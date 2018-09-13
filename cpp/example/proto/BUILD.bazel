@@ -1,0 +1,11 @@
+
+
+load("@//cpp:rules.bzl", "cpp_proto_compile")
+
+cpp_proto_compile(
+    name = "routeguide",
+    deps = [
+        "@//example/proto/routeguide:proto_library",
+    ],
+    has_services = True,
+)
