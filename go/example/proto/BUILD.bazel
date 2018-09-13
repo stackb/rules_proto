@@ -1,0 +1,11 @@
+
+
+load("@//go:rules.bzl", "go_proto_compile", "grpc_go_proto_compile")
+
+grpc_go_proto_compile(
+    name = "routeguide",
+    deps = [
+        "@//example/proto/routeguide:proto_library",
+    ],
+    verbose = 2,
+)

@@ -22,16 +22,10 @@ load("@//java:deps.bzl", "java_proto_deps")
 
 java_proto_deps()
 
-PROTOTOOL_VERSION="v1.2.0"
+load("@//go:deps.bzl", "go_proto_deps")
 
-http_file(
-    name = "com_github_uber_prototool_linux",
-    urls = ["https://github.com/uber/prototool/releases/download/%s/prototool-Linux-x86_64" % PROTOTOOL_VERSION],
-    sha256 = "cdbe781f8c3e3ed0a40490c33d0b8490fd5cb5a2c7912306f0d016878f6e26bd",
-)
+go_proto_deps()
 
-http_file(
-    name = "com_github_uber_prototool_darwin",
-    urls = ["https://github.com/uber/prototool/releases/download/%s/prototool-Darwin-x86_64" % PROTOTOOL_VERSION],
-    sha256 = "cdbe781f8c3e3ed0a40490c33d0b8490fd5cb5a2c7912306f0d016878f6e26bd",
-)
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()

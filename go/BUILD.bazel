@@ -1,0 +1,17 @@
+
+load("@//:rules.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "go",
+    outputs = ["{basename}.pb.go"],
+    tool = "@com_github_golang_protobuf//protoc-gen-go",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "grpc_go",
+    outputs = ["{basename}.pb.go"],
+    options = ["plugins=grpc"],
+    tool = "@com_github_golang_protobuf//protoc-gen-go",
+    visibility = ["//visibility:public"],
+)
