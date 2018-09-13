@@ -1,0 +1,30 @@
+load("@//py:rules.bzl", "py_proto_compile")
+
+proto_library(
+    name = "proto_library",
+    srcs = [
+        "routeguide.proto",
+    ],
+)
+
+java_proto_library(
+    name = "java_proto_library",
+    deps = [
+        "proto_library",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_proto_library",
+    deps = [
+        "proto_library",
+    ],
+)
+
+py_proto_compile(
+    name = "py_proto_compile",
+    deps = [
+        "proto_library",
+    ],
+    has_services = True,
+)
