@@ -47,18 +47,50 @@ proto_plugin = rule(
 # provider object here.
 ProtoInfoProvider = 0
 
+def _capitalize(s):
+  """Capitalize a string - only first letter
+  Args:
+    s (string): The input string to be capitalized.
+  Returns:
+    (string): The capitalized string.
+  """
+  return s[0:1].upper() + s[1:]
+
+
+def _pascal_case(s):
+    """Convert pascal_case -> PascalCase
+    Args:
+        s (string): The input string to be capitalized.
+    Returns:
+        (string): The capitalized string.
+    """
+    return "".join([_capitalize(part) for part in s.split("_")])
+
+def _get_output_sibling_file(pattern, proto, descriptor):
+    if pattern.startswith("@package/"):
+        return descriptor
+    return proto
+
+
 def _get_output_filename(src, pattern):
+    # Slice off this prefix if it exists, we don't use it here.
+    if pattern.startswith("@package/"):
+        pattern = pattern[len("@package/"):]
     basename = src.basename
+    filename = basename
     if basename.endswith(".proto"):
         basename = basename[:-6]
     elif basename.endswith(".protodevel"):
         basename = basename[:-11]
+    
     if pattern.find("{basename}") != -1:
-        return pattern.replace("{basename}", basename)
+        filename = pattern.replace("{basename}", basename)
+    if pattern.find("{basename|pascal}") != -1:
+        filename = pattern.replace("{basename|pascal}", _pascal_case(basename))
     else:
-        return basename + pattern
-    # TODO implement more renaming styles
+        filename = basename + pattern
 
+    return filename
 
 def _get_proto_filename(src):
     #print("src.short_path: %s" % src.short_path)
@@ -135,12 +167,14 @@ def proto_compile_impl(ctx):
 
             for plugin in plugins:
                 for output in plugin.outputs:
-                    outputs.append(ctx.actions.declare_file(_get_output_filename(src, output), sibling = proto))
+                    sibling = _get_output_sibling_file(output, proto, descriptor)
+                    outputs.append(ctx.actions.declare_file(_get_output_filename(src, output), sibling = sibling))
 
             if has_services:
                 for plugin in grpc_plugins:
                     for output in plugin.outputs:
-                        outputs.append(ctx.actions.declare_file(_get_output_filename(src, output), sibling = proto))
+                        sibling = _get_output_sibling_file(output, proto, descriptor)
+                        outputs.append(ctx.actions.declare_file(_get_output_filename(src, output), sibling = sibling))
 
         for src in dep.transitive_sources:
             if directs.get(src.path):

@@ -1,0 +1,11 @@
+
+
+load("@//csharp:rules.bzl", "csharp_proto_compile")
+
+csharp_proto_compile(
+    name = "routeguide",
+    deps = [
+        "@//example/proto/routeguide:proto_library",
+    ],
+    has_services = True,
+)

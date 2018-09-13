@@ -14,7 +14,7 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
 
-load("@//py:deps.bzl", "py_proto_deps")
+load("@//python:deps.bzl", "py_proto_deps")
 
 py_proto_deps()
 
