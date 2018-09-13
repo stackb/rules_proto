@@ -1,0 +1,25 @@
+
+genrule(
+    name = "prototool",
+    srcs = select({
+        ":darwin": ["@com_github_uber_prototool_darwin//file"],
+        "//conditions:default": ["@com_github_uber_prototool_linux//file"],
+    }),
+    outs = ["prototool_bin"],
+    cmd = " && ".join([
+        "IN=$$(pwd)/$(SRCS)",
+        "OUT=$$(pwd)/$@",
+        "TMP=$$(mktemp -d $${TMPDIR:-/tmp}/genrule.XXXXXXXXXX)",
+        "cd $$TMP",
+        "cp $$IN $$OUT",
+        "rm -rf $$TMP",
+    ]),
+    executable = True,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "darwin",
+    values = {"host_cpu": "darwin"},
+    visibility = ["//visibility:private"],
+)
