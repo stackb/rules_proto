@@ -1,0 +1,12 @@
+
+
+load("@//closure:rules.bzl", "closure_proto_compile")
+
+closure_proto_compile(
+    name = "routeguide",
+    deps = [
+        "@//example/proto/routeguide:proto_library",
+    ],
+    has_services = True,
+    verbose = 2,
+)

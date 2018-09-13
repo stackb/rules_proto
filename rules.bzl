@@ -4,6 +4,7 @@ ProtoPluginInfo = provider(fields = {
     "tool": "plugin tool",
     "options": "proto options",
     "out": "aggregate proto output",
+    "outdir": "whether to use the package output dir",
 })
 
 ProtoCompileInfo = provider(fields = {
@@ -23,6 +24,7 @@ def _proto_plugin_impl(ctx):
         name = ctx.label.name,
         options = ctx.attr.options,
         out = ctx.attr.out,
+        outdir = ctx.attr.outdir,
         outputs = ctx.attr.outputs,
         tool = ctx.executable.tool,
     )]
@@ -38,6 +40,9 @@ proto_plugin = rule(
         ),
         "out": attr.string(
             doc = "Output filename generated on a per-plugin basis; to be used in the value for --NAME-out=OUT",
+        ),
+        "outdir": attr.string(
+            doc = "If present, overrides the file.path from out; to be used in the value for --NAME-out=OUT",
         ),
         "tool": attr.label(
             doc = "The plugin binary.  If absent, assume the plugin is a built-in to protoc itself",
@@ -141,7 +146,9 @@ def _get_plugin_options(ctx, options):
 
 def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
     arg = outdir
-    if plugin.out:
+    if plugin.outdir:
+        arg = plugin.outdir.replace("%{name}", outdir)
+    elif plugin.out:
         outfile = plugin_outfiles[plugin.name]
         #arg = "%s" % (outdir)
         #arg = "%s/%s" % (outdir, outfile.short_path)
