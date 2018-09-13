@@ -7,56 +7,49 @@ ProtoInfoProvider = 0
 def _get_output_filename(src, suffix):
     basename = src.basename
     if basename.endswith(".proto"):
-        basename = basename[:-5]
-    return basename + "py"
+        basename = basename[:-6]
+    return basename + suffix
 
 def _py_proto_compile(ctx):
-    protoc = ctx.executable.prototool
-    #prototool = ctx.executable.prototool
+    protoc = ctx.executable.protoc
+    descriptor = ctx.outputs.descriptor
 
     deps = [dep.proto for dep in ctx.attr.deps]
-    sources = []
+    protos = []
     outputs = []
+    args = []
 
     for dep in deps:
         print("dep: %r" % dep)
-        for e in dep.transitive_imports:
-            print("import: %r" % e)
-        for e in dep.transitive_sources:
-            print("source: %r" % e)
-            sources.append(e)
-            filename = _get_output_filename(e, "py")
-            output = ctx.actions.declare_file("%s/%s" % (ctx.label.name, filename))
-            outputs.append(output)
+        # for e in dep.transitive_imports:
+        #     print("import: %r" % e)
+        #     args += ["--proto_path", path]
+        for src in dep.transitive_sources:
+            print("source: %r" % src)
+            proto = ctx.actions.declare_file(src.short_path, sibling = descriptor)
+            protos.append(proto)
+            ctx.actions.run_shell(
+                mnemonic = "CopyProto",
+                inputs = [src],
+                outputs = [proto],
+                command = "find . && cp %s %s" % (src.path, proto.path),
+            )
+            gen = ctx.actions.declare_file(_get_output_filename(src, "_pb2.py"), sibling = proto)
+            outputs.append(gen)
         for e in dep.transitive_proto_path:
             print("proto_path: %r" % e)
         for e in dep.transitive_descriptor_sets:
             print("descriptor_set: %r" % e)
-    
-    prototool_json = struct(
-        protoc = struct(
-            version = ctx.attr.proto_version,
-        ),
-        generate = struct(
-            plugins = [
-                struct(
-                    name = "python",
-                    type = "python",
-                ),
-            ],
-        ),
-    )
 
-    ctx.actions.write(ctx.outputs.prototool_json, prototool_json.to_json())
-    
-    ctx.actions.run(
-        executable = protoc,
-        arguments = ["generate"],
-        inputs = sources + [ctx.outputs.prototool_json],
-        outputs = outputs,
-        env = {
-            "HOME": ctx.outputs.prototool_json.dirname,
-        }
+    args += ["--descriptor_set_out=%s" % descriptor.path]
+    args += ["--proto_path=%s" % descriptor.dirname]        
+    args += ["--python_out=%s" % descriptor.dirname]        
+    args += [proto.path for proto in protos]
+
+    ctx.actions.run_shell(
+        command = "find . && " +  " ".join([protoc.path] + args) + " && find .",
+        inputs = [protoc] + protos,
+        outputs = outputs + [descriptor],
     )
 
     return [DefaultInfo(
@@ -70,14 +63,6 @@ py_proto_compile = rule(
             mandatory = True,
             providers = ["proto"],
         ),
-        "proto_version": attr.string(
-            default = "3.6.1",
-        ),        
-        "prototool": attr.label(
-            default = "@//:prototool",
-            cfg = "host",
-            executable = True,
-        ),
         "protoc": attr.label(
             default = "@com_google_protobuf//:protoc",
             cfg = "host",
@@ -85,8 +70,8 @@ py_proto_compile = rule(
         ),
     },
     outputs = {
-        "prototool_json": "%{name}/prototool.json",
-    },
+        "descriptor": "%{name}/descriptor.bin",
+    }
 )
 
 # def py_proto_library(**kwargs):
