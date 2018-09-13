@@ -1,0 +1,11 @@
+
+
+load("@//node:rules.bzl", "node_proto_compile")
+
+node_proto_compile(
+    name = "routeguide",
+    deps = [
+        "@//example/proto/routeguide:proto_library",
+    ],
+    has_services = True,
+)

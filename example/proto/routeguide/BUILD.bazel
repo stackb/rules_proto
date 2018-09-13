@@ -4,6 +4,7 @@ proto_library(
     srcs = [
         "routeguide.proto",
     ],
+    visibility = ["//visibility:public"],
 )
 
 java_proto_library(
@@ -18,22 +19,4 @@ cc_proto_library(
     deps = [
         "proto_library",
     ],
-)
-
-load("@//py:rules.bzl", "py_proto_compile")
-py_proto_compile(
-    name = "py_proto_compile",
-    deps = [
-        "proto_library",
-    ],
-    has_services = True,
-)
-
-load("@//node:rules.bzl", "node_proto_compile")
-node_proto_compile(
-    name = "node_proto_compile",
-    deps = [
-        "proto_library",
-    ],
-    has_services = True,
 )
