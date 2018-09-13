@@ -18,6 +18,10 @@ load("@//python:deps.bzl", "py_proto_deps")
 
 py_proto_deps()
 
+load("@//java:deps.bzl", "java_proto_deps")
+
+java_proto_deps()
+
 PROTOTOOL_VERSION="v1.2.0"
 
 http_file(

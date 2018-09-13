@@ -1,0 +1,12 @@
+
+
+load("@//java:rules.bzl", "java_proto_compile")
+
+java_proto_compile(
+    name = "routeguide",
+    deps = [
+        "@//example/proto/routeguide:proto_library",
+    ],
+    has_services = True,
+    verbose = 2,
+)
