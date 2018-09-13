@@ -1,8 +1,8 @@
 
 
-load("@//php:rules.bzl", "php_proto_compile")
+load("@//php:rules.bzl", "grpc_php_proto_compile")
 
-php_proto_compile(
+grpc_php_proto_compile(
     name = "routeguide",
     deps = [
         "@//example/proto/routeguide:proto_library",
@@ -16,5 +16,4 @@ php_proto_compile(
         "routeguide/Routeguide/RouteNote.php",
         "routeguide/Routeguide/Feature.php",
     ],
-    has_services = True,
 )

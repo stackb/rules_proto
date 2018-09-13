@@ -1,11 +1,10 @@
 
 
-load("@//python:rules.bzl", "py_proto_compile")
+load("@//python:rules.bzl", "grpc_py_proto_compile")
 
-py_proto_compile(
+grpc_py_proto_compile(
     name = "routeguide",
     deps = [
         "@//example/proto/routeguide:proto_library",
     ],
-    has_services = True,
 )

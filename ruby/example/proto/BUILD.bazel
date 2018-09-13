@@ -1,11 +1,10 @@
 
 
-load("@//ruby:rules.bzl", "ruby_proto_compile")
+load("@//ruby:rules.bzl", "grpc_ruby_proto_compile")
 
-ruby_proto_compile(
+grpc_ruby_proto_compile(
     name = "routeguide",
     deps = [
         "@//example/proto/routeguide:proto_library",
     ],
-    has_services = True,
 )
