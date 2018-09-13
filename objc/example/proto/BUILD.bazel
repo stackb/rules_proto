@@ -1,0 +1,11 @@
+
+
+load("@//objc:rules.bzl", "objc_proto_compile")
+
+objc_proto_compile(
+    name = "routeguide",
+    deps = [
+        "@//example/proto/routeguide:proto_library",
+    ],
+    has_services = True,
+)
