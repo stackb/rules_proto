@@ -1,0 +1,20 @@
+
+
+load("@//php:rules.bzl", "php_proto_compile")
+
+php_proto_compile(
+    name = "routeguide",
+    deps = [
+        "@//example/proto/routeguide:proto_library",
+    ],
+    outputs = [
+        "routeguide/GPBMetadata/Example/Proto/Routeguide/Routeguide.php",
+        "routeguide/Routeguide/Rectangle.php",
+        "routeguide/Routeguide/RouteGuideClient.php",
+        "routeguide/Routeguide/Point.php",
+        "routeguide/Routeguide/RouteSummary.php",
+        "routeguide/Routeguide/RouteNote.php",
+        "routeguide/Routeguide/Feature.php",
+    ],
+    has_services = True,
+)
