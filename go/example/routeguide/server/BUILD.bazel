@@ -2,7 +2,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("//go:rules.bzl", "grpc_go_proto_library")
 
 grpc_go_proto_library(
-    name = "routeguide_proto",
+    name = "routeguide",
     deps = ["//example/proto/routeguide:proto_library"],
     importpath = "google.golang.org/grpc/examples/route_guide/routeguide",
 )
@@ -13,7 +13,7 @@ go_library(
     importpath = "google.golang.org/grpc/examples/route_guide/server",
     visibility = ["//visibility:private"],
     deps = [
-        ":routeguide_proto",
+        ":routeguide",
         "@com_github_golang_protobuf//proto:go_default_library",
         "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",

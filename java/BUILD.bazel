@@ -7,48 +7,38 @@ proto_plugin(
     visibility = ["//visibility:public"],
 )
 
+# TODO: look into the "enable_deprecated" plugin option.
 proto_plugin(
     name = "grpc_java",
     out = "%{name}.jar",
-    tool = ":protoc_gen_grpc_java",
+    tool = "@io_grpc_grpc_java//compiler:grpc_java_plugin",
     visibility = ["//visibility:public"],
 )
 
-genrule(
-    name = "protoc_gen_grpc_java",
-    srcs = select({
-        ":darwin": ["@protoc_gen_grpc_java_macosx//file"],
-        ":windows": ["@protoc_gen_grpc_java_windows_x86_64//file"],
-        ":windows_msvc": ["@protoc_gen_grpc_java_windows_x86_64//file"],
-        "//conditions:default": ["@protoc_gen_grpc_java_linux_x86_64//file"],
-    }),
-    outs = ["protoc_gen_grpc_java_bin"],
-    cmd = " && ".join([
-        "IN=$$(pwd)/$(SRCS)",
-        "OUT=$$(pwd)/$@",
-        "TMP=$$(mktemp -d $${TMPDIR:-/tmp}/genrule.XXXXXXXXXX)",
-        "cd $$TMP",
-        "cp $$IN $$OUT",
-        "rm -rf $$TMP",
-    ]),
-    executable = True,
+java_library(
+    name = "proto_deps",
+    exports = [
+        "@com_google_guava_guava//jar",
+        "@com_google_protobuf//:protobuf_java",
+    ],
+    visibility = ["//visibility:public"],
 )
 
-config_setting(
-    name = "darwin",
-    values = {"host_cpu": "darwin"},
-    visibility = ["//visibility:private"],
+java_library(
+    name = "grpc_deps",
+    exports = [
+        ":proto_deps",
+        "@io_grpc_grpc_java//stub",
+        "@io_grpc_grpc_java//protobuf",
+        "@io_grpc_grpc_java//core",
+    ],
+    visibility = ["//visibility:public"],
 )
 
-config_setting(
-    name = "windows",
-    values = {"host_cpu": "x64_windows"},
-    visibility = ["//visibility:private"],
+java_library(
+    name = "grpc_netty",
+    exports = [
+        "@io_grpc_grpc_java//netty",
+    ],
+    visibility = ["//visibility:public"],
 )
-
-config_setting(
-    name = "windows_msvc",
-    values = {"host_cpu": "x64_windows_msvc"},
-    visibility = ["//visibility:private"],
-)
-

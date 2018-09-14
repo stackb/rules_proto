@@ -1,0 +1,39 @@
+load("//java:rules.bzl", "grpc_java_proto_library")
+
+grpc_java_proto_library(
+    name = "routeguide",
+    deps = ["//example/proto/routeguide:proto_library"],
+)
+
+java_binary(
+    name = "client",
+    srcs = [
+        "io/grpc/examples/routeguide/RouteGuideClient.java",
+    ],
+    main_class = "io.grpc.examples.routeguide.RouteGuideClient",
+    deps = [
+        ":routeguide",
+        ":serverlib",
+    ],
+)
+
+java_library(
+    name = "serverlib",
+    srcs = [
+        "io/grpc/examples/routeguide/RouteGuideServer.java",
+        "io/grpc/examples/routeguide/RouteGuideUtil.java",
+    ],
+    deps = [
+        ":routeguide",
+        "@com_google_protobuf//:protobuf_java_util",
+    ],
+)
+
+java_binary(
+    name = "server",
+    main_class = "io.grpc.examples.routeguide.RouteGuideServer",
+    runtime_deps = [
+        ":serverlib",
+        "@//java:grpc_netty",
+    ],
+)

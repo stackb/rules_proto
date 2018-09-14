@@ -270,9 +270,14 @@ def proto_compile_impl(ctx):
     )
 
     files = [] + ctx.outputs.outputs
-    files += outputs
-    if len(plugin_outfiles) > 0:
-        files += plugin_outfiles.values()
+
+    if len(srcjars) > 0:
+        files += srcjars
+    else:
+        files += outputs
+        if len(plugin_outfiles) > 0:
+            files += plugin_outfiles.values()
+
 
     return [ProtoCompileInfo(
         plugins = plugins,
