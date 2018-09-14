@@ -49,18 +49,13 @@ public class RouteGuideServer {
   private final Server server;
 
   public RouteGuideServer(int port) throws IOException {
-    this(port, RouteGuideUtil.getDefaultFeaturesFile());
-  }
-
-  /** Create a RouteGuide server listening on {@code port} using {@code featureFile} database. */
-  public RouteGuideServer(int port, URL featureFile) throws IOException {
-    this(ServerBuilder.forPort(port), port, RouteGuideUtil.parseFeatures(featureFile));
+    this(ServerBuilder.forPort(port), port);
   }
 
   /** Create a RouteGuide server using serverBuilder as a base and features as data. */
-  public RouteGuideServer(ServerBuilder<?> serverBuilder, int port, Collection<Feature> features) {
+  public RouteGuideServer(ServerBuilder<?> serverBuilder, int port) {
     this.port = port;
-    server = serverBuilder.addService(new RouteGuideService(features))
+    this.server = serverBuilder.addService(new RouteGuideService())
         .build();
   }
 
@@ -110,12 +105,13 @@ public class RouteGuideServer {
    * <p>See route_guide.proto for details of the methods.
    */
   private static class RouteGuideService extends RouteGuideGrpc.RouteGuideImplBase {
-    private final Collection<Feature> features;
     private final ConcurrentMap<Point, List<RouteNote>> routeNotes =
         new ConcurrentHashMap<Point, List<RouteNote>>();
 
-    RouteGuideService(Collection<Feature> features) {
-      this.features = features;
+    private Collection<Feature> features;
+
+    RouteGuideService() {
+      this.features = new java.util.HashSet();
     }
 
     /**
@@ -144,7 +140,7 @@ public class RouteGuideServer {
       int top = max(request.getLo().getLatitude(), request.getHi().getLatitude());
       int bottom = min(request.getLo().getLatitude(), request.getHi().getLatitude());
 
-      for (Feature feature : features) {
+      for (Feature feature : this.features) {
         if (!RouteGuideUtil.exists(feature)) {
           continue;
         }
@@ -255,7 +251,7 @@ public class RouteGuideServer {
      * @return The feature object at the point. Note that an empty name indicates no feature.
      */
     private Feature checkFeature(Point location) {
-      for (Feature feature : features) {
+      for (Feature feature : this.features) {
         if (feature.getLocation().getLatitude() == location.getLatitude()
             && feature.getLocation().getLongitude() == location.getLongitude()) {
           return feature;

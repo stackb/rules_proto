@@ -42,3 +42,11 @@ java_library(
     ],
     visibility = ["//visibility:public"],
 )
+
+java_library(
+    name = "grpc_okhttp",
+    exports = [
+        "@io_grpc_grpc_java//okhttp",
+    ],
+    visibility = ["//visibility:public"],
+)

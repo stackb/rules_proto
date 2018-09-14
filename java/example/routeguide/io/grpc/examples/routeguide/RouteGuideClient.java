@@ -250,13 +250,7 @@ public class RouteGuideClient {
 
   /** Issues several different requests and then exits. */
   public static void main(String[] args) throws InterruptedException {
-    List<Feature> features;
-    try {
-      features = RouteGuideUtil.parseFeatures(RouteGuideUtil.getDefaultFeaturesFile());
-    } catch (IOException ex) {
-      ex.printStackTrace();
-      return;
-    }
+    List<Feature> features = new java.util.ArrayList<Feature>();
 
     RouteGuideClient client = new RouteGuideClient("localhost", 8980);
     try {
