@@ -2,9 +2,11 @@ ProtoPluginInfo = provider(fields = {
     "name": "proto plugin name",
     "outputs": "outputs to be generated",
     "tool": "plugin tool",
+    "executable": "plugin tool executable",
     "options": "proto options",
     "out": "aggregate proto output",
     "outdir": "whether to use the package output dir",
+    "data": "additional data"
 })
 
 ProtoCompileInfo = provider(fields = {
@@ -26,7 +28,9 @@ def _proto_plugin_impl(ctx):
         out = ctx.attr.out,
         outdir = ctx.attr.outdir,
         outputs = ctx.attr.outputs,
-        tool = ctx.executable.tool,
+        tool = ctx.attr.tool,
+        executable = ctx.executable.tool,
+        data = ctx.files.data,
     )]
 
 proto_plugin = rule(
@@ -48,6 +52,10 @@ proto_plugin = rule(
             doc = "The plugin binary.  If absent, assume the plugin is a built-in to protoc itself",
             cfg = "host",
             executable = True,
+        ),
+        "data": attr.label_list(
+            doc = "Additional files that should travel with the plugin",
+            allow_files = True,
         ),
     }
 )
@@ -195,6 +203,7 @@ proto_compile_outputs = {
 }
 
 def proto_compile_impl(ctx):
+    verbose = ctx.attr.verbose
     protoc = ctx.executable.protoc
     has_services = ctx.attr.has_services
     descriptor = ctx.outputs.descriptor
@@ -210,6 +219,9 @@ def proto_compile_impl(ctx):
     #     for f in dat.symlinks:
     #         print("datfile: %r" % f)
 
+    if verbose:
+        print("Starting proto compile...")
+
     plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
     tools = {}
     protos = []
@@ -218,6 +230,9 @@ def proto_compile_impl(ctx):
     directs = {}
     srcjars = []
     plugin_outfiles = {}
+    # Aggregate files from plugin.data.  For example for some reason the
+    # dart_plugin executable does not pull in the dart_sdk dart binary.
+    data = []
 
     for dep in deps:
         for plugin in plugins:
@@ -256,24 +271,30 @@ def proto_compile_impl(ctx):
     args += ["--descriptor_set_out=%s" % descriptor.path]
     args += ["--proto_path=%s" % outdir]        
     for plugin in plugins:
+        data += plugin.data
         args += [get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles)]        
-        if plugin.tool:    
-            tools[plugin.name] = plugin.tool
+        if plugin.executable:    
+            tools[plugin.name] = plugin.executable
 
     args += ["--plugin=protoc-gen-%s=%s" % (k, v.path) for k, v in tools.items()]        
     args += [proto.path for proto in protos]
 
+    print("data: %r" % data)
+
     command = " ".join([protoc.path] + args)
-    if ctx.attr.verbose > 0:
+    if verbose > 0:
         print("PROTOC COMMAND: %s" % command)
-    if ctx.attr.verbose > 1:
+    if verbose > 1:
         command += "&& echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find ."
-    if ctx.attr.verbose > 2:
+    if verbose > 2:
         command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . && " + command
+
+    # for plugin in plugins:
+    #     data += get_tool_files(plugin.tool)
 
     ctx.actions.run_shell(
         command = command,
-        inputs = [protoc] + tools.values() + protos,
+        inputs = [protoc] + tools.values() + protos + data,
         outputs = outputs + [descriptor] + ctx.outputs.outputs,
     )
 
@@ -286,7 +307,6 @@ def proto_compile_impl(ctx):
         if len(plugin_outfiles) > 0:
             files += plugin_outfiles.values()
 
-
     return [ProtoCompileInfo(
         plugins = plugins,
         protos = protos,
@@ -296,6 +316,18 @@ def proto_compile_impl(ctx):
         args = args,
         descriptor = descriptor,
     ), DefaultInfo(files = depset(files))]
+
+
+def get_tool_files(tool):
+    info = tool[DefaultInfo]
+    #if not info:
+    return []
+    # print("tool files: %r" % info.files)
+    # print("tool runfiles: %r" % info.default_runfiles.files)
+    # if not info.default_runfiles:
+    #     return []
+    # return info.default_runfiles.files.to_list()
+
 
 proto_compile = rule(
     implementation = proto_compile_impl,

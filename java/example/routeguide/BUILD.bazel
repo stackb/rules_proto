@@ -14,7 +14,7 @@ java_binary(
     deps = [
         ":routeguide",
         ":serverlib",
-        "@//java:grpc_okhttp",
+        "@//java:grpc_netty",
     ],
 )
 

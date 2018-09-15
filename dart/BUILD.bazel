@@ -1,0 +1,37 @@
+
+load("@//:rules.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "dart",
+    outputs = ["{basename}.pb.dart"],
+    tool = ":dart_protoc_plugin",
+    visibility = ["//visibility:public"],
+    # data = [
+    #     "@dart_sdk//:bin/dart",
+    # ],
+)
+
+# proto_plugin(
+#     name = "grpc_dart",
+#     outputs = ["{basename}.pb.grpc.dart"],
+#     tool = "@com_github_grpc_grpc//:grpc_dart_plugin",
+#     visibility = ["//visibility:public"],
+# )
+
+load("@io_bazel_rules_dart//dart/build_rules:vm.bzl", "dart_vm_binary")
+
+dart_vm_binary(
+    name = "dart_protoc_plugin",
+    srcs = ["dart_protoc_plugin.dart"],
+    script_file = "dart_protoc_plugin.dart",
+    deps = [
+        "@vendor_protoc_plugin//:protoc_plugin",
+        "@vendor_front_end//:front_end",
+        "@vendor_watcher//:watcher",
+        "@vendor_isolate//:isolate",
+        "@vendor_plugin//:plugin",
+        "@vendor_html//:html",
+        "@vendor_glob//:glob",
+        "@vendor_typed_data//:typed_data",
+    ],
+)

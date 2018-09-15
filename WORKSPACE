@@ -1,7 +1,11 @@
 workspace(name = "com_github_stackb_rules_grpc")
 
+# =========================================
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+# =========================================
 
 http_archive(
     name = "com_github_grpc_grpc",
@@ -13,6 +17,8 @@ http_archive(
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
+
+# =========================================
 
 load("@//python:deps.bzl", "py_proto_deps")
 
@@ -36,6 +42,8 @@ load("@//java:deps.bzl", "java_proto_deps")
 
 java_proto_deps()
 
+# =========================================
+
 load("@//go:deps.bzl", "go_proto_deps")
 
 go_proto_deps()
@@ -44,7 +52,53 @@ load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_too
 go_rules_dependencies()
 go_register_toolchains()
 
+# =========================================
+
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 grpc_java_repositories(
     omit_com_google_protobuf = True,
 )
+
+# =========================================
+
+local_repository(
+    name = "io_bazel_rules_dart",
+    path = "/home/pcj/github/dart-lang/rules_dart",
+)
+
+load("@//dart:deps.bzl", "dart_proto_deps", "dart_pub_deps")
+
+dart_proto_deps()
+
+dart_pub_deps(
+    name = "dart_pub_deps_protoc_plugin",
+    spec = "//dart:pubspec.yaml",
+    override = {
+        "path": "1.6.2",
+        "analyzer": "0.32.5",
+        "crypto": "2.0.6",
+        "async": "2.0.8",
+        "fixnum": "0.10.8",
+        "collection": "1.14.11",
+        "dart_style": "1.1.3",
+        "source_span": "1.4.1",
+        "args": "1.5.0",
+    },
+    verbose = 2,
+)
+
+load("@dart_pub_deps_protoc_plugin//:deps.bzl", "pub_deps")
+pub_deps(verbose = 1)
+
+load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
+dart_repositories()
+
+load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
+
+pub_repository(
+        name = "vendor_isolate",
+        output = ".",
+        package = "isolate",
+        version = "2.0.2",
+    )
+
