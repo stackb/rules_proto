@@ -200,6 +200,16 @@ def proto_compile_impl(ctx):
     descriptor = ctx.outputs.descriptor
     outdir = descriptor.dirname
     deps = [dep.proto for dep in ctx.attr.deps]
+    #datadeps = [dep[DefaultInfo].data_runfiles for dep in ctx.attr.deps]
+    #datadeps = [dep[DefaultInfo].default_runfiles for dep in ctx.attr.deps]
+    # datadeps = [dep[ProtoSupportDataInfo].default_runfiles for dep in ctx.attr.deps]
+    # print("datadeps: %r" % datadeps)
+    # for dat in datadeps:
+    #     print("dat: %r" % dat)
+    #     # files, symlinks, empty_filenames
+    #     for f in dat.symlinks:
+    #         print("datfile: %r" % f)
+
     plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
     tools = {}
     protos = []
@@ -211,14 +221,12 @@ def proto_compile_impl(ctx):
 
     for dep in deps:
         for plugin in plugins:
-            print("checking plugin %s" % plugin.name)
             filename = _get_plugin_out(ctx, plugin)
             if not filename:
                 continue
             out = ctx.actions.declare_file(filename, sibling = descriptor)
             outputs.append(out)
             plugin_outfiles[plugin.name] = out
-            print("registered proto out %s: %s" % (plugin.name, out.path))
             # Special handling for output jars
             if out.path.endswith(".jar"):
                 srcjar = _copy_jar_to_srcjar(ctx, out)
@@ -237,13 +245,13 @@ def proto_compile_impl(ctx):
         for src in dep.transitive_sources:
             if directs.get(src.path):
                 continue
-            #print("transitive source: %r" % src)
+            print("transitive source: %r" % src)
             proto = copy_proto(ctx, descriptor, src)
             protos.append(proto)
         for e in dep.transitive_proto_path:
             print("proto_path: %r" % e)
-        # for e in dep.transitive_descriptor_sets:
-        #     print("descriptor_set: %r" % e)
+        for e in dep.transitive_descriptor_sets:
+            print("descriptor_set: %r" % e)
 
     args += ["--descriptor_set_out=%s" % descriptor.path]
     args += ["--proto_path=%s" % outdir]        

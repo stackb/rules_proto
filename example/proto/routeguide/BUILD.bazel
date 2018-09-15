@@ -4,6 +4,9 @@ proto_library(
     srcs = [
         "routeguide.proto",
     ],
+    data = [
+        "features.json",
+    ],
     visibility = ["//visibility:public"],
 )
 

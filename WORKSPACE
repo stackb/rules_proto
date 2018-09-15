@@ -18,6 +18,20 @@ load("@//python:deps.bzl", "py_proto_deps")
 
 py_proto_deps()
 
+load("@io_bazel_rules_python//python:pip.bzl", "pip_repositories", "pip_import")
+
+pip_repositories()
+
+pip_import(
+   name = "grpc_py_deps",
+   requirements = "//python:requirements.txt",
+)
+
+load("@grpc_py_deps//:requirements.bzl", "pip_install")
+pip_install()
+
+# =========================================
+
 load("@//java:deps.bzl", "java_proto_deps")
 
 java_proto_deps()
