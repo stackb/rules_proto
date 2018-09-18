@@ -1,4 +1,4 @@
-load("//dart:library.bzl","grpc_dart_proto_library")
+load("//dart:library.bzl", "grpc_dart_proto_library")
 load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
 
 grpc_dart_proto_library(

@@ -1,6 +1,6 @@
 
 
-load("@//dart:compile.bzl","grpc_dart_proto_compile")
+load("@//dart:compile.bzl", "grpc_dart_proto_compile")
 
 grpc_dart_proto_compile(
     name = "routeguide",

@@ -1,6 +1,6 @@
 
 
-load("@//php:compile.bzl","grpc_php_proto_compile")
+load("@//php:compile.bzl", "grpc_php_proto_compile")
 
 grpc_php_proto_compile(
     name = "routeguide",

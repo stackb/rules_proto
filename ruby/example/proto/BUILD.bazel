@@ -1,6 +1,6 @@
 
 
-load("@//ruby:compile.bzl","grpc_ruby_proto_compile")
+load("@//ruby:compile.bzl", "grpc_ruby_proto_compile")
 
 grpc_ruby_proto_compile(
     name = "routeguide",

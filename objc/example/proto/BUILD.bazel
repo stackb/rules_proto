@@ -1,6 +1,6 @@
 
 
-load("@//objc:compile.bzl","grpc_objc_proto_compile")
+load("@//objc:compile.bzl", "grpc_objc_proto_compile")
 
 grpc_objc_proto_compile(
     name = "routeguide",
