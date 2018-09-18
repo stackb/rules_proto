@@ -1,6 +1,6 @@
 
 
-load("@//closure:compile.bzl","closure_proto_compile")
+load("@//closure:compile.bzl", "closure_proto_compile")
 
 closure_proto_compile(
     name = "routeguide",
@@ -8,5 +8,4 @@ closure_proto_compile(
         "@//example/proto/routeguide:proto_library",
     ],
     has_services = True,
-    verbose = 2,
 )

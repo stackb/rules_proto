@@ -211,13 +211,16 @@ def proto_compile_impl(ctx):
         for src in dep.transitive_sources:
             if directs.get(src.path):
                 continue
-            print("transitive source: %r" % src)
+            if verbose > 2:
+                print("transitive source: %r" % src)
             proto = copy_proto(ctx, descriptor, src)
             protos.append(proto)
         for e in dep.transitive_proto_path:
-            print("proto_path: %r" % e)
+            if verbose > 2:
+                print("proto_path: %r" % e)
         for e in dep.transitive_descriptor_sets:
-            print("descriptor_set: %r" % e)
+            if verbose > 2:
+                print("descriptor_set: %r" % e)
 
     args += ["--descriptor_set_out=%s" % descriptor.path]
     args += ["--proto_path=%s" % outdir]        
@@ -229,8 +232,6 @@ def proto_compile_impl(ctx):
 
     args += ["--plugin=protoc-gen-%s=%s" % (k, v.path) for k, v in tools.items()]        
     args += [proto.path for proto in protos]
-
-    print("data: %r" % data)
 
     command = " ".join([protoc.path] + args)
     if verbose > 0:
@@ -276,7 +277,6 @@ def get_tool_files(tool):
     info = tool[DefaultInfo]
     if not info:
         return files
-    print("tool files: %r" % info.files)
     if info.files:
         files += info.files.to_list()
     if info.default_runfiles:
@@ -284,10 +284,6 @@ def get_tool_files(tool):
         if runfiles.files:
             files += runfiles.files.to_list()
     return files
-    # print("tool runfiles: %r" % info.default_runfiles.files)
-    # if not info.default_runfiles:
-    #     return []
-    # return info.default_runfiles.files.to_list()
 
 
 proto_compile = rule(
