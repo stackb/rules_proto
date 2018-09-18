@@ -1,4 +1,4 @@
-load("@//:rules.bzl", "proto_compile")
+load("@//:compile.bzl", "proto_compile")
 
 def objc_proto_compile(**kwargs):
     proto_compile(

@@ -1,5 +1,5 @@
 
-load("@//:rules.bzl", "proto_plugin")
+load("@//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "csharp",

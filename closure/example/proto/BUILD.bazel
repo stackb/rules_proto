@@ -1,6 +1,6 @@
 
 
-load("@//closure:rules.bzl", "closure_proto_compile")
+load("@//closure:compile.bzl","closure_proto_compile")
 
 closure_proto_compile(
     name = "routeguide",

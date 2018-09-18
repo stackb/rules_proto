@@ -1,4 +1,4 @@
-load("//python:rules.bzl", "grpc_py_proto_library")
+load("//python:compile.bzl","grpc_py_proto_library")
 
 grpc_py_proto_library(
     name = "routeguide",

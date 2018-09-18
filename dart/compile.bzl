@@ -1,4 +1,4 @@
-load("@//:rules.bzl", "proto_compile")
+load("@//:compile.bzl", "proto_compile")
 load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
 
 def dart_proto_compile(**kwargs):

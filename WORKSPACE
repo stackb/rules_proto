@@ -88,7 +88,7 @@ dart_pub_deps(
 )
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", "pub_deps")
-pub_deps(verbose = 1)
+pub_deps(verbose = 0)
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
 dart_repositories()

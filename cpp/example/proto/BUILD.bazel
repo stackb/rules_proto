@@ -1,6 +1,6 @@
 
 
-load("@//cpp:rules.bzl", "grpc_cpp_proto_compile")
+load("@//cpp:compile.bzl","grpc_cpp_proto_compile")
 
 grpc_cpp_proto_compile(
     name = "routeguide",

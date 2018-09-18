@@ -1,4 +1,4 @@
-load("@//:rules.bzl", "proto_compile")
+load("@//:compile.bzl", "proto_compile")
 load("@io_bazel_rules_go//proto:def.bzl", _go_proto_library = "go_proto_library")
 
 def go_proto_compile(**kwargs):
