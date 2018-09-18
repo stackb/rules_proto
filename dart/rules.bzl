@@ -1,4 +1,5 @@
 load("@//:rules.bzl", "proto_compile")
+load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
 
 def dart_proto_compile(**kwargs):
     proto_compile(
@@ -8,7 +9,7 @@ def dart_proto_compile(**kwargs):
 
 def grpc_dart_proto_compile(**kwargs):
     proto_compile(
-        plugins = ["//dart:dart"],
+        plugins = ["//dart:grpc_dart"],
         **kwargs
     )
 
@@ -26,12 +27,14 @@ def grpc_dart_proto_library(**kwargs):
         visibility = visibility,
         verbose = verbose,
     )
-    # native.dart_library(
-    #     name = name,
-    #     srcs = [name_pb],
-    #     deps = ["@//dart:grpc_deps"],
-    #     # This magically adds REPOSITORY_NAME/PACKAGE_NAME/{name_pb} to dartPATH
-    #     imports = [name_pb],
-    #     visibility = visibility,
-    # )
+    dart_library(
+        name = name,
+        srcs = [name_pb],
+        deps = [
+            "@vendor_protobuf//:protobuf",
+        ],
+        lib_root = ".",
+        pub_pkg_name = "foo",
+        visibility = visibility,
+    )
 

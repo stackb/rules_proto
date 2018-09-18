@@ -1,37 +1,38 @@
-load("//python:rules.bzl", "grpc_py_proto_library")
+load("//dart:rules.bzl", "grpc_dart_proto_library")
+load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
 
-grpc_py_proto_library(
+grpc_dart_proto_library(
     name = "routeguide",
     deps = ["//example/proto/routeguide:proto_library"],
     verbose = 2,
 )
 
-py_binary(
-    name = "server",
-    srcs = [
-        "server.py",
-    ],
-    deps = [
-        ":routeguide",
-        ":resources",
-    ],
-)
+# dart_binary(
+#     name = "server",
+#     srcs = [
+#         "server.dart",
+#     ],
+#     deps = [
+#         ":routeguide",
+#         ":common",
+#     ],
+# )
 
-py_binary(
-    name = "client",
-    srcs = [
-        "client.py",
-    ],
-    deps = [
-        ":routeguide",
-        ":resources",
-    ],
-)
+# dart_binary(
+#     name = "client",
+#     srcs = [
+#         "client.dart",
+#     ],
+#     deps = [
+#         ":routeguide",
+#         ":common",
+#     ],
+# )
 
-py_library(
-    name = "resources",
+dart_library(
+    name = "common",
     srcs = [
-        "resources.py",
+        "common.dart",
     ],
     deps = [
         ":routeguide",

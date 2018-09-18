@@ -289,8 +289,8 @@ def proto_compile_impl(ctx):
     if verbose > 2:
         command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . && " + command
 
-    # for plugin in plugins:
-    #     data += get_tool_files(plugin.tool)
+    for plugin in plugins:
+        data += get_tool_files(plugin.tool)
 
     ctx.actions.run_shell(
         command = command,
@@ -319,10 +319,18 @@ def proto_compile_impl(ctx):
 
 
 def get_tool_files(tool):
+    files = []
     info = tool[DefaultInfo]
-    #if not info:
-    return []
-    # print("tool files: %r" % info.files)
+    if not info:
+        return files
+    print("tool files: %r" % info.files)
+    if info.files:
+        files += info.files.to_list()
+    if info.default_runfiles:
+        runfiles = info.default_runfiles
+        if runfiles.files:
+            files += runfiles.files.to_list()
+    return files
     # print("tool runfiles: %r" % info.default_runfiles.files)
     # if not info.default_runfiles:
     #     return []

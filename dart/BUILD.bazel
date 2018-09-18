@@ -3,20 +3,28 @@ load("@//:rules.bzl", "proto_plugin")
 
 proto_plugin(
     name = "dart",
-    outputs = ["{basename}.pb.dart"],
+    outputs = [
+        "{basename}.pb.dart",
+        "{basename}.pbjson.dart",
+        "{basename}.pbenum.dart",
+    ],
     tool = ":dart_protoc_plugin",
     visibility = ["//visibility:public"],
-    # data = [
-    #     "@dart_sdk//:bin/dart",
-    # ],
 )
 
-# proto_plugin(
-#     name = "grpc_dart",
-#     outputs = ["{basename}.pb.grpc.dart"],
-#     tool = "@com_github_grpc_grpc//:grpc_dart_plugin",
-#     visibility = ["//visibility:public"],
-# )
+proto_plugin(
+    name = "grpc_dart",
+    outputs = [
+        "{basename}.pb.dart",
+        "{basename}.pbjson.dart",
+        "{basename}.pbenum.dart",
+        # is the one expected?
+        #"{basename}.pbgrpc.dart",
+        "{basename}.pbserver.dart",
+    ],
+    tool = ":dart_protoc_plugin",
+    visibility = ["//visibility:public"],
+)
 
 load("@io_bazel_rules_dart//dart/build_rules:vm.bzl", "dart_vm_binary")
 

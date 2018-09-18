@@ -84,7 +84,7 @@ dart_pub_deps(
         "source_span": "1.4.1",
         "args": "1.5.0",
     },
-    verbose = 2,
+    verbose = 0,
 )
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", "pub_deps")
