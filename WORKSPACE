@@ -83,9 +83,9 @@ yarn_modules(
 
 # =========================================
 
-load("@//go:deps.bzl", "go_proto_deps")
+load("@//go:deps.bzl", "go_proto_library_deps")
 
-go_proto_deps()
+go_proto_library_deps()
 
 load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
 go_rules_dependencies()
@@ -140,4 +140,10 @@ pub_repository(
         package = "isolate",
         version = "2.0.2",
     )
+
+# =========================================
+
+load("@//contrib/grpc.js:deps.bzl", "grpc_js_deps")
+
+grpc_js_deps()
 
