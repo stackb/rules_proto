@@ -1,0 +1,20 @@
+load("//node:library.bzl", "grpc_node_proto_library")
+load("@org_pubref_rules_node//node:rules.bzl", "node_module", "node_binary")
+
+grpc_node_proto_library(
+    name = "routeguide",
+    deps = ["//example/proto/routeguide:proto_library"],
+)
+
+node_module(
+    name = "client_module",
+    srcs = ["client.js"],
+    deps = [
+        ":routeguide",
+    ],
+)
+
+node_binary(
+    name = "client",
+    entrypoint = ":client_module",
+)

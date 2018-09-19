@@ -12,20 +12,6 @@ def closure_proto_library_deps():
 
     existing = native.existing_rules()
 
-    if "com_github_bazelbuild_buildtools_buildozer_linux" not in existing:
-        http_file(
-            name = "com_github_bazelbuild_buildtools_buildozer_linux",
-            urls = ["https://github.com/bazelbuild/buildtools/releases/download/0.15.0/buildozer"],
-            sha256 = "be07a37307759c68696c989058b3446390dd6e8aa6fdca6f44f04ae3c37212c5",
-        )      
-
-    if "com_github_bazelbuild_buildtools_buildozer_darwin" not in existing:
-        http_file(
-            name = "com_github_bazelbuild_buildtools_buildozer_darwin",
-            urls = ["https://github.com/bazelbuild/buildtools/releases/download/0.15.0/buildozer.osx"],
-            sha256 = "294357ff92e7bb36c62f964ecb90e935312671f5a41a7a9f2d77d8d0d4bd217d",
-        )      
-
     if "io_bazel_rules_closure" not in existing:
         buildozer_http_archive(
             name = "io_bazel_rules_closure",

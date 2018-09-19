@@ -56,6 +56,33 @@ closure_repositories(
 
 # =========================================
 
+load("@//node:deps.bzl", "node_proto_library_deps")
+
+node_proto_library_deps()
+
+load("@org_pubref_rules_node//node:rules.bzl", "node_repositories")
+
+node_repositories()
+
+load("@org_pubref_rules_node//node:rules.bzl", "yarn_modules")
+
+yarn_modules(
+    name = "proto_node_modules",
+    deps = {
+        "google-protobuf": "3.6.1",
+    },
+)
+
+yarn_modules(
+    name = "grpc_node_modules",
+    deps = {
+        "google-protobuf": "3.6.1",
+        "grpc": "1.15.1",
+    },
+)
+
+# =========================================
+
 load("@//go:deps.bzl", "go_proto_deps")
 
 go_proto_deps()
