@@ -16,11 +16,15 @@ routeguide_clients:
 	bazel build \
 		//closure/example/routeguide/client \
 		//cpp/example/routeguide:client \
-		//java/example/routeguide:client 
+		//python/example/routeguide:client \
+		//java/example/routeguide:client \
+		//go/example/routeguide/client 
 
 routeguide_servers:
 	bazel build \
+		//python/example/routeguide:server \
 		//cpp/example/routeguide:server \
+		//java/example/routeguide:server \
 		//go/example/routeguide/server 
 
 routeguide_tests:
