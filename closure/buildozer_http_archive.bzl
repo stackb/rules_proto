@@ -91,7 +91,7 @@ rule lacks the patch functionality of the original.
 Following download and extraction of the archive, this rule will:
 
 1. Execute a single buildozer command.
-2. Execute a set of sed commands. 
+2. Execute a list of sed commands. 
 
 The buildozer command is constructed from the `replace_deps` and `label_list`
 attributes.  For each A -> B mapping in the replace_deps dict, a command like
@@ -99,9 +99,10 @@ attributes.  For each A -> B mapping in the replace_deps dict, a command like
 the label_list attribute.  Refer to buildozer documentation for an explanation
 of the replace deps command.
 
-The sed commands are constructed from the `replace_deps` and `file_list`.  These
+The sed commands are constructed from the `sed_replacements` attribute.  These
 sed commands might not be necessary if buildozer was capable of replacement
-within *.bzl files, but currently it cannot.  For each mapping A -> B in the
-`replace_deps` dict, a sed replacement like `s|A|B|g` is constructed and applied
-to each file in the file_list attribute.
+within *.bzl files, but currently it cannot.  This attribute is a
+string_list_dict, meaning the dict keys are filename to modify (in place), and
+each dict value is are list of sed commands to apply onto that file.  The value
+typically looks something like 's|A|B|g'. 
 """

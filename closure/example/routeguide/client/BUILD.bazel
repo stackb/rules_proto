@@ -1,0 +1,55 @@
+
+load(
+    "@io_bazel_rules_closure//closure:defs.bzl",
+    "closure_js_library",
+    "closure_js_test",
+    "closure_js_binary",
+)
+
+closure_js_test(
+    name = "client_test",
+    srcs = [
+        "client_test.js",
+    ],
+    entry_points = ["example.routeguide.ClientTest"],
+    deps = [
+        ":client",
+        "//closure/example/routeguide",
+        "@io_bazel_rules_closure//closure/library/testing:asserts",
+        "@io_bazel_rules_closure//closure/library/testing:jsunit",
+        "@io_bazel_rules_closure//closure/library/testing:testsuite",
+    ],
+    size = "small",
+)
+
+closure_js_library(
+    name = "client",
+    srcs = [
+        "client.js",
+    ],
+    deps = [
+        "//closure/example/routeguide",
+        "@io_bazel_rules_closure//closure/library/array",
+    ],
+)
+
+closure_js_library(
+    name = "main",
+    srcs = [
+        "main.js",
+    ],
+    deps = [
+        ":client",
+    ],
+)
+
+closure_js_binary(
+    name = "bundle",
+    compilation_level = "ADVANCED",
+    debug = False,
+    entry_points = ["goog:example.routeguide.client.run"],
+    output_wrapper = "(function(){%output%}).call(this);",
+    deps = [
+        ":main",
+    ],
+)

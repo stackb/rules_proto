@@ -33,6 +33,7 @@ go_test(
     srcs = [
         "main_test.go",
     ],
+    size = "small",
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
 )

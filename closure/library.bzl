@@ -17,4 +17,5 @@ def closure_proto_library(**kwargs):
         srcs = [name_pb],
         deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
         visibility = visibility,
+        lenient = True,
     )
