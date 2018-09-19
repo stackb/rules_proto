@@ -1,4 +1,4 @@
-routeguide:
+routeguide_compile:
 	bazel build closure/example/proto:routeguide \
 	 cpp/example/proto:routeguide \
 	 csharp/example/proto:routeguide \
@@ -11,5 +11,5 @@ routeguide:
 	 python/example/proto:routeguide \
 	 ruby/example/proto:routeguide
 
-routeguide_test:
-	bazel test go/example/routeguide/server:go_default_test 
+routeguide_library_test:
+	bazel test go/example/routeguide/... 

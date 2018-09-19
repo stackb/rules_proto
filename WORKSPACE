@@ -42,6 +42,20 @@ load("@//java:deps.bzl", "java_proto_deps")
 
 java_proto_deps()
 
+# ===========
+
+load("@//closure:deps.bzl", "closure_proto_library_deps")
+
+closure_proto_library_deps()
+
+load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
+
+closure_repositories(
+    omit_com_google_protobuf = True,
+    #omit_com_google_code_findbugs_jsr305 = True,
+    # omit_com_google_errorprone_error_prone_annotations = True,
+)
+
 # =========================================
 
 load("@//go:deps.bzl", "go_proto_deps")

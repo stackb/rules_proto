@@ -13,3 +13,28 @@ proto_plugin(
     outdir = "%{name}",
     visibility = ["//visibility:public"],
 )
+
+genrule(
+    name = "buildozer",
+    srcs = select({
+        ":darwin": ["@com_github_bazelbuild_buildtools_buildozer_darwin//file"],
+        "//conditions:default": ["@com_github_bazelbuild_buildtools_buildozer_linux//file"],
+    }),
+    outs = ["buildozer_bin"],
+    cmd = " && ".join([
+        "IN=$$(pwd)/$(SRCS)",
+        "OUT=$$(pwd)/$@",
+        "TMP=$$(mktemp -d $${TMPDIR:-/tmp}/genrule.XXXXXXXXXX)",
+        "cd $$TMP",
+        "cp $$IN $$OUT",
+        "rm -rf $$TMP",
+    ]),
+    executable = True,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "darwin",
+    values = {"host_cpu": "darwin"},
+    visibility = ["//visibility:private"],
+)
