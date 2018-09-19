@@ -12,7 +12,20 @@ routeguide_compile:
 		//python/example/proto:routeguide \
 		//ruby/example/proto:routeguide
 
-routeguide_library_test:
+routeguide_clients:
+	bazel build \
+		//closure/example/routeguide/client \
+		//cpp/example/routeguide:client \
+		//java/example/routeguide:client 
+
+routeguide_servers:
+	bazel build \
+		//cpp/example/routeguide:server \
+		//go/example/routeguide/server 
+
+routeguide_tests:
 	bazel test \
 		//closure/example/routeguide/... \
+		//cpp/example/routeguide/... \
+		//java/example/routeguide/... \
 		//go/example/routeguide/... 

@@ -1,0 +1,38 @@
+load("//cpp:library.bzl", "grpc_cpp_proto_library")
+
+grpc_cpp_proto_library(
+    name = "routeguide",
+    deps = ["//example/proto/routeguide:proto_library"],
+)
+
+package(default_visibility = ["//visibility:public"])
+
+cc_test(
+    name = "feature_test",
+    srcs = ["feature_test.cc"],
+    copts = ["-Iexternal/gtest/include"],
+    deps = [
+        ":helper",
+        "//external:gtest",
+    ],
+    size = "small",
+)
+
+cc_library(
+    name = "helper",
+    srcs = ["helper.cc"],
+    hdrs = ["helper.h"],
+    deps = [":routeguide"],
+)
+
+cc_binary(
+    name = "client",
+    srcs = ["client.cc"],
+    deps = [":helper"],
+)
+
+cc_binary(
+    name = "server",
+    srcs = ["server.cc"],
+    deps = [":helper"],
+)
