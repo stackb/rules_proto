@@ -147,10 +147,18 @@ proto_compile_attrs = {
     "verbose": attr.int(
         doc = "Increase verbose level for more debugging",
     ),
+    "include_imports": attr.bool(
+        doc = "Pass the --include_imports argument to the protoc_plugin",
+        default = True,
+    ),
+    "include_source_info": attr.bool(
+        doc = "Pass the --include_source_info argument to the protoc_plugin",
+        default = True,
+    ),
 }
 
 proto_compile_outputs = {
-    "descriptor": "%{name}/descriptor.bin",
+    "descriptor": "%{name}/descriptor.source.bin",
 }
 
 def proto_compile_impl(ctx):
@@ -223,6 +231,11 @@ def proto_compile_impl(ctx):
                 print("descriptor_set: %r" % e)
 
     args += ["--descriptor_set_out=%s" % descriptor.path]
+    if ctx.attr.include_imports:
+        args += ["--include_imports"]
+    if ctx.attr.include_source_info:
+        args += ["--include_source_info"]
+
     args += ["--proto_path=%s" % outdir]        
     for plugin in plugins:
         data += plugin.data
