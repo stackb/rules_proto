@@ -147,3 +147,9 @@ load("@//contrib/grpc.js:deps.bzl", "grpc_js_deps")
 
 grpc_js_deps()
 
+# =========================================
+
+load("@//contrib/grpc-web:deps.bzl", "grpc_web_deps")
+
+grpc_web_deps()
+

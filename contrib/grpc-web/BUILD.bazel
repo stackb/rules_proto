@@ -1,0 +1,10 @@
+
+load("@//:plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "grpc-web",
+    outputs = ["_grpc_web_pb.js"],
+    options = ["import_style=closure", "mode=grpcwebtext"],
+    tool = "@com_github_grpc_grpc_web//javascript/net/grpc/web:protoc-gen-grpc-web",
+    visibility = ["//visibility:public"],
+)
