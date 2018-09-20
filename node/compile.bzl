@@ -1,13 +1,13 @@
-load("@//:compile.bzl", "proto_compile")
+load("//:compile.bzl", "proto_compile")
 
 def node_proto_compile(**kwargs):
     proto_compile(
-        plugins = ["//node:js"],
+        plugins = [str(Label("//node:js"))],
         **kwargs
     )
 
 def grpc_node_proto_compile(**kwargs):
     proto_compile(
-        plugins = ["//node:js", "//node:grpc_js"],
+        plugins = [str(Label("//node:js")), str(Label("//node:grpc_js"))],
         **kwargs
     )

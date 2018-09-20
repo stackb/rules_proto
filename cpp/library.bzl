@@ -1,4 +1,4 @@
-load("@//cpp:compile.bzl", "cpp_proto_compile", "grpc_cpp_proto_compile")
+load("//cpp:compile.bzl", "cpp_proto_compile", "grpc_cpp_proto_compile")
 
 def cpp_proto_library(**kwargs):
     name = kwargs.get("name")

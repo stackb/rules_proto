@@ -1,13 +1,13 @@
-load("@//:compile.bzl", "proto_compile")
+load("//:compile.bzl", "proto_compile")
 
 def csharp_proto_compile(**kwargs):
     proto_compile(
-        plugins = ["//csharp:csharp"],
+        plugins = [str(Label("//csharp:csharp"))],
         **kwargs
     )
 
 def grpc_csharp_proto_compile(**kwargs):
     proto_compile(
-        plugins = ["//csharp:csharp", "//csharp:grpc_csharp"],
+        plugins = [str(Label("//csharp:csharp")), str(Label("//csharp:grpc_csharp")],
         **kwargs
     )

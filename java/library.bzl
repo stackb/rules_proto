@@ -1,4 +1,4 @@
-load("@//java:compile.bzl", "java_proto_compile", "grpc_java_proto_compile")
+load("//java:compile.bzl", "java_proto_compile", "grpc_java_proto_compile")
 
 def java_proto_library(**kwargs):
     name = kwargs.get("name")
@@ -14,9 +14,9 @@ def java_proto_library(**kwargs):
     native.java_library(
         name = name,
         srcs = [name_pb],
-        deps = ["@//java:proto_deps"],
+        deps = ["//java:proto_deps"],
         exports = [
-            "@//java:proto_deps",
+            "//java:proto_deps",
         ],
         visibility = visibility,
     )
@@ -35,9 +35,9 @@ def grpc_java_proto_library(**kwargs):
     native.java_library(
         name = name,
         srcs = [name_pb],
-        deps = ["@//java:grpc_deps"],
+        deps = ["//java:grpc_deps"],
         exports = [
-            "@//java:grpc_deps",
+            "//java:grpc_deps",
         ],
         visibility = visibility,
     )

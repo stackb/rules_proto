@@ -1,5 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
-load("@//closure:buildozer_http_archive.bzl", "buildozer_http_archive")
+load("//closure:buildozer_http_archive.bzl", "buildozer_http_archive")
 
 RULES_CLOSURE_VERSION = "1e12aa5612d758daf2df339991c8d187223a7ee6"
 RULES_CLOSURE_SHA256 = "663424d34fd067a8d066308eb2887fcaba36d73b354669ec1467498726a6b82c"

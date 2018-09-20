@@ -7,7 +7,7 @@ def go_proto_library(**kwargs):
     visibility = kwargs.get("visibility")
     compilers = kwargs.get("compilers")
     if not compilers:
-        compilers = ["@io_bazel_rules_go//proto:go"]
+        compilers = ["@io_bazel_rules_go//proto:go_proto"]
     _go_proto_library(
         name = name,
         compilers = compilers,

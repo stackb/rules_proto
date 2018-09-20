@@ -1,9 +1,8 @@
-
-load("@//:plugin.bzl", "proto_plugin")
+load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "grpc.js",
-    outputs = ["{basename}.grpc.js"],
+    outputs = [".grpc.js"],
     tool = "@com_github_stackb_grpc_js//protoc-gen-grpc-js",
     visibility = ["//visibility:public"],
 )

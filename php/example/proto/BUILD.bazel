@@ -1,11 +1,11 @@
 
 
-load("@//php:compile.bzl", "grpc_php_proto_compile")
+load("//php:compile.bzl", "grpc_php_proto_compile")
 
 grpc_php_proto_compile(
     name = "routeguide",
     deps = [
-        "@//example/proto/routeguide:proto_library",
+        "//example/proto/routeguide:proto_library",
     ],
     outputs = [
         "routeguide/GPBMetadata/Example/Proto/Routeguide/Routeguide.php",

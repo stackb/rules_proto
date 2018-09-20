@@ -1,5 +1,5 @@
-load("@//closure:compile.bzl", "closure_proto_compile")
-load("@//contrib/grpc-web:compile.bzl", "grpc_web_proto_compile")
+load("//closure:compile.bzl", "closure_proto_compile")
+load("//contrib/grpc-web:compile.bzl", "grpc_web_proto_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def grpc_web_proto_library(**kwargs):

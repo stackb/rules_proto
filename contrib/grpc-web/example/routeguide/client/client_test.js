@@ -5,6 +5,7 @@ goog.setTestOnly('example.routeguide.grpc_web.ClientTest');
 const Client = goog.require('example.routeguide.grpc_web.Client');
 const Rectangle = goog.require('proto.routeguide.Rectangle');
 
+
 const asserts = goog.require('goog.testing.asserts');
 const testSuite = goog.require('goog.testing.testSuite');
 

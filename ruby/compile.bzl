@@ -1,13 +1,13 @@
-load("@//:compile.bzl", "proto_compile")
+load("//:compile.bzl", "proto_compile")
 
 def ruby_proto_compile(**kwargs):
     proto_compile(
-        plugins = ["//ruby:ruby"],
+        plugins = [str(Label("//ruby:ruby"))],
         **kwargs
     )
 
 def grpc_ruby_proto_compile(**kwargs):
     proto_compile(
-        plugins = ["//ruby:ruby", "//ruby:grpc_ruby"],
+        plugins = [str(Label("//ruby:ruby")), str(Label("//ruby:grpc_ruby")],
         **kwargs
     )

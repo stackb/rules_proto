@@ -1,12 +1,12 @@
 
 
-load("@//java:compile.bzl", "grpc_java_proto_compile")
-load("@//java:library.bzl", "grpc_java_proto_library")
+load("//java:compile.bzl", "grpc_java_proto_compile")
+load("//java:library.bzl", "grpc_java_proto_library")
 
 grpc_java_proto_compile(
     name = "routeguide",
     deps = [
-        "@//example/proto/routeguide:proto_library",
+        "//example/proto/routeguide:proto_library",
     ],
     # verbose = 2,
 )
@@ -14,6 +14,6 @@ grpc_java_proto_compile(
 grpc_java_proto_library(
     name = "routeguide_lib",
     deps = [
-        "@//example/proto/routeguide:proto_library",
+        "//example/proto/routeguide:proto_library",
     ],
 )

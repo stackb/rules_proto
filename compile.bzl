@@ -1,4 +1,4 @@
-load("@//:plugin.bzl", "ProtoPluginInfo")
+load("//:plugin.bzl", "ProtoPluginInfo")
 
 ProtoCompileInfo = provider(fields = {
     "plugins": "ProtoPluginInfo object",

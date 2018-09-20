@@ -1,5 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@//dart:sdk.bzl", "dart_sdk_repository")
+load("//dart:sdk.bzl", "dart_sdk_repository")
 
 def dart_proto_deps():
     existing = native.existing_rules()  

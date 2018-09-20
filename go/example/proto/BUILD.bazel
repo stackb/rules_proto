@@ -1,18 +1,18 @@
 
 
-load("@//go:compile.bzl", "grpc_go_proto_compile")
-load("@//go:library.bzl", "grpc_go_proto_library")
+load("//go:compile.bzl", "grpc_go_proto_compile")
+load("//go:library.bzl", "grpc_go_proto_library")
 
 grpc_go_proto_compile(
     name = "routeguide",
     deps = [
-        "@//example/proto/routeguide:proto_library",
+        "//example/proto/routeguide:proto_library",
     ],
 )
 
 grpc_go_proto_library(
     name = "routeguide_lib",
     deps = [
-        "@//example/proto/routeguide:proto_library",
+        "//example/proto/routeguide:proto_library",
     ],
 )

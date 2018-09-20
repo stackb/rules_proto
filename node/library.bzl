@@ -1,5 +1,5 @@
-load("@//node:compile.bzl", "node_proto_compile", "grpc_node_proto_compile")
-load("@//node:node_module_index.bzl", "node_module_index")
+load("//node:compile.bzl", "node_proto_compile", "grpc_node_proto_compile")
+load("//node:node_module_index.bzl", "node_module_index")
 load("@org_pubref_rules_node//node:rules.bzl", "node_module")
 
 def node_proto_library(**kwargs):

@@ -20,7 +20,7 @@ grpc_deps()
 
 # =========================================
 
-load("@//python:deps.bzl", "py_proto_deps")
+load("//python:deps.bzl", "py_proto_deps")
 
 py_proto_deps()
 
@@ -38,13 +38,13 @@ pip_install()
 
 # =========================================
 
-load("@//java:deps.bzl", "java_proto_deps")
+load("//java:deps.bzl", "java_proto_deps")
 
 java_proto_deps()
 
 # ===========
 
-load("@//closure:deps.bzl", "closure_proto_library_deps")
+load("//closure:deps.bzl", "closure_proto_library_deps")
 
 closure_proto_library_deps()
 
@@ -56,7 +56,7 @@ closure_repositories(
 
 # =========================================
 
-load("@//node:deps.bzl", "node_proto_library_deps")
+load("//node:deps.bzl", "node_proto_library_deps")
 
 node_proto_library_deps()
 
@@ -83,7 +83,7 @@ yarn_modules(
 
 # =========================================
 
-load("@//go:deps.bzl", "go_proto_library_deps")
+load("//go:deps.bzl", "go_proto_library_deps")
 
 go_proto_library_deps()
 
@@ -105,7 +105,7 @@ local_repository(
     path = "/home/pcj/github/dart-lang/rules_dart",
 )
 
-load("@//dart:deps.bzl", "dart_proto_deps", "dart_pub_deps")
+load("//dart:deps.bzl", "dart_proto_deps", "dart_pub_deps")
 
 dart_proto_deps()
 
@@ -143,13 +143,13 @@ pub_repository(
 
 # =========================================
 
-load("@//contrib/grpc.js:deps.bzl", "grpc_js_deps")
+load("//contrib/grpc.js:deps.bzl", "grpc_js_deps")
 
 grpc_js_deps()
 
 # =========================================
 
-load("@//contrib/grpc-web:deps.bzl", "grpc_web_deps")
+load("//contrib/grpc-web:deps.bzl", "grpc_web_deps")
 
 grpc_web_deps()
 

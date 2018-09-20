@@ -1,4 +1,4 @@
-load("@//python:compile.bzl", "grpc_py_proto_compile")
+load("//python:compile.bzl", "grpc_py_proto_compile")
 
 def grpc_py_proto_library(**kwargs):
     name = kwargs.get("name")
@@ -16,7 +16,7 @@ def grpc_py_proto_library(**kwargs):
     native.py_library(
         name = name,
         srcs = [name_pb],
-        deps = ["@//python:grpc_deps"],
+        deps = ["//python:grpc_deps"],
         # This magically adds REPOSITORY_NAME/PACKAGE_NAME/{name_pb} to PYTHONPATH
         imports = [name_pb],
         visibility = visibility,

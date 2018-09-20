@@ -14,7 +14,7 @@ java_binary(
     deps = [
         ":routeguide",
         ":serverlib",
-        "@//java:grpc_netty",
+        "//java:grpc_netty",
     ],
 )
 
@@ -35,6 +35,6 @@ java_binary(
     main_class = "io.grpc.examples.routeguide.RouteGuideServer",
     runtime_deps = [
         ":serverlib",
-        "@//java:grpc_netty",
+        "//java:grpc_netty",
     ],
 )

@@ -1,4 +1,4 @@
-load("@//:compile.bzl", "ProtoCompileInfo")
+load("//:compile.bzl", "ProtoCompileInfo")
 
 NodeModuleIndexInfo = provider(fields = {
     "name": "rule name",
