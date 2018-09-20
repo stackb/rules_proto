@@ -36,6 +36,13 @@ def grpc_js_proto_library(**kwargs):
             "@com_github_stackb_grpc_js//js/grpc:api",
             "@com_github_stackb_grpc_js//js/grpc:options",
         ],
+        internal_descriptors = [
+            name_pb + "/descriptor.source.bin",
+            name_pb_grpc + "/descriptor.source.bin",
+        ],
         lenient = True,
+        suppress = [
+            "JSC_WRONG_ARGUMENT_COUNT",
+        ],
         visibility = visibility,
     )
