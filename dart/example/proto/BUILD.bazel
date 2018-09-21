@@ -1,8 +1,8 @@
 
 
-load("//dart:compile.bzl", "grpc_dart_proto_compile")
+load("//dart:compile.bzl", "dart_grpc_compile")
 
-grpc_dart_proto_compile(
+dart_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto/routeguide:proto_library",

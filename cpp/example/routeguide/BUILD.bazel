@@ -1,6 +1,6 @@
-load("//cpp:library.bzl", "grpc_cpp_proto_library")
+load("//cpp:library.bzl", "cpp_grpc_library")
 
-grpc_cpp_proto_library(
+cpp_grpc_library(
     name = "routeguide",
     deps = ["//example/proto/routeguide:proto_library"],
 )

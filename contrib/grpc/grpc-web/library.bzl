@@ -2,7 +2,7 @@ load("//closure:compile.bzl", "closure_proto_compile")
 load("//contrib/grpc/grpc-web:compile.bzl", "grpc_web_proto_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
-def grpc_web_proto_library(**kwargs):
+def web_grpc_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     verbose = kwargs.get("verbose")

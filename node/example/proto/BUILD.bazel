@@ -1,8 +1,8 @@
 
 
-load("//node:compile.bzl", "grpc_node_proto_compile")
+load("//node:compile.bzl", "node_grpc_compile")
 
-grpc_node_proto_compile(
+node_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto/routeguide:proto_library",

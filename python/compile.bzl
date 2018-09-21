@@ -6,7 +6,7 @@ def py_proto_compile(**kwargs):
         **kwargs
     )
 
-def grpc_py_proto_compile(**kwargs):
+def py_grpc_compile(**kwargs):
     proto_compile(
         plugins = [str(Label("//python:python")), str(Label("//python:grpc_python"))],
         **kwargs

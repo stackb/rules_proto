@@ -17,7 +17,7 @@ py_library(
 )
 """
 
-def py_proto_deps():
+def py_proto_compile_deps():
     existing = native.existing_rules()  
     
     if "six" not in existing:

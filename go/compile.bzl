@@ -6,7 +6,7 @@ def go_proto_compile(**kwargs):
         **kwargs
     )
 
-def grpc_go_proto_compile(**kwargs):
+def go_grpc_compile(**kwargs):
     proto_compile(
         plugins = [str(Label("//go:grpc_go"))],
         **kwargs

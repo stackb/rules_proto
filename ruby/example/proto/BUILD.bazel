@@ -1,8 +1,8 @@
 
 
-load("//ruby:compile.bzl", "grpc_ruby_proto_compile")
+load("//ruby:compile.bzl", "ruby_grpc_compile")
 
-grpc_ruby_proto_compile(
+ruby_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto/routeguide:proto_library",

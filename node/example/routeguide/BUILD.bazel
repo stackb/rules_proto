@@ -1,7 +1,7 @@
-load("//node:library.bzl", "grpc_node_proto_library")
+load("//node:library.bzl", "node_grpc_library")
 load("@org_pubref_rules_node//node:rules.bzl", "node_module", "node_binary")
 
-grpc_node_proto_library(
+node_grpc_library(
     name = "routeguide",
     deps = ["//example/proto/routeguide:proto_library"],
 )

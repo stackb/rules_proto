@@ -6,23 +6,19 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file"
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 # =========================================
-
-http_archive(
-    name = "com_github_grpc_grpc",
-    strip_prefix = "grpc-1.15.0",
-    url = "https://github.com/grpc/grpc/archive/v1.15.0.tar.gz",
-    sha256 = "013cc34f3c51c0f87e059a12ea203087a7a15dca2e453295345e1d02e2b9634b",
-)
-
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+load("//:deps.bzl", "grpc_deps")
 
 grpc_deps()
 
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", com_github_grpc_grpc_bazel_grpc_deps = "grpc_deps")
+
+com_github_grpc_grpc_bazel_grpc_deps()
+
 # =========================================
 
-load("//python:deps.bzl", "py_proto_deps")
+load("//python:deps.bzl", "py_proto_compile_deps")
 
-py_proto_deps()
+py_proto_compile_deps()
 
 load("@io_bazel_rules_python//python:pip.bzl", "pip_repositories", "pip_import")
 
@@ -38,9 +34,9 @@ pip_install()
 
 # =========================================
 
-load("//java:deps.bzl", "java_proto_deps")
+load("//java:deps.bzl", "java_grpc_library_deps")
 
-java_proto_deps()
+java_grpc_library_deps()
 
 # ===========
 

@@ -6,7 +6,7 @@ def ts_proto_compile(**kwargs):
         **kwargs
     )
 
-def grpc_ts_proto_compile(**kwargs):
+def ts_grpc_compile(**kwargs):
     proto_compile(
         plugins = [str(Label("//ts:grpc_ts"))],
         **kwargs

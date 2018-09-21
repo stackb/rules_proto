@@ -2,7 +2,7 @@
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-def go_proto_compile_deps():
+def go_deps():
     existing = native.existing_rules()
 
     if "io_bazel_rules_go" not in existing:
@@ -12,5 +12,8 @@ def go_proto_compile_deps():
             sha256 = "97cf62bdef33519412167fd1e4b0810a318a7c234f5f8dc4f53e2da86241c492",
         )
 
+def go_proto_compile_deps():
+    go_deps()
+    
 def go_proto_library_deps():
     go_proto_compile_deps()

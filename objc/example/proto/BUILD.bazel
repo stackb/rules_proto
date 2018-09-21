@@ -1,8 +1,8 @@
 
 
-load("//objc:compile.bzl", "grpc_objc_proto_compile")
+load("//objc:compile.bzl", "objc_grpc_compile")
 
-grpc_objc_proto_compile(
+objc_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto/routeguide:proto_library",

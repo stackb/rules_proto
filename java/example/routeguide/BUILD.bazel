@@ -1,6 +1,6 @@
-load("//java:library.bzl", "grpc_java_proto_library")
+load("//java:library.bzl", "java_grpc_library")
 
-grpc_java_proto_library(
+java_grpc_library(
     name = "routeguide",
     deps = ["//example/proto/routeguide:proto_library"],
 )

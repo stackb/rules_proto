@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
-load("//go:library.bzl", "grpc_go_proto_library")
+load("//go:library.bzl", "go_grpc_library")
 
-grpc_go_proto_library(
+go_grpc_library(
     name = "routeguide",
     deps = ["//example/proto/routeguide:proto_library"],
     importpath = "google.golang.org/grpc/examples/route_guide/routeguide",

@@ -1,8 +1,8 @@
 
 
-load("//php:compile.bzl", "grpc_php_proto_compile")
+load("//php:compile.bzl", "php_grpc_compile")
 
-grpc_php_proto_compile(
+php_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto/routeguide:proto_library",

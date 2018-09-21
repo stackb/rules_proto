@@ -1,7 +1,7 @@
-load("//dart:library.bzl", "grpc_dart_proto_library")
+load("//dart:library.bzl", "dart_grpc_library")
 load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
 
-grpc_dart_proto_library(
+dart_grpc_library(
     name = "routeguide",
     deps = ["//example/proto/routeguide:proto_library"],
     # verbose = 2,

@@ -1,4 +1,4 @@
-load("//node:compile.bzl", "node_proto_compile", "grpc_node_proto_compile")
+load("//node:compile.bzl", "node_proto_compile", "node_grpc_compile")
 load("//contrib/improbable-eng/ts-protoc-gen:compile.bzl", "ts_proto_compile", "ts_grpc_compile")
 load("@build_bazel_rules_typescript//:defs.bzl", "ts_library")
 
@@ -41,7 +41,7 @@ def ts_grpc_library(**kwargs):
     name_js = name + "_pbjs"
     name_pb_grpc = name + "_pb_grpc"
 
-    grpc_node_proto_compile(
+    node_grpc_compile(
         name = name_js,
         deps = deps,
         visibility = visibility,

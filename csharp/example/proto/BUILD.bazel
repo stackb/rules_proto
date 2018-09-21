@@ -1,8 +1,8 @@
 
 
-load("//csharp:compile.bzl", "grpc_csharp_proto_compile")
+load("//csharp:compile.bzl", "csharp_grpc_compile")
 
-grpc_csharp_proto_compile(
+csharp_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto/routeguide:proto_library",

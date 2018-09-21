@@ -16,7 +16,7 @@ def go_proto_library(**kwargs):
         visibility = visibility,
     )
 
-def grpc_go_proto_library(**kwargs):
+def go_grpc_library(**kwargs):
     name = kwargs.get("name")
     importpath = kwargs.get("importpath")
     deps = kwargs.get("deps")

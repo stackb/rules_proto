@@ -6,7 +6,7 @@ def dart_proto_compile(**kwargs):
         **kwargs
     )
 
-def grpc_dart_proto_compile(**kwargs):
+def dart_grpc_compile(**kwargs):
     proto_compile(
         plugins = [str(Label("//dart:grpc_dart"))],
         **kwargs
