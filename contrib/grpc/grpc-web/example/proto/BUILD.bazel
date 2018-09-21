@@ -1,6 +1,6 @@
 
 
-load("//contrib/grpc-web:compile.bzl", "grpc_web_proto_compile")
+load("//contrib/grpc/grpc-web:compile.bzl", "grpc_web_proto_compile")
 
 grpc_web_proto_compile(
     name = "routeguide",

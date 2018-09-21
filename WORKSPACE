@@ -143,13 +143,44 @@ pub_repository(
 
 # =========================================
 
-load("//contrib/grpc.js:deps.bzl", "grpc_js_deps")
+load("//contrib/stackb/grpc.js:deps.bzl", "grpc_js_deps")
 
 grpc_js_deps()
 
 # =========================================
 
-load("//contrib/grpc-web:deps.bzl", "grpc_web_deps")
+load("//contrib/grpc/grpc-web:deps.bzl", "grpc_web_deps")
 
 grpc_web_deps()
 
+# =========================================
+
+load("//contrib/improbable-eng/ts-protoc-gen:deps.bzl", "ts_proto_deps")
+
+ts_proto_deps()
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
+gazelle_dependencies()
+
+load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
+
+node_repositories(
+    package_json = ["@ts_protoc_gen//:package.json"],
+)
+
+load("@build_bazel_rules_typescript//:defs.bzl", "ts_setup_workspace")
+
+ts_setup_workspace()
+
+load("@io_bazel_rules_webtesting//web:repositories.bzl", "browser_repositories", "web_test_repositories")
+
+web_test_repositories()
+
+load("@build_bazel_rules_nodejs//:defs.bzl", "npm_install")
+
+npm_install(
+    name = "deps",
+    package_json = "@ts_protoc_gen//:package.json",
+    package_lock_json = "@ts_protoc_gen//:package-lock.json",
+)

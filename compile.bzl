@@ -253,6 +253,8 @@ def proto_compile_impl(ctx):
         command += "&& echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find ."
     if verbose > 2:
         command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . && " + command
+    if verbose > 3:
+        command = "env && " + command
 
     for plugin in plugins:
         data += get_tool_files(plugin.tool)

@@ -1,8 +1,6 @@
+load("//contrib/improbable-eng/ts-protoc-gen:compile.bzl", "ts_grpc_compile")
 
-
-load("//contrib/grpc.js:compile.bzl", "grpc_js_proto_compile")
-
-grpc_js_proto_compile(
+ts_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto/routeguide:proto_library",

@@ -5,9 +5,9 @@ load(
     "closure_js_binary",
 )
 
-load("//contrib/grpc.js:library.bzl", "grpc_js_proto_library")
+load("//contrib/grpc/grpc-web:library.bzl", "grpc_web_proto_library")
 
-grpc_js_proto_library(
+grpc_web_proto_library(
     name = "routeguide",
     deps = [
         "//example/proto/routeguide:proto_library",
@@ -19,7 +19,7 @@ closure_js_test(
     srcs = [
         "client_test.js",
     ],
-    entry_points = ["example.routeguide.grpc_js.ClientTest"],
+    entry_points = ["example.routeguide.grpc_web.ClientTest"],
     deps = [
         ":client",
         ":routeguide",
@@ -37,7 +37,7 @@ closure_js_library(
     ],
     deps = [
         ":routeguide",
-        "@io_bazel_rules_closure//closure/library/promise",
+        "@com_github_grpc_grpc_web//javascript/net/grpc/web:clientreadablestream",
     ],
 )
 
@@ -55,7 +55,7 @@ closure_js_binary(
     name = "bundle",
     compilation_level = "ADVANCED",
     debug = False,
-    entry_points = ["goog:example.routeguide.grpc_js.client.run"],
+    entry_points = ["goog:example.routeguide.grpc_web.client.run"],
     output_wrapper = "(function(){%output%}).call(this);",
     deps = [
         ":main",

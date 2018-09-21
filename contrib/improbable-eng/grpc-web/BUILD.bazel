@@ -1,0 +1,62 @@
+# ======================================================================
+load("//:plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "ts",
+    outputs = ["_pb.d.ts"],
+    tool = ":protoc-gen-ts",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "grpc_ts",
+    outputs = ["_pb.d.ts"],
+    options = ["service=true"],
+    tool = ":protoc-gen-ts",
+    visibility = ["//visibility:public"],
+)
+
+# ======================================================================
+# This pkg_tar fixes a bug in the original that deals with files from external
+# repositories
+load("//contrib/improbable-eng/grpc-web:pkg_tar.bzl", "pkg_tar")
+
+pkg_tar(
+    name = "runfiles",
+    srcs = ["@ts_protoc_gen//bin:protoc-gen-ts"],
+    strip_prefix = ".",
+    include_runfiles = True,
+)
+
+# ======================================================================
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_embed_data")
+
+go_embed_data(
+    name = "assets",
+    srcs = [
+        ":runfiles",        
+        "@node//:node",
+    ],
+    package = "main",
+    var = "assets",
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "protoc-gen-ts.go",
+        ":assets",  # keep
+    ],
+    importpath = "github.com/stackb/rules_proto/contrib/improbable-eng/grpc-web/protoc-gen-ts",
+    visibility = ["//visibility:public"],
+)
+
+# Note: it was necessary to repackage the assets in a go program to normalize
+# the madness that is the runfiles tree.  Interestingly, writing a protoc plugin
+# in typescript results in a 54M bundle.
+
+go_binary(
+    name = "protoc-gen-ts",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)

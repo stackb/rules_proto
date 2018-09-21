@@ -1,0 +1,10 @@
+
+filegroup(
+    name = "node_modules", 
+    srcs = glob([
+        "node_modules/**/*.js",
+        "node_modules/**/*.d.ts",
+        "node_modules/**/*.json",
+    ]),
+    visibility = ["//contrib/improbable-eng/ts-protoc-gen/example/routeguide:__pkg__"],
+)
