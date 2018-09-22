@@ -1,6 +1,7 @@
 load("//:plugin.bzl", "ProtoPluginInfo")
 
 ProtoCompileInfo = provider(fields = {
+    "label": "label object",
     "plugins": "ProtoPluginInfo object",
     "descriptor": "descriptor set file",
     "outputs": "generated protoc outputs",
@@ -275,6 +276,7 @@ def proto_compile_impl(ctx):
             files += plugin_outfiles.values()
 
     return [ProtoCompileInfo(
+        label = ctx.label,
         plugins = plugins,
         protos = protos,
         outputs = outputs,

@@ -1,0 +1,10 @@
+
+
+load("//rust:compile.bzl", "rust_grpc_compile")
+
+rust_grpc_compile(
+    name = "routeguide",
+    deps = [
+        "//example/proto/routeguide:proto_library",
+    ],
+)

@@ -1,0 +1,27 @@
+load("//rust:library.bzl", "rust_grpc_library")
+load("@io_bazel_rules_rust//rust:rust.bzl", "rust_library", "rust_binary")
+
+rust_grpc_library(
+    name = "routeguide",
+    deps = ["//example/proto/routeguide:proto_library"],
+)
+
+rust_binary(
+    name = "client",
+    srcs = ["client.rs"],
+    deps = [
+        ":routeguide",
+        "//rust/cargo:grpc",
+    ],
+)
+
+rust_binary(
+    name = "server",
+    srcs = ["server.rs"],
+    deps = [
+        ":routeguide",
+        "//rust/cargo:grpc",
+    ],
+    data = ["//example/proto/routeguide:features"],
+    # args = ["example/proto/routeguide/features.json"],
+)

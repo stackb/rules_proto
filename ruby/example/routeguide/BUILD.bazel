@@ -18,7 +18,6 @@ ruby_binary(
 ruby_binary(
     name = "server",
     srcs = ["server.rb"],
-    includes = ["FOO"],
     deps = [
         ":routeguide",
         "@routeguide_gems_bundle//:libs",

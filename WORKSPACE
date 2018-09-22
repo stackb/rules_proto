@@ -197,3 +197,16 @@ bundle_install(
     gemfile = "//ruby:Gemfile",
     gemfile_lock = "//ruby:Gemfile.lock",
 )
+
+# =======================================
+
+load("//rust:deps.bzl", "rust_proto_library_deps")
+
+rust_proto_library_deps()
+
+load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+
+rust_repositories()
+
+load("//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
+raze_fetch_remote_crates()
