@@ -1,31 +1,92 @@
-# rules_proto
+# `rules_proto` [![Build Status](https://travis-ci.org/pubref/rules_proto.svg?branch=master)](https://travis-ci.org/pubref/rules_proto)
 
-`rules_proto` provides build rules for compiling protocol buffer files.
+Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 
-## Overview
+<table border="0"><tr>
+<td><img src="https://bazel.build/images/bazel-icon.svg" height="180"/></td>
+<td><img src="https://github.com/pubref/rules_protobuf/blob/master/images/wtfcat.png" height="180"/></td>
+<td><img src="https://avatars2.githubusercontent.com/u/7802525?v=4&s=400" height="180"/></td>
+</tr><tr>
+<td>Bazel</td>
+<td>rules_proto</td>
+<td>gRPC</td>
+</tr></table>
+
+These rules are the successor to <https://github.com/pubref/rules_protobuf> and
+are in a pre-release status.  The primary goals are:
+
+1. Interoperate with the native `proto_library` rules and other proto support in
+   the bazel ecosystem as much as possible.
+2. Provide a `proto_plugin` rule to support custom protoc plugins.
+3. Minimal dependency loading.  Proto rules should not pull in more dependencies
+   than they absolutely need.
+
+## Usage
+
+### Add rules_proto your `WORKSPACE`
+
+Specify the language(s) you'd like use by loading the language-specific
+`{LANG}/deps.bzl` file and call the macro of your choice corresponding to the
+proto rule you plan to use.  To override any dependency, declare it in your
+workspace before calling the macro.  Example:
+
+```python
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+RULES_PROTO_VERSION = "{replace-with-commit-id}"
+RULES_PROTO_SHA256 = "{replace-with-sha256}"
+
+http_archive(
+    name = "org_pubref_rules_proto",
+    urls = ["https://github.com/pubref/rules_proto/archive/%s.tar.gz" % RULES_PROTO_VERSION],
+    sha256 = RULES_PROTO_SHA256,
+    strip_prefix = "rules_proto-" + RULES_PROTO_VERSION,
+)
+
+load("@org_pubref_rules_protobuf//cpp:deps.bzl", "cpp_proto_library_deps")
+cpp_proto_library_deps()
+```
+
+### Use the rules in your `BUILD.bazel` files
+
+To build a c++ gRPC library:
+
+```python
+load("@org_pubref_rules_protobuf//cpp:library.bzl", "cpp_grpc_library")
+
+proto_library(
+  name = "proto_library",
+  srcs = ["api.proto"],
+)
+
+cpp_grpc_library(
+  name = "api",
+  deps = [":proto_library"],
+)
+```
+
+## Code Layout
 
 Each language `${LANG}` has a top-level subdirectory that contains ~4 files:
 
 1. `deps.bzl`: contains macro functions that declare repository rule
-   dependencies for that language.  There are typically 2 functions
-   `${LANG}_proto_deps()` and `${LANG}_grpc_deps()`.  If you only need proto
-   support (any not grpc support), load the `_proto_` macro, otherwise load the
-   `_grpc_` macro function and call it in your `WORKSPACE`.
+   dependencies for that language.  There are typically `n` macros that
+   correspond to the names of the rules in `compile.bzl` and `library.bzl`.
+   Load only what you need.
 2. `compile.bzl`: contains the rules `${LANG}_proto_compile` and
    `${LANG}_grpc_compile` (if available).
 3. `library.bzl`: contains the rules `${LANG}_proto_library` and
    `${LANG}_grpc_library` (if available).
 4. `BUILD.bazel`: contains `proto_plugin()` declarations for the available
-   plugins. These are consumed by the `${LANG}_proto_compile` and
-   `${LANG}_grpc_compile` rules.
+   plugins for that language.
 
 The root directory contains the base rule defintions:
 
 * `plugin.bzl`: A build rule that defines the name, tool binary, and options for
-  a particular proto plugin.
+  a particular proto plugin.  
 
 * `compile.bzl`: A build rule that contains the `proto_compile` rule.  This rule
-  calls protoc with a given list of plugins and generates output files.
+  calls `protoc` with a given list of plugins and generates output files.
 
 ## Developing Custom Plugins
 
@@ -39,3 +100,6 @@ Follow the pattern seen in the multiple examples in this repository.  The basic 
    by the plugin.  Specifying outputs is the only attribute that requires much
    mental effort.
 
+## Contributing
+
+Contributions welcome; please create Issues or GitHub pull requests.
