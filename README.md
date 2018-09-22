@@ -67,16 +67,16 @@ cpp_grpc_library(
 
 ## Code Layout
 
-Each language `${LANG}` has a top-level subdirectory that contains ~4 files:
+Each language `{LANG}` has a top-level subdirectory that contains ~4 files:
 
 1. `deps.bzl`: contains macro functions that declare repository rule
    dependencies for that language.  There are typically `n` macros that
    correspond to the names of the rules in `compile.bzl` and `library.bzl`.
    Load only what you need.
-2. `compile.bzl`: contains the rules `${LANG}_proto_compile` and
-   `${LANG}_grpc_compile` (if available).
-3. `library.bzl`: contains the rules `${LANG}_proto_library` and
-   `${LANG}_grpc_library` (if available).
+2. `compile.bzl`: contains the rules `{LANG}_proto_compile` and
+   `{LANG}_grpc_compile` (if available).
+3. `library.bzl`: contains the rules `{LANG}_proto_library` and
+   `{LANG}_grpc_library` (if available).
 4. `BUILD.bazel`: contains `proto_plugin()` declarations for the available
    plugins for that language.
 
@@ -87,6 +87,13 @@ The root directory contains the base rule defintions:
 
 * `compile.bzl`: A build rule that contains the `proto_compile` rule.  This rule
   calls `protoc` with a given list of plugins and generates output files.
+
+Additional protoc plugins and their rules are scoped to the github repository
+name where the plugin resides.  For example, there are 3 grpc-web
+implementations in this repo:
+`[github.com/improbable-eng/grpc-web](./github.com/improbable-eng/grpc-web),
+[github.com/grpc/grpc-web](./github.com/grpc/grpc-web), and
+[github.com/stackb/grpc.js](./github.com/stackb/grpc.js).
 
 ## Developing Custom Plugins
 
@@ -100,6 +107,6 @@ Follow the pattern seen in the multiple examples in this repository.  The basic 
    by the plugin.  Specifying outputs is the only attribute that requires much
    mental effort.
 
-## Contributing
+## github.comuting
 
 Contributions welcome; please create Issues or GitHub pull requests.

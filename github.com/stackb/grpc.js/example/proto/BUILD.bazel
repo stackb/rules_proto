@@ -1,0 +1,10 @@
+
+
+load("//github.com/stackb/grpc.js:compile.bzl", "grpc_js_proto_compile")
+
+grpc_js_proto_compile(
+    name = "routeguide",
+    deps = [
+        "//example/proto/routeguide:proto_library",
+    ],
+)

@@ -1,0 +1,63 @@
+load(
+    "@io_bazel_rules_closure//closure:defs.bzl",
+    "closure_js_library",
+    "closure_js_test",
+    "closure_js_binary",
+)
+
+load("//github.com/stackb/grpc.js:library.bzl", "grpc_js_proto_library")
+
+grpc_js_proto_library(
+    name = "routeguide",
+    deps = [
+        "//example/proto/routeguide:proto_library",
+    ],
+)
+
+closure_js_test(
+    name = "client_test",
+    srcs = [
+        "client_test.js",
+    ],
+    entry_points = ["example.routeguide.grpc_js.ClientTest"],
+    deps = [
+        ":client",
+        ":routeguide",
+        "@io_bazel_rules_closure//closure/library/testing:asserts",
+        "@io_bazel_rules_closure//closure/library/testing:jsunit",
+        "@io_bazel_rules_closure//closure/library/testing:testsuite",
+    ],
+    size = "small",
+)
+
+closure_js_library(
+    name = "client",
+    srcs = [
+        "client.js",
+    ],
+    deps = [
+        ":routeguide",
+        "@io_bazel_rules_closure//closure/library/promise",
+    ],
+)
+
+closure_js_library(
+    name = "main",
+    srcs = [
+        "main.js",
+    ],
+    deps = [
+        ":client",
+    ],
+)
+
+closure_js_binary(
+    name = "bundle",
+    compilation_level = "ADVANCED",
+    debug = False,
+    entry_points = ["goog:example.routeguide.grpc_js.client.run"],
+    output_wrapper = "(function(){%output%}).call(this);",
+    deps = [
+        ":main",
+    ],
+)

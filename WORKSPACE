@@ -139,19 +139,19 @@ pub_repository(
 
 # =========================================
 
-load("//contrib/stackb/grpc.js:deps.bzl", "grpc_js_deps")
+load("//github.com/stackb/grpc.js:deps.bzl", "grpc_js_deps")
 
 grpc_js_deps()
 
 # =========================================
 
-load("//contrib/grpc/grpc-web:deps.bzl", "grpc_web_deps")
+load("//github.com/grpc/grpc-web:deps.bzl", "grpc_web_deps")
 
 grpc_web_deps()
 
 # =========================================
 
-load("//contrib/improbable-eng/ts-protoc-gen:deps.bzl", "ts_proto_deps")
+load("//github.com/improbable-eng/ts-protoc-gen:deps.bzl", "ts_proto_deps")
 
 ts_proto_deps()
 
