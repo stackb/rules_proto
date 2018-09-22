@@ -1,3 +1,3 @@
-# greeter
+# routeguide
 
-Greeter is a simple proto used to demo/test the simplest setup.
+The routeguide proto and features.json database.

@@ -1,0 +1,28 @@
+load("//ruby:library.bzl", "ruby_grpc_library")
+load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library", "ruby_binary")
+
+ruby_grpc_library(
+    name = "routeguide",
+    deps = ["//example/proto/routeguide:proto_library"],
+)
+
+ruby_binary(
+    name = "client",
+    srcs = ["client.rb"],
+    deps = [
+        ":routeguide",
+        "@routeguide_gems_bundle//:libs",
+    ],
+)
+
+ruby_binary(
+    name = "server",
+    srcs = ["server.rb"],
+    includes = ["FOO"],
+    deps = [
+        ":routeguide",
+        "@routeguide_gems_bundle//:libs",
+    ],
+    data = ["//example/proto/routeguide:features"],
+    args = ["example/proto/routeguide/features.json"],
+)

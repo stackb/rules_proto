@@ -180,3 +180,20 @@ npm_install(
     package_json = "@ts_protoc_gen//:package.json",
     package_lock_json = "@ts_protoc_gen//:package-lock.json",
 )
+
+# =======================================
+
+load("//ruby:deps.bzl", "ruby_proto_library_deps")
+
+ruby_proto_library_deps()
+
+load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
+
+ruby_register_toolchains()
+
+load("@com_github_yugui_rules_ruby//ruby/private:bundle.bzl", "bundle_install")
+bundle_install(
+    name = "routeguide_gems_bundle",
+    gemfile = "//ruby:Gemfile",
+    gemfile_lock = "//ruby:Gemfile.lock",
+)

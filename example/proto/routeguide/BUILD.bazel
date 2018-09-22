@@ -4,22 +4,13 @@ proto_library(
     srcs = [
         "routeguide.proto",
     ],
-    data = [
-        "features.json",
-    ],
     visibility = ["//visibility:public"],
 )
 
-java_proto_library(
-    name = "java_proto_library",
-    deps = [
-        "proto_library",
+filegroup(
+    name = "features",
+    srcs = [
+        "features.json",
     ],
-)
-
-cc_proto_library(
-    name = "cc_proto_library",
-    deps = [
-        "proto_library",
-    ],
+    visibility = ["//visibility:public"],
 )
