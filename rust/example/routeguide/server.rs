@@ -19,19 +19,66 @@ extern crate tls_api_stub;
 use std::thread;
 use std::env;
 use std::str::FromStr;
+use std::iter;
+use futures;
 
 use routeguide::*;
 
 struct RouteGuideImpl;
 
 impl RouteGuide for RouteGuideImpl {
-    fn list_features(&self, _m: grpc::RequestOptions, req: HelloRequest) -> grpc::SingleResponse<HelloReply> {
-        let mut r = HelloReply::new();
-        let name = if req.get_name().is_empty() { "world" } else { req.get_name() };
-        println!("greeting request from {}", name);
-        r.set_message(format!("Hello {}", name));
-        grpc::SingleResponse::completed(r)
-    }
+  fn list_features(&self, _m: grpc::RequestOptions, req: Rectangle) -> grpc::StreamingResponse<Feature> {
+    // Send back 13 dummy list response objects
+    let iter = iter::repeat(()).map(|_| {
+      let s = "MyTestFileName.bin".to_owned();
+      let mut feature = Feature::new();
+      feature.set_name(s);
+      feature
+    }).take(13);
+    grpc::StreamingResponse::iter(iter);
+  }
+
+  fn record_route(&self, o: grpc::RequestOptions, p: grpc::StreamingRequest<Point>) -> grpc::SingleResponse<RouteSummary> {
+    // let result = p.into_iter(() -> {
+
+    // });
+    //  {
+    //   let summary = RouteSummary::new();
+    //   summary
+    // };
+    // let iter = iter::repeat(()).map(|_| {
+    //   let mut summary = RouteSummary::new();
+    //   summary
+    // }).take(13);
+
+    // match p.iter() {
+    //   Err(e) => panic!("{:?}", e),
+    //   Ok((_, stream)) => {
+    //     for item in stream {
+    //       let point = item.unwrap();
+    //       println!("> {}", point);
+    //     }
+    //   }
+    // }
+    let promise = futures::Future::ok().map(|| {
+      let summary = RouteSummary::new();
+      summary
+    });
+    //let future: grpc::GrpcFuture<RouteSummary> = Box::new(promise);
+
+    grpc::SingleResponse::new(promise)
+  }
+
+  fn route_chat(&self, o: grpc::RequestOptions, p: grpc::StreamingRequest<RouteNote>) -> grpc::StreamingResponse<RouteNote> {
+
+  }
+
+  fn get_feature(&self, o: grpc::RequestOptions, p: Point) -> grpc::SingleResponse<Feature> {
+    let mut r = Feature::new();
+    r.set_name(format!("test"));
+    grpc::SingleResponse::completed(r)
+  }
+
 }
 
 fn main() {

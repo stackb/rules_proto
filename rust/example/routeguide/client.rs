@@ -35,12 +35,30 @@ fn parse_args() -> (String, u16) {
 
 fn main() {
     let (name, port) = parse_args();
+    print!("name: {}, port: {}", name, port);
     let client = RouteGuideClient::new_plain("::1", port, Default::default()).unwrap();
     let mut rect = Rectangle::new();
+
     let mut lo = Point::new();
+    lo.set_latitude(172);
+    lo.set_longitude(204);
+
     let mut hi = Point::new();
+    hi.set_latitude(22);
+    hi.set_longitude(166);
+
     rect.set_lo(lo);
     rect.set_hi(hi);
     let resp = client.list_features(grpc::RequestOptions::new(), rect);
-    println!("{:?}", resp.wait());
+
+    match resp.wait() {
+        Err(e) => panic!("{:?}", e),
+        Ok((_, stream)) => {
+            for item in stream {
+                let feature = item.unwrap();
+                println!("response feature> {}", feature.get_name());
+            }
+        }
+    }
+
 }
