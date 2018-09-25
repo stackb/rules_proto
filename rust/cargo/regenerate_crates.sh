@@ -19,8 +19,8 @@ rm -fr remote
 cargo generate-lockfile && cargo raze
 
 # We need to update the build file path.
-sed -i.bak 's|//rust|@org_pubref_rules_proto//rust|g' "crates.bzl"
-rm crates.bzl.bak
+#sed -i.bak 's|//rust|@org_pubref_rules_proto//rust|g' "crates.bzl"
+#rm crates.bzl.bak
 
 # Remove these outdated rust_bench_test references
 find remote -name '*BUILD' | xargs sed -i.bak '/rust_bench_test/d'

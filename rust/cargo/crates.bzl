@@ -559,11 +559,11 @@ def raze_fetch_remote_crates():
     )
 
     native.new_http_archive(
-        name = "raze__version_check__0_1_4",
-        url = "https://crates-io.s3-us-west-1.amazonaws.com/crates/version_check/version_check-0.1.4.crate",
+        name = "raze__version_check__0_1_5",
+        url = "https://crates-io.s3-us-west-1.amazonaws.com/crates/version_check/version_check-0.1.5.crate",
         type = "tar.gz",
-        strip_prefix = "version_check-0.1.4",
-        build_file = "//rust/cargo/remote:version_check-0.1.4.BUILD"
+        strip_prefix = "version_check-0.1.5",
+        build_file = "//rust/cargo/remote:version_check-0.1.5.BUILD"
     )
 
     native.new_http_archive(

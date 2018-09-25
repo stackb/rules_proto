@@ -21,6 +21,7 @@ rust_binary(
     deps = [
         ":routeguide",
         "//rust/cargo:grpc",
+        "//rust/cargo:futures",
         "//rust/cargo:tls_api_stub",
     ],
     data = ["//example/proto/routeguide:features"],

@@ -15,19 +15,26 @@
 extern crate routeguide;
 extern crate grpc;
 extern crate tls_api_stub;
+extern crate futures;
 
 use std::thread;
 use std::env;
 use std::str::FromStr;
 use std::iter;
-use futures;
+use futures::future::{Future};
+use futures::Stream;
+use futures::Async;
+use futures::Poll;
 
 use routeguide::*;
 
 struct RouteGuideImpl;
 
+// NOTE: this is a first step just to get this class to *compile*, much less
+// operate correctly.
+
 impl RouteGuide for RouteGuideImpl {
-  fn list_features(&self, _m: grpc::RequestOptions, req: Rectangle) -> grpc::StreamingResponse<Feature> {
+  fn list_features(&self, _m: grpc::RequestOptions, _rect: Rectangle) -> grpc::StreamingResponse<Feature> {
     // Send back 13 dummy list response objects
     let iter = iter::repeat(()).map(|_| {
       let s = "MyTestFileName.bin".to_owned();
@@ -35,10 +42,10 @@ impl RouteGuide for RouteGuideImpl {
       feature.set_name(s);
       feature
     }).take(13);
-    grpc::StreamingResponse::iter(iter);
+    grpc::StreamingResponse::iter(iter)
   }
 
-  fn record_route(&self, o: grpc::RequestOptions, p: grpc::StreamingRequest<Point>) -> grpc::SingleResponse<RouteSummary> {
+  fn record_route(&self, _o: grpc::RequestOptions, _p: grpc::StreamingRequest<Point>) -> grpc::SingleResponse<RouteSummary> {
     // let result = p.into_iter(() -> {
 
     // });
@@ -60,20 +67,19 @@ impl RouteGuide for RouteGuideImpl {
     //     }
     //   }
     // }
-    let promise = futures::Future::ok().map(|| {
-      let summary = RouteSummary::new();
-      summary
-    });
-    //let future: grpc::GrpcFuture<RouteSummary> = Box::new(promise);
+    let summary = RouteSummary::new();
+    let fut = RouteSummaryFuture::new(summary);
 
-    grpc::SingleResponse::new(promise)
+    grpc::SingleResponse::no_metadata(fut)
   }
 
-  fn route_chat(&self, o: grpc::RequestOptions, p: grpc::StreamingRequest<RouteNote>) -> grpc::StreamingResponse<RouteNote> {
-
+  fn route_chat(&self, _o: grpc::RequestOptions, _p: grpc::StreamingRequest<RouteNote>) -> grpc::StreamingResponse<RouteNote> {
+    let note = RouteNote::new();
+    let fut = RouteNoteStream::new(note);
+    grpc::StreamingResponse::no_metadata(fut)
   }
 
-  fn get_feature(&self, o: grpc::RequestOptions, p: Point) -> grpc::SingleResponse<Feature> {
+  fn get_feature(&self, _o: grpc::RequestOptions, _p: Point) -> grpc::SingleResponse<Feature> {
     let mut r = Feature::new();
     r.set_name(format!("test"));
     grpc::SingleResponse::completed(r)
@@ -94,4 +100,52 @@ fn main() {
     loop {
         thread::park();
     }
+}
+
+#[derive(Debug)]
+struct RouteSummaryFuture {
+    summary: RouteSummary,
+}
+
+impl RouteSummaryFuture {
+  fn new(summary: RouteSummary) -> RouteSummaryFuture {
+    RouteSummaryFuture {
+      summary: summary,
+    }
+  }
+}
+
+impl Future for RouteSummaryFuture {
+  type Item = RouteSummary;
+  type Error = grpc::Error;
+
+  fn poll(&mut self) -> Poll<RouteSummary, grpc::Error> {
+    Ok(Async::Ready(self.summary.to_owned()))
+  } 
+}
+
+#[derive(Debug)]
+struct RouteNoteStream {
+    note: RouteNote,
+}
+
+impl RouteNoteStream {
+  fn new(note: RouteNote) -> RouteNoteStream {
+    RouteNoteStream {
+      note: note,
+    }
+  }
+}
+
+impl Stream for RouteNoteStream {
+  type Item = RouteNote;
+  type Error = grpc::Error;
+
+  // fn poll(&mut self) -> Poll<RouteNote, grpc::Error> {
+  //   Ok(Async::Ready(self.note))
+  // } 
+
+  fn poll(&mut self) -> Result<Async<Option<RouteNote>>, grpc::Error> {
+    Ok(Async::Ready(std::option::Option::Some(self.note.to_owned())))
+  } 
 }

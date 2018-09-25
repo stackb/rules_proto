@@ -11,6 +11,10 @@ licenses([
 
 
 alias(
+    name = "futures",
+    actual = "@raze__futures__0_1_24//:futures",
+)
+alias(
     name = "grpc",
     actual = "@raze__grpc__0_4_0//:grpc",
 )
