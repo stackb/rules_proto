@@ -30,8 +30,10 @@ use routeguide::*;
 
 struct RouteGuideImpl;
 
+//
 // NOTE: this is a first step just to get this class to *compile*, much less
 // operate correctly.
+//
 
 impl RouteGuide for RouteGuideImpl {
   fn list_features(&self, _m: grpc::RequestOptions, _rect: Rectangle) -> grpc::StreamingResponse<Feature> {
