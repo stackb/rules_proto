@@ -1,0 +1,34 @@
+load("//android:library.bzl", "android_grpc_library")
+load("@gmaven_rules//:defs.bzl", "gmaven_artifact")
+
+android_grpc_library(
+    name = "routeguide",
+    deps = ["//example/proto/routeguide:proto_library"],
+)
+
+# android_library(
+#     name = "clientlib",
+#     manifest = "AndroidManifest.xml",
+#     custom_package = "io.grpc.routeguideexample",
+ 
+# )
+
+# NOTE: at the moment this is not a routeguide client at all.  Only testing that
+# we can compile and reference an android_grpc_library in an android_binary and
+# not have it crash.
+android_binary(
+    name = 'client',
+    manifest = 'AndroidManifest.xml',
+    custom_package = 'io.grpc.routeguideexample',
+    #proguard_specs = ["proguard-rules.pro"],
+    multidex = 'native',
+    resource_files = glob(["src/main/res/**"]),
+    srcs = glob(["src/main/java/**"]), 
+    deps = [
+        ":routeguide",
+        "@com_android_support_appcompat_v7_28_0_0//aar",
+        #gmaven_artifact("com.android.support:appcompat-v7:28.0.0"),
+    ],
+    #'@com_android_support_design_27_0_1//aar',
+    #gmaven_artifact("com.google.android.gms:play-services:aar:12.0.0"),
+)

@@ -21,6 +21,11 @@ are in a pre-release status.  The primary goals are:
 3. Minimal dependency loading.  Proto rules should not pull in more dependencies
    than they absolutely need.
 
+> NOTE: These rules are in a *pre-release* state.  The routeguide examples have
+> been developed thus far with the goal of getting them to compile/build, not to
+> ensure the routeguide client/server is actually correct.  Do expect everything
+> to compile, but not to work right!
+
 ## Usage
 
 ### Add rules_proto your `WORKSPACE`

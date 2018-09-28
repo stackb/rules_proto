@@ -1,0 +1,19 @@
+
+
+load("//android:compile.bzl", "android_grpc_compile")
+#load("//android:library.bzl", "android_grpc_library")
+
+android_grpc_compile(
+    name = "routeguide",
+    deps = [
+        "//example/proto/routeguide:proto_library",
+    ],
+    # verbose = 2,
+)
+
+# android_grpc_library(
+#     name = "routeguide_lib",
+#     deps = [
+#         "//example/proto/routeguide:proto_library",
+#     ],
+# )

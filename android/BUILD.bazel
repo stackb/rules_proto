@@ -1,0 +1,39 @@
+
+load("//:plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "javalite",
+    out = "%{name}.jar",
+    options = ["lite"],
+    tool = "@com_google_protobuf_lite//:protoc_gen_javalite",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "grpc_javalite",
+    out = "%{name}.jar",
+    options = ["lite"],
+    tool = "@io_grpc_grpc_java//compiler:grpc_java_plugin",
+    visibility = ["//visibility:public"],
+)
+
+java_library(
+    name = "proto_deps",
+    exports = [
+        "@com_google_guava_guava//jar",
+        "@com_google_protobuf//:protobuf_java",
+        "@javax_annotation_javax_annotation_api//jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+java_library(
+    name = "grpc_deps",
+    exports = [
+        ":proto_deps",
+        "@io_grpc_grpc_java//core",
+        "@io_grpc_grpc_java//protobuf-lite",
+        "@io_grpc_grpc_java//stub",
+    ],
+    visibility = ["//visibility:public"],
+)
