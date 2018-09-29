@@ -1,0 +1,5 @@
+﻿{
+  "dependencies": {
+    "Google.Protobuf": "3.6.1"
+  }
+}

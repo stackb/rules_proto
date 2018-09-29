@@ -1,8 +1,8 @@
 load("//closure:compile.bzl", "closure_proto_compile")
-load("//github.com/stackb/grpc.js:compile.bzl", "grpc_js_proto_compile")
+load("//github.com/stackb/grpc.js:compile.bzl", "closure_grpc_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
-def grpc_js_proto_library(**kwargs):
+def closure_grpc_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     verbose = kwargs.get("verbose")
@@ -17,7 +17,7 @@ def grpc_js_proto_library(**kwargs):
         visibility = visibility,
     )
     
-    grpc_js_proto_compile(
+    closure_grpc_compile(
         name = name_pb_grpc,
         deps = deps,
         visibility = visibility,

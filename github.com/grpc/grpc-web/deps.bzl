@@ -1,13 +1,19 @@
+load("//:deps.bzl", 
+    "com_github_grpc_grpc_web",
+    "com_google_protobuf",
+    "io_bazel_rules_closure",
+)
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("//closure:deps.bzl", 
+    "closure_proto_compile",
+)
 
-def grpc_web_deps():
-    existing = native.existing_rules()  
-    
-    if "com_github_grpc_grpc_web" not in existing:
-        http_archive(
-            name = "com_github_grpc_grpc_web",
-            urls = ["https://github.com/grpc/grpc-web/archive/92aa9f8fc8e7af4aadede52ea075dd5790a63b62.tar.gz"],
-            strip_prefix = "grpc-web-92aa9f8fc8e7af4aadede52ea075dd5790a63b62",
-            sha256 = "f4996205e6d1d72e2be46f1bda4d26f8586998ed42021161322d490537d8c9b9",
-        )
+def web_grpc_compile(**kwargs):
+    com_google_protobuf(**kwargs)
+    com_github_grpc_grpc_web(**kwargs)
+
+
+def web_grpc_library(**kwargs):
+    closure_proto_compile(**kwargs)
+    web_grpc_compile(**kwargs)    
+    io_bazel_rules_closure(**kwargs)

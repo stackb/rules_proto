@@ -26,6 +26,7 @@ proto_plugin(
     visibility = ["//visibility:public"],
 )
 
+
 load("@io_bazel_rules_dart//dart/build_rules:vm.bzl", "dart_vm_binary")
 
 dart_vm_binary(

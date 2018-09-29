@@ -1,10 +1,37 @@
 
 
-load("//github.com/grpc/grpc-web:compile.bzl", "grpc_web_proto_compile")
+load("//github.com/grpc/grpc-web:compile.bzl", 
+    "closure_grpc_compile",
+    "commonjs_grpc_compile",
+    "commonjs_dts_grpc_compile",
+    "ts_grpc_compile",
+)
 
-grpc_web_proto_compile(
-    name = "routeguide",
+closure_grpc_compile(
+    name = "routeguide_closure",
     deps = [
         "//example/proto/routeguide:proto_library",
     ],
+)
+
+commonjs_grpc_compile(
+    name = "routeguide_commonjs",
+    deps = [
+        "//example/proto/routeguide:proto_library",
+    ],
+)
+
+commonjs_dts_grpc_compile(
+    name = "routeguide_dts",
+    deps = [
+        "//example/proto/routeguide:proto_library",
+    ],
+)
+
+ts_grpc_compile(
+    name = "routeguide_ts",
+    deps = [
+        "//example/proto/routeguide:proto_library",
+    ],
+    verbose = 2,
 )

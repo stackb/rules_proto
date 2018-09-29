@@ -1,20 +1,20 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
+load("//:deps.bzl", 
+    "com_github_grpc_grpc",
+    "com_google_protobuf", 
+    "org_pubref_rules_node",
+)
 
-def node_proto_compile_deps():
-    pass
+def node_proto_compile(**kwargs):
+    com_google_protobuf(**kwargs)
 
-def node_proto_library_deps(
-  rules_node_version = "1c60708c599e6ebd5213f0987207a1d854f13e23",
-  rules_node_sha256 = "248efb149bfa86d9d778b43949351015b23a8339405a9878467a1583ff6df348",
-):
-    node_proto_compile_deps()
+def node_grpc_compile(**kwargs):
+    node_proto_compile(**kwargs)
+    com_github_grpc_grpc(**kwargs)
 
-    existing = native.existing_rules()
+def node_proto_library(**kwargs):
+    node_proto_compile(**kwargs)
+    org_pubref_rules_node(**kwargs)
 
-    if "org_pubref_rules_node" not in existing:
-        http_archive(
-            name = "org_pubref_rules_node",
-            urls = ["https://github.com/pubref/rules_node/archive/%s.tar.gz" % rules_node_version],
-            sha256 = rules_node_sha256,
-            strip_prefix = "rules_node-" + rules_node_version,
-        )
+def node_grpc_library(**kwargs):
+    node_grpc_compile(**kwargs)
+    node_proto_library(**kwargs)

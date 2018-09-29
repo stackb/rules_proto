@@ -3,6 +3,8 @@ load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "csharp",
+    # TODO, figure out how this would work
+    # options = ["base_namespace"],
     outputs = ["@package/{basename|pascal}.cs"],
     visibility = ["//visibility:public"],
 )

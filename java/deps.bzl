@@ -1,14 +1,20 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("//:deps.bzl", 
+    "com_google_guava_guava",
+    "com_google_protobuf", 
+    "io_grpc_grpc_java",
+)
 
-PLUGIN_VERSION = "1.9.0"
+def java_proto_compile(**kwargs):
+    com_google_protobuf(**kwargs)
 
-def java_grpc_library_deps():
-    existing = native.existing_rules()
+def java_grpc_compile(**kwargs):
+    java_proto_compile(**kwargs)
+    io_grpc_grpc_java(**kwargs)
 
-    if "io_grpc_grpc_java" not in existing:
-        http_archive(
-            name = "io_grpc_grpc_java",
-            urls = ["https://github.com/grpc/grpc-java/archive/v1.15.0.tar.gz"],
-            strip_prefix = "grpc-java-1.15.0",
-            sha256 = "8a131e773b1c9c0442e606b7fc85d7fc6739659281589d01bd917ceda218a1c7",
-        )
+def java_proto_library(**kwargs):
+    java_proto_compile(**kwargs)
+    com_google_guava_guava(**kwargs)
+
+def java_grpc_library(**kwargs):
+    java_grpc_compile(**kwargs)
+    java_proto_library(**kwargs)

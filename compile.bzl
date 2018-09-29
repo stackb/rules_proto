@@ -309,3 +309,37 @@ proto_compile = rule(
     outputs = proto_compile_outputs,
     output_to_genfiles = True,
 )
+
+
+def invoke(proto_compile_rule, name_suffix, kwargs):
+    """Invoke a proto_compile rule using kwargs
+
+    Invoke is a convenience function for library rules that call proto_compile
+    rules.  Rather than having to do the same boilerplate across many different
+    files, this function centralizes the logic of calling proto_compile rules
+    using kwargs.
+
+    Args:
+      proto_compile_rule: the rule function to invoke
+      name_suffix: a suffix for the kwargs.name to use for the rule
+      kwargs: the **kwargs dict, passed directly (not decontucted)
+
+    Returns:
+      The name of the invoked rule. This can be used in the srcs label of a library rule.
+    """ 
+
+    name = kwargs.get("name")
+    deps = kwargs.get("deps")
+    visibility = kwargs.get("visibility")
+    verbose = kwargs.get("verbose")
+    rule_name = name + name_suffix
+
+    proto_compile_rule(
+        name = rule_name,
+        deps = deps,
+        visibility = visibility,
+        verbose = verbose,
+    )
+
+    return rule_name
+

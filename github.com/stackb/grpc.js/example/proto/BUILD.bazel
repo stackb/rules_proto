@@ -1,8 +1,8 @@
 
 
-load("//github.com/stackb/grpc.js:compile.bzl", "grpc_js_proto_compile")
+load("//github.com/stackb/grpc.js:compile.bzl", "closure_grpc_compile")
 
-grpc_js_proto_compile(
+closure_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto/routeguide:proto_library",

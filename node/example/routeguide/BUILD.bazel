@@ -18,3 +18,16 @@ node_binary(
     name = "client",
     entrypoint = ":client_module",
 )
+
+node_module(
+    name = "server_module",
+    srcs = ["server.js"],
+    deps = [
+        ":routeguide",
+    ],
+)
+
+node_binary(
+    name = "server",
+    entrypoint = ":server_module",
+)

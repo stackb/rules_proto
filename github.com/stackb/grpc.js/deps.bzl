@@ -1,13 +1,24 @@
+load("//:deps.bzl", 
+    "com_github_stackb_grpc_js",
+    "com_google_protobuf",
+    "io_bazel_rules_closure",
+    "io_bazel_rules_go",
+)
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("//closure:deps.bzl", 
+    "closure_proto_compile",
+)
 
-def grpc_js_deps():
-    existing = native.existing_rules()  
-    
-    if "com_github_stackb_grpc_js" not in existing:
-        http_archive(
-            name = "com_github_stackb_grpc_js",
-            urls = ["https://github.com/stackb/grpc.js/archive/c94ef115b4e8eea526d5b54b829cfc7542f39bc5.tar.gz"],
-            strip_prefix = "grpc.js-c94ef115b4e8eea526d5b54b829cfc7542f39bc5",
-            sha256 = "bf3b7fca7803a9187e6d6780089cad593997c46d76c5d78ba3202ce8b5e424b2",
-        )
+def closure_grpc_compile(**kwargs):
+    # protoc
+    com_google_protobuf(**kwargs)
+    # Need rules_go to build the plugin
+    io_bazel_rules_go(**kwargs)
+    # Need the plugin itself
+    com_github_stackb_grpc_js(**kwargs)
+
+
+def closure_grpc_library(**kwargs):
+    closure_proto_compile(**kwargs)
+    closure_grpc_compile(**kwargs)    
+    io_bazel_rules_closure(**kwargs)

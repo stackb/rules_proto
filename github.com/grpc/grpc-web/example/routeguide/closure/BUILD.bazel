@@ -5,9 +5,9 @@ load(
     "closure_js_binary",
 )
 
-load("//github.com/grpc/grpc-web:library.bzl", "web_grpc_library")
+load("//github.com/grpc/grpc-web:closure.bzl", "closure_grpc_library")
 
-web_grpc_library(
+closure_grpc_library(
     name = "routeguide",
     deps = [
         "//example/proto/routeguide:proto_library",
