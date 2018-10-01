@@ -12,6 +12,42 @@ ProtoCompileInfo = provider(fields = {
     "verbose": "verbose level",
 })
 
+rust_keywords = {
+    "as": True,
+    "break": True,
+    "const": True,
+    "continue": True,
+    "crate": True,
+    "else": True,
+    "enum": True,
+    "extern": True,
+    "false": True,
+    "fn": True,
+    "for": True,
+    "if": True,
+    "impl": True,
+    "let": True,
+    "loop": True,
+    "match": True,
+    "mod": True,
+    "move": True,
+    "mut": True,
+    "pub": True,
+    "ref": True,
+    "return": True,
+    "self": True,
+    "Self": True,
+    "static": True,
+    "struct": True,
+    "super": True,
+    "trait": True,
+    "true": True,
+    "type": True,
+    "unsafe": True,
+    "use": True,
+    "where": True,
+    "while": True,
+}
 
 # Hack - providers indexing is by int, but I have not idea how to get the actual
 # provider object here.
@@ -35,6 +71,15 @@ def _pascal_case(s):
         (string): The capitalized string.
     """
     return "".join([_capitalize(part) for part in s.split("_")])
+
+def _rust_keyword(s):
+    """Check if arg is a rust keyword and append '_pb' if true.
+    Args:
+        s (string): The input string to be capitalized.
+    Returns:
+        (string): The appended string.
+    """
+    return s + "_pb" if rust_keywords.get(s) else s
 
 def _get_output_sibling_file(pattern, proto, descriptor):
     if pattern.startswith("@package/"):
@@ -77,6 +122,8 @@ def _get_output_filename(src, plugin, pattern):
         filename = pattern.replace("{basename}", basename)
     elif pattern.find("{basename|pascal}") != -1:
         filename = pattern.replace("{basename|pascal}", _pascal_case(basename))
+    elif pattern.find("{basename|rust_keyword}") != -1:
+        filename = pattern.replace("{basename|rust_keyword}", _rust_keyword(basename))
     else:
         filename = basename + pattern
 
