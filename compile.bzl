@@ -49,6 +49,12 @@ rust_keywords = {
     "while": True,
 }
 
+objc_upper_segments = {
+    "url": "URL",
+    "http": "HTTP",
+    "https": "HTTPS",
+}
+
 # Hack - providers indexing is by int, but I have not idea how to get the actual
 # provider object here.
 ProtoInfoProvider = 0
@@ -62,6 +68,27 @@ def _capitalize(s):
   """
   return s[0:1].upper() + s[1:]
 
+def _pascal_objc(s):
+    """Convert pascal_case -> PascalCase
+
+    Objective C uses pascal case, but there are e exceptions that it uppercases
+    the entire segment: url, http, and https.
+
+    https://github.com/protocolbuffers/protobuf/blob/54176b26a9be6c9903b375596b778f51f5947921/src/google/protobuf/compiler/objectivec/objectivec_helpers.cc#L91
+
+    Args: 
+      s (string): The input string to be capitalized. 
+    Returns: (string): The capitalized string.
+    """
+    segments = []
+    for segment in s.split("_"):
+        repl = objc_upper_segments.get(segment)
+        if repl:
+            segment = repl
+        else:
+            segment = _capitalize(segment)
+        segments.append(segment)
+    return "".join(segments)
 
 def _pascal_case(s):
     """Convert pascal_case -> PascalCase
@@ -122,6 +149,8 @@ def _get_output_filename(src, plugin, pattern):
         filename = pattern.replace("{basename}", basename)
     elif pattern.find("{basename|pascal}") != -1:
         filename = pattern.replace("{basename|pascal}", _pascal_case(basename))
+    elif pattern.find("{basename|pascal|objc}") != -1:
+        filename = pattern.replace("{basename|pascal|objc}", _pascal_objc(basename))
     elif pattern.find("{basename|rust_keyword}") != -1:
         filename = pattern.replace("{basename|rust_keyword}", _rust_keyword(basename))
     else:

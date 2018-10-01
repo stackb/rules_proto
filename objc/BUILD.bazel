@@ -4,8 +4,8 @@ load("//:plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "objc",
     outputs = [
-        "{basename|pascal}.pbobjc.h",
-        "{basename|pascal}.pbobjc.m",
+        "{basename|pascal|objc}.pbobjc.h",
+        "{basename|pascal|objc}.pbobjc.m",
     ],
     visibility = ["//visibility:public"],
 )
@@ -13,8 +13,8 @@ proto_plugin(
 proto_plugin(
     name = "grpc_objc",
     outputs = [
-        "{basename|pascal}.pbrpc.h",
-        "{basename|pascal}.pbrpc.m",
+        "{basename|pascal|objc}.pbrpc.h",
+        "{basename|pascal|objc}.pbrpc.m",
     ],
     tool = "@com_github_grpc_grpc//:grpc_objective_c_plugin",
     visibility = ["//visibility:public"],
