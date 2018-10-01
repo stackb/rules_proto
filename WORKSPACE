@@ -1,4 +1,4 @@
-workspace(name = "com_github_stackb_rules_grpc")
+workspace(name = "org_pubref_rules_proto")
 
 # =========================================
 

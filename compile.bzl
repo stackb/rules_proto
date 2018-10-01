@@ -245,7 +245,7 @@ def proto_compile_impl(ctx):
             tools[plugin.name] = plugin.executable
 
     args += ["--plugin=protoc-gen-%s=%s" % (k, v.path) for k, v in tools.items()]        
-    args += [proto.path for proto in protos]
+    args += [proto.path for proto in directs.values()]
 
     command = " ".join([protoc.path] + args)
     if verbose > 0:
