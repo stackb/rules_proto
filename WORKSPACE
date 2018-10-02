@@ -211,6 +211,12 @@ npm_install(
     package_lock_json = "@ts_protoc_gen//:package-lock.json",
 )
 
+# =========================================
+
+load("//github.com/gogo/protobuf:deps.bzl", "gogo_grpc_library")
+
+gogo_grpc_library()
+
 # =======================================
 
 load("//ruby:deps.bzl", "ruby_grpc_library")
