@@ -75,6 +75,13 @@ def io_bazel_rules_dotnet(**kwargs):
     github_archive(name, "bazelbuild", "rules_dotnet", ref, sha256)
 
 
+def io_bazel_rules_scala(**kwargs):
+    name = "io_bazel_rules_scala"
+    ref = get_ref(name, "f33c6a659e3af540de35df1413f57f31d36d70c7", kwargs) 
+    sha256 = get_sha256(name, "fc5c25ff314d53ed895a4b98960650daa5e55c9e5e7e57bb822d813059a2947d", kwargs)
+    github_archive(name, "bazelbuild", "rules_scala", ref, sha256)
+
+
 def io_bazel_rules_rust(**kwargs):
     name = "io_bazel_rules_rust"
     ref = get_ref(name, "88022d175adb48aa5f8904f95dfc716c543b3f1e", kwargs) 
@@ -223,6 +230,29 @@ def com_google_guava_guava(**kwargs):
     artifact = get_artifact(name, "com.google.guava:guava:20.0", kwargs)
     sha1 = get_sha1(name, "89507701249388e1ed5ddcf8c41f4ce1be7831ef", kwargs)
     jar(name, artifact, sha1)
+
+
+def com_github_scalapb_scalapb(**kwargs):
+    """scala compiler plugin
+    """    
+    http_archive(
+        name = "com_github_scalapb_scalapb",
+        url = "https://github.com/scalapb/ScalaPB/releases/download/v0.8.0/scalapbc-0.8.0.zip",
+        sha256 = "bda0b44b50f0a816342a52c34e6a341b1a792f2a6d26f4f060852f8f10f5d854",
+        strip_prefix = "scalapbc-0.8.0/lib",
+        build_file_content = """
+java_import(
+    name = "compilerplugin",
+    jars = ["com.thesamet.scalapb.compilerplugin-0.8.0.jar"],
+    visibility = ["//visibility:public"],
+)
+java_import(
+    name = "scala-library",
+    jars = ["org.scala-lang.scala-library-2.11.12.jar"],
+    visibility = ["//visibility:public"],
+)
+        """
+    )    
 
 
 def io_bazel_rules_closure(**kwargs):

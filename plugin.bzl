@@ -39,6 +39,7 @@ proto_plugin = rule(
         "tool": attr.label(
             doc = "The plugin binary.  If absent, assume the plugin is a built-in to protoc itself",
             cfg = "host",
+            allow_files = True,
             executable = True,
         ),
         "data": attr.label_list(

@@ -72,6 +72,24 @@ load("//java:deps.bzl", "java_grpc_library")
 
 java_grpc_library()
 
+# =========================================
+
+load("//scala:deps.bzl", "scala_grpc_library")
+
+scala_grpc_library()
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+
+scala_repositories()
+
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+
+scala_register_toolchains()
+
+load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
+
+scala_proto_repositories()
+
 # ===========
 
 load("//closure:deps.bzl", "closure_proto_library")

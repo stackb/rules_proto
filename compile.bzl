@@ -245,18 +245,6 @@ def proto_compile_impl(ctx):
     descriptor = ctx.outputs.descriptor
     outdir = descriptor.dirname
     deps = [dep.proto for dep in ctx.attr.deps]
-    #datadeps = [dep[DefaultInfo].data_runfiles for dep in ctx.attr.deps]
-    #datadeps = [dep[DefaultInfo].default_runfiles for dep in ctx.attr.deps]
-    # datadeps = [dep[ProtoSupportDataInfo].default_runfiles for dep in ctx.attr.deps]
-    # print("datadeps: %r" % datadeps)
-    # for dat in datadeps:
-    #     print("dat: %r" % dat)
-    #     # files, symlinks, empty_filenames
-    #     for f in dat.symlinks:
-    #         print("datfile: %r" % f)
-
-    if verbose:
-        print("Starting proto compile...")
 
     plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
     tools = {}
@@ -304,7 +292,7 @@ def proto_compile_impl(ctx):
             if verbose > 2:
                 print("proto_path: %r" % e)
         for e in dep.transitive_descriptor_sets:
-            if verbose > 2:
+            if verbose > 3:
                 print("descriptor_set: %r" % e)
 
     args += ["--descriptor_set_out=%s" % descriptor.path]
@@ -368,12 +356,17 @@ def get_tool_files(tool):
     if not tool:
         return files
     info = tool[DefaultInfo]
+    
     if not info:
         return files
     if info.files:
         files += info.files.to_list()
     if info.default_runfiles:
         runfiles = info.default_runfiles
+        if runfiles.files:
+            files += runfiles.files.to_list()
+    if info.data_runfiles:
+        runfiles = info.data_runfiles
         if runfiles.files:
             files += runfiles.files.to_list()
     return files

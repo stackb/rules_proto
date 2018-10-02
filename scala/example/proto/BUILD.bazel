@@ -1,0 +1,10 @@
+
+
+load("//scala:compile.bzl", "scala_grpc_compile")
+
+scala_grpc_compile(
+    name = "routeguide",
+    deps = [
+        "//example/proto/routeguide:proto_library",
+    ],
+)
