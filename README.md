@@ -31,7 +31,7 @@ are in a pre-release status.  The primary goals are:
 ### Add rules_proto your `WORKSPACE`
 
 Specify the language(s) you'd like use by loading the language-specific
-`{LANG}/deps.bzl` file and call the macro of your choice corresponding to the
+`{lang}/deps.bzl` file and call the macro of your choice corresponding to the
 proto rule you plan to use.  To override any dependency, declare it in your
 workspace before calling the macro.  Example:
 
@@ -47,10 +47,10 @@ http_archive(
     sha256 = RULES_PROTO_SHA256,
     strip_prefix = "rules_proto-" + RULES_PROTO_VERSION,
 )
-
-load("@org_pubref_rules_protobuf//cpp:deps.bzl", "cpp_proto_library_deps")
-cpp_proto_library_deps()
 ```
+
+Refer to the `{lang}/README.md` for instructions on workspace dependencies for
+that language. [TODO: write these files!]
 
 ### Use the rules in your `BUILD.bazel` files
 
@@ -72,16 +72,16 @@ cpp_grpc_library(
 
 ## Code Layout
 
-Each language `{LANG}` has a top-level subdirectory that contains ~4 files:
+Each language `{lang}` has a top-level subdirectory that contains ~4 files:
 
 1. `deps.bzl`: contains macro functions that declare repository rule
    dependencies for that language.  There are typically `n` macros that
-   correspond to the names of the rules in `compile.bzl` and `library.bzl`.
-   Load only what you need.
-2. `compile.bzl`: contains the rules `{LANG}_proto_compile` and
-   `{LANG}_grpc_compile` (if available).
-3. `library.bzl`: contains the rules `{LANG}_proto_library` and
-   `{LANG}_grpc_library` (if available).
+   correspond to the names of the rules in `compile.bzl` and `library.bzl`. Load
+   only what you need.
+2. `compile.bzl`: contains the rules `{lang}_proto_compile` and
+   `{lang}_grpc_compile` (if available).
+3. `library.bzl`: contains the rules `{lang}_proto_library` and
+   `{lang}_grpc_library` (if available).
 4. `BUILD.bazel`: contains `proto_plugin()` declarations for the available
    plugins for that language.
 
@@ -110,8 +110,8 @@ Follow the pattern seen in the multiple examples in this repository.  The basic 
 3. `tool` is a label that refers to the binary executable for the plugin itself.
 4. `outputs` is a list of strings that predicts the pattern of files generated
    by the plugin.  Specifying outputs is the only attribute that requires much
-   mental effort.
+   mental effort. [TODO: article here with example writing a custom plugin].
 
-## github.comuting
+## Contributing
 
 Contributions welcome; please create Issues or GitHub pull requests.

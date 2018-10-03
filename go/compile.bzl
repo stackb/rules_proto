@@ -10,7 +10,7 @@ def go_proto_compile(**kwargs):
         name_plugin = name + "_plugin"
         proto_plugin(
             name = name_plugin,
-            outputs = ["@package/%s/{basename}.pb.go" % importpath],
+            outputs = ["{package}/%s/{basename}.pb.go" % importpath],
             tool = "@com_github_golang_protobuf//protoc-gen-go",
         )
         kwargs["plugins"] = [name_plugin]
@@ -33,7 +33,7 @@ def go_grpc_compile(**kwargs):
         proto_plugin(
             name = name_plugin,
             options = ["plugins=grpc"],
-            outputs = ["@package/%s/{basename}.pb.go" % importpath],
+            outputs = ["{package}/%s/{basename}.pb.go" % importpath],
             tool = "@com_github_golang_protobuf//protoc-gen-go",
         )
         kwargs["plugins"] = [name_plugin]

@@ -5,13 +5,13 @@ proto_plugin(
     name = "csharp",
     # TODO, figure out how this would work
     # options = ["base_namespace"],
-    outputs = ["@package/{basename|pascal}.cs"],
+    outputs = ["{package}/{basename|pascal}.cs"],
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
     name = "grpc_csharp",
-    outputs = ["@package/{basename|pascal}Grpc.cs"],
+    outputs = ["{package}/{basename|pascal}Grpc.cs"],
     tool = "@com_github_grpc_grpc//:grpc_csharp_plugin",
     visibility = ["//visibility:public"],
 )

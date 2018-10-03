@@ -3,7 +3,7 @@ load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "javalite",
-    out = "%{name}.jar",
+    out = "{name}.jar",
     options = ["lite"],
     tool = "@com_google_protobuf_lite//:protoc_gen_javalite",
     visibility = ["//visibility:public"],
@@ -11,7 +11,7 @@ proto_plugin(
 
 proto_plugin(
     name = "grpc_javalite",
-    out = "%{name}.jar",
+    out = "{name}.jar",
     options = ["lite"],
     tool = "@io_grpc_grpc_java//compiler:grpc_java_plugin",
     visibility = ["//visibility:public"],

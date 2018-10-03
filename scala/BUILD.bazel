@@ -5,7 +5,7 @@ proto_plugin(
     name = "scala",
     # Use the proto basename and pipe the value to the scala_keyword function.
     # Ths function will append '_pb' if the basename is a scala keyword.
-    out = "%{name}.jar",
+    out = "{name}.jar",
     tool = ":protoc-gen-scala",
     visibility = ["//visibility:public"],
 )
@@ -14,7 +14,7 @@ proto_plugin(
     name = "grpc_scala",
     # Use the proto basename and pipe the value to the scala_keyword function.
     # Ths function will append '_pb' if the basename is a scala keyword.
-    out = "%{name}.jar",
+    out = "{name}.jar",
     tool = ":protoc-gen-scala",
     visibility = ["//visibility:public"],
 )

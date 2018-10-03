@@ -7,10 +7,10 @@ proto_plugin(
         "import_style=closure", 
         "binary", 
         "error_on_name_conflict", 
-        "library=%{name}",
+        "library={name}",
     ],
-    out = "%{name}.js",
-    outdir = "%{name}",
+    out = "{name}.js",
+    outdir = "{name}",
     visibility = ["//visibility:public"],
 )
 
