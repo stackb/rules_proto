@@ -112,6 +112,15 @@ def build_bazel_rules_android(**kwargs):
     github_archive(name, "bazelbuild", "rules_android", ref, sha256)
 
 
+def build_bazel_rules_swift(**kwargs):
+    """swift Rules
+    """
+    name = "build_bazel_rules_swift"
+    ref = get_ref(name, "b3b6e2512c9961c60e84bea086714f35b36273de", kwargs) 
+    sha256 = get_sha256(name, "a5b34a61451889cfe7e172ada0b7b661a5e3b8c5a0d0d5653ac9dfd567e11cff", kwargs)
+    github_archive(name, "bazelbuild", "rules_swift", ref, sha256)
+
+
 def io_bazel_rules_go(**kwargs):
     """Go Rules
     """

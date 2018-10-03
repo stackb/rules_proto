@@ -42,7 +42,7 @@ RULES_PROTO_VERSION = "{replace-with-commit-id}"
 RULES_PROTO_SHA256 = "{replace-with-sha256}"
 
 http_archive(
-    name = "org_pubref_rules_proto",
+    name = "build_stack_rules_proto",
     urls = ["https://github.com/pubref/rules_proto/archive/%s.tar.gz" % RULES_PROTO_VERSION],
     sha256 = RULES_PROTO_SHA256,
     strip_prefix = "rules_proto-" + RULES_PROTO_VERSION,
@@ -57,7 +57,7 @@ that language. [TODO: write these files!]
 To build a c++ gRPC library:
 
 ```python
-load("@org_pubref_rules_protobuf//cpp:library.bzl", "cpp_grpc_library")
+load("@build_stack_rules_protobuf//cpp:library.bzl", "cpp_grpc_library")
 
 proto_library(
   name = "proto_library",
@@ -104,7 +104,7 @@ implementations in this repo:
 
 Follow the pattern seen in the multiple examples in this repository.  The basic idea is:
 
-1. Load the plugin rule: `load("@org_pubref_rules_proto//:plugin.bzl", "proto_plugin")`.
+1. Load the plugin rule: `load("@build_stack_rules_proto//:plugin.bzl", "proto_plugin")`.
 2. Define the rule, giving it a `name`, `options` (not mandatory), `tool`, and
    `outputs`.  
 3. `tool` is a label that refers to the binary executable for the plugin itself.

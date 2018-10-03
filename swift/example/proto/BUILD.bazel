@@ -1,0 +1,11 @@
+
+
+load("//swift:compile.bzl", "swift_grpc_compile")
+
+swift_grpc_compile(
+    name = "routeguide",
+    deps = [
+        "//example/proto/routeguide:proto_library",
+    ],
+    verbose = 1,
+)

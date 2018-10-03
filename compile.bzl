@@ -307,13 +307,13 @@ def _get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
     Args:
       ctx: the <ctx> object
       descriptor: the descriptor <Generated File>
-      outputs: the list of outputs.  This is modified in place!
+      outputs: the list of outputs. 
       src: the orginal .proto source <Source File>.
       proto: the copied .proto <Generated File> (the one in the package 'staging area')
       plugin: the <PluginInfo> object.
 
     Returns:
-      <list<Generated File>> the list of files that will be generated
+      <list<Generated File>> the augmented list of files that will be generated
     """
     for output in plugin.outputs:
         filename = _get_output_filename(src, plugin, output)

@@ -1,4 +1,4 @@
-workspace(name = "org_pubref_rules_proto")
+workspace(name = "build_stack_rules_proto")
 
 # =========================================
 
@@ -216,6 +216,19 @@ npm_install(
 load("//github.com/gogo/protobuf:deps.bzl", "gogo_grpc_library")
 
 gogo_grpc_library()
+
+# =========================================
+
+load("//swift:deps.bzl", "swift_grpc_library")
+
+swift_grpc_library()
+
+load(
+    "@build_bazel_rules_swift//swift:repositories.bzl",
+    "swift_rules_dependencies",
+)
+
+swift_rules_dependencies()
 
 # =======================================
 
