@@ -19,7 +19,7 @@ compiles:
 		//github.com/grpc/grpc-web/example/proto:routeguide_ts \
 
 
-clients: csharp_client
+clients: 
 	bazel build \
 		//android/example/routeguide:client \
 		//closure/example/routeguide/client \

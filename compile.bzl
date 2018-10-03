@@ -90,6 +90,7 @@ def _pascal_objc(s):
         segments.append(segment)
     return "".join(segments)
 
+
 def _pascal_case(s):
     """Convert pascal_case -> PascalCase
     Args:
@@ -98,6 +99,7 @@ def _pascal_case(s):
         (string): The capitalized string.
     """
     return "".join([_capitalize(part) for part in s.split("_")])
+
 
 def _rust_keyword(s):
     """Check if arg is a rust keyword and append '_pb' if true.
@@ -108,10 +110,12 @@ def _rust_keyword(s):
     """
     return s + "_pb" if rust_keywords.get(s) else s
 
+
 def _get_output_sibling_file(pattern, proto, descriptor):
     if pattern.startswith("@package/"):
         return descriptor
     return proto
+
 
 def _get_plugin_out(ctx, plugin):
     if not plugin.out:
@@ -119,6 +123,7 @@ def _get_plugin_out(ctx, plugin):
     filename = plugin.out
     filename = filename.replace("%{name}", ctx.label.name)    
     return filename
+
 
 def _copy_jar_to_srcjar(ctx, jar):
     srcjar = ctx.actions.declare_file("%s/%s.srcjar" % (ctx.label.name, ctx.label.name))
@@ -129,6 +134,7 @@ def _copy_jar_to_srcjar(ctx, jar):
         command = "cp %s %s" % (jar.path, srcjar.path),
     )
     return srcjar
+
 
 def _get_output_filename(src, plugin, pattern):
     # If output to srcjar, don't emit a per-proto output file.
@@ -158,11 +164,13 @@ def _get_output_filename(src, plugin, pattern):
 
     return filename
 
+
 def _get_proto_filename(src):
     parts = src.short_path.split("/")
     if len(parts) > 1 and parts[0] == "..":
         return "/".join(parts[2:])
     return src.short_path
+
 
 def copy_proto(ctx, descriptor, src):
     proto = ctx.actions.declare_file(_get_proto_filename(src), sibling = descriptor)
@@ -174,11 +182,14 @@ def copy_proto(ctx, descriptor, src):
     )
     return proto
 
+
 def _get_plugin_option(ctx, option):
     return option.replace("%{name}", ctx.label.name)
 
+
 def _get_plugin_options(ctx, options):
     return [_get_plugin_option(ctx, option) for option in options]
+
 
 def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
     arg = outdir
@@ -193,6 +204,7 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
         arg = "%s:%s" % (",".join(_get_plugin_options(ctx, plugin.options)), arg) 
     return "--%s_out=%s" % (plugin.name, arg)  
 
+
 def _get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
     for output in plugin.outputs:
         filename = _get_output_filename(src, plugin, output)
@@ -201,6 +213,7 @@ def _get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
         sibling = _get_output_sibling_file(output, proto, descriptor)
         outputs.append(ctx.actions.declare_file(filename, sibling = sibling))
     return outputs
+
 
 proto_compile_attrs = {
     "deps": attr.label_list(
@@ -234,9 +247,11 @@ proto_compile_attrs = {
     ),
 }
 
+
 proto_compile_outputs = {
     "descriptor": "%{name}/descriptor.source.bin",
 }
+
 
 def proto_compile_impl(ctx):
     verbose = ctx.attr.verbose
@@ -315,7 +330,7 @@ def proto_compile_impl(ctx):
     if verbose > 0:
         print("PROTOC COMMAND: %s" % command)
     if verbose > 1:
-        command += "&& echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find ."
+        command += " && echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find ."
     if verbose > 2:
         command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . && " + command
     if verbose > 3:
