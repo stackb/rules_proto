@@ -1,0 +1,22 @@
+
+load("//:plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "grpc-gateway",
+    outputs = [
+        ".pb.gw.go",
+    ],
+    #options = ["import_style=closure", "mode=grpcweb"],
+    tool = "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "swagger",
+    outputs = [
+        ".swagger.json",
+    ],
+    #options = ["import_style=closure", "mode=grpcweb"],
+    tool = "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-swagger",
+    visibility = ["//visibility:public"],
+)

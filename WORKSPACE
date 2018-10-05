@@ -288,3 +288,13 @@ android_sdk_repository(
 load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
 
 gmaven_rules()
+
+# =======================================
+
+load("//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "grpc_gateway_library")
+
+grpc_gateway_library()
+
+load("@com_github_grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
+
+grpc_gateway_repositories()

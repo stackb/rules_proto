@@ -244,7 +244,7 @@ def _copy_jar_to_srcjar(ctx, jar):
         mnemonic = "CopySrcjar",
         inputs = [jar],
         outputs = [srcjar],
-        command = "cp %s %s" % (jar.path, srcjar.path),
+        command = "mv %s %s" % (jar.path, srcjar.path),
     )
     return srcjar
 
@@ -296,8 +296,12 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
         #arg = "%s" % (outdir)
         #arg = "%s/%s" % (outdir, outfile.short_path)
         arg = outfile.path
-    if plugin.options:
-        arg = "%s:%s" % (",".join(_get_plugin_options(ctx, plugin.options)), arg) 
+
+    # Collate a list of options from the plugin itself PLUS options from the
+    # global plugin_options list (if they exist)
+    options = getattr(plugin, "options", []) + ctx.attr.plugin_options
+    if options:
+        arg = "%s:%s" % (",".join(_get_plugin_options(ctx, options)), arg) 
     return "--%s_out=%s" % (plugin.name, arg)  
 
 
@@ -392,7 +396,7 @@ def proto_compile_impl(ctx):
     # on 'google/protobuf/any.proto', we don't necessarily want to actually
     # generate artifacts for it when compiling 'foo.proto'. Maintained as a dict
     # for set semantics.  The key is the value from File.path.  
-    directs = {}
+    targets = {}
 
     # <dict<string,File>> A mapping from plugin name to the plugin tool. Used to
     # generate the --plugin=protoc-gen-KEY=VALUE args
@@ -455,26 +459,31 @@ def proto_compile_impl(ctx):
         # plugin to assemble the actual list of predicted generated artifacts
         # and save these in the 'outputs' list.  
         for src in dep.direct_sources:
-            if directs.get(src.path):
+            if targets.get(src.path):
                 continue
-            directs[src.path] = src
             proto = copy_proto(ctx, descriptor, src)
+            targets[src] = proto
             protos.append(proto)
-
-            for plugin in plugins:
-                outputs = _get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin)
 
         # Iterate all transitive .proto files.  If we already processed in the
         # loop above, skip it. Otherwise add a copy action to get it into the
         # 'staging area'
         for src in dep.transitive_sources:
-            if directs.get(src.path):
+            if targets.get(src):
                 continue
             if verbose > 2:
                 print("transitive source: %r" % src)
             proto = copy_proto(ctx, descriptor, src)
             protos.append(proto)
+            if ctx.attr.transitive:
+                targets[src] = proto
 
+    ###
+    ### Part 3b: collect generated artifacts for all in the target list of protos to compile
+    ###
+    for src, proto in targets.items():
+        for plugin in plugins:
+            outputs = _get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin)
 
     ###
     ### Part 4: build list of arguments for protoc
@@ -497,7 +506,7 @@ def proto_compile_impl(ctx):
 
     args += ["--plugin=protoc-gen-%s=%s" % (k, v.path) for k, v in plugin_tools.items()]        
 
-    args += [proto.path for proto in directs.values()]
+    args += [proto.path for proto in targets.values()]
 
     ###
     ### Part 5: build the final protoc command and declare the action
@@ -564,6 +573,9 @@ proto_compile = rule(
             providers = [ProtoPluginInfo],
             mandatory = True,
         ),
+        "plugin_options": attr.string_list(
+            doc = "List of additional 'global' options to add (applies to all plugins)",
+        ),
         "outputs": attr.output_list(
             doc = "Escape mechanism to explicitly declare files that will be generated",
         ),
@@ -586,6 +598,9 @@ proto_compile = rule(
         "include_source_info": attr.bool(
             doc = "Pass the --include_source_info argument to the protoc_plugin",
             default = True,
+        ),
+        "transitive": attr.bool(
+            doc = "Emit transitive artifacts",
         ),
     },
     outputs = {
