@@ -11,15 +11,13 @@ def ruby_proto_library(**kwargs):
     ruby_proto_compile(
         name = name_pb,
         deps = deps,
-        visibility = visibility,
         transitive = True,
+        visibility = visibility,
     )
 
     ruby_library(
         name = name,
         srcs = [name_pb],
-        deps = [
-        ],
         includes = ["{package}/%s" % name_pb],   
         visibility = visibility,
     )

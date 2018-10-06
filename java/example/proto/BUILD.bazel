@@ -16,3 +16,12 @@ java_grpc_library(
         "//example/proto:routeguide_proto",
     ],
 )
+
+load("//java:library.bzl", "java_proto_library")
+
+java_proto_library(
+    name = "person",
+    deps = [
+        "//example/proto:person_proto",
+    ],
+)

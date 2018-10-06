@@ -24,7 +24,9 @@ library:
 	bazel build \
 		//closure/example/proto:person \
 		//cpp/example/proto:person \
+		//java/example/proto:person \
 		//node/example/proto:person \
+		//ruby/example/proto:person \
 
 	# See https://github.com/bazelbuild/rules_dotnet/issues/72
 	bazel build --spawn_strategy=standalone \

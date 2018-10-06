@@ -13,6 +13,7 @@ def rust_proto_library(**kwargs):
     rust_proto_compile(
         name = name_pb,
         deps = deps,
+        transitive = True,
         visibility = visibility,
     )
     rust_proto_lib(
@@ -39,6 +40,7 @@ def rust_grpc_library(**kwargs):
     rust_grpc_compile(
         name = name_pb,
         deps = deps,
+        transitive = True,
         visibility = visibility,
     )
 
