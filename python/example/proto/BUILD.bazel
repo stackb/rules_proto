@@ -1,17 +1,20 @@
 
 
-load("//python:compile.bzl", "py_grpc_compile")
+load("//python:compile.bzl", "python_grpc_compile")
 
-py_grpc_compile(
+python_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto:routeguide_proto",
     ],
 )
 
-py_grpc_compile(
-    name = "routeguide2",
+
+load("//python:library.bzl", "python_proto_library")
+
+python_proto_library(
+    name = "person",
     deps = [
-        "//example/proto/source_root:proto_library",
+        "//example/proto:person_proto",
     ],
 )

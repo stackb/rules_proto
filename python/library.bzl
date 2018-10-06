@@ -1,19 +1,21 @@
-load("//python:compile.bzl", "py_proto_compile", "py_grpc_compile")
+load("//python:compile.bzl", "python_proto_compile", "python_grpc_compile")
 load("@grpc_py_deps//:requirements.bzl", "all_requirements")
 
-def py_proto_library(**kwargs):
+def python_proto_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    py_proto_compile(
+    python_proto_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
+        transitive = True,
         verbose = verbose,
     )
+
     native.py_library(
         name = name,
         srcs = [name_pb],
@@ -23,17 +25,18 @@ def py_proto_library(**kwargs):
         visibility = visibility,
     )
 
-def py_grpc_library(**kwargs):
+def python_grpc_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    py_grpc_compile(
+    python_grpc_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
+        transitive = True,
         verbose = verbose,
     )
     native.py_library(
@@ -44,3 +47,7 @@ def py_grpc_library(**kwargs):
         imports = [name_pb],
         visibility = visibility,
     )
+
+# Alias
+py_proto_library = python_proto_library
+py_grpc_library = python_grpc_library
