@@ -7,11 +7,14 @@ def scala_proto_library(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
+
     scala_proto_compile(
         name = name_pb,
         deps = deps,
+        transitive = True,
         visibility = visibility,
     )
+
     scala_library(
         name = name,
         srcs = [name_pb],
@@ -28,11 +31,14 @@ def scala_grpc_library(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
+
     scala_grpc_compile(
         name = name_pb,
         deps = deps,
+        transitive = True,
         visibility = visibility,
     )
+
     scala_library(
         name = name,
         srcs = [name_pb],

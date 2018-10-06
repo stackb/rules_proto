@@ -8,3 +8,12 @@ scala_grpc_compile(
         "//example/proto:routeguide_proto",
     ],
 )
+
+load("//scala:library.bzl", "scala_proto_library")
+
+scala_proto_library(
+    name = "person",
+    deps = [
+        "//example/proto:person_proto",
+    ],
+)

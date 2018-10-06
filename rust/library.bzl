@@ -16,10 +16,12 @@ def rust_proto_library(**kwargs):
         transitive = True,
         visibility = visibility,
     )
+
     rust_proto_lib(
         name = name_lib,
         compilation = name_pb,
     )
+
     rust_library(
         name = name,
         srcs = [name_pb, name_lib],
