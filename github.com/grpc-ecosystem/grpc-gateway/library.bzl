@@ -7,12 +7,14 @@ def grpc_gateway_proto_library(**kwargs):
     importpath = kwargs.get("importpath")
     deps = kwargs.get("deps")
     visibility = kwargs.get("visibility")
+
     compilers = kwargs.get("compilers")
     if not compilers:
         compilers = [
             "@io_bazel_rules_go//proto:go_grpc",
             "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
         ]
+
     go_proto_library(
         name = name,
         compilers = compilers,
@@ -22,10 +24,10 @@ def grpc_gateway_proto_library(**kwargs):
     )
 
 def grpc_gateway_library(**kwargs):
+    name = kwargs.get("name")
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
 
-    name = kwargs.get("name")
     name_go = name + "_go"
     name_gw = name + "_gw"
 

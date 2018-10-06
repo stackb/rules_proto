@@ -4,14 +4,14 @@ load("//:plugin.bzl", "proto_plugin")
 [proto_plugin(
     name = name,
     outputs = [".pb.go"],
-    tool = "@com_github_gogo_protobuf//protoc-gen-gogo" + name,
+    tool = "@com_github_gogo_protobuf//protoc-gen-" + name,
     visibility = ["//visibility:public"],
-) for name in ["types", "slick", "faster", "fast"]]
+) for name in ["gogo", "gogotypes", "gogoslick", "gogofaster", "gogofast"]]
 
 [proto_plugin(
     name = "grpc_" + name,
     outputs = [".pb.go"],
     options = ["plugins=grpc"],
-    tool = "@com_github_gogo_protobuf//protoc-gen-gogo" + name,
+    tool = "@com_github_gogo_protobuf//protoc-gen-" + name,
     visibility = ["//visibility:public"],
-) for name in ["types", "slick", "faster", "fast"]]
+) for name in ["gogo", "gogotypes", "gogoslick", "gogofaster", "gogofast"]]

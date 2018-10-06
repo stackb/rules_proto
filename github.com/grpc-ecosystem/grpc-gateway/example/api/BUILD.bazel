@@ -11,24 +11,12 @@ load("//github.com/grpc-ecosystem/grpc-gateway:library.bzl",
 
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_binary")
 
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-
 proto_library(
     name = "api_proto",
     srcs = [
         "api.proto",
     ],
     deps = ["@com_github_googleapis_googleapis//google/api:api_proto"],
-)
-
-grpc_gateway_compile(
-    name = "api_gw_proto_compile",
-    deps = ["api_proto"],
-)
-
-grpc_gateway_swagger_compile(
-    name = "api_swagger",
-    deps = ["api_proto"],
 )
 
 grpc_gateway_library(
@@ -38,31 +26,7 @@ grpc_gateway_library(
     visibility = ["//visibility:public"],
 )
 
-# go_proto_library(
-#     name = "api_go_proto",
-#     importpath = "github.com/stackb/rules_proto/github.com/grpc-ecosystem/grpc-gateway/examples/api",
-#     proto = ":api_proto",
-#     deps = [
-#         "@com_github_googleapis_googleapis//google/api:api_go_proto",
-#     ],
-# )
-
-# go_library(
-#     name = "go_default_library",
-#     embed = [":api_go_proto"],
-#     importpath = "github.com/stackb/rules_proto/github.com/grpc-ecosystem/grpc-gateway/examples/api",
-#     srcs = [
-#         ":api_gw_proto",
-#     ],
-#     deps = [
-#         "@com_github_googleapis_googleapis//google/api:go_default_library",
-#     ],
-#     visibility = ["//visibility:public"],
-# )
-
-# grpc_gateway_compile(
-#     name = "api_grpc_gateway_proto",
-#     deps = [
-#         ":api_proto",
-#     ],
-# )
+grpc_gateway_swagger_compile(
+    name = "api_swagger",
+    deps = ["api_proto"],
+)

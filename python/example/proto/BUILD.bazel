@@ -8,3 +8,10 @@ py_grpc_compile(
         "//example/proto/routeguide:proto_library",
     ],
 )
+
+py_grpc_compile(
+    name = "routeguide2",
+    deps = [
+        "//example/proto/source_root:proto_library",
+    ],
+)

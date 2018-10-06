@@ -66,3 +66,5 @@ compile_dart:
 client_csharp:
 	bazel build --spawn_strategy=standalone \
 		//csharp/example/routeguide:client 
+
+all: compiles clients servers tests
