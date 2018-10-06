@@ -1,56 +1,67 @@
 package main
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
 	"path"
 	"path/filepath"
+	"strings"
 	"syscall"
+
+	"github.com/golang/protobuf/proto"
+	compiler_plugin "google.golang.org/protobuf/compiler_plugin"
 )
 
 func main() {
-	ListFiles(".")
-	plugin := mustFindInSandbox(path.Dir(os.Args[0]), "bazel-out/host/bin/swift/linux_amd64_stripped/protoc-gen-swift.runfiles/com_github_apple_swift_swift_protobuf/ProtoCompilerPlugin")
-	err, exitCode := run(plugin, nil, "", nil)
+	tempDir, err := ioutil.TempDir("", "protoc-gen-swift-")
+	defer os.RemoveAll(tempDir)
+	if err != nil {
+		log.Fatalf("Failed to write temp dir: %v", err)
+	}
+	files := MustRestore(tempDir, assets, nil)
+
+	var compiler string
+	for _, file := range files {
+		if strings.HasSuffix(file, "ProtoCompilerPlugin") {
+			compiler = file
+			break
+		}
+	}
+
+	if compiler == "" {
+		ListFiles(tempDir)
+		log.Fatalf("Failed to locate the compiler plugin!")
+	}
+
+	var request compiler_plugin.CodeGeneratorRequest
+	bytes, err := ioutil.ReadAll(os.Stdin)
+	if err != nil {
+		log.Fatalf("Failed to read stdin: %v", err)
+	}
+
+	proto.Unmarshal(bytes, &request)
+	log.Printf("request: %+v", request)
+
+	requestFile := path.Join(tempDir, "request.proto")
+	err = ioutil.WriteFile("request.proto", bytes, os.ModePerm)
+	if err != nil {
+		log.Fatalf("Failed to write request proto: %v", err)
+	}
+
+	//err, exitCode := Run(compiler, os.Args, tempDir, nil)
+	err, exitCode := Run(compiler, []string{requestFile}, tempDir, nil)
+
 	if err != nil {
 		log.Printf("%v", err)
 	}
+
 	os.Exit(exitCode)
 }
 
-func mustFindInSandbox(dir, file string) string {
-	attempts := 0
-	for {
-		// Just in case we have a bug that will loop forever in some random
-		// filesystem pattern we haven't thought of
-		if attempts > 1000 {
-			log.Fatalf("Too many attempts to find %s within %s", file, dir)
-		}
-		if dir == "" {
-			log.Fatalf("Failed to find %s within %s", file, dir)
-		}
-		abs := path.Join(dir, file)
-		if exists(abs) {
-			return abs
-		}
-		dir = path.Dir(dir)
-		attempts++
-	}
-}
-
-// exists - return true if a file entry exists
-func exists(name string) bool {
-	if _, err := os.Stat(name); err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
-	}
-	return true
-}
-
-// run a command
-func run(entrypoint string, args []string, dir string, env []string) (error, int) {
+// Run a command
+func Run(entrypoint string, args []string, dir string, env []string) (error, int) {
 	cmd := exec.Command(entrypoint, args...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -79,6 +90,39 @@ func run(entrypoint string, args []string, dir string, env []string) (error, int
 		exitCode = ws.ExitStatus()
 	}
 	return err, exitCode
+}
+
+// MustRestore - Restore assets.
+func MustRestore(baseDir string, assets map[string][]byte, mappings map[string]string) []string {
+	files := make([]string, 0)
+
+	// unpack variable is provided by the go_embed data and is a
+	// map[string][]byte such as {"/usr/share/games/fortune/literature.dat":
+	// bytes... }
+	for basename, data := range assets {
+		if mappings != nil {
+			replacement := mappings[basename]
+			if replacement != "" {
+				basename = replacement
+			}
+		}
+		// If not a tarball, write file directly
+		filename := path.Join(baseDir, basename)
+		dirname := path.Dir(filename)
+		//log.Printf("file %s, dir %s, rel %d, abs %s, absdir: %s", file, dir, rel, abs, absdir)
+		if err := os.MkdirAll(dirname, os.ModePerm); err != nil {
+			log.Fatalf("Failed to create asset dir %s: %v", dirname, err)
+		}
+
+		if err := ioutil.WriteFile(filename, data, os.ModePerm); err != nil {
+			log.Fatalf("Failed to write asset %s: %v", filename, err)
+		}
+		//log.Printf("Restored %s", filename)
+		files = append(files, filename)
+	}
+
+	return files
+	//log.Printf("Assets restored to %s", baseDir)
 }
 
 // ListFiles - convenience debugging function to log the files under a given dir

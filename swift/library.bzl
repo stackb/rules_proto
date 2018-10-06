@@ -1,46 +1,44 @@
-load("//python:compile.bzl", "py_proto_compile", "py_grpc_compile")
-load("@grpc_py_deps//:requirements.bzl", "all_requirements")
+load("//swift:compile.bzl", "swift_proto_compile", "swift_grpc_compile")
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
-def py_proto_library(**kwargs):
+def swift_proto_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    py_proto_compile(
+
+    swift_proto_compile(
         name = name_pb,
         deps = deps,
-        visibility = visibility,
-        verbose = verbose,
-    )
-    native.py_library(
-        name = name,
-        srcs = [name_pb],
-        deps = all_requirements, # fixme don't need grpc here
-        # This magically adds REPOSITORY_NAME/PACKAGE_NAME/{name_pb} to PYTHONPATH
-        imports = [name_pb],
+        transitive = True,
         visibility = visibility,
     )
 
-def py_grpc_library(**kwargs):
+    swift_library(
+        name = name,
+        srcs = [name_pb],
+        #deps = ["//swift:proto_deps"],
+        visibility = visibility,
+    )
+
+def swift_grpc_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    py_grpc_compile(
+
+    swift_grpc_compile(
         name = name_pb,
         deps = deps,
+        transitive = True,
         visibility = visibility,
-        verbose = verbose,
     )
-    native.py_library(
+
+    swift_library(
         name = name,
         srcs = [name_pb],
-        deps = all_requirements,
-        # This magically adds REPOSITORY_NAME/PACKAGE_NAME/{name_pb} to PYTHONPATH
-        imports = [name_pb],
+        #deps = ["//swift:grpc_deps"],
         visibility = visibility,
     )

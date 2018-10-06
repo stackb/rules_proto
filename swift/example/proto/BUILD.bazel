@@ -1,10 +1,33 @@
 
 
-load("//swift:compile.bzl", "swift_grpc_compile")
+load("//swift:compile.bzl", "swift_proto_compile", "swift_grpc_compile")
 
 swift_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto:routeguide_proto",
+    ],
+)
+
+load("//swift:library.bzl", "swift_proto_library")
+
+swift_proto_compile(
+    name = "person_proto",
+    deps = [
+        "//example/proto:person_proto",
+    ],
+)
+
+swift_proto_compile(
+    name = "empty_proto",
+    deps = [
+        "//example/proto:empty_proto",
+    ],
+)
+
+swift_proto_library(
+    name = "person",
+    deps = [
+        "//example/proto:person_proto",
     ],
 )

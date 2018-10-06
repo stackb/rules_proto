@@ -219,6 +219,13 @@ gogo_grpc_library()
 
 # =========================================
 
+##
+## Must have swiftc on your system.  To install on ubuntu 17.10, here's what I did:
+##
+## $ sudo apt install ubuntu-make; umake swift 
+## $ vi `/.bashrc` and update PATH to include ~/.local/share/umake/swift/swift-lang/usr/bin
+##
+
 load("//swift:deps.bzl", "swift_grpc_library")
 
 swift_grpc_library()
