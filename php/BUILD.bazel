@@ -1,14 +1,19 @@
 
 load("//:plugin.bzl", "proto_plugin")
 
-# The outputs for a php invocation MUST be given explicitly at the rule level.
 proto_plugin(
     name = "php",
+    # Even though this is php, aggregate into a jar so we don't have to predict
+    # the outputs
+    out = "{name}.jar",
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
     name = "grpc_php",
+    # Even though this is php, aggregate into a jar so we don't have to predict
+    # the outputs
+    out = "{name}.jar",
     tool = "@com_github_grpc_grpc//:grpc_php_plugin",
     visibility = ["//visibility:public"],
 )

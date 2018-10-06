@@ -1,10 +1,27 @@
 
 
 load("//ruby:compile.bzl", "ruby_grpc_compile")
+load("//ruby:library.bzl", "ruby_proto_library", "ruby_grpc_library")
 
 ruby_grpc_compile(
     name = "routeguide",
     deps = [
         "//example/proto:routeguide_proto",
+    ],
+)
+
+
+ruby_grpc_library(
+    name = "routeguide_ruby_grpc_library",
+    deps = [
+        "//example/proto:routeguide_proto",
+    ],
+)
+
+
+ruby_proto_library(
+    name = "person_ruby_proto_library",
+    deps = [
+        "//example/proto:person_proto",
     ],
 )

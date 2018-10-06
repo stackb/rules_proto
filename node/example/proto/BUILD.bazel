@@ -1,10 +1,24 @@
-
-
 load("//node:compile.bzl", "node_grpc_compile")
+load("//node:library.bzl", "node_proto_library", "node_grpc_library")
 
 node_grpc_compile(
-    name = "routeguide",
+    name = "routeguide_node_grpc_compile",
     deps = [
         "//example/proto:routeguide_proto",
     ],
+)
+
+node_grpc_library(
+    name = "routeguide_node_grpc_library",
+    deps = [
+        "//example/proto:routeguide_proto",
+    ],
+)
+
+node_proto_library(
+    name = "person_node_proto_library",
+    deps = [
+        "//example/proto:person_proto",
+    ],
+    transitive = True,
 )

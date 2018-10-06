@@ -7,12 +7,14 @@ def ruby_proto_library(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
+    
     ruby_proto_compile(
-
         name = name_pb,
         deps = deps,
         visibility = visibility,
+        transitive = True,
     )
+
     ruby_library(
         name = name,
         srcs = [name_pb],
@@ -33,6 +35,7 @@ def ruby_grpc_library(**kwargs):
     ruby_grpc_compile(
         name = name_pb,
         deps = deps,
+        transitive = True,
         visibility = visibility,
     )
 

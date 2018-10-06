@@ -7,13 +7,4 @@ php_grpc_compile(
     deps = [
         "//example/proto:routeguide_proto",
     ],
-    outputs = [
-        "routeguide/GPBMetadata/Example/Proto/Routeguide.php",
-        "routeguide/Routeguide/Rectangle.php",
-        "routeguide/Routeguide/RouteGuideClient.php",
-        "routeguide/Routeguide/Point.php",
-        "routeguide/Routeguide/RouteSummary.php",
-        "routeguide/Routeguide/RouteNote.php",
-        "routeguide/Routeguide/Feature.php",
-    ],
 )
