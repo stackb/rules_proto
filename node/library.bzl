@@ -13,6 +13,7 @@ def node_proto_library(**kwargs):
     node_proto_compile(
         name = name_pb,
         deps = deps,
+        transitive = True,
         visibility = visibility,
     )
     node_module_index(
@@ -41,6 +42,7 @@ def node_grpc_library(**kwargs):
     node_grpc_compile(
         name = name_pb,
         deps = deps,
+        transitive = True,
         visibility = visibility,
     )
     node_module_index(

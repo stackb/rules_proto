@@ -12,6 +12,7 @@ def closure_proto_library(**kwargs):
         name = name_pb,
         deps = deps,
         visibility = visibility,
+        transitive = True,
     )
 
     closure_js_library(

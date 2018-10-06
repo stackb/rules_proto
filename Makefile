@@ -1,4 +1,5 @@
-compiles:
+# A collection of targets that exercise the `{lang}:compile.bzl` rules
+compile:
 	bazel build \
 		//android/example/proto:routeguide \
 		//closure/example/proto:routeguide \
@@ -18,7 +19,18 @@ compiles:
 		//github.com/grpc/grpc-web/example/proto:routeguide_dts \
 		//github.com/grpc/grpc-web/example/proto:routeguide_ts \
 
+# A collection of targets that exercise the `{lang}:library.bzl` rules
+library:
+	bazel build \
+		//closure/example/proto:person \
+		//cpp/example/proto:person \
+		//node/example/proto:person \
 
+	# See https://github.com/bazelbuild/rules_dotnet/issues/72
+	bazel build --spawn_strategy=standalone \
+		//csharp/example/proto:person
+
+# A collection of targets that build routeguide clients
 clients: 
 	bazel build \
 		//android/example/routeguide:client \
@@ -35,6 +47,7 @@ clients:
 
 		# //dart/example/routeguide:client \
 
+# A collection of targets that build routeguide servers
 servers:
 	bazel build \
 		//cpp/example/routeguide:server \
@@ -45,6 +58,7 @@ servers:
 		//ruby/example/routeguide:server \
 		//rust/example/routeguide:server \
 
+# A collection of test targets
 tests:
 	bazel test \
 		//closure/example/routeguide/... \

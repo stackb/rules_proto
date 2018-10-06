@@ -7,5 +7,13 @@ closure_proto_compile(
     deps = [
         "//example/proto:routeguide_proto",
     ],
-    has_services = True,
+)
+
+load("//closure:library.bzl", "closure_proto_library")
+
+closure_proto_library(
+    name = "person",
+    deps = [
+        "//example/proto:person_proto",
+    ],
 )

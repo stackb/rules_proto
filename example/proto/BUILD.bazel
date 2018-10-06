@@ -30,6 +30,9 @@ proto_library(
     srcs = [
         "thing.proto",
     ],
+    deps = [
+        "@com_google_protobuf//:any_proto",
+    ],
     visibility = [
         "//visibility:public",
     ],

@@ -4,6 +4,7 @@ def cpp_proto_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     visibility = kwargs.get("visibility")
+    
     name_pb = name + "_pb"
     cpp_proto_compile(
         name = name_pb,
@@ -11,6 +12,7 @@ def cpp_proto_library(**kwargs):
         visibility = visibility,
         transitive = True,
     )
+
     native.cc_library(
         name = name,
         srcs = [name_pb],
@@ -32,7 +34,9 @@ def cpp_grpc_library(**kwargs):
         name = name_pb,
         deps = deps,
         visibility = visibility,
+        transitive = True,
     )
+
     native.cc_library(
         name = name,
         srcs = [name_pb],

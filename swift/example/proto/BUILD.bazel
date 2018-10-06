@@ -7,5 +7,4 @@ swift_grpc_compile(
     deps = [
         "//example/proto:routeguide_proto",
     ],
-    verbose = 1,
 )

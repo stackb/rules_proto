@@ -1,6 +1,5 @@
 load("@io_bazel_rules_go//proto:def.bzl", _go_proto_library = "go_proto_library")
 
-load("//:compile.bzl", "invoke")
 load("//go:compile.bzl", "go_proto_compile", "go_grpc_compile")
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 

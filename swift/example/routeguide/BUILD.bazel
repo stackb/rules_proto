@@ -6,7 +6,6 @@ load("//swift:swift_proto_library.bzl", "swift_proto_library")
 swift_proto_library(
     name = "routeguide",
     deps = ["//example/proto:routeguide_proto"],
-    # verbose = 2,
 )
 
 # py_binary(

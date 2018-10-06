@@ -305,6 +305,41 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
     return "--%s_out=%s" % (plugin.name, arg)  
 
 
+def _apply_plugin_transitivity_rules(ctx, targets, plugin):
+    """Process the proto target list according to plugin transitivity rules
+    
+    Args:
+      ctx: the <ctx> object
+      targets: the dict<string,File> of .proto files that we intend to compile. 
+      plugin: the <PluginInfo> object.
+
+    Returns:
+      <list<File>> the possibly filtered list of .proto <File>s
+    """
+
+    # Iterate transitivity rules like '{ "google/protobuf": "exclude" }'. The
+    # only rule type implemented is "exclude", which checks if the pathname or
+    # dirname ends with the given pattern.  If so, remove that item in the
+    # targets list.
+    #
+    # Why does this feature exist?  Well, library rules like C# require all the
+    # proto files to be present during the compilation (collected via transitive
+    # sources).  However, since the well-known types are already present in the
+    # library dependencies, we don't actually want to compile well-known types
+    # (but do want to compile everything else).
+    #
+    for pattern, rule in plugin.transitivity.items():
+        if rule == "exclude":
+            for key, target in targets.items():
+                if target.dirname.endswith(pattern) or target.path.endswith(pattern):
+                    targets.pop(key)
+                    if ctx.attr.verbose:
+                        print("Removing '%s' from the list of files to compile as plugin '%s' excluded it" % (target.short_path, plugin.name))
+        else:
+            fail("Unknown transitivity rule '%s'" % rule)
+    return targets
+
+
 def _get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
     """Get the predicted generated outputs for a given plugin
     
@@ -448,7 +483,7 @@ def proto_compile_impl(ctx):
             srcjars.append(srcjar)
 
     ###
-    ### Part 3: Gather generated artifacts for each dependency .proto source file.
+    ### Part 3a: Gather generated artifacts for each dependency .proto source file.
     ###
 
     for dep in deps:
@@ -478,8 +513,21 @@ def proto_compile_impl(ctx):
             if ctx.attr.transitive:
                 targets[src] = proto
 
+
     ###
-    ### Part 3b: collect generated artifacts for all in the target list of protos to compile
+    ### Part 3cb: apply transitivity rules
+    ###
+
+    # If the 'transitive = true' was enabled, we collected all the protos into
+    # the 'targets' list.  
+    # At this point we want to post-process that list and remove any protos that
+    # might be incompatible with the plugin transitivity rules.
+    if ctx.attr.transitive:
+        for plugin in plugins:
+            targets = _apply_plugin_transitivity_rules(ctx, targets, plugin)
+
+    ###
+    ### Part 3c: collect generated artifacts for all in the target list of protos to compile
     ###
     for src, proto in targets.items():
         for plugin in plugins:
@@ -512,18 +560,21 @@ def proto_compile_impl(ctx):
     ### Part 5: build the final protoc command and declare the action
     ###
 
+    mnemonic = "ProtoCompile"
+
     command = " ".join([protoc.path] + args)
 
     if verbose > 0:
-        print("PROTOC COMMAND: %s" % command)
+        print("%s: %s" % (mnemonic, command))
     if verbose > 1:
         command += " && echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find ."
     if verbose > 2:
         command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . && " + command
     if verbose > 3:
         command = "env && " + command
-
+    
     ctx.actions.run_shell(
+        mnemonic = mnemonic,
         command = command,
         inputs = [protoc] + plugin_tools.values() + protos + data,
         outputs = outputs + [descriptor] + ctx.outputs.outputs,
@@ -610,7 +661,7 @@ proto_compile = rule(
 )
 
 
-def invoke(proto_compile_rule, name_suffix, kwargs):
+def invoke_transitive(proto_compile_rule, name_suffix, kwargs):
     """Invoke a proto_compile rule using kwargs
 
     Invoke is a convenience function for library rules that call proto_compile
@@ -631,12 +682,14 @@ def invoke(proto_compile_rule, name_suffix, kwargs):
     deps = kwargs.get("deps")
     visibility = kwargs.get("visibility")
     verbose = kwargs.get("verbose")
+    transitive = kwargs.get("transitive", True)
     rule_name = name + name_suffix
 
     proto_compile_rule(
         name = rule_name,
         deps = deps,
         visibility = visibility,
+        transitive = transitive,
         verbose = verbose,
     )
 

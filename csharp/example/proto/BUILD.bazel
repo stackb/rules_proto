@@ -8,3 +8,12 @@ csharp_grpc_compile(
         "//example/proto:routeguide_proto",
     ],
 )
+
+load("//csharp:library.bzl", "csharp_proto_library")
+
+csharp_proto_library(
+    name = "person",
+    deps = [
+        "//example/proto:person_proto",
+    ],
+)

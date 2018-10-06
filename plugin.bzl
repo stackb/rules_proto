@@ -6,19 +6,21 @@ ProtoPluginInfo = provider(fields = {
     "options": "proto options",
     "out": "aggregate proto output",
     "outdir": "whether to use the package output dir",
-    "data": "additional data"
+    "data": "additional data",
+    "transitivity": "transitivity properties",
 })
 
 def _proto_plugin_impl(ctx):
     return [ProtoPluginInfo(
+        data = ctx.files.data,
+        executable = ctx.executable.tool,
         name = ctx.label.name,
         options = ctx.attr.options,
         out = ctx.attr.out,
         outdir = ctx.attr.outdir,
         outputs = ctx.attr.outputs,
         tool = ctx.attr.tool,
-        executable = ctx.executable.tool,
-        data = ctx.files.data,
+        transitivity = ctx.attr.transitivity,
     )]
 
 proto_plugin = rule(
@@ -41,6 +43,9 @@ proto_plugin = rule(
             cfg = "host",
             allow_files = True,
             executable = True,
+        ),
+        "transitivity": attr.string_dict(
+            doc = "Transitive exclusions.  When the compile.bzl 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
         ),
         "data": attr.label_list(
             doc = "Additional files that should travel with the plugin",

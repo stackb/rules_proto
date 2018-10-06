@@ -3,7 +3,6 @@ load("//python:library.bzl", "py_grpc_library")
 py_grpc_library(
     name = "routeguide",
     deps = ["//example/proto:routeguide_proto"],
-    # verbose = 2,
 )
 
 py_binary(
