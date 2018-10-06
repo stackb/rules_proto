@@ -5,7 +5,7 @@ load("//closure:compile.bzl", "closure_proto_compile")
 closure_proto_compile(
     name = "routeguide",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
     has_services = True,
 )

@@ -2,7 +2,7 @@ load("//cpp:library.bzl", "cpp_grpc_library")
 
 cpp_grpc_library(
     name = "routeguide",
-    deps = ["//example/proto/routeguide:proto_library"],
+    deps = ["//example/proto:routeguide_proto"],
 )
 
 package(default_visibility = ["//visibility:public"])

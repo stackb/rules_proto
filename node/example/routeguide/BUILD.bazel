@@ -3,7 +3,7 @@ load("@org_pubref_rules_node//node:rules.bzl", "node_module", "node_binary")
 
 node_grpc_library(
     name = "routeguide",
-    deps = ["//example/proto/routeguide:proto_library"],
+    deps = ["//example/proto:routeguide_proto"],
 )
 
 node_module(

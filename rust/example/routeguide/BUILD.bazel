@@ -3,7 +3,7 @@ load("@io_bazel_rules_rust//rust:rust.bzl", "rust_library", "rust_binary")
 
 rust_grpc_library(
     name = "routeguide",
-    deps = ["//example/proto/routeguide:proto_library"],
+    deps = ["//example/proto:routeguide_proto"],
 )
 
 rust_binary(
@@ -24,6 +24,6 @@ rust_binary(
         "//rust/cargo:futures",
         "//rust/cargo:tls_api_stub",
     ],
-    data = ["//example/proto/routeguide:features"],
-    # args = ["example/proto/routeguide/features.json"],
+    data = ["//example/proto:routeguide_features"],
+    args = ["example/proto/routeguide_features.json"],
 )

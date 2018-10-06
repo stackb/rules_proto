@@ -5,6 +5,6 @@ load("//objc:compile.bzl", "objc_grpc_compile")
 objc_grpc_compile(
     name = "routeguide",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )

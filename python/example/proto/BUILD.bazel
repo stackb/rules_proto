@@ -5,7 +5,7 @@ load("//python:compile.bzl", "py_grpc_compile")
 py_grpc_compile(
     name = "routeguide",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )
 

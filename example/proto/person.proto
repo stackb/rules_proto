@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package example.proto;
+
+import "example/proto/place.proto";
+
+message Person {
+    string name = 1;
+    example.proto.Place place = 3;
+}
+

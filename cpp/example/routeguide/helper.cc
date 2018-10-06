@@ -23,7 +23,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "example/proto/routeguide/routeguide.grpc.pb.h"
+#include "example/proto/routeguide.grpc.pb.h"
 
 namespace routeguide {
 

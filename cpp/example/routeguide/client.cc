@@ -29,7 +29,7 @@
 #include <grpcpp/create_channel.h>
 #include <grpcpp/security/credentials.h>
 #include "cpp/example/routeguide/helper.h"
-#include "example/proto/routeguide/routeguide.grpc.pb.h"
+#include "example/proto/routeguide.grpc.pb.h"
 
 using grpc::Channel;
 using grpc::ClientContext;

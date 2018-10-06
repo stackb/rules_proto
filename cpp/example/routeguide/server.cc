@@ -29,7 +29,7 @@
 #include <grpcpp/server_context.h>
 #include <grpcpp/security/server_credentials.h>
 #include "helper.h"
-#include "example/proto/routeguide/routeguide.grpc.pb.h"
+#include "example/proto/routeguide.grpc.pb.h"
 
 using grpc::Server;
 using grpc::ServerBuilder;

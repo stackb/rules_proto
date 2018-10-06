@@ -3,7 +3,7 @@ load("//github.com/gogo/protobuf:library.bzl", "gogofast_grpc_library")
 
 gogofast_grpc_library(
     name = "routeguide",
-    deps = ["//example/proto/routeguide:proto_library"],
+    deps = ["//example/proto:routeguide_proto"],
     importpath = "google.golang.org/grpc/examples/route_guide/routeguide",
 )
 

@@ -1,35 +1,27 @@
 
 
-load("//cpp:compile.bzl", "cpp_proto_compile", "cpp_grpc_compile")
-
-cpp_grpc_compile(
-    name = "routeguide",
-    deps = [
-        "//example/proto/routeguide:proto_library",
-    ],
-)
-
-cpp_proto_compile(
-    name = "thing_compile",
-    deps = [
-        "//example/proto:thing_proto",
-    ],
-    transitive = True,
-)
-
+load("//cpp:compile.bzl", "cpp_grpc_compile")
 load("//cpp:library.bzl", "cpp_proto_library", "cpp_grpc_library")
 
-cpp_grpc_library(
-    name = "librouteguide",
+cpp_grpc_compile(
+    name = "routeguide_cpp_grpc_compile",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )
 
-cpp_proto_library(
-    name = "thing",
+cpp_grpc_library(
+    name = "routeguide_cpp_grpc_library",
     deps = [
-        "//example/proto:thing_proto",
+        "//example/proto:routeguide_proto",
+    ],
+)
+
+
+cpp_proto_library(
+    name = "person_cpp_proto_library",
+    deps = [
+        "//example/proto:person_proto",
     ],
     transitive = True,
 )

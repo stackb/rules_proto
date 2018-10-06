@@ -6,13 +6,13 @@ load("//go:library.bzl", "go_grpc_library")
 go_grpc_compile(
     name = "routeguide",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )
 
 go_grpc_library(
     name = "routeguide_lib",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )

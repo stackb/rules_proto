@@ -6,7 +6,7 @@ load("//java:library.bzl", "java_grpc_library")
 java_grpc_compile(
     name = "routeguide",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
     # verbose = 2,
 )
@@ -14,6 +14,6 @@ java_grpc_compile(
 java_grpc_library(
     name = "routeguide_lib",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )

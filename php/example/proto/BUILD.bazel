@@ -5,10 +5,10 @@ load("//php:compile.bzl", "php_grpc_compile")
 php_grpc_compile(
     name = "routeguide",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
     outputs = [
-        "routeguide/GPBMetadata/Example/Proto/Routeguide/Routeguide.php",
+        "routeguide/GPBMetadata/Example/Proto/Routeguide.php",
         "routeguide/Routeguide/Rectangle.php",
         "routeguide/Routeguide/RouteGuideClient.php",
         "routeguide/Routeguide/Point.php",

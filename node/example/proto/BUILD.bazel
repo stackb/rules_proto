@@ -5,6 +5,6 @@ load("//node:compile.bzl", "node_grpc_compile")
 node_grpc_compile(
     name = "routeguide",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )

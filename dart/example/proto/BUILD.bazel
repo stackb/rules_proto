@@ -5,7 +5,7 @@ load("//dart:compile.bzl", "dart_grpc_compile")
 dart_grpc_compile(
     name = "routeguide",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
     # verbose = 3,
 )

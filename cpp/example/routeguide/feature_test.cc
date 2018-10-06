@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "helper.h"
-#include "example/proto/routeguide/routeguide.grpc.pb.h"
+#include "example/proto/routeguide.grpc.pb.h"
 
 using routeguide::Feature;
 

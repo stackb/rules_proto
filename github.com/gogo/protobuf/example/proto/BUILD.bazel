@@ -10,27 +10,27 @@ load("//github.com/gogo/protobuf:compile.bzl",
 gogoslick_grpc_compile(
     name = "slickroute",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )
 
 gogofast_grpc_compile(
     name = "fastroute",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )
 
 gogofaster_grpc_compile(
     name = "fasterroute",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )
 
 gogotypes_grpc_compile(
     name = "typesroute",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )

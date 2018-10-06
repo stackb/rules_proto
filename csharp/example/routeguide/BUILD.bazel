@@ -3,7 +3,7 @@ load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_binary", "core_library")
 
 csharp_grpc_library(
     name = "routeguide",
-    deps = ["//example/proto/routeguide:proto_library"],
+    deps = ["//example/proto:routeguide_proto"],
     verbose = 3,
 )
 

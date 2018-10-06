@@ -3,7 +3,7 @@ load("@gmaven_rules//:defs.bzl", "gmaven_artifact")
 
 android_grpc_library(
     name = "routeguide",
-    deps = ["//example/proto/routeguide:proto_library"],
+    deps = ["//example/proto:routeguide_proto"],
 )
 
 # android_library(

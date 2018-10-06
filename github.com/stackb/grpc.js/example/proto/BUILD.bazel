@@ -5,6 +5,6 @@ load("//github.com/stackb/grpc.js:compile.bzl", "closure_grpc_compile")
 closure_grpc_compile(
     name = "routeguide",
     deps = [
-        "//example/proto/routeguide:proto_library",
+        "//example/proto:routeguide_proto",
     ],
 )
