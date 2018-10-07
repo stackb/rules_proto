@@ -14,12 +14,14 @@ def ts_proto_library(**kwargs):
     node_proto_compile(
         name = name_js,
         deps = deps,
+        transitive = True,
         visibility = visibility,
     )
     
     ts_proto_compile(
         name = name_pb,
         deps = deps,
+        transitive = True,
         visibility = visibility,
         verbose = verbose,
     )
@@ -44,12 +46,14 @@ def ts_grpc_library(**kwargs):
     node_grpc_compile(
         name = name_js,
         deps = deps,
+        transitive = True,
         visibility = visibility,
     )
     
     ts_grpc_compile(
         name = name_pb_grpc,
         deps = deps,
+        transitive = True,
         visibility = visibility,
         verbose = verbose,
     )

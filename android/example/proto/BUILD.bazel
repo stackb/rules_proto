@@ -16,3 +16,12 @@ android_grpc_compile(
 #         "//example/proto:routeguide_proto",
 #     ],
 # )
+
+load("//android:library.bzl", "android_proto_library")
+
+android_proto_library(
+    name = "person",
+    deps = [
+        "//example/proto:person_proto",
+    ],
+)

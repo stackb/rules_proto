@@ -34,3 +34,4 @@ ts_grpc_compile(
         "//example/proto:routeguide_proto",
     ],
 )
+

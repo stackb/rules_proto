@@ -1,7 +1,6 @@
 
 
 load("//go:compile.bzl", "go_grpc_compile")
-load("//go:library.bzl", "go_grpc_library")
 
 go_grpc_compile(
     name = "routeguide",
@@ -10,9 +9,15 @@ go_grpc_compile(
     ],
 )
 
-go_grpc_library(
-    name = "routeguide_lib",
+load("//go:library.bzl", "go_proto_library")
+
+go_proto_library(
+    name = "person",
     deps = [
-        "//example/proto:routeguide_proto",
+        "//example/proto:person_proto",
     ],
+    go_deps = [
+        "@com_github_golang_protobuf//ptypes/any:go_default_library",
+    ],
+    importpath = "github.com/stackb/rules_proto/go/example/proto",
 )

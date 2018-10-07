@@ -15,6 +15,7 @@ def gogo_proto_library(**kwargs):
         name = name_pb,
         deps = deps,
         plugin_options = get_importmappings(kwargs.pop("importmappings", {})),
+        transitive = True,
         visibility = visibility,
     )
 
@@ -41,6 +42,7 @@ def gogo_grpc_library(**kwargs):
     gogo_grpc_compile(
         name = name_pb,
         deps = deps,
+        transitive = True,
         plugin_options = get_importmappings(kwargs.pop("importmappings")),
         visibility = visibility,
     )
