@@ -109,6 +109,6 @@ go_binary(
     visibility = ["//visibility:public"],
     data = [
         ":compiler_plugin_deploy.jar",
-        "@local_jdk//:bin/java",
+        "@bazel_tools//tools/jdk:jre",
     ],
 )
