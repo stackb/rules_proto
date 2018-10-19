@@ -68,11 +68,13 @@ def com_github_grpc_grpc(**kwargs):
     github_archive(name, "grpc", "grpc", ref, sha256)
 
 
+# NOTE(pcj): Using a different version of dotnet here that seems to have a bad assembly reference.
+# Create an issue for this.
 def io_bazel_rules_dotnet(**kwargs):
     name = "io_bazel_rules_dotnet"
-    ref = get_ref(name, "281e4eeb389a30b4fd5dcd99915b35c925eff1ba", kwargs) 
-    sha256 = get_sha256(name, "6913f43275eb098d28b46e96215e1d7425a6d7301d6a2805920e8796f2734d8f", kwargs)
-    github_archive(name, "bazelbuild", "rules_dotnet", ref, sha256)
+    ref = get_ref(name, "f3ab918a4edec06d5483f8cfa67fff2b8a5ab03a", kwargs) 
+    sha256 = get_sha256(name, "3b2e795bd69c2c16bd2305ab5b4c1ba2209c302749c17451841f9e0adfc76cd5", kwargs)
+    github_archive(name, "stackb", "rules_dotnet", ref, sha256)
 
 
 def io_bazel_rules_scala(**kwargs):

@@ -70,10 +70,15 @@ tests:
 	bazel test \
 		//closure/example/routeguide/... \
 		//github.com/stackb/grpc.js/example/routeguide/... \
-		//github.com/grpc/grpc-web/example/routeguide/... \
 		//cpp/example/routeguide/... \
 		//java/example/routeguide/... \
 		//go/example/routeguide/... \
+
+# grpc-web closure test seems to crash phantomjs.  Todo move to headless-chrome
+# for rules_closure.
+closure_test:
+	bazel test \
+		//github.com/grpc/grpc-web/example/routeguide/...
 
 
 # This one seems to have an issue with the missing 'qualified_name' pub package,
@@ -88,4 +93,4 @@ client_csharp:
 	bazel build --spawn_strategy=standalone \
 		//csharp/example/routeguide:client 
 
-all: compiles clients servers tests
+all: compile library clients servers tests

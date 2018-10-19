@@ -26,11 +26,6 @@ grpc_java_repositories(
 
 # =========================================
 
-local_repository(
-    name = "io_bazel_rules_dotnet",
-    path = "/home/pcj/github/bazelbuild/rules_dotnet",
-)
-
 load("//csharp:deps.bzl", "csharp_grpc_library")
 
 csharp_grpc_library()
@@ -38,7 +33,6 @@ csharp_grpc_library()
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
 
 dotnet_register_toolchains("host")
-
 #dotnet_register_toolchains(dotnet_version="4.2.3")
 
 dotnet_repositories()
@@ -46,6 +40,12 @@ dotnet_repositories()
 
 load("//csharp/nuget:packages.bzl", nuget_packages = "packages")
 nuget_packages()
+
+load("//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
+load("//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
+
+nuget_protobuf_packages()
+nuget_grpc_packages()
 
 # =========================================
 
@@ -140,11 +140,6 @@ go_rules_dependencies()
 go_register_toolchains()
 
 # =========================================
-
-local_repository(
-    name = "io_bazel_rules_dart",
-    path = "/home/pcj/github/dart-lang/rules_dart",
-)
 
 load("//dart:deps.bzl", "dart_grpc_library")
 
