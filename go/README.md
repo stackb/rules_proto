@@ -43,6 +43,7 @@ go_proto_compile(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
+| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 
 ### Optional Attributes
 
@@ -94,6 +95,7 @@ go_grpc_compile(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
+| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 
 ### Optional Attributes
 
@@ -149,6 +151,7 @@ go_proto_library(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
+| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 
 ### Optional Attributes
 
@@ -204,6 +207,7 @@ go_grpc_library(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
+| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 
 ### Optional Attributes
 
