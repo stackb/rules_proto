@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//java:java_proto_compile.bzl", "java_proto_compile")
 
 java_proto_compile(

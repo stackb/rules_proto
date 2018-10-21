@@ -1,10 +1,19 @@
-# Language `scala`
+# `scala`
+
+| Rule | Description |
+| ---: | :--- |
+| [scala_proto_compile](#scala_proto_compile) | Generates *.scala protobuf artifacts |
+| [scala_grpc_compile](#scala_grpc_compile) | Generates *.scala protobuf+gRPC artifacts |
+| [scala_proto_library](#scala_proto_library) | Generates *.py protobuf library |
+| [scala_grpc_library](#scala_grpc_library) | Generates *.py protobuf+gRPC library |
+
+---
 
 ## `scala_proto_compile`
 
 Generates *.scala protobuf artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
 
@@ -27,10 +36,9 @@ scala_proto_repositories()
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//scala:scala_proto_compile.bzl", "scala_proto_compile")
 
 scala_proto_compile(
@@ -59,11 +67,13 @@ scala_proto_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `scala_grpc_compile`
 
 Generates *.scala protobuf+gRPC artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
 
@@ -86,10 +96,9 @@ scala_proto_repositories()
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//scala:scala_grpc_compile.bzl", "scala_grpc_compile")
 
 scala_grpc_compile(
@@ -118,11 +127,13 @@ scala_grpc_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `scala_proto_library`
 
 Generates *.py protobuf library
 
-### Usage
+### `WORKSPACE`
 
 ```python
 
@@ -145,10 +156,9 @@ scala_proto_repositories()
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//scala:scala_proto_library.bzl", "scala_proto_library")
 
 scala_proto_library(
@@ -177,11 +187,13 @@ scala_proto_library(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `scala_grpc_library`
 
 Generates *.py protobuf+gRPC library
 
-### Usage
+### `WORKSPACE`
 
 ```python
 
@@ -204,10 +216,9 @@ scala_proto_repositories()
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//scala:scala_grpc_library.bzl", "scala_grpc_library")
 
 scala_grpc_library(

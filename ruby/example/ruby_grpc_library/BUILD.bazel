@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//ruby:ruby_grpc_library.bzl", "ruby_grpc_library")
 
 ruby_grpc_library(

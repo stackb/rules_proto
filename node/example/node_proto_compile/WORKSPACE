@@ -15,7 +15,6 @@ local_repository(
 )
 
 
-# WORKSPACE
 load("@build_stack_rules_proto//node:deps.bzl", "node_proto_compile")
 
 node_proto_compile()

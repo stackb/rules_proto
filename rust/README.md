@@ -1,13 +1,21 @@
-# Language `rust`
+# `rust`
+
+| Rule | Description |
+| ---: | :--- |
+| [rust_proto_compile](#rust_proto_compile) | Generates rust protobuf artifacts |
+| [rust_grpc_compile](#rust_grpc_compile) | Generates rust protobuf+gRPC artifacts |
+| [rust_proto_library](#rust_proto_library) | Generates rust protobuf library |
+| [rust_grpc_library](#rust_grpc_library) | Generates rust protobuf+gRPC library |
+
+---
 
 ## `rust_proto_compile`
 
 Generates rust protobuf artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//rust:deps.bzl", "rust_proto_compile")
 
 rust_proto_compile()
@@ -22,10 +30,9 @@ raze_fetch_remote_crates()
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//rust:rust_proto_compile.bzl", "rust_proto_compile")
 
 rust_proto_compile(
@@ -54,14 +61,15 @@ rust_proto_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `rust_grpc_compile`
 
 Generates rust protobuf+gRPC artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//rust:deps.bzl", "rust_grpc_compile")
 
 rust_grpc_compile()
@@ -76,10 +84,9 @@ raze_fetch_remote_crates()
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//rust:rust_grpc_compile.bzl", "rust_grpc_compile")
 
 rust_grpc_compile(
@@ -108,14 +115,15 @@ rust_grpc_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `rust_proto_library`
 
 Generates rust protobuf library
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//rust:deps.bzl", "rust_proto_library")
 
 rust_proto_library()
@@ -130,10 +138,9 @@ raze_fetch_remote_crates()
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//rust:rust_proto_library.bzl", "rust_proto_library")
 
 rust_proto_library(
@@ -162,14 +169,15 @@ rust_proto_library(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `rust_grpc_library`
 
 Generates rust protobuf+gRPC library
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//rust:deps.bzl", "rust_grpc_library")
 
 rust_grpc_library()
@@ -184,10 +192,9 @@ raze_fetch_remote_crates()
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//rust:rust_grpc_library.bzl", "rust_grpc_library")
 
 rust_grpc_library(

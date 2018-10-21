@@ -1,0 +1,37 @@
+
+http_archive(
+	name = "bazel_toolchains",
+	urls = [
+		"https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
+		"https://github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
+	],
+	strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
+	sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
+)
+
+local_repository(
+	name = "build_stack_rules_proto",
+	path = "../../../",
+)
+
+
+load("@build_stack_rules_proto//dart:deps.bzl", "dart_grpc_compile")
+
+dart_grpc_compile()
+
+load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+
+dart_protoc_plugin_deps()
+
+load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
+
+dart_repositories()
+
+load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
+
+pub_repository(
+    name = "vendor_isolate",
+    output = ".",
+    package = "isolate",
+    version = "2.0.2",
+)

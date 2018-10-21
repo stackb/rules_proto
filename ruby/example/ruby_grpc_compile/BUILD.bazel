@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//ruby:ruby_grpc_compile.bzl", "ruby_grpc_compile")
 
 ruby_grpc_compile(

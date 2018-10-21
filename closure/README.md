@@ -1,22 +1,27 @@
-# Language `closure`
+# `closure`
+
+| Rule | Description |
+| ---: | :--- |
+| [closure_proto_compile](#closure_proto_compile) | Generates closure *.js protobuf+gRPC files |
+| [closure_proto_library](#closure_proto_library) | Generates a closure_library with compiled protobuf *.js files |
+
+---
 
 ## `closure_proto_compile`
 
 Generates closure *.js protobuf+gRPC files
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//closure:deps.bzl", "closure_proto_compile")
 
 closure_proto_compile()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//closure:closure_proto_compile.bzl", "closure_proto_compile")
 
 closure_proto_compile(
@@ -45,11 +50,13 @@ closure_proto_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `closure_proto_library`
 
 Generates a closure_library with compiled protobuf *.js files
 
-### Usage
+### `WORKSPACE`
 
 ```python
 load("@build_stack_rules_proto//closure:deps.bzl", "closure_proto_library")
@@ -63,10 +70,9 @@ closure_repositories(
 )
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//closure:closure_proto_library.bzl", "closure_proto_library")
 
 closure_proto_library(

@@ -15,7 +15,6 @@ local_repository(
 )
 
 
-# WORKSPACE
 load("@build_stack_rules_proto//go:deps.bzl", "go_proto_library")
 
 go_proto_library()

@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//node:node_proto_library.bzl", "node_proto_library")
 
 node_proto_library(

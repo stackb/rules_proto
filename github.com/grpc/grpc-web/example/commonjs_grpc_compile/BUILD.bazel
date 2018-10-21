@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//github.com/grpc/grpc-web:commonjs_grpc_compile.bzl", "commonjs_grpc_compile")
 
 commonjs_grpc_compile(

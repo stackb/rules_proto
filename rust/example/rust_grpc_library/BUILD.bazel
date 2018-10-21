@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//rust:rust_grpc_library.bzl", "rust_grpc_library")
 
 rust_grpc_library(

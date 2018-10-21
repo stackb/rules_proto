@@ -1,22 +1,27 @@
-# Language `php`
+# `php`
+
+| Rule | Description |
+| ---: | :--- |
+| [php_proto_compile](#php_proto_compile) | Generates php protobuf artifacts |
+| [php_grpc_compile](#php_grpc_compile) | Generates php protobuf+gRPC artifacts |
+
+---
 
 ## `php_proto_compile`
 
 Generates php protobuf artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//php:deps.bzl", "php_proto_compile")
 
 php_proto_compile()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//php:php_proto_compile.bzl", "php_proto_compile")
 
 php_proto_compile(
@@ -45,14 +50,15 @@ php_proto_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `php_grpc_compile`
 
 Generates php protobuf+gRPC artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//php:deps.bzl", "php_grpc_compile")
 
 php_grpc_compile()
@@ -62,10 +68,9 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 grpc_deps()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//php:php_grpc_compile.bzl", "php_grpc_compile")
 
 php_grpc_compile(

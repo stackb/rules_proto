@@ -1,22 +1,29 @@
-# Language `python`
+# `python`
+
+| Rule | Description |
+| ---: | :--- |
+| [python_proto_compile](#python_proto_compile) | Generates *.py protobuf artifacts |
+| [python_grpc_compile](#python_grpc_compile) | Generates *.py protobuf+gRPC artifacts |
+| [python_proto_library](#python_proto_library) | Generates *.py protobuf library |
+| [python_grpc_library](#python_grpc_library) | Generates *.py protobuf+gRPC library |
+
+---
 
 ## `python_proto_compile`
 
 Generates *.py protobuf artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//python:deps.bzl", "python_proto_compile")
 
 python_proto_compile()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//python:python_proto_compile.bzl", "python_proto_compile")
 
 python_proto_compile(
@@ -45,14 +52,15 @@ python_proto_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `python_grpc_compile`
 
 Generates *.py protobuf+gRPC artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//python:deps.bzl", "python_grpc_compile")
 
 python_grpc_compile()
@@ -62,10 +70,9 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 grpc_deps()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//python:python_grpc_compile.bzl", "python_grpc_compile")
 
 python_grpc_compile(
@@ -94,14 +101,15 @@ python_grpc_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `python_proto_library`
 
 Generates *.py protobuf library
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//python:deps.bzl", "python_proto_library")
 
 python_proto_library()
@@ -121,10 +129,9 @@ protobuf_pip_install()
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//python:python_proto_library.bzl", "python_proto_library")
 
 python_proto_library(
@@ -153,14 +160,15 @@ python_proto_library(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `python_grpc_library`
 
 Generates *.py protobuf+gRPC library
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//python:deps.bzl", "python_grpc_library")
 
 python_grpc_library()
@@ -192,10 +200,9 @@ load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
 grpc_pip_install()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//python:python_grpc_library.bzl", "python_grpc_library")
 
 python_grpc_library(

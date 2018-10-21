@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//python:python_proto_library.bzl", "python_proto_library")
 
 python_proto_library(

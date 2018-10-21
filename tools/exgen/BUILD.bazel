@@ -17,6 +17,7 @@ go_library(
         "objc.go",
         "php.go",
         "rust.go",
+        "dart.go",
     ],
     importpath = "github.com/stackb/rules_proto/tools/exgen",
     deps = [

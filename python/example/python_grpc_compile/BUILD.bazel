@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//python:python_grpc_compile.bzl", "python_grpc_compile")
 
 python_grpc_compile(

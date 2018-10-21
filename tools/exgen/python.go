@@ -1,7 +1,6 @@
 package main
 
-var pythonGrpcCompileUsageTemplate = mustTemplate(`# WORKSPACE
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var pythonGrpcCompileUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -9,8 +8,7 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()`)
 
-var pythonProtoLibraryUsageTemplate = mustTemplate(`# WORKSPACE
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var pythonProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -28,8 +26,7 @@ load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install
 protobuf_pip_install()
 `)
 
-var pythonGrpcLibraryUsageTemplate = mustTemplate(`# WORKSPACE
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var pythonGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 

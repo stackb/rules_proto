@@ -1,22 +1,29 @@
-# Language `java`
+# `java`
+
+| Rule | Description |
+| ---: | :--- |
+| [java_proto_compile](#java_proto_compile) | Generates a srcjar with protobuf *.java files |
+| [java_grpc_compile](#java_grpc_compile) | Generates a srcjar with protobuf+gRPC *.java files |
+| [java_proto_library](#java_proto_library) | Generates a jar with compiled protobuf *.class files |
+| [java_grpc_library](#java_grpc_library) | Generates a jar with compiled protobuf+gRPC *.class files |
+
+---
 
 ## `java_proto_compile`
 
 Generates a srcjar with protobuf *.java files
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//java:deps.bzl", "java_proto_compile")
 
 java_proto_compile()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//java:java_proto_compile.bzl", "java_proto_compile")
 
 java_proto_compile(
@@ -45,23 +52,23 @@ java_proto_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `java_grpc_compile`
 
 Generates a srcjar with protobuf+gRPC *.java files
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//java:deps.bzl", "java_grpc_compile")
 
 java_grpc_compile()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//java:java_grpc_compile.bzl", "java_grpc_compile")
 
 java_grpc_compile(
@@ -90,23 +97,23 @@ java_grpc_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `java_proto_library`
 
 Generates a jar with compiled protobuf *.class files
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//java:deps.bzl", "java_proto_library")
 
 java_proto_library()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//java:java_proto_library.bzl", "java_proto_library")
 
 java_proto_library(
@@ -135,14 +142,15 @@ java_proto_library(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `java_grpc_library`
 
 Generates a jar with compiled protobuf+gRPC *.class files
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 
 io_grpc_grpc_java()
@@ -157,10 +165,9 @@ load("@build_stack_rules_proto//java:deps.bzl", "java_grpc_library")
 java_grpc_library()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//java:java_grpc_library.bzl", "java_grpc_library")
 
 java_grpc_library(

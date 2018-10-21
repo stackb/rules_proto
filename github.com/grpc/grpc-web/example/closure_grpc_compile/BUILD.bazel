@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//github.com/grpc/grpc-web:closure_grpc_compile.bzl", "closure_grpc_compile")
 
 closure_grpc_compile(

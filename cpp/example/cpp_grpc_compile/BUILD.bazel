@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//cpp:cpp_grpc_compile.bzl", "cpp_grpc_compile")
 
 cpp_grpc_compile(

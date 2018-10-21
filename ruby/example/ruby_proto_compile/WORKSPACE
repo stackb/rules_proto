@@ -15,7 +15,6 @@ local_repository(
 )
 
 
-# WORKSPACE
 load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_proto_compile")
 
 ruby_proto_compile()

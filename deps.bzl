@@ -293,7 +293,7 @@ def dart_pub_deps_protoc_plugin(**kwargs):
     if name not in native.existing_rules():
         dart_pub_deps(
             name = name,
-            spec = "//dart:pubspec.yaml",
+            spec = str(Label("//dart:pubspec.yaml")),
             override = {
                 "path": "1.6.2",
                 "analyzer": "0.32.5",

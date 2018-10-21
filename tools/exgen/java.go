@@ -1,7 +1,6 @@
 package main
 
-var javaGrpcUsageTemplate = mustTemplate(`# WORKSPACE
-load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+var javaGrpcUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 
 io_grpc_grpc_java()
 

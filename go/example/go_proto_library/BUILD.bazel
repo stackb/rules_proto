@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//go:go_proto_library.bzl", "go_proto_library")
 
 go_proto_library(

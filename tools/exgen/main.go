@@ -52,6 +52,7 @@ type Rule struct {
 	Implementation *template.Template
 	Attrs          []*Attr
 	Plugins        []string
+	Experimental   bool
 }
 
 type Attr struct {
@@ -110,6 +111,7 @@ func action(c *cli.Context) error {
 		makeObjc(),
 		makePhp(),
 		makeRust(),
+		makeDart(),
 		makeGithubComGrpcGrpcWeb(),
 	}
 
@@ -207,13 +209,11 @@ def {{ .Rule.Name }}(**kwargs):
         **kwargs
 	)`)
 
-var usageTemplate = mustTemplate(`# WORKSPACE
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var usageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()`)
 
-var grpcUsageTemplate = mustTemplate(`# WORKSPACE
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var grpcUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -221,32 +221,28 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()`)
 
-var protoCompileExampleTemplate = mustTemplate(`# BUILD.bazel
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+var protoCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
 	name = "person_{{ .Lang.Name }}_proto",
 	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )`)
 
-var grpcCompileExampleTemplate = mustTemplate(`# BUILD.bazel
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+var grpcCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
 	name = "greeter_{{ .Lang.Name }}_grpc",
 	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )`)
 
-var protoLibraryExampleTemplate = mustTemplate(`# BUILD.bazel
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+var protoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
 	name = "person_{{ .Lang.Name }}_library",
 	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )`)
 
-var grpcLibraryExampleTemplate = mustTemplate(`# BUILD.bazel
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+var grpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
 	name = "greeter_{{ .Lang.Name }}_library",
@@ -317,14 +313,20 @@ func mustWriteMakefile(dir string, languages []*Language) {
 	for _, lang := range languages {
 		ruleNames := make([]string, len(lang.Rules))
 		for i, rule := range lang.Rules {
-			ruleNames[i] = rule.Name
+			if !rule.Experimental {
+				ruleNames[i] = rule.Name
+				continue
+			}
 
 			out.w("%s: ", rule.Name)
 			out.w("\t(cd %s && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)", path.Join(lang.Dir, "example", rule.Name))
 			out.ln()
 		}
-		out.w("%s: %s", lang.Name, strings.Join(ruleNames, " "))
-		out.ln()
+
+		if len(ruleNames) > 0 {
+			out.w("%s: %s", lang.Name, strings.Join(ruleNames, " "))
+			out.ln()
+		}
 	}
 
 	out.MustWrite(path.Join(dir, "Makefile.examples"))
@@ -333,16 +335,30 @@ func mustWriteMakefile(dir string, languages []*Language) {
 func mustWriteReadme(dir string, lang *Language) {
 	out := &LineWriter{}
 
-	out.w("# Language `%s`", lang.Name)
+	out.w("# `%s`", lang.Name)
+	out.ln()
+
+	out.w("| Rule | Description |")
+	out.w("| ---: | :--- |")
+	for _, rule := range lang.Rules {
+		out.w("| [%s](#%s) | %s |", rule.Name, rule.Name, rule.Doc)
+	}
 	out.ln()
 
 	for _, rule := range lang.Rules {
+		out.w(`---`)
+		out.ln()
 		out.w("## `%s`", rule.Name)
 		out.ln()
+
+		if rule.Experimental {
+			out.w(`> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!`)
+			out.ln()
+		}
 		out.w(rule.Doc)
 		out.ln()
 
-		out.w("### Usage")
+		out.w("### `WORKSPACE`")
 		out.ln()
 
 		out.w("```python")
@@ -350,7 +366,7 @@ func mustWriteReadme(dir string, lang *Language) {
 		out.w("```")
 		out.ln()
 
-		out.w("### Example")
+		out.w("### `BUILD.bazel`")
 		out.ln()
 
 		out.w("```python")

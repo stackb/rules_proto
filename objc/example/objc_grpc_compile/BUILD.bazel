@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//objc:objc_grpc_compile.bzl", "objc_grpc_compile")
 
 objc_grpc_compile(

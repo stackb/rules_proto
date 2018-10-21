@@ -1,22 +1,29 @@
-# Language `ruby`
+# `ruby`
+
+| Rule | Description |
+| ---: | :--- |
+| [ruby_proto_compile](#ruby_proto_compile) | Generates *.ruby protobuf artifacts |
+| [ruby_grpc_compile](#ruby_grpc_compile) | Generates *.ruby protobuf+gRPC artifacts |
+| [ruby_proto_library](#ruby_proto_library) | Generates *.rb protobuf library |
+| [ruby_grpc_library](#ruby_grpc_library) | Generates *.rb protobuf+gRPC library |
+
+---
 
 ## `ruby_proto_compile`
 
 Generates *.ruby protobuf artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_proto_compile")
 
 ruby_proto_compile()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//ruby:ruby_proto_compile.bzl", "ruby_proto_compile")
 
 ruby_proto_compile(
@@ -45,14 +52,15 @@ ruby_proto_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `ruby_grpc_compile`
 
 Generates *.ruby protobuf+gRPC artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_grpc_compile")
 
 ruby_grpc_compile()
@@ -62,10 +70,9 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 grpc_deps()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//ruby:ruby_grpc_compile.bzl", "ruby_grpc_compile")
 
 ruby_grpc_compile(
@@ -94,11 +101,13 @@ ruby_grpc_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `ruby_proto_library`
 
 Generates *.rb protobuf library
 
-### Usage
+### `WORKSPACE`
 
 ```python
 
@@ -119,10 +128,9 @@ bundle_install(
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//ruby:ruby_proto_library.bzl", "ruby_proto_library")
 
 ruby_proto_library(
@@ -151,11 +159,13 @@ ruby_proto_library(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `ruby_grpc_library`
 
 Generates *.rb protobuf+gRPC library
 
-### Usage
+### `WORKSPACE`
 
 ```python
 
@@ -180,10 +190,9 @@ bundle_install(
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//ruby:ruby_grpc_library.bzl", "ruby_grpc_library")
 
 ruby_grpc_library(

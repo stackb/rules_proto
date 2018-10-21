@@ -15,7 +15,6 @@ local_repository(
 )
 
 
-# WORKSPACE
 load("@build_stack_rules_proto//php:deps.bzl", "php_grpc_compile")
 
 php_grpc_compile()

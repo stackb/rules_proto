@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//scala:scala_proto_library.bzl", "scala_proto_library")
 
 scala_proto_library(

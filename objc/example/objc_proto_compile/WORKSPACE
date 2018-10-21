@@ -15,7 +15,6 @@ local_repository(
 )
 
 
-# WORKSPACE
 load("@build_stack_rules_proto//objc:deps.bzl", "objc_proto_compile")
 
 objc_proto_compile()

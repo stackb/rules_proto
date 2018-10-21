@@ -1,13 +1,21 @@
-# Language `go`
+# `go`
+
+| Rule | Description |
+| ---: | :--- |
+| [go_proto_compile](#go_proto_compile) | Generates *.go protobuf artifacts |
+| [go_grpc_compile](#go_grpc_compile) | Generates *.go protobuf+gRPC artifacts |
+| [go_proto_library](#go_proto_library) | Generates *.go protobuf library |
+| [go_grpc_library](#go_grpc_library) | Generates *.go protobuf+gRPC library |
+
+---
 
 ## `go_proto_compile`
 
 Generates *.go protobuf artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//go:deps.bzl", "go_proto_compile")
 
 go_proto_compile()
@@ -19,10 +27,9 @@ go_rules_dependencies()
 go_register_toolchains()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//go:go_proto_compile.bzl", "go_proto_compile")
 
 go_proto_compile(
@@ -51,14 +58,15 @@ go_proto_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `go_grpc_compile`
 
 Generates *.go protobuf+gRPC artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//go:deps.bzl", "go_grpc_compile")
 
 go_grpc_compile()
@@ -70,10 +78,9 @@ go_rules_dependencies()
 go_register_toolchains()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//go:go_grpc_compile.bzl", "go_grpc_compile")
 
 go_grpc_compile(
@@ -102,14 +109,15 @@ go_grpc_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `go_proto_library`
 
 Generates *.go protobuf library
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//go:deps.bzl", "go_proto_library")
 
 go_proto_library()
@@ -121,10 +129,9 @@ go_rules_dependencies()
 go_register_toolchains()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//go:go_proto_library.bzl", "go_proto_library")
 
 go_proto_library(
@@ -157,14 +164,15 @@ go_proto_library(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `go_grpc_library`
 
 Generates *.go protobuf+gRPC library
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//go:deps.bzl", "go_grpc_library")
 
 go_grpc_library()
@@ -176,10 +184,9 @@ go_rules_dependencies()
 go_register_toolchains()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//go:go_grpc_library.bzl", "go_grpc_library")
 
 go_grpc_library(

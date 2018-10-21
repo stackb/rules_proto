@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
 
 cpp_proto_compile(

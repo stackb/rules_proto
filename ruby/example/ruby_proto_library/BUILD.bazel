@@ -1,4 +1,3 @@
-# BUILD.bazel
 load("@build_stack_rules_proto//ruby:ruby_proto_library.bzl", "ruby_proto_library")
 
 ruby_proto_library(

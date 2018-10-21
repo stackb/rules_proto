@@ -1,22 +1,29 @@
-# Language `node`
+# `node`
+
+| Rule | Description |
+| ---: | :--- |
+| [node_proto_compile](#node_proto_compile) | Generates node *.js protobuf artifacts |
+| [node_grpc_compile](#node_grpc_compile) | Generates node *.js protobuf+gRPC artifacts |
+| [node_proto_library](#node_proto_library) | Generates node *.js protobuf library |
+| [node_grpc_library](#node_grpc_library) | Generates node *.js protobuf+gRPC library |
+
+---
 
 ## `node_proto_compile`
 
 Generates node *.js protobuf artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//node:deps.bzl", "node_proto_compile")
 
 node_proto_compile()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//node:node_proto_compile.bzl", "node_proto_compile")
 
 node_proto_compile(
@@ -45,14 +52,15 @@ node_proto_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `node_grpc_compile`
 
 Generates node *.js protobuf+gRPC artifacts
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//node:deps.bzl", "node_grpc_compile")
 
 node_grpc_compile()
@@ -62,10 +70,9 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 grpc_deps()
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//node:node_grpc_compile.bzl", "node_grpc_compile")
 
 node_grpc_compile(
@@ -94,14 +101,15 @@ node_grpc_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `node_proto_library`
 
 Generates node *.js protobuf library
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//node:deps.bzl", "node_proto_library")
 
 node_proto_library()
@@ -119,10 +127,9 @@ yarn_modules(
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//node:node_proto_library.bzl", "node_proto_library")
 
 node_proto_library(
@@ -151,14 +158,15 @@ node_proto_library(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `node_grpc_library`
 
 Generates node *.js protobuf+gRPC library
 
-### Usage
+### `WORKSPACE`
 
 ```python
-# WORKSPACE
 load("@build_stack_rules_proto//node:deps.bzl", "node_grpc_library")
 
 node_grpc_library()
@@ -187,10 +195,9 @@ yarn_modules(
 
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//node:node_grpc_library.bzl", "node_grpc_library")
 
 node_grpc_library(

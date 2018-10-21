@@ -1,10 +1,19 @@
-# Language `grpc_web`
+# `grpc_web`
+
+| Rule | Description |
+| ---: | :--- |
+| [closure_grpc_compile](#closure_grpc_compile) | Generates a closure *.js protobuf+gRPC files |
+| [commonjs_grpc_compile](#commonjs_grpc_compile) | Generates a commonjs *.js protobuf+gRPC files |
+| [commonjs_dts_grpc_compile](#commonjs_dts_grpc_compile) | Generates a commonjs_dts *.js protobuf+gRPC files |
+| [ts_grpc_compile](#ts_grpc_compile) | Generates a commonjs *.ts protobuf+gRPC files |
+
+---
 
 ## `closure_grpc_compile`
 
 Generates a closure *.js protobuf+gRPC files
 
-### Usage
+### `WORKSPACE`
 
 ```python
 load("@build_stack_rules_proto//github.com/grpc/grpc-web:deps.bzl", "closure_grpc_compile")
@@ -18,10 +27,9 @@ closure_repositories(
 )
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//github.com/grpc/grpc-web:closure_grpc_compile.bzl", "closure_grpc_compile")
 
 closure_grpc_compile(
@@ -50,11 +58,13 @@ closure_grpc_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `commonjs_grpc_compile`
 
 Generates a commonjs *.js protobuf+gRPC files
 
-### Usage
+### `WORKSPACE`
 
 ```python
 load("@build_stack_rules_proto//github.com/grpc/grpc-web:deps.bzl", "commonjs_grpc_compile")
@@ -68,10 +78,9 @@ closure_repositories(
 )
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//github.com/grpc/grpc-web:commonjs_grpc_compile.bzl", "commonjs_grpc_compile")
 
 commonjs_grpc_compile(
@@ -100,11 +109,13 @@ commonjs_grpc_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `commonjs_dts_grpc_compile`
 
 Generates a commonjs_dts *.js protobuf+gRPC files
 
-### Usage
+### `WORKSPACE`
 
 ```python
 load("@build_stack_rules_proto//github.com/grpc/grpc-web:deps.bzl", "commonjs_dts_grpc_compile")
@@ -118,10 +129,9 @@ closure_repositories(
 )
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//github.com/grpc/grpc-web:commonjs_dts_grpc_compile.bzl", "commonjs_dts_grpc_compile")
 
 commonjs_dts_grpc_compile(
@@ -150,11 +160,13 @@ commonjs_dts_grpc_compile(
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 
+---
+
 ## `ts_grpc_compile`
 
 Generates a commonjs *.ts protobuf+gRPC files
 
-### Usage
+### `WORKSPACE`
 
 ```python
 load("@build_stack_rules_proto//github.com/grpc/grpc-web:deps.bzl", "ts_grpc_compile")
@@ -168,10 +180,9 @@ closure_repositories(
 )
 ```
 
-### Example
+### `BUILD.bazel`
 
 ```python
-# BUILD.bazel
 load("@build_stack_rules_proto//github.com/grpc/grpc-web:ts_grpc_compile.bzl", "ts_grpc_compile")
 
 ts_grpc_compile(
