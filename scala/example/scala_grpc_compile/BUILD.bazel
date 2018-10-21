@@ -1,0 +1,7 @@
+# BUILD.bazel
+load("@build_stack_rules_proto//scala:scala_grpc_compile.bzl", "scala_grpc_compile")
+
+scala_grpc_compile(
+	name = "greeter_scala_grpc",
+	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)

@@ -103,8 +103,10 @@ func action(c *cli.Context) error {
 		makeClosure(),
 		makeNode(),
 		makeJava(),
+		makeScala(),
 		makePython(),
 		makeGo(),
+		makeRuby(),
 		makeGithubComGrpcGrpcWeb(),
 	}
 

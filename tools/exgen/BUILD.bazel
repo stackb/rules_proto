@@ -4,14 +4,16 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "go_default_library",
     srcs = [
-        "main.go",
-        "java.go",
-        "python.go",
-        "cpp.go",
-        "go.go",
         "closure.go",
-        "node.go",
+        "cpp.go",
         "github_grpc_grpc_web.go",
+        "go.go",
+        "java.go",
+        "main.go",
+        "node.go",
+        "python.go",
+        "ruby.go",
+        "scala.go",
     ],
     importpath = "github.com/stackb/rules_proto/tools/exgen",
     deps = [

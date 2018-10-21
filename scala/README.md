@@ -1,0 +1,238 @@
+# Language `scala`
+
+## `scala_proto_compile`
+
+Generates *.scala protobuf artifacts
+
+### Usage
+
+```python
+
+load("@build_stack_rules_proto//scala:deps.bzl", "scala_proto_compile")
+scala_proto_compile()
+
+# rules_go used here to compile a wrapper around the protoc-gen-scala plugin
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+scala_repositories()
+
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+scala_register_toolchains()
+
+load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
+scala_proto_repositories()
+
+```
+
+### Example
+
+```python
+# BUILD.bazel
+load("@build_stack_rules_proto//scala:scala_proto_compile.bzl", "scala_proto_compile")
+
+scala_proto_compile(
+	name = "person_scala_proto",
+	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)
+```
+
+### Mandatory Attributes
+
+| Name | Type | Default | Description |
+| ---: | :--- | ------- | ----------- |
+| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
+
+### Optional Attributes
+
+| Name | Type | Default | Description |
+| ---: | :--- | ------- | ----------- |
+| plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
+| plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
+| outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
+| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
+| protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
+| verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
+| include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
+| include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
+| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+
+## `scala_grpc_compile`
+
+Generates *.scala protobuf+gRPC artifacts
+
+### Usage
+
+```python
+
+load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_compile")
+scala_grpc_compile()
+
+# rules_go used here to compile a wrapper around the protoc-gen-scala plugin
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+scala_repositories()
+
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+scala_register_toolchains()
+
+load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
+scala_proto_repositories()
+
+```
+
+### Example
+
+```python
+# BUILD.bazel
+load("@build_stack_rules_proto//scala:scala_grpc_compile.bzl", "scala_grpc_compile")
+
+scala_grpc_compile(
+	name = "greeter_scala_grpc",
+	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)
+```
+
+### Mandatory Attributes
+
+| Name | Type | Default | Description |
+| ---: | :--- | ------- | ----------- |
+| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
+
+### Optional Attributes
+
+| Name | Type | Default | Description |
+| ---: | :--- | ------- | ----------- |
+| plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
+| plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
+| outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
+| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
+| protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
+| verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
+| include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
+| include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
+| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+
+## `scala_proto_library`
+
+Generates *.py protobuf library
+
+### Usage
+
+```python
+
+load("@build_stack_rules_proto//scala:deps.bzl", "scala_proto_library")
+scala_proto_library()
+
+# rules_go used here to compile a wrapper around the protoc-gen-scala plugin
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+scala_repositories()
+
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+scala_register_toolchains()
+
+load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
+scala_proto_repositories()
+
+```
+
+### Example
+
+```python
+# BUILD.bazel
+load("@build_stack_rules_proto//scala:scala_proto_library.bzl", "scala_proto_library")
+
+scala_proto_library(
+	name = "person_scala_library",
+	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)
+```
+
+### Mandatory Attributes
+
+| Name | Type | Default | Description |
+| ---: | :--- | ------- | ----------- |
+| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
+
+### Optional Attributes
+
+| Name | Type | Default | Description |
+| ---: | :--- | ------- | ----------- |
+| plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
+| plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
+| outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
+| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
+| protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
+| verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
+| include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
+| include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
+| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+
+## `scala_grpc_library`
+
+Generates *.py protobuf+gRPC library
+
+### Usage
+
+```python
+
+load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_library")
+scala_grpc_library()
+
+# rules_go used here to compile a wrapper around the protoc-gen-scala plugin
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+scala_repositories()
+
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+scala_register_toolchains()
+
+load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
+scala_proto_repositories()
+
+```
+
+### Example
+
+```python
+# BUILD.bazel
+load("@build_stack_rules_proto//scala:scala_grpc_library.bzl", "scala_grpc_library")
+
+scala_grpc_library(
+	name = "greeter_scala_library",
+	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)
+```
+
+### Mandatory Attributes
+
+| Name | Type | Default | Description |
+| ---: | :--- | ------- | ----------- |
+| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
+
+### Optional Attributes
+
+| Name | Type | Default | Description |
+| ---: | :--- | ------- | ----------- |
+| plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
+| plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
+| outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
+| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
+| protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
+| verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
+| include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
+| include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
+| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

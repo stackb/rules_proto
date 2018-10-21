@@ -48,6 +48,20 @@ java_grpc_library:
 
 java: java_proto_compile java_grpc_compile java_proto_library java_grpc_library
 
+scala_proto_compile: 
+	(cd scala/example/scala_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+scala_grpc_compile: 
+	(cd scala/example/scala_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+scala_proto_library: 
+	(cd scala/example/scala_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+scala_grpc_library: 
+	(cd scala/example/scala_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+scala: scala_proto_compile scala_grpc_compile scala_proto_library scala_grpc_library
+
 python_proto_compile: 
 	(cd python/example/python_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
@@ -75,6 +89,20 @@ go_grpc_library:
 	(cd go/example/go_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
 go: go_proto_compile go_grpc_compile go_proto_library go_grpc_library
+
+ruby_proto_compile: 
+	(cd ruby/example/ruby_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+ruby_grpc_compile: 
+	(cd ruby/example/ruby_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+ruby_proto_library: 
+	(cd ruby/example/ruby_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+ruby_grpc_library: 
+	(cd ruby/example/ruby_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+ruby: ruby_proto_compile ruby_grpc_compile ruby_proto_library ruby_grpc_library
 
 closure_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
