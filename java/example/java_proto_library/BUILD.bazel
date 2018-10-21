@@ -1,0 +1,7 @@
+# BUILD.bazel
+load("@build_stack_rules_proto//java:java_proto_library.bzl", "java_proto_library")
+
+java_proto_library(
+	name = "person_java_library",
+	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)

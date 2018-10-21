@@ -10,7 +10,7 @@ grpc_java_repositories(
     omit_com_google_protobuf = True,
 )
 
-load("@build_stack_rules_proto//{{ .Lang.Name }}:deps.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()`)
 

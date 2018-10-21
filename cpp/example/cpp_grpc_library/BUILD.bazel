@@ -1,0 +1,7 @@
+# BUILD.bazel
+load("@build_stack_rules_proto//cpp:cpp_grpc_library.bzl", "cpp_grpc_library")
+
+cpp_grpc_library(
+	name = "greeter_cpp_library",
+	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)

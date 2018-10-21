@@ -1,0 +1,7 @@
+# BUILD.bazel
+load("@build_stack_rules_proto//github.com/grpc/grpc-web:commonjs_dts_grpc_compile.bzl", "commonjs_dts_grpc_compile")
+
+commonjs_dts_grpc_compile(
+	name = "greeter_grpc_web_grpc",
+	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)

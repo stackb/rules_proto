@@ -170,9 +170,9 @@ closure_grpc_library()
 
 # =========================================
 
-load("//github.com/grpc/grpc-web:deps.bzl", "web_grpc_library")
+load("//github.com/grpc/grpc-web:deps.bzl", "closure_grpc_library")
 
-web_grpc_library()
+closure_grpc_library()
 
 # =========================================
 

@@ -1,0 +1,11 @@
+# BUILD.bazel
+load("@build_stack_rules_proto//go:go_grpc_library.bzl", "go_grpc_library")
+
+go_grpc_library(
+	name = "greeter_go_library",
+    importpath = "github.com/stackb/rules_proto/go/example/go_grpc_library/greeter",
+	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    go_deps = [
+        "@com_github_golang_protobuf//ptypes/any:go_default_library",
+    ],
+)

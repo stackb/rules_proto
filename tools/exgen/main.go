@@ -201,12 +201,12 @@ def {{ .Rule.Name }}(**kwargs):
 	)`)
 
 var usageTemplate = mustTemplate(`# WORKSPACE
-load("@build_stack_rules_proto//{{ .Lang.Name }}:deps.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()`)
 
 var grpcUsageTemplate = mustTemplate(`# WORKSPACE
-load("@build_stack_rules_proto//{{ .Lang.Name }}:deps.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -215,7 +215,7 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 grpc_deps()`)
 
 var protoCompileExampleTemplate = mustTemplate(`# BUILD.bazel
-load("@build_stack_rules_proto//{{ .Lang.Name }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
 	name = "person_{{ .Lang.Name }}_proto",
@@ -223,7 +223,7 @@ load("@build_stack_rules_proto//{{ .Lang.Name }}:{{ .Rule.Name }}.bzl", "{{ .Rul
 )`)
 
 var grpcCompileExampleTemplate = mustTemplate(`# BUILD.bazel
-load("@build_stack_rules_proto//{{ .Lang.Name }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
 	name = "greeter_{{ .Lang.Name }}_grpc",
@@ -231,7 +231,7 @@ load("@build_stack_rules_proto//{{ .Lang.Name }}:{{ .Rule.Name }}.bzl", "{{ .Rul
 )`)
 
 var protoLibraryExampleTemplate = mustTemplate(`# BUILD.bazel
-load("@build_stack_rules_proto//{{ .Lang.Name }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
 	name = "person_{{ .Lang.Name }}_library",
@@ -239,7 +239,7 @@ load("@build_stack_rules_proto//{{ .Lang.Name }}:{{ .Rule.Name }}.bzl", "{{ .Rul
 )`)
 
 var grpcLibraryExampleTemplate = mustTemplate(`# BUILD.bazel
-load("@build_stack_rules_proto//{{ .Lang.Name }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
 	name = "greeter_{{ .Lang.Name }}_library",
@@ -256,7 +256,7 @@ func mustWriteRule(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
 	out.t(rule.Implementation, &ruleData{lang, rule})
 	out.ln()
-	out.MustWrite(path.Join(dir, lang.Name, rule.Name+".bzl"))
+	out.MustWrite(path.Join(dir, lang.Dir, rule.Name+".bzl"))
 }
 
 func mustWriteExamples(dir string, lang *Language) {
@@ -270,6 +270,9 @@ func mustWriteExamples(dir string, lang *Language) {
 
 func mustWriteExampleWorkspace(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
+	depth := strings.Split(lang.Dir, "/")
+	// +2 as we are in the example/{rule} subdirectory
+	relpath := strings.Repeat("../", len(depth)+2)
 
 	out.w(`
 http_archive(
@@ -284,9 +287,9 @@ http_archive(
 
 local_repository(
 	name = "build_stack_rules_proto",
-	path = "../../..",
+	path = "%s",
 )
-`)
+`, relpath)
 
 	out.ln()
 	out.t(rule.Usage, &ruleData{lang, rule})
@@ -310,7 +313,7 @@ func mustWriteMakefile(dir string, languages []*Language) {
 			ruleNames[i] = rule.Name
 
 			out.w("%s: ", rule.Name)
-			out.w("\t(cd %s && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc ../../../tools/bazelrc.remote build //...)", path.Join(lang.Dir, "example", rule.Name))
+			out.w("\t(cd %s && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)", path.Join(lang.Dir, "example", rule.Name))
 			out.ln()
 		}
 		out.w("%s: %s", lang.Name, strings.Join(ruleNames, " "))

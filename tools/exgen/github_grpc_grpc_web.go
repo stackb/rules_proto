@@ -1,6 +1,6 @@
 package main
 
-var grpcWebUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Name }}:deps.bzl", "{{ .Rule.Name }}")
+var grpcWebUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -19,9 +19,36 @@ func makeGithubComGrpcGrpcWeb() *Language {
 				Name:           "closure_grpc_compile",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//github.com/grpc/grpc-web:closure"},
-				Usage:          usageTemplate,
-				Example:        protoCompileExampleTemplate,
+				Usage:          grpcWebUsageTemplate,
+				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates a closure *.js protobuf+gRPC files",
+				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+			},
+			&Rule{
+				Name:           "commonjs_grpc_compile",
+				Implementation: compileRuleTemplate,
+				Plugins:        []string{"//github.com/grpc/grpc-web:commonjs"},
+				Usage:          grpcWebUsageTemplate,
+				Example:        grpcCompileExampleTemplate,
+				Doc:            "Generates a commonjs *.js protobuf+gRPC files",
+				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+			},
+			&Rule{
+				Name:           "commonjs_dts_grpc_compile",
+				Implementation: compileRuleTemplate,
+				Plugins:        []string{"//github.com/grpc/grpc-web:commonjs_dts"},
+				Usage:          grpcWebUsageTemplate,
+				Example:        grpcCompileExampleTemplate,
+				Doc:            "Generates a commonjs_dts *.js protobuf+gRPC files",
+				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+			},
+			&Rule{
+				Name:           "ts_grpc_compile",
+				Implementation: compileRuleTemplate,
+				Plugins:        []string{"//github.com/grpc/grpc-web:ts"},
+				Usage:          grpcWebUsageTemplate,
+				Example:        grpcCompileExampleTemplate,
+				Doc:            "Generates a commonjs *.ts protobuf+gRPC files",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
 			},
 		},

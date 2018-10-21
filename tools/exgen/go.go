@@ -1,7 +1,7 @@
 package main
 
 var goUsageTemplate = mustTemplate(`# WORKSPACE
-load("@build_stack_rules_proto//{{ .Lang.Name }}:deps.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -127,7 +127,7 @@ def {{ .Rule.Name }}(**kwargs):
 `)
 
 var goProtoLibraryExampleTemplate = mustTemplate(`# BUILD.bazel
-load("@build_stack_rules_proto//{{ .Lang.Name }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
 	name = "person_{{ .Lang.Name }}_library",
@@ -139,7 +139,7 @@ load("@build_stack_rules_proto//{{ .Lang.Name }}:{{ .Rule.Name }}.bzl", "{{ .Rul
 )`)
 
 var goGrpcLibraryExampleTemplate = mustTemplate(`# BUILD.bazel
-load("@build_stack_rules_proto//{{ .Lang.Name }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
 	name = "greeter_{{ .Lang.Name }}_library",
