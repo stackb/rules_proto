@@ -81,6 +81,26 @@ func main() {
 			Usage: "Directory to scan",
 			Value: ".",
 		},
+		&cli.StringFlag{
+			Name:  "header",
+			Usage: "Template for the main readme header",
+			Value: "tools/exgen/header.tpl",
+		},
+		&cli.StringFlag{
+			Name:  "footer",
+			Usage: "Template for the main readme footer",
+			Value: "tools/exgen/footer.tpl",
+		},
+		&cli.StringFlag{
+			Name:  "ref",
+			Usage: "Version ref to use for main readme",
+			Value: "v0.9",
+		},
+		&cli.StringFlag{
+			Name:  "sha256",
+			Usage: "Sha256 value to use for main readme",
+			Value: "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973d",
+		},
 	}
 	app.Action = func(c *cli.Context) error {
 		err := action(c)
@@ -116,12 +136,18 @@ func action(c *cli.Context) error {
 	}
 
 	for _, lang := range languages {
-		mustWriteReadme(dir, lang)
-		mustWriteRules(dir, lang)
-		mustWriteExamples(dir, lang)
+		mustWriteLanguageReadme(dir, lang)
+		mustWriteLanguageRules(dir, lang)
+		mustWriteLanguageExamples(dir, lang)
 	}
 
 	mustWriteMakefile(dir, languages)
+	mustWriteReadme(dir, c.String("header"), c.String("footer"), struct {
+		Ref, Sha256 string
+	}{
+		Ref:    c.String("ref"),
+		Sha256: c.String("sha256"),
+	}, languages)
 
 	return nil
 }
@@ -249,29 +275,29 @@ var grpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{
 	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )`)
 
-func mustWriteRules(dir string, lang *Language) {
+func mustWriteLanguageRules(dir string, lang *Language) {
 	for _, rule := range lang.Rules {
-		mustWriteRule(dir, lang, rule)
+		mustWriteLanguageRule(dir, lang, rule)
 	}
 }
 
-func mustWriteRule(dir string, lang *Language, rule *Rule) {
+func mustWriteLanguageRule(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
 	out.t(rule.Implementation, &ruleData{lang, rule})
 	out.ln()
 	out.MustWrite(path.Join(dir, lang.Dir, rule.Name+".bzl"))
 }
 
-func mustWriteExamples(dir string, lang *Language) {
+func mustWriteLanguageExamples(dir string, lang *Language) {
 	for _, rule := range lang.Rules {
 		exampleDir := path.Join(dir, lang.Dir, "example", rule.Name)
 		os.MkdirAll(exampleDir, os.ModePerm)
-		mustWriteExampleWorkspace(exampleDir, lang, rule)
-		mustWriteExampleBuildFile(exampleDir, lang, rule)
+		mustWriteLanguageExampleWorkspace(exampleDir, lang, rule)
+		mustWriteLanguageExampleBuildFile(exampleDir, lang, rule)
 	}
 }
 
-func mustWriteExampleWorkspace(dir string, lang *Language, rule *Rule) {
+func mustWriteLanguageExampleWorkspace(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
 	depth := strings.Split(lang.Dir, "/")
 	// +2 as we are in the example/{rule} subdirectory
@@ -300,7 +326,7 @@ local_repository(
 	out.MustWrite(path.Join(dir, "WORKSPACE"))
 }
 
-func mustWriteExampleBuildFile(dir string, lang *Language, rule *Rule) {
+func mustWriteLanguageExampleBuildFile(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
 	out.t(rule.Example, &ruleData{lang, rule})
 	out.ln()
@@ -332,7 +358,7 @@ func mustWriteMakefile(dir string, languages []*Language) {
 	out.MustWrite(path.Join(dir, "Makefile.examples"))
 }
 
-func mustWriteReadme(dir string, lang *Language) {
+func mustWriteLanguageReadme(dir string, lang *Language) {
 	out := &LineWriter{}
 
 	out.w("# `%s`", lang.Name)
@@ -403,6 +429,30 @@ func mustWriteReadme(dir string, lang *Language) {
 	out.MustWrite(path.Join(dir, lang.Dir, "README.md"))
 }
 
+func mustWriteReadme(dir, header, footer string, data interface{}, languages []*Language) {
+	out := &LineWriter{}
+
+	out.tpl(header, data)
+	out.ln()
+
+	out.w("## Rules")
+	out.ln()
+
+	out.w("| Lang | Rule | Description |")
+	out.w("| ---: | :--- | :--- |")
+	for _, lang := range languages {
+		for _, rule := range lang.Rules {
+			out.w("| [%s](/%s) | [%s](/%s#%s) | %s |", lang.Name, lang.Dir, rule.Name, lang.Dir, rule.Name, rule.Doc)
+		}
+	}
+	out.ln()
+
+	out.tpl(footer, data)
+	out.ln()
+
+	out.MustWrite(path.Join(dir, "README.md"))
+}
+
 // ********************************
 // Utility types
 // ********************************
@@ -422,6 +472,14 @@ func (w *LineWriter) t(t *template.Template, data interface{}) {
 		log.Fatalf("%v", err)
 	}
 	w.lines = append(w.lines, buf.String())
+}
+
+func (w *LineWriter) tpl(filename string, data interface{}) {
+	tpl, err := template.ParseFiles(filename)
+	if err != nil {
+		log.Fatalf("Failed to parse %s: %v", filename, err)
+	}
+	w.t(tpl, data)
 }
 
 func (w *LineWriter) ln() {

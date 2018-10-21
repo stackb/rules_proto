@@ -30,4 +30,8 @@ go_binary(
     name = "exgen",
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
+    data = [
+        "header.tpl",
+        "footer.tpl",
+    ],
 )
