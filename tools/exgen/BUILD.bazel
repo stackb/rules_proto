@@ -10,6 +10,7 @@ go_library(
         "cpp.go",
         "go.go",
         "closure.go",
+        "node.go",
         "github_grpc_grpc_web.go",
     ],
     importpath = "github.com/stackb/rules_proto/tools/exgen",

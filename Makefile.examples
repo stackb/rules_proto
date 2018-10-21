@@ -20,6 +20,20 @@ closure_proto_library:
 
 closure: closure_proto_compile closure_proto_library
 
+node_proto_compile: 
+	(cd node/example/node_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+node_grpc_compile: 
+	(cd node/example/node_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+node_proto_library: 
+	(cd node/example/node_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+node_grpc_library: 
+	(cd node/example/node_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+node: node_proto_compile node_grpc_compile node_proto_library node_grpc_library
+
 java_proto_compile: 
 	(cd java/example/java_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 

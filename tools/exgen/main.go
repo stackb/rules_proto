@@ -101,6 +101,7 @@ func action(c *cli.Context) error {
 	languages := []*Language{
 		makeCpp(),
 		makeClosure(),
+		makeNode(),
 		makeJava(),
 		makePython(),
 		makeGo(),
