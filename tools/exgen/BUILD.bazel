@@ -16,6 +16,7 @@ go_library(
         "scala.go",
         "objc.go",
         "php.go",
+        "rust.go",
     ],
     importpath = "github.com/stackb/rules_proto/tools/exgen",
     deps = [

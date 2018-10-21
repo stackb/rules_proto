@@ -1,0 +1,7 @@
+# BUILD.bazel
+load("@build_stack_rules_proto//rust:rust_proto_library.bzl", "rust_proto_library")
+
+rust_proto_library(
+	name = "person_rust_library",
+	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)

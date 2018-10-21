@@ -120,6 +120,20 @@ php_grpc_compile:
 
 php: php_proto_compile php_grpc_compile
 
+rust_proto_compile: 
+	(cd rust/example/rust_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+rust_grpc_compile: 
+	(cd rust/example/rust_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+rust_proto_library: 
+	(cd rust/example/rust_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+rust_grpc_library: 
+	(cd rust/example/rust_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+rust: rust_proto_compile rust_grpc_compile rust_proto_library rust_grpc_library
+
 closure_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 

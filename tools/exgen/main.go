@@ -109,6 +109,7 @@ func action(c *cli.Context) error {
 		makeRuby(),
 		makeObjc(),
 		makePhp(),
+		makeRust(),
 		makeGithubComGrpcGrpcWeb(),
 	}
 
