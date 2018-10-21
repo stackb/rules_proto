@@ -112,6 +112,14 @@ objc_grpc_compile:
 
 objc: objc_proto_compile objc_grpc_compile
 
+php_proto_compile: 
+	(cd php/example/php_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+php_grpc_compile: 
+	(cd php/example/php_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+php: php_proto_compile php_grpc_compile
+
 closure_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
