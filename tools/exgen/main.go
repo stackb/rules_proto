@@ -107,6 +107,7 @@ func action(c *cli.Context) error {
 		makePython(),
 		makeGo(),
 		makeRuby(),
+		makeObjc(),
 		makeGithubComGrpcGrpcWeb(),
 	}
 
