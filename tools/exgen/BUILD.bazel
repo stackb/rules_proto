@@ -1,0 +1,25 @@
+
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "main.go",
+        "java.go",
+        "python.go",
+        "cpp.go",
+        "go.go",
+        "github_grpc_grpc_web.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/tools/exgen",
+    deps = [
+        "@com_github_urfave_cli//:go_default_library",        
+    ]
+)
+
+# Utility program to generate documentation and examples
+go_binary(
+    name = "exgen",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)

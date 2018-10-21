@@ -1,23 +1,30 @@
 
 
-load("//java:compile.bzl", "java_grpc_compile")
-load("//java:library.bzl", "java_grpc_library")
+load("//java:compile.bzl", "java_proto_compile", "java_grpc_compile")
+
+java_proto_compile(
+    name = "personc",
+    deps = [
+        "//example/proto:person_proto",
+    ],
+)
 
 java_grpc_compile(
+    name = "routeguidec",
+    deps = [
+        "//example/proto:routeguide_proto",
+    ],
+)
+
+
+load("//java:library.bzl", "java_grpc_compile", "java_grpc_library")
+
+java_grpc_library(
     name = "routeguide",
     deps = [
         "//example/proto:routeguide_proto",
     ],
 )
-
-java_grpc_library(
-    name = "routeguide_lib",
-    deps = [
-        "//example/proto:routeguide_proto",
-    ],
-)
-
-load("//java:library.bzl", "java_proto_library")
 
 java_proto_library(
     name = "person",

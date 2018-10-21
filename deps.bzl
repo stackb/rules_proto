@@ -54,10 +54,104 @@ def get_sha1(name, default, kwargs):
     return kwargs.get(key, default)
 
 
+def external_protobuf_clib(**kwargs):
+    name = "protobuf_clib"
+    if name not in native.existing_rules():
+        native.bind(
+            name = name,
+            actual = "@com_google_protobuf//:protoc_lib",
+        )
+
+
+def external_protobuf_headers(**kwargs):
+    name = "protobuf_headers"
+    if name not in native.existing_rules():
+        native.bind(
+            name = name,
+            actual = "@com_google_protobuf//:protobuf_headers",
+        )
+
+
+def external_protocol_compiler(**kwargs):
+    name = "protocol_compiler"
+    if name not in native.existing_rules():
+        native.bind(
+            name = name,
+            actual = "@com_google_protobuf//:protoc",
+        )
+
+def external_nanopb(**kwargs):
+    com_github_nanopb_nanopb(**kwargs)
+    name = "nanopb"
+    if name not in native.existing_rules():
+        native.bind(
+            name = name,
+            actual = "@com_github_nanopb_nanopb//:nanopb",
+        )
+
+def external_libssl(**kwargs):
+    boringssl(**kwargs)
+    name = "libssl"
+    if name not in native.existing_rules():
+        native.bind(
+            name = name,
+            actual = "@boringssl//:ssl",
+        )
+
+def external_zlib(**kwargs):
+    com_github_madler_zlib(**kwargs)
+    name = "zlib"
+    if name not in native.existing_rules():
+        native.bind(
+            name = name,
+            actual = "@com_github_madler_zlib//:z",
+        )
+
+
+def com_github_madler_zlib(**kwargs):
+    if "com_github_madler_zlib" not in native.existing_rules():
+       http_archive(
+           name = "com_github_madler_zlib",
+           build_file = "@com_github_grpc_grpc//third_party:zlib.BUILD",
+           strip_prefix = "zlib-cacf7f1d4e3d44d871b605da3b647f07d718623f",
+           url = "https://github.com/madler/zlib/archive/cacf7f1d4e3d44d871b605da3b647f07d718623f.tar.gz",
+       )
+
+def com_github_bazelbuild_bazel_gazelle(**kwargs):
+    if "com_github_bazelbuild_bazel_gazelle" not in native.existing_rules():
+        sha1 = "4bee5cae22da3b948d90293aff01928dd3b9f41a"
+        http_archive(
+            name = "com_github_bazelbuild_bazel_gazelle",
+            strip_prefix = "bazel-gazelle-" + sha1,
+            url = "https://github.com/bazelbuild/bazel-gazelle/archive/%s.tar.gz" % sha1,
+            patch_cmds = [
+                # Expose the go_library targets so we can use it!
+                "sed -i 's|//:__subpackages__|//visibility:public|g' internal/rule/BUILD.bazel",
+            ],
+        )
+
+
+def boringssl(**kwargs):
+    if "boringssl" not in native.existing_rules():
+        http_archive(
+            name = "boringssl",
+            # on the chromium-stable-with-bazel branch
+            url = "https://boringssl.googlesource.com/boringssl/+archive/dcd3e6e6ecddf059adb48fca45bc7346a108bdd9.tar.gz",
+        )
+
+
+def com_github_nanopb_nanopb(**kwargs):
+    name = "com_github_nanopb_nanopb"
+    ref = get_ref(name, "5f85445781ef29e50435c2eea661ca435a19b6bc", kwargs) 
+    sha256 = get_sha256(name, "8c09d35806c857dcb3a383c81052cc7ba1c5855e827d1792a83bd57251821e29", kwargs)
+    github_archive(name, "nanopb", "nanopb", ref, sha256)
+
+
 def com_google_protobuf(**kwargs):
     name = "com_google_protobuf"
     ref = get_ref(name, "48cb18e5c419ddd23d9badcfe4e9df7bde1979b2", kwargs) # ref referenced by com_github_grpc_grpc
-    sha256 = get_sha256(name, "013cc34f3c51c0f87e059a12ea203087a7a15dca2e453295345e1d02e2b9634c", kwargs)
+    #sha256 = get_sha256(name, "013cc34f3c51c0f87e059a12ea203087a7a15dca2e453295345e1d02e2b9634c", kwargs)
+    sha256 = get_sha256(name, "f5a35e17fb07f3b13517264cd17a089636fcbb2912f9df7bef7414058969a8d2", kwargs)
     github_archive(name, "google", "protobuf", ref, sha256)
 
 

@@ -63,3 +63,13 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
+
+proto_library(
+    name = "greeter_grpc",
+    srcs = [
+        "greeter.proto",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+)

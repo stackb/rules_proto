@@ -5,6 +5,7 @@ load("//:deps.bzl",
 
 def rust_proto_compile(**kwargs):
     com_google_protobuf(**kwargs)
+    io_bazel_rules_rust(**kwargs)
 
 def rust_grpc_compile(**kwargs):
     rust_proto_compile(**kwargs)
