@@ -118,6 +118,11 @@ Generates android protobuf library
 load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 io_grpc_grpc_java()
 
+load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+grpc_java_repositories(
+    omit_com_google_protobuf = True,
+)
+
 load("@build_stack_rules_proto//android:deps.bzl", "android_proto_library")
 android_proto_library()
 
@@ -171,11 +176,16 @@ Generates android protobuf+gRPC library
 load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 io_grpc_grpc_java()
 
+load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+grpc_java_repositories(
+    omit_com_google_protobuf = True,
+)
+
 load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_library")
 android_grpc_library()
 
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-grpc_deps()
+#load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+#grpc_deps()
 
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
 android_sdk_repository(name = "androidsdk")
