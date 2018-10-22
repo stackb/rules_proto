@@ -33,8 +33,8 @@ go_register_toolchains()
 load("@build_stack_rules_proto//go:go_proto_compile.bzl", "go_proto_compile")
 
 go_proto_compile(
-	name = "person_go_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_go_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -86,8 +86,8 @@ go_register_toolchains()
 load("@build_stack_rules_proto//go:go_grpc_compile.bzl", "go_grpc_compile")
 
 go_grpc_compile(
-	name = "greeter_go_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_go_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 

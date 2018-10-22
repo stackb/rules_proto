@@ -233,11 +233,11 @@ var compileRuleTemplate = mustTemplate(`load("//:compile.bzl", "proto_compile")
 
 def {{ .Rule.Name }}(**kwargs):
     proto_compile(
-		plugins = [{{ range .Rule.Plugins }}
-			str(Label("{{ . }}")),{{ end }}
-		],
+        plugins = [{{ range .Rule.Plugins }}
+            str(Label("{{ . }}")),{{ end }}
+        ],
         **kwargs
-	)`)
+    )`)
 
 var usageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
@@ -254,29 +254,29 @@ grpc_deps()`)
 var protoCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
-	name = "person_{{ .Lang.Name }}_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_{{ .Lang.Name }}_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )`)
 
 var grpcCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
-	name = "greeter_{{ .Lang.Name }}_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_{{ .Lang.Name }}_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )`)
 
 var protoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
-	name = "person_{{ .Lang.Name }}_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_{{ .Lang.Name }}_library",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )`)
 
 var grpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
-	name = "greeter_{{ .Lang.Name }}_library",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_{{ .Lang.Name }}_library",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )`)
 
 func mustWriteLanguageRules(dir string, lang *Language) {
@@ -309,18 +309,18 @@ func mustWriteLanguageExampleWorkspace(dir string, lang *Language, rule *Rule) {
 
 	out.w(`
 http_archive(
-	name = "bazel_toolchains",
-	urls = [
-		"https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
-		"https://github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
-	],
-	strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
-	sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
+    name = "bazel_toolchains",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
+        "https://github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
+    ],
+    strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
+    sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
 )
 
 local_repository(
-	name = "build_stack_rules_proto",
-	path = "%s",
+    name = "build_stack_rules_proto",
+    path = "%s",
 )
 `, relpath)
 

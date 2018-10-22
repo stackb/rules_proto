@@ -27,8 +27,8 @@ python_proto_compile()
 load("@build_stack_rules_proto//python:python_proto_compile.bzl", "python_proto_compile")
 
 python_proto_compile(
-	name = "person_python_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_python_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -76,8 +76,8 @@ grpc_deps()
 load("@build_stack_rules_proto//python:python_grpc_compile.bzl", "python_grpc_compile")
 
 python_grpc_compile(
-	name = "greeter_python_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_python_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -135,8 +135,8 @@ protobuf_pip_install()
 load("@build_stack_rules_proto//python:python_proto_library.bzl", "python_proto_library")
 
 python_proto_library(
-	name = "person_python_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_python_library",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -206,8 +206,8 @@ grpc_pip_install()
 load("@build_stack_rules_proto//python:python_grpc_library.bzl", "python_grpc_library")
 
 python_grpc_library(
-	name = "greeter_python_library",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_python_library",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 

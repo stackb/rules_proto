@@ -25,8 +25,8 @@ closure_proto_compile()
 load("@build_stack_rules_proto//closure:closure_proto_compile.bzl", "closure_proto_compile")
 
 closure_proto_compile(
-	name = "person_closure_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_closure_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -76,8 +76,8 @@ closure_repositories(
 load("@build_stack_rules_proto//closure:closure_proto_library.bzl", "closure_proto_library")
 
 closure_proto_library(
-	name = "person_closure_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_closure_library",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 

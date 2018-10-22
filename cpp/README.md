@@ -27,8 +27,8 @@ cpp_proto_compile()
 load("@build_stack_rules_proto//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
 
 cpp_proto_compile(
-	name = "person_cpp_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_cpp_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -76,8 +76,8 @@ grpc_deps()
 load("@build_stack_rules_proto//cpp:cpp_grpc_compile.bzl", "cpp_grpc_compile")
 
 cpp_grpc_compile(
-	name = "greeter_cpp_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_cpp_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -121,8 +121,8 @@ cpp_proto_library()
 load("@build_stack_rules_proto//cpp:cpp_proto_library.bzl", "cpp_proto_library")
 
 cpp_proto_library(
-	name = "person_cpp_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_cpp_library",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -170,8 +170,8 @@ grpc_deps()
 load("@build_stack_rules_proto//cpp:cpp_grpc_library.bzl", "cpp_grpc_library")
 
 cpp_grpc_library(
-	name = "greeter_cpp_library",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_cpp_library",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 

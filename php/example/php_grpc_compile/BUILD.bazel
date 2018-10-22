@@ -1,6 +1,6 @@
 load("@build_stack_rules_proto//php:php_grpc_compile.bzl", "php_grpc_compile")
 
 php_grpc_compile(
-	name = "greeter_php_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_php_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )

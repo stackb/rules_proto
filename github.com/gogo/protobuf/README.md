@@ -41,8 +41,8 @@ go_register_toolchains()
 load("@build_stack_rules_proto//github.com/gogo/protobuf:gogo_proto_compile.bzl", "gogo_proto_compile")
 
 gogo_proto_compile(
-	name = "person_gogo_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_gogo_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -94,8 +94,8 @@ go_register_toolchains()
 load("@build_stack_rules_proto//github.com/gogo/protobuf:gogo_grpc_compile.bzl", "gogo_grpc_compile")
 
 gogo_grpc_compile(
-	name = "greeter_gogo_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_gogo_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -262,8 +262,8 @@ go_register_toolchains()
 load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofast_proto_compile.bzl", "gogofast_proto_compile")
 
 gogofast_proto_compile(
-	name = "person_gogo_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_gogo_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -315,8 +315,8 @@ go_register_toolchains()
 load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofast_grpc_compile.bzl", "gogofast_grpc_compile")
 
 gogofast_grpc_compile(
-	name = "greeter_gogo_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_gogo_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -483,8 +483,8 @@ go_register_toolchains()
 load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_proto_compile.bzl", "gogofaster_proto_compile")
 
 gogofaster_proto_compile(
-	name = "person_gogo_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_gogo_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -536,8 +536,8 @@ go_register_toolchains()
 load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_grpc_compile.bzl", "gogofaster_grpc_compile")
 
 gogofaster_grpc_compile(
-	name = "greeter_gogo_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_gogo_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 

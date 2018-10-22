@@ -1,6 +1,6 @@
 load("@build_stack_rules_proto//java:java_grpc_compile.bzl", "java_grpc_compile")
 
 java_grpc_compile(
-	name = "greeter_java_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_java_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )

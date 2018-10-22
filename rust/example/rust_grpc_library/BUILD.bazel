@@ -1,6 +1,6 @@
 load("@build_stack_rules_proto//rust:rust_grpc_library.bzl", "rust_grpc_library")
 
 rust_grpc_library(
-	name = "greeter_rust_library",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_rust_library",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )

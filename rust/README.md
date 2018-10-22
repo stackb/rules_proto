@@ -36,8 +36,8 @@ raze_fetch_remote_crates()
 load("@build_stack_rules_proto//rust:rust_proto_compile.bzl", "rust_proto_compile")
 
 rust_proto_compile(
-	name = "person_rust_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_rust_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -90,8 +90,8 @@ raze_fetch_remote_crates()
 load("@build_stack_rules_proto//rust:rust_grpc_compile.bzl", "rust_grpc_compile")
 
 rust_grpc_compile(
-	name = "greeter_rust_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_rust_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -144,8 +144,8 @@ raze_fetch_remote_crates()
 load("@build_stack_rules_proto//rust:rust_proto_library.bzl", "rust_proto_library")
 
 rust_proto_library(
-	name = "person_rust_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_rust_library",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -198,8 +198,8 @@ raze_fetch_remote_crates()
 load("@build_stack_rules_proto//rust:rust_grpc_library.bzl", "rust_grpc_library")
 
 rust_grpc_library(
-	name = "greeter_rust_library",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_rust_library",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 

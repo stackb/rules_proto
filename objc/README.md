@@ -25,8 +25,8 @@ objc_proto_compile()
 load("@build_stack_rules_proto//objc:objc_proto_compile.bzl", "objc_proto_compile")
 
 objc_proto_compile(
-	name = "person_objc_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_objc_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -74,8 +74,8 @@ grpc_deps()
 load("@build_stack_rules_proto//objc:objc_grpc_compile.bzl", "objc_grpc_compile")
 
 objc_grpc_compile(
-	name = "greeter_objc_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_objc_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 

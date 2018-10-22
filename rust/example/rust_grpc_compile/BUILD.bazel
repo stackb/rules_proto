@@ -1,6 +1,6 @@
 load("@build_stack_rules_proto//rust:rust_grpc_compile.bzl", "rust_grpc_compile")
 
 rust_grpc_compile(
-	name = "greeter_rust_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_rust_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )

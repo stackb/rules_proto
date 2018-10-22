@@ -27,8 +27,8 @@ node_proto_compile()
 load("@build_stack_rules_proto//node:node_proto_compile.bzl", "node_proto_compile")
 
 node_proto_compile(
-	name = "person_node_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_node_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -76,8 +76,8 @@ grpc_deps()
 load("@build_stack_rules_proto//node:node_grpc_compile.bzl", "node_grpc_compile")
 
 node_grpc_compile(
-	name = "greeter_node_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_node_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -133,8 +133,8 @@ yarn_modules(
 load("@build_stack_rules_proto//node:node_proto_library.bzl", "node_proto_library")
 
 node_proto_library(
-	name = "person_node_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_node_library",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -201,8 +201,8 @@ yarn_modules(
 load("@build_stack_rules_proto//node:node_grpc_library.bzl", "node_grpc_library")
 
 node_grpc_library(
-	name = "greeter_node_library",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_node_library",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 

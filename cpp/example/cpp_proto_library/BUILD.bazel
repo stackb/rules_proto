@@ -1,6 +1,6 @@
 load("@build_stack_rules_proto//cpp:cpp_proto_library.bzl", "cpp_proto_library")
 
 cpp_proto_library(
-	name = "person_cpp_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_cpp_library",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )

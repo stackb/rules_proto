@@ -27,8 +27,8 @@ ruby_proto_compile()
 load("@build_stack_rules_proto//ruby:ruby_proto_compile.bzl", "ruby_proto_compile")
 
 ruby_proto_compile(
-	name = "person_ruby_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_ruby_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -76,8 +76,8 @@ grpc_deps()
 load("@build_stack_rules_proto//ruby:ruby_grpc_compile.bzl", "ruby_grpc_compile")
 
 ruby_grpc_compile(
-	name = "greeter_ruby_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_ruby_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -134,8 +134,8 @@ bundle_install(
 load("@build_stack_rules_proto//ruby:ruby_proto_library.bzl", "ruby_proto_library")
 
 ruby_proto_library(
-	name = "person_ruby_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_ruby_library",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -196,8 +196,8 @@ bundle_install(
 load("@build_stack_rules_proto//ruby:ruby_grpc_library.bzl", "ruby_grpc_library")
 
 ruby_grpc_library(
-	name = "greeter_ruby_library",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_ruby_library",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 

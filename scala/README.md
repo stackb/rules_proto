@@ -42,8 +42,8 @@ scala_proto_repositories()
 load("@build_stack_rules_proto//scala:scala_proto_compile.bzl", "scala_proto_compile")
 
 scala_proto_compile(
-	name = "person_scala_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_scala_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -102,8 +102,8 @@ scala_proto_repositories()
 load("@build_stack_rules_proto//scala:scala_grpc_compile.bzl", "scala_grpc_compile")
 
 scala_grpc_compile(
-	name = "greeter_scala_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_scala_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -162,8 +162,8 @@ scala_proto_repositories()
 load("@build_stack_rules_proto//scala:scala_proto_library.bzl", "scala_proto_library")
 
 scala_proto_library(
-	name = "person_scala_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_scala_library",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -222,8 +222,8 @@ scala_proto_repositories()
 load("@build_stack_rules_proto//scala:scala_grpc_library.bzl", "scala_grpc_library")
 
 scala_grpc_library(
-	name = "greeter_scala_library",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_scala_library",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 

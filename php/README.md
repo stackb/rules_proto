@@ -25,8 +25,8 @@ php_proto_compile()
 load("@build_stack_rules_proto//php:php_proto_compile.bzl", "php_proto_compile")
 
 php_proto_compile(
-	name = "person_php_proto",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+    name = "person_php_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -74,8 +74,8 @@ grpc_deps()
 load("@build_stack_rules_proto//php:php_grpc_compile.bzl", "php_grpc_compile")
 
 php_grpc_compile(
-	name = "greeter_php_grpc",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    name = "greeter_php_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
