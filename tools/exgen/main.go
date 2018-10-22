@@ -341,18 +341,30 @@ func mustWriteMakefile(dir string, languages []*Language) {
 	out := &LineWriter{}
 
 	for _, lang := range languages {
-		ruleNames := make([]string, len(lang.Rules))
+		buildNames := make([]string, len(lang.Rules))
+		cleanNames := make([]string, len(lang.Rules))
+
 		for i, rule := range lang.Rules {
-			ruleNames[i] = rule.Name
+			buildNames[i] = rule.Name
+			cleanNames[i] = "clean_" + rule.Name
 
 			out.w("%s: ", rule.Name)
 			out.w("\t(cd %s && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)", path.Join(lang.Dir, "example", rule.Name))
 			out.ln()
+
+			out.w("clean_%s: ", rule.Name)
+			out.w("\t(cd %s && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)", path.Join(lang.Dir, "example", rule.Name))
+			out.ln()
+
 		}
 
-		if len(ruleNames) > 0 {
-			out.w("%s: %s", lang.Name, strings.Join(ruleNames, " "))
+		if len(buildNames) > 0 {
+			out.w("%s: %s", lang.Name, strings.Join(buildNames, " "))
 			out.ln()
+
+			out.w("clean_%s: %s", lang.Name, strings.Join(cleanNames, " "))
+			out.ln()
+
 		}
 	}
 
