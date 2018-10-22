@@ -55,6 +55,8 @@ type Rule struct {
 	Plugins []string
 	// Not expected to be functional
 	Experimental bool
+	// Not compatible with remote execution
+	RemoteIncompatible bool
 }
 
 type Attr struct {
@@ -123,18 +125,21 @@ func action(c *cli.Context) error {
 	}
 
 	languages := []*Language{
-		makeCpp(),
+
+		makeAndroid(),
 		makeClosure(),
-		makeNode(),
-		makeJava(),
-		makeScala(),
-		makePython(),
+		makeCpp(),
+		makeDart(),
 		makeGo(),
-		makeRuby(),
+		makeJava(),
+		makeNode(),
 		makeObjc(),
 		makePhp(),
+		makePython(),
+		makeRuby(),
 		makeRust(),
-		makeDart(),
+		makeScala(),
+
 		makeGithubComGrpcGrpcWeb(),
 		makeGogo(),
 	}

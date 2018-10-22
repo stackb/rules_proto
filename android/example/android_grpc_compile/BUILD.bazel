@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//android:android_grpc_compile.bzl", "android_grpc_compile")
+
+android_grpc_compile(
+    name = "greeter_android_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)

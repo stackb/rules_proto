@@ -49,48 +49,52 @@ workspace dependencies and build rule usage.
 
 | Lang | Rule | Description |
 | ---: | :--- | :--- |
+| [android](/android) | [android_proto_compile](/android#android_proto_compile) | Generates android protobuf artifacts |
+| [android](/android) | [android_grpc_compile](/android#android_grpc_compile) | Generates android protobuf+gRPC artifacts |
+| [android](/android) | [android_proto_library](/android#android_proto_library) | Generates android protobuf library |
+| [android](/android) | [android_grpc_library](/android#android_grpc_library) | Generates android protobuf+gRPC library |
+| [closure](/closure) | [closure_proto_compile](/closure#closure_proto_compile) | Generates closure *.js protobuf+gRPC files |
+| [closure](/closure) | [closure_proto_library](/closure#closure_proto_library) | Generates a closure_library with compiled protobuf *.js files |
 | [cpp](/cpp) | [cpp_proto_compile](/cpp#cpp_proto_compile) | Generates *.h,*.cc protobuf artifacts |
 | [cpp](/cpp) | [cpp_grpc_compile](/cpp#cpp_grpc_compile) | Generates *.h,*.cc protobuf+gRPC artifacts |
 | [cpp](/cpp) | [cpp_proto_library](/cpp#cpp_proto_library) | Generates *.h,*.cc protobuf library |
 | [cpp](/cpp) | [cpp_grpc_library](/cpp#cpp_grpc_library) | Generates *.h,*.cc protobuf+gRPC library |
-| [closure](/closure) | [closure_proto_compile](/closure#closure_proto_compile) | Generates closure *.js protobuf+gRPC files |
-| [closure](/closure) | [closure_proto_library](/closure#closure_proto_library) | Generates a closure_library with compiled protobuf *.js files |
-| [node](/node) | [node_proto_compile](/node#node_proto_compile) | Generates node *.js protobuf artifacts |
-| [node](/node) | [node_grpc_compile](/node#node_grpc_compile) | Generates node *.js protobuf+gRPC artifacts |
-| [node](/node) | [node_proto_library](/node#node_proto_library) | Generates node *.js protobuf library |
-| [node](/node) | [node_grpc_library](/node#node_grpc_library) | Generates node *.js protobuf+gRPC library |
-| [java](/java) | [java_proto_compile](/java#java_proto_compile) | Generates a srcjar with protobuf *.java files |
-| [java](/java) | [java_grpc_compile](/java#java_grpc_compile) | Generates a srcjar with protobuf+gRPC *.java files |
-| [java](/java) | [java_proto_library](/java#java_proto_library) | Generates a jar with compiled protobuf *.class files |
-| [java](/java) | [java_grpc_library](/java#java_grpc_library) | Generates a jar with compiled protobuf+gRPC *.class files |
-| [scala](/scala) | [scala_proto_compile](/scala#scala_proto_compile) | Generates *.scala protobuf artifacts |
-| [scala](/scala) | [scala_grpc_compile](/scala#scala_grpc_compile) | Generates *.scala protobuf+gRPC artifacts |
-| [scala](/scala) | [scala_proto_library](/scala#scala_proto_library) | Generates *.py protobuf library |
-| [scala](/scala) | [scala_grpc_library](/scala#scala_grpc_library) | Generates *.py protobuf+gRPC library |
-| [python](/python) | [python_proto_compile](/python#python_proto_compile) | Generates *.py protobuf artifacts |
-| [python](/python) | [python_grpc_compile](/python#python_grpc_compile) | Generates *.py protobuf+gRPC artifacts |
-| [python](/python) | [python_proto_library](/python#python_proto_library) | Generates *.py protobuf library |
-| [python](/python) | [python_grpc_library](/python#python_grpc_library) | Generates *.py protobuf+gRPC library |
-| [go](/go) | [go_proto_compile](/go#go_proto_compile) | Generates *.go protobuf artifacts |
-| [go](/go) | [go_grpc_compile](/go#go_grpc_compile) | Generates *.go protobuf+gRPC artifacts |
-| [go](/go) | [go_proto_library](/go#go_proto_library) | Generates *.go protobuf library |
-| [go](/go) | [go_grpc_library](/go#go_grpc_library) | Generates *.go protobuf+gRPC library |
-| [ruby](/ruby) | [ruby_proto_compile](/ruby#ruby_proto_compile) | Generates *.ruby protobuf artifacts |
-| [ruby](/ruby) | [ruby_grpc_compile](/ruby#ruby_grpc_compile) | Generates *.ruby protobuf+gRPC artifacts |
-| [ruby](/ruby) | [ruby_proto_library](/ruby#ruby_proto_library) | Generates *.rb protobuf library |
-| [ruby](/ruby) | [ruby_grpc_library](/ruby#ruby_grpc_library) | Generates *.rb protobuf+gRPC library |
-| [objc](/objc) | [objc_proto_compile](/objc#objc_proto_compile) | Generates objc protobuf artifacts |
-| [objc](/objc) | [objc_grpc_compile](/objc#objc_grpc_compile) | Generates objc protobuf+gRPC artifacts |
-| [php](/php) | [php_proto_compile](/php#php_proto_compile) | Generates php protobuf artifacts |
-| [php](/php) | [php_grpc_compile](/php#php_grpc_compile) | Generates php protobuf+gRPC artifacts |
-| [rust](/rust) | [rust_proto_compile](/rust#rust_proto_compile) | Generates rust protobuf artifacts |
-| [rust](/rust) | [rust_grpc_compile](/rust#rust_grpc_compile) | Generates rust protobuf+gRPC artifacts |
-| [rust](/rust) | [rust_proto_library](/rust#rust_proto_library) | Generates rust protobuf library |
-| [rust](/rust) | [rust_grpc_library](/rust#rust_grpc_library) | Generates rust protobuf+gRPC library |
 | [dart](/dart) | [dart_proto_compile](/dart#dart_proto_compile) | Generates dart protobuf artifacts |
 | [dart](/dart) | [dart_grpc_compile](/dart#dart_grpc_compile) | Generates dart protobuf+gRPC artifacts |
 | [dart](/dart) | [dart_proto_library](/dart#dart_proto_library) | Generates dart protobuf library |
 | [dart](/dart) | [dart_grpc_library](/dart#dart_grpc_library) | Generates dart protobuf+gRPC library |
+| [go](/go) | [go_proto_compile](/go#go_proto_compile) | Generates *.go protobuf artifacts |
+| [go](/go) | [go_grpc_compile](/go#go_grpc_compile) | Generates *.go protobuf+gRPC artifacts |
+| [go](/go) | [go_proto_library](/go#go_proto_library) | Generates *.go protobuf library |
+| [go](/go) | [go_grpc_library](/go#go_grpc_library) | Generates *.go protobuf+gRPC library |
+| [java](/java) | [java_proto_compile](/java#java_proto_compile) | Generates a srcjar with protobuf *.java files |
+| [java](/java) | [java_grpc_compile](/java#java_grpc_compile) | Generates a srcjar with protobuf+gRPC *.java files |
+| [java](/java) | [java_proto_library](/java#java_proto_library) | Generates a jar with compiled protobuf *.class files |
+| [java](/java) | [java_grpc_library](/java#java_grpc_library) | Generates a jar with compiled protobuf+gRPC *.class files |
+| [node](/node) | [node_proto_compile](/node#node_proto_compile) | Generates node *.js protobuf artifacts |
+| [node](/node) | [node_grpc_compile](/node#node_grpc_compile) | Generates node *.js protobuf+gRPC artifacts |
+| [node](/node) | [node_proto_library](/node#node_proto_library) | Generates node *.js protobuf library |
+| [node](/node) | [node_grpc_library](/node#node_grpc_library) | Generates node *.js protobuf+gRPC library |
+| [objc](/objc) | [objc_proto_compile](/objc#objc_proto_compile) | Generates objc protobuf artifacts |
+| [objc](/objc) | [objc_grpc_compile](/objc#objc_grpc_compile) | Generates objc protobuf+gRPC artifacts |
+| [php](/php) | [php_proto_compile](/php#php_proto_compile) | Generates php protobuf artifacts |
+| [php](/php) | [php_grpc_compile](/php#php_grpc_compile) | Generates php protobuf+gRPC artifacts |
+| [python](/python) | [python_proto_compile](/python#python_proto_compile) | Generates *.py protobuf artifacts |
+| [python](/python) | [python_grpc_compile](/python#python_grpc_compile) | Generates *.py protobuf+gRPC artifacts |
+| [python](/python) | [python_proto_library](/python#python_proto_library) | Generates *.py protobuf library |
+| [python](/python) | [python_grpc_library](/python#python_grpc_library) | Generates *.py protobuf+gRPC library |
+| [ruby](/ruby) | [ruby_proto_compile](/ruby#ruby_proto_compile) | Generates *.ruby protobuf artifacts |
+| [ruby](/ruby) | [ruby_grpc_compile](/ruby#ruby_grpc_compile) | Generates *.ruby protobuf+gRPC artifacts |
+| [ruby](/ruby) | [ruby_proto_library](/ruby#ruby_proto_library) | Generates *.rb protobuf library |
+| [ruby](/ruby) | [ruby_grpc_library](/ruby#ruby_grpc_library) | Generates *.rb protobuf+gRPC library |
+| [rust](/rust) | [rust_proto_compile](/rust#rust_proto_compile) | Generates rust protobuf artifacts |
+| [rust](/rust) | [rust_grpc_compile](/rust#rust_grpc_compile) | Generates rust protobuf+gRPC artifacts |
+| [rust](/rust) | [rust_proto_library](/rust#rust_proto_library) | Generates rust protobuf library |
+| [rust](/rust) | [rust_grpc_library](/rust#rust_grpc_library) | Generates rust protobuf+gRPC library |
+| [scala](/scala) | [scala_proto_compile](/scala#scala_proto_compile) | Generates *.scala protobuf artifacts |
+| [scala](/scala) | [scala_grpc_compile](/scala#scala_grpc_compile) | Generates *.scala protobuf+gRPC artifacts |
+| [scala](/scala) | [scala_proto_library](/scala#scala_proto_library) | Generates *.py protobuf library |
+| [scala](/scala) | [scala_grpc_library](/scala#scala_grpc_library) | Generates *.py protobuf+gRPC library |
 | [grpc_web](/github.com/grpc/grpc-web) | [closure_grpc_compile](/github.com/grpc/grpc-web#closure_grpc_compile) | Generates a closure *.js protobuf+gRPC files |
 | [grpc_web](/github.com/grpc/grpc-web) | [commonjs_grpc_compile](/github.com/grpc/grpc-web#commonjs_grpc_compile) | Generates a commonjs *.js protobuf+gRPC files |
 | [grpc_web](/github.com/grpc/grpc-web) | [commonjs_dts_grpc_compile](/github.com/grpc/grpc-web#commonjs_dts_grpc_compile) | Generates a commonjs_dts *.js protobuf+gRPC files |
