@@ -1,7 +1,7 @@
 load("@build_stack_rules_proto//go:go_proto_library.bzl", "go_proto_library")
 
 go_proto_library(
-	name = "person_go_library",
+    name = "person_go_library",
     importpath = "github.com/stackb/rules_proto/go/example/go_proto_library/person",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
     go_deps = [

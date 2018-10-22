@@ -1,5 +1,3 @@
-
-
 load("//github.com/gogo/protobuf:compile.bzl", 
     "gogofast_grpc_compile",
     "gogofaster_grpc_compile",

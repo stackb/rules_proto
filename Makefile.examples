@@ -1,22 +1,136 @@
+cpp_proto_compile: 
+	(cd cpp/example/cpp_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+cpp_grpc_compile: 
+	(cd cpp/example/cpp_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+cpp_proto_library: 
+	(cd cpp/example/cpp_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+cpp_grpc_library: 
+	(cd cpp/example/cpp_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
 cpp: cpp_proto_compile cpp_grpc_compile cpp_proto_library cpp_grpc_library
+
+closure_proto_compile: 
+	(cd closure/example/closure_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+closure_proto_library: 
+	(cd closure/example/closure_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
 closure: closure_proto_compile closure_proto_library
 
+node_proto_compile: 
+	(cd node/example/node_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+node_grpc_compile: 
+	(cd node/example/node_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+node_proto_library: 
+	(cd node/example/node_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+node_grpc_library: 
+	(cd node/example/node_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
 node: node_proto_compile node_grpc_compile node_proto_library node_grpc_library
+
+java_proto_compile: 
+	(cd java/example/java_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+java_grpc_compile: 
+	(cd java/example/java_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+java_proto_library: 
+	(cd java/example/java_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+java_grpc_library: 
+	(cd java/example/java_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
 java: java_proto_compile java_grpc_compile java_proto_library java_grpc_library
 
+scala_proto_compile: 
+	(cd scala/example/scala_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+scala_grpc_compile: 
+	(cd scala/example/scala_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+scala_proto_library: 
+	(cd scala/example/scala_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+scala_grpc_library: 
+	(cd scala/example/scala_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
 scala: scala_proto_compile scala_grpc_compile scala_proto_library scala_grpc_library
+
+python_proto_compile: 
+	(cd python/example/python_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+python_grpc_compile: 
+	(cd python/example/python_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+python_proto_library: 
+	(cd python/example/python_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+python_grpc_library: 
+	(cd python/example/python_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
 python: python_proto_compile python_grpc_compile python_proto_library python_grpc_library
 
+go_proto_compile: 
+	(cd go/example/go_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+go_grpc_compile: 
+	(cd go/example/go_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+go_proto_library: 
+	(cd go/example/go_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+go_grpc_library: 
+	(cd go/example/go_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
 go: go_proto_compile go_grpc_compile go_proto_library go_grpc_library
+
+ruby_proto_compile: 
+	(cd ruby/example/ruby_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+ruby_grpc_compile: 
+	(cd ruby/example/ruby_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+ruby_proto_library: 
+	(cd ruby/example/ruby_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+ruby_grpc_library: 
+	(cd ruby/example/ruby_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
 ruby: ruby_proto_compile ruby_grpc_compile ruby_proto_library ruby_grpc_library
 
+objc_proto_compile: 
+	(cd objc/example/objc_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+objc_grpc_compile: 
+	(cd objc/example/objc_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
 objc: objc_proto_compile objc_grpc_compile
 
+php_proto_compile: 
+	(cd php/example/php_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+php_grpc_compile: 
+	(cd php/example/php_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
 php: php_proto_compile php_grpc_compile
+
+rust_proto_compile: 
+	(cd rust/example/rust_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+rust_grpc_compile: 
+	(cd rust/example/rust_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+rust_proto_library: 
+	(cd rust/example/rust_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+rust_grpc_library: 
+	(cd rust/example/rust_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
 rust: rust_proto_compile rust_grpc_compile rust_proto_library rust_grpc_library
 
@@ -32,6 +146,56 @@ dart_proto_library:
 dart_grpc_library: 
 	(cd dart/example/dart_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
-dart:    
+dart: dart_proto_compile dart_grpc_compile dart_proto_library dart_grpc_library
+
+closure_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+commonjs_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/commonjs_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+commonjs_dts_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/commonjs_dts_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+ts_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/ts_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
 grpc_web: closure_grpc_compile commonjs_grpc_compile commonjs_dts_grpc_compile ts_grpc_compile
+
+gogo_proto_compile: 
+	(cd github.com/gogo/protobuf/example/gogo_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogo_grpc_compile: 
+	(cd github.com/gogo/protobuf/example/gogo_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogo_proto_library: 
+	(cd github.com/gogo/protobuf/example/gogo_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogo_grpc_library: 
+	(cd github.com/gogo/protobuf/example/gogo_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogofast_proto_compile: 
+	(cd github.com/gogo/protobuf/example/gogofast_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogofast_grpc_compile: 
+	(cd github.com/gogo/protobuf/example/gogofast_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogofast_proto_library: 
+	(cd github.com/gogo/protobuf/example/gogofast_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogofast_grpc_library: 
+	(cd github.com/gogo/protobuf/example/gogofast_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogofaster_proto_compile: 
+	(cd github.com/gogo/protobuf/example/gogofaster_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogofaster_grpc_compile: 
+	(cd github.com/gogo/protobuf/example/gogofaster_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogofaster_proto_library: 
+	(cd github.com/gogo/protobuf/example/gogofaster_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogofaster_grpc_library: 
+	(cd github.com/gogo/protobuf/example/gogofaster_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+gogo: gogo_proto_compile gogo_grpc_compile gogo_proto_library gogo_grpc_library gogofast_proto_compile gogofast_grpc_compile gogofast_proto_library gogofast_grpc_library gogofaster_proto_compile gogofaster_grpc_compile gogofaster_proto_library gogofaster_grpc_library

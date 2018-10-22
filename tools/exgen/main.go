@@ -31,28 +31,30 @@ type Language struct {
 	Rules []*Rule
 
 	// List of available plugins
-	Plugins []*Plugin
-}
-
-func (l *Language) GetPluginByName(name string) *Plugin {
-	for _, p := range l.Plugins {
-		if p.Name == name {
-			return p
-		}
-	}
-	return nil
+	Plugins map[string]*Plugin
 }
 
 type Rule struct {
-	Name           string
-	Type           string
-	Doc            string
-	Usage          *template.Template
-	Example        *template.Template
+	// Name of the rule
+	Name string
+	// Base name of the rule (typically the lang name)
+	Base string
+	// Kind of the rule (proto|grpc)
+	Kind string
+	// Description
+	Doc string
+	// Temmplate for workspace
+	Usage *template.Template
+	// Template for build file
+	Example *template.Template
+	// Template for bzl file
 	Implementation *template.Template
-	Attrs          []*Attr
-	Plugins        []string
-	Experimental   bool
+	// List of attributes
+	Attrs []*Attr
+	// List of plugins
+	Plugins []string
+	// Not expected to be functional
+	Experimental bool
 }
 
 type Attr struct {
@@ -64,7 +66,8 @@ type Attr struct {
 }
 
 type Plugin struct {
-	Name string
+	Tool    string
+	Options []string
 }
 
 type ruleData struct {
@@ -133,6 +136,7 @@ func action(c *cli.Context) error {
 		makeRust(),
 		makeDart(),
 		makeGithubComGrpcGrpcWeb(),
+		makeGogo(),
 	}
 
 	for _, lang := range languages {
@@ -230,7 +234,7 @@ var compileRuleTemplate = mustTemplate(`load("//:compile.bzl", "proto_compile")
 def {{ .Rule.Name }}(**kwargs):
     proto_compile(
 		plugins = [{{ range .Rule.Plugins }}
-			str(Label("{{ . }}")),{{ end}}
+			str(Label("{{ . }}")),{{ end }}
 		],
         **kwargs
 	)`)
@@ -339,10 +343,7 @@ func mustWriteMakefile(dir string, languages []*Language) {
 	for _, lang := range languages {
 		ruleNames := make([]string, len(lang.Rules))
 		for i, rule := range lang.Rules {
-			if !rule.Experimental {
-				ruleNames[i] = rule.Name
-				continue
-			}
+			ruleNames[i] = rule.Name
 
 			out.w("%s: ", rule.Name)
 			out.w("\t(cd %s && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)", path.Join(lang.Dir, "example", rule.Name))

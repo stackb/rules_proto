@@ -1,5 +1,6 @@
 load("//go:go_proto_compile.bzl", "go_proto_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//go:utils.bzl", "get_importmappings")
 
 def go_proto_library(**kwargs):
     name = kwargs.get("name")
@@ -13,7 +14,8 @@ def go_proto_library(**kwargs):
     go_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
+        transitive = kwargs.pop("transitive", True),
+        plugin_options = get_importmappings(kwargs.pop("importmap", {})),
         visibility = visibility,
     )
 

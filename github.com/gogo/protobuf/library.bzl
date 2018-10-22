@@ -1,4 +1,3 @@
-
 load("//go:utils.bzl", "get_importmappings")
 load("//github.com/gogo/protobuf:compile.bzl", "gogo_proto_compile", "gogo_grpc_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")

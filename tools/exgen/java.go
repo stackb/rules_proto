@@ -67,11 +67,6 @@ func makeJava() *Language {
 	return &Language{
 		Dir:  "java",
 		Name: "java",
-		Plugins: []*Plugin{
-			&Plugin{
-				Name: "//java:java",
-			},
-		},
 		Rules: []*Rule{
 			&Rule{
 				Name:           "java_proto_compile",

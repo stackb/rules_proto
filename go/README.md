@@ -43,7 +43,6 @@ go_proto_compile(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
-| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 
 ### Optional Attributes
 
@@ -58,6 +57,8 @@ go_proto_compile(
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
+| importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
 ---
 
@@ -95,7 +96,6 @@ go_grpc_compile(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
-| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 
 ### Optional Attributes
 
@@ -110,6 +110,8 @@ go_grpc_compile(
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
+| importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
 ---
 
@@ -137,7 +139,7 @@ go_register_toolchains()
 load("@build_stack_rules_proto//go:go_proto_library.bzl", "go_proto_library")
 
 go_proto_library(
-	name = "person_go_library",
+    name = "person_go_library",
     importpath = "github.com/stackb/rules_proto/go/example/go_proto_library/person",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
     go_deps = [
@@ -151,7 +153,6 @@ go_proto_library(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
-| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 
 ### Optional Attributes
 
@@ -166,6 +167,8 @@ go_proto_library(
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
+| importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
 ---
 
@@ -193,9 +196,9 @@ go_register_toolchains()
 load("@build_stack_rules_proto//go:go_grpc_library.bzl", "go_grpc_library")
 
 go_grpc_library(
-	name = "greeter_go_library",
+    name = "greeter_go_library",
     importpath = "github.com/stackb/rules_proto/go/example/go_grpc_library/greeter",
-	deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
     go_deps = [
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
@@ -207,7 +210,6 @@ go_grpc_library(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (`native.proto_library`)          |
-| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 
 ### Optional Attributes
 
@@ -222,4 +224,6 @@ go_grpc_library(
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
+| importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
