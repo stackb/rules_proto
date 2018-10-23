@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//swift:swift_grpc_library.bzl", "swift_grpc_library")
+
+swift_grpc_library(
+    name = "greeter_swift_library",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)
