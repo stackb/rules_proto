@@ -36,7 +36,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "build_stack_rules_proto",
     urls = ["https://github.com/stackb/rules_proto/archive/{{ .Ref }}.tar.gz"],
-    sha256 = {{ .Sha256 }},
+    sha256 = "{{ .Sha256 }}",
     strip_prefix = "rules_proto-{{ .Ref }}",
 )
 ```
