@@ -7,6 +7,7 @@ go_library(
         "android.go",
         "closure.go",
         "cpp.go",
+        "csharp.go",
         "dart.go",
         "github_grpc_grpc_web.go",
         "go.go",

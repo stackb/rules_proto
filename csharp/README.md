@@ -1,42 +1,33 @@
-# `rust`
+# `csharp`
 
 | Rule | Description |
 | ---: | :--- |
-| [rust_proto_compile](#rust_proto_compile) | Generates rust protobuf artifacts |
-| [rust_grpc_compile](#rust_grpc_compile) | Generates rust protobuf+gRPC artifacts |
-| [rust_proto_library](#rust_proto_library) | Generates rust protobuf library |
-| [rust_grpc_library](#rust_grpc_library) | Generates rust protobuf+gRPC library |
+| [csharp_proto_compile](#csharp_proto_compile) | Generates csharp protobuf artifacts |
+| [csharp_grpc_compile](#csharp_grpc_compile) | Generates csharp protobuf+gRPC artifacts |
+| [csharp_proto_library](#csharp_proto_library) | Generates csharp protobuf library |
+| [csharp_grpc_library](#csharp_grpc_library) | Generates csharp protobuf+gRPC library |
 
 ---
 
-## `rust_proto_compile`
+## `csharp_proto_compile`
 
-Generates rust protobuf artifacts
+Generates csharp protobuf artifacts
 
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//rust:deps.bzl", "rust_proto_compile")
+load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_proto_compile")
 
-rust_proto_compile()
-
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
-
-rust_repositories()
-
-load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
-
-raze_fetch_remote_crates()
-
+csharp_proto_compile()
 ```
 
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//rust:rust_proto_compile.bzl", "rust_proto_compile")
+load("@build_stack_rules_proto//csharp:csharp_proto_compile.bzl", "csharp_proto_compile")
 
-rust_proto_compile(
-    name = "person_rust_proto",
+csharp_proto_compile(
+    name = "person_csharp_proto",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
@@ -46,10 +37,10 @@ rust_proto_compile(
 ```python
 load("//:compile.bzl", "proto_compile")
 
-def rust_proto_compile(**kwargs):
+def csharp_proto_compile(**kwargs):
     proto_compile(
         plugins = [
-            str(Label("//rust:rust")),
+            str(Label("//csharp:csharp")),
         ],
         **kwargs
     )
@@ -77,34 +68,29 @@ def rust_proto_compile(**kwargs):
 
 ---
 
-## `rust_grpc_compile`
+## `csharp_grpc_compile`
 
-Generates rust protobuf+gRPC artifacts
+Generates csharp protobuf+gRPC artifacts
 
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//rust:deps.bzl", "rust_grpc_compile")
+load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_compile")
 
-rust_grpc_compile()
+csharp_grpc_compile()
 
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
-rust_repositories()
-
-load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
-
-raze_fetch_remote_crates()
-
+grpc_deps()
 ```
 
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//rust:rust_grpc_compile.bzl", "rust_grpc_compile")
+load("@build_stack_rules_proto//csharp:csharp_grpc_compile.bzl", "csharp_grpc_compile")
 
-rust_grpc_compile(
-    name = "greeter_rust_grpc",
+csharp_grpc_compile(
+    name = "greeter_csharp_grpc",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
@@ -114,11 +100,11 @@ rust_grpc_compile(
 ```python
 load("//:compile.bzl", "proto_compile")
 
-def rust_grpc_compile(**kwargs):
+def csharp_grpc_compile(**kwargs):
     proto_compile(
         plugins = [
-            str(Label("//rust:rust")),
-            str(Label("//rust:grpc_rust")),
+            str(Label("//csharp:csharp")),
+            str(Label("//csharp:grpc_csharp")),
         ],
         **kwargs
     )
@@ -146,34 +132,36 @@ def rust_grpc_compile(**kwargs):
 
 ---
 
-## `rust_proto_library`
+## `csharp_proto_library`
 
-Generates rust protobuf library
+Generates csharp protobuf library
 
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//rust:deps.bzl", "rust_proto_library")
+load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_proto_library")
+csharp_proto_library()
 
-rust_proto_library()
+load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
+dotnet_register_toolchains("host")
+#dotnet_register_toolchains(dotnet_version="4.2.3")
+dotnet_repositories()
 
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
+nuget_packages()
 
-rust_repositories()
-
-load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
-
-raze_fetch_remote_crates()
+load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
+nuget_protobuf_packages()
 
 ```
 
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//rust:rust_proto_library.bzl", "rust_proto_library")
+load("@build_stack_rules_proto//csharp:csharp_proto_library.bzl", "csharp_proto_library")
 
-rust_proto_library(
-    name = "person_rust_library",
+csharp_proto_library(
+    name = "person_csharp_library",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
@@ -181,38 +169,22 @@ rust_proto_library(
 ### `IMPLEMENTATION`
 
 ```python
-load("//rust:rust_proto_compile.bzl", "rust_proto_compile")
-load("//rust:rust_proto_lib.bzl", "rust_proto_lib")
-load("@io_bazel_rules_rust//rust:rust.bzl", "rust_library")
+load("//csharp:csharp_proto_compile.bzl", "csharp_proto_compile")
+load("//:compile.bzl", "invoke_transitive")
+load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 
-def rust_proto_library(**kwargs):
+def csharp_proto_library(**kwargs):
+    kwargs["srcs"] = [invoke_transitive(csharp_proto_compile, "_pb", kwargs)]   
+    kwargs["deps"] = [
+        "@google.protobuf//:core",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
+    ]
+    kwargs["verbose"] = None
+
+    core_library(**kwargs)
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_lib = name + "_lib"
-
-    rust_proto_compile(
-        name = name_pb,
-        deps = deps,
-        transitive = True,
-        visibility = visibility,
-    )
-
-    rust_proto_lib(
-        name = name_lib,
-        compilation = name_pb,
-    )
-
-    rust_library(
-        name = name,
-        srcs = [name_pb, name_lib],
-        deps = [
-            str(Label("//rust/cargo:protobuf")),
-        ],
-        visibility = visibility,
-    )
 
 ```
 
@@ -238,34 +210,45 @@ def rust_proto_library(**kwargs):
 
 ---
 
-## `rust_grpc_library`
+## `csharp_grpc_library`
 
-Generates rust protobuf+gRPC library
+Generates csharp protobuf+gRPC library
 
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//rust:deps.bzl", "rust_grpc_library")
+load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
+csharp_grpc_library()
 
-rust_grpc_library()
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+grpc_deps()
 
-rust_repositories()
+load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
 
-load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
+dotnet_register_toolchains("host")
+#dotnet_register_toolchains(dotnet_version="4.2.3")
 
-raze_fetch_remote_crates()
+dotnet_repositories()
+
+load("@io_bazel_rules_dotnet//csharp/nuget:packages.bzl", nuget_packages = "packages")
+nuget_packages()
+
+load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
+load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
+
+nuget_protobuf_packages()
+nuget_grpc_packages()
 
 ```
 
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//rust:rust_grpc_library.bzl", "rust_grpc_library")
+load("@build_stack_rules_proto//csharp:csharp_grpc_library.bzl", "csharp_grpc_library")
 
-rust_grpc_library(
-    name = "greeter_rust_library",
+csharp_grpc_library(
+    name = "greeter_csharp_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
@@ -273,41 +256,24 @@ rust_grpc_library(
 ### `IMPLEMENTATION`
 
 ```python
-load("//rust:rust_grpc_compile.bzl", "rust_grpc_compile")
-load("//rust:rust_proto_lib.bzl", "rust_proto_lib")
-load("@io_bazel_rules_rust//rust:rust.bzl", "rust_library")
+load("//csharp:csharp_grpc_compile.bzl", "csharp_grpc_compile")
+load("//:compile.bzl", "invoke_transitive")
+load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 
-def rust_grpc_library(**kwargs):
+def csharp_grpc_library(**kwargs):
+    kwargs["srcs"] = [invoke_transitive(csharp_grpc_compile, "_pb", kwargs)]   
+    kwargs["deps"] = [
+        "@google.protobuf//:core",
+        "@grpc.core//:core",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
+        "@system.interactive.async//:core",
+    ]
+    kwargs["verbose"] = None
+
+    core_library(**kwargs)
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_lib = name + "_lib"
-
-    rust_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        transitive = True,
-        visibility = visibility,
-    )
-
-    rust_proto_lib(
-        name = name_lib,
-        compilation = name_pb,
-    )
-
-    rust_library(
-        name = name,
-        srcs = [name_pb, name_lib],
-        deps = [
-            str(Label("//rust/cargo:protobuf")),
-            str(Label("//rust/cargo:grpc")),
-            str(Label("//rust/cargo:tls_api")),
-            str(Label("//rust/cargo:tls_api_stub")),
-        ],
-        visibility = visibility,
-    )
 
 ```
 

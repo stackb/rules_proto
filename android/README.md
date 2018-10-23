@@ -32,6 +32,20 @@ android_proto_compile(
 )
 ```
 
+### `IMPLEMENTATION`
+
+```python
+load("//:compile.bzl", "proto_compile")
+
+def android_proto_compile(**kwargs):
+    proto_compile(
+        plugins = [
+            str(Label("//android:javalite")),
+        ],
+        **kwargs
+    )
+```
+
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -86,6 +100,21 @@ android_grpc_compile(
 )
 ```
 
+### `IMPLEMENTATION`
+
+```python
+load("//:compile.bzl", "proto_compile")
+
+def android_grpc_compile(**kwargs):
+    proto_compile(
+        plugins = [
+            str(Label("//android:javalite")),
+            str(Label("//android:grpc_javalite")),
+        ],
+        **kwargs
+    )
+```
+
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -115,6 +144,9 @@ Generates android protobuf library
 ### `WORKSPACE`
 
 ```python
+
+# The set of dependencies loaded here is excessive for android proto alone
+# (but simplifies our setup) 
 load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 io_grpc_grpc_java()
 
@@ -142,6 +174,40 @@ android_proto_library(
     name = "person_android_library",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
+```
+
+### `IMPLEMENTATION`
+
+```python
+load("//android:android_proto_compile.bzl", "android_proto_compile")
+load("@build_bazel_rules_android//android:rules.bzl", "android_library")
+
+def android_proto_library(**kwargs):
+    name = kwargs.get("name")
+    deps = kwargs.get("deps")
+    visibility = kwargs.get("visibility")
+
+    name_pb = name + "_pb"
+
+    android_proto_compile(
+        name = name_pb,
+        deps = deps,
+        transitive = True,
+        visibility = visibility,
+    )
+
+    android_library(
+        name = name,
+        srcs = [name_pb],
+        deps = [
+            str(Label("//android:proto_deps")),
+        ],
+        exports = [
+            str(Label("//android:proto_deps")),
+        ],
+        visibility = visibility,
+    )
+
 ```
 
 ### Mandatory Attributes
@@ -203,6 +269,40 @@ android_grpc_library(
     name = "greeter_android_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
+```
+
+### `IMPLEMENTATION`
+
+```python
+load("//android:android_grpc_compile.bzl", "android_grpc_compile")
+load("@build_bazel_rules_android//android:rules.bzl", "android_library")
+
+def android_grpc_library(**kwargs):
+    name = kwargs.get("name")
+    deps = kwargs.get("deps")
+    visibility = kwargs.get("visibility")
+
+    name_pb = name + "_pb"
+
+    android_grpc_compile(
+        name = name_pb,
+        deps = deps,
+        transitive = True,
+        visibility = visibility,
+    )
+
+    android_library(
+        name = name,
+        srcs = [name_pb],
+        deps = [
+            str(Label("//android:grpc_deps")),
+        ],
+        exports = [
+            str(Label("//android:grpc_deps")),
+        ],
+        visibility = visibility,
+	)
+
 ```
 
 ### Mandatory Attributes

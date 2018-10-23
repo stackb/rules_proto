@@ -1,6 +1,9 @@
 package main
 
-var androidProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+var androidProtoLibraryUsageTemplate = mustTemplate(`
+# The set of dependencies loaded here is excessive for android proto alone
+# (but simplifies our setup) 
+load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")

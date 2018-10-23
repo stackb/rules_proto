@@ -32,6 +32,20 @@ python_proto_compile(
 )
 ```
 
+### `IMPLEMENTATION`
+
+```python
+load("//:compile.bzl", "proto_compile")
+
+def python_proto_compile(**kwargs):
+    proto_compile(
+        plugins = [
+            str(Label("//python:python")),
+        ],
+        **kwargs
+    )
+```
+
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -79,6 +93,21 @@ python_grpc_compile(
     name = "greeter_python_grpc",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
+```
+
+### `IMPLEMENTATION`
+
+```python
+load("//:compile.bzl", "proto_compile")
+
+def python_grpc_compile(**kwargs):
+    proto_compile(
+        plugins = [
+            str(Label("//python:python")),
+            str(Label("//python:grpc_python")),
+        ],
+        **kwargs
+    )
 ```
 
 ### Mandatory Attributes
@@ -138,6 +167,41 @@ python_proto_library(
     name = "person_python_library",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
+```
+
+### `IMPLEMENTATION`
+
+```python
+load("//python:python_proto_compile.bzl", "python_proto_compile")
+load("@protobuf_py_deps//:requirements.bzl", protobuf_requirements = "all_requirements")
+
+def python_proto_library(**kwargs):
+    name = kwargs.get("name")
+    deps = kwargs.get("deps")
+    verbose = kwargs.get("verbose")
+    visibility = kwargs.get("visibility")
+
+    name_pb = name + "_pb"
+    python_proto_compile(
+        name = name_pb,
+        deps = deps,
+        visibility = visibility,
+        transitive = True,
+        verbose = verbose,
+    )
+
+    native.py_library(
+        name = name,
+        srcs = [name_pb],
+        deps = protobuf_requirements,
+        # This magically adds REPOSITORY_NAME/PACKAGE_NAME/{name_pb} to PYTHONPATH
+        imports = [name_pb],
+        visibility = visibility,
+    )
+
+# Alias
+py_proto_library = python_proto_library
+
 ```
 
 ### Mandatory Attributes
@@ -209,6 +273,42 @@ python_grpc_library(
     name = "greeter_python_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
+```
+
+### `IMPLEMENTATION`
+
+```python
+load("//python:python_grpc_compile.bzl", "python_grpc_compile")
+load("@protobuf_py_deps//:requirements.bzl", protobuf_requirements = "all_requirements")
+load("@grpc_py_deps//:requirements.bzl", grpc_requirements = "all_requirements")
+
+def python_grpc_library(**kwargs):
+    name = kwargs.get("name")
+    deps = kwargs.get("deps")
+    verbose = kwargs.get("verbose")
+    visibility = kwargs.get("visibility")
+
+    name_pb = name + "_pb"
+    python_grpc_compile(
+        name = name_pb,
+        deps = deps,
+        visibility = visibility,
+        transitive = True,
+        verbose = verbose,
+    )
+
+    native.py_library(
+        name = name,
+        srcs = [name_pb],
+        deps = depset(protobuf_requirements + grpc_requirements).to_list(),
+        # This magically adds REPOSITORY_NAME/PACKAGE_NAME/{name_pb} to PYTHONPATH
+        imports = [name_pb],
+        visibility = visibility,
+    )
+
+# Alias
+py_grpc_library = python_grpc_library
+
 ```
 
 ### Mandatory Attributes

@@ -129,6 +129,7 @@ func action(c *cli.Context) error {
 		makeAndroid(),
 		makeClosure(),
 		makeCpp(),
+		makeCsharp(),
 		makeDart(),
 		makeGo(),
 		makeJava(),
@@ -415,6 +416,14 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 
 		out.w("```python")
 		out.t(rule.Example, &ruleData{lang, rule})
+		out.w("```")
+		out.ln()
+
+		out.w("### `IMPLEMENTATION`")
+		out.ln()
+
+		out.w("```python")
+		out.t(rule.Implementation, &ruleData{lang, rule})
 		out.w("```")
 		out.ln()
 

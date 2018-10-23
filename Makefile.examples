@@ -70,6 +70,34 @@ cpp: cpp_proto_compile cpp_grpc_compile cpp_proto_library cpp_grpc_library
 
 clean_cpp: clean_cpp_proto_compile clean_cpp_grpc_compile clean_cpp_proto_library clean_cpp_grpc_library
 
+csharp_proto_compile: 
+	(cd csharp/example/csharp_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_csharp_proto_compile: 
+	(cd csharp/example/csharp_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+csharp_grpc_compile: 
+	(cd csharp/example/csharp_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_csharp_grpc_compile: 
+	(cd csharp/example/csharp_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+csharp_proto_library: 
+	(cd csharp/example/csharp_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_csharp_proto_library: 
+	(cd csharp/example/csharp_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+csharp_grpc_library: 
+	(cd csharp/example/csharp_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_csharp_grpc_library: 
+	(cd csharp/example/csharp_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+csharp: csharp_proto_compile csharp_grpc_compile csharp_proto_library csharp_grpc_library
+
+clean_csharp: clean_csharp_proto_compile clean_csharp_grpc_compile clean_csharp_proto_library clean_csharp_grpc_library
+
 dart_proto_compile: 
 	(cd dart/example/dart_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
