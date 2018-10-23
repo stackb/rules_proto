@@ -144,7 +144,7 @@ func action(c *cli.Context) error {
 		makeScala(),
 		makeSwift(),
 
-		//makeGrpcJs(),
+		makeGrpcJs(),
 		makeGogo(),
 		makeGithubComGrpcGrpcWeb(),
 		makeGrpcGateway(),

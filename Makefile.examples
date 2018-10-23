@@ -382,6 +382,22 @@ swift: swift_proto_compile swift_grpc_compile swift_proto_library swift_grpc_lib
 
 clean_swift: clean_swift_proto_compile clean_swift_grpc_compile clean_swift_proto_library clean_swift_grpc_library
 
+closure_grpc_compile: 
+	(cd github.com/stackb/grpc.js/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_closure_grpc_compile: 
+	(cd github.com/stackb/grpc.js/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+closure_grpc_library: 
+	(cd github.com/stackb/grpc.js/example/closure_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_closure_grpc_library: 
+	(cd github.com/stackb/grpc.js/example/closure_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+grpc.js: closure_grpc_compile closure_grpc_library
+
+clean_grpc.js: clean_closure_grpc_compile clean_closure_grpc_library
+
 gogo_proto_compile: 
 	(cd github.com/gogo/protobuf/example/gogo_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 

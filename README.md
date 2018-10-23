@@ -103,6 +103,8 @@ workspace dependencies and build rule usage.
 | [swift](/swift) | [swift_grpc_compile](/swift#swift_grpc_compile) | Generates swift protobuf+gRPC artifacts |
 | [swift](/swift) | [swift_proto_library](/swift#swift_proto_library) | Generates swift protobuf library |
 | [swift](/swift) | [swift_grpc_library](/swift#swift_grpc_library) | Generates swift protobuf+gRPC library |
+| [grpc.js](/github.com/stackb/grpc.js) | [closure_grpc_compile](/github.com/stackb/grpc.js#closure_grpc_compile) | Generates protobuf closure grpc *.js files |
+| [grpc.js](/github.com/stackb/grpc.js) | [closure_grpc_library](/github.com/stackb/grpc.js#closure_grpc_library) | Generates protobuf closure library *.js files |
 | [gogo](/github.com/gogo/protobuf) | [gogo_proto_compile](/github.com/gogo/protobuf#gogo_proto_compile) | Generates gogo protobuf artifacts |
 | [gogo](/github.com/gogo/protobuf) | [gogo_grpc_compile](/github.com/gogo/protobuf#gogo_grpc_compile) | Generates gogo protobuf+gRPC artifacts |
 | [gogo](/github.com/gogo/protobuf) | [gogo_proto_library](/github.com/gogo/protobuf#gogo_proto_library) | Generates gogo protobuf library |
