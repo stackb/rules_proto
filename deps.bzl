@@ -219,10 +219,21 @@ def build_bazel_rules_swift(**kwargs):
     """swift Rules
     """
     name = "build_bazel_rules_swift"
-    ref = get_ref(name, "b3b6e2512c9961c60e84bea086714f35b36273de", kwargs) 
-    sha256 = get_sha256(name, "a5b34a61451889cfe7e172ada0b7b661a5e3b8c5a0d0d5653ac9dfd567e11cff", kwargs)
+    ref = get_ref(name, "8f594d9a9b39ce471064cc13d35c07ea77a24628", kwargs) 
+    sha256 = get_sha256(name, "0b6c009c18f4a1235db65acf841bbe85043d290f39ebb142436c046476a823e5", kwargs)
     github_archive(name, "bazelbuild", "rules_swift", ref, sha256)
 
+
+def com_github_apple_swift_swift_protobuf(**kwargs):
+    if "com_github_apple_swift_swift_protobuf" not in native.existing_rules():
+        version = "86c579d280d629416c7bd9d32a5dfacab8e0b0b4" # v1.2.0
+        http_archive(
+            name = "com_github_apple_swift_swift_protobuf",
+            url = "https://github.com/apple/swift-protobuf/archive/%s.tar.gz" % version,
+            sha256 = "edd677ff3ad01a4090902c80e7a28671a2f48fa6ce06726f0616678465f575f1",
+            strip_prefix = "swift-protobuf-" + version,
+            build_file = "@build_bazel_rules_swift//third_party:com_github_apple_swift_swift_protobuf/BUILD.overlay",
+        )    
 
 def io_bazel_rules_go(**kwargs):
     """Go Rules
@@ -346,25 +357,26 @@ def com_google_guava_guava(**kwargs):
 
 def com_github_scalapb_scalapb(**kwargs):
     """scala compiler plugin
-    """    
-    http_archive(
-        name = "com_github_scalapb_scalapb",
-        url = "https://github.com/scalapb/ScalaPB/releases/download/v0.8.0/scalapbc-0.8.0.zip",
-        sha256 = "bda0b44b50f0a816342a52c34e6a341b1a792f2a6d26f4f060852f8f10f5d854",
-        strip_prefix = "scalapbc-0.8.0/lib",
-        build_file_content = """
-java_import(
-    name = "compilerplugin",
-    jars = ["com.thesamet.scalapb.compilerplugin-0.8.0.jar"],
-    visibility = ["//visibility:public"],
-)
-java_import(
-    name = "scala-library",
-    jars = ["org.scala-lang.scala-library-2.11.12.jar"],
-    visibility = ["//visibility:public"],
-)
-        """
-    )    
+    """
+    if "com_github_scalapb_scalapb" not in native.existing_rules():
+        http_archive(
+            name = "com_github_scalapb_scalapb",
+            url = "https://github.com/scalapb/ScalaPB/releases/download/v0.8.0/scalapbc-0.8.0.zip",
+            sha256 = "bda0b44b50f0a816342a52c34e6a341b1a792f2a6d26f4f060852f8f10f5d854",
+            strip_prefix = "scalapbc-0.8.0/lib",
+            build_file_content = """
+    java_import(
+        name = "compilerplugin",
+        jars = ["com.thesamet.scalapb.compilerplugin-0.8.0.jar"],
+        visibility = ["//visibility:public"],
+    )
+    java_import(
+        name = "scala-library",
+        jars = ["org.scala-lang.scala-library-2.11.12.jar"],
+        visibility = ["//visibility:public"],
+    )
+            """
+        )    
 
 
 def io_bazel_rules_closure(**kwargs):
@@ -444,6 +456,15 @@ def bazel_gazelle(**kwargs):
     ref = get_ref(name, "6a1b93cc9b1c7e55e7d05a6d324bcf9d87ea3ab1", kwargs)  
     sha256 = get_sha256(name, "bc493cce447c02b361393a79e562a5f48f456705417ee76009a761a159540dd7", kwargs)
     github_archive(name, "bazelbuild", "bazel-gazelle", ref, sha256)
+
+
+def bazel_skylib(**kwargs):
+    """ bazel utils 
+    """
+    name = "bazel_skylib"
+    ref = get_ref(name, "8cecf885c8bf4c51e82fd6b50b9dd68d2c98f757", kwargs)  
+    sha256 = get_sha256(name, "68ef2998919a92c2c9553f7a6b00a1d0615b57720a13239c0e51d0ded5aa452a", kwargs)
+    github_archive(name, "bazelbuild", "bazel-skylib", ref, sha256)
 
 
 def com_github_grpc_grpc_web(**kwargs):

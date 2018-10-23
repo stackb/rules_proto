@@ -1,6 +1,7 @@
 # `swift`
 
-**NOTE**: The swift rules are VERY INCOMPLETE.  This is a Work-In-Progress!
+
+**NOTE**: The swift rules are essentially non-functional.  The protoc-plugin core dumps despite all efforts thus far on linux.
 
 | Rule | Description |
 | ---: | :--- |
@@ -210,8 +211,6 @@ swift_proto_library(
 
 ```python
 load("//swift:swift_proto_compile.bzl", "swift_proto_compile")
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
-
 load("@build_bazel_rules_swift//swift:swift.bzl", _swift_proto_library = "swift_proto_library")
 
 def swift_proto_library(**kwargs):
@@ -286,8 +285,6 @@ swift_grpc_library(
 
 ```python
 load("//swift:swift_grpc_compile.bzl", "swift_grpc_compile")
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
-
 load("@build_bazel_rules_swift//swift:swift.bzl", _swift_proto_library = "swift_proto_library")
 
 def swift_grpc_library(**kwargs):

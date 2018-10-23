@@ -99,6 +99,10 @@ workspace dependencies and build rule usage.
 | [scala](/scala) | [scala_grpc_compile](/scala#scala_grpc_compile) | Generates *.scala protobuf+gRPC artifacts |
 | [scala](/scala) | [scala_proto_library](/scala#scala_proto_library) | Generates *.py protobuf library |
 | [scala](/scala) | [scala_grpc_library](/scala#scala_grpc_library) | Generates *.py protobuf+gRPC library |
+| [swift](/swift) | [swift_proto_compile](/swift#swift_proto_compile) | Generates swift protobuf artifacts |
+| [swift](/swift) | [swift_grpc_compile](/swift#swift_grpc_compile) | Generates swift protobuf+gRPC artifacts |
+| [swift](/swift) | [swift_proto_library](/swift#swift_proto_library) | Generates swift protobuf library |
+| [swift](/swift) | [swift_grpc_library](/swift#swift_grpc_library) | Generates swift protobuf+gRPC library |
 | [grpc_web](/github.com/grpc/grpc-web) | [closure_grpc_compile](/github.com/grpc/grpc-web#closure_grpc_compile) | Generates a closure *.js protobuf+gRPC files |
 | [grpc_web](/github.com/grpc/grpc-web) | [commonjs_grpc_compile](/github.com/grpc/grpc-web#commonjs_grpc_compile) | Generates a commonjs *.js protobuf+gRPC files |
 | [grpc_web](/github.com/grpc/grpc-web) | [commonjs_dts_grpc_compile](/github.com/grpc/grpc-web#commonjs_dts_grpc_compile) | Generates a commonjs_dts *.js protobuf+gRPC files |

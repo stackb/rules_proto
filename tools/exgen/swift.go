@@ -36,9 +36,10 @@ def {{ .Rule.Name }}(**kwargs):
 
 func makeSwift() *Language {
 	return &Language{
-		Dir:   "swift",
-		Name:  "swift",
-		Notes: mustTemplate(`**NOTE**: The swift rules are VERY INCOMPLETE.  This is a Work-In-Progress!`),
+		Dir:  "swift",
+		Name: "swift",
+		Notes: mustTemplate(`
+**NOTE**: The swift rules are essentially non-functional.  The protoc-plugin core dumps despite all efforts thus far on linux.`),
 		Rules: []*Rule{
 			&Rule{
 				Experimental:   true,

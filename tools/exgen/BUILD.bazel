@@ -21,6 +21,7 @@ go_library(
         "ruby.go",
         "rust.go",
         "scala.go",
+        "swift.go",
     ],
     importpath = "github.com/stackb/rules_proto/tools/exgen",
     deps = [

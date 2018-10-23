@@ -1,6 +1,6 @@
 # `csharp`
 
-**NOTE**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
+**NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
 
 ~~~python
 System.ArgumentNullException: Value cannot be null.
@@ -13,6 +13,8 @@ Parameter name: path1
 ~~~
 
 To remedy this, use --spawn_strategy=standalone for the csharp rules.
+
+**NOTE 2**: the csharp nuget dependency sha256 values do not appear stable.
 
 | Rule | Description |
 | ---: | :--- |

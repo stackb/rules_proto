@@ -12,17 +12,18 @@ proto_plugin(
 proto_plugin(
     name = "grpc_swift",
     outputs = [".grpc.pb.swift"],
-    #tool = "@com_github_apple_swift_swift_protobuf//:ProtoCompilerPlugin",
-    tool = ":protoc-gen-swift",
+    tool = "@com_github_apple_swift_swift_protobuf//:ProtoCompilerPlugin",
+    #tool = ":protoc-gen-swift",
     visibility = ["//visibility:public"],
 )
 
 
-load("//go:library.bzl", "go_proto_library")
+#load("//go:library.bzl", "go_proto_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 go_proto_library(
     name = "compiler_plugin",
-    deps = ["@com_google_protobuf//:compiler_plugin_proto"],
+    proto = "@com_google_protobuf//:compiler_plugin_proto",
     importpath = "google.golang.org/protobuf/compiler_plugin",
 )
 
@@ -36,8 +37,6 @@ go_embed_data(
     package = "main",
     var = "assets",
 )
-
-
 
 go_library(
     name = "go_default_library",

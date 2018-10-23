@@ -225,12 +225,18 @@ load("//swift:deps.bzl", "swift_grpc_library")
 
 swift_grpc_library()
 
-load(
-    "@build_bazel_rules_swift//swift:repositories.bzl",
-    "swift_rules_dependencies",
+load("//swift:repositories.bzl", "swift_toolchain")
+# Default values work with linux, x86_64, /usr/local/bin/clang. 
+swift_toolchain(
+	root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
 )
 
-swift_rules_dependencies()
+# load(
+#     "@build_bazel_rules_swift//swift:repositories.bzl",
+#     "swift_rules_dependencies",
+# )
+
+# swift_rules_dependencies()
 
 # =======================================
 

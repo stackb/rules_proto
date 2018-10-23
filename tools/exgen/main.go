@@ -143,6 +143,7 @@ func action(c *cli.Context) error {
 		makeRuby(),
 		makeRust(),
 		makeScala(),
+		makeSwift(),
 
 		makeGithubComGrpcGrpcWeb(),
 		makeGogo(),

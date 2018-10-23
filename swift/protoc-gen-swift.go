@@ -42,7 +42,7 @@ func main() {
 	}
 
 	proto.Unmarshal(bytes, &request)
-	log.Printf("request: %+v", request)
+	//log.Printf("request: %+v", request)
 
 	requestFile := path.Join(tempDir, "request.proto")
 	err = ioutil.WriteFile("request.proto", bytes, os.ModePerm)

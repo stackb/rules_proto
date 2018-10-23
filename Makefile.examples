@@ -354,6 +354,34 @@ scala: scala_proto_compile scala_grpc_compile scala_proto_library scala_grpc_lib
 
 clean_scala: clean_scala_proto_compile clean_scala_grpc_compile clean_scala_proto_library clean_scala_grpc_library
 
+swift_proto_compile: 
+	(cd swift/example/swift_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_swift_proto_compile: 
+	(cd swift/example/swift_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+swift_grpc_compile: 
+	(cd swift/example/swift_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_swift_grpc_compile: 
+	(cd swift/example/swift_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+swift_proto_library: 
+	(cd swift/example/swift_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_swift_proto_library: 
+	(cd swift/example/swift_proto_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+swift_grpc_library: 
+	(cd swift/example/swift_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_swift_grpc_library: 
+	(cd swift/example/swift_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+swift: swift_proto_compile swift_grpc_compile swift_proto_library swift_grpc_library
+
+clean_swift: clean_swift_proto_compile clean_swift_grpc_compile clean_swift_proto_library clean_swift_grpc_library
+
 closure_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
