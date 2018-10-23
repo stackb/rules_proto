@@ -1,6 +1,6 @@
 package main
 
-var cppProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:cpp_proto_compile.bzl", "cpp_proto_compile")
+var cppProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:cpp_proto_compile.bzl", "cpp_proto_compile")
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
@@ -25,7 +25,7 @@ def {{ .Rule.Name }}(**kwargs):
     )
 `)
 
-var cppGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:cpp_grpc_compile.bzl", "cpp_grpc_compile")
+var cppGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:cpp_grpc_compile.bzl", "cpp_grpc_compile")
 
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")

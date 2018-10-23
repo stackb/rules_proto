@@ -17,6 +17,7 @@ proto_library(
         "api.proto",
     ],
     deps = ["@com_github_googleapis_googleapis//google/api:api_proto"],
+    visibility = ["//visibility:public"],
 )
 
 grpc_gateway_library(

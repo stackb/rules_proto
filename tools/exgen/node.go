@@ -51,7 +51,7 @@ yarn_modules(
 )
 `)
 
-var nodeProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:node_proto_compile.bzl", "node_proto_compile")
+var nodeProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:node_proto_compile.bzl", "node_proto_compile")
 load("//node:node_module_index.bzl", "node_module_index")
 load("@org_pubref_rules_node//node:rules.bzl", "node_module")
 
@@ -84,7 +84,7 @@ def {{ .Rule.Name }}(**kwargs):
     )
 `)
 
-var nodeGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:node_grpc_compile.bzl", "node_grpc_compile")
+var nodeGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:node_grpc_compile.bzl", "node_grpc_compile")
 load("//node:node_module_index.bzl", "node_module_index")
 load("@org_pubref_rules_node//node:rules.bzl", "node_module")
 

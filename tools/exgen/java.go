@@ -13,7 +13,7 @@ load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()`)
 
-var javaProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:java_proto_compile.bzl", "java_proto_compile")
+var javaProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:java_proto_compile.bzl", "java_proto_compile")
 
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
@@ -38,7 +38,7 @@ def {{ .Rule.Name }}(**kwargs):
     )
 `)
 
-var javaGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:java_grpc_compile.bzl", "java_grpc_compile")
+var javaGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:java_grpc_compile.bzl", "java_grpc_compile")
 
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")

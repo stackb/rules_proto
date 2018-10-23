@@ -10,7 +10,7 @@ closure_repositories(
     omit_com_google_protobuf = True,
 )`)
 
-var closureProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:closure_proto_compile.bzl", "closure_proto_compile")
+var closureProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:closure_proto_compile.bzl", "closure_proto_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def {{ .Rule.Name }}(**kwargs):

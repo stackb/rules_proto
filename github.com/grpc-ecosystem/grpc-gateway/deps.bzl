@@ -6,7 +6,7 @@ load("//:deps.bzl",
 
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
-def grpc_gateway_compile(**kwargs):
+def gateway_grpc_compile(**kwargs):
     io_bazel_rules_go(**kwargs)
     bazel_gazelle(**kwargs)
     com_github_grpc_ecosystem_grpc_gateway(**kwargs)
@@ -42,5 +42,8 @@ def grpc_gateway_compile(**kwargs):
     )
 
 
-def grpc_gateway_library(**kwargs):
-    grpc_gateway_compile(**kwargs)
+def gateway_grpc_library(**kwargs):
+    gateway_grpc_compile(**kwargs)
+
+def gateway_swagger_compile(**kwargs):
+    gateway_grpc_compile(**kwargs)

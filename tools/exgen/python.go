@@ -56,7 +56,7 @@ load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
 
 grpc_pip_install()`)
 
-var pythonProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:python_proto_compile.bzl", "python_proto_compile")
+var pythonProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:python_proto_compile.bzl", "python_proto_compile")
 load("@protobuf_py_deps//:requirements.bzl", protobuf_requirements = "all_requirements")
 
 def python_proto_library(**kwargs):
@@ -87,7 +87,7 @@ def python_proto_library(**kwargs):
 py_proto_library = python_proto_library
 `)
 
-var pythonGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:python_grpc_compile.bzl", "python_grpc_compile")
+var pythonGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:python_grpc_compile.bzl", "python_grpc_compile")
 load("@protobuf_py_deps//:requirements.bzl", protobuf_requirements = "all_requirements")
 load("@grpc_py_deps//:requirements.bzl", grpc_requirements = "all_requirements")
 

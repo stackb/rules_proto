@@ -38,7 +38,7 @@ bundle_install(
 )
 `)
 
-var rubyProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:ruby_proto_compile.bzl", "ruby_proto_compile")
+var rubyProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:ruby_proto_compile.bzl", "ruby_proto_compile")
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -63,7 +63,7 @@ def {{ .Rule.Name }}(**kwargs):
     )
 `)
 
-var rubyGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:ruby_grpc_compile.bzl", "ruby_grpc_compile")
+var rubyGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:ruby_grpc_compile.bzl", "ruby_grpc_compile")
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
 
 def {{ .Rule.Name }}(**kwargs):

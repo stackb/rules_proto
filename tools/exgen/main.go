@@ -128,7 +128,6 @@ func action(c *cli.Context) error {
 	}
 
 	languages := []*Language{
-
 		makeAndroid(),
 		makeClosure(),
 		makeCpp(),
@@ -145,8 +144,10 @@ func action(c *cli.Context) error {
 		makeScala(),
 		makeSwift(),
 
-		makeGithubComGrpcGrpcWeb(),
+		//makeGrpcJs(),
 		makeGogo(),
+		makeGithubComGrpcGrpcWeb(),
+		makeGrpcGateway(),
 	}
 
 	for _, lang := range languages {

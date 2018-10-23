@@ -1,6 +1,6 @@
 package main
 
-var objcProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:objc_proto_compile.bzl", "objc_proto_compile")
+var objcProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:objc_proto_compile.bzl", "objc_proto_compile")
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
@@ -22,7 +22,7 @@ def {{ .Rule.Name }}(**kwargs):
     )
 `)
 
-var objcGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Name}}:objc_grpc_compile.bzl", "objc_grpc_compile")
+var objcGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:objc_grpc_compile.bzl", "objc_grpc_compile")
 
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")

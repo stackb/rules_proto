@@ -22,8 +22,21 @@ go_library(
         "rust.go",
         "scala.go",
         "swift.go",
+        "grpc_gateway.go",
+        "grpcjs.go",
     ],
     importpath = "github.com/stackb/rules_proto/tools/exgen",
+    deps = [
+        "@com_github_urfave_cli//:go_default_library",        
+    ]
+)
+
+go_library(
+    name = "grpc_js_lib",
+    srcs = [
+        "grpc_js.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/tools/grpc_js",
     deps = [
         "@com_github_urfave_cli//:go_default_library",        
     ]

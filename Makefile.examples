@@ -382,34 +382,6 @@ swift: swift_proto_compile swift_grpc_compile swift_proto_library swift_grpc_lib
 
 clean_swift: clean_swift_proto_compile clean_swift_grpc_compile clean_swift_proto_library clean_swift_grpc_library
 
-closure_grpc_compile: 
-	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
-
-clean_closure_grpc_compile: 
-	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
-
-commonjs_grpc_compile: 
-	(cd github.com/grpc/grpc-web/example/commonjs_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
-
-clean_commonjs_grpc_compile: 
-	(cd github.com/grpc/grpc-web/example/commonjs_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
-
-commonjs_dts_grpc_compile: 
-	(cd github.com/grpc/grpc-web/example/commonjs_dts_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
-
-clean_commonjs_dts_grpc_compile: 
-	(cd github.com/grpc/grpc-web/example/commonjs_dts_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
-
-ts_grpc_compile: 
-	(cd github.com/grpc/grpc-web/example/ts_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
-
-clean_ts_grpc_compile: 
-	(cd github.com/grpc/grpc-web/example/ts_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
-
-grpc_web: closure_grpc_compile commonjs_grpc_compile commonjs_dts_grpc_compile ts_grpc_compile
-
-clean_grpc_web: clean_closure_grpc_compile clean_commonjs_grpc_compile clean_commonjs_dts_grpc_compile clean_ts_grpc_compile
-
 gogo_proto_compile: 
 	(cd github.com/gogo/protobuf/example/gogo_proto_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
 
@@ -485,3 +457,53 @@ clean_gogofaster_grpc_library:
 gogo: gogo_proto_compile gogo_grpc_compile gogo_proto_library gogo_grpc_library gogofast_proto_compile gogofast_grpc_compile gogofast_proto_library gogofast_grpc_library gogofaster_proto_compile gogofaster_grpc_compile gogofaster_proto_library gogofaster_grpc_library
 
 clean_gogo: clean_gogo_proto_compile clean_gogo_grpc_compile clean_gogo_proto_library clean_gogo_grpc_library clean_gogofast_proto_compile clean_gogofast_grpc_compile clean_gogofast_proto_library clean_gogofast_grpc_library clean_gogofaster_proto_compile clean_gogofaster_grpc_compile clean_gogofaster_proto_library clean_gogofaster_grpc_library
+
+closure_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_closure_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+commonjs_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/commonjs_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_commonjs_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/commonjs_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+commonjs_dts_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/commonjs_dts_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_commonjs_dts_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/commonjs_dts_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+ts_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/ts_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_ts_grpc_compile: 
+	(cd github.com/grpc/grpc-web/example/ts_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+grpc_web: closure_grpc_compile commonjs_grpc_compile commonjs_dts_grpc_compile ts_grpc_compile
+
+clean_grpc_web: clean_closure_grpc_compile clean_commonjs_grpc_compile clean_commonjs_dts_grpc_compile clean_ts_grpc_compile
+
+gateway_grpc_compile: 
+	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_gateway_grpc_compile: 
+	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+gateway_swagger_compile: 
+	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_swagger_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_gateway_swagger_compile: 
+	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_swagger_compile && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+gateway_grpc_library: 
+	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)
+
+clean_gateway_grpc_library: 
+	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_library && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)
+
+grpc-gateway: gateway_grpc_compile gateway_swagger_compile gateway_grpc_library
+
+clean_grpc-gateway: clean_gateway_grpc_compile clean_gateway_swagger_compile clean_gateway_grpc_library
