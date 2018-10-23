@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//github.com/improbable-eng/ts-protoc-gen:ts_proto_compile.bzl", "ts_proto_compile")
+
+ts_proto_compile(
+    name = "person_ts-protoc-gen_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)

@@ -102,12 +102,12 @@ func main() {
 		&cli.StringFlag{
 			Name:  "ref",
 			Usage: "Version ref to use for main readme",
-			Value: "v0.9",
+			Value: "{GIT_COMMIT_ID}",
 		},
 		&cli.StringFlag{
 			Name:  "sha256",
 			Usage: "Sha256 value to use for main readme",
-			Value: "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973d",
+			Value: "{ARCHIVE_TAR_GZ_SHA256}",
 		},
 	}
 	app.Action = func(c *cli.Context) error {
@@ -144,10 +144,12 @@ func action(c *cli.Context) error {
 		makeScala(),
 		makeSwift(),
 
-		makeGrpcJs(),
 		makeGogo(),
-		makeGithubComGrpcGrpcWeb(),
 		makeGrpcGateway(),
+		makeGrpcJs(),
+		makeGithubComGrpcGrpcWeb(),
+		makeGithubComImprobableTsProtocGen(),
+		//makeGithubComImprobableGrpcWeb(),
 	}
 
 	for _, lang := range languages {

@@ -13,7 +13,7 @@ closure_repositories(
 func makeGithubComGrpcGrpcWeb() *Language {
 	return &Language{
 		Dir:  "github.com/grpc/grpc-web",
-		Name: "grpc_web",
+		Name: "grpc-web",
 		Rules: []*Rule{
 			&Rule{
 				Name:           "closure_grpc_compile",

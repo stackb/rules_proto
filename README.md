@@ -35,9 +35,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_stack_rules_proto",
-    urls = ["https://github.com/stackb/rules_proto/archive/v0.9.tar.gz"],
-    sha256 = 4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973d,
-    strip_prefix = "rules_proto-v0.9",
+    urls = ["https://github.com/stackb/rules_proto/archive/{GIT_COMMIT_ID}.tar.gz"],
+    sha256 = {ARCHIVE_TAR_GZ_SHA256},
+    strip_prefix = "rules_proto-{GIT_COMMIT_ID}",
 )
 ```
 
@@ -103,8 +103,6 @@ workspace dependencies and build rule usage.
 | [swift](/swift) | [swift_grpc_compile](/swift#swift_grpc_compile) | Generates swift protobuf+gRPC artifacts |
 | [swift](/swift) | [swift_proto_library](/swift#swift_proto_library) | Generates swift protobuf library |
 | [swift](/swift) | [swift_grpc_library](/swift#swift_grpc_library) | Generates swift protobuf+gRPC library |
-| [grpc.js](/github.com/stackb/grpc.js) | [closure_grpc_compile](/github.com/stackb/grpc.js#closure_grpc_compile) | Generates protobuf closure grpc *.js files |
-| [grpc.js](/github.com/stackb/grpc.js) | [closure_grpc_library](/github.com/stackb/grpc.js#closure_grpc_library) | Generates protobuf closure library *.js files |
 | [gogo](/github.com/gogo/protobuf) | [gogo_proto_compile](/github.com/gogo/protobuf#gogo_proto_compile) | Generates gogo protobuf artifacts |
 | [gogo](/github.com/gogo/protobuf) | [gogo_grpc_compile](/github.com/gogo/protobuf#gogo_grpc_compile) | Generates gogo protobuf+gRPC artifacts |
 | [gogo](/github.com/gogo/protobuf) | [gogo_proto_library](/github.com/gogo/protobuf#gogo_proto_library) | Generates gogo protobuf library |
@@ -117,13 +115,16 @@ workspace dependencies and build rule usage.
 | [gogo](/github.com/gogo/protobuf) | [gogofaster_grpc_compile](/github.com/gogo/protobuf#gogofaster_grpc_compile) | Generates gogofaster protobuf+gRPC artifacts |
 | [gogo](/github.com/gogo/protobuf) | [gogofaster_proto_library](/github.com/gogo/protobuf#gogofaster_proto_library) | Generates gogofaster protobuf library |
 | [gogo](/github.com/gogo/protobuf) | [gogofaster_grpc_library](/github.com/gogo/protobuf#gogofaster_grpc_library) | Generates gogofaster protobuf+gRPC library |
-| [grpc_web](/github.com/grpc/grpc-web) | [closure_grpc_compile](/github.com/grpc/grpc-web#closure_grpc_compile) | Generates a closure *.js protobuf+gRPC files |
-| [grpc_web](/github.com/grpc/grpc-web) | [commonjs_grpc_compile](/github.com/grpc/grpc-web#commonjs_grpc_compile) | Generates a commonjs *.js protobuf+gRPC files |
-| [grpc_web](/github.com/grpc/grpc-web) | [commonjs_dts_grpc_compile](/github.com/grpc/grpc-web#commonjs_dts_grpc_compile) | Generates a commonjs_dts *.js protobuf+gRPC files |
-| [grpc_web](/github.com/grpc/grpc-web) | [ts_grpc_compile](/github.com/grpc/grpc-web#ts_grpc_compile) | Generates a commonjs *.ts protobuf+gRPC files |
 | [grpc-gateway](/github.com/grpc-ecosystem/grpc-gateway) | [gateway_grpc_compile](/github.com/grpc-ecosystem/grpc-gateway#gateway_grpc_compile) | Generates grpc-gateway *.go files |
 | [grpc-gateway](/github.com/grpc-ecosystem/grpc-gateway) | [gateway_swagger_compile](/github.com/grpc-ecosystem/grpc-gateway#gateway_swagger_compile) | Generates grpc-gateway swagger *.json files |
 | [grpc-gateway](/github.com/grpc-ecosystem/grpc-gateway) | [gateway_grpc_library](/github.com/grpc-ecosystem/grpc-gateway#gateway_grpc_library) | Generates grpc-gateway library files |
+| [grpc.js](/github.com/stackb/grpc.js) | [closure_grpc_compile](/github.com/stackb/grpc.js#closure_grpc_compile) | Generates protobuf closure grpc *.js files |
+| [grpc.js](/github.com/stackb/grpc.js) | [closure_grpc_library](/github.com/stackb/grpc.js#closure_grpc_library) | Generates protobuf closure library *.js files |
+| [grpc-web](/github.com/grpc/grpc-web) | [closure_grpc_compile](/github.com/grpc/grpc-web#closure_grpc_compile) | Generates a closure *.js protobuf+gRPC files |
+| [grpc-web](/github.com/grpc/grpc-web) | [commonjs_grpc_compile](/github.com/grpc/grpc-web#commonjs_grpc_compile) | Generates a commonjs *.js protobuf+gRPC files |
+| [grpc-web](/github.com/grpc/grpc-web) | [commonjs_dts_grpc_compile](/github.com/grpc/grpc-web#commonjs_dts_grpc_compile) | Generates a commonjs_dts *.js protobuf+gRPC files |
+| [grpc-web](/github.com/grpc/grpc-web) | [ts_grpc_compile](/github.com/grpc/grpc-web#ts_grpc_compile) | Generates a commonjs *.ts protobuf+gRPC files |
+| [ts-protoc-gen](/github.com/improbable-eng/ts-protoc-gen) | [ts_proto_compile](/github.com/improbable-eng/ts-protoc-gen#ts_proto_compile) | Generates typescript protobuf t.ds files |
 
 ## Code Layout
 

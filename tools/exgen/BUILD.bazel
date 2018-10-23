@@ -10,6 +10,8 @@ go_library(
         "csharp.go",
         "dart.go",
         "github_grpc_grpc_web.go",
+        #"github_com_improbable_grpc_web.go",
+        "github_com_improbable_eng_ts_protoc_gen.go",
         "go.go",
         "gogo.go",
         "java.go",
