@@ -39,7 +39,7 @@ def nuget_grpc_packages():
        name = "system.interactive.async",
        package = "system.interactive.async",
        version = "3.2.0",
-       sha256 = "cdc28ac9c99a1e8707b2dde4a41cec1a622349f4a00c7029f9e006a1ac10ebab",
+       sha256 = "8d8c3296247b4e86c7d0bdaae6bdf6447939e2cf59e613debb9231da8e2fb978",
        core_lib = "lib/netstandard2.0/System.Interactive.Async.dll",
        net_lib = "lib/net46/System.Interactive.Async.dll",
        mono_lib = "lib/net46/System.Interactive.Async.dll",

@@ -30,6 +30,9 @@ type Language struct {
 	// List of rules
 	Rules []*Rule
 
+	// Additional nodes about the language
+	Notes *template.Template
+
 	// List of available plugins
 	Plugins map[string]*Plugin
 }
@@ -382,6 +385,11 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 
 	out.w("# `%s`", lang.Name)
 	out.ln()
+
+	if lang.Notes != nil {
+		out.t(lang.Notes, lang)
+		out.ln()
+	}
 
 	out.w("| Rule | Description |")
 	out.w("| ---: | :--- |")

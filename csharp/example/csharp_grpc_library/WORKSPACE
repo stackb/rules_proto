@@ -29,7 +29,7 @@ dotnet_register_toolchains("host")
 
 dotnet_repositories()
 
-load("@io_bazel_rules_dotnet//csharp/nuget:packages.bzl", nuget_packages = "packages")
+load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
 nuget_packages()
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")

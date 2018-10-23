@@ -29,7 +29,7 @@ dotnet_register_toolchains("host")
 
 dotnet_repositories()
 
-load("@io_bazel_rules_dotnet//csharp/nuget:packages.bzl", nuget_packages = "packages")
+load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
 nuget_packages()
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
@@ -81,6 +81,21 @@ func makeCsharp() *Language {
 	return &Language{
 		Dir:  "csharp",
 		Name: "csharp",
+		Notes: mustTemplate(`**NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
+
+~~~python
+System.ArgumentNullException: Value cannot be null.
+Parameter name: path1
+   at System.IO.Path.Combine(String path1, String path2)
+   at Microsoft.DotNet.Configurer.CliFallbackFolderPathCalculator.get_DotnetUserProfileFolderPath()
+   at Microsoft.DotNet.Configurer.FirstTimeUseNoticeSentinel..ctor(CliFallbackFolderPathCalculator cliFallbackFolderPathCalculator)
+   at Microsoft.DotNet.Cli.Program.ProcessArgs(String[] args, ITelemetry telemetryClient)
+   at Microsoft.DotNet.Cli.Program.Main(String[] args)
+~~~
+
+To remedy this, use --spawn_strategy=standalone for the csharp rules.
+
+**NOTE 2**: the csharp nuget dependency sha256 values do not appear stable.`),
 		Rules: []*Rule{
 			&Rule{
 				Name:           "csharp_proto_compile",
