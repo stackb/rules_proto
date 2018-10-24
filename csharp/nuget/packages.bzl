@@ -107,7 +107,7 @@ def packages():
         name = "newtonsoft.json",
         package = "newtonsoft.json",
         version = "11.0.2",
-        sha256 = "679e438d5eb7d7e5599aa71b65fd23ee50dabf57579607873b87d34aec11ca1e",
+        sha256 = "6219406c67f0a31433c5bdc779fe22c95f5e19d3d024935dd868124748ec049d",
         core_lib = "lib/netstandard2.0/Newtonsoft.Json.dll",
         net_lib = "lib/net45/Newtonsoft.Json.dll",
         mono_lib = "lib/net45/Newtonsoft.Json.dll",

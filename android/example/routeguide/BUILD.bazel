@@ -1,4 +1,4 @@
-load("//android:library.bzl", "android_grpc_library")
+load("//android:android_grpc_library.bzl", "android_grpc_library")
 load("@gmaven_rules//:defs.bzl", "gmaven_artifact")
 
 android_grpc_library(

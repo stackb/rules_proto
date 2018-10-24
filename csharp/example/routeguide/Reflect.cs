@@ -2,18 +2,21 @@ using System;
 using System.IO;
 using System.Reflection;
 
-public class Class1
+public class Reflect
 {
     public static void GetAllClassesAndMethodsOfAssembly(string name)
     {
-        Assembly assem1 = Assembly.Load(AssemblyName.GetAssemblyName(name));
+        Assembly assem1 = Assembly.LoadFrom(name);
         //Another Way
-        Assembly assem2 = Assembly.Load(name);
+        //Assembly assem2 = Assembly.Load(name);
         //Get List of Class Name
+        Console.WriteLine("Assembly FullName : " + assem1.FullName);
+        Console.WriteLine("Assembly EntryPoint : " + assem1.EntryPoint);
 
         Type[] types = assem1.GetTypes();
-        foreach(Type tc in types)
+        foreach (Type tc in types)
         {
+    
             if (tc.IsAbstract)
             {
                 Console.WriteLine("Abstract Class : " + tc.Name);
@@ -26,6 +29,10 @@ public class Class1
             {
                 Console.WriteLine("Sealed Class : " + tc.Name);
             }  
+
+            Console.WriteLine("Type.Namespace : " + tc.Namespace);
+            Console.WriteLine("Type.FullName : " + tc.FullName);
+            Console.WriteLine("Type.AssemblyQualifiedName : " + tc.AssemblyQualifiedName);
 
             //Get List of Method Names of Class
             MemberInfo[] methodName = tc.GetMethods();
@@ -46,6 +53,9 @@ public class Class1
 
     static void Main(string[] args)
     {
-        GetAllClassesAndMethodsOfAssembly(args[0]);
+        Console.WriteLine("Input File: " + args[0]);
+        var filename = args[0];
+        Console.WriteLine(File.Exists(filename) ? "File exists." : "File does not exist.");
+        GetAllClassesAndMethodsOfAssembly(filename);
     }  
 }

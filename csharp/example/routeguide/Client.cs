@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RouteGuide;
 
 class Program
 {
@@ -27,9 +26,9 @@ class Program
     /// </summary>
     public class Client
     {
-        readonly RouteGuideClient client;
+        readonly RouteGuide.RouteGuide.RouteGuideClient client;
 
-        public Client(RouteGuideClient client)
+        public Client(RouteGuide.RouteGuide.RouteGuideClient client)
         {
             this.client = client;
         }
@@ -43,9 +42,9 @@ class Program
             {
                 Log("*** GetFeature: lat={0} lon={1}", lat, lon);
 
-                Point request = new Point { Latitude = lat, Longitude = lon };
+                RouteGuide.Point request = new RouteGuide.Point { Latitude = lat, Longitude = lon };
                 
-                Feature feature = client.GetFeature(request);
+                RouteGuide.Feature feature = client.GetFeature(request);
                 if (feature.Exists())
                 {
                     Log("Found feature called \"{0}\" at {1}, {2}",
@@ -75,10 +74,10 @@ class Program
                 Log("*** ListFeatures: lowLat={0} lowLon={1} hiLat={2} hiLon={3}", lowLat, lowLon, hiLat,
                     hiLon);
 
-                Rectangle request = new Rectangle
+                RouteGuide.Rectangle request = new RouteGuide.Rectangle
                 {
-                    Lo = new Point { Latitude = lowLat, Longitude = lowLon },
-                    Hi = new Point { Latitude = hiLat, Longitude = hiLon }
+                    Lo = new RouteGuide.Point { Latitude = lowLat, Longitude = lowLon },
+                    Hi = new RouteGuide.Point { Latitude = hiLat, Longitude = hiLon }
                 };
                 
                 using (var call = client.ListFeatures(request))
@@ -88,7 +87,7 @@ class Program
 
                     while (await responseStream.MoveNext())
                     {
-                        Feature feature = responseStream.Current;
+                        RouteGuide.Feature feature = responseStream.Current;
                         responseLog.Append(feature.ToString());
                     }
                     Log(responseLog.ToString());
@@ -105,7 +104,7 @@ class Program
         /// Client-streaming example. Sends numPoints randomly chosen points from features 
         /// with a variable delay in between. Prints the statistics when they are sent from the server.
         /// </summary>
-        public async Task RecordRoute(List<Feature> features, int numPoints)
+        public async Task RecordRoute(List<RouteGuide.Feature> features, int numPoints)
         {
             try
             {
@@ -118,7 +117,7 @@ class Program
                     for (int i = 0; i < numPoints; ++i)
                     {
                         int index = rand.Next(features.Count);
-                        Point point = features[index].Location;
+                        RouteGuide.Point point = features[index].Location;
                         Log("Visiting point {0}, {1}", point.GetLatitude(), point.GetLongitude());
 
                         await call.RequestStream.WriteAsync(point);
@@ -128,7 +127,7 @@ class Program
                     }
                     await call.RequestStream.CompleteAsync();
 
-                    RouteSummary summary = await call.ResponseAsync;
+                    RouteGuide.RouteSummary summary = await call.ResponseAsync;
                     Log("Finished trip with {0} points. Passed {1} features. "
                         + "Travelled {2} meters. It took {3} seconds.", summary.PointCount,
                         summary.FeatureCount, summary.Distance, summary.ElapsedTime);
@@ -152,7 +151,7 @@ class Program
             try
             {
                 Log("*** RouteChat");
-                var requests = new List<RouteNote>
+                var requests = new List<RouteGuide.RouteNote>
                 {
                     NewNote("First message", 0, 0),
                     NewNote("Second message", 0, 1),
@@ -172,7 +171,7 @@ class Program
                         }
                     });
 
-                    foreach (RouteNote request in requests)
+                    foreach (RouteGuide.RouteNote request in requests)
                     {
                         Log("Sending message \"{0}\" at {1}, {2}", request.Message,
                             request.Location.Latitude, request.Location.Longitude);
@@ -202,39 +201,41 @@ class Program
             Console.WriteLine(s);
         }
 
-        private RouteNote NewNote(string message, int lat, int lon)
+        private RouteGuide.RouteNote NewNote(string message, int lat, int lon)
         {
-            return new RouteNote
+            return new RouteGuide.RouteNote
             {
                 Message = message,
-                Location = new Point { Latitude = lat, Longitude = lon }
+                Location = new RouteGuide.Point { Latitude = lat, Longitude = lon }
             };
         }
     }
 
     static void Main(string[] args)
     {
-        var channel = new Channel("127.0.0.1:50052", ChannelCredentials.Insecure);
-        var routeGuideClient = new RouteGuideClient(channel);
-        var client = new Client();
+        Console.WriteLine("Starting Client...");
 
-        // // Looking for a valid feature
-        // client.GetFeature(409146138, -746188906);
+        var channel = new Channel("127.0.0.1:50051", ChannelCredentials.Insecure);
+        var routeGuideClient = new RouteGuide.RouteGuide.RouteGuideClient(channel);
+        var client = new Client(routeGuideClient);
 
-        // // Feature missing.
-        // client.GetFeature(0, 0);
+        // Looking for a valid feature
+        client.GetFeature(409146138, -746188906);
 
-        // // Looking for features between 40, -75 and 42, -73.
-        // client.ListFeatures(400000000, -750000000, 420000000, -730000000).Wait();
+        // Feature missing.
+        client.GetFeature(0, 0);
 
-        // // Record a few randomly selected points from the features file.
-        // client.RecordRoute(RouteGuideUtil.ParseFeatures(RouteGuideUtil.DefaultFeaturesFile), 10).Wait();
+        // Looking for features between 40, -75 and 42, -73.
+        client.ListFeatures(400000000, -750000000, 420000000, -730000000).Wait();
 
-        // // Send and receive some notes.
-        // client.RouteChat().Wait();
+        // Record a few randomly selected points from the features file.
+        client.RecordRoute(RouteGuideUtil.ParseFeatures(RouteGuideUtil.DefaultFeaturesFile), 10).Wait();
 
-        // channel.ShutdownAsync().Wait();
-        // Console.WriteLine("Press any key to exit...");
-        // Console.ReadKey();
+        // Send and receive some notes.
+        client.RouteChat().Wait();
+
+        channel.ShutdownAsync().Wait();
+        Console.WriteLine("Press any key to exit...");
+        Console.ReadKey();
     }
 }

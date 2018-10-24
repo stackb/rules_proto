@@ -5,9 +5,7 @@ var javaGrpcUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.
 io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
-grpc_java_repositories(
-    omit_com_google_protobuf = True,
-)
+grpc_java_repositories(omit_com_google_protobuf = True)
 
 load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
