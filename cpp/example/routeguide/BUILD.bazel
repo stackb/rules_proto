@@ -29,10 +29,12 @@ cc_binary(
     name = "client",
     srcs = ["client.cc"],
     deps = [":helper"],
+    data = ["//example/proto:routeguide_features"],
 )
 
 cc_binary(
     name = "server",
     srcs = ["server.cc"],
     deps = [":helper"],
+    data = ["//example/proto:routeguide_features"],
 )
