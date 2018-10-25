@@ -10,19 +10,24 @@ def _get_js_variable_name(file):
   # Deal with special characters here?
   return name
 
+def _get_js_output_file_name(ctx, file):
+  filename = file.short_path
+  return filename
+
 def _node_module_index_impl(ctx):
   compilation = ctx.attr.compilation[ProtoCompileInfo]
-  index_js = ctx.actions.declare_file("%s/index.js" % ctx.label.name)
+
+  index_js = ctx.actions.declare_file("%s/index.js" % (compilation.label.name))
 
   exports = {}
 
   for output in compilation.outputs:
     if output.path.endswith("_pb.js"):
         name = _get_js_variable_name(output)
-        exports[name] = output.short_path
+        exports[name] = _get_js_output_file_name(ctx, output)
     elif output.path.endswith("_grpc_pb.js"):
         name = _get_js_variable_name(output)
-        exports[name] = output.short_path
+        exports[name] = _get_js_output_file_name(ctx, output)
 
   content = []
   content.append("module.exports = {")

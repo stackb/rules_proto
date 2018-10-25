@@ -49,8 +49,8 @@ var (
 	tls        = flag.Bool("tls", false, "Connection uses TLS if true, else plain TCP")
 	certFile   = flag.String("cert_file", "", "The TLS cert file")
 	keyFile    = flag.String("key_file", "", "The TLS key file")
-	jsonDBFile = flag.String("json_db_file", "testdata/route_guide_db.json", "A json file containing a list of features")
-	port       = flag.Int("port", 10000, "The server port")
+	jsonDBFile = flag.String("json_db_file", "example/proto/routeguide_features.json", "A json file containing a list of features")
+	port       = flag.Int("port", 50052, "The server port")
 )
 
 type routeGuideServer struct {
@@ -62,12 +62,17 @@ type routeGuideServer struct {
 
 // GetFeature returns the feature at the given point.
 func (s *routeGuideServer) GetFeature(ctx context.Context, point *pb.Point) (*pb.Feature, error) {
+	// if point.Latitude == 0 && point.Longitude == 0 {
+	// 	return nil, grpc.Errorf(codes.InvalidArgument, "Point must not be at absolute zero coordinate")
+	// }
+
 	for _, feature := range s.savedFeatures {
 		if proto.Equal(feature.Location, point) {
 			return feature, nil
 		}
 	}
 	// No feature was found, return an unnamed feature
+	log.Printf("No feature found at point %v", point)
 	return &pb.Feature{Location: point}, nil
 }
 
@@ -158,6 +163,7 @@ func (s *routeGuideServer) loadFeatures(filePath string) {
 	if err := json.Unmarshal(file, &s.savedFeatures); err != nil {
 		log.Fatalf("Failed to load default features: %v", err)
 	}
+	log.Printf("Loaded %d features from database file %q...", len(s.savedFeatures), filePath)
 }
 
 func toRadians(num float64) float64 {
@@ -186,6 +192,10 @@ func calcDistance(p1 *pb.Point, p2 *pb.Point) int32 {
 }
 
 func inRange(point *pb.Point, rect *pb.Rectangle) bool {
+	if rect.Lo == nil && rect.Hi == nil {
+		log.Printf("Invalid rect: %v", rect)
+		return false
+	}
 	left := math.Min(float64(rect.Lo.Longitude), float64(rect.Hi.Longitude))
 	right := math.Max(float64(rect.Lo.Longitude), float64(rect.Hi.Longitude))
 	top := math.Max(float64(rect.Lo.Latitude), float64(rect.Hi.Latitude))
@@ -232,5 +242,6 @@ func main() {
 	}
 	grpcServer := grpc.NewServer(opts...)
 	pb.RegisterRouteGuideServer(grpcServer, newServer())
+	log.Printf("Server listening on :%d...", *port)
 	grpcServer.Serve(lis)
 }

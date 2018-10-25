@@ -201,8 +201,8 @@ def com_github_grpc_ecosystem_grpc_gateway(**kwargs):
 
 def org_pubref_rules_node(**kwargs):
     name = "org_pubref_rules_node"
-    ref = get_ref(name, "1c60708c599e6ebd5213f0987207a1d854f13e23", kwargs)  
-    sha256 = get_sha256(name, "248efb149bfa86d9d778b43949351015b23a8339405a9878467a1583ff6df348", kwargs)
+    ref = get_ref(name, "144b4b705e5e56b3ea5a64f47b086388be939b1d", kwargs)  
+    sha256 = get_sha256(name, "c5d8f923bdf1ba905d7e46ce718d564814c2fad13673bc7dc4a2fce20c946315", kwargs)
     github_archive(name, "pubref", "rules_node", ref, sha256)
 
 

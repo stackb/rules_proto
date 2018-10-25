@@ -1,5 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
-load("//go:library.bzl", "go_grpc_library")
+load("//go:go_grpc_library.bzl", "go_grpc_library")
 
 go_grpc_library(
     name = "routeguide",
@@ -26,6 +26,7 @@ go_binary(
     name = "server",
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
+    data = ["//example/proto:routeguide_features"],
 )
 
 go_test(

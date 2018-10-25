@@ -22,9 +22,49 @@ const parseArgs = require('minimist');
 const path = require('path');
 const _ = require('lodash');
 const grpc = require('grpc');
-const routeguide = grpc.loadPackageDefinition(packageDefinition).routeguide;
-const client = new routeguide.RouteGuide('localhost:50051',
-                                       grpc.credentials.createInsecure());
+
+// Import the protocol buffer node_module such that the importpath is
+// "{package}/{rule-name}".  In this case the {package} is
+// "node/example/routeguide" (because there is a
+// node/example/routeguide/BUILD.bazel file) and the {rule-name} is "routeguide"
+// (because the BUILD.bazel file has a node_grpc_library target with name =
+// "routeguide").
+const routeguide = require('node/example/routeguide/routeguide')
+
+// At this point V8 has just loaded an index.js file like this:
+//
+// module.exports = {'routeguide_pb':
+//  require('./node/example/routeguide/routeguide_pb/example/proto/routeguide_pb.js'),
+//  'routeguide_grpc_pb':
+//  require('./node/example/routeguide/routeguide_pb/example/proto/routeguide_grpc_pb.js'),
+//}
+//
+// Internally, this node_module has copied over the generated files as they
+// appeared in the bazel-genfiles directly such that these generated files can
+// satisfy their own require statements successfully.  The index.js exports and
+// object that makes them available by their basename(s).
+//
+
+// The protobuf 'messages' for the proto file 'routeguide.proto' are therefore
+// imported by:
+//
+const messages = routeguide.routeguide_pb;
+//console.log("routeguide messages", messages);
+
+// The protobuf 'services' for the proto file 'routeguide.proto' are therefore
+// imported by:
+//
+const services = routeguide.routeguide_grpc_pb;
+//console.log("routeguide services", services);
+
+// This is included as data in the client node_module, so we can load 
+// this database as a constant.
+const featureList = require('./example/proto/routeguide_features.json');
+console.log(`Loaded ${featureList.length} from feature database`);
+
+const client = new services.RouteGuideClient(
+  'localhost:50052',
+  grpc.credentials.createInsecure());
 
 const COORD_FACTOR = 1e7;
 
@@ -37,30 +77,67 @@ function runGetFeature(callback) {
   const next = _.after(2, callback);
   function featureCallback(error, feature) {
     if (error) {
-      callback(error);
+      console.warn("ERROR occured while attempting to get feature", error);
+      if (callback) {
+        callback(error);
+        callback = undefined  
+      }
       return;
     }
-    if (feature.name === '') {
-      console.log('Found no feature at ' +
-          feature.location.latitude/COORD_FACTOR + ', ' +
-          feature.location.longitude/COORD_FACTOR);
+
+    // console.log("Feature", feature.toObject());
+
+    if (feature.getName() && feature.getName() != "undefined") {
+      console.log('Found feature called "' + feature.getName() + '" at ' +
+          feature.getLocation().getLatitude()/COORD_FACTOR + ', ' +
+          feature.getLocation().getLongitude()/COORD_FACTOR);
     } else {
-      console.log('Found feature called "' + feature.name + '" at ' +
-          feature.location.latitude/COORD_FACTOR + ', ' +
-          feature.location.longitude/COORD_FACTOR);
+      console.log('Found no feature at ' +
+          feature.getLocation().getLatitude()/COORD_FACTOR + ', ' +
+          feature.getLocation().getLongitude()/COORD_FACTOR);
     }
     next();
   }
-  const point1 = {
-    latitude: 409146138,
-    longitude: -746188906
-  };
-  const point2 = {
-    latitude: 0,
-    longitude: 0
-  };
+  const point1 = newPoint(409146138, -746188906);
+  const point2 = newPoint(1, 1);
   client.getFeature(point1, featureCallback);
   client.getFeature(point2, featureCallback);
+}
+
+/**
+ * @param {number} latitude
+ * @param {number} longitude
+ * @returns {!messages.Point}
+ */
+function newPoint(latitude, longitude) {
+  const point = new messages.Point()
+  point.setLatitude(latitude);
+  point.setLongitude(longitude);
+  return point;
+}
+
+/**
+ * @param {!messages.Point} lo
+ * @param {!messages.Point} hi
+ * @returns {!messages.Rectangle}
+ */
+function newRectangle(lo, hi) {
+  const rect = new messages.Rectangle()
+  rect.setLo(lo);
+  rect.setHi(hi);
+  return rect;
+}
+
+/**
+ * @param {!messages.Point} point
+ * @param {string} message
+ * @returns {!messages.Note}
+ */
+function newNote(point, message) {
+  const note = new messages.RouteNote()
+  note.setLocation(point);
+  note.setMessage(message);
+  return note;
 }
 
 /**
@@ -70,22 +147,15 @@ function runGetFeature(callback) {
  * @param {function} callback Called when this demo is complete
  */
 function runListFeatures(callback) {
-  const rectangle = {
-    lo: {
-      latitude: 400000000,
-      longitude: -750000000
-    },
-    hi: {
-      latitude: 420000000,
-      longitude: -730000000
-    }
-  };
+  const rectangle = newRectangle(
+    newPoint(400000000, -750000000),
+    newPoint(420000000, -73000000));
   console.log('Looking for features between 40, -75 and 42, -73');
   const call = client.listFeatures(rectangle);
   call.on('data', function(feature) {
-      console.log('Found feature called "' + feature.name + '" at ' +
-          feature.location.latitude/COORD_FACTOR + ', ' +
-          feature.location.longitude/COORD_FACTOR);
+    console.log('Found feature called "' + feature.getName() + '" at ' +
+          feature.getLocation().getLatitude()/COORD_FACTOR + ', ' +
+          feature.getLocation().getLongitude()/COORD_FACTOR);
   });
   call.on('end', callback);
 }
@@ -97,60 +167,57 @@ function runListFeatures(callback) {
  * @param {function} callback Called when this demo is complete
  */
 function runRecordRoute(callback) {
-  const argv = parseArgs(process.argv, {
-    string: 'db_path'
-  });
-  fs.readFile(path.resolve(argv.db_path), function(err, data) {
-    if (err) {
-      callback(err);
+
+  const num_points = 10;
+
+  const call = client.recordRoute(function(error, stats) {
+    if (error) {
+      callback(error);
       return;
     }
-    const feature_list = JSON.parse(data);
-
-    const num_points = 10;
-    const call = client.recordRoute(function(error, stats) {
-      if (error) {
-        callback(error);
-        return;
-      }
-      console.log('Finished trip with', stats.point_count, 'points');
-      console.log('Passed', stats.feature_count, 'features');
-      console.log('Travelled', stats.distance, 'meters');
-      console.log('It took', stats.elapsed_time, 'seconds');
-      callback();
-    });
-    /**
-     * Constructs a function that asynchronously sends the given point and then
-     * delays sending its callback
-     * @param {number} lat The latitude to send
-     * @param {number} lng The longitude to send
-     * @return {function(function)} The function that sends the point
-     */
-    function pointSender(lat, lng) {
-      /**
-       * Sends the point, then calls the callback after a delay
-       * @param {function} callback Called when complete
-       */
-      return function(callback) {
-        console.log('Visiting point ' + lat/COORD_FACTOR + ', ' +
-            lng/COORD_FACTOR);
-        call.write({
-          latitude: lat,
-          longitude: lng
-        });
-        _.delay(callback, _.random(500, 1500));
-      };
-    }
-    const point_senders = [];
-    for (let i = 0; i < num_points; i++) {
-      const rand_point = feature_list[_.random(0, feature_list.length - 1)];
-      point_senders[i] = pointSender(rand_point.location.latitude,
-                                     rand_point.location.longitude);
-    }
-    async.series(point_senders, function() {
-      call.end();
-    });
+    console.log('Finished trip with', stats.getPointCount(), 'points');
+    console.log('Passed', stats.getFeatureCount(), 'features');
+    console.log('Traveled', stats.getDistance(), 'meters');
+    console.log('It took', stats.getElapsedTime(), 'seconds');
+    callback();
   });
+
+  /**
+   * Constructs a function that asynchronously sends the given point and then
+   * delays sending its callback
+   * @param {number} lat The latitude to send
+   * @param {number} lng The longitude to send
+   * @return {function(function)} The function that sends the point
+   */
+  function pointSender(lat, lng) {
+    /**
+     * Sends the point, then calls the callback after a delay
+     * @param {function} callback Called when complete
+     */
+    return function(callback) {
+      console.log('Visiting point ' + lat/COORD_FACTOR + ', ' +
+          lng/COORD_FACTOR);
+      call.write(newPoint(lat, lng));
+      _.delay(callback, _.random(100, 500));
+    };
+  }
+
+  const pointSenders = [];
+
+  for (let i = 0; i < num_points; i++) {
+    const randIndex = _.random(0, featureList.length - 1)
+    console.log("randomIndex", randIndex);
+    const randomPointJson = featureList[randIndex];
+    const randomPoint = newPoint(randomPointJson.location.latitude, randomPointJson.location.longitude)
+    console.log("randomPoint", randomPointJson, randomPoint.toObject());
+    pointSenders[i] = pointSender(randomPoint.getLatitude(),
+                                    randomPoint.getLongitude());
+  }
+
+  async.series(pointSenders, function() {
+    call.end();
+  });
+
 }
 
 /**
@@ -161,41 +228,22 @@ function runRecordRoute(callback) {
 function runRouteChat(callback) {
   const call = client.routeChat();
   call.on('data', function(note) {
-    console.log('Got message "' + note.message + '" at ' +
-        note.location.latitude + ', ' + note.location.longitude);
+    console.log('Got message "' + note.getMessage() + '" at ' +
+        note.getLocation().getLatitude() + ', ' + note.getLocation().getLongitude());
   });
 
   call.on('end', callback);
 
-  const notes = [{
-    location: {
-      latitude: 0,
-      longitude: 0
-    },
-    message: 'First message'
-  }, {
-    location: {
-      latitude: 0,
-      longitude: 1
-    },
-    message: 'Second message'
-  }, {
-    location: {
-      latitude: 1,
-      longitude: 0
-    },
-    message: 'Third message'
-  }, {
-    location: {
-      latitude: 0,
-      longitude: 0
-    },
-    message: 'Fourth message'
-  }];
+  const notes = [
+    newNote(newPoint(0, 0), 'First message'),
+    newNote(newPoint(0, 1), 'Second message'),
+    newNote(newPoint(1, 0), 'Third message'),
+    newNote(newPoint(0, 0), 'Fourth message'),
+  ]
   for (let i = 0; i < notes.length; i++) {
     const note = notes[i];
-    console.log('Sending message "' + note.message + '" at ' +
-        note.location.latitude + ', ' + note.location.longitude);
+    console.log('Sending message "' + note.getMessage() + '" at ' +
+        note.getLocation().getLatitude() + ', ' + note.getLocation().getLongitude());
     call.write(note);
   }
   call.end();

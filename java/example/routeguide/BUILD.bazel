@@ -1,4 +1,4 @@
-load("//java:library.bzl", "java_grpc_library")
+load("//java:java_grpc_library.bzl", "java_grpc_library")
 
 java_grpc_library(
     name = "routeguide",

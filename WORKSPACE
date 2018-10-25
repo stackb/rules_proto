@@ -124,6 +124,7 @@ yarn_modules(
     deps = {
         "google-protobuf": "3.6.1",
         "grpc": "1.15.1",
+        "async": "2.6.1",
     },
 )
 

@@ -16,16 +16,20 @@ def node_grpc_library(**kwargs):
         transitive = True,
         visibility = visibility,
     )
+
     node_module_index(
         name = name_index,
         compilation = name_pb,
     )
+
     node_module(
         name = name,
         srcs = [name_pb],
+        # strip_prefix = name_pb,
+        layout = "workspace",
         index = name_index,
         deps = [
-            "@proto_node_modules//:_all_",
+            #"@proto_node_modules//:_all_",
             "@grpc_node_modules//:_all_",
         ],
         visibility = visibility,
