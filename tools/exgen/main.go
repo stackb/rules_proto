@@ -4,9 +4,11 @@ package main
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"fmt"
 	"io"
 	"log"
+	"net/http"
 	"os"
 	"path"
 	"strings"
@@ -109,6 +111,11 @@ func main() {
 			Usage: "Sha256 value to use for main readme",
 			Value: "{ARCHIVE_TAR_GZ_SHA256}",
 		},
+		&cli.StringFlag{
+			Name:  "github_url",
+			Usage: "URL for github download",
+			Value: "https://github.com/stackb/rules_proto/archive/{ref}.tar.gz",
+		},
 	}
 	app.Action = func(c *cli.Context) error {
 		err := action(c)
@@ -125,6 +132,15 @@ func action(c *cli.Context) error {
 	dir := c.String("dir")
 	if dir == "" {
 		return fmt.Errorf("--dir required")
+	}
+
+	ref := c.String("ref")
+	sha256 := c.String("sha256")
+	githubURL := c.String("github_url")
+
+	// Autodetermine sha256 if we have a real commit and templated sha256 value
+	if ref != "{GIT_COMMIT_ID}" && sha256 == "{ARCHIVE_TAR_GZ_SHA256}" {
+		sha256 = mustGetSha256(strings.Replace(githubURL, "{ref}", ref, 1))
 	}
 
 	languages := []*Language{
@@ -149,7 +165,6 @@ func action(c *cli.Context) error {
 		makeGrpcJs(),
 		makeGithubComGrpcGrpcWeb(),
 		makeGithubComImprobableTsProtocGen(),
-		//makeGithubComImprobableGrpcWeb(),
 	}
 
 	for _, lang := range languages {
@@ -162,8 +177,8 @@ func action(c *cli.Context) error {
 	mustWriteReadme(dir, c.String("header"), c.String("footer"), struct {
 		Ref, Sha256 string
 	}{
-		Ref:    c.String("ref"),
-		Sha256: c.String("sha256"),
+		Ref:    ref,
+		Sha256: sha256,
 	}, languages)
 
 	return nil
@@ -554,4 +569,23 @@ func writeFile(filepath, content string) error {
 
 	log.Printf("Wrote %s", filepath)
 	return nil
+}
+
+func mustGetSha256(url string) string {
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer response.Body.Close()
+
+	h := sha256.New()
+	if _, err := io.Copy(h, response.Body); err != nil {
+		log.Fatal(err)
+	}
+
+	sha256 := fmt.Sprintf("%x", h.Sum(nil))
+
+	log.Printf("sha256 for %s is %q", url, sha256)
+
+	return sha256
 }
