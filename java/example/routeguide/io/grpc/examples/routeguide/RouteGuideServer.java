@@ -49,13 +49,19 @@ public class RouteGuideServer {
   private final Server server;
 
   public RouteGuideServer(int port) throws IOException {
-    this(ServerBuilder.forPort(port), port);
+    this(port, RouteGuideUtil.getDefaultFeaturesFile());
+  }
+
+  /** Create a RouteGuide server listening on {@code port} using {@code featureFile} database. */
+  public RouteGuideServer(int port, URL featureFile) throws IOException {
+    this(ServerBuilder.forPort(port), port, RouteGuideUtil.parseFeatures(featureFile));
   }
 
   /** Create a RouteGuide server using serverBuilder as a base and features as data. */
-  public RouteGuideServer(ServerBuilder<?> serverBuilder, int port) {
+  public RouteGuideServer(ServerBuilder<?> serverBuilder, int port, Collection<Feature> features) {
     this.port = port;
-    this.server = serverBuilder.addService(new RouteGuideService())
+    logger.info("Initializing server with " + features.size() + " features");
+    server = serverBuilder.addService(new RouteGuideService(features))
         .build();
   }
 
@@ -94,7 +100,7 @@ public class RouteGuideServer {
    * Main method.  This comment makes the linter happy.
    */
   public static void main(String[] args) throws Exception {
-    RouteGuideServer server = new RouteGuideServer(8980);
+    RouteGuideServer server = new RouteGuideServer(50053);
     server.start();
     server.blockUntilShutdown();
   }
@@ -105,13 +111,12 @@ public class RouteGuideServer {
    * <p>See route_guide.proto for details of the methods.
    */
   private static class RouteGuideService extends RouteGuideGrpc.RouteGuideImplBase {
+    private final Collection<Feature> features;
     private final ConcurrentMap<Point, List<RouteNote>> routeNotes =
         new ConcurrentHashMap<Point, List<RouteNote>>();
 
-    private Collection<Feature> features;
-
-    RouteGuideService() {
-      this.features = new java.util.HashSet();
+    RouteGuideService(Collection<Feature> features) {
+      this.features = features;
     }
 
     /**
@@ -140,7 +145,7 @@ public class RouteGuideServer {
       int top = max(request.getLo().getLatitude(), request.getHi().getLatitude());
       int bottom = min(request.getLo().getLatitude(), request.getHi().getLatitude());
 
-      for (Feature feature : this.features) {
+      for (Feature feature : features) {
         if (!RouteGuideUtil.exists(feature)) {
           continue;
         }
@@ -251,7 +256,7 @@ public class RouteGuideServer {
      * @return The feature object at the point. Note that an empty name indicates no feature.
      */
     private Feature checkFeature(Point location) {
-      for (Feature feature : this.features) {
+      for (Feature feature : features) {
         if (feature.getLocation().getLatitude() == location.getLatitude()
             && feature.getLocation().getLongitude() == location.getLongitude()) {
           return feature;

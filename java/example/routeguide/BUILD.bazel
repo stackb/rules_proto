@@ -16,6 +16,7 @@ java_binary(
         ":serverlib",
         "//java:grpc_netty",
     ],
+    resources = ["route_guide_db.json"],
 )
 
 java_library(
@@ -37,4 +38,5 @@ java_binary(
         ":serverlib",
         "//java:grpc_netty",
     ],
+    resources = ["route_guide_db.json"],
 )

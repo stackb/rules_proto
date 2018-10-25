@@ -49,13 +49,20 @@ public class RouteGuideUtil {
    * Gets the default features file from classpath.
    */
   public static URL getDefaultFeaturesFile() {
-    return RouteGuideServer.class.getResource("route_guide_db.json");
+    String filename = "/example/routeguide/route_guide_db.json";
+    URL r = RouteGuideServer.class.getResource(filename);
+    if (r == null) {
+      throw new NullPointerException("No resource found at " + filename);
+    }
+    return r;
   }
 
   /**
    * Parses the JSON input file containing the list of features.
    */
   public static List<Feature> parseFeatures(URL file) throws IOException {
+    System.out.println("Parsing feature db from " + file);
+
     InputStream input = file.openStream();
     try {
       Reader reader = new InputStreamReader(input, Charset.forName("UTF-8"));
