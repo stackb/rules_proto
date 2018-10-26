@@ -35,9 +35,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_stack_rules_proto",
-    urls = ["https://github.com/stackb/rules_proto/archive/cf706f5f6a5f58d1b1b7f9d89d53fa904a977046.tar.gz"],
-    sha256 = "e7eb47a137b175536dbebe61c1493900ad81f174bbc8bee50098b72a4caca63a",
-    strip_prefix = "rules_proto-cf706f5f6a5f58d1b1b7f9d89d53fa904a977046",
+    urls = ["https://github.com/stackb/rules_proto/archive/{GIT_COMMIT_ID}.tar.gz"],
+    sha256 = "{ARCHIVE_TAR_GZ_SHA256}",
+    strip_prefix = "rules_proto-{GIT_COMMIT_ID}",
 )
 ```
 

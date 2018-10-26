@@ -210,7 +210,7 @@ func addGogoRules(language *Language, base string) {
 			Base:           base,
 			Kind:           "grpc",
 			Implementation: goCompileRuleTemplate,
-			Plugins:        []string{protoPlugin},
+			Plugins:        []string{grpcPlugin},
 			Usage:          goUsageTemplate,
 			Example:        grpcCompileExampleTemplate,
 			Doc:            fmt.Sprintf("Generates %s protobuf+gRPC artifacts", base),

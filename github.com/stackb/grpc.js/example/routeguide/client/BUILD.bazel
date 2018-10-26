@@ -5,7 +5,7 @@ load(
     "closure_js_binary",
 )
 
-load("//github.com/stackb/grpc.js:library.bzl", "closure_grpc_library")
+load("//github.com/stackb/grpc.js:closure_grpc_library.bzl", "closure_grpc_library")
 
 closure_grpc_library(
     name = "routeguide",

@@ -8,6 +8,7 @@ os:
   - osx
 
 env:
+    V=0.18.0
     V=0.17.2
 
 before_install:

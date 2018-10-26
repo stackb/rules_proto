@@ -151,7 +151,7 @@ def gogo_grpc_compile(**kwargs):
         kwargs.pop("importpath")
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
-        kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:gogo"))]
+        kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:grpc_gogo"))]
 
     proto_compile(
         **kwargs
@@ -522,7 +522,7 @@ def gogofast_grpc_compile(**kwargs):
         kwargs.pop("importpath")
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
-        kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:gogofast"))]
+        kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:grpc_gogofast"))]
 
     proto_compile(
         **kwargs
@@ -893,7 +893,7 @@ def gogofaster_grpc_compile(**kwargs):
         kwargs.pop("importpath")
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
-        kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:gogofaster"))]
+        kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:grpc_gogofaster"))]
 
     proto_compile(
         **kwargs
