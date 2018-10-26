@@ -355,6 +355,30 @@ def com_google_guava_guava(**kwargs):
     jar(name, artifact, sha1)
 
 
+def com_thesamet_scalapb_scalapb_json4s(**kwargs):
+    """json parsing library for scala
+    """
+    name = "com_thesamet_scalapb_scalapb_json4s"
+    artifact = get_artifact(name, "com.thesamet.scalapb:scalapb-json4s_2.12:0.7.1", kwargs)
+    sha1 = get_sha1(name, "808eeb6cfaa359a6c6a3dd2ea2c0374caee30c28", kwargs)
+    jar(name, artifact, sha1)
+
+def org_json4s_json4s_jackson_2_12(**kwargs):
+    """json parsing library for scala
+    """
+    name = "org_json4s_json4s_jackson_2_12"
+    artifact = get_artifact(name, "org.json4s:json4s-jackson_2.12:3.6.1", kwargs)
+    sha1 = get_sha1(name, "864cf214dcd5686929f1c7f8d61344195c828b35", kwargs)
+    jar(name, artifact, sha1)
+
+def org_json4s_json4s_ast_2_12(**kwargs):
+    """json parsing library for scala
+    """
+    name = "org_json4s_json4s_ast_2_12"
+    artifact = get_artifact(name, "org.json4s:json4s-ast_2.12:3.6.1", kwargs)
+    sha1 = get_sha1(name, "cf937592788dfa654acb9679b97eb1e691bf69f8", kwargs)
+    jar(name, artifact, sha1)
+
 def com_github_scalapb_scalapb(**kwargs):
     """scala compiler plugin
     """
@@ -365,16 +389,16 @@ def com_github_scalapb_scalapb(**kwargs):
             sha256 = "bda0b44b50f0a816342a52c34e6a341b1a792f2a6d26f4f060852f8f10f5d854",
             strip_prefix = "scalapbc-0.8.0/lib",
             build_file_content = """
-    java_import(
-        name = "compilerplugin",
-        jars = ["com.thesamet.scalapb.compilerplugin-0.8.0.jar"],
-        visibility = ["//visibility:public"],
-    )
-    java_import(
-        name = "scala-library",
-        jars = ["org.scala-lang.scala-library-2.11.12.jar"],
-        visibility = ["//visibility:public"],
-    )
+java_import(
+    name = "compilerplugin",
+    jars = ["com.thesamet.scalapb.compilerplugin-0.8.0.jar"],
+    visibility = ["//visibility:public"],
+)
+java_import(
+    name = "scala-library",
+    jars = ["org.scala-lang.scala-library-2.11.12.jar"],
+    visibility = ["//visibility:public"],
+)
             """
         )    
 

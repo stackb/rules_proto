@@ -77,8 +77,9 @@ def {{ .Rule.Name }}(**kwargs):
 
 func makeScala() *Language {
 	return &Language{
-		Dir:  "scala",
-		Name: "scala",
+		Dir:   "scala",
+		Name:  "scala",
+		Notes: mustTemplate("Rules for `scala_grpc_{compile|library}` don't produce code that compiles!  Use `@//io_bazel_rules_scala//scala_proto:scala_proto.bzl` instead"),
 		Rules: []*Rule{
 			&Rule{
 				Name:           "scala_proto_compile",
@@ -97,6 +98,7 @@ func makeScala() *Language {
 				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates *.scala protobuf+gRPC artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Experimental:   true,
 			},
 			&Rule{
 				Name:           "scala_proto_library",
@@ -113,6 +115,7 @@ func makeScala() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates *.py protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Experimental:   true,
 			},
 		},
 	}

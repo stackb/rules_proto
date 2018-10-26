@@ -1,5 +1,7 @@
 # `scala`
 
+Rules for `scala_grpc_{compile|library}` don't produce code that compiles!  Use `@//io_bazel_rules_scala//scala_proto:scala_proto.bzl` instead
+
 | Rule | Description |
 | ---: | :--- |
 | [scala_proto_compile](#scala_proto_compile) | Generates *.scala protobuf artifacts |
@@ -84,6 +86,8 @@ def scala_proto_compile(**kwargs):
 ---
 
 ## `scala_grpc_compile`
+
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates *.scala protobuf+gRPC artifacts
 
@@ -250,6 +254,8 @@ def scala_proto_library(**kwargs):
 ---
 
 ## `scala_grpc_library`
+
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates *.py protobuf+gRPC library
 
