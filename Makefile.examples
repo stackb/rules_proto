@@ -533,3 +533,5 @@ clean_ts_proto_compile:
 ts-protoc-gen: ts_proto_compile
 
 clean_ts-protoc-gen: clean_ts_proto_compile
+
+all_clean:                     clean_android clean_closure clean_cpp clean_csharp clean_dart clean_go clean_java clean_node clean_objc clean_php clean_python clean_ruby clean_rust clean_scala clean_swift clean_gogo clean_grpc-gateway clean_grpc.js clean_grpc-web clean_ts-protoc-gen

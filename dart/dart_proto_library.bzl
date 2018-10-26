@@ -8,7 +8,7 @@ def dart_proto_library(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    dart_grpc_compile(
+    dart_proto_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,

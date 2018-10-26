@@ -105,7 +105,7 @@ closure_grpc_library(
 
 ```python
 load("//github.com/stackb/grpc.js:closure_grpc_compile.bzl", "closure_grpc_compile")
-load("//closure:compile.bzl", "closure_proto_compile")
+load("//closure:closure_proto_compile.bzl", "closure_proto_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def closure_grpc_library(**kwargs):

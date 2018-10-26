@@ -31,7 +31,7 @@ def {{ .Rule.Name }}(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    dart_grpc_compile(
+    dart_proto_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -50,10 +50,7 @@ def {{ .Rule.Name }}(**kwargs):
 `)
 
 var dartGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:dart_grpc_compile.bzl", "dart_grpc_compile")
-load("//{{ .Lang.Dir }}:dart_proto_lib.bzl", "dart_proto_lib")
 load("@io_bazel_rules_dart//dart:dart.bzl", "dart_library")
-
-load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
 
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")

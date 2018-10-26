@@ -11,7 +11,7 @@ go_rules_dependencies()
 go_register_toolchains()`)
 
 var grpcjsGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:closure_grpc_compile.bzl", "closure_grpc_compile")
-load("//closure:compile.bzl", "closure_proto_compile")
+load("//closure:closure_proto_compile.bzl", "closure_proto_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def {{ .Rule.Name }}(**kwargs):

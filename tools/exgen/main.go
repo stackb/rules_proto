@@ -371,6 +371,8 @@ func mustWriteLanguageExampleBuildFile(dir string, lang *Language, rule *Rule) {
 func mustWriteMakefile(dir string, languages []*Language) {
 	out := &LineWriter{}
 
+	allClean := make([]string, len(languages))
+
 	for _, lang := range languages {
 		buildNames := make([]string, len(lang.Rules))
 		cleanNames := make([]string, len(lang.Rules))
@@ -396,8 +398,13 @@ func mustWriteMakefile(dir string, languages []*Language) {
 			out.w("clean_%s: %s", lang.Name, strings.Join(cleanNames, " "))
 			out.ln()
 
+			allClean = append(allClean, "clean_"+lang.Name)
+
 		}
 	}
+
+	out.w("all_clean: %s", strings.Join(allClean, " "))
+	out.ln()
 
 	out.MustWrite(path.Join(dir, "Makefile.examples"))
 }

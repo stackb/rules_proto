@@ -220,7 +220,7 @@ def dart_proto_library(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    dart_grpc_compile(
+    dart_proto_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -307,10 +307,7 @@ dart_grpc_library(
 
 ```python
 load("//dart:dart_grpc_compile.bzl", "dart_grpc_compile")
-load("//dart:dart_proto_lib.bzl", "dart_proto_lib")
 load("@io_bazel_rules_dart//dart:dart.bzl", "dart_library")
-
-load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
 
 def dart_grpc_library(**kwargs):
     name = kwargs.get("name")
