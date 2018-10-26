@@ -62,13 +62,22 @@ load("@io_bazel_rules_python//python:pip.bzl", "pip_repositories", "pip_import")
 pip_repositories()
 
 pip_import(
-   name = "grpc_py_deps",
-   requirements = "//python:requirements.txt",
+	name = "protobuf_py_deps",
+	requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
 )
 
-load("@grpc_py_deps//:requirements.bzl", "pip_install")
+load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
 
-pip_install()
+protobuf_pip_install()
+
+pip_import(
+   name = "grpc_py_deps",
+   requirements = "@build_stack_rules_proto//python:requirements.txt",
+)
+
+load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
+
+grpc_pip_install()
 
 # =========================================
 

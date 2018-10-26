@@ -15,7 +15,7 @@
 
 import json
 
-from example.proto.routeguide import routeguide_pb2
+from routeguide_pb.example.proto import routeguide_pb2
 
 def read_route_guide_database():
     """Reads the route guide database.
@@ -25,11 +25,11 @@ def read_route_guide_database():
       route_guide_pb2.Features.
   """
     feature_list = []
-    with open("route_guide_db.json") as route_guide_db_file:
+    with open("example/proto/routeguide_features.json") as route_guide_db_file:
         for item in json.load(route_guide_db_file):
-            feature = route_guide_pb2.Feature(
+            feature = routeguide_pb2.Feature(
                 name=item["name"],
-                location=route_guide_pb2.Point(
+                location=routeguide_pb2.Point(
                     latitude=item["location"]["latitude"],
                     longitude=item["location"]["longitude"]))
             feature_list.append(feature)

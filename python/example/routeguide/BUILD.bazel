@@ -1,18 +1,17 @@
-load("//python:library.bzl", "py_grpc_library")
+load("//python:python_grpc_library.bzl", "py_grpc_library")
 
 py_grpc_library(
     name = "routeguide",
     deps = ["//example/proto:routeguide_proto"],
 )
 
-py_binary(
-    name = "server",
+py_library(
+    name = "resources",
     srcs = [
-        "server.py",
+        "resources.py",
     ],
     deps = [
         ":routeguide",
-        ":resources",
     ],
 )
 
@@ -25,14 +24,19 @@ py_binary(
         ":routeguide",
         ":resources",
     ],
+    imports = ["."],
+    data = ["//example/proto:routeguide_features"],
 )
 
-py_library(
-    name = "resources",
+py_binary(
+    name = "server",
     srcs = [
-        "resources.py",
+        "server.py",
     ],
     deps = [
         ":routeguide",
+        ":resources",
     ],
+    imports = ["."],
+    data = ["//example/proto:routeguide_features"],
 )

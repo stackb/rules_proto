@@ -19,9 +19,12 @@ import math
 
 import grpc
 
-from example.proto.routeguide import routeguide_pb2
-from example.proto.routeguide import routeguide_pb2_grpc
-from python.example.routeguide import resources
+# Recommend to the directory structure of client.runfiles to figure out the
+# correct import here.
+from routeguide_pb.example.proto import routeguide_pb2
+from routeguide_pb.example.proto import routeguide_pb2_grpc
+
+import resources
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
@@ -56,7 +59,7 @@ def get_distance(start, end):
     return R * c
 
 
-class RouteGuideServicer(routeguide_pb_grpc.RouteGuideServicer):
+class RouteGuideServicer(routeguide_pb2_grpc.RouteGuideServicer):
     """Provides methods that implement functionality of route guide server."""
 
     def __init__(self):
@@ -65,7 +68,7 @@ class RouteGuideServicer(routeguide_pb_grpc.RouteGuideServicer):
     def GetFeature(self, request, context):
         feature = get_feature(self.db, request)
         if feature is None:
-            return routeguide_pb.Feature(name="", location=request)
+            return routeguide_pb2.Feature(name="", location=request)
         else:
             return feature
 
@@ -114,9 +117,11 @@ class RouteGuideServicer(routeguide_pb_grpc.RouteGuideServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    routeguide_pb_grpc.add_RouteGuideServicer_to_server(
+    routeguide_pb2_grpc.add_RouteGuideServicer_to_server(
         RouteGuideServicer(), server)
-    server.add_insecure_port('[::]:50051')
+    port = '50051'
+    server.add_insecure_port('[::]:' + port)
+    print("Python RouteGuide Server listing on :%s..." % port)
     server.start()
     try:
         while True:

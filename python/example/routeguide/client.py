@@ -17,21 +17,14 @@ from __future__ import print_function
 
 import random
 import os
-
-#print(os.environ["PWD"])
-
-# This is the correct importpath PACKAGE_NAME + NAME_PB + IMPORTPATH
-#print(os.listdir("python/example/routeguide/routeguide_pb/example/proto/routeguide"))
-print(os.listdir("python/example/routeguide"))
-
-#for s in os.environ["PYTHONPATH"].split(":"):
-#    print(s)
-
 import grpc
 
-from example.proto.routeguide import routeguide_pb2
-from example.proto.routeguide import routeguide_pb2_grpc
-from python.example.routeguide import resources
+# Recommend to the directory structure of client.runfiles to figure out the
+# correct import here.
+from routeguide_pb.example.proto import routeguide_pb2
+from routeguide_pb.example.proto import routeguide_pb2_grpc
+
+import resources
 
 def make_route_note(message, latitude, longitude):
     return routeguide_pb2.RouteNote(
