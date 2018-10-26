@@ -1,13 +1,7 @@
 
 
-load("//github.com/grpc-ecosystem/grpc-gateway:compile.bzl", 
-    "grpc_gateway_compile",
-    "grpc_gateway_swagger_compile",
-)
-
-load("//github.com/grpc-ecosystem/grpc-gateway:library.bzl", 
-    "grpc_gateway_library",
-)
+load("//github.com/grpc-ecosystem/grpc-gateway:gateway_grpc_library.bzl", "gateway_grpc_library")
+load("//github.com/grpc-ecosystem/grpc-gateway:gateway_swagger_compile.bzl", "gateway_swagger_compile")
 
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_binary")
 
@@ -20,14 +14,14 @@ proto_library(
     visibility = ["//visibility:public"],
 )
 
-grpc_gateway_library(
+gateway_grpc_library(
     name = "go_default_library",
     deps = ["api_proto"],
     importpath = "github.com/stackb/rules_proto/github.com/grpc-ecosystem/grpc-gateway/examples/api",
     visibility = ["//visibility:public"],
 )
 
-grpc_gateway_swagger_compile(
+gateway_swagger_compile(
     name = "api_swagger",
     deps = ["api_proto"],
 )
