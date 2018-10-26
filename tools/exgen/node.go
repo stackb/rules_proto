@@ -49,6 +49,7 @@ yarn_modules(
         "grpc": "1.15.1",
     },
 )
+
 `)
 
 var nodeProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:node_proto_compile.bzl", "node_proto_compile")

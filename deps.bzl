@@ -166,8 +166,8 @@ def com_github_grpc_grpc(**kwargs):
 # Create an issue for this.
 def io_bazel_rules_dotnet(**kwargs):
     name = "io_bazel_rules_dotnet"
-    ref = get_ref(name, "2277b7a1b913bd98fae25e2cf8a032afae18d26e", kwargs) 
-    sha256 = get_sha256(name, "3b2e795bd69c2c16bd2305ab5b4c1ba2309c302749c17451841f9e0adfc76cd5", kwargs)
+    ref = get_ref(name, "845434d2c60442a620edf615b523d0c907bb06b6", kwargs) 
+    sha256 = get_sha256(name, "4133d381ab9539fed19e321fdf672bb205339b779eeb20fd963bd60616148779", kwargs)
     github_archive(name, "stackb", "rules_dotnet", ref, sha256)
 
 
