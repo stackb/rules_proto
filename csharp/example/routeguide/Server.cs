@@ -184,19 +184,4 @@ class Program
 
     }
 
-    private static Task AwaitCancellation(CancellationToken token)
-    {
-        var taskSource = new TaskCompletionSource<bool>();
-        token.Register(() => taskSource.SetResult(true));
-        return taskSource.Task;
-    }
-
-    private static async Task RunServiceAsync(Server server, CancellationToken cancellationToken = default(CancellationToken))
-    {
-        // Start server
-        server.Start();
-
-        await AwaitCancellation(cancellationToken);
-        await server.ShutdownAsync();
-    }
 }
