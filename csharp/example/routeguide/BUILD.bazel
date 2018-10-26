@@ -56,7 +56,6 @@ core_binary(
     name = "client",
     srcs = [
         "Client.cs",
-        #":routeguide_pb",
     ],
     deps = [
         ":util",
@@ -64,10 +63,9 @@ core_binary(
         "@google.protobuf//:core",
         "@system.interactive.async//:core",
         "@grpc.core//:core",
-        #"@io_bazel_rules_dotnet//dotnet/stdlib.core:system.threading.tasks.dll",
-        #"@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
 
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.reflection.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.globalization.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.runtime.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.runtime.extensions.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.runtime.handles.dll",
@@ -87,20 +85,43 @@ core_binary(
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.filesystem.primitives.dll",       
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.core.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.dll",
-
-        #"@io_bazel_rules_dotnet//dotnet/stdlib:System.Threading.Tasks.Dataflow.dll",
-        #"@io_bazel_rules_dotnet//dotnet/stdlib:System.Reactive.Windows.Threading.dll",
     ],
+    data = ["//example/proto:routeguide_features"],
 )
 
-# core_binary(
-#     name = "server",
-#     srcs = ["server.cs"],
-#     deps = [
-#         ":routeguide",
-#         "@google.protobuf//:core",
-#         "@system.interactive.async//:core",
-#         "@grpc.core//:core",
-#     ],
-#     # data = ["//example/proto/routeguide:features"],
-# )
+core_binary(
+    name = "server",
+    srcs = [
+        "Server.cs",
+    ],
+    deps = [
+        ":util",
+        ":routeguide",
+        "@google.protobuf//:core",
+        "@system.interactive.async//:core",
+        "@grpc.core//:core",
+
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.reflection.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.globalization.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.runtime.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.runtime.extensions.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.runtime.handles.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.console.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.private.corelib.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.linq.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.threading.tasks.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.filesystem.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:netstandard.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.collections.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.security.cryptography.primitives.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.linq.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.xdocument.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.text.encoding.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.filesystem.primitives.dll",       
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.core.dll",
+        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.dll",
+    ],
+    data = ["//example/proto:routeguide_features"],
+)

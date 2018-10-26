@@ -258,7 +258,7 @@ public class RouteGuideClient {
       return;
     }
 
-    RouteGuideClient client = new RouteGuideClient("localhost", 50052);
+    RouteGuideClient client = new RouteGuideClient("localhost", 50051);
     try {
       // Looking for a valid feature
       client.getFeature(409146138, -746188906);

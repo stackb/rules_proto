@@ -63,8 +63,10 @@ def {{ .Rule.Name }}(**kwargs):
 
 func makeJava() *Language {
 	return &Language{
-		Dir:  "java",
-		Name: "java",
+		Dir:              "java",
+		Name:             "java",
+		RouteGuideClient: "//java/example/routeguide:client",
+		RouteGuideServer: "//java/example/routeguide:server",
 		Rules: []*Rule{
 			&Rule{
 				Name:           "java_proto_compile",

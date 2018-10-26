@@ -63,7 +63,7 @@ const featureList = require('./example/proto/routeguide_features.json');
 console.log(`Loaded ${featureList.length} from feature database`);
 
 const client = new services.RouteGuideClient(
-  'localhost:50052',
+  'localhost:50051',
   grpc.credentials.createInsecure());
 
 const COORD_FACTOR = 1e7;

@@ -100,7 +100,7 @@ public class RouteGuideServer {
    * Main method.  This comment makes the linter happy.
    */
   public static void main(String[] args) throws Exception {
-    RouteGuideServer server = new RouteGuideServer(50053);
+    RouteGuideServer server = new RouteGuideServer(50051);
     server.start();
     server.blockUntilShutdown();
   }

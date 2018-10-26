@@ -37,6 +37,9 @@ type Language struct {
 
 	// List of available plugins
 	Plugins map[string]*Plugin
+
+	// Does the langaguage has a routeguide server?  If so, this is the bazel target to run it.
+	RouteGuideServer, RouteGuideClient string
 }
 
 type Rule struct {

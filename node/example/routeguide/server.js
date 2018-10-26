@@ -220,7 +220,7 @@ function getServer() {
 }
 
 if (require.main === module) {
-  const addr = '0.0.0.0:50053';
+  const addr = '0.0.0.0:50051';
   // If this is run as a script, start a server on an unused port
   const routeServer = getServer();
   routeServer.bind(addr, grpc.ServerCredentials.createInsecure());
