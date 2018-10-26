@@ -380,11 +380,11 @@ func mustWriteMakefile(dir string, languages []*Language) {
 			cleanNames[i] = "clean_" + rule.Name
 
 			out.w("%s: ", rule.Name)
-			out.w("\t(cd %s && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel --bazelrc /home/pcj/go/src/github.com/stackb/rules_proto/tools/bazelrc.remote build //...)", path.Join(lang.Dir, "example", rule.Name))
+			out.w("\t(cd %s && bazel build //...)", path.Join(lang.Dir, "example", rule.Name))
 			out.ln()
 
 			out.w("clean_%s: ", rule.Name)
-			out.w("\t(cd %s && /home/pcj/.cache/bzl/release/0.17.2/bin/bazel clean)", path.Join(lang.Dir, "example", rule.Name))
+			out.w("\t(cd %s && bazel clean)", path.Join(lang.Dir, "example", rule.Name))
 			out.ln()
 
 		}
