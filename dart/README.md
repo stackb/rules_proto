@@ -232,7 +232,7 @@ def dart_proto_library(**kwargs):
         deps = [
             str(Label("@vendor_protobuf//:protobuf")),
         ],
-        lib_root = ".",
+        #lib_root = ".",
         pub_pkg_name = "foo",
         visibility = visibility,
     )
@@ -307,7 +307,7 @@ dart_grpc_library(
 
 ```python
 load("//dart:dart_grpc_compile.bzl", "dart_grpc_compile")
-load("@io_bazel_rules_dart//dart:dart.bzl", "dart_library")
+load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
 
 def dart_grpc_library(**kwargs):
     name = kwargs.get("name")
@@ -328,7 +328,7 @@ def dart_grpc_library(**kwargs):
         deps = [
             str(Label("@vendor_protobuf//:protobuf")),
         ],
-        lib_root = ".",
+        #lib_root = ".",
         pub_pkg_name = "foo",
         visibility = visibility,
     )

@@ -520,9 +520,15 @@ ts_grpc_compile:
 clean_ts_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/ts_grpc_compile && bazel clean)
 
-grpc-web: closure_grpc_compile commonjs_grpc_compile commonjs_dts_grpc_compile ts_grpc_compile
+closure_grpc_library: 
+	(cd github.com/grpc/grpc-web/example/closure_grpc_library && bazel build //...)
 
-clean_grpc-web: clean_closure_grpc_compile clean_commonjs_grpc_compile clean_commonjs_dts_grpc_compile clean_ts_grpc_compile
+clean_closure_grpc_library: 
+	(cd github.com/grpc/grpc-web/example/closure_grpc_library && bazel clean)
+
+grpc-web: closure_grpc_compile commonjs_grpc_compile commonjs_dts_grpc_compile ts_grpc_compile closure_grpc_library
+
+clean_grpc-web: clean_closure_grpc_compile clean_commonjs_grpc_compile clean_commonjs_dts_grpc_compile clean_ts_grpc_compile clean_closure_grpc_library
 
 ts_proto_compile: 
 	(cd github.com/improbable-eng/ts-protoc-gen/example/ts_proto_compile && bazel build //...)

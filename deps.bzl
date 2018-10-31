@@ -282,9 +282,9 @@ def io_bazel_rules_dart(**kwargs):
     """Dart Rules
     """
     name = "io_bazel_rules_dart"
-    ref = get_ref(name, "32ec7eb8585ba618e1236ccce43d158b6bda2f7b", kwargs)  
-    sha256 = get_sha256(name, "b8107ad02bb3f3667900f18a585bb490192d6a193e975e82b2766470da1c7ebd", kwargs)
-    github_archive(name, "bazelbuild", "rules_dart", ref, sha256)
+    ref = get_ref(name, "00465718510be5f0654b590c5f8372cca8a60376", kwargs) # ~10/7/2018 
+    sha256 = get_sha256(name, "be154d276eb2a31e50af2da0de1a8933b6971ab8b365604828ae6d25b4886d04", kwargs)
+    github_archive(name, "dart-lang", "rules_dart", ref, sha256)
 
 
 def dart_sdk(**kwargs):
@@ -306,15 +306,16 @@ def dart_pub_deps_protoc_plugin(**kwargs):
             name = name,
             spec = str(Label("//dart:pubspec.yaml")),
             override = {
-                "path": "1.6.2",
-                "analyzer": "0.32.5",
-                "crypto": "2.0.6",
-                "async": "2.0.8",
-                "fixnum": "0.10.8",
-                "collection": "1.14.11",
-                "dart_style": "1.1.3",
-                "source_span": "1.4.1",
-                "args": "1.5.0",
+                # "path": "1.6.2",
+                # "analyzer": "0.32.5",
+                # "crypto": "2.0.6",
+                # "async": "2.0.8",
+                # "fixnum": "0.10.8",
+                # "collection": "1.14.11",
+                # "dart_style": "1.1.3",
+                # "source_span": "1.4.1",
+                # "args": "1.5.0",
+                "front_end": "0.1.6",
             },
         )
 
