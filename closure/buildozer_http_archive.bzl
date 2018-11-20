@@ -54,7 +54,7 @@ def _http_archive_impl(ctx):
         for filename, replacements in ctx.attr.sed_replacements.items():
             # And each sed replacement to make (dict value)...
             for replacement in replacements:
-                args = [sed, "--in-place", replacement, filename]
+                args = [sed, "-i.bak", replacement, filename]
                 # execute the replace on that file.
                 result = ctx.execute(args, quiet = False)
                 if result.return_code:
