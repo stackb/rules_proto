@@ -157,8 +157,8 @@ def com_google_protobuf(**kwargs):
 
 def com_github_grpc_grpc(**kwargs):
     name = "com_github_grpc_grpc"
-    ref = get_ref(name, "d6c989936c0d6fdaf481e4ac460beaebc6c57f20", kwargs) # v1.17.0
-    sha256 = get_sha256(name, "1b1e4d9b5d38000149501d1719d2947f62ed32a79b5f8fe932f6286689257d7a", kwargs)
+    ref = get_ref(name, "f0fbee59326402e6c1f0a7c6a1f8899fd2b0025a", kwargs) # Bazel 0.20.0 workspace fixes.
+    sha256 = get_sha256(name, "6cea8d3dbe289872343aafe67736539b0a28ecd062d3ff4965f157f5d9d77d1d", kwargs)
     github_archive(name, "grpc", "grpc", ref, sha256)
 
 
