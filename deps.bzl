@@ -142,8 +142,8 @@ def boringssl(**kwargs):
 
 def com_github_nanopb_nanopb(**kwargs):
     name = "com_github_nanopb_nanopb"
-    ref = get_ref(name, "5f85445781ef29e50435c2eea661ca435a19b6bc", kwargs) 
-    sha256 = get_sha256(name, "8c09d35806c857dcb3a383c81052cc7ba1c5855e827d1792a83bd57251821e29", kwargs)
+    ref = get_ref(name, "ae9901f2a31500e8fdc93fa9804d24851c58bb1e", kwargs)
+    sha256 = get_sha256(name, "7aa0ab179eff56241b6cded9cd07324af2395ad56d5478e2f7dabdb42b65d3fb", kwargs)
     github_archive(name, "nanopb", "nanopb", ref, sha256)
 
 
