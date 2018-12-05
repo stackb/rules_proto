@@ -158,7 +158,7 @@ def com_google_protobuf(**kwargs):
 def com_github_grpc_grpc(**kwargs):
     name = "com_github_grpc_grpc"
     ref = get_ref(name, "d6c989936c0d6fdaf481e4ac460beaebc6c57f20", kwargs) # v1.17.0
-    sha256 = get_sha256(name, "8c09d35806c857dcb3a383c81052cc7ba1c5855e827d0792a83bd57251821e29", kwargs)
+    sha256 = get_sha256(name, "1b1e4d9b5d38000149501d1719d2947f62ed32a79b5f8fe932f6286689257d7a", kwargs)
     github_archive(name, "grpc", "grpc", ref, sha256)
 
 
