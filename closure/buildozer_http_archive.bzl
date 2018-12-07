@@ -22,10 +22,17 @@ def _http_archive_impl(ctx):
         ctx.attr.strip_prefix,
     )
 
+    if ctx.os.name == "mac os x":
+      buildozer_urls = [ctx.attr.buildozer_mac_url]
+      buildozer_sha256 = ctx.attr.buildozer_mac_sha256
+    else:
+      buildozer_urls = [ctx.attr.buildozer_linux_url]
+      buildozer_sha256 = ctx.attr.buildozer_linux_sha256
+
     ctx.download(
-        [ctx.attr.buildozer_linux_url],
+        buildozer_urls,
         output = "buildozer",
-        sha256 = ctx.attr.buildozer_linux_sha256,
+        sha256 = buildozer_sha256,
         executable = True,
     )
 
@@ -47,7 +54,7 @@ def _http_archive_impl(ctx):
         for filename, replacements in ctx.attr.sed_replacements.items():
             # And each sed replacement to make (dict value)...
             for replacement in replacements:
-                args = [sed, "--in-place", replacement, filename]
+                args = [sed, "-i.bak", replacement, filename]
                 # execute the replace on that file.
                 result = ctx.execute(args, quiet = False)
                 if result.return_code:
@@ -74,6 +81,12 @@ _http_archive_attrs = {
     ),
     "buildozer_linux_sha256": attr.string(
         default = "be07a37307759c68696c989058b3446390dd6e8aa6fdca6f44f04ae3c37212c5",
+    ),
+    "buildozer_mac_url": attr.string(
+        default = "https://github.com/bazelbuild/buildtools/releases/download/0.15.0/buildozer.osx",
+    ),
+    "buildozer_mac_sha256": attr.string(
+        default = "294357ff92e7bb36c62f964ecb90e935312671f5a41a7a9f2d77d8d0d4bd217d",
     ),
 }
 
