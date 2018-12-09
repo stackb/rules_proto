@@ -105,7 +105,7 @@ _mac_file = "dartsdk-macos-x64-release.zip"
 
 _version = "2.1.0-dev.1.0"
 _linux_sha = "b97f967fbdb0d677702a9e51deeb697b3086496e3e69ff7b815e213c2f9a181d"
-_mac_sha = "b376957f9cd4069443c5880066ff5b5d117f3450393de7ad57f06148e7a6b92c"
+_mac_sha = "ec1e2f948886962abb36e6bc729a8fd9fbf50e2a7803191a53c6487af00d4046"
 
 def _sdk_repository_impl(repository_ctx):
     """Downloads the appropriate SDK for the current OS."""
