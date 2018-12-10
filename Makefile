@@ -19,24 +19,6 @@ compile:
 		//github.com/grpc/grpc-web/example/proto:routeguide_dts \
 		//github.com/grpc/grpc-web/example/proto:routeguide_ts \
 
-# A collection of targets that exercise the `{lang}:library.bzl` rules
-library:
-	bazel build \
-		//android/example/proto:person \
-		//closure/example/proto:person \
-		//cpp/example/proto:person \
-		//go/example/proto:person \
-		//java/example/proto:person \
-		//node/example/proto:person \
-		//python/example/proto:person \
-		//ruby/example/proto:person \
-		//rust/example/proto:person \
-		//scala/example/proto:person \
-
-	# See https://github.com/bazelbuild/rules_dotnet/issues/72
-	bazel build --spawn_strategy=standalone \
-		//csharp/example/proto:person
-
 # A collection of targets that build routeguide clients
 clients: 
 	bazel build \

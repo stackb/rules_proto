@@ -18,7 +18,7 @@ def _pub_repository(name, entry, verbose):
     version = entry["version"]
     if entry.get("override"):
         override = entry.get("override")
-        print("%s %s override %s" % (name, version, override))
+        # print("%s %s override %s" % (name, version, override))
         version = override
 
     if version.startswith("^"):
@@ -55,7 +55,7 @@ def _pub_repository(name, entry, verbose):
         out.append('            pub_deps = [')
         for depname, depversion in deps.items():
             out.append('                "%s",' % depname)
-        out.append('            ]')
+        out.append('            ],')
     out.append('        )')
     out.append('    elif verbose > 0:')
     out.append('        print("Skipped vendor_%s (already exists)")' % name)
@@ -104,15 +104,11 @@ def _dart_pub_deps_impl(rtx):
     # Iterate all lines in output
     lines = result.stdout.split("\n")
     for line in lines:
-        #print("LINE: " + line)
+        # print("LINE: " + line)
         if line.startswith("  - "):
             toks = line[4:].split(" ")
             name = toks[0]
             version = toks[1]
-            # if len(toks) > 2:
-            #     upper = toks[2]
-            #     if upper:
-            #         version = upper
             active[name] = {
                 "name": name,
                 "version": version,

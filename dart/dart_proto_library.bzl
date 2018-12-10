@@ -20,8 +20,7 @@ def dart_proto_library(**kwargs):
         deps = [
             str(Label("@vendor_protobuf//:protobuf")),
         ],
-        #lib_root = ".",
-        pub_pkg_name = "foo",
+        pub_pkg_name = name,
         visibility = visibility,
     )
 

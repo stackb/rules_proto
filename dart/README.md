@@ -30,14 +30,7 @@ load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositori
 
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)
 ```
 
 ### `BUILD.bazel`
@@ -108,14 +101,7 @@ load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositori
 
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)
 ```
 
 ### `BUILD.bazel`
@@ -186,14 +172,7 @@ load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositori
 
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)
 ```
 
 ### `BUILD.bazel`
@@ -232,8 +211,7 @@ def dart_proto_library(**kwargs):
         deps = [
             str(Label("@vendor_protobuf//:protobuf")),
         ],
-        #lib_root = ".",
-        pub_pkg_name = "foo",
+        pub_pkg_name = name,
         visibility = visibility,
     )
 
@@ -282,14 +260,7 @@ load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositori
 
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)
 ```
 
 ### `BUILD.bazel`
@@ -327,9 +298,9 @@ def dart_grpc_library(**kwargs):
         srcs = [name_pb],
         deps = [
             str(Label("@vendor_protobuf//:protobuf")),
+            str(Label("@vendor_grpc//:grpc")),
         ],
-        #lib_root = ".",
-        pub_pkg_name = "foo",
+        pub_pkg_name = name,
         visibility = visibility,
     )
 

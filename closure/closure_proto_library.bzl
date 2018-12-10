@@ -5,6 +5,8 @@ def closure_proto_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.pop("transitive", True)
+    transitivity = kwargs.get("transitivity")
 
     name_pb = name + "_pb"
 
@@ -12,7 +14,8 @@ def closure_proto_library(**kwargs):
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        transitive = True,
+        transitive = transitive,
+        transitivity = transitivity,
     )
 
     closure_js_library(
@@ -22,6 +25,9 @@ def closure_proto_library(**kwargs):
         visibility = visibility,
         internal_descriptors = [name_pb + "/descriptor.source.bin"],
         lenient = True,
+        suppress = [
+            "JSC_WRONG_ARGUMENT_COUNT",
+        ],
     )
     name = kwargs.get("name")
     deps = kwargs.get("deps")

@@ -16,16 +16,21 @@
 import 'dart:convert';
 import 'dart:io';
 
-//import 'dart/example/routeguide/routeguide.pb.dart';
-//import 'dart__example__routeguide__routeguide_pb__example__proto__routeguide__routeguide.pb.dart';
-import 'dart__example__routeguide__routeguide_pb__example__proto__routeguide__routeguide.pb.dart';
+//
+// This path boils down to several things: (1) the bazel package name
+// 'routeguide_pb', which is actually the implicit target name of the
+// `dart_grpc_compile` rule; (3) the package path of the actual proto
+// 'example/proto'; (4) the generated name of the proto library
+// 'routeguide.pb.dart'.  
+//
+import 'routeguide_pb/example/proto/routeguide.pb.dart';
 
 const coordFactor = 1e7;
 
 final List<Feature> featuresDb = _readDatabase();
 
 List<Feature> _readDatabase() {
-  final dbData = new File('data/route_guide_db.json').readAsStringSync();
+  final dbData = new File('example/proto/routeguide_features.json').readAsStringSync();
   final List db = jsonDecode(dbData);
   return db.map((entry) {
     final location = new Point()

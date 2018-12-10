@@ -27,11 +27,4 @@ load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositori
 
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)

@@ -1,4 +1,4 @@
 name: protoc_plugin_deps
 
 dependencies:
-  protoc_plugin: '12.0.0'
+  grpc: '0.6.8'
