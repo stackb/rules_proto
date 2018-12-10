@@ -151,11 +151,6 @@ go_register_toolchains()
 
 # =========================================
 
-local_repository(
-    name = "io_bazel_rules_dart",
-    path = "/home/pcj/github/dart-lang/rules_dart",
-)
-
 load("//dart:deps.bzl", "dart_grpc_library")
 
 dart_grpc_library()
