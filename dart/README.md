@@ -22,22 +22,17 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_proto_compile")
 
 dart_proto_compile()
 
-load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-
-dart_protoc_plugin_deps()
+# rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
-
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
+load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+dart_protoc_plugin_deps()
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)
 ```
 
 ### `BUILD.bazel`
@@ -100,22 +95,17 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_grpc_compile")
 
 dart_grpc_compile()
 
-load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-
-dart_protoc_plugin_deps()
+# rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
-
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
+load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+dart_protoc_plugin_deps()
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)
 ```
 
 ### `BUILD.bazel`
@@ -178,22 +168,17 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_proto_library")
 
 dart_proto_library()
 
-load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-
-dart_protoc_plugin_deps()
+# rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
-
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
+load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+dart_protoc_plugin_deps()
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)
 ```
 
 ### `BUILD.bazel`
@@ -232,8 +217,7 @@ def dart_proto_library(**kwargs):
         deps = [
             str(Label("@vendor_protobuf//:protobuf")),
         ],
-        #lib_root = ".",
-        pub_pkg_name = "foo",
+        pub_pkg_name = name,
         visibility = visibility,
     )
 
@@ -274,22 +258,20 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_grpc_library")
 
 dart_grpc_library()
 
-load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-
-dart_protoc_plugin_deps()
+# rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
-
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
+load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+dart_protoc_plugin_deps()
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)
+load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
+dart_grpc_deps()
+
 ```
 
 ### `BUILD.bazel`
@@ -327,9 +309,9 @@ def dart_grpc_library(**kwargs):
         srcs = [name_pb],
         deps = [
             str(Label("@vendor_protobuf//:protobuf")),
+            str(Label("@vendor_grpc//:grpc")),
         ],
-        #lib_root = ".",
-        pub_pkg_name = "foo",
+        pub_pkg_name = name,
         visibility = visibility,
     )
 

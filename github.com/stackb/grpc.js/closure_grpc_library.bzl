@@ -7,6 +7,8 @@ def closure_grpc_library(**kwargs):
     deps = kwargs.get("deps")
     verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.pop("transitive", True)
+    transitivity = kwargs.get("transitivity")
 
     name_pb = name + "_pb"
     name_pb_grpc = name + "_pb_grpc"
@@ -14,17 +16,21 @@ def closure_grpc_library(**kwargs):
     closure_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
+        transitive = transitive,
+        transitivity = transitivity,
         visibility = visibility,
     )
     
     closure_grpc_compile(
         name = name_pb_grpc,
         deps = deps,
-        transitive = True,
+        transitive = transitive,
+        transitivity = transitivity,
         visibility = visibility,
         verbose = verbose,
     )
+
+    closure_deps = kwargs.get("closure_deps", [])
 
     closure_js_library(
         name = name,
@@ -37,7 +43,7 @@ def closure_grpc_library(**kwargs):
             "@com_github_stackb_grpc_js//js/grpc",
             "@com_github_stackb_grpc_js//js/grpc:api",
             "@com_github_stackb_grpc_js//js/grpc:options",
-        ],
+        ] + closure_deps,
         internal_descriptors = [
             name_pb + "/descriptor.source.bin",
             name_pb_grpc + "/descriptor.source.bin",

@@ -155,22 +155,15 @@ load("//dart:deps.bzl", "dart_grpc_library")
 
 dart_grpc_library()
 
-load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-
-dart_protoc_plugin_deps()
-
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
 
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
+load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+dart_protoc_plugin_deps()
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)
+load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
+dart_grpc_deps()
 
 # =========================================
 

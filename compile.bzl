@@ -328,13 +328,29 @@ def _apply_plugin_transitivity_rules(ctx, targets, plugin):
     # library dependencies, we don't actually want to compile well-known types
     # (but do want to compile everything else).
     #
-    for pattern, rule in plugin.transitivity.items():
+    transitivity = plugin.transitivity + ctx.attr.transitivity
+
+    for pattern, rule in transitivity.items():
         if rule == "exclude":
             for key, target in targets.items():
+                if ctx.attr.verbose > 2:
+                    print("Checking '%s' endswith '%s'" % (target.short_path, pattern))
                 if target.dirname.endswith(pattern) or target.path.endswith(pattern):
                     targets.pop(key)
-                    if ctx.attr.verbose:
+                    if ctx.attr.verbose > 2:
                         print("Removing '%s' from the list of files to compile as plugin '%s' excluded it" % (target.short_path, plugin.name))
+                else:
+                    if ctx.attr.verbose > 2:
+                        print("Keeping '%s' (not excluded)" % (target.short_path))
+        elif rule == "include":
+            for key, target in targets.items():
+                if target.dirname.endswith(pattern) or target.path.endswith(pattern):
+                    if ctx.attr.verbose > 2:
+                        print("Keeping '%s' (explicitly included)" % (target.short_path))
+                else:
+                    targets.pop(key)
+                    if ctx.attr.verbose > 2:
+                        print("Removing '%s' from the list of files to compile as plugin '%s' did not include it" % (target.short_path, plugin.name))
         else:
             fail("Unknown transitivity rule '%s'" % rule)
     return targets
@@ -572,7 +588,9 @@ def proto_compile_impl(ctx):
         command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . && " + command
     if verbose > 3:
         command = "env && " + command
-    
+        for f in outputs:
+            print("expected output: %q", f.path)    
+
     ctx.actions.run_shell(
         mnemonic = mnemonic,
         command = command,
@@ -653,6 +671,9 @@ proto_compile = rule(
         "transitive": attr.bool(
             doc = "Emit transitive artifacts",
         ),
+        "transitivity": attr.string_dict(
+            doc = "Transitive rules.  When the 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
+        ),
     },
     outputs = {
         "descriptor": "%{name}/descriptor.source.bin",
@@ -678,19 +699,35 @@ def invoke_transitive(proto_compile_rule, name_suffix, kwargs):
       The name of the invoked rule. This can be used in the srcs label of a library rule.
     """ 
 
-    name = kwargs.get("name")
     deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-    verbose = kwargs.get("verbose")
+    has_services = kwargs.get("has_services")
+    include_imports = kwargs.get("include_imports")
+    include_source_info = kwargs.get("include_source_info")
+    name = kwargs.get("name")
+    outputs = kwargs.get("outputs")
+    plugin_options = kwargs.get("plugin_options")
+    plugins = kwargs.get("plugins")
+    protoc = kwargs.get("protoc")    
     transitive = kwargs.get("transitive", True)
+    verbose = kwargs.get("verbose")
+    visibility = kwargs.get("visibility")
+
     rule_name = name + name_suffix
 
     proto_compile_rule(
         name = rule_name,
+
         deps = deps,
-        visibility = visibility,
+        has_services = has_services,
+        include_imports = include_imports,
+        include_source_info = include_source_info,
+        outputs = outputs,
+        plugin_options = plugin_options,
+        plugins = plugins,
+        protoc = protoc,
         transitive = transitive,
         verbose = verbose,
+        visibility = visibility,
     )
 
     return rule_name

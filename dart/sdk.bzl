@@ -1,3 +1,8 @@
+# NOTE: this is a slightly modified version of
+# https://github.com/dart-lang/rules_dart/blob/master/dart/build_rules/internal/sdk.bzl
+# to experiment with different versions.  A better solution would be a PR on the
+# rules_dart repository to make it customizable.
+
 # Copyright 2016 The Bazel Authors. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -100,12 +105,13 @@ filegroup(
 """
 
 _hosted_prefix = "https://storage.googleapis.com/dart-archive/channels/dev/release"
+# _hosted_prefix = "https://storage.googleapis.com/dart-archive/channels/stable/release"
 _linux_file = "dartsdk-linux-x64-release.zip"
 _mac_file = "dartsdk-macos-x64-release.zip"
 
-_version = "2.1.0-dev.1.0"
-_linux_sha = "b97f967fbdb0d677702a9e51deeb697b3086496e3e69ff7b815e213c2f9a181d"
-_mac_sha = "ec1e2f948886962abb36e6bc729a8fd9fbf50e2a7803191a53c6487af00d4046"
+_version = "2.2.0-dev.0.0"
+_linux_sha = "fe2087156d5215cf5f333cf6cd72d9a461fb1e475bcc60e48e53d348306ca0d9"
+_mac_sha = "3e6953d30c1c1427b689da9f7effb86380dde1475d0291634c3868651926a6b9"
 
 def _sdk_repository_impl(repository_ctx):
     """Downloads the appropriate SDK for the current OS."""

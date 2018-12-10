@@ -1,32 +1,50 @@
 load("//dart:dart_grpc_library.bzl", "dart_grpc_library")
 load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
+load("@io_bazel_rules_dart//dart/build_rules:vm.bzl", "dart_vm_binary")
 
-dart_grpc_library(
-    name = "routeguide",
-    deps = ["//example/proto:routeguide_proto"],
+dart_vm_binary(
+    name = "client_bin",
+    srcs = [
+        "client_bin.dart",
+    ],
+    script_file = "client_bin.dart",
+    deps = [
+        ":client",
+        "@vendor_convert//:convert",
+    ],
 )
 
-# dart_binary(
-#     name = "server",
-#     srcs = [
-#         "server.dart",
-#     ],
-#     deps = [
-#         ":routeguide",
-#         ":common",
-#     ],
-# )
+dart_vm_binary(
+    name = "server_bin",
+    srcs = [
+        "server_bin.dart",
+    ],
+    script_file = "server_bin.dart",
+    deps = [
+        ":server",
+        "@vendor_convert//:convert",
+    ],
+)
 
-# dart_binary(
-#     name = "client",
-#     srcs = [
-#         "client.dart",
-#     ],
-#     deps = [
-#         ":routeguide",
-#         ":common",
-#     ],
-# )
+dart_library(
+    name = "server",
+    srcs = [
+        "server.dart",
+    ],
+    deps = [
+        ":common",
+    ],
+)
+
+dart_library(
+    name = "client",
+    srcs = [
+        "client.dart",
+    ],
+    deps = [
+        ":common",
+    ],
+)
 
 dart_library(
     name = "common",
@@ -36,4 +54,10 @@ dart_library(
     deps = [
         ":routeguide",
     ],
+    data = ["//example/proto:routeguide_features"],
+)
+
+dart_grpc_library(
+    name = "routeguide",
+    deps = ["//example/proto:routeguide_proto"],
 )

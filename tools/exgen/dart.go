@@ -4,22 +4,36 @@ var dartUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.D
 
 {{ .Rule.Name }}()
 
-load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-
-dart_protoc_plugin_deps()
+# rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
-
 dart_repositories()
 
-load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")
+load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+dart_protoc_plugin_deps()
+`)
 
-pub_repository(
-    name = "vendor_isolate",
-    output = ".",
-    package = "isolate",
-    version = "2.0.2",
-)`)
+var dartGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
+{{ .Rule.Name }}()
+
+# rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains()
+
+load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
+dart_repositories()
+
+load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+dart_protoc_plugin_deps()
+
+load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
+dart_grpc_deps()
+`)
 
 var dartProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:dart_proto_compile.bzl", "dart_proto_compile")
 load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
@@ -43,8 +57,7 @@ def {{ .Rule.Name }}(**kwargs):
         deps = [
             str(Label("@vendor_protobuf//:protobuf")),
         ],
-        #lib_root = ".",
-        pub_pkg_name = "foo",
+        pub_pkg_name = name,
         visibility = visibility,
     )
 `)
@@ -70,9 +83,9 @@ def {{ .Rule.Name }}(**kwargs):
         srcs = [name_pb],
         deps = [
             str(Label("@vendor_protobuf//:protobuf")),
+            str(Label("@vendor_grpc//:grpc")),
         ],
-        #lib_root = ".",
-        pub_pkg_name = "foo",
+        pub_pkg_name = name,
         visibility = visibility,
     )
 `)
@@ -114,7 +127,7 @@ func makeDart() *Language {
 			&Rule{
 				Name:           "dart_grpc_library",
 				Implementation: dartGrpcLibraryRuleTemplate,
-				Usage:          dartUsageTemplate,
+				Usage:          dartGrpcLibraryUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates dart protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
