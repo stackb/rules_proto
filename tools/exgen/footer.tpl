@@ -1,3 +1,24 @@
+## Transitivity
+
+Briefly, here's how the rules work:
+
+1. Using the `proto_library` graph, collect all the `*.proto` files directly and
+transitively required for the protobuf compilation.
+
+2. Copy the `*.proto` files into a "staging" area in the bazel sandbox such that a
+single `-I.` will satisfy all imports.
+
+3. Call `protoc OPTIONS FILELIST` and generate outputs.
+
+The concept of *transitivity* (as defined here) affects which files in the set
+`*.proto` files are named in the `FILELIST`.  If we only list direct
+dependencies then we say `transitive = False`.  If all files are named, then
+`transitive = True`.  The set of files that can be included or excluded from the
+`FILELIST` are called *transitivity rules*, which can be defined on a per-rule
+or per-plugin basis.  Please grep the codebase for examples of their usage.
+
+> TODO: explain this better and provide examples.
+
 ## Code Layout
 
 Each language `{lang}` has a top-level subdirectory that contains:
