@@ -1,19 +1,31 @@
 load("//csharp:csharp_grpc_compile.bzl", "csharp_grpc_compile")
-load("//:compile.bzl", "invoke_transitive")
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 
 def csharp_grpc_library(**kwargs):
-    kwargs["srcs"] = [invoke_transitive(csharp_grpc_compile, "_pb", kwargs)]   
-    kwargs["deps"] = [
-        "@google.protobuf//:core",
-        "@grpc.core//:core",
-        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-        "@system.interactive.async//:core",
-    ]
-    kwargs["verbose"] = None
-
-    core_library(**kwargs)
     name = kwargs.get("name")
     deps = kwargs.get("deps")
+    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.get("transitive")
+
+    name_pb = name + "_pb"
+    csharp_grpc_compile(
+        name = name_pb,
+        deps = deps,
+        visibility = visibility,
+        transitive = transitive,
+        verbose = verbose,
+    )
+    
+    core_library(
+        name = name,
+        srcs = [name_pb],
+        deps = [
+            "@google.protobuf//:core",
+            "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
+            "@grpc.core//:core",
+            "@system.interactive.async//:core",    
+        ],        
+        visibility = visibility,
+    )
 

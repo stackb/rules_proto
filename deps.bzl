@@ -149,9 +149,8 @@ def com_github_nanopb_nanopb(**kwargs):
 
 def com_google_protobuf(**kwargs):
     name = "com_google_protobuf"
-    ref = get_ref(name, "48cb18e5c419ddd23d9badcfe4e9df7bde1979b2", kwargs) # ref referenced by com_github_grpc_grpc
-    #sha256 = get_sha256(name, "013cc34f3c51c0f87e059a12ea203087a7a15dca2e453295345e1d02e2b9634c", kwargs)
-    sha256 = get_sha256(name, "f5a35e17fb07f3b13517264cd17a089636fcbb2912f9df7bef7414058969a8d2", kwargs)
+    ref = get_ref(name, "b829ff2a4614ff25048944b2cdc8e43b6488fda0", kwargs) 
+    sha256 = get_sha256(name, "5d82a718e271e7fda626f983628e4b4601221788c2244763a9e57eda4cc667dd", kwargs)
     github_archive(name, "google", "protobuf", ref, sha256)
 
 
@@ -166,8 +165,8 @@ def com_github_grpc_grpc(**kwargs):
 # Create an issue for this.
 def io_bazel_rules_dotnet(**kwargs):
     name = "io_bazel_rules_dotnet"
-    ref = get_ref(name, "845434d2c60442a620edf615b523d0c907bb06b6", kwargs) 
-    sha256 = get_sha256(name, "4133d381ab9539fed19e321fdf672bb205339b779eeb20fd963bd60616148779", kwargs)
+    ref = get_ref(name, "e1254bf789f5008cf0f3d26fb6031695413a2d50", kwargs) 
+    sha256 = get_sha256(name, "4fdda2aeeef61a2ebbeac7d5885fe361adbc73cc93b395494a84b41865065b4d", kwargs)
     github_archive(name, "stackb", "rules_dotnet", ref, sha256)
 
 
@@ -484,8 +483,8 @@ def com_github_stackb_grpc_js(**kwargs):
     """Grpc-web implementation (closure)
     """
     name = "com_github_stackb_grpc_js"
-    ref = get_ref(name, "c94ef115b4e8eea526d5b54b829cfc7542f39bc5", kwargs)  
-    sha256 = get_sha256(name, "bf3b7fca7803a9187e6d6780089cad593997c46d76c5d78ba3202ce8b5e424b2", kwargs)
+    ref = get_ref(name, "fb3d7dbd8bfc8e1d4fb259f76d75f59cd4b67c31", kwargs)  
+    sha256 = get_sha256(name, "019c2fbaf3958fff3a8a68d775dde606f0eb77163f1256e1d700e78c9ed2db85", kwargs)
     github_archive(name, "stackb", "grpc.js", ref, sha256)
 
 

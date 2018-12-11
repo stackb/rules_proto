@@ -40,41 +40,65 @@ nuget_grpc_packages()
 `)
 
 var csharpProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
-load("//:compile.bzl", "invoke_transitive")
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 
 def {{ .Rule.Name }}(**kwargs):
-    kwargs["srcs"] = [invoke_transitive({{ .Rule.Base }}_{{ .Rule.Kind }}_compile, "_pb", kwargs)]   
-    kwargs["deps"] = [
-        "@google.protobuf//:core",
-        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-    ]
-    kwargs["verbose"] = None
-
-    core_library(**kwargs)
     name = kwargs.get("name")
     deps = kwargs.get("deps")
+    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.get("transitive")
+
+    name_pb = name + "_pb"
+    {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
+        name = name_pb,
+        deps = deps,
+		visibility = visibility,
+		transitive = transitive,
+        verbose = verbose,
+    )
+    
+    core_library(
+        name = name,
+        srcs = [name_pb],
+        deps = [
+            "@google.protobuf//:core",
+            "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
+        ],        
+        visibility = visibility,
+    )
 `)
 
 var csharpGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
-load("//:compile.bzl", "invoke_transitive")
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 
 def {{ .Rule.Name }}(**kwargs):
-    kwargs["srcs"] = [invoke_transitive({{ .Rule.Base }}_{{ .Rule.Kind }}_compile, "_pb", kwargs)]   
-    kwargs["deps"] = [
-        "@google.protobuf//:core",
-        "@grpc.core//:core",
-        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-        "@system.interactive.async//:core",
-    ]
-    kwargs["verbose"] = None
-
-    core_library(**kwargs)
     name = kwargs.get("name")
     deps = kwargs.get("deps")
+    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.get("transitive")
+
+    name_pb = name + "_pb"
+    {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
+        name = name_pb,
+        deps = deps,
+        visibility = visibility,
+        transitive = transitive,
+        verbose = verbose,
+    )
+    
+    core_library(
+        name = name,
+        srcs = [name_pb],
+        deps = [
+            "@google.protobuf//:core",
+            "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
+            "@grpc.core//:core",
+            "@system.interactive.async//:core",    
+        ],        
+        visibility = visibility,
+    )
 `)
 
 func makeCsharp() *Language {

@@ -3,7 +3,7 @@ goog.module('example.routeguide.grpc_js.Client');
 const Feature = goog.require('proto.routeguide.Feature');
 const GoogPromise = goog.require('goog.Promise');
 const Rectangle = goog.require('proto.routeguide.Rectangle');
-const RouteguideApi = goog.require('proto.routeguide.RouteguideApi');
+const RouteguideClient = goog.require('proto.routeguide.RouteguideClient');
 
 /**
  * A skeleton client. The point of this exercise is not actually to create a
@@ -13,9 +13,9 @@ class Client {
 
     constructor() {
         /**
-         * @const @private @type {!RouteguideApi}
+         * @const @private @type {!RouteguideClient}
          */
-        this.client_ = new RouteguideApi();
+        this.client_ = new RouteguideClient();
     }
 
     /**
