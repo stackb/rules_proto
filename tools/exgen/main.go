@@ -502,11 +502,14 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.w("## Rules")
 	out.ln()
 
-	out.w("| Lang | Rule | Description |")
+	out.w("| Lang | Rule | Description")
 	out.w("| ---: | :--- | :--- |")
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {
-			out.w("| [%s](/%s) | [%s](/%s#%s) | %s |", lang.Name, lang.Dir, rule.Name, lang.Dir, rule.Name, rule.Doc)
+			dirLink := fmt.Sprintf("[%s](/%s)", lang.Name, lang.Dir)
+			ruleLink := fmt.Sprintf("[%s](/%s#%s)", rule.Name, lang.Dir, rule.Name)
+			exampleLink := fmt.Sprintf("[example](/%s/example/%s)", lang.Name, rule.Name)
+			out.w("| %s | %s | %s (%s) |", dirLink, ruleLink, rule.Doc, exampleLink)
 		}
 	}
 	out.ln()
