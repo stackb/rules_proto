@@ -22,6 +22,3 @@ build:remote --remote_cache=operation-queue:8980
 build:remote --remote_executor=operation-queue:8980
 build:remote --experimental_strict_action_env=true
 build:remote --remote_timeout=3600
-
-build --strategy=CoreCompile=standalone
-build:remote --strategy=CoreCompile=standalone

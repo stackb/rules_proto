@@ -6,3 +6,14 @@ foo
 foo
 foo
 foo
+foo
+foo
+skip scala
+skip scala
+skip swift
+skip swift!
+skip csharp!
+use remote execution
+use remote execution!
+use remote execution!
+use remote execution!
