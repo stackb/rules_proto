@@ -18,8 +18,8 @@ build:remote --strategy=Closure=remote
 build:remote --genrule_strategy=remote
 build:remote --define=EXECUTOR=remote
 
-build:remote --remote_cache=operation-queue:8980
-build:remote --remote_executor=operation-queue:8980
+build:remote --remote_cache=operation-queue.farm.svc.cluster.local:8980
+build:remote --remote_executor=operation-queue.farm.svc.cluster.local:8980
 build:remote --experimental_strict_action_env=true
 build:remote --remote_timeout=3600
 
