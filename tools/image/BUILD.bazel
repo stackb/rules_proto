@@ -6,7 +6,7 @@ load("@package_bundle//file:packages.bzl", "packages")
 
 container_image(
     name = "image",
-    base = "@rbe_ubuntu//image",
+    base = "@bazel//image",
     debs = [
         # xz
         packages["xz-utils"],
@@ -16,6 +16,8 @@ container_image(
         # packages["ruby"],
         # packages["ruby2.3"],
     ],
+    entrypoint = ["/usr/local/bin/bazel"],
+    cmd = ["/usr/local/bin/bazel"],
 )
 
 container_push(
@@ -23,6 +25,6 @@ container_push(
     format = "Docker",
     image = ":image",
     registry = "gcr.io",
-    repository = "stack-build/rules_proto/rbe-ubuntu16-04-extras",
-    tag = "latest",
+    repository = "stack-build/rules_proto/bazel",
+    tag = "0.19.2",
 )

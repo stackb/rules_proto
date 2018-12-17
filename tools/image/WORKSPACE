@@ -26,16 +26,11 @@ load(
     "container_pull",
 )
 
-RBE_UBUNTU_REGISTRY = "gcr.io"
-RBE_UBUNTU_REPOSITORY = "cloud-marketplace/google/rbe-ubuntu16-04"
-RBE_UBUNTU_DIGEST = "sha256:9bd8ba020af33edb5f11eff0af2f63b3bcb168cd6566d7b27c6685e717787928"
-RBE_UBUNTU_TAG = "%s/%s@%s" % (RBE_UBUNTU_REGISTRY, RBE_UBUNTU_REPOSITORY, RBE_UBUNTU_DIGEST)
-
 container_pull(
-    name = "rbe_ubuntu",
-    registry = RBE_UBUNTU_REGISTRY,
-    repository = RBE_UBUNTU_REPOSITORY,
-    digest = RBE_UBUNTU_DIGEST,
+    name = "bazel",
+    registry = "l.gcr.io",
+    repository = "google/bazel",
+    tag = "0.19.2",
 )
 
 load(
