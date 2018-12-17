@@ -1,0 +1,28 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@io_bazel_rules_docker//container:push.bzl", "container_push")
+load("@io_bazel_rules_docker//container:image.bzl", "container_image")
+load("@package_bundle//file:packages.bzl", "packages")
+
+container_image(
+    name = "image",
+    base = "@rbe_ubuntu//image",
+    debs = [
+        # xz
+        packages["xz-utils"],
+        packages["liblzma5"],
+
+        # ruby
+        # packages["ruby"],
+        # packages["ruby2.3"],
+    ],
+)
+
+container_push(
+    name = "push",
+    format = "Docker",
+    image = ":image",
+    registry = "gcr.io",
+    repository = "stack-build/rules_proto/rbe-ubuntu16-04-extras",
+    tag = "latest",
+)

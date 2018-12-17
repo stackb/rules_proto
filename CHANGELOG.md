@@ -22,3 +22,6 @@ skip all except cpp
 skip all except cpp
 skip all except cpp
 skip all except cpp
+try bazel entrypoint
+try abs bazel entrypoint
+try abs bazel entrypoint!
