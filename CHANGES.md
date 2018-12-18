@@ -10,4 +10,6 @@ Assorted bugfixes
 * Relieve :deps.bzl of dart deps
 
 passed: 
+
+* Use remote cache
 * bazel build --config=remote --remote_instance_name=main //cpp/... //java/... //objc/... //php/... //python/... //go/... 
