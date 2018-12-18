@@ -7,3 +7,7 @@ Assorted bugfixes
 * Test google/protobuf 3.6.2.1
 * Fix grpc.js and update sha1 to that repo.
 * Apply buildifier
+* Relieve :deps.bzl of dart deps
+
+passed: 
+* bazel build --config=remote --remote_instance_name=main //cpp/... //java/... //objc/... //php/... //python/... //go/... 
