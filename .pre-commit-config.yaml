@@ -1,0 +1,17 @@
+repos:
+    - repo: local
+      hooks:
+          # Purify text files.
+          #
+          # This hook combines the EOF-fixer, trailing-whitespace, and converts
+          # to UNIX new-line charaters.
+          #
+          # When running against an empty file, it does not append the new-line
+          # character to EOF.
+          - id: purify-text
+            entry: ./tools/lint/purify_text.py
+            language: python
+            name: purify-text
+            types: [text]
+            stages:
+                - commit
