@@ -1,4 +1,5 @@
-# `rules_proto` [![Build Status](https://travis-ci.org/pubref/rules_proto.svg?branch=master)](https://travis-ci.org/stackb/rules_proto)
+# `rules_proto` [![Build Status](https://fortune.stack.build/badge.svg?jobs=cpp-job)
+
 
 Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 
