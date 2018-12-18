@@ -1,11 +1,11 @@
 load("//:deps.bzl", 
     "com_github_stackb_grpc_js",
     "com_google_protobuf",
-    "io_bazel_rules_closure",
     "io_bazel_rules_go",
 )
 
 load("//closure:deps.bzl", 
+    "io_bazel_rules_closure",
     "closure_proto_compile",
 )
 
