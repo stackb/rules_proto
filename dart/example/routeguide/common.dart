@@ -21,7 +21,7 @@ import 'dart:io';
 // 'routeguide_pb', which is actually the implicit target name of the
 // `dart_grpc_compile` rule; (3) the package path of the actual proto
 // 'example/proto'; (4) the generated name of the proto library
-// 'routeguide.pb.dart'.  
+// 'routeguide.pb.dart'.
 //
 import 'routeguide_pb/example/proto/routeguide.pb.dart';
 

@@ -8,4 +8,3 @@ message Place {
     string name = 1;
     example.proto.Thing thing = 2;
 }
-

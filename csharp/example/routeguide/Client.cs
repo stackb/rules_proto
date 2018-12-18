@@ -43,7 +43,7 @@ class Program
                 Log("*** GetFeature: lat={0} lon={1}", lat, lon);
 
                 RouteGuide.Point request = new RouteGuide.Point { Latitude = lat, Longitude = lon };
-                
+
                 RouteGuide.Feature feature = client.GetFeature(request);
                 if (feature.Exists())
                 {
@@ -79,7 +79,7 @@ class Program
                     Lo = new RouteGuide.Point { Latitude = lowLat, Longitude = lowLon },
                     Hi = new RouteGuide.Point { Latitude = hiLat, Longitude = hiLon }
                 };
-                
+
                 using (var call = client.ListFeatures(request))
                 {
                     var responseStream = call.ResponseStream;
@@ -95,13 +95,13 @@ class Program
             }
             catch (RpcException e)
             {
-                Log("RPC failed " + e); 
+                Log("RPC failed " + e);
                 throw;
             }
         }
 
         /// <summary>
-        /// Client-streaming example. Sends numPoints randomly chosen points from features 
+        /// Client-streaming example. Sends numPoints randomly chosen points from features
         /// with a variable delay in between. Prints the statistics when they are sent from the server.
         /// </summary>
         public async Task RecordRoute(List<RouteGuide.Feature> features, int numPoints)
@@ -123,7 +123,7 @@ class Program
                         await call.RequestStream.WriteAsync(point);
 
                         // A bit of delay before sending the next one.
-                        await Task.Delay(rand.Next(1000) + 500);    
+                        await Task.Delay(rand.Next(1000) + 500);
                     }
                     await call.RequestStream.CompleteAsync();
 
@@ -166,7 +166,7 @@ class Program
                         while (await call.ResponseStream.MoveNext())
                         {
                             var note = call.ResponseStream.Current;
-                            Log("Got message \"{0}\" at {1}, {2}", note.Message, 
+                            Log("Got message \"{0}\" at {1}, {2}", note.Message,
                                 note.Location.Latitude, note.Location.Longitude);
                         }
                     });

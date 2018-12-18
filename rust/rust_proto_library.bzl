@@ -30,4 +30,3 @@ def rust_proto_library(**kwargs):
         ],
         visibility = visibility,
     )
-

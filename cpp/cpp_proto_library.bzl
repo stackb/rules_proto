@@ -21,4 +21,3 @@ def cpp_proto_library(**kwargs):
         includes = [name_pb],
         visibility = visibility,
     )
-

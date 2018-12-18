@@ -1,5 +1,4 @@
-
-load("//:deps.bzl", 
+load("//:deps.bzl",
     "com_google_protobuf",
     "dart_pub_deps_protoc_plugin",
     "dart_pub_deps_grpc",

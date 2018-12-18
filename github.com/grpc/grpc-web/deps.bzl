@@ -1,10 +1,10 @@
-load("//:deps.bzl", 
+load("//:deps.bzl",
     "com_github_grpc_grpc_web",
     "com_google_protobuf",
     "io_bazel_rules_closure",
 )
 
-load("//closure:deps.bzl", 
+load("//closure:deps.bzl",
     "closure_proto_compile",
 )
 
@@ -24,5 +24,4 @@ def ts_grpc_compile(**kwargs):
     closure_grpc_compile(**kwargs)
 
 def closure_grpc_library(**kwargs):
-    closure_grpc_compile(**kwargs)    
-
+    closure_grpc_compile(**kwargs)

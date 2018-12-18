@@ -1,5 +1,5 @@
 # A collection of targets that build routeguide clients
-clients: 
+clients:
 	bazel build \
 		//android/example/routeguide:client \
 		//closure/example/routeguide/client \

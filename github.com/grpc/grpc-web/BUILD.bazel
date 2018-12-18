@@ -1,4 +1,3 @@
-
 load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
@@ -25,7 +24,7 @@ proto_plugin(
     name = "commonjs_dts",
     outputs = [
         "_grpc_web_pb.js",
-        "_pb.d.ts",        
+        "_pb.d.ts",
     ],
     options = ["import_style=commonjs+dts", "mode=grpcweb"],
     tool = "@com_github_grpc_grpc_web//javascript/net/grpc/web:protoc-gen-grpc-web",
@@ -41,4 +40,3 @@ proto_plugin(
     tool = "@com_github_grpc_grpc_web//javascript/net/grpc/web:protoc-gen-grpc-web",
     visibility = ["//visibility:public"],
 )
-

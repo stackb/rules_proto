@@ -18,7 +18,6 @@ def ruby_grpc_library(**kwargs):
     ruby_library(
         name = name,
         srcs = [name_pb],
-        includes = ["{package}/%s" % name_pb],   
+        includes = ["{package}/%s" % name_pb],
         visibility = visibility,
     )
-

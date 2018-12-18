@@ -26,7 +26,7 @@ RUN SWIFT_URL=https://swift.org/builds/$SWIFT_BRANCH/$(echo "$SWIFT_PLATFORM" | 
           A3BAFD3556A59079C06894BD63BC1CFE91D306C6 \
       # pub   4096R/71E1B235 2016-05-31 [expires: 2019-06-14]
       #       Key fingerprint = 5E4D F843 FB06 5D7F 7E24  FBA2 EF54 30F0 71E1 B235
-      # uid                  Swift 4.x Release Signing Key <swift-infrastructure@swift.org>          
+      # uid                  Swift 4.x Release Signing Key <swift-infrastructure@swift.org>
           5E4DF843FB065D7F7E24FBA2EF5430F071E1B235 \
         ; do \
           gpg --quiet --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
@@ -34,7 +34,7 @@ RUN SWIFT_URL=https://swift.org/builds/$SWIFT_BRANCH/$(echo "$SWIFT_PLATFORM" | 
     && gpg --batch --verify --quiet swift.tar.gz.sig swift.tar.gz \
     && tar -xzf swift.tar.gz --directory / --strip-components=1 \
     && rm -r "$GNUPGHOME" swift.tar.gz.sig swift.tar.gz \
-    && chmod -R o+r /usr/lib/swift 
+    && chmod -R o+r /usr/lib/swift
 
 RUN apt-get -q update && \
     apt-get -q install -y \
@@ -46,7 +46,7 @@ RUN apt-get -q update && \
     tzdata \
     libcurl4-openssl-dev \
     pkg-config \
-    && rm -r /var/lib/apt/lists/*    
+    && rm -r /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/clang clang /usr/local/bin/clang 1
 

@@ -30,4 +30,3 @@ def node_grpc_library(**kwargs):
         ],
         visibility = visibility,
     )
-

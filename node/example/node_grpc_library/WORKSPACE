@@ -1,4 +1,3 @@
-
 http_archive(
     name = "bazel_toolchains",
     urls = [
@@ -40,5 +39,3 @@ yarn_modules(
         "grpc": "1.15.1",
     },
 )
-
-

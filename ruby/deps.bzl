@@ -1,5 +1,4 @@
-
-load("//:deps.bzl", 
+load("//:deps.bzl",
     "com_google_protobuf",
     "com_github_grpc_grpc",
     "com_github_yugui_rules_ruby",

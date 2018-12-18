@@ -14,7 +14,7 @@ http_archive(
     url = "https://github.com/google/protobuf/archive/%s.tar.gz" % PROTOBUF_VERSION,
     sha256 = "5d82a718e271e7fda626f983628e4b4601221788c2244763a9e57eda4cc667dd",
     strip_prefix = "protobuf-" + PROTOBUF_VERSION,
-)    
+)
 
 
 # =========================================
@@ -232,7 +232,7 @@ gogo_grpc_library()
 ##
 ## Must have swiftc on your system.  To install on ubuntu 17.10, here's what I did:
 ##
-## $ sudo apt install ubuntu-make; umake swift 
+## $ sudo apt install ubuntu-make; umake swift
 ## $ vi `/.bashrc` and update PATH to include ~/.local/share/umake/swift/swift-lang/usr/bin
 ##
 
@@ -241,7 +241,7 @@ load("//swift:deps.bzl", "swift_grpc_library")
 swift_grpc_library()
 
 load("//swift:repositories.bzl", "swift_toolchain")
-# Default values work with linux, x86_64, /usr/local/bin/clang. 
+# Default values work with linux, x86_64, /usr/local/bin/clang.
 swift_toolchain(
 	root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
 )
@@ -299,7 +299,7 @@ load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repo
 # Why is this not a workspace rule?  This is so painful.
 # $ curl -O -J -L https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
 # $ mkdir ~/android-sdk
-# $ unzip in that dir 
+# $ unzip in that dir
 # $ tools/bin/sdkmanager --list
 # $ tools/bin/sdkmanager "platforms;android-28" "build-tools;28.0.3"
 # $ export ANDROID_HOME="/home/pcj/android-sdk/"

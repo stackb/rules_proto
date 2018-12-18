@@ -1,4 +1,4 @@
-load("//:deps.bzl", 
+load("//:deps.bzl",
     "com_google_protobuf",
     "io_bazel_rules_rust",
 )

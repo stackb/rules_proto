@@ -18,7 +18,7 @@ def ts_proto_library(**kwargs):
         transitive = True,
         visibility = visibility,
     )
-    
+
     ts_proto_compile(
         name = name_pb,
         deps = deps,
@@ -50,7 +50,7 @@ def ts_grpc_library(**kwargs):
         transitive = True,
         visibility = visibility,
     )
-    
+
     ts_grpc_compile(
         name = name_pb_grpc,
         deps = deps,

@@ -53,4 +53,3 @@ proto_plugin = rule(
         ),
     }
 )
-

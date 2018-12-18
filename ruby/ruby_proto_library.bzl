@@ -7,7 +7,7 @@ def ruby_proto_library(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    
+
     ruby_proto_compile(
         name = name_pb,
         deps = deps,
@@ -18,7 +18,6 @@ def ruby_proto_library(**kwargs):
     ruby_library(
         name = name,
         srcs = [name_pb],
-        includes = ["{package}/%s" % name_pb],   
+        includes = ["{package}/%s" % name_pb],
         visibility = visibility,
     )
-

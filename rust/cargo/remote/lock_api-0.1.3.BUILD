@@ -34,4 +34,3 @@ rust_library(
         "owning_ref",
     ],
 )
-

@@ -1,4 +1,3 @@
-
 load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
@@ -16,8 +15,8 @@ proto_plugin(
     # Ths function will append '_pb' if the basename is a scala keyword.
     out = "{name}.jar",
     options = [
-        "grpc", 
-        #"java_conversions", # causes weird import problems 
+        "grpc",
+        #"java_conversions", # causes weird import problems
     ],
     tool = ":protoc-gen-scala",
     visibility = ["//visibility:public"],
@@ -84,7 +83,7 @@ scala_binary(
 #     outs = ["protoc-gen-scala.sh"],
 #     cmd = """
 #     echo '$(location @local_jdk//:bin/java) -jar $(location protoc_gen_deploy.jar) $$@' > $@
-#     """, 
+#     """,
 #     executable = True,
 # )
 

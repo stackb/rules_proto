@@ -1,4 +1,3 @@
-
 load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
@@ -59,8 +58,8 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_embed_data
 go_embed_data(
     name = "assets",
     srcs = [
-        ":protoc_plugin",        
-        "@dart_sdk//:bin/dart",        
+        ":protoc_plugin",
+        "@dart_sdk//:bin/dart",
     ],
     flatten = True,
     package = "main",

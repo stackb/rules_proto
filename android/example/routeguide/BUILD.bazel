@@ -10,7 +10,7 @@ android_grpc_library(
 #     name = "clientlib",
 #     manifest = "AndroidManifest.xml",
 #     custom_package = "io.grpc.routeguideexample",
- 
+
 # )
 
 # NOTE: at the moment this is not a routeguide client at all.  Only testing that
@@ -23,7 +23,7 @@ android_binary(
     #proguard_specs = ["proguard-rules.pro"],
     multidex = 'native',
     resource_files = glob(["src/main/res/**"]),
-    srcs = glob(["src/main/java/**"]), 
+    srcs = glob(["src/main/java/**"]),
     deps = [
         ":routeguide",
         "@com_android_support_appcompat_v7_28_0_0//aar",

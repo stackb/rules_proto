@@ -26,4 +26,3 @@ def android_grpc_library(**kwargs):
         ],
         visibility = visibility,
 	)
-

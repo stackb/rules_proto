@@ -21,4 +21,3 @@ def java_grpc_library(**kwargs):
         ],
         visibility = visibility,
     )
-

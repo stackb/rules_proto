@@ -15,11 +15,10 @@ testSuite({
     testListFeatures: () => {
         const client = new Client();
         const rect = new Rectangle();
-        
+
         return client.listFeatures(rect).then(features => {
             asserts.assertEquals(0, features.length);
         });
     },
 
 });
-

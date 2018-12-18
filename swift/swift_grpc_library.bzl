@@ -3,4 +3,3 @@ load("@build_bazel_rules_swift//swift:swift.bzl", _swift_proto_library = "swift_
 
 def swift_grpc_library(**kwargs):
     _swift_proto_library(**kwargs)
-

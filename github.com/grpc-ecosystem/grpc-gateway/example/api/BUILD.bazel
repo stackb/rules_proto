@@ -1,5 +1,3 @@
-
-
 load("//github.com/grpc-ecosystem/grpc-gateway:gateway_grpc_library.bzl", "gateway_grpc_library")
 load("//github.com/grpc-ecosystem/grpc-gateway:gateway_swagger_compile.bzl", "gateway_swagger_compile")
 

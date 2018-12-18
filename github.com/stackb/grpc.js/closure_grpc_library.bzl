@@ -20,7 +20,7 @@ def closure_grpc_library(**kwargs):
         transitivity = transitivity,
         visibility = visibility,
     )
-    
+
     closure_grpc_compile(
         name = name_pb_grpc,
         deps = deps,
@@ -54,4 +54,3 @@ def closure_grpc_library(**kwargs):
         ],
         visibility = visibility,
     )
-

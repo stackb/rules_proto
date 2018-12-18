@@ -16,7 +16,7 @@ public class Reflect
         Type[] types = assem1.GetTypes();
         foreach (Type tc in types)
         {
-    
+
             if (tc.IsAbstract)
             {
                 Console.WriteLine("Abstract Class : " + tc.Name);
@@ -28,7 +28,7 @@ public class Reflect
             else if (tc.IsSealed)
             {
                 Console.WriteLine("Sealed Class : " + tc.Name);
-            }  
+            }
 
             Console.WriteLine("Type.Namespace : " + tc.Namespace);
             Console.WriteLine("Type.FullName : " + tc.FullName);
@@ -57,5 +57,5 @@ public class Reflect
         var filename = args[0];
         Console.WriteLine(File.Exists(filename) ? "File exists." : "File does not exist.");
         GetAllClassesAndMethodsOfAssembly(filename);
-    }  
+    }
 }

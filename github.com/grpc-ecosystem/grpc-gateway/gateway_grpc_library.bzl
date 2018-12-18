@@ -23,4 +23,3 @@ def gateway_grpc_library(**kwargs):
 		deps = ["@go_googleapis//google/api:annotations_go_proto"],
         visibility = visibility,
     )
-

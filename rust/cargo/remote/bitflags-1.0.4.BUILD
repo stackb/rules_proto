@@ -32,4 +32,3 @@ rust_library(
         "default",
     ],
 )
-

@@ -49,7 +49,7 @@ _swift_toolchain = repository_rule(
 
 def swift_toolchain(**kwargs):
     """
-    swift_toolchain - configure toolchain for swift specifically for use within 
+    swift_toolchain - configure toolchain for swift specifically for use within
     a docker sandbox.
     """
 

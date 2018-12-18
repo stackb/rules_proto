@@ -1,12 +1,11 @@
-
 load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "js",
     options = [
-        "import_style=closure", 
-        "binary", 
-        "error_on_name_conflict", 
+        "import_style=closure",
+        "binary",
+        "error_on_name_conflict",
         "library={name}",
     ],
     out = "{name}.js",

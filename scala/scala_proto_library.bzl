@@ -24,4 +24,3 @@ def scala_proto_library(**kwargs):
         ],
         visibility = visibility,
     )
-
