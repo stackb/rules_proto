@@ -6,3 +6,4 @@ Assorted bugfixes
 * Makefile cleanup.
 * Test google/protobuf 3.6.2.1
 * Fix grpc.js and update sha1 to that repo.
+* Apply buildifier
