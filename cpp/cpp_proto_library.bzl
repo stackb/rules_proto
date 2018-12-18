@@ -16,7 +16,7 @@ def cpp_proto_library(**kwargs):
         name = name,
         srcs = [name_pb],
         deps = [
-            "//external:protobuf_clib",
+            "//:protobuf_clib",
         ],
         includes = [name_pb],
         visibility = visibility,

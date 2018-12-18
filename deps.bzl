@@ -57,7 +57,7 @@ def get_sha1(name, default, kwargs):
 def external_protobuf_clib(**kwargs):
     name = "protobuf_clib"
     if name not in native.existing_rules():
-        native.bind(
+        native.alias(
             name = name,
             actual = "@com_google_protobuf//:protoc_lib",
         )
@@ -66,7 +66,7 @@ def external_protobuf_clib(**kwargs):
 def external_protobuf_headers(**kwargs):
     name = "protobuf_headers"
     if name not in native.existing_rules():
-        native.bind(
+        native.alias(
             name = name,
             actual = "@com_google_protobuf//:protobuf_headers",
         )
@@ -75,7 +75,7 @@ def external_protobuf_headers(**kwargs):
 def external_protocol_compiler(**kwargs):
     name = "protocol_compiler"
     if name not in native.existing_rules():
-        native.bind(
+        native.alias(
             name = name,
             actual = "@com_google_protobuf//:protoc",
         )
@@ -84,7 +84,7 @@ def external_nanopb(**kwargs):
     com_github_nanopb_nanopb(**kwargs)
     name = "nanopb"
     if name not in native.existing_rules():
-        native.bind(
+        native.alias(
             name = name,
             actual = "@com_github_nanopb_nanopb//:nanopb",
         )
@@ -93,7 +93,7 @@ def external_libssl(**kwargs):
     boringssl(**kwargs)
     name = "libssl"
     if name not in native.existing_rules():
-        native.bind(
+        native.alias(
             name = name,
             actual = "@boringssl//:ssl",
         )
@@ -102,7 +102,7 @@ def external_zlib(**kwargs):
     com_github_madler_zlib(**kwargs)
     name = "zlib"
     if name not in native.existing_rules():
-        native.bind(
+        native.alias(
             name = name,
             actual = "@com_github_madler_zlib//:z",
         )

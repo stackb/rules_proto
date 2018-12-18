@@ -176,7 +176,7 @@ def cpp_proto_library(**kwargs):
         name = name,
         srcs = [name_pb],
         deps = [
-            "//external:protobuf_clib",
+            "//:protobuf_clib",
         ],
         includes = [name_pb],
         visibility = visibility,
@@ -255,7 +255,7 @@ def cpp_grpc_library(**kwargs):
         name = name,
         srcs = [name_pb],
         deps = [
-            "//external:protobuf_clib",
+            "//:protobuf_clib",
             "@com_github_grpc_grpc//:grpc++",
             "@com_github_grpc_grpc//:grpc++_reflection",
         ],
