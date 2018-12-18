@@ -2,9 +2,9 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:gogo_grpc_library.bzl",
 
 gogo_grpc_library(
     name = "greeter_gogo_library",
+    importpath = "github.com/stackb/rules_proto/gogo/example/gogo_grpc_library/greeter",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
     go_deps = [
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
-    importpath = "github.com/stackb/rules_proto/gogo/example/gogo_grpc_library/greeter",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )

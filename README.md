@@ -1,5 +1,4 @@
-# `rules_proto` [![Build Status](https://fortune.stack.build/badge.svg?jobs=cpp-job)
-
+# `rules_proto` [![Build Status](https://travis-ci.org/pubref/rules_proto.svg?branch=master)](https://travis-ci.org/stackb/rules_proto)
 
 Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 
@@ -36,9 +35,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_stack_rules_proto",
-    urls = ["https://github.com/stackb/rules_proto/archive/844077a71597f91c41b02d4509c5f79d51588552.tar.gz"],
-    sha256 = "867d09bf45515cb3ddeb06f7bdd2182eecf171ae3cd6b716b3b9d2fce50f292f",
-    strip_prefix = "rules_proto-844077a71597f91c41b02d4509c5f79d51588552",
+    urls = ["https://github.com/stackb/rules_proto/archive/{GIT_COMMIT_ID}.tar.gz"],
+    sha256 = "{ARCHIVE_TAR_GZ_SHA256}",
+    strip_prefix = "rules_proto-{GIT_COMMIT_ID}",
 )
 ```
 
