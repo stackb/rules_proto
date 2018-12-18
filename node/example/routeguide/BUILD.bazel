@@ -6,11 +6,10 @@ node_grpc_library(
     deps = ["//example/proto:routeguide_proto"],
 )
 
-
 node_module(
     name = "clientlib",
-    main = "client.js",
     data = ["//example/proto:routeguide_features"],
+    main = "client.js",
     deps = [":routeguide"],
 )
 
@@ -19,11 +18,10 @@ node_binary(
     entrypoint = ":clientlib",
 )
 
-
 node_module(
     name = "serverlib",
-    main = "server.js",
     data = ["//example/proto:routeguide_features"],
+    main = "server.js",
     deps = [":routeguide"],
 )
 

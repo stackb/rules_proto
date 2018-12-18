@@ -1,4 +1,3 @@
-
 load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
@@ -13,9 +12,9 @@ proto_plugin(
 proto_plugin(
     name = "grpc_csharp",
     outputs = ["{package}/{basename|pascal}Grpc.cs"],
+    tool = "@com_github_grpc_grpc//:grpc_csharp_plugin",
     transitivity = {
         "google/protobuf": "exclude",
     },
-    tool = "@com_github_grpc_grpc//:grpc_csharp_plugin",
     visibility = ["//visibility:public"],
 )

@@ -7,6 +7,7 @@ load("@package_bundle//file:packages.bzl", "packages")
 container_image(
     name = "image",
     base = "@bazel//image",
+    cmd = ["/usr/local/bin/bazel"],
     debs = [
         # xz
         packages["xz-utils"],
@@ -17,7 +18,6 @@ container_image(
         # packages["ruby2.3"],
     ],
     entrypoint = ["/usr/local/bin/bazel"],
-    cmd = ["/usr/local/bin/bazel"],
 )
 
 container_push(

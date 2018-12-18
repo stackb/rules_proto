@@ -4,7 +4,6 @@ load(
     "closure_js_test",
     "closure_js_binary",
 )
-
 load("//github.com/grpc/grpc-web:closure_grpc_library.bzl", "closure_grpc_library")
 
 closure_grpc_library(
@@ -16,6 +15,7 @@ closure_grpc_library(
 
 closure_js_test(
     name = "client_test",
+    size = "small",
     srcs = [
         "client_test.js",
     ],
@@ -27,7 +27,6 @@ closure_js_test(
         "@io_bazel_rules_closure//closure/library/testing:jsunit",
         "@io_bazel_rules_closure//closure/library/testing:testsuite",
     ],
-    size = "small",
 )
 
 closure_js_library(

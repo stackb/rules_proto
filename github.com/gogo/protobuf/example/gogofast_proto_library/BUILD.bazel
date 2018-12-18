@@ -2,10 +2,10 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofast_proto_library.
 
 gogofast_proto_library(
     name = "person_gogo_library",
-    importpath = "github.com/stackb/rules_proto/gogo/example/gogofast_proto_library/person",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
     go_deps = [
-		"@com_github_gogo_protobuf//types:go_default_library",
+        "@com_github_gogo_protobuf//types:go_default_library",
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/gogo/example/gogofast_proto_library/person",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )

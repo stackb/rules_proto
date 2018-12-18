@@ -1,14 +1,13 @@
-
 proto_library(
     name = "person_proto",
     srcs = [
         "person.proto",
     ],
-    deps = [
-        ":place_proto",
-    ],
     visibility = [
         "//visibility:public",
+    ],
+    deps = [
+        ":place_proto",
     ],
 )
 
@@ -17,11 +16,11 @@ proto_library(
     srcs = [
         "place.proto",
     ],
-    deps = [
-        ":thing_proto",
-    ],
     visibility = [
         "//visibility:public",
+    ],
+    deps = [
+        ":thing_proto",
     ],
 )
 
@@ -30,11 +29,11 @@ proto_library(
     srcs = [
         "thing.proto",
     ],
-    deps = [
-        "@com_google_protobuf//:any_proto",
-    ],
     visibility = [
         "//visibility:public",
+    ],
+    deps = [
+        "@com_google_protobuf//:any_proto",
     ],
 )
 

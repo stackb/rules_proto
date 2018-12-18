@@ -18,12 +18,12 @@ rust_binary(
 rust_binary(
     name = "server",
     srcs = ["server.rs"],
+    args = ["example/proto/routeguide_features.json"],
+    data = ["//example/proto:routeguide_features"],
     deps = [
         ":routeguide",
-        "//rust/cargo:grpc",
         "//rust/cargo:futures",
+        "//rust/cargo:grpc",
         "//rust/cargo:tls_api_stub",
     ],
-    data = ["//example/proto:routeguide_features"],
-    args = ["example/proto/routeguide_features.json"],
 )

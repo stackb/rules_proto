@@ -1,4 +1,3 @@
-
 load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
@@ -16,8 +15,8 @@ proto_plugin(
     # Ths function will append '_pb' if the basename is a scala keyword.
     out = "{name}.jar",
     options = [
-        "grpc", 
-        #"java_conversions", # causes weird import problems 
+        "grpc",
+        #"java_conversions", # causes weird import problems
     ],
     tool = ":protoc-gen-scala",
     visibility = ["//visibility:public"],
@@ -25,55 +24,55 @@ proto_plugin(
 
 java_library(
     name = "proto_deps",
-    exports = [
-        "//external:io_bazel_rules_scala/dependency/proto/scalapb_runtime",
-        "//external:io_bazel_rules_scala/dependency/com_google_protobuf/protobuf_java",
-        "//external:io_bazel_rules_scala/dependency/proto/scalapb_lenses",
-        "//external:io_bazel_rules_scala/dependency/proto/scalapb_fastparse",
-    ],
     visibility = ["//visibility:public"],
+    exports = [
+        "//external:io_bazel_rules_scala/dependency/com_google_protobuf/protobuf_java",
+        "//external:io_bazel_rules_scala/dependency/proto/scalapb_fastparse",
+        "//external:io_bazel_rules_scala/dependency/proto/scalapb_lenses",
+        "//external:io_bazel_rules_scala/dependency/proto/scalapb_runtime",
+    ],
 )
 
 java_library(
     name = "grpc_deps",
+    visibility = ["//visibility:public"],
     exports = [
         ":proto_deps",
-        "//external:io_bazel_rules_scala/dependency/proto/scalapb_runtime_grpc",
-        "//external:io_bazel_rules_scala/dependency/proto/grpc_core",
-        "//external:io_bazel_rules_scala/dependency/proto/grpc_stub",
-        "//external:io_bazel_rules_scala/dependency/proto/grpc_protobuf",
-        "//external:io_bazel_rules_scala/dependency/proto/grpc_netty",
-        "//external:io_bazel_rules_scala/dependency/proto/grpc_context",
-        "//external:io_bazel_rules_scala/dependency/proto/guava",
         "//external:io_bazel_rules_scala/dependency/proto/google_instrumentation",
+        "//external:io_bazel_rules_scala/dependency/proto/grpc_context",
+        "//external:io_bazel_rules_scala/dependency/proto/grpc_core",
+        "//external:io_bazel_rules_scala/dependency/proto/grpc_netty",
+        "//external:io_bazel_rules_scala/dependency/proto/grpc_protobuf",
+        "//external:io_bazel_rules_scala/dependency/proto/grpc_stub",
+        "//external:io_bazel_rules_scala/dependency/proto/guava",
+        "//external:io_bazel_rules_scala/dependency/proto/netty_buffer",
         "//external:io_bazel_rules_scala/dependency/proto/netty_codec",
         "//external:io_bazel_rules_scala/dependency/proto/netty_codec_http",
         "//external:io_bazel_rules_scala/dependency/proto/netty_codec_http2",
         "//external:io_bazel_rules_scala/dependency/proto/netty_codec_socks",
-        "//external:io_bazel_rules_scala/dependency/proto/netty_handler",
-        "//external:io_bazel_rules_scala/dependency/proto/netty_buffer",
-        "//external:io_bazel_rules_scala/dependency/proto/netty_transport",
-        "//external:io_bazel_rules_scala/dependency/proto/netty_resolver",
         "//external:io_bazel_rules_scala/dependency/proto/netty_common",
+        "//external:io_bazel_rules_scala/dependency/proto/netty_handler",
         "//external:io_bazel_rules_scala/dependency/proto/netty_handler_proxy",
+        "//external:io_bazel_rules_scala/dependency/proto/netty_resolver",
+        "//external:io_bazel_rules_scala/dependency/proto/netty_transport",
+        "//external:io_bazel_rules_scala/dependency/proto/scalapb_runtime_grpc",
     ],
-    visibility = ["//visibility:public"],
 )
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library", "scala_binary", "scala_test")
 
 scala_binary(
     name = "compiler_plugin",
-    main_class = "CompilerPlugin",
     srcs = ["CompilerPlugin.scala"],
-    deps = [
-        "@com_google_protobuf//:protobuf_java",
-        "@com_github_scalapb_scalapb//:compilerplugin",
-    ],
+    main_class = "CompilerPlugin",
+    visibility = ["//visibility:public"],
     runtime_deps = [
         "@com_github_scalapb_scalapb//:scala-library",
     ],
-    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_scalapb_scalapb//:compilerplugin",
+        "@com_google_protobuf//:protobuf_java",
+    ],
 )
 
 # Curiously this didn't work
@@ -84,7 +83,7 @@ scala_binary(
 #     outs = ["protoc-gen-scala.sh"],
 #     cmd = """
 #     echo '$(location @local_jdk//:bin/java) -jar $(location protoc_gen_deploy.jar) $$@' > $@
-#     """, 
+#     """,
 #     executable = True,
 # )
 
@@ -109,10 +108,10 @@ go_library(
 
 go_binary(
     name = "protoc-gen-scala",
-    embed = [":go_default_library"],
-    visibility = ["//visibility:public"],
     data = [
         ":compiler_plugin_deploy.jar",
         "@bazel_tools//tools/jdk:jre",
     ],
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
 )
