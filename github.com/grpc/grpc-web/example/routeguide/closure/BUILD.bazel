@@ -27,6 +27,7 @@ closure_js_test(
         "@io_bazel_rules_closure//closure/library/testing:jsunit",
         "@io_bazel_rules_closure//closure/library/testing:testsuite",
     ],
+    tags = ["manual"], # skip this test in CI, it currently always core-dumps phantom-js
 )
 
 closure_js_library(
