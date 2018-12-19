@@ -1,4 +1,5 @@
 # `rules_proto` 
+
 Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 
 <table border="0"><tr>
@@ -24,6 +25,7 @@ are in a pre-release status.  The primary goals are:
 minimize external dependencies in your project.  Add `rules_proto` when you have
 more complex proto requirements such as when dealing with multiple output
 languages, gRPC, unsupported (native) language support, or custom proto plugins.
+
 
 ## Installation
 
