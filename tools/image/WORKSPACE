@@ -72,6 +72,8 @@ dpkg_list(
     packages = [
         "xz-utils",
         "liblzma5",
+        "bzip2",
+        "libbz2-1.0",
         # "ruby",
         # "ruby2.3",
         # "libruby2.3",

@@ -12,6 +12,9 @@ container_image(
         # xz
         packages["xz-utils"],
         packages["liblzma5"],
+        # bzip2
+        packages["bzip2"],
+        packages["libbz2-1.0"],
 
         # ruby
         # packages["ruby"],
