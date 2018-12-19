@@ -1,5 +1,4 @@
 # `rules_proto` 
-
 Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 
 <table border="0"><tr>
