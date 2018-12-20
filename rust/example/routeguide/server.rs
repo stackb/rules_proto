@@ -123,7 +123,7 @@ impl Future for RouteSummaryFuture {
 
   fn poll(&mut self) -> Poll<RouteSummary, grpc::Error> {
     Ok(Async::Ready(self.summary.to_owned()))
-  } 
+  }
 }
 
 #[derive(Debug)]
@@ -145,9 +145,9 @@ impl Stream for RouteNoteStream {
 
   // fn poll(&mut self) -> Poll<RouteNote, grpc::Error> {
   //   Ok(Async::Ready(self.note))
-  // } 
+  // }
 
   fn poll(&mut self) -> Result<Async<Option<RouteNote>>, grpc::Error> {
     Ok(Async::Ready(std::option::Option::Some(self.note.to_owned())))
-  } 
+  }
 }

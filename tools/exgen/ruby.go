@@ -47,7 +47,7 @@ def {{ .Rule.Name }}(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    
+
     ruby_proto_compile(
         name = name_pb,
         deps = deps,
@@ -58,7 +58,7 @@ def {{ .Rule.Name }}(**kwargs):
     ruby_library(
         name = name,
         srcs = [name_pb],
-        includes = ["{package}/%s" % name_pb],   
+        includes = ["{package}/%s" % name_pb],
         visibility = visibility,
     )
 `)
@@ -83,7 +83,7 @@ def {{ .Rule.Name }}(**kwargs):
     ruby_library(
         name = name,
         srcs = [name_pb],
-        includes = ["{package}/%s" % name_pb],   
+        includes = ["{package}/%s" % name_pb],
         visibility = visibility,
     )
 `)

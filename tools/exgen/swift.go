@@ -9,7 +9,7 @@ go_rules_dependencies()
 go_register_toolchains()
 
 load("@build_stack_rules_proto//{{ .Lang.Dir }}:repositories.bzl", "swift_toolchain")
-# Default values work with linux, x86_64, /usr/local/bin/clang. 
+# Default values work with linux, x86_64, /usr/local/bin/clang.
 swift_toolchain(
 	#root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
 )

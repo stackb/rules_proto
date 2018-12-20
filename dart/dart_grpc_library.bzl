@@ -24,4 +24,3 @@ def dart_grpc_library(**kwargs):
         pub_pkg_name = name,
         visibility = visibility,
     )
-

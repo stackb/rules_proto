@@ -38,4 +38,3 @@ def gogofaster_grpc_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-

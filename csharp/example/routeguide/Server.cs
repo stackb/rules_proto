@@ -90,7 +90,7 @@ class Program
             }
 
             stopwatch.Stop();
-            
+
             return new RouteGuide.RouteSummary
             {
                 PointCount = pointCount,

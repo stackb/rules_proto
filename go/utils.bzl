@@ -1,9 +1,8 @@
-
 def get_importmappings(mappings):
     """Build list of importmappings
 
     Args:
-        mappings: dict<string,string> src: dst 
+        mappings: dict<string,string> src: dst
     Returns
         list<string> in the form 'M{src}={dst}`
     """

@@ -1,4 +1,3 @@
-
 http_archive(
     name = "bazel_toolchains",
     urls = [
@@ -24,7 +23,7 @@ go_rules_dependencies()
 go_register_toolchains()
 
 load("@build_stack_rules_proto//swift:repositories.bzl", "swift_toolchain")
-# Default values work with linux, x86_64, /usr/local/bin/clang. 
+# Default values work with linux, x86_64, /usr/local/bin/clang.
 swift_toolchain(
 	#root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
 )
@@ -32,5 +31,3 @@ swift_toolchain(
 # Uncomment for ocal development with swift installed on your machine
 # load("@build_bazel_rules_swift//swift:repositories.bzl", "swift_rules_dependencies")
 # swift_rules_dependencies()
-
-

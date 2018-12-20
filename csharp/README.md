@@ -203,14 +203,14 @@ def csharp_proto_library(**kwargs):
 		transitive = transitive,
         verbose = verbose,
     )
-    
+
     core_library(
         name = name,
         srcs = [name_pb],
         deps = [
             "@google.protobuf//:core",
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-        ],        
+        ],
         visibility = visibility,
     )
 
@@ -302,7 +302,7 @@ def csharp_grpc_library(**kwargs):
         transitive = transitive,
         verbose = verbose,
     )
-    
+
     core_library(
         name = name,
         srcs = [name_pb],
@@ -310,8 +310,8 @@ def csharp_grpc_library(**kwargs):
             "@google.protobuf//:core",
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
             "@grpc.core//:core",
-            "@system.interactive.async//:core",    
-        ],        
+            "@system.interactive.async//:core",
+        ],
         visibility = visibility,
     )
 
@@ -336,4 +336,3 @@ def csharp_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
-

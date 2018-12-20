@@ -1,4 +1,4 @@
-load("//:deps.bzl", 
+load("//:deps.bzl",
     "bazel_gazelle",
     "bazel_skylib",
     "org_pubref_rules_node",
@@ -31,6 +31,5 @@ def ts_proto_library(**kwargs):
     ts_proto_compile(**kwargs)
 
 def ts_grpc_library(**kwargs):
-    ts_grpc_compile(**kwargs)    
+    ts_grpc_compile(**kwargs)
     ts_proto_library(**kwargs)
-

@@ -32,4 +32,3 @@ def closure_proto_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     visibility = kwargs.get("visibility")
-

@@ -1,4 +1,4 @@
-# `rules_proto` 
+# `rules_proto`
 
 Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 
@@ -157,17 +157,17 @@ access that rule by adding `_pb` at the end of the rule name, like `bazel build
 
 * There are generally four rule flavors for any language `{lang}`:
 `{lang}_proto_compile`, `{lang}_proto_library`, `{lang}_grpc_compile`, and
-`{lang}_grpc_library`.  
+`{lang}_grpc_library`.
 
 * If you are solely interested in the source code artifacts, use the
-  `{lang}_{proto|grpc}_compile` rule.  
+  `{lang}_{proto|grpc}_compile` rule.
 
 * If your proto file has services, use the `{lang}_{grpc}_{compile|library}`
-  rule instead.  
+  rule instead.
 
 * Load any external dependencies needed for the rule via the
   `load("@build_stack_rules_proto//{lang}:deps.bzl",
-  "{lang}_{proto|grpc}_{compile|library}")`.  
+  "{lang}_{proto|grpc}_{compile|library}")`.
 
 
 ## Rules
@@ -298,7 +298,7 @@ demonstrating standalone usage.
 The root directory contains the base rule defintions:
 
 * `plugin.bzl`: A build rule that defines the name, tool binary, and options for
-  a particular proto plugin.  
+  a particular proto plugin.
 
 * `compile.bzl`: A build rule that contains the `proto_compile` rule.  This rule
   calls `protoc` with a given list of plugins and generates output files.
@@ -316,7 +316,7 @@ Follow the pattern seen in the multiple examples in this repository.  The basic 
 
 1. Load the plugin rule: `load("@build_stack_rules_proto//:plugin.bzl", "proto_plugin")`.
 2. Define the rule, giving it a `name`, `options` (not mandatory), `tool`, and
-   `outputs`.  
+   `outputs`.
 3. `tool` is a label that refers to the binary executable for the plugin itself.
 4. `outputs` is a list of strings that predicts the pattern of files generated
    by the plugin.  Specifying outputs is the only attribute that requires much
@@ -325,4 +325,3 @@ Follow the pattern seen in the multiple examples in this repository.  The basic 
 ## Contributing
 
 Contributions welcome; please create Issues or GitHub pull requests.
-

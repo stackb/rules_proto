@@ -57,7 +57,7 @@ const messages = routeguide.routeguide_pb;
 const services = routeguide.routeguide_grpc_pb;
 //console.log("routeguide services", services);
 
-// This is included as data in the client node_module, so we can load 
+// This is included as data in the client node_module, so we can load
 // this database as a constant.
 const featureList = require('./example/proto/routeguide_features.json');
 console.log(`Loaded ${featureList.length} from feature database`);
@@ -80,7 +80,7 @@ function runGetFeature(callback) {
       console.warn("ERROR occured while attempting to get feature", error);
       if (callback) {
         callback(error);
-        callback = undefined  
+        callback = undefined
       }
       return;
     }

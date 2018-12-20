@@ -1,4 +1,3 @@
-
 proto_library(
     name = "person_proto",
     srcs = [

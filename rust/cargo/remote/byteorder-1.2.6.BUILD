@@ -35,4 +35,3 @@ rust_library(
         "std",
     ],
 )
-

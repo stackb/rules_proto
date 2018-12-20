@@ -25,10 +25,10 @@ class Client {
 
     /**
      * List existing features.  Promise resolves to a list of features.
-     * 
+     *
      * @param {!Rectangle} rect
      * @param {!Object} metadata
-     * @return {!ClientReadableStream<!Feature>}  
+     * @return {!ClientReadableStream<!Feature>}
      */
     listFeatures(rect, metadata) {
         return this.client_.listFeatures(rect, metadata);

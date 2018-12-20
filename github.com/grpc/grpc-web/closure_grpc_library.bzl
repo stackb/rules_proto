@@ -17,7 +17,7 @@ def closure_grpc_library(**kwargs):
         transitive = True,
         visibility = visibility,
     )
-    
+
     closure_grpc_compile(
         name = name_pb_grpc,
         deps = deps,
@@ -40,5 +40,3 @@ def closure_grpc_library(**kwargs):
         lenient = True,
         visibility = visibility,
     )
-
-

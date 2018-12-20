@@ -30,7 +30,7 @@ go_rules_dependencies()
 go_register_toolchains()
 
 load("@build_stack_rules_proto//swift:repositories.bzl", "swift_toolchain")
-# Default values work with linux, x86_64, /usr/local/bin/clang. 
+# Default values work with linux, x86_64, /usr/local/bin/clang.
 swift_toolchain(
 	#root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
 )
@@ -107,7 +107,7 @@ go_rules_dependencies()
 go_register_toolchains()
 
 load("@build_stack_rules_proto//swift:repositories.bzl", "swift_toolchain")
-# Default values work with linux, x86_64, /usr/local/bin/clang. 
+# Default values work with linux, x86_64, /usr/local/bin/clang.
 swift_toolchain(
 	#root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
 )
@@ -184,7 +184,7 @@ go_rules_dependencies()
 go_register_toolchains()
 
 load("@build_stack_rules_proto//swift:repositories.bzl", "swift_toolchain")
-# Default values work with linux, x86_64, /usr/local/bin/clang. 
+# Default values work with linux, x86_64, /usr/local/bin/clang.
 swift_toolchain(
 	#root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
 )
@@ -258,7 +258,7 @@ go_rules_dependencies()
 go_register_toolchains()
 
 load("@build_stack_rules_proto//swift:repositories.bzl", "swift_toolchain")
-# Default values work with linux, x86_64, /usr/local/bin/clang. 
+# Default values work with linux, x86_64, /usr/local/bin/clang.
 swift_toolchain(
 	#root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
 )
@@ -311,4 +311,3 @@ def swift_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
-

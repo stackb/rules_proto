@@ -1,4 +1,4 @@
-load("//:deps.bzl", 
+load("//:deps.bzl",
     "io_bazel_rules_go",
     "bazel_gazelle",
     "com_github_grpc_ecosystem_grpc_gateway",

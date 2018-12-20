@@ -1,4 +1,3 @@
-
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "workspace_and_buildfile")
 
 def _http_archive_impl(ctx):
@@ -104,7 +103,7 @@ rule lacks the patch functionality of the original.
 Following download and extraction of the archive, this rule will:
 
 1. Execute a single buildozer command.
-2. Execute a list of sed commands. 
+2. Execute a list of sed commands.
 
 The buildozer command is constructed from the `replace_deps` and `label_list`
 attributes.  For each A -> B mapping in the replace_deps dict, a command like
@@ -117,5 +116,5 @@ sed commands might not be necessary if buildozer was capable of replacement
 within *.bzl files, but currently it cannot.  This attribute is a
 string_list_dict, meaning the dict keys are filename to modify (in place), and
 each dict value is are list of sed commands to apply onto that file.  The value
-typically looks something like 's|A|B|g'. 
+typically looks something like 's|A|B|g'.
 """

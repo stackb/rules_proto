@@ -1,4 +1,4 @@
-# `rules_proto` 
+# `rules_proto`
 
 Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 
@@ -157,14 +157,14 @@ access that rule by adding `_pb` at the end of the rule name, like `bazel build
 
 * There are generally four rule flavors for any language `{lang}`:
 `{lang}_proto_compile`, `{lang}_proto_library`, `{lang}_grpc_compile`, and
-`{lang}_grpc_library`.  
+`{lang}_grpc_library`.
 
 * If you are solely interested in the source code artifacts, use the
-  `{lang}_{proto|grpc}_compile` rule.  
+  `{lang}_{proto|grpc}_compile` rule.
 
 * If your proto file has services, use the `{lang}_{grpc}_{compile|library}`
-  rule instead.  
+  rule instead.
 
 * Load any external dependencies needed for the rule via the
   `load("@build_stack_rules_proto//{lang}:deps.bzl",
-  "{lang}_{proto|grpc}_{compile|library}")`.  
+  "{lang}_{proto|grpc}_{compile|library}")`.

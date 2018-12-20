@@ -1,4 +1,4 @@
-load("//:deps.bzl", 
+load("//:deps.bzl",
     "io_bazel_rules_go",
 )
 

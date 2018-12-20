@@ -1,4 +1,3 @@
-
 def _execute(rtx, cmds):
     """Execute a command and fail if return code.
     Args:
@@ -75,7 +74,7 @@ def _dart_pub_deps_impl(rtx):
     override = rtx.attr.override
     # int
     verbose = rtx.attr.verbose
-    # string 
+    # string
     pub = rtx.path(rtx.attr._pub)
     # string
     spec = rtx.path(rtx.attr.spec)
@@ -89,7 +88,7 @@ def _dart_pub_deps_impl(rtx):
     # Run pub deps
     result = _execute(rtx, [pub, "deps", "--style", "list"])
 
-    # name -> entry 
+    # name -> entry
     direct_deps = {}
     # name -> entry
 
@@ -176,4 +175,3 @@ dart_pub_deps = repository_rule(
         ),
     },
 )
-

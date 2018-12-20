@@ -22,4 +22,3 @@ def gogofaster_grpc_compile(**kwargs):
     proto_compile(
         **kwargs
     )
-

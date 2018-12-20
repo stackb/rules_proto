@@ -1,4 +1,3 @@
-
 http_archive(
     name = "bazel_toolchains",
     urls = [
@@ -30,4 +29,3 @@ bundle_install(
     gemfile = "//ruby:Gemfile",
     gemfile_lock = "//ruby:Gemfile.lock",
 )
-

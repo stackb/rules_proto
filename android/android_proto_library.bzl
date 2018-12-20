@@ -26,4 +26,3 @@ def android_proto_library(**kwargs):
         ],
         visibility = visibility,
     )
-

@@ -16,14 +16,13 @@ def csharp_proto_library(**kwargs):
 		transitive = transitive,
         verbose = verbose,
     )
-    
+
     core_library(
         name = name,
         srcs = [name_pb],
         deps = [
             "@google.protobuf//:core",
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-        ],        
+        ],
         visibility = visibility,
     )
-

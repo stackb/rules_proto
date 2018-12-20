@@ -44,7 +44,7 @@ demonstrating standalone usage.
 The root directory contains the base rule defintions:
 
 * `plugin.bzl`: A build rule that defines the name, tool binary, and options for
-  a particular proto plugin.  
+  a particular proto plugin.
 
 * `compile.bzl`: A build rule that contains the `proto_compile` rule.  This rule
   calls `protoc` with a given list of plugins and generates output files.
@@ -62,7 +62,7 @@ Follow the pattern seen in the multiple examples in this repository.  The basic 
 
 1. Load the plugin rule: `load("@build_stack_rules_proto//:plugin.bzl", "proto_plugin")`.
 2. Define the rule, giving it a `name`, `options` (not mandatory), `tool`, and
-   `outputs`.  
+   `outputs`.
 3. `tool` is a label that refers to the binary executable for the plugin itself.
 4. `outputs` is a list of strings that predicts the pattern of files generated
    by the plugin.  Specifying outputs is the only attribute that requires much

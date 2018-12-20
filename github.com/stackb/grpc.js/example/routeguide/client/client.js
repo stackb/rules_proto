@@ -20,13 +20,13 @@ class Client {
 
     /**
      * List existing features.  Promise resolves to a list of features.
-     * 
+     *
      * @param {!Rectangle} rect
-     * @return {!GoogPromise<!Array<!Feature>>} feature 
+     * @return {!GoogPromise<!Array<!Feature>>} feature
      */
     listFeatures(rect) {
         /**
-         * @type {!Array<!Feature>} 
+         * @type {!Array<!Feature>}
          */
         const features = [];
 

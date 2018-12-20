@@ -25,4 +25,3 @@ def cpp_grpc_library(**kwargs):
         includes = [name_pb],
         visibility = visibility,
     )
-

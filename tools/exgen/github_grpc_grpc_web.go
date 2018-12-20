@@ -29,7 +29,7 @@ def {{ .Rule.Name }}(**kwargs):
         transitive = True,
         visibility = visibility,
     )
-    
+
     closure_grpc_compile(
         name = name_pb_grpc,
         deps = deps,

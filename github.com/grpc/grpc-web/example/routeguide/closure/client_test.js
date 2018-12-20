@@ -16,11 +16,10 @@ testSuite({
     testListFeatures: () => {
         const client = new Client("localhost", null, null);
         const rect = new Rectangle();
-        
+
         // Currently this segfaults phantomjs!
         const stream = client.listFeatures(rect, {});
         asserts.assertNotNull(stream);
     },
 
 });
-

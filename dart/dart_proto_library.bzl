@@ -23,4 +23,3 @@ def dart_proto_library(**kwargs):
         pub_pkg_name = name,
         visibility = visibility,
     )
-

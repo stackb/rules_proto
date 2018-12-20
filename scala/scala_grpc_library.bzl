@@ -24,4 +24,3 @@ def scala_grpc_library(**kwargs):
         ],
         visibility = visibility,
     )
-

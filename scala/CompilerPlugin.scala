@@ -9,7 +9,7 @@ object CompilerPlugin {
   def main(args: Array[String]): Unit = {
     val registry = ExtensionRegistry.newInstance()
     Scalapb.registerAllExtensions(registry)
-    val request = CodeGeneratorRequest.parseFrom(Streamable.bytes(System.in), registry)    
+    val request = CodeGeneratorRequest.parseFrom(Streamable.bytes(System.in), registry)
     System.out.write(ProtobufGenerator.handleCodeGeneratorRequest(request).toByteArray)
-  }  
+  }
 }

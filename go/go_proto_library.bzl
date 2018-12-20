@@ -28,4 +28,3 @@ def go_proto_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-

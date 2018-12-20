@@ -27,4 +27,3 @@ def python_proto_library(**kwargs):
 
 # Alias
 py_proto_library = python_proto_library
-

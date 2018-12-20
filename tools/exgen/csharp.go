@@ -57,14 +57,14 @@ def {{ .Rule.Name }}(**kwargs):
 		transitive = transitive,
         verbose = verbose,
     )
-    
+
     core_library(
         name = name,
         srcs = [name_pb],
         deps = [
             "@google.protobuf//:core",
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-        ],        
+        ],
         visibility = visibility,
     )
 `)
@@ -87,7 +87,7 @@ def {{ .Rule.Name }}(**kwargs):
         transitive = transitive,
         verbose = verbose,
     )
-    
+
     core_library(
         name = name,
         srcs = [name_pb],
@@ -95,8 +95,8 @@ def {{ .Rule.Name }}(**kwargs):
             "@google.protobuf//:core",
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
             "@grpc.core//:core",
-            "@system.interactive.async//:core",    
-        ],        
+            "@system.interactive.async//:core",
+        ],
         visibility = visibility,
     )
 `)

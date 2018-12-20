@@ -30,4 +30,3 @@ def go_grpc_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-

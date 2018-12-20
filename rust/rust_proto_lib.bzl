@@ -15,7 +15,7 @@ def _rust_proto_lib_impl(ctx):
   srcs = compilation.files
   lib_rs = ctx.actions.declare_file("%s/lib.rs" % compilation.label.name)
 
-  # Search in the plugin list for 'protoc_gen_rust_grpc' or similar. 
+  # Search in the plugin list for 'protoc_gen_rust_grpc' or similar.
   grpc = False
   for plugin in compilation.plugins:
     if plugin.executable.path.endswith("grpc"):

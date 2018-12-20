@@ -29,4 +29,3 @@ def node_proto_library(**kwargs):
         ],
         visibility = visibility,
     )
-

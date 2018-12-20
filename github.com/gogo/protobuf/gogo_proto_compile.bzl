@@ -22,4 +22,3 @@ def gogo_proto_compile(**kwargs):
     proto_compile(
         **kwargs
     )
-

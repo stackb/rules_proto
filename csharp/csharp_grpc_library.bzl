@@ -16,7 +16,7 @@ def csharp_grpc_library(**kwargs):
         transitive = transitive,
         verbose = verbose,
     )
-    
+
     core_library(
         name = name,
         srcs = [name_pb],
@@ -24,8 +24,7 @@ def csharp_grpc_library(**kwargs):
             "@google.protobuf//:core",
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
             "@grpc.core//:core",
-            "@system.interactive.async//:core",    
-        ],        
+            "@system.interactive.async//:core",
+        ],
         visibility = visibility,
     )
-

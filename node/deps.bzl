@@ -1,6 +1,6 @@
-load("//:deps.bzl", 
+load("//:deps.bzl",
     "com_github_grpc_grpc",
-    "com_google_protobuf", 
+    "com_google_protobuf",
     "org_pubref_rules_node",
 )
 

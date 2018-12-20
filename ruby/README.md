@@ -180,7 +180,7 @@ def ruby_proto_library(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    
+
     ruby_proto_compile(
         name = name_pb,
         deps = deps,
@@ -191,7 +191,7 @@ def ruby_proto_library(**kwargs):
     ruby_library(
         name = name,
         srcs = [name_pb],
-        includes = ["{package}/%s" % name_pb],   
+        includes = ["{package}/%s" % name_pb],
         visibility = visibility,
     )
 
@@ -282,7 +282,7 @@ def ruby_grpc_library(**kwargs):
     ruby_library(
         name = name,
         srcs = [name_pb],
-        includes = ["{package}/%s" % name_pb],   
+        includes = ["{package}/%s" % name_pb],
         visibility = visibility,
     )
 
@@ -307,4 +307,3 @@ def ruby_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
-

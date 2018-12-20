@@ -621,4 +621,3 @@ def raze_fetch_remote_crates():
         strip_prefix = "ws2_32-sys-0.2.1",
         build_file = str(Label("//rust/cargo/remote:ws2_32-sys-0.2.1.BUILD"))
     )
-

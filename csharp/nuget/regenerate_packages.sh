@@ -21,7 +21,7 @@ TMPDIR=$(mktemp -d ${TMPDIR:-/tmp}/nuget.XXXXXXXXXX)
 touch "${TMPDIR}/WORKSPACE"
 
 # Gather protobuf deps
-"${TOOL}" add --path "/${TMPDIR}" Google.Protobuf "${PROTOBUF_VERSION}" 
+"${TOOL}" add --path "/${TMPDIR}" Google.Protobuf "${PROTOBUF_VERSION}"
 
 # Create the nuget.bzl file, indent 4 spaces
 echo 'load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "nuget_package")' > ./csharp/nuget/nuget.bzl
@@ -32,7 +32,7 @@ sed -e 's/^/    /' "${TMPDIR}/WORKSPACE" >> csharp/nuget/nuget.bzl
 echo "" > "${TMPDIR}/WORKSPACE"
 
 # Rerun it for grpc deps
-"${TOOL}" add --path "/${TMPDIR}" Grpc "${GRPC_VERSION}" 
+"${TOOL}" add --path "/${TMPDIR}" Grpc "${GRPC_VERSION}"
 
 # Similarly, write the gprc.bzl file
 echo "def nuget_grpc_packages():" >> ./csharp/nuget/nuget.bzl

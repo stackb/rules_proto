@@ -12,15 +12,15 @@ class Client {
     constructor() {
         /**
          * A list of features
-         * @const @private @type {!Array<!Feature>} 
+         * @const @private @type {!Array<!Feature>}
          */
         this.features_ = [];
     }
 
     /**
      * Add a feature.
-     * 
-     * @param {!Feature} feature 
+     *
+     * @param {!Feature} feature
      */
     addFeature(feature) {
         this.features_.push(feature);
@@ -28,8 +28,8 @@ class Client {
 
     /**
      * Get a list of features.
-     * 
-     * @return {!Array<!Feature>} 
+     *
+     * @return {!Array<!Feature>}
      */
     getFeatures() {
         return arrays.clone(this.features_);

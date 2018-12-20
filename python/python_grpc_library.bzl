@@ -28,4 +28,3 @@ def python_grpc_library(**kwargs):
 
 # Alias
 py_grpc_library = python_grpc_library
-

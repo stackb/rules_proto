@@ -1,4 +1,3 @@
-
 http_archive(
     name = "bazel_toolchains",
     urls = [
@@ -37,4 +36,3 @@ load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_protobuf_packages()
 nuget_grpc_packages()
-
