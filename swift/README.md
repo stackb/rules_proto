@@ -85,12 +85,11 @@ _rule = rule(
             aspects = [_aspect],
         ),    
     },
-    output_to_genfiles = True,
 )
 
 def swift_proto_compile(**kwargs):
     _rule(
-        verbose_string = "%s" % kwargs.get("verbose"),
+        verbose_string = "%s" % kwargs.get("verbose", 0),
         plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
         **kwargs)
 
@@ -191,12 +190,11 @@ _rule = rule(
             aspects = [_aspect],
         ),    
     },
-    output_to_genfiles = True,
 )
 
 def swift_grpc_compile(**kwargs):
     _rule(
-        verbose_string = "%s" % kwargs.get("verbose"),
+        verbose_string = "%s" % kwargs.get("verbose", 0),
         plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
         **kwargs)
 

@@ -6,7 +6,6 @@ proto_plugin(
         ".pb.h",
         ".pb.cc",
     ],
-    options = ["foo"],
     visibility = ["//visibility:public"],
 )
 

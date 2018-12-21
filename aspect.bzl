@@ -3,7 +3,7 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 proto_compile_aspect_attrs = {
     "verbose_string": attr.string(
         doc = "Increase verbose level for more debugging",
-        values = ["None", "1", "2", "3", "4"],
+        values = ["0", "1", "2", "3", "4"],
     ),
     # "plugin_options": attr.string_list(
     #     doc = "List of additional 'global' options to add (applies to all plugins)",
@@ -57,6 +57,8 @@ def get_int_attr(attr, name):
 
 def get_string_list_attr(attr, name):
     value = getattr(attr, name, "")
+    if value == "":
+        return []
     return value.split(";")
 
 def proto_compile_aspect_impl(target, ctx):
@@ -136,8 +138,9 @@ def proto_compile_aspect_impl(target, ctx):
     # 'declare_file' actions.
     # print(dir(node))
     # print(node.files)
-    descriptor = ctx.actions.declare_file(ctx.label.name+"_descriptor.bin")
-    outputs.append(descriptor)
+    descriptor = target.files.to_list()[0]
+    # descriptor = ctx.actions.declare_file(ctx.label.name+"_descriptor.bin")
+    # outputs.append(descriptor)
 
     # <string> The directory where that generated descriptor is.
     outdir = descriptor.dirname
@@ -189,7 +192,6 @@ def proto_compile_aspect_impl(target, ctx):
         for plugin in plugins:
             outputs = _get_plugin_outputs(ctx, descriptor, outputs, proto, plugin)
 
-
     print("target.files: %r" % target.files)
     descriptor_sets = depset(
         direct = target.files.to_list(),
@@ -208,7 +210,7 @@ def proto_compile_aspect_impl(target, ctx):
     # list<string> argument list to construct
     args = []
 
-    args = ["--descriptor_set_out=%s" % descriptor.path]
+    # args = ["--descriptor_set_out=%s" % descriptor.path]
 
     pathsep = ctx.configuration.host_path_separator
 
@@ -238,9 +240,9 @@ def proto_compile_aspect_impl(target, ctx):
     if verbose > 0:
         print("%s: %s" % (mnemonic, command))
     if verbose > 1:
-        command += " && echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find ."
+        command += " && echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find . -type f "
     if verbose > 2:
-        command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . && " + command
+        command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . -type l && " + command
     if verbose > 3:
         command = "env && " + command
         for f in outputs:
@@ -254,11 +256,6 @@ def proto_compile_aspect_impl(target, ctx):
     )
 
     return [ProtoLibraryAspectNodeInfo(
-        target = target,
-        ctx = ctx,
-        ctx_label = ctx.label,
-        rule = ctx.rule,
-        actions = ctx.actions,
         outputs = outputs,
     )]
 
@@ -557,8 +554,8 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_options, plugin_outfiles):
       <string> for the protoc arg list.
     """
     label_name = ctx.label.name
-    print(">>>>>>>>>>>>>> label_name? '%s'" % label_name)
-    arg = outdir
+    arg = ctx.bin_dir.path
+
     if plugin.outdir:
         arg = plugin.outdir.replace("{name}", outdir)
     elif plugin.out:
@@ -643,8 +640,13 @@ def _get_plugin_outputs(ctx, descriptor, outputs, proto, plugin):
         filename = _get_output_filename(proto, plugin, output)
         if not filename:
             continue
-        sibling = _get_output_sibling_file(output, proto, descriptor)
-        output = ctx.actions.declare_file(filename, sibling = sibling)
+        # sibling = _get_output_sibling_file(output, proto, descriptor)
+        sibling = proto
+        print("FILENAME: %s" % filename)
+        # output = ctx.actions.declare_file(filename, sibling = sibling)
+        output = ctx.actions.declare_file(filename)
+        # output = ctx.new_file(filename, root = descriptor)
+        
         print("Using sibling file '%s' for '%s' => '%s'" % (sibling.path, filename, output.path))
         outputs.append(output)
     return outputs

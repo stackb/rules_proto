@@ -9,9 +9,8 @@ def proto_compile_impl(ctx):
         aspect = dep[ProtoLibraryAspectNodeInfo]
         files += aspect.outputs
 
+    # print("final files: %r" % files)
     return [DefaultInfo(files = depset(files))]
-
-
 
 # def proto_compile_impl(ctx):
 
