@@ -1,7 +1,5 @@
-startup:cache --host_jvm_args=-Dbazel.DigestFunction=sha256
-build:cache --remote_local_fallback
-build:cache --remote_http_cache=http://content.stack.build/stackb/rules_proto/cas/main
-
+# Look out for https://github.com/bazelbuild/bazel/commit/e3f4ce739f0dbe0fea2b5580655fc96012d162cd#diff-bc401d1977583c2ccaee3cb3df28d007
+#build --incompatible_disable_legacy_proto_provider=true
 
 build:remote --jobs=4
 

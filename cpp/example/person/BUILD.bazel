@@ -1,0 +1,8 @@
+load("//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
+
+cpp_proto_compile(
+    name = "cpp_person_proto",
+    deps = ["//example/proto:person_proto"],
+    verbose = 4,
+)
+

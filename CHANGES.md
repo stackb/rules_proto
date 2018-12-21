@@ -8,6 +8,7 @@ Assorted bugfixes
 * Fix grpc.js and update sha1 to that repo.
 * Apply buildifier
 * Relieve :deps.bzl of dart deps
+* Add ruby to base image
 
 passed: 
 

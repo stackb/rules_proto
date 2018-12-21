@@ -42,15 +42,44 @@ closure_grpc_compile(
 ### `IMPLEMENTATION`
 
 ```python
-load("//:compile.bzl", "proto_compile")
+load("//:compile.bzl", "proto_compile_attrs", "proto_compile_impl")
+load("//:aspect.bzl", "ProtoLibraryAspectNodeInfo", "proto_compile_aspect_attrs", "proto_compile_aspect_impl")
+load("//:plugin.bzl", "ProtoPluginInfo")
+
+# "Aspects should be top-level values in extension files that define them."
+
+_aspect = aspect(
+    implementation = proto_compile_aspect_impl,
+    attr_aspects = ["deps"],
+    attrs = proto_compile_aspect_attrs + {
+        "_plugins": attr.label_list(
+            doc = "List of protoc plugins to apply",
+            providers = [ProtoPluginInfo],
+            default = [
+                str(Label("//github.com/grpc/grpc-web:closure")),
+            ],
+        ),
+    },
+)
+
+_rule = rule(
+    implementation = proto_compile_impl,
+    attrs = proto_compile_attrs + {
+        "deps": attr.label_list(
+            mandatory = True,
+            providers = ["proto", ProtoLibraryAspectNodeInfo],
+            aspects = [_aspect],
+        ),    
+    },
+    output_to_genfiles = True,
+)
 
 def closure_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/grpc/grpc-web:closure")),
-        ],
-        **kwargs
-    )
+    _rule(
+        verbose_string = "%s" % kwargs.get("verbose"),
+        plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
+        **kwargs)
+
 ```
 
 ### Mandatory Attributes
@@ -107,15 +136,44 @@ commonjs_grpc_compile(
 ### `IMPLEMENTATION`
 
 ```python
-load("//:compile.bzl", "proto_compile")
+load("//:compile.bzl", "proto_compile_attrs", "proto_compile_impl")
+load("//:aspect.bzl", "ProtoLibraryAspectNodeInfo", "proto_compile_aspect_attrs", "proto_compile_aspect_impl")
+load("//:plugin.bzl", "ProtoPluginInfo")
+
+# "Aspects should be top-level values in extension files that define them."
+
+_aspect = aspect(
+    implementation = proto_compile_aspect_impl,
+    attr_aspects = ["deps"],
+    attrs = proto_compile_aspect_attrs + {
+        "_plugins": attr.label_list(
+            doc = "List of protoc plugins to apply",
+            providers = [ProtoPluginInfo],
+            default = [
+                str(Label("//github.com/grpc/grpc-web:commonjs")),
+            ],
+        ),
+    },
+)
+
+_rule = rule(
+    implementation = proto_compile_impl,
+    attrs = proto_compile_attrs + {
+        "deps": attr.label_list(
+            mandatory = True,
+            providers = ["proto", ProtoLibraryAspectNodeInfo],
+            aspects = [_aspect],
+        ),    
+    },
+    output_to_genfiles = True,
+)
 
 def commonjs_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/grpc/grpc-web:commonjs")),
-        ],
-        **kwargs
-    )
+    _rule(
+        verbose_string = "%s" % kwargs.get("verbose"),
+        plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
+        **kwargs)
+
 ```
 
 ### Mandatory Attributes
@@ -172,15 +230,44 @@ commonjs_dts_grpc_compile(
 ### `IMPLEMENTATION`
 
 ```python
-load("//:compile.bzl", "proto_compile")
+load("//:compile.bzl", "proto_compile_attrs", "proto_compile_impl")
+load("//:aspect.bzl", "ProtoLibraryAspectNodeInfo", "proto_compile_aspect_attrs", "proto_compile_aspect_impl")
+load("//:plugin.bzl", "ProtoPluginInfo")
+
+# "Aspects should be top-level values in extension files that define them."
+
+_aspect = aspect(
+    implementation = proto_compile_aspect_impl,
+    attr_aspects = ["deps"],
+    attrs = proto_compile_aspect_attrs + {
+        "_plugins": attr.label_list(
+            doc = "List of protoc plugins to apply",
+            providers = [ProtoPluginInfo],
+            default = [
+                str(Label("//github.com/grpc/grpc-web:commonjs_dts")),
+            ],
+        ),
+    },
+)
+
+_rule = rule(
+    implementation = proto_compile_impl,
+    attrs = proto_compile_attrs + {
+        "deps": attr.label_list(
+            mandatory = True,
+            providers = ["proto", ProtoLibraryAspectNodeInfo],
+            aspects = [_aspect],
+        ),    
+    },
+    output_to_genfiles = True,
+)
 
 def commonjs_dts_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/grpc/grpc-web:commonjs_dts")),
-        ],
-        **kwargs
-    )
+    _rule(
+        verbose_string = "%s" % kwargs.get("verbose"),
+        plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
+        **kwargs)
+
 ```
 
 ### Mandatory Attributes
@@ -237,15 +324,44 @@ ts_grpc_compile(
 ### `IMPLEMENTATION`
 
 ```python
-load("//:compile.bzl", "proto_compile")
+load("//:compile.bzl", "proto_compile_attrs", "proto_compile_impl")
+load("//:aspect.bzl", "ProtoLibraryAspectNodeInfo", "proto_compile_aspect_attrs", "proto_compile_aspect_impl")
+load("//:plugin.bzl", "ProtoPluginInfo")
+
+# "Aspects should be top-level values in extension files that define them."
+
+_aspect = aspect(
+    implementation = proto_compile_aspect_impl,
+    attr_aspects = ["deps"],
+    attrs = proto_compile_aspect_attrs + {
+        "_plugins": attr.label_list(
+            doc = "List of protoc plugins to apply",
+            providers = [ProtoPluginInfo],
+            default = [
+                str(Label("//github.com/grpc/grpc-web:ts")),
+            ],
+        ),
+    },
+)
+
+_rule = rule(
+    implementation = proto_compile_impl,
+    attrs = proto_compile_attrs + {
+        "deps": attr.label_list(
+            mandatory = True,
+            providers = ["proto", ProtoLibraryAspectNodeInfo],
+            aspects = [_aspect],
+        ),    
+    },
+    output_to_genfiles = True,
+)
 
 def ts_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/grpc/grpc-web:ts")),
-        ],
-        **kwargs
-    )
+    _rule(
+        verbose_string = "%s" % kwargs.get("verbose"),
+        plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
+        **kwargs)
+
 ```
 
 ### Mandatory Attributes

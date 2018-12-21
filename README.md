@@ -26,7 +26,6 @@ minimize external dependencies in your project.  Add `rules_proto` when you have
 more complex proto requirements such as when dealing with multiple output
 languages, gRPC, unsupported (native) language support, or custom proto plugins.
 
-
 ## Installation
 
 Add rules_proto your `WORKSPACE`:
