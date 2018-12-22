@@ -1,0 +1,25 @@
+load("//python:python_proto_compile.bzl", "python_proto_compile")
+
+python_proto_compile(
+    name = "python_person_proto",
+    deps = ["//example/proto:person_proto"],
+    verbose = 4,
+)
+
+load("//python:python_proto_library.bzl", "python_proto_library")
+
+python_proto_library(
+    name = "python_person_proto_library",
+    deps = ["//example/proto:person_proto"],
+    verbose = 4,
+)
+
+
+load("//python:python_grpc_compile.bzl", "python_grpc_compile")
+
+python_grpc_compile(
+    name = "python_person_grpc",
+    deps = ["//example/proto:person_proto"],
+    verbose = 4,
+)
+

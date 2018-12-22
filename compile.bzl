@@ -1,6 +1,9 @@
 load("//:aspect.bzl", "ProtoLibraryAspectNodeInfo")
 load("//:plugin.bzl", "ProtoPluginInfo")
 
+ProtoCompileInfo = provider(fields = {
+    
+})
 
 def proto_compile_impl(ctx):
     files = [] 

@@ -1,6 +1,8 @@
 # Look out for https://github.com/bazelbuild/bazel/commit/e3f4ce739f0dbe0fea2b5580655fc96012d162cd#diff-bc401d1977583c2ccaee3cb3df28d007
 #build --incompatible_disable_legacy_proto_provider=true
 
+#build --experimental_enable_cc_skylark_api
+
 build:remote --jobs=4
 
 build:remote --host_javabase=@bazel_toolchains//configs/ubuntu16_04_clang/1.1:jdk8

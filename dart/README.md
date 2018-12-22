@@ -55,8 +55,9 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 
 # "Aspects should be top-level values in extension files that define them."
 
-_aspect = aspect(
+dart_proto_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
+    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
     attrs = proto_compile_aspect_attrs + {
         "_plugins": attr.label_list(
@@ -74,8 +75,8 @@ _rule = rule(
     attrs = proto_compile_attrs + {
         "deps": attr.label_list(
             mandatory = True,
-            providers = ["proto", ProtoLibraryAspectNodeInfo],
-            aspects = [_aspect],
+            providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
+            aspects = [dart_proto_compile_aspect],
         ),    
     },
 )
@@ -156,8 +157,9 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 
 # "Aspects should be top-level values in extension files that define them."
 
-_aspect = aspect(
+dart_grpc_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
+    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
     attrs = proto_compile_aspect_attrs + {
         "_plugins": attr.label_list(
@@ -175,8 +177,8 @@ _rule = rule(
     attrs = proto_compile_attrs + {
         "deps": attr.label_list(
             mandatory = True,
-            providers = ["proto", ProtoLibraryAspectNodeInfo],
-            aspects = [_aspect],
+            providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
+            aspects = [dart_grpc_compile_aspect],
         ),    
     },
 )

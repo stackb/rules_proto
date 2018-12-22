@@ -1,28 +1,31 @@
 package main
 
 var cppProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:cpp_proto_compile.bzl", "cpp_proto_compile")
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
+load("//{{ .Lang.Dir }}:{{ .Rule.Name }}_aspect.bzl", "{{ .Rule.Name }}")
 
-    name_pb = name + "_pb"
-    cpp_proto_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        transitive = True,
-    )
+#def {{ .Rule.Name }}(**kwargs):
+#    name = kwargs.get("name")
+#    deps = kwargs.get("deps")
+#    visibility = kwargs.get("visibility")
 
-    native.cc_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            "//external:protobuf_clib",
-        ],
-        includes = [name_pb],
-        visibility = visibility,
-    )
+#    name_pb = name + "_pb"
+#    cpp_proto_compile(
+#        name = name_pb,
+#        deps = deps,
+#        visibility = visibility,
+#        transitive = True,
+#    )
+
+#    native.cc_library(
+#        name = name,
+#        srcs = [name_pb],
+#        deps = [
+#            "//external:protobuf_clib",
+#        ],
+#        includes = [name_pb],
+#        visibility = visibility,
+#    )
+#
 `)
 
 var cppGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:cpp_grpc_compile.bzl", "cpp_grpc_compile")

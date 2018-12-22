@@ -50,8 +50,9 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 
 # "Aspects should be top-level values in extension files that define them."
 
-_aspect = aspect(
+rust_proto_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
+    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
     attrs = proto_compile_aspect_attrs + {
         "_plugins": attr.label_list(
@@ -69,8 +70,8 @@ _rule = rule(
     attrs = proto_compile_attrs + {
         "deps": attr.label_list(
             mandatory = True,
-            providers = ["proto", ProtoLibraryAspectNodeInfo],
-            aspects = [_aspect],
+            providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
+            aspects = [rust_proto_compile_aspect],
         ),    
     },
 )
@@ -146,8 +147,9 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 
 # "Aspects should be top-level values in extension files that define them."
 
-_aspect = aspect(
+rust_grpc_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
+    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
     attrs = proto_compile_aspect_attrs + {
         "_plugins": attr.label_list(
@@ -166,8 +168,8 @@ _rule = rule(
     attrs = proto_compile_attrs + {
         "deps": attr.label_list(
             mandatory = True,
-            providers = ["proto", ProtoLibraryAspectNodeInfo],
-            aspects = [_aspect],
+            providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
+            aspects = [rust_grpc_compile_aspect],
         ),    
     },
 )

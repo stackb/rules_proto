@@ -41,8 +41,9 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 
 # "Aspects should be top-level values in extension files that define them."
 
-_aspect = aspect(
+cpp_proto_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
+    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
     attrs = proto_compile_aspect_attrs + {
         "_plugins": attr.label_list(
@@ -60,8 +61,8 @@ _rule = rule(
     attrs = proto_compile_attrs + {
         "deps": attr.label_list(
             mandatory = True,
-            providers = ["proto", ProtoLibraryAspectNodeInfo],
-            aspects = [_aspect],
+            providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
+            aspects = [cpp_proto_compile_aspect],
         ),    
     },
 )
@@ -132,8 +133,9 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 
 # "Aspects should be top-level values in extension files that define them."
 
-_aspect = aspect(
+cpp_grpc_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
+    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
     attrs = proto_compile_aspect_attrs + {
         "_plugins": attr.label_list(
@@ -152,8 +154,8 @@ _rule = rule(
     attrs = proto_compile_attrs + {
         "deps": attr.label_list(
             mandatory = True,
-            providers = ["proto", ProtoLibraryAspectNodeInfo],
-            aspects = [_aspect],
+            providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
+            aspects = [cpp_grpc_compile_aspect],
         ),    
     },
 )
@@ -215,28 +217,31 @@ cpp_proto_library(
 
 ```python
 load("//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
-def cpp_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
+load("//cpp:cpp_proto_library_aspect.bzl", "cpp_proto_library")
 
-    name_pb = name + "_pb"
-    cpp_proto_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        transitive = True,
-    )
+#def cpp_proto_library(**kwargs):
+#    name = kwargs.get("name")
+#    deps = kwargs.get("deps")
+#    visibility = kwargs.get("visibility")
 
-    native.cc_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            "//external:protobuf_clib",
-        ],
-        includes = [name_pb],
-        visibility = visibility,
-    )
+#    name_pb = name + "_pb"
+#    cpp_proto_compile(
+#        name = name_pb,
+#        deps = deps,
+#        visibility = visibility,
+#        transitive = True,
+#    )
+
+#    native.cc_library(
+#        name = name,
+#        srcs = [name_pb],
+#        deps = [
+#            "//external:protobuf_clib",
+#        ],
+#        includes = [name_pb],
+#        visibility = visibility,
+#    )
+#
 
 ```
 

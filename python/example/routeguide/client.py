@@ -21,8 +21,8 @@ import grpc
 
 # Recommend to the directory structure of client.runfiles to figure out the
 # correct import here.
-from routeguide_pb.example.proto import routeguide_pb2
-from routeguide_pb.example.proto import routeguide_pb2_grpc
+from example.proto import routeguide_pb2
+from example.proto import routeguide_pb2_grpc
 
 import resources
 
