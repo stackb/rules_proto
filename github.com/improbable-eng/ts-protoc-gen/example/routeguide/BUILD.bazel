@@ -8,10 +8,10 @@ ts_grpc_library(
 
 ts_web_test_suite(
     name = "routeguide_test",
-    deps = ["routeguide"],
     bootstrap = [":routeguide_js"],
     browsers = [
         "@io_bazel_rules_webtesting//browsers:chromium-local",
         "@io_bazel_rules_webtesting//browsers:firefox-local",
     ],
+    deps = ["routeguide"],
 )

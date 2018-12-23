@@ -12,8 +12,8 @@ def csharp_proto_library(**kwargs):
     csharp_proto_compile(
         name = name_pb,
         deps = deps,
-		visibility = visibility,
-		transitive = transitive,
+        visibility = visibility,
+        transitive = transitive,
         verbose = verbose,
     )
 

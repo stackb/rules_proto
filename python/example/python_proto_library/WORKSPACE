@@ -1,11 +1,11 @@
 http_archive(
     name = "bazel_toolchains",
+    sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
+    strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
     urls = [
         "https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
         "https://github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
     ],
-    strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
-    sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
 )
 
 local_repository(
@@ -13,18 +13,17 @@ local_repository(
     path = "../../../",
 )
 
-
 load("@build_stack_rules_proto//python:deps.bzl", "python_proto_library")
 
 python_proto_library()
 
-load("@io_bazel_rules_python//python:pip.bzl", "pip_repositories", "pip_import")
+load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
 
 pip_repositories()
 
 pip_import(
-	name = "protobuf_py_deps",
-	requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
+    name = "protobuf_py_deps",
+    requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
 )
 
 load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")

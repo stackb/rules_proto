@@ -129,7 +129,6 @@ def closure_proto_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     visibility = kwargs.get("visibility")
-
 ```
 
 ### Mandatory Attributes
@@ -151,3 +150,4 @@ def closure_proto_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

@@ -11,6 +11,7 @@ clients:
 		//node/example/routeguide:client \
 		//python/example/routeguide:client \
 		//ruby/example/routeguide:client \
+		//scala/example/routeguide:client \
 		//github.com/grpc/grpc-web/example/routeguide/closure:bundle \
 		//github.com/stackb/grpc.js/example/routeguide/client:bundle \
 
@@ -20,6 +21,7 @@ clients:
 servers:
 	bazel build \
 		//cpp/example/routeguide:server \
+		//csharp/example/routeguide:server \
 		//dart/example/routeguide:server \
 		//go/example/routeguide/server \
 		//java/example/routeguide:server \

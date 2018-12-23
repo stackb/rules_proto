@@ -1,7 +1,7 @@
 package main
 
-var rubyProtoLibraryUsageTemplate = mustTemplate(`
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var rubyProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
 {{ .Rule.Name }}()
 
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
@@ -14,11 +14,10 @@ bundle_install(
     name = "routeguide_gems_bundle",
     gemfile = "//ruby:Gemfile",
     gemfile_lock = "//ruby:Gemfile.lock",
-)
-`)
+)`)
 
-var rubyGrpcLibraryUsageTemplate = mustTemplate(`
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var rubyGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
 {{ .Rule.Name }}()
 
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
@@ -35,8 +34,7 @@ bundle_install(
     name = "routeguide_gems_bundle",
     gemfile = "//ruby:Gemfile",
     gemfile_lock = "//ruby:Gemfile.lock",
-)
-`)
+)`)
 
 var rubyProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:ruby_proto_compile.bzl", "ruby_proto_compile")
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
@@ -60,8 +58,7 @@ def {{ .Rule.Name }}(**kwargs):
         srcs = [name_pb],
         includes = ["{package}/%s" % name_pb],
         visibility = visibility,
-    )
-`)
+    )`)
 
 var rubyGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:ruby_grpc_compile.bzl", "ruby_grpc_compile")
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
@@ -85,8 +82,7 @@ def {{ .Rule.Name }}(**kwargs):
         srcs = [name_pb],
         includes = ["{package}/%s" % name_pb],
         visibility = visibility,
-    )
-`)
+    )`)
 
 func makeRuby() *Language {
 	return &Language{

@@ -1,20 +1,27 @@
 package main
 
-var grpcGatewayUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.bzl", "io_bazel_rules_go", "bazel_gazelle")
+var grpcGatewayUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.bzl", "bazel_gazelle", "io_bazel_rules_go")
+
 io_bazel_rules_go()
+
 bazel_gazelle()
 
 load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
 {{ .Rule.Name }}()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
 gazelle_dependencies()
 
 load("@com_github_grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
+
 grpc_gateway_repositories()`)
 
 var grpcGatewayLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:gateway_grpc_compile.bzl", "gateway_grpc_compile")
@@ -38,11 +45,10 @@ def {{ .Rule.Name }}(**kwargs):
         name = name,
         compilers = compilers,
         importpath = importpath,
-		proto = deps[0],
-		deps = ["@go_googleapis//google/api:annotations_go_proto"],
+        proto = deps[0],
+        deps = ["@go_googleapis//google/api:annotations_go_proto"],
         visibility = visibility,
-    )
-`)
+    )`)
 
 var grpcGatewayCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 

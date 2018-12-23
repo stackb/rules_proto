@@ -3,16 +3,17 @@ cargo-raze crate build file.
 
 DO NOT EDIT! Replaced on runs of cargo-raze
 """
+
 package(default_visibility = ["//visibility:public"])
 
 licenses([
-  "notice", # "MIT,Apache-2.0"
+    "notice",  # "MIT,Apache-2.0"
 ])
 
 load(
     "@io_bazel_rules_rust//rust:rust.bzl",
-    "rust_library",
     "rust_binary",
+    "rust_library",
     "rust_test",
 )
 
@@ -20,9 +21,15 @@ load(
 
 rust_library(
     name = "grpc",
+    srcs = glob(["**/*.rs"]),
+    crate_features = [
+    ],
     crate_root = "src/lib.rs",
     crate_type = "lib",
-    srcs = glob(["**/*.rs"]),
+    rustc_flags = [
+        "--cap-lints allow",
+        "--target=x86_64-unknown-linux-gnu",
+    ],
     deps = [
         "@raze__base64__0_9_3//:base64",
         "@raze__bytes__0_4_10//:bytes",
@@ -36,12 +43,6 @@ rust_library(
         "@raze__tokio_core__0_1_17//:tokio_core",
         "@raze__tokio_io__0_1_8//:tokio_io",
         "@raze__tokio_tls_api__0_1_20//:tokio_tls_api",
-    ],
-    rustc_flags = [
-        "--cap-lints allow",
-        "--target=x86_64-unknown-linux-gnu",
-    ],
-    crate_features = [
     ],
 )
 

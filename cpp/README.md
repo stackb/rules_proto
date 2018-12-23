@@ -159,6 +159,7 @@ cpp_proto_library(
 
 ```python
 load("//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
+
 def cpp_proto_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
@@ -181,7 +182,6 @@ def cpp_proto_library(**kwargs):
         includes = [name_pb],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -263,7 +263,6 @@ def cpp_grpc_library(**kwargs):
         includes = [name_pb],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -285,3 +284,4 @@ def cpp_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

@@ -51,5 +51,5 @@ proto_plugin = rule(
             doc = "Additional files that should travel with the plugin",
             allow_files = True,
         ),
-    }
+    },
 )

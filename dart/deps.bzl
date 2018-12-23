@@ -1,4 +1,5 @@
-load("//:deps.bzl",
+load(
+    "//:deps.bzl",
     "com_google_protobuf",
     "io_bazel_rules_dart",
     "io_bazel_rules_go",
@@ -6,7 +7,6 @@ load("//:deps.bzl",
 
 # Special dart_sdk_repository
 load("//dart:sdk.bzl", "dart_sdk_repository")
-
 load("//dart:dart_pub_deps.bzl", "dart_pub_deps")
 
 def dart_sdk(**kwargs):
@@ -30,7 +30,6 @@ def dart_pub_deps_protoc_plugin(**kwargs):
             # these overrides were determined by manually browsing pub.dartlang.org,
             # starting at protoc_plugin and going through all transitive dependencies,
             # pinning them to the version specified there (basically, seems like latest)
-
             override = {
                 "analyzer": "0.34.0",
                 "args": "1.5.1",
@@ -72,7 +71,6 @@ def dart_pub_deps_grpc(**kwargs):
             # these overrides were determined by manually browsing pub.dartlang.org,
             # starting at protoc_plugin and going through all transitive dependencies,
             # pinning them to the version specified there (basically, seems like latest)
-
             override = {
                 "async": "2.0.8",
                 "collection": "1.14.11",

@@ -143,19 +143,18 @@ load("@build_stack_rules_proto//python:deps.bzl", "python_proto_library")
 
 python_proto_library()
 
-load("@io_bazel_rules_python//python:pip.bzl", "pip_repositories", "pip_import")
+load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
 
 pip_repositories()
 
 pip_import(
-	name = "protobuf_py_deps",
-	requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
+    name = "protobuf_py_deps",
+    requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
 )
 
 load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
 
 protobuf_pip_install()
-
 ```
 
 ### `BUILD.bazel`
@@ -201,7 +200,6 @@ def python_proto_library(**kwargs):
 
 # Alias
 py_proto_library = python_proto_library
-
 ```
 
 ### Mandatory Attributes
@@ -241,13 +239,13 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
 
-load("@io_bazel_rules_python//python:pip.bzl", "pip_repositories", "pip_import")
+load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
 
 pip_repositories()
 
 pip_import(
-	name = "protobuf_py_deps",
-	requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
+    name = "protobuf_py_deps",
+    requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
 )
 
 load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
@@ -255,8 +253,8 @@ load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install
 protobuf_pip_install()
 
 pip_import(
-   name = "grpc_py_deps",
-   requirements = "@build_stack_rules_proto//python:requirements.txt",
+    name = "grpc_py_deps",
+    requirements = "@build_stack_rules_proto//python:requirements.txt",
 )
 
 load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
@@ -308,7 +306,6 @@ def python_grpc_library(**kwargs):
 
 # Alias
 py_grpc_library = python_grpc_library
-
 ```
 
 ### Mandatory Attributes
@@ -330,3 +327,4 @@ py_grpc_library = python_grpc_library
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

@@ -3,16 +3,17 @@ cargo-raze crate build file.
 
 DO NOT EDIT! Replaced on runs of cargo-raze
 """
+
 package(default_visibility = ["//visibility:public"])
 
 licenses([
-  "notice", # "MIT,Apache-2.0"
+    "notice",  # "MIT,Apache-2.0"
 ])
 
 load(
     "@io_bazel_rules_rust//rust:rust.bzl",
-    "rust_library",
     "rust_binary",
+    "rust_library",
     "rust_test",
 )
 
@@ -22,9 +23,15 @@ load(
 
 rust_library(
     name = "httpbis",
+    srcs = glob(["**/*.rs"]),
+    crate_features = [
+    ],
     crate_root = "src/lib.rs",
     crate_type = "lib",
-    srcs = glob(["**/*.rs"]),
+    rustc_flags = [
+        "--cap-lints allow",
+        "--target=x86_64-unknown-linux-gnu",
+    ],
     deps = [
         "@raze__bytes__0_4_10//:bytes",
         "@raze__futures__0_1_24//:futures",
@@ -40,12 +47,6 @@ rust_library(
         "@raze__tokio_uds__0_1_7//:tokio_uds",
         "@raze__unix_socket__0_5_0//:unix_socket",
         "@raze__void__1_0_2//:void",
-    ],
-    rustc_flags = [
-        "--cap-lints allow",
-        "--target=x86_64-unknown-linux-gnu",
-    ],
-    crate_features = [
     ],
 )
 

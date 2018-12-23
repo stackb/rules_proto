@@ -23,16 +23,19 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_proto_compile")
 dart_proto_compile()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
+
 dart_repositories()
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-dart_protoc_plugin_deps()
 
+dart_protoc_plugin_deps()
 ```
 
 ### `BUILD.bazel`
@@ -96,16 +99,19 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_grpc_compile")
 dart_grpc_compile()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
+
 dart_repositories()
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-dart_protoc_plugin_deps()
 
+dart_protoc_plugin_deps()
 ```
 
 ### `BUILD.bazel`
@@ -169,16 +175,19 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_proto_library")
 dart_proto_library()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
+
 dart_repositories()
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-dart_protoc_plugin_deps()
 
+dart_protoc_plugin_deps()
 ```
 
 ### `BUILD.bazel`
@@ -220,7 +229,6 @@ def dart_proto_library(**kwargs):
         pub_pkg_name = name,
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -259,19 +267,23 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_grpc_library")
 dart_grpc_library()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
+
 dart_repositories()
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+
 dart_protoc_plugin_deps()
 
 load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
-dart_grpc_deps()
 
+dart_grpc_deps()
 ```
 
 ### `BUILD.bazel`
@@ -314,7 +326,6 @@ def dart_grpc_library(**kwargs):
         pub_pkg_name = name,
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -336,3 +347,4 @@ def dart_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

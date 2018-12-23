@@ -1,4 +1,5 @@
-load("//:deps.bzl",
+load(
+    "//:deps.bzl",
     "com_google_guava_guava",
     "com_google_protobuf",
     "io_grpc_grpc_java",

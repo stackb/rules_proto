@@ -24,7 +24,6 @@ def _swift_toolchain_impl(repository_ctx):
         root = repository_ctx.attr.root,
     ))
 
-
 _swift_toolchain = repository_rule(
     implementation = _swift_toolchain_impl,
     attrs = {

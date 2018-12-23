@@ -1,11 +1,12 @@
-load("//:deps.bzl",
+load(
+    "//:deps.bzl",
+    "com_github_scalapb_scalapb",
     "com_google_protobuf",
+    "com_thesamet_scalapb_scalapb_json4s",
     "io_bazel_rules_go",
     "io_bazel_rules_scala",
-    "com_github_scalapb_scalapb",
-    "com_thesamet_scalapb_scalapb_json4s",
-    "org_json4s_json4s_jackson_2_12",
     "org_json4s_json4s_ast_2_12",
+    "org_json4s_json4s_jackson_2_12",
 )
 
 def scala_proto_compile(**kwargs):

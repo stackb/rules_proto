@@ -139,8 +139,8 @@ Generates *.rb protobuf library
 ### `WORKSPACE`
 
 ```python
-
 load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_proto_library")
+
 ruby_proto_library()
 
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
@@ -154,7 +154,6 @@ bundle_install(
     gemfile = "//ruby:Gemfile",
     gemfile_lock = "//ruby:Gemfile.lock",
 )
-
 ```
 
 ### `BUILD.bazel`
@@ -194,7 +193,6 @@ def ruby_proto_library(**kwargs):
         includes = ["{package}/%s" % name_pb],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -226,8 +224,8 @@ Generates *.rb protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-
 load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_grpc_library")
+
 ruby_grpc_library()
 
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
@@ -245,7 +243,6 @@ bundle_install(
     gemfile = "//ruby:Gemfile",
     gemfile_lock = "//ruby:Gemfile.lock",
 )
-
 ```
 
 ### `BUILD.bazel`
@@ -285,7 +282,6 @@ def ruby_grpc_library(**kwargs):
         includes = ["{package}/%s" % name_pb],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -307,3 +303,4 @@ def ruby_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

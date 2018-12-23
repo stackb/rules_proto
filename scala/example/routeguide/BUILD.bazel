@@ -1,5 +1,5 @@
 load("//scala:scala_grpc_library.bzl", "scala_grpc_library")
-load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library", "scala_binary")
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_binary", "scala_library")
 load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scalapb_proto_library")
 
 scala_grpc_library(
@@ -9,8 +9,8 @@ scala_grpc_library(
 
 scalapb_proto_library(
     name = "routeguide_scalapb_grpc",
-    deps = ["//example/proto:routeguide_proto"],
     with_grpc = True,
+    deps = ["//example/proto:routeguide_proto"],
 )
 
 scala_library(
@@ -20,18 +20,18 @@ scala_library(
     ],
     deps = [
         ":routeguide_scalapb_grpc",
-        "@com_thesamet_scalapb_scalapb_json4s//jar",
-        "@org_json4s_json4s_jackson_2_12//jar",
-        "@org_json4s_json4s_ast_2_12//jar",
         "//scala:grpc_deps",
+        "@com_thesamet_scalapb_scalapb_json4s//jar",
+        "@org_json4s_json4s_ast_2_12//jar",
+        "@org_json4s_json4s_jackson_2_12//jar",
     ],
 )
 
 scala_library(
     name = "service",
     srcs = [
-        "example/RouteGuideService.scala",
         "example/AtomicRef.scala",
+        "example/RouteGuideService.scala",
     ],
     deps = [
         ":routeguide_scalapb_grpc",
@@ -44,12 +44,12 @@ scala_binary(
         "example/RouteGuideClient.scala",
     ],
     main_class = "example.RouteGuideClient",
+    resources = ["route_guide_db.json"],
     deps = [
-        ":service",
         ":persistence",
         ":routeguide_scalapb_grpc",
+        ":service",
     ],
-    resources = ["route_guide_db.json"],
 )
 
 # TODO: routeguide server implementations

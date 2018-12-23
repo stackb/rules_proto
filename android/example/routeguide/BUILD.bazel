@@ -17,13 +17,13 @@ android_grpc_library(
 # we can compile and reference an android_grpc_library in an android_binary and
 # not have it crash.
 android_binary(
-    name = 'client',
-    manifest = 'AndroidManifest.xml',
-    custom_package = 'io.grpc.routeguideexample',
-    #proguard_specs = ["proguard-rules.pro"],
-    multidex = 'native',
-    resource_files = glob(["src/main/res/**"]),
+    name = "client",
     srcs = glob(["src/main/java/**"]),
+    custom_package = "io.grpc.routeguideexample",
+    manifest = "AndroidManifest.xml",
+    #proguard_specs = ["proguard-rules.pro"],
+    multidex = "native",
+    resource_files = glob(["src/main/res/**"]),
     deps = [
         ":routeguide",
         "@com_android_support_appcompat_v7_28_0_0//aar",

@@ -15,21 +15,28 @@ Generates grpc-gateway *.go files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//:deps.bzl", "io_bazel_rules_go", "bazel_gazelle")
+load("@build_stack_rules_proto//:deps.bzl", "bazel_gazelle", "io_bazel_rules_go")
+
 io_bazel_rules_go()
+
 bazel_gazelle()
 
 load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_grpc_compile")
+
 gateway_grpc_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
 gazelle_dependencies()
 
 load("@com_github_grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
+
 grpc_gateway_repositories()
 ```
 
@@ -87,21 +94,28 @@ Generates grpc-gateway swagger *.json files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//:deps.bzl", "io_bazel_rules_go", "bazel_gazelle")
+load("@build_stack_rules_proto//:deps.bzl", "bazel_gazelle", "io_bazel_rules_go")
+
 io_bazel_rules_go()
+
 bazel_gazelle()
 
 load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_swagger_compile")
+
 gateway_swagger_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
 gazelle_dependencies()
 
 load("@com_github_grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
+
 grpc_gateway_repositories()
 ```
 
@@ -159,21 +173,28 @@ Generates grpc-gateway library files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//:deps.bzl", "io_bazel_rules_go", "bazel_gazelle")
+load("@build_stack_rules_proto//:deps.bzl", "bazel_gazelle", "io_bazel_rules_go")
+
 io_bazel_rules_go()
+
 bazel_gazelle()
 
 load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_grpc_library")
+
 gateway_grpc_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
 gazelle_dependencies()
 
 load("@com_github_grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
+
 grpc_gateway_repositories()
 ```
 
@@ -213,11 +234,10 @@ def gateway_grpc_library(**kwargs):
         name = name,
         compilers = compilers,
         importpath = importpath,
-		proto = deps[0],
-		deps = ["@go_googleapis//google/api:annotations_go_proto"],
+        proto = deps[0],
+        deps = ["@go_googleapis//google/api:annotations_go_proto"],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -239,3 +259,4 @@ def gateway_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

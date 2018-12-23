@@ -1,4 +1,5 @@
-load("//:deps.bzl",
+load(
+    "//:deps.bzl",
     "com_google_protobuf",
     "get_ref",
     "get_sha256",
@@ -20,14 +21,14 @@ def io_bazel_rules_closure(**kwargs):
             strip_prefix = "rules_closure-" + ref,
             label_list = ["//...:%java_binary", "//...:%java_library"],
             replace_deps = {
-              "@com_google_code_findbugs_jsr305": "@com_google_code_findbugs_jsr305_3_0_0",
-              "@com_google_errorprone_error_prone_annotations": "@com_google_errorprone_error_prone_annotations_2_1_3",
+                "@com_google_code_findbugs_jsr305": "@com_google_code_findbugs_jsr305_3_0_0",
+                "@com_google_errorprone_error_prone_annotations": "@com_google_errorprone_error_prone_annotations_2_1_3",
             },
             sed_replacements = {
-              "closure/repositories.bzl": [
-                "s|com_google_code_findbugs_jsr305|com_google_code_findbugs_jsr305_3_0_0|g",
-                "s|com_google_errorprone_error_prone_annotations|com_google_errorprone_error_prone_annotations_2_1_3|g",
-              ],
+                "closure/repositories.bzl": [
+                    "s|com_google_code_findbugs_jsr305|com_google_code_findbugs_jsr305_3_0_0|g",
+                    "s|com_google_errorprone_error_prone_annotations|com_google_errorprone_error_prone_annotations_2_1_3|g",
+                ],
             },
         )
 

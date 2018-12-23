@@ -13,6 +13,9 @@ proto_plugin(
 
 proto_plugin(
     name = "grpc_dart",
+    options = [
+        "grpc",
+    ],
     outputs = [
         "{basename}.pb.dart",
         "{basename}.pbjson.dart",
@@ -27,9 +30,6 @@ proto_plugin(
         #
         #  "{basename}.pbserver.dart",
     ],
-    options = [
-        "grpc",
-    ],
     tool = ":protoc-gen-dart",
     visibility = ["//visibility:public"],
 )
@@ -41,19 +41,19 @@ dart_vm_snapshot(
     srcs = ["dart_protoc_plugin.dart"],
     script_file = "dart_protoc_plugin.dart",
     deps = [
-        "@vendor_protoc_plugin//:protoc_plugin",
         "@vendor_front_end//:front_end",
-        "@vendor_watcher//:watcher",
-        "@vendor_html//:html",
-        "@vendor_plugin//:plugin",
-        "@vendor_pub_semver//:pub_semver",
         "@vendor_glob//:glob",
+        "@vendor_html//:html",
         "@vendor_logging//:logging",
+        "@vendor_plugin//:plugin",
+        "@vendor_protoc_plugin//:protoc_plugin",
+        "@vendor_pub_semver//:pub_semver",
         "@vendor_typed_data//:typed_data",
+        "@vendor_watcher//:watcher",
     ],
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_embed_data")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_embed_data", "go_library")
 
 go_embed_data(
     name = "assets",

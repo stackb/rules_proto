@@ -8,15 +8,27 @@ load("//:plugin.bzl", "proto_plugin")
         "google/protobuf": "exclude",
     },
     visibility = ["//visibility:public"],
-) for name in ["gogo", "gogotypes", "gogoslick", "gogofaster", "gogofast"]]
+) for name in [
+    "gogo",
+    "gogotypes",
+    "gogoslick",
+    "gogofaster",
+    "gogofast",
+]]
 
 [proto_plugin(
     name = "grpc_" + name,
-    outputs = [".pb.go"],
     options = ["plugins=grpc"],
+    outputs = [".pb.go"],
     tool = "@com_github_gogo_protobuf//protoc-gen-" + name,
     transitivity = {
         "google/protobuf": "exclude",
     },
     visibility = ["//visibility:public"],
-) for name in ["gogo", "gogotypes", "gogoslick", "gogofaster", "gogofast"]]
+) for name in [
+    "gogo",
+    "gogotypes",
+    "gogoslick",
+    "gogofaster",
+    "gogofast",
+]]

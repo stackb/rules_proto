@@ -15,6 +15,7 @@ def go_grpc_compile(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("//go:grpc_go"))]

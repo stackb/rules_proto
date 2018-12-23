@@ -153,7 +153,6 @@ yarn_modules(
         "google-protobuf": "3.6.1",
     },
 )
-
 ```
 
 ### `BUILD.bazel`
@@ -201,7 +200,6 @@ def node_proto_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -258,8 +256,6 @@ yarn_modules(
         "grpc": "1.15.1",
     },
 )
-
-
 ```
 
 ### `BUILD.bazel`
@@ -308,7 +304,6 @@ def node_grpc_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -330,3 +325,4 @@ def node_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

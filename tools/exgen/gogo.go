@@ -2,47 +2,16 @@ package main
 
 import "fmt"
 
-// var gogoProtoLibraryRuleTemplate2 = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
-// load("//go:utils.bzl", "get_importmappings")
-// load("@io_bazel_rules_go//go:def.bzl", "go_library")
-
-// def {{ .Rule.Name }}(**kwargs):
-//     name = kwargs.get("name")
-//     deps = kwargs.get("deps")
-//     visibility = kwargs.get("visibility")
-
-//     name_pb = name + "_pb"
-
-//     {{ .Rule.Base }}_{{ .Rule.Kind }}_compile(
-//         name = name_pb,
-//         deps = deps,
-//         plugin_options = get_importmappings(kwargs.pop("importmap", {})),
-//         transitive = False,
-//         visibility = visibility,
-//     )
-
-//     go_deps = kwargs.pop("go_deps", [])
-
-//     kwargs["deps"] = depset([
-//         "@com_github_gogo_protobuf//proto:go_default_library",
-//     ] + go_deps).to_list()
-
-//     go_library(
-//         srcs = [name_pb],
-//         **kwargs
-//     )
-// `)
-
 var gogoProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
 wkt_mappings = get_importmappings({
-	"google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
 })
 
 def {{ .Rule.Name }}(**kwargs):
@@ -70,19 +39,18 @@ def {{ .Rule.Name }}(**kwargs):
         ],
         importpath = importpath,
         visibility = visibility,
-    )
-`)
+    )`)
 
 var gogoGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
 wkt_mappings = get_importmappings({
-	"google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
 })
 
 def {{ .Rule.Name }}(**kwargs):
@@ -112,52 +80,18 @@ def {{ .Rule.Name }}(**kwargs):
         ],
         importpath = importpath,
         visibility = visibility,
-    )
-`)
-
-// var gogoProtoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
-
-// {{ .Rule.Name }}(
-//     name = "person_{{ .Lang.Name }}_library",
-//     importpath = "github.com/stackb/rules_proto/{{ .Lang.Name }}/example/{{ .Rule.Name }}/person",
-//     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
-//     go_deps = [
-//         "@com_github_golang_protobuf//ptypes/any:go_default_library",
-//     ],
-// )
-
-// {{ .Rule.Name }}(
-//     name = "place_{{ .Lang.Name }}_library",
-//     importpath = "github.com/stackb/rules_proto/{{ .Lang.Name }}/example/{{ .Rule.Name }}/place",
-//     deps = [
-//         "@build_stack_rules_proto//example/proto:place_proto",
-//     ],
-//     go_deps = [
-//         "@com_github_golang_protobuf//ptypes/any:go_default_library",
-//     ],
-// )
-
-// {{ .Rule.Name }}(
-//     name = "thing_{{ .Lang.Name }}_library",
-//     importpath = "github.com/stackb/rules_proto/{{ .Lang.Name }}/example/{{ .Rule.Name }}/thing",
-//     deps = ["@build_stack_rules_proto//example/proto:thing_proto"],
-//     go_deps = [
-//         "@com_github_golang_protobuf//ptypes/any:go_default_library",
-//     ],
-// )
-
-// `)
+    )`)
 
 var gogoProtoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "person_{{ .Lang.Name }}_library",
-    importpath = "github.com/stackb/rules_proto/{{ .Lang.Name }}/example/{{ .Rule.Name }}/person",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
     go_deps = [
-		"@com_github_gogo_protobuf//types:go_default_library",
+        "@com_github_gogo_protobuf//types:go_default_library",
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/{{ .Lang.Name }}/example/{{ .Rule.Name }}/person",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )`)
 
 func makeGogo() *Language {

@@ -21,8 +21,7 @@ yarn_modules(
     deps = {
         "google-protobuf": "3.6.1",
     },
-)
-`)
+)`)
 
 var nodeGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
@@ -48,9 +47,7 @@ yarn_modules(
     deps = {
         "grpc": "1.15.1",
     },
-)
-
-`)
+)`)
 
 var nodeProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:node_proto_compile.bzl", "node_proto_compile")
 load("//node:node_module_index.bzl", "node_module_index")
@@ -82,8 +79,7 @@ def {{ .Rule.Name }}(**kwargs):
             "@proto_node_modules//:_all_",
         ],
         visibility = visibility,
-    )
-`)
+    )`)
 
 var nodeGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:node_grpc_compile.bzl", "node_grpc_compile")
 load("//node:node_module_index.bzl", "node_module_index")
@@ -116,8 +112,7 @@ def {{ .Rule.Name }}(**kwargs):
             "@grpc_node_modules//:_all_",
         ],
         visibility = visibility,
-    )
-`)
+    )`)
 
 func makeNode() *Language {
 	return &Language{

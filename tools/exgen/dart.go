@@ -5,35 +5,42 @@ var dartUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.D
 {{ .Rule.Name }}()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
+
 dart_repositories()
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-dart_protoc_plugin_deps()
-`)
+
+dart_protoc_plugin_deps()`)
 
 var dartGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
+
 dart_repositories()
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+
 dart_protoc_plugin_deps()
 
 load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
-dart_grpc_deps()
-`)
+
+dart_grpc_deps()`)
 
 var dartProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:dart_proto_compile.bzl", "dart_proto_compile")
 load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
@@ -59,8 +66,7 @@ def {{ .Rule.Name }}(**kwargs):
         ],
         pub_pkg_name = name,
         visibility = visibility,
-    )
-`)
+    )`)
 
 var dartGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:dart_grpc_compile.bzl", "dart_grpc_compile")
 load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
@@ -87,8 +93,7 @@ def {{ .Rule.Name }}(**kwargs):
         ],
         pub_pkg_name = name,
         visibility = visibility,
-    )
-`)
+    )`)
 
 func makeDart() *Language {
 	return &Language{

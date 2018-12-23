@@ -156,19 +156,23 @@ Generates csharp protobuf library
 
 ```python
 load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_proto_library")
+
 csharp_proto_library()
 
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
+
 dotnet_register_toolchains("host")
 #dotnet_register_toolchains(dotnet_version="4.2.3")
+
 dotnet_repositories()
 
 load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
+
 nuget_packages()
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
-nuget_protobuf_packages()
 
+nuget_protobuf_packages()
 ```
 
 ### `BUILD.bazel`
@@ -199,8 +203,8 @@ def csharp_proto_library(**kwargs):
     csharp_proto_compile(
         name = name_pb,
         deps = deps,
-		visibility = visibility,
-		transitive = transitive,
+        visibility = visibility,
+        transitive = transitive,
         verbose = verbose,
     )
 
@@ -213,7 +217,6 @@ def csharp_proto_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -246,6 +249,7 @@ Generates csharp protobuf+gRPC library
 
 ```python
 load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
+
 csharp_grpc_library()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
@@ -260,14 +264,15 @@ dotnet_register_toolchains("host")
 dotnet_repositories()
 
 load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
+
 nuget_packages()
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_protobuf_packages()
-nuget_grpc_packages()
 
+nuget_grpc_packages()
 ```
 
 ### `BUILD.bazel`
@@ -314,7 +319,6 @@ def csharp_grpc_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -336,3 +340,4 @@ def csharp_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

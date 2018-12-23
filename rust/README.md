@@ -27,7 +27,6 @@ rust_repositories()
 load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
-
 ```
 
 ### `BUILD.bazel`
@@ -95,7 +94,6 @@ rust_repositories()
 load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
-
 ```
 
 ### `BUILD.bazel`
@@ -164,7 +162,6 @@ rust_repositories()
 load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
-
 ```
 
 ### `BUILD.bazel`
@@ -213,7 +210,6 @@ def rust_proto_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -256,7 +252,6 @@ rust_repositories()
 load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
-
 ```
 
 ### `BUILD.bazel`
@@ -308,7 +303,6 @@ def rust_grpc_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -330,3 +324,4 @@ def rust_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

@@ -3,16 +3,17 @@ cargo-raze crate build file.
 
 DO NOT EDIT! Replaced on runs of cargo-raze
 """
+
 package(default_visibility = ["//visibility:public"])
 
 licenses([
-  "notice", # "MIT"
+    "notice",  # "MIT"
 ])
 
 load(
     "@io_bazel_rules_rust//rust:rust.bzl",
-    "rust_library",
     "rust_binary",
+    "rust_library",
     "rust_test",
 )
 
@@ -42,9 +43,15 @@ load(
 
 rust_library(
     name = "tokio",
+    srcs = glob(["**/*.rs"]),
+    crate_features = [
+    ],
     crate_root = "src/lib.rs",
     crate_type = "lib",
-    srcs = glob(["**/*.rs"]),
+    rustc_flags = [
+        "--cap-lints allow",
+        "--target=x86_64-unknown-linux-gnu",
+    ],
     deps = [
         "@raze__futures__0_1_24//:futures",
         "@raze__mio__0_6_16//:mio",
@@ -59,12 +66,6 @@ rust_library(
         "@raze__tokio_timer__0_2_6//:tokio_timer",
         "@raze__tokio_udp__0_1_2//:tokio_udp",
         "@raze__tokio_uds__0_2_1//:tokio_uds",
-    ],
-    rustc_flags = [
-        "--cap-lints allow",
-        "--target=x86_64-unknown-linux-gnu",
-    ],
-    crate_features = [
     ],
 )
 

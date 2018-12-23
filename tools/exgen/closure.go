@@ -40,8 +40,7 @@ def {{ .Rule.Name }}(**kwargs):
     )
     name = kwargs.get("name")
     deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-`)
+    visibility = kwargs.get("visibility")`)
 
 func makeClosure() *Language {
 	return &Language{
