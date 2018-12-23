@@ -37,9 +37,6 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
         internal_descriptors = [name_pb + "/descriptor.source.bin"],
         lenient = True,
-        suppress = [
-            "JSC_WRONG_ARGUMENT_COUNT",
-        ],
     )
     name = kwargs.get("name")
     deps = kwargs.get("deps")

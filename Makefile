@@ -11,9 +11,10 @@ clients:
 		//node/example/routeguide:client \
 		//python/example/routeguide:client \
 		//ruby/example/routeguide:client \
-		//rust/example/routeguide:client \
 		//github.com/grpc/grpc-web/example/routeguide/closure:bundle \
 		//github.com/stackb/grpc.js/example/routeguide/client:bundle \
+
+# 		//rust/example/routeguide:client \
 
 # A collection of targets that build routeguide servers
 servers:
@@ -25,7 +26,9 @@ servers:
 		//node/example/routeguide:server \
 		//python/example/routeguide:server \
 		//ruby/example/routeguide:server \
-		//rust/example/routeguide:server \
+
+
+#		//rust/example/routeguide:server \
 
 # A collection of test targets
 tests:

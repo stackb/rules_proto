@@ -5,10 +5,13 @@ load("//:deps.bzl",
     "build_bazel_rules_nodejs",
     "build_bazel_rules_typescript",
     "com_google_protobuf",
-    "io_bazel_rules_closure",
     "io_bazel_rules_go",
     "io_bazel_rules_webtesting",
     "ts_protoc_gen",
+)
+
+load("//closure:deps.bzl",
+    "io_bazel_rules_closure",
 )
 
 def ts_proto_compile(**kwargs):
