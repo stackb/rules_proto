@@ -177,7 +177,6 @@ def java_proto_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -214,6 +213,7 @@ load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
 grpc_java_repositories(omit_com_google_protobuf = True)
 
 load("@build_stack_rules_proto//java:deps.bzl", "java_grpc_library")
@@ -258,7 +258,6 @@ def java_grpc_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -280,3 +279,4 @@ def java_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

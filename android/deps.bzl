@@ -1,7 +1,8 @@
-load("//:deps.bzl",
+load(
+    "//:deps.bzl",
     "build_bazel_rules_android",
-    "com_google_protobuf_lite",
     "com_google_protobuf",
+    "com_google_protobuf_lite",
     "gmaven_rules",
     "io_grpc_grpc_java",
 )

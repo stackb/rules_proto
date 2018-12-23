@@ -51,9 +51,7 @@ def {{ .Rule.Name }}(**kwargs):
         ],
         lenient = True,
         visibility = visibility,
-    )
-
-`)
+    )`)
 
 func makeGithubComGrpcGrpcWeb() *Language {
 	return &Language{

@@ -1,31 +1,31 @@
 load("//ruby:ruby_grpc_library.bzl", "ruby_grpc_library")
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library", "ruby_binary")
+load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_binary", "ruby_library")
 
 ruby_grpc_library(
     name = "routeguide",
-    deps = ["//example/proto:routeguide_proto"],
     includes = ["."],
+    deps = ["//example/proto:routeguide_proto"],
 )
 
 ruby_binary(
     name = "client",
     srcs = ["client.rb"],
+    args = ["example/proto/routeguide_features.json"],
+    data = ["//example/proto:routeguide_features"],
+    includes = ["."],
     deps = [
         ":routeguide",
         "@routeguide_gems_bundle//:libs",
     ],
-    includes = ["."],
-    data = ["//example/proto:routeguide_features"],
-    args = ["example/proto/routeguide_features.json"],
 )
 
 ruby_binary(
     name = "server",
     srcs = ["server.rb"],
+    args = ["example/proto/routeguide_features.json"],
+    data = ["//example/proto:routeguide_features"],
     deps = [
         ":routeguide",
         "@routeguide_gems_bundle//:libs",
     ],
-    data = ["//example/proto:routeguide_features"],
-    args = ["example/proto/routeguide_features.json"],
 )

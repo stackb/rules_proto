@@ -3,20 +3,20 @@ load("//:plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "go",
     outputs = [".pb.go"],
+    tool = "@com_github_golang_protobuf//protoc-gen-go",
     transitivity = {
         "google/protobuf": "exclude",
     },
-    tool = "@com_github_golang_protobuf//protoc-gen-go",
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
     name = "grpc_go",
+    options = ["plugins=grpc"],
     outputs = [".pb.go"],
+    tool = "@com_github_golang_protobuf//protoc-gen-go",
     transitivity = {
         "google/protobuf": "exclude",
     },
-    options = ["plugins=grpc"],
-    tool = "@com_github_golang_protobuf//protoc-gen-go",
     visibility = ["//visibility:public"],
 )

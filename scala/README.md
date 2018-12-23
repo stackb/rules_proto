@@ -18,24 +18,28 @@ Generates *.scala protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-
 load("@build_stack_rules_proto//scala:deps.bzl", "scala_proto_compile")
+
 scala_proto_compile()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+
 scala_repositories()
 
 load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+
 scala_register_toolchains()
 
 load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
-scala_proto_repositories()
 
+scala_proto_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -94,24 +98,28 @@ Generates *.scala protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-
 load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_compile")
+
 scala_grpc_compile()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+
 scala_repositories()
 
 load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+
 scala_register_toolchains()
 
 load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
-scala_proto_repositories()
 
+scala_proto_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -168,24 +176,28 @@ Generates *.py protobuf library
 ### `WORKSPACE`
 
 ```python
-
 load("@build_stack_rules_proto//scala:deps.bzl", "scala_proto_library")
+
 scala_proto_library()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+
 scala_repositories()
 
 load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+
 scala_register_toolchains()
 
 load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
-scala_proto_repositories()
 
+scala_proto_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -228,7 +240,6 @@ def scala_proto_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -262,24 +273,28 @@ Generates *.py protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-
 load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_library")
+
 scala_grpc_library()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+
 scala_repositories()
 
 load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+
 scala_register_toolchains()
 
 load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
-scala_proto_repositories()
 
+scala_proto_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -322,7 +337,6 @@ def scala_grpc_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -344,3 +358,4 @@ def scala_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

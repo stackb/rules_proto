@@ -15,13 +15,17 @@ Generates protobuf closure grpc *.js files
 
 ```python
 load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "closure_grpc_compile")
+
 closure_grpc_compile()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
+
 closure_repositories(omit_com_google_protobuf = True)
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 ```
 
@@ -80,13 +84,17 @@ Generates protobuf closure library *.js files
 
 ```python
 load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "closure_grpc_library")
+
 closure_grpc_library()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
+
 closure_repositories(omit_com_google_protobuf = True)
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 ```
 
@@ -160,7 +168,6 @@ def closure_grpc_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -182,3 +189,4 @@ def closure_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

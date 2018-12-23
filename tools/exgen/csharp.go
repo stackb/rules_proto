@@ -1,21 +1,26 @@
 package main
 
 var csharpProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
 {{ .Rule.Name }}()
 
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
+
 dotnet_register_toolchains("host")
 #dotnet_register_toolchains(dotnet_version="4.2.3")
+
 dotnet_repositories()
 
 load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
+
 nuget_packages()
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
-nuget_protobuf_packages()
-`)
+
+nuget_protobuf_packages()`)
 
 var csharpGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
 {{ .Rule.Name }}()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
@@ -30,14 +35,15 @@ dotnet_register_toolchains("host")
 dotnet_repositories()
 
 load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
+
 nuget_packages()
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_protobuf_packages()
-nuget_grpc_packages()
-`)
+
+nuget_grpc_packages()`)
 
 var csharpProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
@@ -53,8 +59,8 @@ def {{ .Rule.Name }}(**kwargs):
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
-		visibility = visibility,
-		transitive = transitive,
+        visibility = visibility,
+        transitive = transitive,
         verbose = verbose,
     )
 
@@ -66,8 +72,7 @@ def {{ .Rule.Name }}(**kwargs):
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
         ],
         visibility = visibility,
-    )
-`)
+    )`)
 
 var csharpGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
@@ -98,8 +103,7 @@ def {{ .Rule.Name }}(**kwargs):
             "@system.interactive.async//:core",
         ],
         visibility = visibility,
-    )
-`)
+    )`)
 
 func makeCsharp() *Language {
 	return &Language{

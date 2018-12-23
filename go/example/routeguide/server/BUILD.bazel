@@ -3,8 +3,8 @@ load("//go:go_grpc_library.bzl", "go_grpc_library")
 
 go_grpc_library(
     name = "routeguide",
-    deps = ["//example/proto:routeguide_proto"],
     importpath = "google.golang.org/grpc/examples/route_guide/routeguide",
+    deps = ["//example/proto:routeguide_proto"],
 )
 
 go_library(
@@ -24,17 +24,17 @@ go_library(
 
 go_binary(
     name = "server",
+    data = ["//example/proto:routeguide_features"],
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
-    data = ["//example/proto:routeguide_features"],
 )
 
 go_test(
     name = "go_default_test",
+    size = "small",
     srcs = [
         "main_test.go",
     ],
-    size = "small",
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
 )

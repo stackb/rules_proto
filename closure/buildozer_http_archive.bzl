@@ -22,11 +22,11 @@ def _http_archive_impl(ctx):
     )
 
     if ctx.os.name == "mac os x":
-      buildozer_urls = [ctx.attr.buildozer_mac_url]
-      buildozer_sha256 = ctx.attr.buildozer_mac_sha256
+        buildozer_urls = [ctx.attr.buildozer_mac_url]
+        buildozer_sha256 = ctx.attr.buildozer_mac_sha256
     else:
-      buildozer_urls = [ctx.attr.buildozer_linux_url]
-      buildozer_sha256 = ctx.attr.buildozer_linux_sha256
+        buildozer_urls = [ctx.attr.buildozer_linux_url]
+        buildozer_sha256 = ctx.attr.buildozer_linux_sha256
 
     ctx.download(
         buildozer_urls,
@@ -34,7 +34,6 @@ def _http_archive_impl(ctx):
         sha256 = buildozer_sha256,
         executable = True,
     )
-
 
     if ctx.attr.label_list:
         args = ["./buildozer", "-root_dir", ctx.path(".")]
@@ -49,18 +48,19 @@ def _http_archive_impl(ctx):
         sed = ctx.which("sed")
         if not sed:
             fail("sed utility not found")
+
         # For each file (dict key) in the target list...
         for filename, replacements in ctx.attr.sed_replacements.items():
             # And each sed replacement to make (dict value)...
             for replacement in replacements:
                 args = [sed, "-i.bak", replacement, filename]
+
                 # execute the replace on that file.
                 result = ctx.execute(args, quiet = False)
                 if result.return_code:
                     fail("Buildozer failed: %s" % result.stderr)
 
     workspace_and_buildfile(ctx)
-
 
 _http_archive_attrs = {
     "url": attr.string(),

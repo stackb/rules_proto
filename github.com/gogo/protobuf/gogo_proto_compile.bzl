@@ -15,6 +15,7 @@ def gogo_proto_compile(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:gogo"))]

@@ -5,18 +5,19 @@ def _execute(rtx, cmds):
       cmds: !list<string>
     Returns: struct value from the rtx.execute method.
     """
+
     #print("Execute <%s>" % " ".join(cmds))
     result = rtx.execute(cmds)
     if result.return_code:
-        fail(" ".join(cmds) + "failed: %s" %(result.stderr))
+        fail(" ".join(cmds) + "failed: %s" % (result.stderr))
     return result
-
 
 def _pub_repository(name, entry, verbose):
     out = []
     version = entry["version"]
     if entry.get("override"):
         override = entry.get("override")
+
         # print("%s %s override %s" % (name, version, override))
         version = override
 
@@ -42,7 +43,7 @@ def _pub_repository(name, entry, verbose):
         version = version[2:]
     out += [
         '    if "vendor_%s" not in existing:' % name,
-        '        pub_repository(',
+        "        pub_repository(",
         '            name = "vendor_%s",' % name,
         '            output = ".",',
         '            package = "%s",' % name,
@@ -51,17 +52,16 @@ def _pub_repository(name, entry, verbose):
 
     deps = entry.get("deps")
     if deps:
-        out.append('            pub_deps = [')
+        out.append("            pub_deps = [")
         for depname, depversion in deps.items():
             out.append('                "%s",' % depname)
-        out.append('            ],')
-    out.append('        )')
-    out.append('    elif verbose > 0:')
+        out.append("            ],")
+    out.append("        )")
+    out.append("    elif verbose > 0:")
     out.append('        print("Skipped vendor_%s (already exists)")' % name)
     if verbose > 1:
         print("%s: %s" % (name, version))
     return out
-
 
 def _dart_pub_deps_impl(rtx):
     """
@@ -72,10 +72,13 @@ def _dart_pub_deps_impl(rtx):
 
     # map[string]string name -> version overrides
     override = rtx.attr.override
+
     # int
     verbose = rtx.attr.verbose
+
     # string
     pub = rtx.path(rtx.attr._pub)
+
     # string
     spec = rtx.path(rtx.attr.spec)
 
@@ -93,6 +96,7 @@ def _dart_pub_deps_impl(rtx):
     # name -> entry
 
     transitive_deps = {}
+
     # The dict that is "active" (one of: deps | transitive_deps).  A dict gets
     # 'activated' when we hit that section in the output.
     active = None
@@ -136,15 +140,14 @@ def _dart_pub_deps_impl(rtx):
             active = direct_deps
         elif line == "transitive dependencies:":
             active = transitive_deps
-        else:
-            if verbose > 2:
-                print("SKIP: " + line)
+        elif verbose > 2:
+            print("SKIP: " + line)
 
     out = [
-        '# Generated - do not modify',
+        "# Generated - do not modify",
         'load("@io_bazel_rules_dart//dart/build_rules/internal:pub.bzl", "pub_repository")',
-        'def pub_deps(verbose = 0):',
-        '    existing = native.existing_rules()',
+        "def pub_deps(verbose = 0):",
+        "    existing = native.existing_rules()",
     ]
 
     for name, entry in direct_deps.items():
@@ -155,7 +158,6 @@ def _dart_pub_deps_impl(rtx):
     rtx.file("deps.bzl", "\n".join(out))
     rtx.file("BUILD.bazel", "")
 
-
 dart_pub_deps = repository_rule(
     implementation = _dart_pub_deps_impl,
     attrs = {
@@ -164,14 +166,14 @@ dart_pub_deps = repository_rule(
             default = "@dart_sdk//:bin/pub",
         ),
         "spec": attr.label(
-            doc = 'A pubspec.yaml file that details the dependencies',
+            doc = "A pubspec.yaml file that details the dependencies",
             mandatory = True,
         ),
         "override": attr.string_dict(
             doc = 'A mapping from NAME -> VERSION such that the given VERSION will be chosen for any direct/transitive dependency with that name.  Example: {"glob": "1.1.7"}',
         ),
         "verbose": attr.int(
-            doc = 'A number that changes the verbose level',
+            doc = "A number that changes the verbose level",
         ),
     },
 )

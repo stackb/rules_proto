@@ -1,4 +1,5 @@
-load("//:deps.bzl",
+load(
+    "//:deps.bzl",
     "com_github_grpc_grpc",
     "com_google_protobuf",
     "io_bazel_rules_python",

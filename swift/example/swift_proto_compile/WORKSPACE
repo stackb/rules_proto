@@ -1,11 +1,11 @@
 http_archive(
     name = "bazel_toolchains",
+    sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
+    strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
     urls = [
         "https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
         "https://github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
     ],
-    strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
-    sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
 )
 
 local_repository(
@@ -13,19 +13,22 @@ local_repository(
     path = "../../../",
 )
 
-
 load("@build_stack_rules_proto//swift:deps.bzl", "swift_proto_compile")
+
 swift_proto_compile()
 
 # rules_go used here to compile a wrapper around the protoc-gen-swift plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@build_stack_rules_proto//swift:repositories.bzl", "swift_toolchain")
+
 # Default values work with linux, x86_64, /usr/local/bin/clang.
 swift_toolchain(
-	#root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
+    #root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
 )
 
 # Uncomment for ocal development with swift installed on your machine

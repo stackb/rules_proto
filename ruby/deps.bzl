@@ -1,7 +1,8 @@
-load("//:deps.bzl",
-    "com_google_protobuf",
+load(
+    "//:deps.bzl",
     "com_github_grpc_grpc",
     "com_github_yugui_rules_ruby",
+    "com_google_protobuf",
 )
 
 def ruby_proto_compile(**kwargs):

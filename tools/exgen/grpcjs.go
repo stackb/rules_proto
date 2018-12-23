@@ -1,13 +1,17 @@
 package main
 
 var grpcjsUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
 {{ .Rule.Name }}()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
+
 closure_repositories(omit_com_google_protobuf = True)
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()`)
 
 var grpcjsGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:closure_grpc_compile.bzl", "closure_grpc_compile")
@@ -65,8 +69,7 @@ def {{ .Rule.Name }}(**kwargs):
             "JSC_WRONG_ARGUMENT_COUNT",
         ],
         visibility = visibility,
-    )
-`)
+    )`)
 
 func makeGrpcJs() *Language {
 	return &Language{

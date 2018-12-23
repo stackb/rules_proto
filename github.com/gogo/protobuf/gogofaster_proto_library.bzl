@@ -3,11 +3,11 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
 wkt_mappings = get_importmappings({
-	"google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
 })
 
 def gogofaster_proto_library(**kwargs):

@@ -1,10 +1,11 @@
-load("//:deps.bzl",
+load(
+    "//:deps.bzl",
+    "bazel_skylib",
+    "build_bazel_rules_swift",
+    "com_github_apple_swift_swift_protobuf",
     "com_github_grpc_grpc",
     "com_google_protobuf",
     "io_bazel_rules_go",
-    "build_bazel_rules_swift",
-    "bazel_skylib",
-    "com_github_apple_swift_swift_protobuf",
 )
 
 def swift_proto_compile(**kwargs):

@@ -1,11 +1,11 @@
 http_archive(
     name = "bazel_toolchains",
+    sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
+    strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
     urls = [
         "https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
         "https://github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
     ],
-    strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
-    sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
 )
 
 local_repository(
@@ -13,18 +13,21 @@ local_repository(
     path = "../../../",
 )
 
-
 load("@build_stack_rules_proto//dart:deps.bzl", "dart_proto_compile")
 
 dart_proto_compile()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
+
 dart_repositories()
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+
 dart_protoc_plugin_deps()

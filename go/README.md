@@ -20,7 +20,7 @@ load("@build_stack_rules_proto//go:deps.bzl", "go_proto_compile")
 
 go_proto_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -58,6 +58,7 @@ def go_proto_compile(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("//go:go"))]
@@ -65,7 +66,6 @@ def go_proto_compile(**kwargs):
     proto_compile(
         **kwargs
     )
-
 ```
 
 ### Mandatory Attributes
@@ -103,7 +103,7 @@ load("@build_stack_rules_proto//go:deps.bzl", "go_grpc_compile")
 
 go_grpc_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -141,6 +141,7 @@ def go_grpc_compile(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("//go:grpc_go"))]
@@ -148,7 +149,6 @@ def go_grpc_compile(**kwargs):
     proto_compile(
         **kwargs
     )
-
 ```
 
 ### Mandatory Attributes
@@ -186,7 +186,7 @@ load("@build_stack_rules_proto//go:deps.bzl", "go_proto_library")
 
 go_proto_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -200,11 +200,11 @@ load("@build_stack_rules_proto//go:go_proto_library.bzl", "go_proto_library")
 
 go_proto_library(
     name = "person_go_library",
-    importpath = "github.com/stackb/rules_proto/go/example/go_proto_library/person",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
     go_deps = [
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/go/example/go_proto_library/person",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -241,7 +241,6 @@ def go_proto_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -279,7 +278,7 @@ load("@build_stack_rules_proto//go:deps.bzl", "go_grpc_library")
 
 go_grpc_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -293,11 +292,11 @@ load("@build_stack_rules_proto//go:go_grpc_library.bzl", "go_grpc_library")
 
 go_grpc_library(
     name = "greeter_go_library",
-    importpath = "github.com/stackb/rules_proto/go/example/go_grpc_library/greeter",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
     go_deps = [
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/go/example/go_grpc_library/greeter",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -336,7 +335,6 @@ def go_grpc_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -360,3 +358,4 @@ def go_grpc_library(**kwargs):
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
+

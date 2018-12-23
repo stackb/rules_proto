@@ -5,6 +5,7 @@ var javaGrpcUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.
 io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
 grpc_java_repositories(omit_com_google_protobuf = True)
 
 load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
@@ -33,8 +34,7 @@ def {{ .Rule.Name }}(**kwargs):
             str(Label("//java:proto_deps")),
         ],
         visibility = visibility,
-    )
-`)
+    )`)
 
 var javaGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:java_grpc_compile.bzl", "java_grpc_compile")
 
@@ -58,8 +58,7 @@ def {{ .Rule.Name }}(**kwargs):
             str(Label("//java:grpc_deps")),
         ],
         visibility = visibility,
-    )
-`)
+    )`)
 
 func makeJava() *Language {
 	return &Language{

@@ -1,539 +1,539 @@
-android_proto_compile:
+android_proto_compile: 
 	(cd android/example/android_proto_compile && bazel build //...)
 
-clean_android_proto_compile:
+clean_android_proto_compile: 
 	(cd android/example/android_proto_compile && bazel clean)
 
-android_grpc_compile:
+android_grpc_compile: 
 	(cd android/example/android_grpc_compile && bazel build //...)
 
-clean_android_grpc_compile:
+clean_android_grpc_compile: 
 	(cd android/example/android_grpc_compile && bazel clean)
 
-android_proto_library:
+android_proto_library: 
 	(cd android/example/android_proto_library && bazel build //...)
 
-clean_android_proto_library:
+clean_android_proto_library: 
 	(cd android/example/android_proto_library && bazel clean)
 
-android_grpc_library:
+android_grpc_library: 
 	(cd android/example/android_grpc_library && bazel build //...)
 
-clean_android_grpc_library:
+clean_android_grpc_library: 
 	(cd android/example/android_grpc_library && bazel clean)
 
 android: android_proto_compile android_grpc_compile android_proto_library android_grpc_library
 
 clean_android: clean_android_proto_compile clean_android_grpc_compile clean_android_proto_library clean_android_grpc_library
 
-closure_proto_compile:
+closure_proto_compile: 
 	(cd closure/example/closure_proto_compile && bazel build //...)
 
-clean_closure_proto_compile:
+clean_closure_proto_compile: 
 	(cd closure/example/closure_proto_compile && bazel clean)
 
-closure_proto_library:
+closure_proto_library: 
 	(cd closure/example/closure_proto_library && bazel build //...)
 
-clean_closure_proto_library:
+clean_closure_proto_library: 
 	(cd closure/example/closure_proto_library && bazel clean)
 
 closure: closure_proto_compile closure_proto_library
 
 clean_closure: clean_closure_proto_compile clean_closure_proto_library
 
-cpp_proto_compile:
+cpp_proto_compile: 
 	(cd cpp/example/cpp_proto_compile && bazel build //...)
 
-clean_cpp_proto_compile:
+clean_cpp_proto_compile: 
 	(cd cpp/example/cpp_proto_compile && bazel clean)
 
-cpp_grpc_compile:
+cpp_grpc_compile: 
 	(cd cpp/example/cpp_grpc_compile && bazel build //...)
 
-clean_cpp_grpc_compile:
+clean_cpp_grpc_compile: 
 	(cd cpp/example/cpp_grpc_compile && bazel clean)
 
-cpp_proto_library:
+cpp_proto_library: 
 	(cd cpp/example/cpp_proto_library && bazel build //...)
 
-clean_cpp_proto_library:
+clean_cpp_proto_library: 
 	(cd cpp/example/cpp_proto_library && bazel clean)
 
-cpp_grpc_library:
+cpp_grpc_library: 
 	(cd cpp/example/cpp_grpc_library && bazel build //...)
 
-clean_cpp_grpc_library:
+clean_cpp_grpc_library: 
 	(cd cpp/example/cpp_grpc_library && bazel clean)
 
 cpp: cpp_proto_compile cpp_grpc_compile cpp_proto_library cpp_grpc_library
 
 clean_cpp: clean_cpp_proto_compile clean_cpp_grpc_compile clean_cpp_proto_library clean_cpp_grpc_library
 
-csharp_proto_compile:
+csharp_proto_compile: 
 	(cd csharp/example/csharp_proto_compile && bazel build //...)
 
-clean_csharp_proto_compile:
+clean_csharp_proto_compile: 
 	(cd csharp/example/csharp_proto_compile && bazel clean)
 
-csharp_grpc_compile:
+csharp_grpc_compile: 
 	(cd csharp/example/csharp_grpc_compile && bazel build //...)
 
-clean_csharp_grpc_compile:
+clean_csharp_grpc_compile: 
 	(cd csharp/example/csharp_grpc_compile && bazel clean)
 
-csharp_proto_library:
+csharp_proto_library: 
 	(cd csharp/example/csharp_proto_library && bazel build //...)
 
-clean_csharp_proto_library:
+clean_csharp_proto_library: 
 	(cd csharp/example/csharp_proto_library && bazel clean)
 
-csharp_grpc_library:
+csharp_grpc_library: 
 	(cd csharp/example/csharp_grpc_library && bazel build //...)
 
-clean_csharp_grpc_library:
+clean_csharp_grpc_library: 
 	(cd csharp/example/csharp_grpc_library && bazel clean)
 
 csharp: csharp_proto_compile csharp_grpc_compile csharp_proto_library csharp_grpc_library
 
 clean_csharp: clean_csharp_proto_compile clean_csharp_grpc_compile clean_csharp_proto_library clean_csharp_grpc_library
 
-dart_proto_compile:
+dart_proto_compile: 
 	(cd dart/example/dart_proto_compile && bazel build //...)
 
-clean_dart_proto_compile:
+clean_dart_proto_compile: 
 	(cd dart/example/dart_proto_compile && bazel clean)
 
-dart_grpc_compile:
+dart_grpc_compile: 
 	(cd dart/example/dart_grpc_compile && bazel build //...)
 
-clean_dart_grpc_compile:
+clean_dart_grpc_compile: 
 	(cd dart/example/dart_grpc_compile && bazel clean)
 
-dart_proto_library:
+dart_proto_library: 
 	(cd dart/example/dart_proto_library && bazel build //...)
 
-clean_dart_proto_library:
+clean_dart_proto_library: 
 	(cd dart/example/dart_proto_library && bazel clean)
 
-dart_grpc_library:
+dart_grpc_library: 
 	(cd dart/example/dart_grpc_library && bazel build //...)
 
-clean_dart_grpc_library:
+clean_dart_grpc_library: 
 	(cd dart/example/dart_grpc_library && bazel clean)
 
 dart: dart_proto_compile dart_grpc_compile dart_proto_library dart_grpc_library
 
 clean_dart: clean_dart_proto_compile clean_dart_grpc_compile clean_dart_proto_library clean_dart_grpc_library
 
-go_proto_compile:
+go_proto_compile: 
 	(cd go/example/go_proto_compile && bazel build //...)
 
-clean_go_proto_compile:
+clean_go_proto_compile: 
 	(cd go/example/go_proto_compile && bazel clean)
 
-go_grpc_compile:
+go_grpc_compile: 
 	(cd go/example/go_grpc_compile && bazel build //...)
 
-clean_go_grpc_compile:
+clean_go_grpc_compile: 
 	(cd go/example/go_grpc_compile && bazel clean)
 
-go_proto_library:
+go_proto_library: 
 	(cd go/example/go_proto_library && bazel build //...)
 
-clean_go_proto_library:
+clean_go_proto_library: 
 	(cd go/example/go_proto_library && bazel clean)
 
-go_grpc_library:
+go_grpc_library: 
 	(cd go/example/go_grpc_library && bazel build //...)
 
-clean_go_grpc_library:
+clean_go_grpc_library: 
 	(cd go/example/go_grpc_library && bazel clean)
 
 go: go_proto_compile go_grpc_compile go_proto_library go_grpc_library
 
 clean_go: clean_go_proto_compile clean_go_grpc_compile clean_go_proto_library clean_go_grpc_library
 
-java_proto_compile:
+java_proto_compile: 
 	(cd java/example/java_proto_compile && bazel build //...)
 
-clean_java_proto_compile:
+clean_java_proto_compile: 
 	(cd java/example/java_proto_compile && bazel clean)
 
-java_grpc_compile:
+java_grpc_compile: 
 	(cd java/example/java_grpc_compile && bazel build //...)
 
-clean_java_grpc_compile:
+clean_java_grpc_compile: 
 	(cd java/example/java_grpc_compile && bazel clean)
 
-java_proto_library:
+java_proto_library: 
 	(cd java/example/java_proto_library && bazel build //...)
 
-clean_java_proto_library:
+clean_java_proto_library: 
 	(cd java/example/java_proto_library && bazel clean)
 
-java_grpc_library:
+java_grpc_library: 
 	(cd java/example/java_grpc_library && bazel build //...)
 
-clean_java_grpc_library:
+clean_java_grpc_library: 
 	(cd java/example/java_grpc_library && bazel clean)
 
 java: java_proto_compile java_grpc_compile java_proto_library java_grpc_library
 
 clean_java: clean_java_proto_compile clean_java_grpc_compile clean_java_proto_library clean_java_grpc_library
 
-node_proto_compile:
+node_proto_compile: 
 	(cd node/example/node_proto_compile && bazel build //...)
 
-clean_node_proto_compile:
+clean_node_proto_compile: 
 	(cd node/example/node_proto_compile && bazel clean)
 
-node_grpc_compile:
+node_grpc_compile: 
 	(cd node/example/node_grpc_compile && bazel build //...)
 
-clean_node_grpc_compile:
+clean_node_grpc_compile: 
 	(cd node/example/node_grpc_compile && bazel clean)
 
-node_proto_library:
+node_proto_library: 
 	(cd node/example/node_proto_library && bazel build //...)
 
-clean_node_proto_library:
+clean_node_proto_library: 
 	(cd node/example/node_proto_library && bazel clean)
 
-node_grpc_library:
+node_grpc_library: 
 	(cd node/example/node_grpc_library && bazel build //...)
 
-clean_node_grpc_library:
+clean_node_grpc_library: 
 	(cd node/example/node_grpc_library && bazel clean)
 
 node: node_proto_compile node_grpc_compile node_proto_library node_grpc_library
 
 clean_node: clean_node_proto_compile clean_node_grpc_compile clean_node_proto_library clean_node_grpc_library
 
-objc_proto_compile:
+objc_proto_compile: 
 	(cd objc/example/objc_proto_compile && bazel build //...)
 
-clean_objc_proto_compile:
+clean_objc_proto_compile: 
 	(cd objc/example/objc_proto_compile && bazel clean)
 
-objc_grpc_compile:
+objc_grpc_compile: 
 	(cd objc/example/objc_grpc_compile && bazel build //...)
 
-clean_objc_grpc_compile:
+clean_objc_grpc_compile: 
 	(cd objc/example/objc_grpc_compile && bazel clean)
 
 objc: objc_proto_compile objc_grpc_compile
 
 clean_objc: clean_objc_proto_compile clean_objc_grpc_compile
 
-php_proto_compile:
+php_proto_compile: 
 	(cd php/example/php_proto_compile && bazel build //...)
 
-clean_php_proto_compile:
+clean_php_proto_compile: 
 	(cd php/example/php_proto_compile && bazel clean)
 
-php_grpc_compile:
+php_grpc_compile: 
 	(cd php/example/php_grpc_compile && bazel build //...)
 
-clean_php_grpc_compile:
+clean_php_grpc_compile: 
 	(cd php/example/php_grpc_compile && bazel clean)
 
 php: php_proto_compile php_grpc_compile
 
 clean_php: clean_php_proto_compile clean_php_grpc_compile
 
-python_proto_compile:
+python_proto_compile: 
 	(cd python/example/python_proto_compile && bazel build //...)
 
-clean_python_proto_compile:
+clean_python_proto_compile: 
 	(cd python/example/python_proto_compile && bazel clean)
 
-python_grpc_compile:
+python_grpc_compile: 
 	(cd python/example/python_grpc_compile && bazel build //...)
 
-clean_python_grpc_compile:
+clean_python_grpc_compile: 
 	(cd python/example/python_grpc_compile && bazel clean)
 
-python_proto_library:
+python_proto_library: 
 	(cd python/example/python_proto_library && bazel build //...)
 
-clean_python_proto_library:
+clean_python_proto_library: 
 	(cd python/example/python_proto_library && bazel clean)
 
-python_grpc_library:
+python_grpc_library: 
 	(cd python/example/python_grpc_library && bazel build //...)
 
-clean_python_grpc_library:
+clean_python_grpc_library: 
 	(cd python/example/python_grpc_library && bazel clean)
 
 python: python_proto_compile python_grpc_compile python_proto_library python_grpc_library
 
 clean_python: clean_python_proto_compile clean_python_grpc_compile clean_python_proto_library clean_python_grpc_library
 
-ruby_proto_compile:
+ruby_proto_compile: 
 	(cd ruby/example/ruby_proto_compile && bazel build //...)
 
-clean_ruby_proto_compile:
+clean_ruby_proto_compile: 
 	(cd ruby/example/ruby_proto_compile && bazel clean)
 
-ruby_grpc_compile:
+ruby_grpc_compile: 
 	(cd ruby/example/ruby_grpc_compile && bazel build //...)
 
-clean_ruby_grpc_compile:
+clean_ruby_grpc_compile: 
 	(cd ruby/example/ruby_grpc_compile && bazel clean)
 
-ruby_proto_library:
+ruby_proto_library: 
 	(cd ruby/example/ruby_proto_library && bazel build //...)
 
-clean_ruby_proto_library:
+clean_ruby_proto_library: 
 	(cd ruby/example/ruby_proto_library && bazel clean)
 
-ruby_grpc_library:
+ruby_grpc_library: 
 	(cd ruby/example/ruby_grpc_library && bazel build //...)
 
-clean_ruby_grpc_library:
+clean_ruby_grpc_library: 
 	(cd ruby/example/ruby_grpc_library && bazel clean)
 
 ruby: ruby_proto_compile ruby_grpc_compile ruby_proto_library ruby_grpc_library
 
 clean_ruby: clean_ruby_proto_compile clean_ruby_grpc_compile clean_ruby_proto_library clean_ruby_grpc_library
 
-rust_proto_compile:
+rust_proto_compile: 
 	(cd rust/example/rust_proto_compile && bazel build //...)
 
-clean_rust_proto_compile:
+clean_rust_proto_compile: 
 	(cd rust/example/rust_proto_compile && bazel clean)
 
-rust_grpc_compile:
+rust_grpc_compile: 
 	(cd rust/example/rust_grpc_compile && bazel build //...)
 
-clean_rust_grpc_compile:
+clean_rust_grpc_compile: 
 	(cd rust/example/rust_grpc_compile && bazel clean)
 
-rust_proto_library:
+rust_proto_library: 
 	(cd rust/example/rust_proto_library && bazel build //...)
 
-clean_rust_proto_library:
+clean_rust_proto_library: 
 	(cd rust/example/rust_proto_library && bazel clean)
 
-rust_grpc_library:
+rust_grpc_library: 
 	(cd rust/example/rust_grpc_library && bazel build //...)
 
-clean_rust_grpc_library:
+clean_rust_grpc_library: 
 	(cd rust/example/rust_grpc_library && bazel clean)
 
 rust: rust_proto_compile rust_grpc_compile rust_proto_library rust_grpc_library
 
 clean_rust: clean_rust_proto_compile clean_rust_grpc_compile clean_rust_proto_library clean_rust_grpc_library
 
-scala_proto_compile:
+scala_proto_compile: 
 	(cd scala/example/scala_proto_compile && bazel build //...)
 
-clean_scala_proto_compile:
+clean_scala_proto_compile: 
 	(cd scala/example/scala_proto_compile && bazel clean)
 
-scala_grpc_compile:
+scala_grpc_compile: 
 	(cd scala/example/scala_grpc_compile && bazel build //...)
 
-clean_scala_grpc_compile:
+clean_scala_grpc_compile: 
 	(cd scala/example/scala_grpc_compile && bazel clean)
 
-scala_proto_library:
+scala_proto_library: 
 	(cd scala/example/scala_proto_library && bazel build //...)
 
-clean_scala_proto_library:
+clean_scala_proto_library: 
 	(cd scala/example/scala_proto_library && bazel clean)
 
-scala_grpc_library:
+scala_grpc_library: 
 	(cd scala/example/scala_grpc_library && bazel build //...)
 
-clean_scala_grpc_library:
+clean_scala_grpc_library: 
 	(cd scala/example/scala_grpc_library && bazel clean)
 
 scala: scala_proto_compile scala_grpc_compile scala_proto_library scala_grpc_library
 
 clean_scala: clean_scala_proto_compile clean_scala_grpc_compile clean_scala_proto_library clean_scala_grpc_library
 
-swift_proto_compile:
+swift_proto_compile: 
 	(cd swift/example/swift_proto_compile && bazel build //...)
 
-clean_swift_proto_compile:
+clean_swift_proto_compile: 
 	(cd swift/example/swift_proto_compile && bazel clean)
 
-swift_grpc_compile:
+swift_grpc_compile: 
 	(cd swift/example/swift_grpc_compile && bazel build //...)
 
-clean_swift_grpc_compile:
+clean_swift_grpc_compile: 
 	(cd swift/example/swift_grpc_compile && bazel clean)
 
-swift_proto_library:
+swift_proto_library: 
 	(cd swift/example/swift_proto_library && bazel build //...)
 
-clean_swift_proto_library:
+clean_swift_proto_library: 
 	(cd swift/example/swift_proto_library && bazel clean)
 
-swift_grpc_library:
+swift_grpc_library: 
 	(cd swift/example/swift_grpc_library && bazel build //...)
 
-clean_swift_grpc_library:
+clean_swift_grpc_library: 
 	(cd swift/example/swift_grpc_library && bazel clean)
 
 swift: swift_proto_compile swift_grpc_compile swift_proto_library swift_grpc_library
 
 clean_swift: clean_swift_proto_compile clean_swift_grpc_compile clean_swift_proto_library clean_swift_grpc_library
 
-gogo_proto_compile:
+gogo_proto_compile: 
 	(cd github.com/gogo/protobuf/example/gogo_proto_compile && bazel build //...)
 
-clean_gogo_proto_compile:
+clean_gogo_proto_compile: 
 	(cd github.com/gogo/protobuf/example/gogo_proto_compile && bazel clean)
 
-gogo_grpc_compile:
+gogo_grpc_compile: 
 	(cd github.com/gogo/protobuf/example/gogo_grpc_compile && bazel build //...)
 
-clean_gogo_grpc_compile:
+clean_gogo_grpc_compile: 
 	(cd github.com/gogo/protobuf/example/gogo_grpc_compile && bazel clean)
 
-gogo_proto_library:
+gogo_proto_library: 
 	(cd github.com/gogo/protobuf/example/gogo_proto_library && bazel build //...)
 
-clean_gogo_proto_library:
+clean_gogo_proto_library: 
 	(cd github.com/gogo/protobuf/example/gogo_proto_library && bazel clean)
 
-gogo_grpc_library:
+gogo_grpc_library: 
 	(cd github.com/gogo/protobuf/example/gogo_grpc_library && bazel build //...)
 
-clean_gogo_grpc_library:
+clean_gogo_grpc_library: 
 	(cd github.com/gogo/protobuf/example/gogo_grpc_library && bazel clean)
 
-gogofast_proto_compile:
+gogofast_proto_compile: 
 	(cd github.com/gogo/protobuf/example/gogofast_proto_compile && bazel build //...)
 
-clean_gogofast_proto_compile:
+clean_gogofast_proto_compile: 
 	(cd github.com/gogo/protobuf/example/gogofast_proto_compile && bazel clean)
 
-gogofast_grpc_compile:
+gogofast_grpc_compile: 
 	(cd github.com/gogo/protobuf/example/gogofast_grpc_compile && bazel build //...)
 
-clean_gogofast_grpc_compile:
+clean_gogofast_grpc_compile: 
 	(cd github.com/gogo/protobuf/example/gogofast_grpc_compile && bazel clean)
 
-gogofast_proto_library:
+gogofast_proto_library: 
 	(cd github.com/gogo/protobuf/example/gogofast_proto_library && bazel build //...)
 
-clean_gogofast_proto_library:
+clean_gogofast_proto_library: 
 	(cd github.com/gogo/protobuf/example/gogofast_proto_library && bazel clean)
 
-gogofast_grpc_library:
+gogofast_grpc_library: 
 	(cd github.com/gogo/protobuf/example/gogofast_grpc_library && bazel build //...)
 
-clean_gogofast_grpc_library:
+clean_gogofast_grpc_library: 
 	(cd github.com/gogo/protobuf/example/gogofast_grpc_library && bazel clean)
 
-gogofaster_proto_compile:
+gogofaster_proto_compile: 
 	(cd github.com/gogo/protobuf/example/gogofaster_proto_compile && bazel build //...)
 
-clean_gogofaster_proto_compile:
+clean_gogofaster_proto_compile: 
 	(cd github.com/gogo/protobuf/example/gogofaster_proto_compile && bazel clean)
 
-gogofaster_grpc_compile:
+gogofaster_grpc_compile: 
 	(cd github.com/gogo/protobuf/example/gogofaster_grpc_compile && bazel build //...)
 
-clean_gogofaster_grpc_compile:
+clean_gogofaster_grpc_compile: 
 	(cd github.com/gogo/protobuf/example/gogofaster_grpc_compile && bazel clean)
 
-gogofaster_proto_library:
+gogofaster_proto_library: 
 	(cd github.com/gogo/protobuf/example/gogofaster_proto_library && bazel build //...)
 
-clean_gogofaster_proto_library:
+clean_gogofaster_proto_library: 
 	(cd github.com/gogo/protobuf/example/gogofaster_proto_library && bazel clean)
 
-gogofaster_grpc_library:
+gogofaster_grpc_library: 
 	(cd github.com/gogo/protobuf/example/gogofaster_grpc_library && bazel build //...)
 
-clean_gogofaster_grpc_library:
+clean_gogofaster_grpc_library: 
 	(cd github.com/gogo/protobuf/example/gogofaster_grpc_library && bazel clean)
 
 gogo: gogo_proto_compile gogo_grpc_compile gogo_proto_library gogo_grpc_library gogofast_proto_compile gogofast_grpc_compile gogofast_proto_library gogofast_grpc_library gogofaster_proto_compile gogofaster_grpc_compile gogofaster_proto_library gogofaster_grpc_library
 
 clean_gogo: clean_gogo_proto_compile clean_gogo_grpc_compile clean_gogo_proto_library clean_gogo_grpc_library clean_gogofast_proto_compile clean_gogofast_grpc_compile clean_gogofast_proto_library clean_gogofast_grpc_library clean_gogofaster_proto_compile clean_gogofaster_grpc_compile clean_gogofaster_proto_library clean_gogofaster_grpc_library
 
-gateway_grpc_compile:
+gateway_grpc_compile: 
 	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_compile && bazel build //...)
 
-clean_gateway_grpc_compile:
+clean_gateway_grpc_compile: 
 	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_compile && bazel clean)
 
-gateway_swagger_compile:
+gateway_swagger_compile: 
 	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_swagger_compile && bazel build //...)
 
-clean_gateway_swagger_compile:
+clean_gateway_swagger_compile: 
 	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_swagger_compile && bazel clean)
 
-gateway_grpc_library:
+gateway_grpc_library: 
 	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_library && bazel build //...)
 
-clean_gateway_grpc_library:
+clean_gateway_grpc_library: 
 	(cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_library && bazel clean)
 
 grpc-gateway: gateway_grpc_compile gateway_swagger_compile gateway_grpc_library
 
 clean_grpc-gateway: clean_gateway_grpc_compile clean_gateway_swagger_compile clean_gateway_grpc_library
 
-closure_grpc_compile:
+closure_grpc_compile: 
 	(cd github.com/stackb/grpc.js/example/closure_grpc_compile && bazel build //...)
 
-clean_closure_grpc_compile:
+clean_closure_grpc_compile: 
 	(cd github.com/stackb/grpc.js/example/closure_grpc_compile && bazel clean)
 
-closure_grpc_library:
+closure_grpc_library: 
 	(cd github.com/stackb/grpc.js/example/closure_grpc_library && bazel build //...)
 
-clean_closure_grpc_library:
+clean_closure_grpc_library: 
 	(cd github.com/stackb/grpc.js/example/closure_grpc_library && bazel clean)
 
 grpc.js: closure_grpc_compile closure_grpc_library
 
 clean_grpc.js: clean_closure_grpc_compile clean_closure_grpc_library
 
-closure_grpc_compile:
+closure_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && bazel build //...)
 
-clean_closure_grpc_compile:
+clean_closure_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/closure_grpc_compile && bazel clean)
 
-commonjs_grpc_compile:
+commonjs_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/commonjs_grpc_compile && bazel build //...)
 
-clean_commonjs_grpc_compile:
+clean_commonjs_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/commonjs_grpc_compile && bazel clean)
 
-commonjs_dts_grpc_compile:
+commonjs_dts_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/commonjs_dts_grpc_compile && bazel build //...)
 
-clean_commonjs_dts_grpc_compile:
+clean_commonjs_dts_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/commonjs_dts_grpc_compile && bazel clean)
 
-ts_grpc_compile:
+ts_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/ts_grpc_compile && bazel build //...)
 
-clean_ts_grpc_compile:
+clean_ts_grpc_compile: 
 	(cd github.com/grpc/grpc-web/example/ts_grpc_compile && bazel clean)
 
-closure_grpc_library:
+closure_grpc_library: 
 	(cd github.com/grpc/grpc-web/example/closure_grpc_library && bazel build //...)
 
-clean_closure_grpc_library:
+clean_closure_grpc_library: 
 	(cd github.com/grpc/grpc-web/example/closure_grpc_library && bazel clean)
 
 grpc-web: closure_grpc_compile commonjs_grpc_compile commonjs_dts_grpc_compile ts_grpc_compile closure_grpc_library
 
 clean_grpc-web: clean_closure_grpc_compile clean_commonjs_grpc_compile clean_commonjs_dts_grpc_compile clean_ts_grpc_compile clean_closure_grpc_library
 
-ts_proto_compile:
+ts_proto_compile: 
 	(cd github.com/improbable-eng/ts-protoc-gen/example/ts_proto_compile && bazel build //...)
 
-clean_ts_proto_compile:
+clean_ts_proto_compile: 
 	(cd github.com/improbable-eng/ts-protoc-gen/example/ts_proto_compile && bazel clean)
 
 ts-protoc-gen: ts_proto_compile

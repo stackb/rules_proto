@@ -1,9 +1,9 @@
-load("//:deps.bzl",
-    "io_bazel_rules_go",
+load(
+    "//:deps.bzl",
     "bazel_gazelle",
     "com_github_grpc_ecosystem_grpc_gateway",
+    "io_bazel_rules_go",
 )
-
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
 def gateway_grpc_compile(**kwargs):
@@ -40,7 +40,6 @@ def gateway_grpc_compile(**kwargs):
         commit = "eb3733d160e74a9c7e442f435eb3bea458e1d19f",
         importpath = "gopkg.in/yaml.v2",
     )
-
 
 def gateway_grpc_library(**kwargs):
     gateway_grpc_compile(**kwargs)

@@ -4,7 +4,7 @@ var goUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir
 
 {{ .Rule.Name }}()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -27,14 +27,14 @@ def {{ .Rule.Name }}(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("{{ index .Rule.Plugins 0 }}"))]
 
     proto_compile(
         **kwargs
-    )
-`)
+    )`)
 
 var goProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
@@ -65,8 +65,7 @@ def {{ .Rule.Name }}(**kwargs):
         ],
         importpath = importpath,
         visibility = visibility,
-    )
-`)
+    )`)
 
 var goGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:go_grpc_compile.bzl", "go_grpc_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
@@ -99,8 +98,7 @@ def {{ .Rule.Name }}(**kwargs):
         ],
         importpath = importpath,
         visibility = visibility,
-    )
-`)
+    )`)
 
 var goProtoCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
@@ -122,22 +120,22 @@ var goProtoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto
 
 {{ .Rule.Name }}(
     name = "person_{{ .Lang.Name }}_library",
-    importpath = "github.com/stackb/rules_proto/{{ .Lang.Name }}/example/{{ .Rule.Name }}/person",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
     go_deps = [
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/{{ .Lang.Name }}/example/{{ .Rule.Name }}/person",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )`)
 
 var goGrpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "greeter_{{ .Lang.Name }}_library",
-    importpath = "github.com/stackb/rules_proto/{{ .Lang.Name }}/example/{{ .Rule.Name }}/greeter",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
     go_deps = [
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/{{ .Lang.Name }}/example/{{ .Rule.Name }}/greeter",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )`)
 
 var goProtoAttrs = []*Attr{

@@ -51,10 +51,10 @@ dart_library(
     srcs = [
         "common.dart",
     ],
+    data = ["//example/proto:routeguide_features"],
     deps = [
         ":routeguide",
     ],
-    data = ["//example/proto:routeguide_features"],
 )
 
 dart_grpc_library(

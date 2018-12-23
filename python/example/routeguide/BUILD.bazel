@@ -20,12 +20,12 @@ py_binary(
     srcs = [
         "client.py",
     ],
-    deps = [
-        ":routeguide",
-        ":resources",
-    ],
-    imports = ["."],
     data = ["//example/proto:routeguide_features"],
+    imports = ["."],
+    deps = [
+        ":resources",
+        ":routeguide",
+    ],
 )
 
 py_binary(
@@ -33,10 +33,10 @@ py_binary(
     srcs = [
         "server.py",
     ],
-    deps = [
-        ":routeguide",
-        ":resources",
-    ],
-    imports = ["."],
     data = ["//example/proto:routeguide_features"],
+    imports = ["."],
+    deps = [
+        ":resources",
+        ":routeguide",
+    ],
 )

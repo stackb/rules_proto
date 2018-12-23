@@ -7,7 +7,6 @@ ts_grpc_compile(
     ],
 )
 
-
 load("//github.com/improbable-eng/ts-protoc-gen:library.bzl", "ts_proto_library")
 
 ts_proto_library(

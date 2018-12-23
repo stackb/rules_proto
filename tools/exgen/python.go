@@ -12,19 +12,18 @@ var pythonProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_pro
 
 {{ .Rule.Name }}()
 
-load("@io_bazel_rules_python//python:pip.bzl", "pip_repositories", "pip_import")
+load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
 
 pip_repositories()
 
 pip_import(
-	name = "protobuf_py_deps",
-	requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
+    name = "protobuf_py_deps",
+    requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
 )
 
 load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
 
-protobuf_pip_install()
-`)
+protobuf_pip_install()`)
 
 var pythonGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
@@ -34,13 +33,13 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
 
-load("@io_bazel_rules_python//python:pip.bzl", "pip_repositories", "pip_import")
+load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
 
 pip_repositories()
 
 pip_import(
-	name = "protobuf_py_deps",
-	requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
+    name = "protobuf_py_deps",
+    requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
 )
 
 load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
@@ -48,8 +47,8 @@ load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install
 protobuf_pip_install()
 
 pip_import(
-   name = "grpc_py_deps",
-   requirements = "@build_stack_rules_proto//python:requirements.txt",
+    name = "grpc_py_deps",
+    requirements = "@build_stack_rules_proto//python:requirements.txt",
 )
 
 load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
@@ -84,8 +83,7 @@ def python_proto_library(**kwargs):
     )
 
 # Alias
-py_proto_library = python_proto_library
-`)
+py_proto_library = python_proto_library`)
 
 var pythonGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:python_grpc_compile.bzl", "python_grpc_compile")
 load("@protobuf_py_deps//:requirements.bzl", protobuf_requirements = "all_requirements")
@@ -116,8 +114,7 @@ def python_grpc_library(**kwargs):
     )
 
 # Alias
-py_grpc_library = python_grpc_library
-`)
+py_grpc_library = python_grpc_library`)
 
 func makePython() *Language {
 	return &Language{

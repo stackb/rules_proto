@@ -28,7 +28,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_proto_
 
 gogo_proto_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -66,6 +66,7 @@ def gogo_proto_compile(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:gogo"))]
@@ -73,7 +74,6 @@ def gogo_proto_compile(**kwargs):
     proto_compile(
         **kwargs
     )
-
 ```
 
 ### Mandatory Attributes
@@ -111,7 +111,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_grpc_c
 
 gogo_grpc_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -149,6 +149,7 @@ def gogo_grpc_compile(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:grpc_gogo"))]
@@ -156,7 +157,6 @@ def gogo_grpc_compile(**kwargs):
     proto_compile(
         **kwargs
     )
-
 ```
 
 ### Mandatory Attributes
@@ -194,7 +194,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_proto_
 
 gogo_proto_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -208,12 +208,12 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:gogo_proto_library.bzl"
 
 gogo_proto_library(
     name = "person_gogo_library",
-    importpath = "github.com/stackb/rules_proto/gogo/example/gogo_proto_library/person",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
     go_deps = [
-		"@com_github_gogo_protobuf//types:go_default_library",
+        "@com_github_gogo_protobuf//types:go_default_library",
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/gogo/example/gogo_proto_library/person",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -225,11 +225,11 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
 wkt_mappings = get_importmappings({
-	"google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
 })
 
 def gogo_proto_library(**kwargs):
@@ -258,7 +258,6 @@ def gogo_proto_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -296,7 +295,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_grpc_l
 
 gogo_grpc_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -310,11 +309,11 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:gogo_grpc_library.bzl",
 
 gogo_grpc_library(
     name = "greeter_gogo_library",
-    importpath = "github.com/stackb/rules_proto/gogo/example/gogo_grpc_library/greeter",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
     go_deps = [
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/gogo/example/gogo_grpc_library/greeter",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -326,11 +325,11 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
 wkt_mappings = get_importmappings({
-	"google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
 })
 
 def gogo_grpc_library(**kwargs):
@@ -361,7 +360,6 @@ def gogo_grpc_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -399,7 +397,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_pr
 
 gogofast_proto_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -437,6 +435,7 @@ def gogofast_proto_compile(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:gogofast"))]
@@ -444,7 +443,6 @@ def gogofast_proto_compile(**kwargs):
     proto_compile(
         **kwargs
     )
-
 ```
 
 ### Mandatory Attributes
@@ -482,7 +480,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_gr
 
 gogofast_grpc_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -520,6 +518,7 @@ def gogofast_grpc_compile(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:grpc_gogofast"))]
@@ -527,7 +526,6 @@ def gogofast_grpc_compile(**kwargs):
     proto_compile(
         **kwargs
     )
-
 ```
 
 ### Mandatory Attributes
@@ -565,7 +563,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_pr
 
 gogofast_proto_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -579,12 +577,12 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofast_proto_library.
 
 gogofast_proto_library(
     name = "person_gogo_library",
-    importpath = "github.com/stackb/rules_proto/gogo/example/gogofast_proto_library/person",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
     go_deps = [
-		"@com_github_gogo_protobuf//types:go_default_library",
+        "@com_github_gogo_protobuf//types:go_default_library",
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/gogo/example/gogofast_proto_library/person",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -596,11 +594,11 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
 wkt_mappings = get_importmappings({
-	"google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
 })
 
 def gogofast_proto_library(**kwargs):
@@ -629,7 +627,6 @@ def gogofast_proto_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -667,7 +664,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_gr
 
 gogofast_grpc_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -681,11 +678,11 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofast_grpc_library.b
 
 gogofast_grpc_library(
     name = "greeter_gogo_library",
-    importpath = "github.com/stackb/rules_proto/gogo/example/gogofast_grpc_library/greeter",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
     go_deps = [
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/gogo/example/gogofast_grpc_library/greeter",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -697,11 +694,11 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
 wkt_mappings = get_importmappings({
-	"google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
 })
 
 def gogofast_grpc_library(**kwargs):
@@ -732,7 +729,6 @@ def gogofast_grpc_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -770,7 +766,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_
 
 gogofaster_proto_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -808,6 +804,7 @@ def gogofaster_proto_compile(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:gogofaster"))]
@@ -815,7 +812,6 @@ def gogofaster_proto_compile(**kwargs):
     proto_compile(
         **kwargs
     )
-
 ```
 
 ### Mandatory Attributes
@@ -853,7 +849,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_
 
 gogofaster_grpc_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -891,6 +887,7 @@ def gogofaster_grpc_compile(**kwargs):
         )
         kwargs["plugins"] = [name_plugin]
         kwargs.pop("importpath")
+
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
         kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:grpc_gogofaster"))]
@@ -898,7 +895,6 @@ def gogofaster_grpc_compile(**kwargs):
     proto_compile(
         **kwargs
     )
-
 ```
 
 ### Mandatory Attributes
@@ -936,7 +932,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_
 
 gogofaster_proto_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -950,12 +946,12 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_proto_librar
 
 gogofaster_proto_library(
     name = "person_gogo_library",
-    importpath = "github.com/stackb/rules_proto/gogo/example/gogofaster_proto_library/person",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
     go_deps = [
-		"@com_github_gogo_protobuf//types:go_default_library",
+        "@com_github_gogo_protobuf//types:go_default_library",
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/gogo/example/gogofaster_proto_library/person",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 
@@ -967,11 +963,11 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
 wkt_mappings = get_importmappings({
-	"google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
 })
 
 def gogofaster_proto_library(**kwargs):
@@ -1000,7 +996,6 @@ def gogofaster_proto_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -1038,7 +1033,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_
 
 gogofaster_grpc_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -1052,11 +1047,11 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_grpc_library
 
 gogofaster_grpc_library(
     name = "greeter_gogo_library",
-    importpath = "github.com/stackb/rules_proto/gogo/example/gogofaster_grpc_library/greeter",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
     go_deps = [
         "@com_github_golang_protobuf//ptypes/any:go_default_library",
     ],
+    importpath = "github.com/stackb/rules_proto/gogo/example/gogofaster_grpc_library/greeter",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
 
@@ -1068,11 +1063,11 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
 wkt_mappings = get_importmappings({
-	"google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-	"google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
 })
 
 def gogofaster_grpc_library(**kwargs):
@@ -1103,7 +1098,6 @@ def gogofaster_grpc_library(**kwargs):
         importpath = importpath,
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -1127,3 +1121,4 @@ def gogofaster_grpc_library(**kwargs):
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
+

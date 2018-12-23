@@ -1,4 +1,5 @@
 load("//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
+
 def cpp_proto_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")

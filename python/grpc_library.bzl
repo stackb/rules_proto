@@ -1,4 +1,4 @@
-load("//python:compile.bzl", "python_proto_compile", "python_grpc_compile")
+load("//python:compile.bzl", "python_grpc_compile", "python_proto_compile")
 load("@protobuf_py_deps//:requirements.bzl", protobuf_requirements = "all_requirements")
 load("@grpc_py_deps//:requirements.bzl", grpc_requirements = "all_requirements")
 

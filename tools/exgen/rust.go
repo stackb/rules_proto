@@ -10,8 +10,7 @@ rust_repositories()
 
 load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
 
-raze_fetch_remote_crates()
-`)
+raze_fetch_remote_crates()`)
 
 var rustProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:rust_proto_compile.bzl", "rust_proto_compile")
 load("//{{ .Lang.Dir }}:rust_proto_lib.bzl", "rust_proto_lib")
@@ -44,8 +43,7 @@ def {{ .Rule.Name }}(**kwargs):
             str(Label("//rust/cargo:protobuf")),
         ],
         visibility = visibility,
-    )
-`)
+    )`)
 
 var rustGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:rust_grpc_compile.bzl", "rust_grpc_compile")
 load("//{{ .Lang.Dir }}:rust_proto_lib.bzl", "rust_proto_lib")
@@ -81,8 +79,7 @@ def {{ .Rule.Name }}(**kwargs):
             str(Label("//rust/cargo:tls_api_stub")),
         ],
         visibility = visibility,
-    )
-`)
+    )`)
 
 func makeRust() *Language {
 	return &Language{

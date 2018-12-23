@@ -11,11 +11,10 @@ PROTOBUF_VERSION = "b829ff2a4614ff25048944b2cdc8e43b6488fda0"
 
 http_archive(
     name = "com_google_protobuf",
-    url = "https://github.com/google/protobuf/archive/%s.tar.gz" % PROTOBUF_VERSION,
     sha256 = "5d82a718e271e7fda626f983628e4b4601221788c2244763a9e57eda4cc667dd",
     strip_prefix = "protobuf-" + PROTOBUF_VERSION,
+    url = "https://github.com/google/protobuf/archive/%s.tar.gz" % PROTOBUF_VERSION,
 )
-
 
 # =========================================
 load("//:deps.bzl", "com_github_grpc_grpc")
@@ -32,6 +31,7 @@ load("//:deps.bzl", "io_grpc_grpc_java")
 io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
 grpc_java_repositories(
     omit_com_google_protobuf = True,
 )
@@ -49,14 +49,15 @@ dotnet_register_toolchains("host")
 
 dotnet_repositories()
 
-
 load("//csharp/nuget:packages.bzl", nuget_packages = "packages")
+
 nuget_packages()
 
 load("//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
 load("//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_protobuf_packages()
+
 nuget_grpc_packages()
 
 # =========================================
@@ -65,13 +66,13 @@ load("//python:deps.bzl", "python_grpc_library")
 
 python_grpc_library()
 
-load("@io_bazel_rules_python//python:pip.bzl", "pip_repositories", "pip_import")
+load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
 
 pip_repositories()
 
 pip_import(
-	name = "protobuf_py_deps",
-	requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
+    name = "protobuf_py_deps",
+    requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
 )
 
 load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
@@ -79,8 +80,8 @@ load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install
 protobuf_pip_install()
 
 pip_import(
-   name = "grpc_py_deps",
-   requirements = "@build_stack_rules_proto//python:requirements.txt",
+    name = "grpc_py_deps",
+    requirements = "@build_stack_rules_proto//python:requirements.txt",
 )
 
 load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
@@ -155,7 +156,7 @@ load("//go:deps.bzl", "go_grpc_library")
 
 go_grpc_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -172,9 +173,11 @@ load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositori
 dart_repositories()
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
+
 dart_protoc_plugin_deps()
 
 load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
+
 dart_grpc_deps()
 
 # =========================================
@@ -241,9 +244,10 @@ load("//swift:deps.bzl", "swift_grpc_library")
 swift_grpc_library()
 
 load("//swift:repositories.bzl", "swift_toolchain")
+
 # Default values work with linux, x86_64, /usr/local/bin/clang.
 swift_toolchain(
-	root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
+    root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
 )
 
 # load(
@@ -305,7 +309,7 @@ load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repo
 # $ export ANDROID_HOME="/home/pcj/android-sdk/"
 #
 android_sdk_repository(
-    name = "androidsdk"
+    name = "androidsdk",
 )
 
 load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
@@ -323,4 +327,17 @@ load("@com_github_grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_
 grpc_gateway_repositories()
 
 load("//tools/exgen:deps.bzl", "exgen_deps")
+
 exgen_deps()
+
+# =======================================
+
+http_archive(
+    name = "com_github_bazelbuild_buildtools",
+    strip_prefix = "buildtools-41d89cd7c8328bb912f3b8f50d2dc970805d21f8",
+    url = "https://github.com/bazelbuild/buildtools/archive/41d89cd7c8328bb912f3b8f50d2dc970805d21f8.zip",
+)
+
+load("@com_github_bazelbuild_buildtools//buildifier:deps.bzl", "buildifier_dependencies")
+
+buildifier_dependencies()

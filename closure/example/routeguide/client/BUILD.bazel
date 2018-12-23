@@ -1,12 +1,13 @@
 load(
     "@io_bazel_rules_closure//closure:defs.bzl",
+    "closure_js_binary",
     "closure_js_library",
     "closure_js_test",
-    "closure_js_binary",
 )
 
 closure_js_test(
     name = "client_test",
+    size = "small",
     srcs = [
         "client_test.js",
     ],
@@ -18,7 +19,6 @@ closure_js_test(
         "@io_bazel_rules_closure//closure/library/testing:jsunit",
         "@io_bazel_rules_closure//closure/library/testing:testsuite",
     ],
-    size = "small",
 )
 
 closure_js_library(

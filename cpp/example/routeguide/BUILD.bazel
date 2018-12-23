@@ -9,13 +9,13 @@ package(default_visibility = ["//visibility:public"])
 
 cc_test(
     name = "feature_test",
+    size = "small",
     srcs = ["feature_test.cc"],
     copts = ["-Iexternal/gtest/include"],
     deps = [
         ":helper",
         "//external:gtest",
     ],
-    size = "small",
 )
 
 cc_library(
@@ -28,13 +28,13 @@ cc_library(
 cc_binary(
     name = "client",
     srcs = ["client.cc"],
-    deps = [":helper"],
     data = ["//example/proto:routeguide_features"],
+    deps = [":helper"],
 )
 
 cc_binary(
     name = "server",
     srcs = ["server.cc"],
-    deps = [":helper"],
     data = ["//example/proto:routeguide_features"],
+    deps = [":helper"],
 )

@@ -80,6 +80,7 @@ load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
 grpc_java_repositories(omit_com_google_protobuf = True)
 
 load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_compile")
@@ -142,24 +143,28 @@ Generates android protobuf library
 ### `WORKSPACE`
 
 ```python
-
 # The set of dependencies loaded here is excessive for android proto alone
 # (but simplifies our setup)
 load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+
 io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
 grpc_java_repositories(
     omit_com_google_protobuf = True,
 )
 
 load("@build_stack_rules_proto//android:deps.bzl", "android_proto_library")
+
 android_proto_library()
 
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
+
 android_sdk_repository(name = "androidsdk")
 
 load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
+
 gmaven_rules()
 ```
 
@@ -205,7 +210,6 @@ def android_proto_library(**kwargs):
         ],
         visibility = visibility,
     )
-
 ```
 
 ### Mandatory Attributes
@@ -238,23 +242,25 @@ Generates android protobuf+gRPC library
 
 ```python
 load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+
 io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
 grpc_java_repositories(
     omit_com_google_protobuf = True,
 )
 
 load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_library")
+
 android_grpc_library()
 
-#load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-#grpc_deps()
-
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
+
 android_sdk_repository(name = "androidsdk")
 
 load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
+
 gmaven_rules()
 ```
 
@@ -299,8 +305,7 @@ def android_grpc_library(**kwargs):
             str(Label("//android:grpc_deps")),
         ],
         visibility = visibility,
-	)
-
+    )
 ```
 
 ### Mandatory Attributes
@@ -322,3 +327,4 @@ def android_grpc_library(**kwargs):
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+

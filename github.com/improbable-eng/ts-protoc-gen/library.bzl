@@ -1,6 +1,6 @@
 load("//node:node_proto_compile.bzl", "node_proto_compile")
 load("//node:node_grpc_compile.bzl", "node_grpc_compile")
-load("//github.com/improbable-eng/ts-protoc-gen:compile.bzl", "ts_proto_compile", "ts_grpc_compile")
+load("//github.com/improbable-eng/ts-protoc-gen:compile.bzl", "ts_grpc_compile", "ts_proto_compile")
 load("@build_bazel_rules_typescript//:defs.bzl", "ts_library")
 
 def ts_proto_library(**kwargs):
