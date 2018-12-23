@@ -44,8 +44,8 @@ csharp_grpc_library()
 
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
 
-dotnet_register_toolchains("host")
-#dotnet_register_toolchains(dotnet_version="4.2.3")
+#dotnet_register_toolchains("host")
+dotnet_register_toolchains(dotnet_version="4.2.3")
 
 dotnet_repositories()
 
