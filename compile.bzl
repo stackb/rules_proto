@@ -500,7 +500,7 @@ def proto_compile_impl(ctx):
         # Iterate all transitive .proto files.  If we already processed in the
         # loop above, skip it. Otherwise add a copy action to get it into the
         # 'staging area'
-        for src in dep.transitive_sources:
+        for src in dep.transitive_sources.to_list():
             if targets.get(src):
                 continue
             if verbose > 2:
@@ -574,8 +574,9 @@ def proto_compile_impl(ctx):
     ctx.actions.run_shell(
         mnemonic = mnemonic,
         command = command,
-        inputs = [protoc] + plugin_tools.values() + protos + data,
+        inputs = protos + data,
         outputs = outputs + [descriptor] + ctx.outputs.outputs,
+        tools = [protoc] + plugin_tools.values()
     )
 
     ###
