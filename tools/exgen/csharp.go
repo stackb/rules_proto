@@ -6,8 +6,10 @@ var csharpProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_pro
 
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
 
-dotnet_register_toolchains("host")
-#dotnet_register_toolchains(dotnet_version="4.2.3")
+dotnet_register_toolchains(
+    net_roslyn_version = "2.7.0",
+    net_version = "4.7.2",
+)
 
 dotnet_repositories()
 
@@ -29,8 +31,10 @@ grpc_deps()
 
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
 
-dotnet_register_toolchains("host")
-#dotnet_register_toolchains(dotnet_version="4.2.3")
+dotnet_register_toolchains(
+    net_roslyn_version = "2.7.0",
+    net_version = "4.7.2",
+)
 
 dotnet_repositories()
 

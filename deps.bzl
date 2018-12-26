@@ -14,8 +14,9 @@ def github_archive(name, org, repo, ref, sha256):
             ],
             sha256 = sha256,
         )
-    else:
-        print("Skipping predefined dependency: '%s'" % name)
+
+    # else:
+    #     print("Skipping predefined dependency: '%s'" % name)
 
 def jar(name, artifact, sha1):
     """Declare a maven_jar
@@ -142,11 +143,9 @@ def com_github_grpc_grpc(**kwargs):
     sha256 = get_sha256(name, "6cea8d3dbe289872343aafe67736539b0a28ecd062d3ff4965f157f5d9d77d1d", kwargs)
     github_archive(name, "grpc", "grpc", ref, sha256)
 
-# NOTE(pcj): Using a different version of dotnet here that seems to have a bad assembly reference.
-# Create an issue for this.
 def io_bazel_rules_dotnet(**kwargs):
     name = "io_bazel_rules_dotnet"
-    ref = get_ref(name, "9713688cf5db211319cc706f0ced0543d01af14c", kwargs) # PR#95
+    ref = get_ref(name, "9713688cf5db211319cc706f0ced0543d01af14c", kwargs)  # PR#95
     sha256 = get_sha256(name, "ad058d0e2f13d1729fcd1ba886ebe6e323e21a1a6fc234a1686471ac8dcd5d7e", kwargs)
     github_archive(name, "bazelbuild", "rules_dotnet", ref, sha256)
 
@@ -158,8 +157,8 @@ def io_bazel_rules_scala(**kwargs):
 
 def io_bazel_rules_rust(**kwargs):
     name = "io_bazel_rules_rust"
-    ref = get_ref(name, "88022d175adb48aa5f8904f95dfc716c543b3f1e", kwargs)
-    sha256 = get_sha256(name, "d9832945f0fa7097ee548bd6fecfc814bd19759561dd7b06723e1c6a1879aa71", kwargs)
+    ref = get_ref(name, "84aa67671143f575252b91c8d17aa1b694c6c46a", kwargs)
+    sha256 = get_sha256(name, "e3cfb53d36cfc96bb071aafa468b0abc19b84e74e3ea67fb1b00703276cc1c76", kwargs)
     github_archive(name, "bazelbuild", "rules_rust", ref, sha256)
 
 def com_github_yugui_rules_ruby(**kwargs):

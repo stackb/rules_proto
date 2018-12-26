@@ -4,7 +4,13 @@ cargo-raze crate build file.
 DO NOT EDIT! Replaced on runs of cargo-raze
 """
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = [
+    # Public for visibility by "@raze__crate__version//" targets.
+    #
+    # Prefer access through "//rust/cargo", which limits external
+    # visibility to explicit Cargo.toml dependencies.
+    "//visibility:public",
+])
 
 licenses([
     "notice",  # "MIT"
@@ -17,6 +23,7 @@ load(
     "rust_test",
 )
 
+# Unsupported target "build-script-build" with type "custom-build" omitted
 alias(
     name = "ws2_32_sys",
     actual = ":ws2_32",
@@ -30,9 +37,9 @@ rust_library(
     crate_root = "src/lib.rs",
     crate_type = "lib",
     rustc_flags = [
-        "--cap-lints allow",
-        "--target=x86_64-unknown-linux-gnu",
+        "--cap-lints=allow",
     ],
+    version = "0.2.1",
     deps = [
         "@raze__winapi__0_2_8//:winapi",
     ],

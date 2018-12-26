@@ -4,7 +4,13 @@ cargo-raze crate build file.
 DO NOT EDIT! Replaced on runs of cargo-raze
 """
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = [
+    # Public for visibility by "@raze__crate__version//" targets.
+    #
+    # Prefer access through "//rust/cargo", which limits external
+    # visibility to explicit Cargo.toml dependencies.
+    "//visibility:public",
+])
 
 licenses([
     "notice",  # "MIT,Apache-2.0"
@@ -17,6 +23,7 @@ load(
     "rust_test",
 )
 
+# Unsupported target "build-script-build" with type "custom-build" omitted
 # Unsupported target "client" with type "example" omitted
 # Unsupported target "client" with type "test" omitted
 # Unsupported target "client_server" with type "bench" omitted
@@ -29,19 +36,19 @@ rust_library(
     crate_root = "src/lib.rs",
     crate_type = "lib",
     rustc_flags = [
-        "--cap-lints allow",
-        "--target=x86_64-unknown-linux-gnu",
+        "--cap-lints=allow",
     ],
+    version = "0.6.1",
     deps = [
-        "@raze__bytes__0_4_10//:bytes",
-        "@raze__futures__0_1_24//:futures",
+        "@raze__bytes__0_4_11//:bytes",
+        "@raze__futures__0_1_25//:futures",
         "@raze__futures_cpupool__0_1_8//:futures_cpupool",
-        "@raze__log__0_4_5//:log",
+        "@raze__log__0_4_6//:log",
         "@raze__net2__0_2_33//:net2",
         "@raze__tls_api__0_1_20//:tls_api",
         "@raze__tls_api_stub__0_1_20//:tls_api_stub",
         "@raze__tokio_core__0_1_17//:tokio_core",
-        "@raze__tokio_io__0_1_8//:tokio_io",
+        "@raze__tokio_io__0_1_10//:tokio_io",
         "@raze__tokio_timer__0_1_2//:tokio_timer",
         "@raze__tokio_tls_api__0_1_20//:tokio_tls_api",
         "@raze__tokio_uds__0_1_7//:tokio_uds",

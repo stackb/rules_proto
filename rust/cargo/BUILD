@@ -12,7 +12,7 @@ licenses([
 
 alias(
     name = "futures",
-    actual = "@raze__futures__0_1_24//:futures",
+    actual = "@raze__futures__0_1_25//:futures",
 )
 
 alias(

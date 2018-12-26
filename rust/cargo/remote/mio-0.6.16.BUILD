@@ -4,7 +4,13 @@ cargo-raze crate build file.
 DO NOT EDIT! Replaced on runs of cargo-raze
 """
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = [
+    # Public for visibility by "@raze__crate__version//" targets.
+    #
+    # Prefer access through "//rust/cargo", which limits external
+    # visibility to explicit Cargo.toml dependencies.
+    "//visibility:public",
+])
 
 licenses([
     "notice",  # "MIT"
@@ -29,14 +35,14 @@ rust_library(
     crate_root = "src/lib.rs",
     crate_type = "lib",
     rustc_flags = [
-        "--cap-lints allow",
-        "--target=x86_64-unknown-linux-gnu",
+        "--cap-lints=allow",
     ],
+    version = "0.6.16",
     deps = [
         "@raze__iovec__0_1_2//:iovec",
-        "@raze__lazycell__1_2_0//:lazycell",
-        "@raze__libc__0_2_43//:libc",
-        "@raze__log__0_4_5//:log",
+        "@raze__lazycell__1_2_1//:lazycell",
+        "@raze__libc__0_2_45//:libc",
+        "@raze__log__0_4_6//:log",
         "@raze__net2__0_2_33//:net2",
         "@raze__slab__0_4_1//:slab",
     ],
