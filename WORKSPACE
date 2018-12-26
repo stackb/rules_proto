@@ -1,5 +1,11 @@
 workspace(name = "build_stack_rules_proto")
 
+# http_archive(
+#     name = "com_google_protobuf_javalite",
+#     strip_prefix = "protocolbuffers-384989534b2246d413dbcd750744faab2607b516",
+#     url = "https://github.com/protocolbuffers/protobuf/archive/384989534b2246d413dbcd750744faab2607b516.tar.gz",
+# )
+
 # =========================================
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
@@ -7,7 +13,7 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 # =========================================
 
-PROTOBUF_VERSION = "b829ff2a4614ff25048944b2cdc8e43b6488fda0"
+PROTOBUF_VERSION = "b829ff2a4614ff25048944b2cdc8e43b6488fda0" # 3.6.1.2
 
 http_archive(
     name = "com_google_protobuf",
