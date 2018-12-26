@@ -4,3 +4,4 @@ build --remote_local_fallback
 build --strategy=CoreCompile=standalone
 build --incompatible_remove_native_http_archive=false
 build --incompatible_package_name_is_a_function=false
+build --remote_http_cache=http://bazel-cache:8080/stackb/rules_proto/cas/main
