@@ -44,10 +44,12 @@ csharp_grpc_library()
 
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
 
-dotnet_register_toolchains("host")
-#dotnet_register_toolchains(dotnet_version="4.2.3")
-
 dotnet_repositories()
+
+dotnet_register_toolchains(
+    net_roslyn_version = "2.7.0",
+    net_version = "4.7.2",
+)
 
 load("//csharp/nuget:packages.bzl", nuget_packages = "packages")
 

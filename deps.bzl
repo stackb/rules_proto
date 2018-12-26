@@ -14,6 +14,8 @@ def github_archive(name, org, repo, ref, sha256):
             ],
             sha256 = sha256,
         )
+    else:
+        print("Skipping predefined dependency: '%s'" % name)
 
 def jar(name, artifact, sha1):
     """Declare a maven_jar
@@ -144,9 +146,9 @@ def com_github_grpc_grpc(**kwargs):
 # Create an issue for this.
 def io_bazel_rules_dotnet(**kwargs):
     name = "io_bazel_rules_dotnet"
-    ref = get_ref(name, "e1254bf789f5008cf0f3d26fb6031695413a2d50", kwargs)
-    sha256 = get_sha256(name, "4fdda2aeeef61a2ebbeac7d5885fe361adbc73cc93b395494a84b41865065b4d", kwargs)
-    github_archive(name, "stackb", "rules_dotnet", ref, sha256)
+    ref = get_ref(name, "9713688cf5db211319cc706f0ced0543d01af14c", kwargs) # PR#95
+    sha256 = get_sha256(name, "ad058d0e2f13d1729fcd1ba886ebe6e323e21a1a6fc234a1686471ac8dcd5d7e", kwargs)
+    github_archive(name, "bazelbuild", "rules_dotnet", ref, sha256)
 
 def io_bazel_rules_scala(**kwargs):
     name = "io_bazel_rules_scala"
