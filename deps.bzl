@@ -14,8 +14,6 @@ def github_archive(name, org, repo, ref, sha256):
             ],
             sha256 = sha256,
         )
-    else:
-        print("Skipping predefined dependency: '%s'" % name)
 
 def jar(name, artifact, sha1):
     """Declare a maven_jar
