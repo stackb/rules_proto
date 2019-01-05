@@ -1,4 +1,4 @@
-FROM l.gcr.io/google/bazel:0.19.2
+FROM l.gcr.io/google/bazel:0.20.0
 
 RUN apt-get update && apt-get install -y \
   xz-utils \
@@ -43,3 +43,9 @@ ADD license_accepter.sh /opt/
 RUN /opt/license_accepter.sh $ANDROID_HOME
 
 RUN /opt/android-sdk/tools/bin/sdkmanager "platforms;android-28" "build-tools;28.0.3"
+
+RUN apt-get install -y \
+  make
+
+RUN apt-get install -y \
+  maven
