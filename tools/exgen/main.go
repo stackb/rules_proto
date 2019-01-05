@@ -415,7 +415,8 @@ func mustWriteCircleCiConfig(dir string, languages []*Language) {
 	out.w("jobs:")
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {
-			out.w("  %s:", rule.Name)
+			key := strings.Replace(path.Join(lang.Dir, rule.Name), "/", "-", -1)
+			out.w("  %s:", key)
 			out.w("    docker:")
 			out.w("      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2")
 			out.w("    steps:")
@@ -430,7 +431,8 @@ func mustWriteCircleCiConfig(dir string, languages []*Language) {
 	out.w("    jobs:")
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {
-			out.w("      - %s", rule.Name)
+			key := strings.Replace(path.Join(lang.Dir, rule.Name), "/", "-", -1)
+			out.w("      - %s", key)
 		}
 	}
 
