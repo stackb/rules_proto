@@ -5,13 +5,13 @@ jobs:
       - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
     steps:
       - checkout
-      - run: make
+      - run: (cd cpp/example/cpp_proto_compile/ && bazel build :all)
   build20:
     docker:
       - image: gcr.io/stack-build/rules_proto/bazel:0.20.0
     steps:
       - checkout
-      - run: make
+      - run: (cd cpp/example/cpp_proto_compile/ && bazel build :all)
 workflows:
   version: 2
   build_and_test:
