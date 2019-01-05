@@ -121,7 +121,7 @@ Parameter name: path1
    at Microsoft.DotNet.Cli.Program.Main(String[] args)
 ~~~
 
-To remedy this, use --spawn_strategy=standalone for the csharp rules.
+To remedy this, use --strategy=CoreCompile=standalone for the csharp rules.
 
 **NOTE 2**: the csharp nuget dependency sha256 values do not appear stable.`),
 		Rules: []*Rule{
@@ -156,6 +156,9 @@ To remedy this, use --spawn_strategy=standalone for the csharp rules.
 				Implementation: csharpProtoLibraryRuleTemplate,
 				Doc:            "Generates csharp protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				BazelBuildArguments: []string{
+					"--strategy=CoreCompile=standalone",
+				},
 			},
 			&Rule{
 				Name:           "csharp_grpc_library",
@@ -166,6 +169,9 @@ To remedy this, use --spawn_strategy=standalone for the csharp rules.
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates csharp protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				BazelBuildArguments: []string{
+					"--strategy=CoreCompile=standalone",
+				},
 			},
 		},
 	}

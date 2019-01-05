@@ -1,4 +1,4 @@
-FROM l.gcr.io/google/bazel:0.20.0
+FROM l.gcr.io/google/bazel:0.19.2
 
 RUN apt-get update && apt-get install -y \
   xz-utils \

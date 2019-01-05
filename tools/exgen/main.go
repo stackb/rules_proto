@@ -65,6 +65,8 @@ type Rule struct {
 	Experimental bool
 	// Not compatible with remote execution
 	RemoteIncompatible bool
+	// required/suggested build arguments
+	BazelBuildArguments []string
 }
 
 type Attr struct {
@@ -415,13 +417,14 @@ func mustWriteCircleCiConfig(dir string, languages []*Language) {
 	out.w("jobs:")
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {
-			key := strings.Replace(path.Join("bazel-0.20.0", lang.Dir, rule.Name), "/", "-", -1)
+			key := strings.Replace(path.Join("bazel-0.19.2", lang.Dir, rule.Name), "/", "-", -1)
+			buildArgs := strings.Join(rule.BazelBuildArguments, " ")
 			out.w("  %s:", key)
 			out.w("    docker:")
-			out.w("      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081")
+			out.w("      - image: gcr.io/stack-build/rules_proto/bazel@sha256:d7094acee85ed3dd3cf035581f5da7852982e11423f045a25f260b9a259b11f8")
 			out.w("    steps:")
 			out.w("      - checkout")
-			out.w("      - run: (cd %s && bazel build :all)", path.Join(lang.Dir, "example", rule.Name))
+			out.w("      - run: (cd %s && bazel build %s :all)", path.Join(lang.Dir, "example", rule.Name), buildArgs)
 		}
 	}
 
@@ -431,7 +434,7 @@ func mustWriteCircleCiConfig(dir string, languages []*Language) {
 	out.w("    jobs:")
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {
-			key := strings.Replace(path.Join("bazel-0.20.0", lang.Dir, rule.Name), "/", "-", -1)
+			key := strings.Replace(path.Join("bazel-0.19.2", lang.Dir, rule.Name), "/", "-", -1)
 			out.w("      - %s", key)
 		}
 	}

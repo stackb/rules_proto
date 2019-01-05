@@ -12,7 +12,7 @@ Parameter name: path1
    at Microsoft.DotNet.Cli.Program.Main(String[] args)
 ~~~
 
-To remedy this, use --spawn_strategy=standalone for the csharp rules.
+To remedy this, use --strategy=CoreCompile=standalone for the csharp rules.
 
 **NOTE 2**: the csharp nuget dependency sha256 values do not appear stable.
 
