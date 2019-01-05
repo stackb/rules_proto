@@ -6,11 +6,11 @@ proto_plugin(
         ".pb.gw.go",
     ],
     # Show options:
-    # $ bazel run @com_github_grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway -- --help
+    # $ bazel run @grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway -- --help
     # options = [
     #     "logtostderr=true",
     # ],
-    tool = "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway",
+    tool = "@grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway",
     visibility = ["//visibility:public"],
 )
 
@@ -20,10 +20,10 @@ proto_plugin(
         ".swagger.json",
     ],
     # Show options:
-    # $ bazel run @com_github_grpc_ecosystem_grpc_gateway//protoc-gen-grpc-swagger -- --help
+    # $ bazel run @grpc_ecosystem_grpc_gateway//protoc-gen-grpc-swagger -- --help
     # options = [
     #     "json_names_for_fields",
     # ],
-    tool = "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-swagger",
+    tool = "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger",
     visibility = ["//visibility:public"],
 )

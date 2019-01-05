@@ -12,7 +12,7 @@ def gateway_grpc_library(**kwargs):
     if not compilers:
         compilers = [
             "@io_bazel_rules_go//proto:go_grpc",
-            "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
+            "@grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
         ]
 
     go_proto_library(
