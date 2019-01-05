@@ -177,6 +177,7 @@ func action(c *cli.Context) error {
 	}
 
 	mustWriteMakefile(dir, languages)
+	mustWriteCircleCiConfig(dir, languages)
 	mustWriteReadme(dir, c.String("header"), c.String("footer"), struct {
 		Ref, Sha256 string
 	}{
@@ -405,6 +406,35 @@ func mustWriteMakefile(dir string, languages []*Language) {
 	out.ln()
 
 	out.MustWrite(path.Join(dir, "Makefile.examples"))
+}
+
+func mustWriteCircleCiConfig(dir string, languages []*Language) {
+	out := &LineWriter{}
+
+	out.w("version: 2")
+	out.w("jobs:")
+	for _, lang := range languages {
+		for _, rule := range lang.Rules {
+			out.w("  %s:", rule.Name)
+			out.w("    docker:")
+			out.w("      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2")
+			out.w("    steps:")
+			out.w("      - checkout")
+			out.w("      - run: (cd %s && bazel build :all)", path.Join(lang.Dir, "example", rule.Name))
+		}
+	}
+
+	out.w("workflows:")
+	out.w("  version: 2")
+	out.w("  build_and_test:")
+	out.w("    jobs:")
+	for _, lang := range languages {
+		for _, rule := range lang.Rules {
+			out.w("      - %s", rule.Name)
+		}
+	}
+
+	out.MustWrite(path.Join(dir, ".circleci/config.yml"))
 }
 
 func mustWriteLanguageReadme(dir string, lang *Language) {
