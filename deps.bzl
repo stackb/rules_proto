@@ -285,6 +285,14 @@ def com_google_guava_guava(**kwargs):
     sha1 = get_sha1(name, "89507701249388e1ed5ddcf8c41f4ce1be7831ef", kwargs)
     jar(name, artifact, sha1)
 
+def com_google_guava_guava_android(**kwargs):
+    """grpc java plugin and jars
+    """
+    name = "com_google_guava_guava_android"
+    artifact = get_artifact(name, "com.google.guava:guava:27.0.1-android", kwargs)
+    sha1 = get_sha1(name, "89507701249388e1ed5ddcf8c41f4ce1be7831ef", kwargs)
+    jar(name, artifact, sha1)
+
 def com_thesamet_scalapb_scalapb_json4s(**kwargs):
     """json parsing library for scala
     """
