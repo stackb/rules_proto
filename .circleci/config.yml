@@ -1,464 +1,464 @@
 version: 2
 jobs:
-  android-android_proto_compile:
+  bazel-0.20.0-android-android_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd android/example/android_proto_compile && bazel build :all)
-  android-android_grpc_compile:
+  bazel-0.20.0-android-android_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd android/example/android_grpc_compile && bazel build :all)
-  android-android_proto_library:
+  bazel-0.20.0-android-android_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd android/example/android_proto_library && bazel build :all)
-  android-android_grpc_library:
+  bazel-0.20.0-android-android_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd android/example/android_grpc_library && bazel build :all)
-  closure-closure_proto_compile:
+  bazel-0.20.0-closure-closure_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd closure/example/closure_proto_compile && bazel build :all)
-  closure-closure_proto_library:
+  bazel-0.20.0-closure-closure_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd closure/example/closure_proto_library && bazel build :all)
-  cpp-cpp_proto_compile:
+  bazel-0.20.0-cpp-cpp_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd cpp/example/cpp_proto_compile && bazel build :all)
-  cpp-cpp_grpc_compile:
+  bazel-0.20.0-cpp-cpp_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd cpp/example/cpp_grpc_compile && bazel build :all)
-  cpp-cpp_proto_library:
+  bazel-0.20.0-cpp-cpp_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd cpp/example/cpp_proto_library && bazel build :all)
-  cpp-cpp_grpc_library:
+  bazel-0.20.0-cpp-cpp_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd cpp/example/cpp_grpc_library && bazel build :all)
-  csharp-csharp_proto_compile:
+  bazel-0.20.0-csharp-csharp_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd csharp/example/csharp_proto_compile && bazel build :all)
-  csharp-csharp_grpc_compile:
+  bazel-0.20.0-csharp-csharp_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd csharp/example/csharp_grpc_compile && bazel build :all)
-  csharp-csharp_proto_library:
+  bazel-0.20.0-csharp-csharp_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd csharp/example/csharp_proto_library && bazel build :all)
-  csharp-csharp_grpc_library:
+  bazel-0.20.0-csharp-csharp_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd csharp/example/csharp_grpc_library && bazel build :all)
-  dart-dart_proto_compile:
+  bazel-0.20.0-dart-dart_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd dart/example/dart_proto_compile && bazel build :all)
-  dart-dart_grpc_compile:
+  bazel-0.20.0-dart-dart_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd dart/example/dart_grpc_compile && bazel build :all)
-  dart-dart_proto_library:
+  bazel-0.20.0-dart-dart_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd dart/example/dart_proto_library && bazel build :all)
-  dart-dart_grpc_library:
+  bazel-0.20.0-dart-dart_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd dart/example/dart_grpc_library && bazel build :all)
-  go-go_proto_compile:
+  bazel-0.20.0-go-go_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd go/example/go_proto_compile && bazel build :all)
-  go-go_grpc_compile:
+  bazel-0.20.0-go-go_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd go/example/go_grpc_compile && bazel build :all)
-  go-go_proto_library:
+  bazel-0.20.0-go-go_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd go/example/go_proto_library && bazel build :all)
-  go-go_grpc_library:
+  bazel-0.20.0-go-go_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd go/example/go_grpc_library && bazel build :all)
-  java-java_proto_compile:
+  bazel-0.20.0-java-java_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd java/example/java_proto_compile && bazel build :all)
-  java-java_grpc_compile:
+  bazel-0.20.0-java-java_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd java/example/java_grpc_compile && bazel build :all)
-  java-java_proto_library:
+  bazel-0.20.0-java-java_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd java/example/java_proto_library && bazel build :all)
-  java-java_grpc_library:
+  bazel-0.20.0-java-java_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd java/example/java_grpc_library && bazel build :all)
-  node-node_proto_compile:
+  bazel-0.20.0-node-node_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd node/example/node_proto_compile && bazel build :all)
-  node-node_grpc_compile:
+  bazel-0.20.0-node-node_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd node/example/node_grpc_compile && bazel build :all)
-  node-node_proto_library:
+  bazel-0.20.0-node-node_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd node/example/node_proto_library && bazel build :all)
-  node-node_grpc_library:
+  bazel-0.20.0-node-node_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd node/example/node_grpc_library && bazel build :all)
-  objc-objc_proto_compile:
+  bazel-0.20.0-objc-objc_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd objc/example/objc_proto_compile && bazel build :all)
-  objc-objc_grpc_compile:
+  bazel-0.20.0-objc-objc_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd objc/example/objc_grpc_compile && bazel build :all)
-  php-php_proto_compile:
+  bazel-0.20.0-php-php_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd php/example/php_proto_compile && bazel build :all)
-  php-php_grpc_compile:
+  bazel-0.20.0-php-php_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd php/example/php_grpc_compile && bazel build :all)
-  python-python_proto_compile:
+  bazel-0.20.0-python-python_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd python/example/python_proto_compile && bazel build :all)
-  python-python_grpc_compile:
+  bazel-0.20.0-python-python_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd python/example/python_grpc_compile && bazel build :all)
-  python-python_proto_library:
+  bazel-0.20.0-python-python_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd python/example/python_proto_library && bazel build :all)
-  python-python_grpc_library:
+  bazel-0.20.0-python-python_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd python/example/python_grpc_library && bazel build :all)
-  ruby-ruby_proto_compile:
+  bazel-0.20.0-ruby-ruby_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd ruby/example/ruby_proto_compile && bazel build :all)
-  ruby-ruby_grpc_compile:
+  bazel-0.20.0-ruby-ruby_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd ruby/example/ruby_grpc_compile && bazel build :all)
-  ruby-ruby_proto_library:
+  bazel-0.20.0-ruby-ruby_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd ruby/example/ruby_proto_library && bazel build :all)
-  ruby-ruby_grpc_library:
+  bazel-0.20.0-ruby-ruby_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd ruby/example/ruby_grpc_library && bazel build :all)
-  rust-rust_proto_compile:
+  bazel-0.20.0-rust-rust_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd rust/example/rust_proto_compile && bazel build :all)
-  rust-rust_grpc_compile:
+  bazel-0.20.0-rust-rust_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd rust/example/rust_grpc_compile && bazel build :all)
-  rust-rust_proto_library:
+  bazel-0.20.0-rust-rust_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd rust/example/rust_proto_library && bazel build :all)
-  rust-rust_grpc_library:
+  bazel-0.20.0-rust-rust_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd rust/example/rust_grpc_library && bazel build :all)
-  scala-scala_proto_compile:
+  bazel-0.20.0-scala-scala_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd scala/example/scala_proto_compile && bazel build :all)
-  scala-scala_grpc_compile:
+  bazel-0.20.0-scala-scala_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd scala/example/scala_grpc_compile && bazel build :all)
-  scala-scala_proto_library:
+  bazel-0.20.0-scala-scala_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd scala/example/scala_proto_library && bazel build :all)
-  scala-scala_grpc_library:
+  bazel-0.20.0-scala-scala_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd scala/example/scala_grpc_library && bazel build :all)
-  swift-swift_proto_compile:
+  bazel-0.20.0-swift-swift_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd swift/example/swift_proto_compile && bazel build :all)
-  swift-swift_grpc_compile:
+  bazel-0.20.0-swift-swift_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd swift/example/swift_grpc_compile && bazel build :all)
-  swift-swift_proto_library:
+  bazel-0.20.0-swift-swift_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd swift/example/swift_proto_library && bazel build :all)
-  swift-swift_grpc_library:
+  bazel-0.20.0-swift-swift_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd swift/example/swift_grpc_library && bazel build :all)
-  github.com-gogo-protobuf-gogo_proto_compile:
+  bazel-0.20.0-github.com-gogo-protobuf-gogo_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogo_proto_compile && bazel build :all)
-  github.com-gogo-protobuf-gogo_grpc_compile:
+  bazel-0.20.0-github.com-gogo-protobuf-gogo_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogo_grpc_compile && bazel build :all)
-  github.com-gogo-protobuf-gogo_proto_library:
+  bazel-0.20.0-github.com-gogo-protobuf-gogo_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogo_proto_library && bazel build :all)
-  github.com-gogo-protobuf-gogo_grpc_library:
+  bazel-0.20.0-github.com-gogo-protobuf-gogo_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogo_grpc_library && bazel build :all)
-  github.com-gogo-protobuf-gogofast_proto_compile:
+  bazel-0.20.0-github.com-gogo-protobuf-gogofast_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogofast_proto_compile && bazel build :all)
-  github.com-gogo-protobuf-gogofast_grpc_compile:
+  bazel-0.20.0-github.com-gogo-protobuf-gogofast_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogofast_grpc_compile && bazel build :all)
-  github.com-gogo-protobuf-gogofast_proto_library:
+  bazel-0.20.0-github.com-gogo-protobuf-gogofast_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogofast_proto_library && bazel build :all)
-  github.com-gogo-protobuf-gogofast_grpc_library:
+  bazel-0.20.0-github.com-gogo-protobuf-gogofast_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogofast_grpc_library && bazel build :all)
-  github.com-gogo-protobuf-gogofaster_proto_compile:
+  bazel-0.20.0-github.com-gogo-protobuf-gogofaster_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogofaster_proto_compile && bazel build :all)
-  github.com-gogo-protobuf-gogofaster_grpc_compile:
+  bazel-0.20.0-github.com-gogo-protobuf-gogofaster_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogofaster_grpc_compile && bazel build :all)
-  github.com-gogo-protobuf-gogofaster_proto_library:
+  bazel-0.20.0-github.com-gogo-protobuf-gogofaster_proto_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogofaster_proto_library && bazel build :all)
-  github.com-gogo-protobuf-gogofaster_grpc_library:
+  bazel-0.20.0-github.com-gogo-protobuf-gogofaster_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/gogo/protobuf/example/gogofaster_grpc_library && bazel build :all)
-  github.com-grpc-ecosystem-grpc-gateway-gateway_grpc_compile:
+  bazel-0.20.0-github.com-grpc-ecosystem-grpc-gateway-gateway_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_compile && bazel build :all)
-  github.com-grpc-ecosystem-grpc-gateway-gateway_swagger_compile:
+  bazel-0.20.0-github.com-grpc-ecosystem-grpc-gateway-gateway_swagger_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_swagger_compile && bazel build :all)
-  github.com-grpc-ecosystem-grpc-gateway-gateway_grpc_library:
+  bazel-0.20.0-github.com-grpc-ecosystem-grpc-gateway-gateway_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_library && bazel build :all)
-  github.com-stackb-grpc.js-closure_grpc_compile:
+  bazel-0.20.0-github.com-stackb-grpc.js-closure_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/stackb/grpc.js/example/closure_grpc_compile && bazel build :all)
-  github.com-stackb-grpc.js-closure_grpc_library:
+  bazel-0.20.0-github.com-stackb-grpc.js-closure_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/stackb/grpc.js/example/closure_grpc_library && bazel build :all)
-  github.com-grpc-grpc-web-closure_grpc_compile:
+  bazel-0.20.0-github.com-grpc-grpc-web-closure_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/grpc/grpc-web/example/closure_grpc_compile && bazel build :all)
-  github.com-grpc-grpc-web-commonjs_grpc_compile:
+  bazel-0.20.0-github.com-grpc-grpc-web-commonjs_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/grpc/grpc-web/example/commonjs_grpc_compile && bazel build :all)
-  github.com-grpc-grpc-web-commonjs_dts_grpc_compile:
+  bazel-0.20.0-github.com-grpc-grpc-web-commonjs_dts_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/grpc/grpc-web/example/commonjs_dts_grpc_compile && bazel build :all)
-  github.com-grpc-grpc-web-ts_grpc_compile:
+  bazel-0.20.0-github.com-grpc-grpc-web-ts_grpc_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/grpc/grpc-web/example/ts_grpc_compile && bazel build :all)
-  github.com-grpc-grpc-web-closure_grpc_library:
+  bazel-0.20.0-github.com-grpc-grpc-web-closure_grpc_library:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/grpc/grpc-web/example/closure_grpc_library && bazel build :all)
-  github.com-improbable-eng-ts-protoc-gen-ts_proto_compile:
+  bazel-0.20.0-github.com-improbable-eng-ts-protoc-gen-ts_proto_compile:
     docker:
-      - image: gcr.io/stack-build/rules_proto/bazel:0.19.2
+      - image: gcr.io/stack-build/rules_proto/bazel@sha256:5afbc21f56720e7784b46f974828a2938e64ecd808eb0a09193f856891d1a081
     steps:
       - checkout
       - run: (cd github.com/improbable-eng/ts-protoc-gen/example/ts_proto_compile && bazel build :all)
@@ -466,80 +466,80 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - android-android_proto_compile
-      - android-android_grpc_compile
-      - android-android_proto_library
-      - android-android_grpc_library
-      - closure-closure_proto_compile
-      - closure-closure_proto_library
-      - cpp-cpp_proto_compile
-      - cpp-cpp_grpc_compile
-      - cpp-cpp_proto_library
-      - cpp-cpp_grpc_library
-      - csharp-csharp_proto_compile
-      - csharp-csharp_grpc_compile
-      - csharp-csharp_proto_library
-      - csharp-csharp_grpc_library
-      - dart-dart_proto_compile
-      - dart-dart_grpc_compile
-      - dart-dart_proto_library
-      - dart-dart_grpc_library
-      - go-go_proto_compile
-      - go-go_grpc_compile
-      - go-go_proto_library
-      - go-go_grpc_library
-      - java-java_proto_compile
-      - java-java_grpc_compile
-      - java-java_proto_library
-      - java-java_grpc_library
-      - node-node_proto_compile
-      - node-node_grpc_compile
-      - node-node_proto_library
-      - node-node_grpc_library
-      - objc-objc_proto_compile
-      - objc-objc_grpc_compile
-      - php-php_proto_compile
-      - php-php_grpc_compile
-      - python-python_proto_compile
-      - python-python_grpc_compile
-      - python-python_proto_library
-      - python-python_grpc_library
-      - ruby-ruby_proto_compile
-      - ruby-ruby_grpc_compile
-      - ruby-ruby_proto_library
-      - ruby-ruby_grpc_library
-      - rust-rust_proto_compile
-      - rust-rust_grpc_compile
-      - rust-rust_proto_library
-      - rust-rust_grpc_library
-      - scala-scala_proto_compile
-      - scala-scala_grpc_compile
-      - scala-scala_proto_library
-      - scala-scala_grpc_library
-      - swift-swift_proto_compile
-      - swift-swift_grpc_compile
-      - swift-swift_proto_library
-      - swift-swift_grpc_library
-      - github.com-gogo-protobuf-gogo_proto_compile
-      - github.com-gogo-protobuf-gogo_grpc_compile
-      - github.com-gogo-protobuf-gogo_proto_library
-      - github.com-gogo-protobuf-gogo_grpc_library
-      - github.com-gogo-protobuf-gogofast_proto_compile
-      - github.com-gogo-protobuf-gogofast_grpc_compile
-      - github.com-gogo-protobuf-gogofast_proto_library
-      - github.com-gogo-protobuf-gogofast_grpc_library
-      - github.com-gogo-protobuf-gogofaster_proto_compile
-      - github.com-gogo-protobuf-gogofaster_grpc_compile
-      - github.com-gogo-protobuf-gogofaster_proto_library
-      - github.com-gogo-protobuf-gogofaster_grpc_library
-      - github.com-grpc-ecosystem-grpc-gateway-gateway_grpc_compile
-      - github.com-grpc-ecosystem-grpc-gateway-gateway_swagger_compile
-      - github.com-grpc-ecosystem-grpc-gateway-gateway_grpc_library
-      - github.com-stackb-grpc.js-closure_grpc_compile
-      - github.com-stackb-grpc.js-closure_grpc_library
-      - github.com-grpc-grpc-web-closure_grpc_compile
-      - github.com-grpc-grpc-web-commonjs_grpc_compile
-      - github.com-grpc-grpc-web-commonjs_dts_grpc_compile
-      - github.com-grpc-grpc-web-ts_grpc_compile
-      - github.com-grpc-grpc-web-closure_grpc_library
-      - github.com-improbable-eng-ts-protoc-gen-ts_proto_compile
+      - bazel-0.20.0-android-android_proto_compile
+      - bazel-0.20.0-android-android_grpc_compile
+      - bazel-0.20.0-android-android_proto_library
+      - bazel-0.20.0-android-android_grpc_library
+      - bazel-0.20.0-closure-closure_proto_compile
+      - bazel-0.20.0-closure-closure_proto_library
+      - bazel-0.20.0-cpp-cpp_proto_compile
+      - bazel-0.20.0-cpp-cpp_grpc_compile
+      - bazel-0.20.0-cpp-cpp_proto_library
+      - bazel-0.20.0-cpp-cpp_grpc_library
+      - bazel-0.20.0-csharp-csharp_proto_compile
+      - bazel-0.20.0-csharp-csharp_grpc_compile
+      - bazel-0.20.0-csharp-csharp_proto_library
+      - bazel-0.20.0-csharp-csharp_grpc_library
+      - bazel-0.20.0-dart-dart_proto_compile
+      - bazel-0.20.0-dart-dart_grpc_compile
+      - bazel-0.20.0-dart-dart_proto_library
+      - bazel-0.20.0-dart-dart_grpc_library
+      - bazel-0.20.0-go-go_proto_compile
+      - bazel-0.20.0-go-go_grpc_compile
+      - bazel-0.20.0-go-go_proto_library
+      - bazel-0.20.0-go-go_grpc_library
+      - bazel-0.20.0-java-java_proto_compile
+      - bazel-0.20.0-java-java_grpc_compile
+      - bazel-0.20.0-java-java_proto_library
+      - bazel-0.20.0-java-java_grpc_library
+      - bazel-0.20.0-node-node_proto_compile
+      - bazel-0.20.0-node-node_grpc_compile
+      - bazel-0.20.0-node-node_proto_library
+      - bazel-0.20.0-node-node_grpc_library
+      - bazel-0.20.0-objc-objc_proto_compile
+      - bazel-0.20.0-objc-objc_grpc_compile
+      - bazel-0.20.0-php-php_proto_compile
+      - bazel-0.20.0-php-php_grpc_compile
+      - bazel-0.20.0-python-python_proto_compile
+      - bazel-0.20.0-python-python_grpc_compile
+      - bazel-0.20.0-python-python_proto_library
+      - bazel-0.20.0-python-python_grpc_library
+      - bazel-0.20.0-ruby-ruby_proto_compile
+      - bazel-0.20.0-ruby-ruby_grpc_compile
+      - bazel-0.20.0-ruby-ruby_proto_library
+      - bazel-0.20.0-ruby-ruby_grpc_library
+      - bazel-0.20.0-rust-rust_proto_compile
+      - bazel-0.20.0-rust-rust_grpc_compile
+      - bazel-0.20.0-rust-rust_proto_library
+      - bazel-0.20.0-rust-rust_grpc_library
+      - bazel-0.20.0-scala-scala_proto_compile
+      - bazel-0.20.0-scala-scala_grpc_compile
+      - bazel-0.20.0-scala-scala_proto_library
+      - bazel-0.20.0-scala-scala_grpc_library
+      - bazel-0.20.0-swift-swift_proto_compile
+      - bazel-0.20.0-swift-swift_grpc_compile
+      - bazel-0.20.0-swift-swift_proto_library
+      - bazel-0.20.0-swift-swift_grpc_library
+      - bazel-0.20.0-github.com-gogo-protobuf-gogo_proto_compile
+      - bazel-0.20.0-github.com-gogo-protobuf-gogo_grpc_compile
+      - bazel-0.20.0-github.com-gogo-protobuf-gogo_proto_library
+      - bazel-0.20.0-github.com-gogo-protobuf-gogo_grpc_library
+      - bazel-0.20.0-github.com-gogo-protobuf-gogofast_proto_compile
+      - bazel-0.20.0-github.com-gogo-protobuf-gogofast_grpc_compile
+      - bazel-0.20.0-github.com-gogo-protobuf-gogofast_proto_library
+      - bazel-0.20.0-github.com-gogo-protobuf-gogofast_grpc_library
+      - bazel-0.20.0-github.com-gogo-protobuf-gogofaster_proto_compile
+      - bazel-0.20.0-github.com-gogo-protobuf-gogofaster_grpc_compile
+      - bazel-0.20.0-github.com-gogo-protobuf-gogofaster_proto_library
+      - bazel-0.20.0-github.com-gogo-protobuf-gogofaster_grpc_library
+      - bazel-0.20.0-github.com-grpc-ecosystem-grpc-gateway-gateway_grpc_compile
+      - bazel-0.20.0-github.com-grpc-ecosystem-grpc-gateway-gateway_swagger_compile
+      - bazel-0.20.0-github.com-grpc-ecosystem-grpc-gateway-gateway_grpc_library
+      - bazel-0.20.0-github.com-stackb-grpc.js-closure_grpc_compile
+      - bazel-0.20.0-github.com-stackb-grpc.js-closure_grpc_library
+      - bazel-0.20.0-github.com-grpc-grpc-web-closure_grpc_compile
+      - bazel-0.20.0-github.com-grpc-grpc-web-commonjs_grpc_compile
+      - bazel-0.20.0-github.com-grpc-grpc-web-commonjs_dts_grpc_compile
+      - bazel-0.20.0-github.com-grpc-grpc-web-ts_grpc_compile
+      - bazel-0.20.0-github.com-grpc-grpc-web-closure_grpc_library
+      - bazel-0.20.0-github.com-improbable-eng-ts-protoc-gen-ts_proto_compile
