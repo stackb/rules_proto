@@ -20,7 +20,7 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 
-load("@com_github_grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
+load("@grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
 
 grpc_gateway_repositories()`)
 
@@ -38,7 +38,7 @@ def {{ .Rule.Name }}(**kwargs):
     if not compilers:
         compilers = [
             "@io_bazel_rules_go//proto:go_grpc",
-            "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
+            "@grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
         ]
 
     go_proto_library(

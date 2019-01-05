@@ -166,8 +166,8 @@ def com_github_yugui_rules_ruby(**kwargs):
     sha256 = get_sha256(name, "7991ded3b902aba4c13fa7bdd67132edfcc279930b356737c1a3d3b2686d08c8", kwargs)
     github_archive(name, "yugui", "rules_ruby", ref, sha256)
 
-def com_github_grpc_ecosystem_grpc_gateway(**kwargs):
-    name = "com_github_grpc_ecosystem_grpc_gateway"
+def grpc_ecosystem_grpc_gateway(**kwargs):
+    name = "grpc_ecosystem_grpc_gateway"
     ref = get_ref(name, "8aa3d3f00fbaea619d864e688cd045497aa30fe8", kwargs)  # Oct 2, 2018,
     sha256 = get_sha256(name, "e21e3a3ac5e2be3869474f1c703db5d4f72e459e07084e9228eaaf2484e0dd48", kwargs)
     github_archive(name, "grpc-ecosystem", "grpc-gateway", ref, sha256)
