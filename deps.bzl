@@ -324,7 +324,7 @@ def com_github_scalapb_scalapb(**kwargs):
         http_archive(
             name = "com_github_scalapb_scalapb",
             url = "https://github.com/scalapb/ScalaPB/releases/download/v0.8.2/scalapbc-0.8.2.zip",
-            sha256 = "bda0b44b50f0a816342a52c34e6a341b1a792f2a6d26f4f060852f8f10f5d850",
+            sha256 = "b7efaddcf33268c2dfd5815587d25615dc853ee2843827a6a6d078bb62d48bef",
             strip_prefix = "scalapbc-0.8.2/lib",
             build_file_content = """
 java_import(
