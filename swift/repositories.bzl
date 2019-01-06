@@ -17,9 +17,10 @@ def _swift_toolchain_impl(repository_ctx):
     Args:
       repository_ctx: The repository rule context.
     """
+    clang = repository_ctx.which("clang")
     repository_ctx.file("BUILD.bazel", BUILD_FILE.format(
         arch = repository_ctx.attr.arch,
-        clang_executable = repository_ctx.attr.clang_executable,
+        clang_executable = clang or repository_ctx.attr.clang_executable,
         os = repository_ctx.attr.os,
         root = repository_ctx.attr.root,
     ))
