@@ -323,13 +323,13 @@ def com_github_scalapb_scalapb(**kwargs):
     if "com_github_scalapb_scalapb" not in native.existing_rules():
         http_archive(
             name = "com_github_scalapb_scalapb",
-            url = "https://github.com/scalapb/ScalaPB/releases/download/v0.8.0/scalapbc-0.8.0.zip",
-            sha256 = "bda0b44b50f0a816342a52c34e6a341b1a792f2a6d26f4f060852f8f10f5d854",
-            strip_prefix = "scalapbc-0.8.0/lib",
+            url = "https://github.com/scalapb/ScalaPB/releases/download/v0.8.2/scalapbc-0.8.2.zip",
+            sha256 = "bda0b44b50f0a816342a52c34e6a341b1a792f2a6d26f4f060852f8f10f5d850",
+            strip_prefix = "scalapbc-0.8.2/lib",
             build_file_content = """
 java_import(
     name = "compilerplugin",
-    jars = ["com.thesamet.scalapb.compilerplugin-0.8.0.jar"],
+    jars = ["com.thesamet.scalapb.compilerplugin-0.8.2.jar"],
     visibility = ["//visibility:public"],
 )
 java_import(
