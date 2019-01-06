@@ -278,11 +278,19 @@ def io_grpc_grpc_java(**kwargs):
     github_archive(name, "grpc", "grpc-java", ref, sha256)
 
 def com_google_guava_guava(**kwargs):
-    """grpc java plugin and jars
+    """guava jar dependency
     """
     name = "com_google_guava_guava"
     artifact = get_artifact(name, "com.google.guava:guava:20.0", kwargs)
     sha1 = get_sha1(name, "89507701249388e1ed5ddcf8c41f4ce1be7831ef", kwargs)
+    jar(name, artifact, sha1)
+
+def javax_annotation_javax_annotation_api(**kwargs):
+    """javax annotation jar dependency
+    """
+    name = "javax_annotation_javax_annotation_api"
+    artifact = get_artifact(name, "javax.annotation:javax.annotation-api:1.3.2", kwargs)
+    sha1 = get_sha1(name, "934c04d3cfef185a8008e7bf34331b79730a9d43", kwargs)
     jar(name, artifact, sha1)
 
 def com_thesamet_scalapb_scalapb_json4s(**kwargs):

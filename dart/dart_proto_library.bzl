@@ -6,12 +6,14 @@ def dart_proto_library(**kwargs):
     deps = kwargs.get("deps")
     verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.get("transitive", True)
 
     name_pb = name + "_pb"
     dart_proto_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
+        transitive = transitive,
         verbose = verbose,
     )
     dart_library(

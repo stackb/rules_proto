@@ -53,7 +53,7 @@ def {{ .Rule.Name }}(**kwargs):
     deps = kwargs.get("deps")
     verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
-    transitive = kwargs.get("transitive")
+    transitive = kwargs.get("transitive", True)
 
     name_pb = name + "_pb"
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
@@ -82,7 +82,7 @@ def {{ .Rule.Name }}(**kwargs):
     deps = kwargs.get("deps")
     verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
-    transitive = kwargs.get("transitive")
+    transitive = kwargs.get("transitive", True)
 
     name_pb = name + "_pb"
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
