@@ -316,7 +316,14 @@ def _apply_plugin_transitivity_rules(ctx, targets, plugin):
     # library dependencies, we don't actually want to compile well-known types
     # (but do want to compile everything else).
     #
-    transitivity = plugin.transitivity + ctx.attr.transitivity
+    # Use `update` instead of `+` to comply to the following change in starlark
+    # syntax:
+    #       --incompatible_disallow_dict_plus
+    # TODO: Remove the above comment once --incompatible_disallow_dict_plus
+    # becomes well known by developers working on this repository.
+    transitivity = {}
+    transitivity.update(plugin.transitivity)
+    transitivity.update(ctx.attr.transitivity)
 
     for pattern, rule in transitivity.items():
         if rule == "exclude":
@@ -412,7 +419,7 @@ def proto_compile_impl(ctx):
     outdir = descriptor.dirname
 
     # <list<ProtoInfo>> A list of ProtoInfo
-    deps = [dep.proto for dep in ctx.attr.deps]
+    deps = [dep[ProtoInfo] for dep in ctx.attr.deps]
 
     # <list<PluginInfo>> A list of PluginInfo
     plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
@@ -615,7 +622,7 @@ proto_compile = rule(
         "deps": attr.label_list(
             doc = "proto_library dependencies",
             mandatory = True,
-            providers = ["proto"],
+            providers = [ProtoInfo],
         ),
         "plugins": attr.label_list(
             doc = "List of protoc plugins to apply",
