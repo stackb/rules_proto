@@ -136,8 +136,8 @@ def com_google_protobuf(**kwargs):
 
 def com_github_grpc_grpc(**kwargs):
     name = "com_github_grpc_grpc"
-    ref = get_ref(name, "f0fbee59326402e6c1f0a7c6a1f8899fd2b0025a", kwargs)  # Bazel 0.20.0 workspace fixes.
-    sha256 = get_sha256(name, "6cea8d3dbe289872343aafe67736539b0a28ecd062d3ff4965f157f5d9d77d1d", kwargs)
+    ref = get_ref(name, "v1.18.0", kwargs)
+    sha256 = get_sha256(name, "069a52a166382dd7b99bf8e7e805f6af40d797cfcee5f80e530ca3fc75fd06e2", kwargs)
     github_archive(name, "grpc", "grpc", ref, sha256)
 
 # NOTE(pcj): Using a different version of dotnet here that seems to have a bad assembly reference.
