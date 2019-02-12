@@ -15,6 +15,8 @@ def gogo_grpc_library(**kwargs):
     deps = kwargs.get("deps")
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.pop("transitive", True)
+    verbose = kwargs.pop("verbose", 0)
     go_deps = kwargs.get("go_deps", [])
 
     name_pb = name + "_pb"
@@ -22,7 +24,8 @@ def gogo_grpc_library(**kwargs):
     gogo_grpc_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
+        transitive = transitive,
+        verbose = verbose,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
         visibility = visibility,
     )

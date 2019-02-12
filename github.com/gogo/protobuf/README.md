@@ -237,6 +237,8 @@ def gogo_proto_library(**kwargs):
     deps = kwargs.get("deps")
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.pop("transitive", True)
+    verbose = kwargs.pop("verbose", 0)
     go_deps = kwargs.get("go_deps", [])
 
     name_pb = name + "_pb"
@@ -244,7 +246,8 @@ def gogo_proto_library(**kwargs):
     gogo_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
+        transitive = transitive,
+        verbose = verbose,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
         visibility = visibility,
     )
@@ -337,6 +340,8 @@ def gogo_grpc_library(**kwargs):
     deps = kwargs.get("deps")
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.pop("transitive", True)
+    verbose = kwargs.pop("verbose", 0)
     go_deps = kwargs.get("go_deps", [])
 
     name_pb = name + "_pb"
@@ -344,7 +349,8 @@ def gogo_grpc_library(**kwargs):
     gogo_grpc_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
+        transitive = transitive,
+        verbose = verbose,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
         visibility = visibility,
     )
@@ -606,6 +612,8 @@ def gogofast_proto_library(**kwargs):
     deps = kwargs.get("deps")
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.pop("transitive", True)
+    verbose = kwargs.pop("verbose", 0)
     go_deps = kwargs.get("go_deps", [])
 
     name_pb = name + "_pb"
@@ -613,7 +621,8 @@ def gogofast_proto_library(**kwargs):
     gogofast_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
+        transitive = transitive,
+        verbose = verbose,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
         visibility = visibility,
     )
@@ -706,6 +715,8 @@ def gogofast_grpc_library(**kwargs):
     deps = kwargs.get("deps")
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.pop("transitive", True)
+    verbose = kwargs.pop("verbose", 0)
     go_deps = kwargs.get("go_deps", [])
 
     name_pb = name + "_pb"
@@ -713,7 +724,8 @@ def gogofast_grpc_library(**kwargs):
     gogofast_grpc_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
+        transitive = transitive,
+        verbose = verbose,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
         visibility = visibility,
     )
@@ -975,6 +987,8 @@ def gogofaster_proto_library(**kwargs):
     deps = kwargs.get("deps")
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.pop("transitive", True)
+    verbose = kwargs.pop("verbose", 0)
     go_deps = kwargs.get("go_deps", [])
 
     name_pb = name + "_pb"
@@ -982,7 +996,8 @@ def gogofaster_proto_library(**kwargs):
     gogofaster_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
+        transitive = transitive,
+        verbose = verbose,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
         visibility = visibility,
     )
@@ -1075,6 +1090,8 @@ def gogofaster_grpc_library(**kwargs):
     deps = kwargs.get("deps")
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
+    transitive = kwargs.pop("transitive", True)
+    verbose = kwargs.pop("verbose", 0)
     go_deps = kwargs.get("go_deps", [])
 
     name_pb = name + "_pb"
@@ -1082,7 +1099,8 @@ def gogofaster_grpc_library(**kwargs):
     gogofaster_grpc_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
+        transitive = transitive,
+        verbose = verbose,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
         visibility = visibility,
     )
