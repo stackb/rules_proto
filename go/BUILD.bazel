@@ -2,6 +2,7 @@ load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "go",
+    options = ["paths=source_relative"],
     outputs = [".pb.go"],
     tool = "@com_github_golang_protobuf//protoc-gen-go",
     transitivity = {
@@ -12,7 +13,7 @@ proto_plugin(
 
 proto_plugin(
     name = "grpc_go",
-    options = ["plugins=grpc"],
+    options = ["paths=source_relative", "plugins=grpc"],
     outputs = [".pb.go"],
     tool = "@com_github_golang_protobuf//protoc-gen-go",
     transitivity = {
