@@ -4,10 +4,15 @@ load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
 def github_archive(name, org, repo, ref, sha256):
     """Declare an http_archive from github
     """
+    # correct github quirk about removing the 'v' in front of tags
+    stripRef = ref
+    if stripRef.startswith('v'):
+        stripRef = ref[1:]
+
     if name not in native.existing_rules():
         http_archive(
             name = name,
-            strip_prefix = repo + "-" + ref,
+            strip_prefix = repo + "-" + stripRef,
             urls = [
                 "https://mirror.bazel.build/github.com/%s/%s/archive/%s.tar.gz" % (org, repo, ref),
                 "https://github.com/%s/%s/archive/%s.tar.gz" % (org, repo, ref),

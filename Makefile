@@ -47,4 +47,4 @@ closure_test:
 	bazel test \
 		//github.com/grpc/grpc-web/example/routeguide/...
 
-all: compile library clients servers tests
+all: clients servers tests
