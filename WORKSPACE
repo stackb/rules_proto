@@ -7,13 +7,13 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 # =========================================
 
-PROTOBUF_VERSION = "b829ff2a4614ff25048944b2cdc8e43b6488fda0"
+PROTOBUF_VERSION = "3.6.1.3"
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "5d82a718e271e7fda626f983628e4b4601221788c2244763a9e57eda4cc667dd",
+    sha256 = "73fdad358857e120fd0fa19e071a96e15c0f23bb25f85d3f7009abfd4f264a2a",
     strip_prefix = "protobuf-" + PROTOBUF_VERSION,
-    url = "https://github.com/google/protobuf/archive/%s.tar.gz" % PROTOBUF_VERSION,
+    url = "https://github.com/google/protobuf/archive/v%s.tar.gz" % PROTOBUF_VERSION,
 )
 
 # =========================================

@@ -130,8 +130,8 @@ def com_github_nanopb_nanopb(**kwargs):
 
 def com_google_protobuf(**kwargs):
     name = "com_google_protobuf"
-    ref = get_ref(name, "b829ff2a4614ff25048944b2cdc8e43b6488fda0", kwargs)
-    sha256 = get_sha256(name, "5d82a718e271e7fda626f983628e4b4601221788c2244763a9e57eda4cc667dd", kwargs)
+    ref = get_ref(name, "v3.6.1.3", kwargs)
+    sha256 = get_sha256(name, "73fdad358857e120fd0fa19e071a96e15c0f23bb25f85d3f7009abfd4f264a2a", kwargs)
     github_archive(name, "google", "protobuf", ref, sha256)
 
 def com_github_grpc_grpc(**kwargs):
