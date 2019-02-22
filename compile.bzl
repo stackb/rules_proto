@@ -316,7 +316,9 @@ def _apply_plugin_transitivity_rules(ctx, targets, plugin):
     # library dependencies, we don't actually want to compile well-known types
     # (but do want to compile everything else).
     #
-    transitivity = plugin.transitivity + ctx.attr.transitivity
+    transitivity = {}
+    transitivity.update(plugin.transitivity)
+    transitivity.update(ctx.attr.transitivity)
 
     for pattern, rule in transitivity.items():
         if rule == "exclude":
