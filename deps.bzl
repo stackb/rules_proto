@@ -254,9 +254,9 @@ def io_bazel_rules_dart(**kwargs):
     """Dart Rules
     """
     name = "io_bazel_rules_dart"
-    ref = get_ref(name, "78a4e1ba257bbe9a9d7a064c8cde8c5317059e17", kwargs)  # ~11/27/2018
-    sha256 = get_sha256(name, "7e699c457f45151e5c61dce6bdcaf14e4cb840d95af86c13a9e7eecc49fd39a3", kwargs)
-    github_archive(name, "dart-lang", "rules_dart", ref, sha256)
+    ref = get_ref(name, "07aa5a42827f74d707ad3abcd3edbc14c7cad837", kwargs)  # ~2019/03/11
+    sha256 = get_sha256(name, "836aa1908fda2c5f25f5a8dc298399d60252006c2953d170b95a33bfc5b5de14", kwargs)
+    github_archive(name, "fkint", "rules_dart", ref, sha256)
 
 def com_google_protobuf_lite(**kwargs):
     """A different branch of google/protobuf that contains the protobuf_lite plugin
