@@ -222,8 +222,8 @@ def io_bazel_rules_python(**kwargs):
     """python Rules
     """
     name = "io_bazel_rules_python"
-    ref = get_ref(name, "e6399b601e2f72f74e5aa635993d69166784dde1", kwargs) # 2018-12-19
-    sha256 = get_sha256(name, "2797863749d3266482e156ebe1b7d5cd1893d054ccc8d8ab8b71add5709f5b04", kwargs)
+    ref = get_ref(name, "965d4b4a63e6462204ae671d7c3f02b25da37941", kwargs) # 2019-03-07
+    sha256 = get_sha256(name, "3e55ec4f7e151b048e950965f956c1e0633fc76449905f40dba671574eac574c", kwargs)
     github_archive(name, "bazelbuild", "rules_python", ref, sha256)
 
 def six(**kwargs):
