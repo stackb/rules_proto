@@ -262,8 +262,8 @@ def com_google_protobuf_lite(**kwargs):
     """A different branch of google/protobuf that contains the protobuf_lite plugin
     """
     name = "com_google_protobuf_lite"
-    ref = get_ref(name, "384989534b2246d413dbcd750744faab2607b516", kwargs)
-    sha256 = get_sha256(name, "97b07327b491924fc5173fe1adc2bb504751b0f13990b70b1b5da16eddb47c8d", kwargs)
+    ref = get_ref(name, "d5e9baa5841d501996ddacbba6ad6da1912e8eeb", kwargs)
+    sha256 = get_sha256(name, "c836a2046acb9635e259c3e639dc2ca50d4550d0350f1c98236fb203065e0359", kwargs)
     github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
 def gmaven_rules(**kwargs):
