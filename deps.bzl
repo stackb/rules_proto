@@ -278,8 +278,8 @@ def io_grpc_grpc_java(**kwargs):
     """grpc java plugin and jars
     """
     name = "io_grpc_grpc_java"
-    ref = get_ref(name, "fe7f043504d66e1b3f674c0514ce794c8a56884e", kwargs)  # v1.17.2
-    sha256 = get_sha256(name, "adc446334be8573035cee78d077f17dfebf3299a78b92ce2e5d39d184da6c948", kwargs)
+    ref = get_ref(name, "3c24dc6fe1b8f3e5c89b919c38a4eefe216397d3", kwargs)  # v1.19.0 and changes up to PR #5456
+    sha256 = get_sha256(name, "1eeb136874a58a0a311a0701016aced96919f501ced0372013eb1708724ab046", kwargs)
     github_archive(name, "grpc", "grpc-java", ref, sha256)
 
 def com_google_guava_guava(**kwargs):
