@@ -46,14 +46,6 @@ def get_sha1(name, default, kwargs):
     key = name + "_sha1"
     return kwargs.get(key, default)
 
-def external_protobuf_clib(**kwargs):
-    name = "protobuf_clib"
-    if name not in native.existing_rules():
-        native.bind(
-            name = name,
-            actual = "@com_google_protobuf//:protoc_lib",
-        )
-
 def external_protobuf_headers(**kwargs):
     name = "protobuf_headers"
     if name not in native.existing_rules():

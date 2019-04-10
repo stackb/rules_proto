@@ -17,9 +17,8 @@ def cpp_grpc_library(**kwargs):
         name = name,
         srcs = [name_pb],
         deps = [
-            "//external:protobuf_clib",
-            "@com_github_grpc_grpc//:grpc++",
-            "@com_github_grpc_grpc//:grpc++_reflection",
+            "@com_google_protobuf//:protobuf_lite",
+            "@com_github_grpc_grpc//:grpc++_codegen_proto",
         ],
         # This seems magical to me.
         includes = [name_pb],
