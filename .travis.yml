@@ -8,41 +8,44 @@ os:
   # - osx DISABLE FOR NOW UNTIL LINUX WORKING
 
 env:
-#  - BAZEL=0.24.0 LANG=java RULE=java_proto_compile PASS
-#  - BAZEL=0.24.0 LANG=java RULE=java_proto_library PASS
-#  - BAZEL=0.24.0 LANG=java RULE=java_grpc_compile PASS
-#  - BAZEL=0.24.0 LANG=java RULE=java_grpc_library PASS
+#  - BAZEL=0.24.0 LANG=java RULE=java_proto_compile
+#  - BAZEL=0.24.0 LANG=java RULE=java_proto_library
+#  - BAZEL=0.24.0 LANG=java RULE=java_grpc_compile
+#  - BAZEL=0.24.0 LANG=java RULE=java_grpc_library
 
-#  - BAZEL=0.24.0 LANG=go RULE=go_proto_compile PASS
-#  - BAZEL=0.24.0 LANG=go RULE=go_proto_library PASS
-#  - BAZEL=0.24.0 LANG=go RULE=go_grpc_compile PASS
-#  - BAZEL=0.24.0 LANG=go RULE=go_grpc_library PASS
+#  - BAZEL=0.24.0 LANG=go RULE=go_proto_compile
+#  - BAZEL=0.24.0 LANG=go RULE=go_proto_library
+#  - BAZEL=0.24.0 LANG=go RULE=go_grpc_compile
+#  - BAZEL=0.24.0 LANG=go RULE=go_grpc_library
 
-#  - BAZEL=0.24.0 LANG=python RULE=python_proto_compile PASS
-#  - BAZEL=0.24.0 LANG=python RULE=python_proto_library PASS
-#  - BAZEL=0.24.0 LANG=python RULE=python_grpc_compile PASS
-#  - BAZEL=0.24.0 LANG=python RULE=python_grpc_library PASS
+#  - BAZEL=0.24.0 LANG=python RULE=python_proto_compile
+#  - BAZEL=0.24.0 LANG=python RULE=python_proto_library
+#  - BAZEL=0.24.0 LANG=python RULE=python_grpc_compile
+#  - BAZEL=0.24.0 LANG=python RULE=python_grpc_library
 
-#  - BAZEL=0.24.0 LANG=cpp RULE=cpp_proto_compile PASS
-#  - BAZEL=0.24.0 LANG=cpp RULE=cpp_proto_library PASS
-#  - BAZEL=0.24.0 LANG=cpp RULE=cpp_grpc_compile PASS
-#  - BAZEL=0.24.0 LANG=cpp RULE=cpp_grpc_library PASS
+#  - BAZEL=0.24.0 LANG=cpp RULE=cpp_proto_compile
+#  - BAZEL=0.24.0 LANG=cpp RULE=cpp_proto_library
+#  - BAZEL=0.24.0 LANG=cpp RULE=cpp_grpc_compile
+#  - BAZEL=0.24.0 LANG=cpp RULE=cpp_grpc_library
 
-#  - BAZEL=0.24.0 LANG=scala RULE=scala_proto_compile PASS
-#  - BAZEL=0.24.0 LANG=scala RULE=scala_proto_library PASS
-#  - BAZEL=0.24.0 LANG=scala RULE=scala_grpc_compile PASS
-#  - BAZEL=0.24.0 LANG=scala RULE=scala_grpc_library PASS
+#  - BAZEL=0.24.0 LANG=scala RULE=scala_proto_compile
+#  - BAZEL=0.24.0 LANG=scala RULE=scala_proto_library
+#  - BAZEL=0.24.0 LANG=scala RULE=scala_grpc_compile
+#  - BAZEL=0.24.0 LANG=scala RULE=scala_grpc_library
 
-#  - BAZEL=0.24.0 LANG=node RULE=node_proto_compile PASS
-#  - BAZEL=0.24.0 LANG=node RULE=node_proto_library PASS
-#  - BAZEL=0.24.0 LANG=node RULE=node_grpc_compile PASS
-#  - BAZEL=0.24.0 LANG=node RULE=node_grpc_library PASS
+#  - BAZEL=0.24.0 LANG=node RULE=node_proto_compile
+#  - BAZEL=0.24.0 LANG=node RULE=node_proto_library
+#  - BAZEL=0.24.0 LANG=node RULE=node_grpc_compile
+#  - BAZEL=0.24.0 LANG=node RULE=node_grpc_library
 
-#  - BAZEL=0.24.0 LANG=objc RULE=objc_proto_compile PASS
-#  - BAZEL=0.24.0 LANG=objc RULE=objc_grpc_compile PASS
+#  - BAZEL=0.24.0 LANG=objc RULE=objc_proto_compile
+#  - BAZEL=0.24.0 LANG=objc RULE=objc_grpc_compile
 
-#  - BAZEL=0.24.0 LANG=php RULE=php_proto_compile PASS
-#  - BAZEL=0.24.0 LANG=php RULE=php_grpc_compile PASS
+#  - BAZEL=0.24.0 LANG=php RULE=php_proto_compile
+#  - BAZEL=0.24.0 LANG=php RULE=php_grpc_compile
+
+ - BAZEL=0.24.0 LANG=ruby RULE=ruby_proto_compile
+ - BAZEL=0.24.0 LANG=ruby RULE=ruby_grpc_compile
 
 # Cannot test swift on this travis CI setup at the moment
 #  - BAZEL=0.24.0 LANG=swift RULE=swift_proto_compile CC=clang
@@ -62,10 +65,10 @@ env:
 #  - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=commonjs_grpc_compile
 #  - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=commonjs_dts_grpc_compile
 #  - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=ts_grpc_compile
- - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=closure_grpc_library
+#  - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=closure_grpc_library
 
- - BAZEL=0.24.0 LANG=github.com/stackb/grpc.js RULE=closure_grpc_compile
- - BAZEL=0.24.0 LANG=github.com/stackb/grpc.js RULE=closure_grpc_library
+#  - BAZEL=0.24.0 LANG=github.com/stackb/grpc.js RULE=closure_grpc_compile
+#  - BAZEL=0.24.0 LANG=github.com/stackb/grpc.js RULE=closure_grpc_library
 
 before_install:
   - |
