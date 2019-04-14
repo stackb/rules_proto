@@ -5,7 +5,7 @@ language: java
 
 os:
   - linux
-  - osx
+  # - osx DISABLE FOR NOW UNTIL LINUX WORKING
 
 env:
   - BAZEL=0.24.0 LANG=java RULE=proto_library
@@ -25,7 +25,7 @@ before_install:
 
 script:
   - |
-    cd "${LANG}/example/${LANG}_{$RULE}" && bazel build //:*
+    cd "${LANG}/example/${LANG}_${RULE}" && bazel build //:*
 
 notifications:
   email: false
