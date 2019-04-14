@@ -132,10 +132,10 @@ def com_github_madler_zlib(**kwargs):
     if "com_github_madler_zlib" not in native.existing_rules():
         http_archive(
             name = "com_github_madler_zlib",
-            # take from @com_github_grpc_grpc//third_party:zlib.BUILD
             build_file_content = ZLIB_BUILD,
             strip_prefix = "zlib-cacf7f1d4e3d44d871b605da3b647f07d718623f",
             url = "https://github.com/madler/zlib/archive/cacf7f1d4e3d44d871b605da3b647f07d718623f.tar.gz",
+            sha256 = "6d4d6640ca3121620995ee255945161821218752b551a1a180f4215f7d124d45",
         )
 
 def external_zlib(**kwargs):
