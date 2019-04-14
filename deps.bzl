@@ -218,8 +218,8 @@ def com_github_yugui_rules_ruby(**kwargs):
 
 def grpc_ecosystem_grpc_gateway(**kwargs):
     name = "grpc_ecosystem_grpc_gateway"
-    ref = get_ref(name, "8aa3d3f00fbaea619d864e688cd045497aa30fe8", kwargs)  # Oct 2, 2018,
-    sha256 = get_sha256(name, "e21e3a3ac5e2be3869474f1c703db5d4f72e459e07084e9228eaaf2484e0dd48", kwargs)
+    ref = get_ref(name, "79ff520b46091f8148bafeafd6e798826d6d47c2", kwargs)  # Apr 2019
+    sha256 = get_sha256(name, "a8d283391d1e37b2bea798082f198187dd1edfed03da00f5be96edc6dadfde44", kwargs)
     github_archive(name, "grpc-ecosystem", "grpc-gateway", ref, sha256)
 
 def org_pubref_rules_node(**kwargs):
@@ -434,8 +434,8 @@ def bazel_gazelle(**kwargs):
     """ build file generator for go
     """
     name = "bazel_gazelle"
-    ref = get_ref(name, "6a1b93cc9b1c7e55e7d05a6d324bcf9d87ea3ab1", kwargs)
-    sha256 = get_sha256(name, "bc493cce447c02b361393a79e562a5f48f456705417ee76009a761a159540dd7", kwargs)
+    ref = get_ref(name, "63ddd72aa315d020456f1a96bc6fcca9405810cb", kwargs)
+    sha256 = get_sha256(name, "bff502b74b6ad77d0b9b558ebe99b030d6ba9ab0e3a8b4cb396448bf7fe88ab4", kwargs)
     github_archive(name, "bazelbuild", "bazel-gazelle", ref, sha256)
 
 def bazel_skylib(**kwargs):

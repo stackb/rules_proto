@@ -8,7 +8,7 @@ proto_library(
         "api.proto",
     ],
     visibility = ["//visibility:public"],
-    deps = ["@com_github_googleapis_googleapis//google/api:api_proto"],
+    deps = ["@go_googleapis//google/api:annotations_proto"],
 )
 
 gateway_grpc_library(

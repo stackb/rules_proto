@@ -35,9 +35,10 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 
-load("@grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
+#load("@grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
 
-grpc_gateway_repositories()
+#grpc_gateway_repositories()
+
 ```
 
 ### `BUILD.bazel`
@@ -114,9 +115,10 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 
-load("@grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
+#load("@grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
 
-grpc_gateway_repositories()
+#grpc_gateway_repositories()
+
 ```
 
 ### `BUILD.bazel`
@@ -193,9 +195,10 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 
-load("@grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
+#load("@grpc_ecosystem_grpc_gateway//:repositories.bzl", grpc_gateway_repositories = "repositories")
 
-grpc_gateway_repositories()
+#grpc_gateway_repositories()
+
 ```
 
 ### `BUILD.bazel`
