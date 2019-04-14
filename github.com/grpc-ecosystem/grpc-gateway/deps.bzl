@@ -3,14 +3,16 @@ load(
     "bazel_gazelle",
     "grpc_ecosystem_grpc_gateway",
     "io_bazel_rules_go",
+    "com_github_bazelbuild_buildtools",
 )
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
 def gateway_grpc_compile(**kwargs):
     io_bazel_rules_go(**kwargs)
     bazel_gazelle(**kwargs)
+    com_github_bazelbuild_buildtools(**kwargs)
     grpc_ecosystem_grpc_gateway(**kwargs)
-
+    
     go_repository(
         name = "org_golang_google_genproto",
         commit = "383e8b2c3b9e36c4076b235b32537292176bae20",

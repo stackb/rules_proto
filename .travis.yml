@@ -47,7 +47,7 @@ env:
 #  - BAZEL=0.24.0 LANG=ruby RULE=ruby_proto_compile
 #  - BAZEL=0.24.0 LANG=ruby RULE=ruby_grpc_compile
 
-# Cannot test swift on this travis CI setup at the moment
+# Cannot test swift on this travis CI setup at the moment (no swiftc)
 #  - BAZEL=0.24.0 LANG=swift RULE=swift_proto_compile CC=clang
 #  - BAZEL=0.24.0 LANG=swift RULE=swift_grpc_compile CC=clang
 #  - BAZEL=0.24.0 LANG=swift RULE=swift_proto_library CC=clang
@@ -68,7 +68,7 @@ env:
 #  - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=closure_grpc_library
 
 #  - BAZEL=0.24.0 LANG=github.com/stackb/grpc.js RULE=closure_grpc_compile
- - BAZEL=0.24.0 LANG=github.com/stackb/grpc.js RULE=closure_grpc_library
+#  - BAZEL=0.24.0 LANG=github.com/stackb/grpc.js RULE=closure_grpc_library
 
  - BAZEL=0.24.0 LANG=github.com/grpc-ecosystem/grpc-gateway RULE=gateway_grpc_compile
  - BAZEL=0.24.0 LANG=github.com/grpc-ecosystem/grpc-gateway RULE=gateway_grpc_library

@@ -160,6 +160,12 @@ def com_github_bazelbuild_bazel_gazelle(**kwargs):
             ],
         )
 
+def com_github_bazelbuild_buildtools(**kwargs):
+    name = "com_github_bazelbuild_buildtools"
+    ref = get_ref(name, "6415663945d3248207da955aafa1fa2af1a0f2ed", kwargs)
+    sha256 = get_sha256(name, "d1e28237d1f4c2255c504246b4f3fd36f74d590f2974491b4399a84c58b495ed", kwargs)
+    github_archive(name, "bazelbuild", "buildtools", ref, sha256)
+
 def boringssl(**kwargs):
     if "boringssl" not in native.existing_rules():
         http_archive(
