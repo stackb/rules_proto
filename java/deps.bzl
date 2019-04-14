@@ -5,8 +5,13 @@ load(
     "io_grpc_grpc_java",
 )
 
+load(
+    "//protobuf:deps.bzl",
+    "protobuf",
+)
+
 def java_proto_compile(**kwargs):
-    com_google_protobuf(**kwargs)
+    protobuf(**kwargs)
 
 def java_grpc_compile(**kwargs):
     java_proto_compile(**kwargs)

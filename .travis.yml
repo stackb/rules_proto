@@ -8,7 +8,7 @@ os:
   # - osx DISABLE FOR NOW UNTIL LINUX WORKING
 
 env:
-  - BAZEL=0.24.0 LANG=java RULE=proto_library
+  - BAZEL=0.24.0 LANG=java RULE=proto_compile
 
 before_install:
   - |
