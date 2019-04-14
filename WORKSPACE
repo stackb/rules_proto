@@ -114,6 +114,9 @@ load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_reposito
 
 scala_proto_repositories()
 
+# See rules_scala WORKSPACE
+register_toolchains("@io_bazel_rules_scala//test/proto:scalapb_toolchain")
+
 # ===========
 
 load("//closure:deps.bzl", "closure_proto_library")

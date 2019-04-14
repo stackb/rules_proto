@@ -7,11 +7,12 @@ scala_grpc_library(
     deps = ["//example/proto:routeguide_proto"],
 )
 
-scalapb_proto_library(
-    name = "routeguide_scalapb_grpc",
-    with_grpc = True,
-    deps = ["//example/proto:routeguide_proto"],
-)
+# Alternative example using the proto_library impl in rules_scala
+#  
+# scalapb_proto_library(
+#     name = "routeguide_scalapb_grpc",
+#     deps = ["//example/proto:routeguide_proto"],
+# )
 
 scala_library(
     name = "persistence",
@@ -19,7 +20,7 @@ scala_library(
         "example/RouteGuidePersistence.scala",
     ],
     deps = [
-        ":routeguide_scalapb_grpc",
+        ":routeguide_scala_grpc",
         "//scala:grpc_deps",
         "@com_thesamet_scalapb_scalapb_json4s//jar",
         "@org_json4s_json4s_ast_2_12//jar",
@@ -34,7 +35,7 @@ scala_library(
         "example/RouteGuideService.scala",
     ],
     deps = [
-        ":routeguide_scalapb_grpc",
+        ":routeguide_scala_grpc",
     ],
 )
 
@@ -47,7 +48,7 @@ scala_binary(
     resources = ["route_guide_db.json"],
     deps = [
         ":persistence",
-        ":routeguide_scalapb_grpc",
+        ":routeguide_scala_grpc",
         ":service",
     ],
 )
