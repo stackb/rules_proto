@@ -240,17 +240,17 @@ def build_bazel_rules_swift(**kwargs):
     """swift Rules
     """
     name = "build_bazel_rules_swift"
-    ref = get_ref(name, "8f594d9a9b39ce471064cc13d35c07ea77a24628", kwargs)
-    sha256 = get_sha256(name, "0b6c009c18f4a1235db65acf841bbe85043d290f39ebb142436c046476a823e5", kwargs)
+    ref = get_ref(name, "004597eeb9b3e0a2bda6c9f6232f8687a01e73b0", kwargs) # Apr 12, 2019
+    sha256 = get_sha256(name, "1fa65113903c03d0c7ae0fd79cfcf5cda1695d96411afa58a8022569db53e3c2", kwargs)
     github_archive(name, "bazelbuild", "rules_swift", ref, sha256)
 
 def com_github_apple_swift_swift_protobuf(**kwargs):
     if "com_github_apple_swift_swift_protobuf" not in native.existing_rules():
-        version = "86c579d280d629416c7bd9d32a5dfacab8e0b0b4"  # v1.2.0
+        version = "1.4.0"  
         http_archive(
             name = "com_github_apple_swift_swift_protobuf",
             url = "https://github.com/apple/swift-protobuf/archive/%s.tar.gz" % version,
-            sha256 = "edd677ff3ad01a4090902c80e7a28671a2f48fa6ce06726f0616678465f575f1",
+            sha256 = "efa256d572d19fc23756a30089129af523173ad29a84ee87800fa88f056efaac",
             strip_prefix = "swift-protobuf-" + version,
             build_file = "@build_bazel_rules_swift//third_party:com_github_apple_swift_swift_protobuf/BUILD.overlay",
         )
@@ -444,8 +444,13 @@ def bazel_skylib(**kwargs):
     name = "bazel_skylib"
 
     # Attempting to match version referenced by protocolbuffers/protobuf@
-    ref = get_ref(name, "2169ae1c374aab4a09aa90e65efe1a3aad4e279b", kwargs)
-    sha256 = get_sha256(name, "bbccf674aa441c266df9894182d80de104cabd19be98be002f6d478aaa31574d", kwargs)
+    # ref = get_ref(name, "2169ae1c374aab4a09aa90e65efe1a3aad4e279b", kwargs)
+    # sha256 = get_sha256(name, "bbccf674aa441c266df9894182d80de104cabd19be98be002f6d478aaa31574d", kwargs)
+
+    # latest 
+    ref = get_ref(name, "be3b1fc838386bdbea39d9750ea4411294870575", kwargs) # Apr 13, 2019
+    sha256 = get_sha256(name, "6128dd2af9830430e0ae404cb6fdce754fb80ed88942e1a0865a7f376bb68c4e", kwargs)
+
     # ref = get_ref(name, "8cecf885c8bf4c51e82fd6b50b9dd68d2c98f757", kwargs)
     # sha256 = get_sha256(name, "68ef2998919a92c2c9553f7a6b00a1d0615b57720a13239c0e51d0ded5aa452a", kwargs)
     github_archive(name, "bazelbuild", "bazel-skylib", ref, sha256)

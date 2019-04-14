@@ -243,23 +243,31 @@ gogo_grpc_library()
 ## $ vi `/.bashrc` and update PATH to include ~/.local/share/umake/swift/swift-lang/usr/bin
 ##
 
+# load("//swift:repositories.bzl", "swift_toolchain")
+
+# # Default values work with linux, x86_64, /usr/local/bin/clang.
+# swift_toolchain(
+#     root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
+# )
+
 load("//swift:deps.bzl", "swift_grpc_library")
 
 swift_grpc_library()
 
-load("//swift:repositories.bzl", "swift_toolchain")
-
-# Default values work with linux, x86_64, /usr/local/bin/clang.
-swift_toolchain(
-    root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
+load(
+    "@build_bazel_rules_swift//swift:repositories.bzl",
+    "swift_rules_dependencies",
 )
 
-# load(
-#     "@build_bazel_rules_swift//swift:repositories.bzl",
-#     "swift_rules_dependencies",
-# )
+swift_rules_dependencies()
 
-# swift_rules_dependencies()
+load(
+    "@build_bazel_apple_support//lib:repositories.bzl",
+    "apple_support_dependencies",
+)
+
+apple_support_dependencies()
+
 
 # =======================================
 

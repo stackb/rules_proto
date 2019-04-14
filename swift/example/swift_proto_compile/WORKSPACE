@@ -18,20 +18,18 @@ load("@build_stack_rules_proto//swift:deps.bzl", "swift_proto_compile")
 
 swift_proto_compile()
 
-# rules_go used here to compile a wrapper around the protoc-gen-swift plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-load("@build_stack_rules_proto//swift:repositories.bzl", "swift_toolchain")
-
-# Default values work with linux, x86_64, /usr/local/bin/clang.
-swift_toolchain(
-    #root = "/home/pcj/.local/share/umake/swift/swift-lang/usr",
+load(
+    "@build_bazel_rules_swift//swift:repositories.bzl",
+    "swift_rules_dependencies",
 )
 
-# Uncomment for ocal development with swift installed on your machine
-# load("@build_bazel_rules_swift//swift:repositories.bzl", "swift_rules_dependencies")
-# swift_rules_dependencies()
+swift_rules_dependencies()
+
+load(
+    "@build_bazel_apple_support//lib:repositories.bzl",
+    "apple_support_dependencies",
+)
+
+apple_support_dependencies()
+
+

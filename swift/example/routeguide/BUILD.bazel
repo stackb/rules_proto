@@ -1,41 +1,9 @@
 #load("//swift:library.bzl", "swift_grpc_library")
 
-#load("@build_bazel_rules_swift//swift:swift.bzl", "swift_proto_library")
-load("//swift:swift_proto_library.bzl", "swift_proto_library")
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_proto_library")
+#load("//swift:swift_proto_library.bzl", "swift_proto_library")
 
 swift_proto_library(
     name = "routeguide",
     deps = ["//example/proto:routeguide_proto"],
 )
-
-# py_binary(
-#     name = "server",
-#     srcs = [
-#         "server.py",
-#     ],
-#     deps = [
-#         ":routeguide",
-#         ":resources",
-#     ],
-# )
-
-# py_binary(
-#     name = "client",
-#     srcs = [
-#         "client.py",
-#     ],
-#     deps = [
-#         ":routeguide",
-#         ":resources",
-#     ],
-# )
-
-# py_library(
-#     name = "resources",
-#     srcs = [
-#         "resources.py",
-#     ],
-#     deps = [
-#         ":routeguide",
-#     ],
-# )

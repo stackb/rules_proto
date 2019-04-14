@@ -21,5 +21,5 @@ closure_proto_library()
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
 closure_repositories(
-#    omit_com_google_protobuf = True,
+    omit_com_google_protobuf = True,
 )

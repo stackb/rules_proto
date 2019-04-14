@@ -46,8 +46,13 @@ env:
 #  - BAZEL=0.24.0 LANG=objc RULE=proto_compile
 #  - BAZEL=0.24.0 LANG=objc RULE=grpc_compile
 
- - BAZEL=0.24.0 LANG=php RULE=proto_compile
- - BAZEL=0.24.0 LANG=php RULE=grpc_compile
+#  - BAZEL=0.24.0 LANG=php RULE=proto_compile
+#  - BAZEL=0.24.0 LANG=php RULE=grpc_compile
+
+ - BAZEL=0.24.0 LANG=swift RULE=proto_compile CC=clang
+ - BAZEL=0.24.0 LANG=swift RULE=grpc_compile CC=clang
+ - BAZEL=0.24.0 LANG=swift RULE=proto_library CC=clang
+ - BAZEL=0.24.0 LANG=swift RULE=grpc_library CC=clang
 
 before_install:
   - |
