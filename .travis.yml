@@ -10,8 +10,12 @@ os:
 env:
 #  - BAZEL=0.24.0 LANG=java RULE=proto_compile PASS
 #  - BAZEL=0.24.0 LANG=java RULE=proto_library PASS
-  - BAZEL=0.24.0 LANG=java RULE=grpc_compile
-  - BAZEL=0.24.0 LANG=java RULE=grpc_library
+#  - BAZEL=0.24.0 LANG=java RULE=grpc_compile PASS
+#  - BAZEL=0.24.0 LANG=java RULE=grpc_library PASS
+ - BAZEL=0.24.0 LANG=go RULE=proto_compile
+ - BAZEL=0.24.0 LANG=go RULE=proto_library
+ - BAZEL=0.24.0 LANG=go RULE=grpc_compile
+ - BAZEL=0.24.0 LANG=go RULE=grpc_library
 
 before_install:
   - |

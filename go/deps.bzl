@@ -1,11 +1,15 @@
 load(
     "//:deps.bzl",
-    "com_google_protobuf",
     "io_bazel_rules_go",
 )
 
+load(
+    "//protobuf:deps.bzl",
+    "protobuf",
+)
+
 def go_proto_compile(**kwargs):
-    com_google_protobuf(**kwargs)
+    protobuf(**kwargs)
     io_bazel_rules_go(**kwargs)
 
 def go_grpc_compile(**kwargs):
