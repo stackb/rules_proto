@@ -79,9 +79,7 @@ closure_proto_library()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
-closure_repositories(
-    omit_com_google_protobuf = True,
-)
+closure_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -124,7 +122,14 @@ def closure_proto_library(**kwargs):
         deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
         visibility = visibility,
         internal_descriptors = [name_pb + "/descriptor.source.bin"],
-        lenient = True,
+        suppress = [
+            "JSC_LATE_PROVIDE_ERROR",
+            "JSC_UNDEFINED_VARIABLE",
+            "JSC_IMPLICITLY_NULLABLE_JSDOC",
+            "JSC_STRICT_INEXISTENT_PROPERTY",
+            "JSC_POSSIBLE_INEXISTENT_PROPERTY",
+            "JSC_UNRECOGNIZED_TYPE_ERROR",
+        ],
     )
     name = kwargs.get("name")
     deps = kwargs.get("deps")

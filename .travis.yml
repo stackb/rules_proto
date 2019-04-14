@@ -55,6 +55,9 @@ env:
 #  - BAZEL=0.24.0 LANG=swift RULE=proto_library CC=clang
 #  - BAZEL=0.24.0 LANG=swift RULE=grpc_library CC=clang
 
+ - BAZEL=0.24.0 LANG=closure RULE=proto_compile
+ - BAZEL=0.24.0 LANG=closure RULE=proto_library
+
 before_install:
   - |
     if [ "${TRAVIS_OS_NAME}" = "osx" ]; then

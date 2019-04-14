@@ -1,8 +1,5 @@
 load(
     "//:deps.bzl",
-    "external_zlib",
-    "bazel_skylib",
-    "com_google_protobuf",
     "get_ref",
     "get_sha256",
 )
@@ -18,17 +15,8 @@ load("//closure:buildozer_http_archive.bzl", "buildozer_http_archive")
 def io_bazel_rules_closure(**kwargs):
     name = "io_bazel_rules_closure" 
 
-    ref = get_ref(name, "50d3dc9e6d27a5577a0f95708466718825d579f4", kwargs)
+    ref = get_ref(name, "50d3dc9e6d27a5577a0f95708466718825d579f4", kwargs) # April 2019
     sha256 = get_sha256(name, "1c05fea22c9630cf1047f25d008780756373a60ddd4d2a6993cf9858279c5da6", kwargs)
-
-    # ref = get_ref(name, "08e5bc3b6cb48d3ab9264e407d1df59bab6720a8", kwargs) #344 
-    # sha256 = get_sha256(name, "7500470389f2147afa82e1c6e39f61f4d9d411812dc91503f83c6092df1e8253", kwargs)
-
-    # ref = get_ref(name, "1b1061b31e8a470b0ce314298bd7dcf9f088a11e", kwargs) #343
-    # sha256 = get_sha256(name, "cb3b211eb61838e34f7ef5c85360d44f4bc10bae540ecb9c4b534d5cf7249d05", kwargs)
-    
-    # ref = get_ref(name, "a176ec89a1b251bb5442ba569d47cee3c053e633", kwargs) #338
-    # sha256 = get_sha256(name, "041d9f6bae83212d37ac617c4283bfa60b2bd351888ccf98a58528b43d7519a9", kwargs)
 
     if "io_bazel_rules_closure" not in native.existing_rules():
         buildozer_http_archive(
