@@ -1,4 +1,3 @@
 build --strategy=CoreCompile=standalone
-build --incompatible_remove_native_http_archive=false
 build --incompatible_disable_legacy_cpp_toolchain_skylark_api=false
 build --incompatible_disable_legacy_flags_cc_toolchain_api=true

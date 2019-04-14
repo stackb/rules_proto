@@ -38,29 +38,29 @@ grpc_java_repositories(
 
 # =========================================
 
-load("//csharp:deps.bzl", "csharp_grpc_library")
+# load("//csharp:deps.bzl", "csharp_grpc_library")
 
-csharp_grpc_library()
+# csharp_grpc_library()
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
+# load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
 
-dotnet_repositories()
+# dotnet_repositories()
 
-dotnet_register_toolchains(
-    net_roslyn_version = "2.7.0",
-    net_version = "4.7.2",
-)
+# dotnet_register_toolchains(
+#     net_roslyn_version = "2.7.0",
+#     net_version = "4.7.2",
+# )
 
-load("//csharp/nuget:packages.bzl", nuget_packages = "packages")
+# load("//csharp/nuget:packages.bzl", nuget_packages = "packages")
 
-nuget_packages()
+# nuget_packages()
 
-load("//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
-load("//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
+# load("//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
+# load("//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
-nuget_protobuf_packages()
+# nuget_protobuf_packages()
 
-nuget_grpc_packages()
+# nuget_grpc_packages()
 
 # =========================================
 
@@ -146,7 +146,6 @@ yarn_modules(
 yarn_modules(
     name = "grpc_node_modules",
     deps = {
-        "google-protobuf": "3.6.1",
         "grpc": "1.15.1",
         "async": "2.6.1",
     },
@@ -210,9 +209,9 @@ node_repositories(
     package_json = ["@ts_protoc_gen//:package.json"],
 )
 
-load("@build_bazel_rules_typescript//:defs.bzl", "ts_setup_workspace")
+# load("@build_bazel_rules_typescript//:defs.bzl", "ts_setup_workspace")
 
-ts_setup_workspace()
+# ts_setup_workspace()
 
 load("@io_bazel_rules_webtesting//web:repositories.bzl", "browser_repositories", "web_test_repositories")
 
@@ -261,35 +260,35 @@ swift_toolchain(
 
 # =======================================
 
-load("//ruby:deps.bzl", "ruby_grpc_library")
+# load("//ruby:deps.bzl", "ruby_grpc_library")
 
-ruby_grpc_library()
+# ruby_grpc_library()
 
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
+# load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
 
-ruby_register_toolchains()
+# ruby_register_toolchains()
 
-load("@com_github_yugui_rules_ruby//ruby/private:bundle.bzl", "bundle_install")
+# load("@com_github_yugui_rules_ruby//ruby/private:bundle.bzl", "bundle_install")
 
-bundle_install(
-    name = "routeguide_gems_bundle",
-    gemfile = "//ruby:Gemfile",
-    gemfile_lock = "//ruby:Gemfile.lock",
-)
+# bundle_install(
+#     name = "routeguide_gems_bundle",
+#     gemfile = "//ruby:Gemfile",
+#     gemfile_lock = "//ruby:Gemfile.lock",
+# )
 
 # =======================================
 
-load("//rust:deps.bzl", "rust_grpc_library")
+# load("//rust:deps.bzl", "rust_grpc_library")
 
-rust_grpc_library()
+# rust_grpc_library()
 
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+# load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 
-rust_repositories()
+# rust_repositories()
 
-load("//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
+# load("//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
 
-raze_fetch_remote_crates()
+# raze_fetch_remote_crates()
 
 # ========================================
 
