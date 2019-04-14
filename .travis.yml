@@ -23,10 +23,10 @@ env:
 #  - BAZEL=0.24.0 LANG=python RULE=grpc_compile PASS
 #  - BAZEL=0.24.0 LANG=python RULE=grpc_library PASS
 
- - BAZEL=0.24.0 LANG=cpp RULE=proto_compile PASS
- - BAZEL=0.24.0 LANG=cpp RULE=proto_library PASS
- - BAZEL=0.24.0 LANG=cpp RULE=grpc_compile PASS
- - BAZEL=0.24.0 LANG=cpp RULE=grpc_library PASS
+#  - BAZEL=0.24.0 LANG=cpp RULE=proto_compile PASS
+#  - BAZEL=0.24.0 LANG=cpp RULE=proto_library PASS
+#  - BAZEL=0.24.0 LANG=cpp RULE=grpc_compile PASS
+#  - BAZEL=0.24.0 LANG=cpp RULE=grpc_library PASS
 
 #  - BAZEL=0.24.0 LANG=scala RULE=proto_compile PASS
 #  - BAZEL=0.24.0 LANG=scala RULE=proto_library PASS
@@ -55,8 +55,14 @@ env:
 #  - BAZEL=0.24.0 LANG=swift RULE=proto_library CC=clang
 #  - BAZEL=0.24.0 LANG=swift RULE=grpc_library CC=clang
 
- - BAZEL=0.24.0 LANG=closure RULE=proto_compile
- - BAZEL=0.24.0 LANG=closure RULE=proto_library
+#  - BAZEL=0.24.0 LANG=closure RULE=proto_compile
+#  - BAZEL=0.24.0 LANG=closure RULE=proto_library
+
+ - BAZEL=0.24.0 LANG=github.com/gogo/protobuf RULE=gogo_proto_compile
+ - BAZEL=0.24.0 LANG=github.com/gogo/protobuf RULE=gogo_proto_library
+ - BAZEL=0.24.0 LANG=github.com/gogo/protobuf RULE=gogo_grpc_compile
+ - BAZEL=0.24.0 LANG=github.com/gogo/protobuf RULE=gogo_grpc_library
+
 
 before_install:
   - |
@@ -73,7 +79,7 @@ before_install:
 
 script:
   - |
-    cd "${LANG}/example/${LANG}_${RULE}" && bazel build //:*
+    cd "${LANG}/example/${RULE}" && bazel build //:*
 
 notifications:
   email: false
