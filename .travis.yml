@@ -23,10 +23,15 @@ env:
 #  - BAZEL=0.24.0 LANG=python RULE=grpc_compile PASS
 #  - BAZEL=0.24.0 LANG=python RULE=grpc_library PASS
 
- - BAZEL=0.24.0 LANG=cpp RULE=proto_compile
- - BAZEL=0.24.0 LANG=cpp RULE=proto_library
- - BAZEL=0.24.0 LANG=cpp RULE=grpc_compile
- - BAZEL=0.24.0 LANG=cpp RULE=grpc_library
+#  - BAZEL=0.24.0 LANG=cpp RULE=proto_compile PASS
+#  - BAZEL=0.24.0 LANG=cpp RULE=proto_library PASS
+#  - BAZEL=0.24.0 LANG=cpp RULE=grpc_compile PASS
+#  - BAZEL=0.24.0 LANG=cpp RULE=grpc_library PASS
+
+ - BAZEL=0.24.0 LANG=scala RULE=proto_compile
+ - BAZEL=0.24.0 LANG=scala RULE=proto_library
+ - BAZEL=0.24.0 LANG=scala RULE=grpc_compile
+ - BAZEL=0.24.0 LANG=scala RULE=grpc_library
 
 before_install:
   - |
