@@ -224,8 +224,8 @@ def grpc_ecosystem_grpc_gateway(**kwargs):
 
 def org_pubref_rules_node(**kwargs):
     name = "org_pubref_rules_node"
-    ref = get_ref(name, "1ec0c8fb03b5b10ce0778a63cc7dfec1f7bdf05f", kwargs)
-    sha256 = get_sha256(name, "7d3560034be2250a6bd0abe1c8e250bcf11af79c543f791635b5995f99c2eee1", kwargs)
+    ref = get_ref(name, "fbefffbf8bb031e84be8180c725391039f175c2c", kwargs)
+    sha256 = get_sha256(name, "142c5392425fd023a071d694655b34755ce3eb20cbb51bf84a9c410053df73cd", kwargs)
     github_archive(name, "pubref", "rules_node", ref, sha256)
 
 def build_bazel_rules_android(**kwargs):

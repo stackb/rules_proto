@@ -6,6 +6,7 @@ clients:
 		//go/example/routeguide/client \
 		//java/example/routeguide:client \
 		//python/example/routeguide:client \
+		//scala/example/routeguide:client \
 
 # A collection of targets that build routeguide servers
 servers:
@@ -14,6 +15,8 @@ servers:
 		//go/example/routeguide/server \
 		//java/example/routeguide:server \
 		//python/example/routeguide:server
+		//scala/example/routeguide:server \
+
 
 # A collection of test targets
 tests:
@@ -31,7 +34,6 @@ pending_clients:
 		//closure/example/routeguide/client \
 		//node/example/routeguide:client \
 		//ruby/example/routeguide:client \
-		//scala/example/routeguide:client \
 		//github.com/grpc/grpc-web/example/routeguide/closure:bundle \
 		//github.com/stackb/grpc.js/example/routeguide/client:bundle \
  		//rust/example/routeguide:client 
