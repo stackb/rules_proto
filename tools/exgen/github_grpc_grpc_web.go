@@ -57,7 +57,8 @@ def {{ .Rule.Name }}(**kwargs):
             "JSC_POSSIBLE_INEXISTENT_PROPERTY",
             "JSC_UNRECOGNIZED_TYPE_ERROR",
             "JSC_UNUSED_PRIVATE_PROPERTY",
-            "JSC_EXTRA_REQUIRE_WARNING",
+			"JSC_EXTRA_REQUIRE_WARNING",
+			"JSC_INVALID_INTERFACE_MEMBER_DECLARATION",
 		],
         visibility = visibility,
     )`)

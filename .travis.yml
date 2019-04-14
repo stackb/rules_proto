@@ -58,12 +58,14 @@ env:
 #  - BAZEL=0.24.0 LANG=github.com/gogo/protobuf RULE=gogo_grpc_compile
 #  - BAZEL=0.24.0 LANG=github.com/gogo/protobuf RULE=gogo_grpc_library
 
- - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=closure_grpc_compile
- - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=commonjs_grpc_compile
- - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=commonjs_dts_grpc_compile
- - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=ts_grpc_compile
+#  - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=closure_grpc_compile
+#  - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=commonjs_grpc_compile
+#  - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=commonjs_dts_grpc_compile
+#  - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=ts_grpc_compile
  - BAZEL=0.24.0 LANG=github.com/grpc/grpc-web RULE=closure_grpc_library
 
+ - BAZEL=0.24.0 LANG=github.com/stackb/grpc.js RULE=closure_grpc_compile
+ - BAZEL=0.24.0 LANG=github.com/stackb/grpc.js RULE=closure_grpc_library
 
 before_install:
   - |

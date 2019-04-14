@@ -1,7 +1,6 @@
 load(
     "//:deps.bzl",
     "com_github_stackb_grpc_js",
-    "com_google_protobuf",
     "io_bazel_rules_go",
 )
 load(
@@ -10,14 +9,14 @@ load(
     "io_bazel_rules_closure",
 )
 
+load(
+    "//protobuf:deps.bzl",
+    "protobuf",
+)
+
 def closure_grpc_compile(**kwargs):
-    # protoc
-    com_google_protobuf(**kwargs)
-
-    # Need rules_go to build the plugin
+    protobuf(**kwargs)
     io_bazel_rules_go(**kwargs)
-
-    # Need the plugin itself
     com_github_stackb_grpc_js(**kwargs)
 
 def closure_grpc_library(**kwargs):
