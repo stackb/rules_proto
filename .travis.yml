@@ -23,10 +23,10 @@ env:
 #  - BAZEL=0.24.0 LANG=python RULE=grpc_compile PASS
 #  - BAZEL=0.24.0 LANG=python RULE=grpc_library PASS
 
-#  - BAZEL=0.24.0 LANG=cpp RULE=proto_compile PASS
-#  - BAZEL=0.24.0 LANG=cpp RULE=proto_library PASS
-#  - BAZEL=0.24.0 LANG=cpp RULE=grpc_compile PASS
-#  - BAZEL=0.24.0 LANG=cpp RULE=grpc_library PASS
+ - BAZEL=0.24.0 LANG=cpp RULE=proto_compile PASS
+ - BAZEL=0.24.0 LANG=cpp RULE=proto_library PASS
+ - BAZEL=0.24.0 LANG=cpp RULE=grpc_compile PASS
+ - BAZEL=0.24.0 LANG=cpp RULE=grpc_library PASS
 
 #  - BAZEL=0.24.0 LANG=scala RULE=proto_compile PASS
 #  - BAZEL=0.24.0 LANG=scala RULE=proto_library PASS
@@ -43,16 +43,17 @@ env:
 #  - BAZEL=0.24.0 LANG=node RULE=grpc_compile PASS
 #  - BAZEL=0.24.0 LANG=node RULE=grpc_library PASS
 
-#  - BAZEL=0.24.0 LANG=objc RULE=proto_compile
-#  - BAZEL=0.24.0 LANG=objc RULE=grpc_compile
+#  - BAZEL=0.24.0 LANG=objc RULE=proto_compile PASS
+#  - BAZEL=0.24.0 LANG=objc RULE=grpc_compile PASS
 
-#  - BAZEL=0.24.0 LANG=php RULE=proto_compile
-#  - BAZEL=0.24.0 LANG=php RULE=grpc_compile
+#  - BAZEL=0.24.0 LANG=php RULE=proto_compile PASS
+#  - BAZEL=0.24.0 LANG=php RULE=grpc_compile PASS
 
- - BAZEL=0.24.0 LANG=swift RULE=proto_compile CC=clang
- - BAZEL=0.24.0 LANG=swift RULE=grpc_compile CC=clang
- - BAZEL=0.24.0 LANG=swift RULE=proto_library CC=clang
- - BAZEL=0.24.0 LANG=swift RULE=grpc_library CC=clang
+# Cannot test swift on this travis CI setup at the moment
+#  - BAZEL=0.24.0 LANG=swift RULE=proto_compile CC=clang
+#  - BAZEL=0.24.0 LANG=swift RULE=grpc_compile CC=clang
+#  - BAZEL=0.24.0 LANG=swift RULE=proto_library CC=clang
+#  - BAZEL=0.24.0 LANG=swift RULE=grpc_library CC=clang
 
 before_install:
   - |
