@@ -1,12 +1,16 @@
 load(
     "//:deps.bzl",
     "com_github_grpc_grpc",
-    "com_google_protobuf",
     "external_protobuf_clib",
 )
 
+load(
+    "//protobuf:deps.bzl",
+    "protobuf",
+)
+
 def cpp_proto_compile(**kwargs):
-    com_google_protobuf(**kwargs)
+    protobuf(**kwargs)
 
 def cpp_grpc_compile(**kwargs):
     cpp_proto_compile(**kwargs)
