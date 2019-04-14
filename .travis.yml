@@ -43,8 +43,11 @@ env:
 #  - BAZEL=0.24.0 LANG=node RULE=grpc_compile PASS
 #  - BAZEL=0.24.0 LANG=node RULE=grpc_library PASS
 
- - BAZEL=0.24.0 LANG=objc RULE=proto_compile
- - BAZEL=0.24.0 LANG=objc RULE=grpc_compile
+#  - BAZEL=0.24.0 LANG=objc RULE=proto_compile
+#  - BAZEL=0.24.0 LANG=objc RULE=grpc_compile
+
+ - BAZEL=0.24.0 LANG=php RULE=proto_compile
+ - BAZEL=0.24.0 LANG=php RULE=grpc_compile
 
 before_install:
   - |
