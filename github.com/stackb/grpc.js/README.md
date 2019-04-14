@@ -165,6 +165,8 @@ def closure_grpc_library(**kwargs):
         lenient = True,
         suppress = [
             "JSC_WRONG_ARGUMENT_COUNT",
+            "JSC_DUPLICATE_NAMESPACE",
+            "JSC_MIXED_MODULE_TYPE",
         ],
         visibility = visibility,
     )
