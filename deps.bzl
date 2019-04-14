@@ -442,23 +442,14 @@ def bazel_skylib(**kwargs):
     """ bazel utils
     """
     name = "bazel_skylib"
-
-    # Attempting to match version referenced by protocolbuffers/protobuf@
-    # ref = get_ref(name, "2169ae1c374aab4a09aa90e65efe1a3aad4e279b", kwargs)
-    # sha256 = get_sha256(name, "bbccf674aa441c266df9894182d80de104cabd19be98be002f6d478aaa31574d", kwargs)
-
-    # latest 
     ref = get_ref(name, "be3b1fc838386bdbea39d9750ea4411294870575", kwargs) # Apr 13, 2019
     sha256 = get_sha256(name, "6128dd2af9830430e0ae404cb6fdce754fb80ed88942e1a0865a7f376bb68c4e", kwargs)
-
-    # ref = get_ref(name, "8cecf885c8bf4c51e82fd6b50b9dd68d2c98f757", kwargs)
-    # sha256 = get_sha256(name, "68ef2998919a92c2c9553f7a6b00a1d0615b57720a13239c0e51d0ded5aa452a", kwargs)
     github_archive(name, "bazelbuild", "bazel-skylib", ref, sha256)
 
 def com_github_grpc_grpc_web(**kwargs):
     """Rule for grpc-web
     """
     name = "com_github_grpc_grpc_web"
-    ref = get_ref(name, "92aa9f8fc8e7af4aadede52ea075dd5790a63b62", kwargs)
-    sha256 = get_sha256(name, "f4996205e6d1d72e2be46f1bda4d26f8586998ed42021161322d490537d8c9b9", kwargs)
+    ref = get_ref(name, "ffe8e9c9036f4ec7d5b55da75b1758b1f57fbf8d", kwargs)
+    sha256 = get_sha256(name, "936ca06fe7a9b55c1e334e4869e1d153fec68d92d750d2b550e41e1c5580b4dd", kwargs)
     github_archive(name, "grpc", "grpc-web", ref, sha256)

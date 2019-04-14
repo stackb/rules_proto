@@ -36,7 +36,16 @@ def closure_grpc_library(**kwargs):
             "@com_github_grpc_grpc_web//javascript/net/grpc/web:error",
             "@io_bazel_rules_closure//closure/library",
             "@io_bazel_rules_closure//closure/protobuf:jspb",
-        ],
-        lenient = True,
+		],
+		suppress = [
+            "JSC_LATE_PROVIDE_ERROR",
+            "JSC_UNDEFINED_VARIABLE",
+            "JSC_IMPLICITLY_NULLABLE_JSDOC",
+            "JSC_STRICT_INEXISTENT_PROPERTY",
+            "JSC_POSSIBLE_INEXISTENT_PROPERTY",
+            "JSC_UNRECOGNIZED_TYPE_ERROR",
+            "JSC_UNUSED_PRIVATE_PROPERTY",
+            "JSC_EXTRA_REQUIRE_WARNING",
+		],
         visibility = visibility,
     )
