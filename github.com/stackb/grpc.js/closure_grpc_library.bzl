@@ -48,11 +48,9 @@ def closure_grpc_library(**kwargs):
             name_pb + "/descriptor.source.bin",
             name_pb_grpc + "/descriptor.source.bin",
         ],
-        lenient = True,
         suppress = [
-            "JSC_WRONG_ARGUMENT_COUNT",
-            "JSC_DUPLICATE_NAMESPACE",
-            "JSC_MIXED_MODULE_TYPE",
+            "JSC_IMPLICITLY_NULLABLE_JSDOC",            
         ],
+        library_level_checks = False,
         visibility = visibility,
     )

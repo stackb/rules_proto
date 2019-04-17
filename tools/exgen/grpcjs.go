@@ -1,12 +1,22 @@
 package main
 
-var grpcjsUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var grpcjsLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
 closure_repositories(omit_com_google_protobuf = True)
+
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains()`)
+
+var grpcjsUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
+{{ .Rule.Name }}()
 
 load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -64,11 +74,10 @@ def {{ .Rule.Name }}(**kwargs):
             name_pb + "/descriptor.source.bin",
             name_pb_grpc + "/descriptor.source.bin",
         ],
-        lenient = True,
         suppress = [
-            "JSC_WRONG_ARGUMENT_COUNT",
-            "JSC_MIXED_MODULE_TYPE",
+            "JSC_IMPLICITLY_NULLABLE_JSDOC",            
         ],
+        library_level_checks = False,
         visibility = visibility,
     )`)
 
@@ -89,7 +98,7 @@ func makeGrpcJs() *Language {
 			&Rule{
 				Name:           "closure_grpc_library",
 				Implementation: grpcjsGrpcLibraryRuleTemplate,
-				Usage:          grpcjsUsageTemplate,
+				Usage:          grpcjsLibraryUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates protobuf closure library *.js files",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),

@@ -185,9 +185,6 @@ def com_google_protobuf(**kwargs):
     ref = get_ref(name, "v3.7.1", kwargs)
     sha256 = get_sha256(name, "f1748989842b46fa208b2a6e4e2785133cfcc3e4d43c17fecb023733f0f5443f", kwargs)
 
-    # ref = get_ref(name, "v3.6.1.3", kwargs)
-    # sha256 = get_sha256(name, "73fdad358857e120fd0fa19e071a96e15c0f23bb25f85d3f7009abfd4f264a2a", kwargs)
-
     github_archive(name, "google", "protobuf", ref, sha256)
 
 def com_github_grpc_grpc(**kwargs):
@@ -400,8 +397,8 @@ def com_github_stackb_grpc_js(**kwargs):
     """Grpc-web implementation (closure)
     """
     name = "com_github_stackb_grpc_js"
-    ref = get_ref(name, "fb3d7dbd8bfc8e1d4fb259f76d75f59cd4b67c31", kwargs)
-    sha256 = get_sha256(name, "019c2fbaf3958fff3a8a68d775dde606f0eb77163f1256e1d700e78c9ed2db85", kwargs)
+    ref = get_ref(name, "d075960a9e62846ce92ae1029a777c141809f489", kwargs)
+    sha256 = get_sha256(name, "c0f422823486986ea965fd36a0f5d3380151516421a6de8b69b72778cf3798a4", kwargs)
     github_archive(name, "stackb", "grpc.js", ref, sha256)
 
 def build_bazel_rules_nodejs(**kwargs):

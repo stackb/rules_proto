@@ -17,7 +17,6 @@ load(
 def closure_grpc_compile(**kwargs):
     protobuf(**kwargs)
     io_bazel_rules_go(**kwargs)
-    io_bazel_rules_closure(**kwargs)
     com_github_stackb_grpc_js(**kwargs)
 
 def closure_grpc_library(**kwargs):
