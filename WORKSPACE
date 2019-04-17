@@ -49,6 +49,7 @@ dotnet_repositories()
 dotnet_register_toolchains(
     net_roslyn_version = "2.7.0",
     net_version = "4.7.2",
+    core_version = "v2.1.503",
 )
 
 load("//csharp/nuget:packages.bzl", nuget_packages = "packages")
