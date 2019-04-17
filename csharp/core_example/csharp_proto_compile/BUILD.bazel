@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//csharp:csharp_proto_compile.bzl", "csharp_proto_compile")
+
+csharp_proto_compile(
+    name = "person_csharp_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)

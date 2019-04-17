@@ -342,8 +342,8 @@ def com_google_protobuf_lite(**kwargs):
     """A different branch of google/protobuf that contains the protobuf_lite plugin
     """
     name = "com_google_protobuf_lite"
-    ref = get_ref(name, "3cf3be9959928bf8a7133d323eaf6a5a8d5afdd7", kwargs)
-    sha256 = get_sha256(name, "9f28fd96ccd1f87e0b2d23c622db2a87c87ff91dc30dd13a6dd3bff11738e608", kwargs)
+    ref = get_ref(name, "d5e9baa5841d501996ddacbba6ad6da1912e8eeb", kwargs) # ivuca #66
+    sha256 = get_sha256(name, "c836a2046acb9635e259c3e639dc2ca50d4550d0350f1c98236fb203065e0359", kwargs)
     github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
 
@@ -360,8 +360,8 @@ def io_grpc_grpc_java(**kwargs):
     """grpc java plugin and jars
     """
     name = "io_grpc_grpc_java"
-    ref = get_ref(name, "fe7f043504d66e1b3f674c0514ce794c8a56884e", kwargs)  # v1.17.2
-    sha256 = get_sha256(name, "adc446334be8573035cee78d077f17dfebf3299a78b92ce2e5d39d184da6c948", kwargs)
+    ref = get_ref(name, "3c24dc6fe1b8f3e5c89b919c38a4eefe216397d3", kwargs)  # v1.19.0 and changes up to PR #5456
+    sha256 = get_sha256(name, "1eeb136874a58a0a311a0701016aced96919f501ced0372013eb1708724ab046", kwargs)
     github_archive(name, "grpc", "grpc-java", ref, sha256)
 
 
