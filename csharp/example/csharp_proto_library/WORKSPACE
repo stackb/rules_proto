@@ -19,10 +19,19 @@ csharp_proto_library()
 
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
 
-dotnet_register_toolchains("host")
-#dotnet_register_toolchains(dotnet_version="4.2.3")
+dotnet_register_toolchains(
+    net_roslyn_version = "2.7.0",
+    net_version = "4.7.2",
+    core_version = "v2.1.503",
+)
 
 dotnet_repositories()
+
+# Default core_sdk
+core_register_sdk("v2.1.503", name = "core_sdk")
+
+# Default net_sdk
+net_register_sdk("net472", name = "net_sdk")
 
 load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
 
