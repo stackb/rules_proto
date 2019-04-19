@@ -21,7 +21,7 @@ def csharp_proto_library(**kwargs):
         name = name,
         srcs = [name_pb],
         deps = [
-            "@google.protobuf//:netstandard1.0_core",
+            "@google.protobuf//:core",
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
         ],
         visibility = visibility,

@@ -1,3 +1,5 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 http_archive(
     name = "bazel_toolchains",
     sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
@@ -17,25 +19,31 @@ load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
 
 csharp_grpc_library()
 
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories", "core_register_sdk")
 
-grpc_deps()
+core_version = "v2.1.503"
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
+dotnet_register_toolchains(
+    core_version = core_version,
+)
 
-framework = "v2.1.503"
-dotnet_register_toolchains(core_version=framework)
-core_register_sdk(core_version="{}".format(framework), name = "core_sdk")
+dotnet_register_toolchains(
+    core_version = core_version,
+)
 
-dotnet_repositories()
+core_register_sdk(
+    name = "core_sdk",
+    core_version = core_version
+)
 
 load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
 
 nuget_packages()
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
-load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_protobuf_packages()
+
+load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_grpc_packages()

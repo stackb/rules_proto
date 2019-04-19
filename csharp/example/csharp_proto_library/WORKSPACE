@@ -9,10 +9,26 @@ load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_proto_library")
 
 csharp_proto_library()
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
+load("@io_bazel_rules_dotnet//dotnet:defs.bzl", 
+    "dotnet_register_toolchains", 
+    "core_register_sdk",
+    "dotnet_repositories",
+)
 
-dotnet_register_toolchains("host")
-#dotnet_register_toolchains(dotnet_version="4.2.3")
+core_version = "v2.1.503"
+
+dotnet_register_toolchains(
+    core_version = core_version,
+)
+
+dotnet_register_toolchains(
+    core_version = core_version,
+)
+
+core_register_sdk(
+    name = "core_sdk",
+    core_version = core_version
+)
 
 dotnet_repositories()
 

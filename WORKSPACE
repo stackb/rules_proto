@@ -1,10 +1,5 @@
 workspace(name = "build_stack_rules_proto")
 
-local_repository(
-    name = "build_bazel_rules_nodejs",
-    path = "/home/pcj/github/bazelbuild/rules_nodejs",
-)
-
 # =========================================
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
@@ -47,15 +42,28 @@ load("//csharp:deps.bzl", "csharp_grpc_library")
 
 csharp_grpc_library()
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
+load("@io_bazel_rules_dotnet//dotnet:defs.bzl", 
+    "dotnet_register_toolchains", 
+    "core_register_sdk",
+    "dotnet_repositories",
+)
 
-dotnet_repositories()
+core_version = "v2.1.503"
 
 dotnet_register_toolchains(
-    net_roslyn_version = "2.7.0",
-    net_version = "4.7.2",
-    core_version = "v2.1.503",
+    core_version = core_version,
 )
+
+dotnet_register_toolchains(
+    core_version = core_version,
+)
+
+core_register_sdk(
+    name = "core_sdk",
+    core_version = core_version
+)
+
+dotnet_repositories()
 
 load("//csharp/nuget:packages.bzl", nuget_packages = "packages")
 
