@@ -68,11 +68,12 @@ env:
 #  - BAZEL=0.24.1 LANG=github.com/grpc/grpc-web RULE=closure_grpc_library
 
 #  - BAZEL=0.24.1 LANG=github.com/stackb/grpc.js RULE=closure_grpc_compile
- - BAZEL=0.24.1 LANG=github.com/stackb/grpc.js RULE=closure_grpc_library
+# - BAZEL=0.24.1 LANG=github.com/stackb/grpc.js RULE=closure_grpc_library
 
 #  - BAZEL=0.24.1 LANG=github.com/grpc-ecosystem/grpc-gateway RULE=gateway_grpc_compile
 #  - BAZEL=0.24.1 LANG=github.com/grpc-ecosystem/grpc-gateway RULE=gateway_grpc_library
 #  - BAZEL=0.24.1 LANG=github.com/grpc-ecosystem/grpc-gateway RULE=gateway_swagger_compile
+ - BAZEL=0.24.1 LANG=github.com/stackb/grpc.js RULE=closure_grpc_library
 
 before_install:
   - |

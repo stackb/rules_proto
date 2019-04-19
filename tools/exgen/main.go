@@ -167,7 +167,6 @@ func action(c *cli.Context) error {
 		makeGrpcGateway(),
 		makeGrpcJs(),
 		makeGithubComGrpcGrpcWeb(),
-		makeGithubComImprobableTsProtocGen(),
 	}
 
 	for _, lang := range languages {

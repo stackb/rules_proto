@@ -1,5 +1,10 @@
 workspace(name = "build_stack_rules_proto")
 
+local_repository(
+    name = "build_bazel_rules_nodejs",
+    path = "/home/pcj/github/bazelbuild/rules_nodejs",
+)
+
 # =========================================
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
@@ -166,6 +171,16 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
+load("//:deps.bzl", "bazel_gazelle")
+
+bazel_gazelle()
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+
+gazelle_dependencies()
+
+# gazelle:repo bazel_gazelle
+
 # =========================================
 
 load("//dart:deps.bzl", "dart_grpc_library")
@@ -195,38 +210,6 @@ closure_grpc_library()
 load("//github.com/grpc/grpc-web:deps.bzl", "closure_grpc_library")
 
 closure_grpc_library()
-
-# =========================================
-
-load("//github.com/improbable-eng/ts-protoc-gen:deps.bzl", "ts_grpc_library")
-
-ts_grpc_library()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-
-gazelle_dependencies()
-
-load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
-
-node_repositories(
-    package_json = ["@ts_protoc_gen//:package.json"],
-)
-
-# load("@build_bazel_rules_typescript//:defs.bzl", "ts_setup_workspace")
-
-# ts_setup_workspace()
-
-load("@io_bazel_rules_webtesting//web:repositories.bzl", "browser_repositories", "web_test_repositories")
-
-web_test_repositories()
-
-load("@build_bazel_rules_nodejs//:defs.bzl", "npm_install")
-
-npm_install(
-    name = "deps",
-    package_json = "@ts_protoc_gen//:package.json",
-    package_lock_json = "@ts_protoc_gen//:package-lock.json",
-)
 
 # =========================================
 

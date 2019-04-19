@@ -250,7 +250,6 @@ access that rule by adding `_pb` at the end of the rule name, like `bazel build
 | [grpc-web](/github.com/grpc/grpc-web) | [commonjs_dts_grpc_compile](/github.com/grpc/grpc-web#commonjs_dts_grpc_compile) | Generates a commonjs_dts *.js protobuf+gRPC files ([example](/grpc-web/example/commonjs_dts_grpc_compile)) |
 | [grpc-web](/github.com/grpc/grpc-web) | [ts_grpc_compile](/github.com/grpc/grpc-web#ts_grpc_compile) | Generates a commonjs *.ts protobuf+gRPC files ([example](/grpc-web/example/ts_grpc_compile)) |
 | [grpc-web](/github.com/grpc/grpc-web) | [closure_grpc_library](/github.com/grpc/grpc-web#closure_grpc_library) | Generates protobuf closure library *.js files ([example](/grpc-web/example/closure_grpc_library)) |
-| [ts-protoc-gen](/github.com/improbable-eng/ts-protoc-gen) | [ts_proto_compile](/github.com/improbable-eng/ts-protoc-gen#ts_proto_compile) | Generates typescript protobuf t.ds files ([example](/ts-protoc-gen/example/ts_proto_compile)) |
 
 ## Transitivity
 
