@@ -59,8 +59,10 @@ def {{ .Rule.Name }}(**kwargs):
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     android_library(
@@ -88,8 +90,10 @@ def {{ .Rule.Name }}(**kwargs):
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     android_library(

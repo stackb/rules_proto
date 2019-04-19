@@ -64,13 +64,17 @@ def {{ .Rule.Name }}(**kwargs):
     node_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
+
     node_module_index(
         name = name_index,
         compilation = name_pb,
     )
+
     node_module(
         name = name,
         srcs = [name_pb],
@@ -96,13 +100,17 @@ def {{ .Rule.Name }}(**kwargs):
     node_grpc_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
+
     node_module_index(
         name = name_index,
         compilation = name_pb,
     )
+
     node_module(
         name = name,
         srcs = [name_pb],

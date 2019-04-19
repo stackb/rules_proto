@@ -17,6 +17,9 @@ def go_grpc_library(**kwargs):
         transitive = kwargs.pop("transitive", True),
         plugin_options = get_importmappings(kwargs.pop("importmap", {})),
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     go_library(

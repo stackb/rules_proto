@@ -13,8 +13,10 @@ def rust_grpc_library(**kwargs):
     rust_grpc_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     rust_proto_lib(

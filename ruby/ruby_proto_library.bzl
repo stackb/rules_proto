@@ -11,8 +11,10 @@ def ruby_proto_library(**kwargs):
     ruby_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     ruby_library(

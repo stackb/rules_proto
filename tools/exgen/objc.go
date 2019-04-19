@@ -7,11 +7,14 @@ def {{ .Rule.Name }}(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    objc_proto_compile(
+
+	objc_proto_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        transitive = True,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     native.objc_library(
@@ -34,7 +37,9 @@ def {{ .Rule.Name }}(**kwargs):
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        transitive = True,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     native.objc_library(

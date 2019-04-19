@@ -80,17 +80,17 @@ load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
-    transitive = kwargs.get("transitive")
 
     name_pb = name + "_pb"
+
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        transitive = transitive,
-        verbose = verbose,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     core_library(
@@ -109,17 +109,16 @@ load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
-    transitive = kwargs.get("transitive")
 
     name_pb = name + "_pb"
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        transitive = transitive,
-        verbose = verbose,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     core_library(

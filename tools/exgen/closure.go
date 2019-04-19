@@ -15,8 +15,6 @@ def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     visibility = kwargs.get("visibility")
-    transitive = kwargs.pop("transitive", True)
-    transitivity = kwargs.get("transitivity")
 
     name_pb = name + "_pb"
 
@@ -24,8 +22,8 @@ def {{ .Rule.Name }}(**kwargs):
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        transitive = transitive,
-        transitivity = transitivity,
+        transitive = kwargs.pop("transitive", True),
+        transitivity = kwargs.pop("transitivity", {}),
     )
 
     closure_js_library(

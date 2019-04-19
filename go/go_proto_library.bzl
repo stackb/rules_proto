@@ -14,9 +14,11 @@ def go_proto_library(**kwargs):
     go_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = kwargs.pop("transitive", True),
         plugin_options = get_importmappings(kwargs.pop("importmap", {})),
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     go_library(

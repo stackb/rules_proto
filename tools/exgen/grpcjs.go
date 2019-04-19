@@ -31,10 +31,7 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
-    transitive = kwargs.pop("transitive", True)
-    transitivity = kwargs.get("transitivity")
 
     name_pb = name + "_pb"
     name_pb_grpc = name + "_pb_grpc"
@@ -42,18 +39,19 @@ def {{ .Rule.Name }}(**kwargs):
     closure_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = transitive,
-        transitivity = transitivity,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     closure_grpc_compile(
         name = name_pb_grpc,
         deps = deps,
-        transitive = transitive,
-        transitivity = transitivity,
         visibility = visibility,
-        verbose = verbose,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     closure_deps = kwargs.get("closure_deps", [])

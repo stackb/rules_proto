@@ -40,33 +40,56 @@ type Language struct {
 
 	// Does the langaguage has a routeguide server?  If so, this is the bazel target to run it.
 	RouteGuideServer, RouteGuideClient string
+
+	// Exclude lang in TravisCI configuration
+	NoTravisCI bool
+
+	// Additional travis-specific env vars in the form "K=V"
+	TravisEnvVars []string
 }
 
 type Rule struct {
 	// Name of the rule
 	Name string
+
 	// Base name of the rule (typically the lang name)
 	Base string
+
 	// Kind of the rule (proto|grpc)
 	Kind string
+
 	// Description
 	Doc string
+
 	// Temmplate for workspace
 	Usage *template.Template
+
 	// Template for build file
 	Example *template.Template
+
 	// Template for bzl file
 	Implementation *template.Template
+
 	// List of attributes
 	Attrs []*Attr
+
 	// List of plugins
 	Plugins []string
+
 	// Not expected to be functional
 	Experimental bool
+
 	// Not compatible with remote execution
 	RemoteIncompatible bool
+
 	// Bazel build flags
 	Flags []*Flag
+
+	// Exclude rule in TravisCI configuration
+	NoTravisCI bool
+
+	// Additional travis-specific env vars in the form "K=V"
+	TravisEnvVars []string
 }
 
 // Flag captures information about a bazel build flag.
@@ -113,6 +136,16 @@ func main() {
 			Name:  "footer",
 			Usage: "Template for the main readme footer",
 			Value: "tools/exgen/footer.tpl",
+		},
+		&cli.StringFlag{
+			Name:  "travis_header",
+			Usage: "Template for the travis header",
+			Value: "tools/exgen/travis_header.tpl",
+		},
+		&cli.StringFlag{
+			Name:  "travis_footer",
+			Usage: "Template for the travis footer",
+			Value: "tools/exgen/travis_footer.tpl",
 		},
 		&cli.StringFlag{
 			Name:  "ref",
@@ -191,6 +224,15 @@ func action(c *cli.Context) error {
 		Ref:    ref,
 		Sha256: sha256,
 	}, languages)
+
+	mustWriteTravisYml(dir, c.String("travis_header"), c.String("travis_footer"), struct {
+		Ref, Sha256 string
+	}{
+		Ref:    ref,
+		Sha256: sha256,
+	}, languages, []string{
+		"BAZEL=0.24.1",
+	})
 
 	return nil
 }
@@ -370,8 +412,8 @@ func mustWriteLanguageExampleBuildFile(dir string, lang *Language, rule *Rule) {
 func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
 	for _, f := range rule.Flags {
-		out.w(fmt.Sprintf("# %s", f.Description))
-		out.w(fmt.Sprintf("%s --%s=%s", f.Category, f.Name, f.Value))
+		out.w("# %s", f.Description)
+		out.w("%s --%s=%s", f.Category, f.Name, f.Value)
 	}
 	out.MustWrite(path.Join(dir, ".bazelrc"))
 }
@@ -430,7 +472,7 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 			out.w("| Category | Flag | Value | Description |")
 			out.w("| --- | --- | --- | --- |")
 			for _, f := range rule.Flags {
-				out.w(fmt.Sprintf("| %s | %s | %s | %s |", f.Category, f.Name, f.Value, f.Description))
+				out.w("| %s | %s | %s | %s |", f.Category, f.Name, f.Value, f.Description)
 			}
 			out.ln()
 		}
@@ -473,14 +515,18 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.w("## Rules")
 	out.ln()
 
-	out.w("| Lang | Rule | Description")
-	out.w("| ---: | :--- | :--- |")
+	out.w("> If rule has no status (not tested), don't trust it!")
+	out.ln()
+
+	out.w("| Status | Lang | Rule | Description")
+	out.w("| ---    | ---: | :--- | :--- |")
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {
+			travisLink := fmt.Sprintf("[![Build Status](https://travis-ci.org/stackb/rules_proto.svg?branch=travis)](https://travis-ci.org/stackb/rules_proto)")
 			dirLink := fmt.Sprintf("[%s](/%s)", lang.Name, lang.Dir)
 			ruleLink := fmt.Sprintf("[%s](/%s#%s)", rule.Name, lang.Dir, rule.Name)
 			exampleLink := fmt.Sprintf("[example](/%s/example/%s)", lang.Name, rule.Name)
-			out.w("| %s | %s | %s (%s) |", dirLink, ruleLink, rule.Doc, exampleLink)
+			out.w("| %s | %s | %s | %s (%s) |", travisLink, dirLink, ruleLink, rule.Doc, exampleLink)
 		}
 	}
 	out.ln()
@@ -489,6 +535,43 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.ln()
 
 	out.MustWrite(path.Join(dir, "README.md"))
+}
+
+func mustWriteTravisYml(dir, header, footer string, data interface{}, languages []*Language, envVars []string) {
+	out := &LineWriter{}
+
+	out.tpl(header, data)
+
+	for _, lang := range languages {
+		if lang.NoTravisCI {
+			continue
+		}
+		for _, rule := range lang.Rules {
+			if rule.NoTravisCI {
+				continue
+			}
+			env := make([]string, 0)
+			for _, v := range envVars {
+				env = append(env, v)
+			}
+			for _, v := range lang.TravisEnvVars {
+				env = append(env, v)
+			}
+			for _, v := range rule.TravisEnvVars {
+				env = append(env, v)
+			}
+			env = append(env, "LANG="+lang.Dir)
+			env = append(env, "RULE="+rule.Name)
+
+			out.w("  - %s", strings.Join(env, " "))
+		}
+	}
+	out.ln()
+
+	out.tpl(footer, data)
+	out.ln()
+
+	out.MustWrite(path.Join(dir, ".travis.yml"))
 }
 
 // ********************************

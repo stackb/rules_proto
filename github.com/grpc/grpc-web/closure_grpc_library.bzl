@@ -5,7 +5,6 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 def closure_grpc_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
@@ -14,16 +13,19 @@ def closure_grpc_library(**kwargs):
     closure_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     closure_grpc_compile(
         name = name_pb_grpc,
         deps = deps,
-        transitive = True,
         visibility = visibility,
-        verbose = verbose,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     closure_js_library(

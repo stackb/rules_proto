@@ -4,17 +4,16 @@ load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 def csharp_grpc_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
-    transitive = kwargs.get("transitive")
 
     name_pb = name + "_pb"
     csharp_grpc_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        transitive = transitive,
-        verbose = verbose,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     core_library(

@@ -36,8 +36,10 @@ def {{ .Rule.Name }}(**kwargs):
     scala_proto_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     scala_library(
@@ -63,8 +65,10 @@ def {{ .Rule.Name }}(**kwargs):
     scala_grpc_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     scala_library(

@@ -19,8 +19,6 @@ def {{ .Rule.Name }}(**kwargs):
     deps = kwargs.get("deps")
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
-    transitive = kwargs.pop("transitive", True)
-    verbose = kwargs.pop("verbose", 0)
     go_deps = kwargs.get("go_deps", [])
 
     name_pb = name + "_pb"
@@ -28,10 +26,11 @@ def {{ .Rule.Name }}(**kwargs):
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
-        transitive = transitive,
-        verbose = verbose,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     go_library(
@@ -61,8 +60,6 @@ def {{ .Rule.Name }}(**kwargs):
     deps = kwargs.get("deps")
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
-    transitive = kwargs.pop("transitive", True)
-    verbose = kwargs.pop("verbose", 0)
     go_deps = kwargs.get("go_deps", [])
 
     name_pb = name + "_pb"
@@ -70,10 +67,11 @@ def {{ .Rule.Name }}(**kwargs):
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
-        transitive = transitive,
-        verbose = verbose,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     go_library(

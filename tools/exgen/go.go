@@ -52,9 +52,11 @@ def {{ .Rule.Name }}(**kwargs):
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
-        transitive = kwargs.pop("transitive", True),
         plugin_options = get_importmappings(kwargs.pop("importmap", {})),
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     go_library(
@@ -86,6 +88,9 @@ def {{ .Rule.Name }}(**kwargs):
         transitive = kwargs.pop("transitive", True),
         plugin_options = get_importmappings(kwargs.pop("importmap", {})),
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     go_library(
