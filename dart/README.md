@@ -49,20 +49,6 @@ dart_proto_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def dart_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//dart:dart")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -125,20 +111,6 @@ dart_grpc_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def dart_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//dart:grpc_dart")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -199,36 +171,6 @@ dart_proto_library(
     name = "person_dart_library",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//dart:dart_proto_compile.bzl", "dart_proto_compile")
-load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
-
-def dart_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    dart_proto_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = verbose,
-    )
-    dart_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            str(Label("@vendor_protobuf//:protobuf")),
-        ],
-        pub_pkg_name = name,
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes
@@ -295,37 +237,6 @@ dart_grpc_library(
     name = "greeter_dart_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//dart:dart_grpc_compile.bzl", "dart_grpc_compile")
-load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
-
-def dart_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    dart_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = verbose,
-    )
-    dart_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            str(Label("@vendor_protobuf//:protobuf")),
-            str(Label("@vendor_grpc//:grpc")),
-        ],
-        pub_pkg_name = name,
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes

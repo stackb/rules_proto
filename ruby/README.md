@@ -32,20 +32,6 @@ ruby_proto_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def ruby_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//ruby:ruby")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -93,21 +79,6 @@ ruby_grpc_compile(
     name = "greeter_ruby_grpc",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def ruby_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//ruby:ruby")),
-            str(Label("//ruby:grpc_ruby")),
-        ],
-        **kwargs
-    )
 ```
 
 ### Mandatory Attributes
@@ -165,34 +136,6 @@ ruby_proto_library(
     name = "person_ruby_library",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//ruby:ruby_proto_compile.bzl", "ruby_proto_compile")
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
-
-def ruby_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
-    ruby_proto_compile(
-        name = name_pb,
-        deps = deps,
-        transitive = True,
-        visibility = visibility,
-    )
-
-    ruby_library(
-        name = name,
-        srcs = [name_pb],
-        includes = ["{package}/%s" % name_pb],
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes
@@ -254,34 +197,6 @@ ruby_grpc_library(
     name = "greeter_ruby_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//ruby:ruby_grpc_compile.bzl", "ruby_grpc_compile")
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
-
-def ruby_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
-    ruby_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        transitive = True,
-        visibility = visibility,
-    )
-
-    ruby_library(
-        name = name,
-        srcs = [name_pb],
-        includes = ["{package}/%s" % name_pb],
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes

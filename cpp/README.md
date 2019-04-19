@@ -32,20 +32,6 @@ cpp_proto_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def cpp_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//cpp:cpp")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -95,21 +81,6 @@ cpp_grpc_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def cpp_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//cpp:cpp")),
-            str(Label("//cpp:grpc_cpp")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -153,35 +124,6 @@ cpp_proto_library(
     name = "person_cpp_library",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
-
-def cpp_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    cpp_proto_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        transitive = True,
-    )
-
-    native.cc_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            "//external:protobuf_clib",
-        ],
-        includes = [name_pb],
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes
@@ -231,38 +173,6 @@ cpp_grpc_library(
     name = "greeter_cpp_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//cpp:cpp_grpc_compile.bzl", "cpp_grpc_compile")
-
-def cpp_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    cpp_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        transitive = True,
-    )
-
-    native.cc_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            "//external:protobuf_clib",
-            "@com_github_grpc_grpc//:grpc++",
-            "@com_github_grpc_grpc//:grpc++_reflection",
-        ],
-        # This seems magical to me.
-        includes = [name_pb],
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes

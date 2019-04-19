@@ -32,20 +32,6 @@ java_proto_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def java_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//java:java")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -91,21 +77,6 @@ java_grpc_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def java_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//java:java")),
-            str(Label("//java:grpc_java")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -149,34 +120,6 @@ java_proto_library(
     name = "person_java_library",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//java:java_proto_compile.bzl", "java_proto_compile")
-
-def java_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    java_proto_compile(
-        name = name_pb,
-        deps = deps,
-        transitive = True,
-        visibility = visibility,
-    )
-    native.java_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [str(Label("//java:proto_deps"))],
-        exports = [
-            str(Label("//java:proto_deps")),
-        ],
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes
@@ -230,34 +173,6 @@ java_grpc_library(
     name = "greeter_java_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//java:java_grpc_compile.bzl", "java_grpc_compile")
-
-def java_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    java_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        transitive = True,
-        visibility = visibility,
-    )
-    native.java_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [str(Label("//java:grpc_deps"))],
-        exports = [
-            str(Label("//java:grpc_deps")),
-        ],
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes

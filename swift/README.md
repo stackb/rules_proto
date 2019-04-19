@@ -50,20 +50,6 @@ swift_proto_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def swift_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//swift:swift")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -127,20 +113,6 @@ swift_grpc_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def swift_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//swift:grpc_swift")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -200,14 +172,6 @@ swift_proto_library(
     name = "person_swift_library",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("@build_bazel_rules_swift//swift:swift.bzl", _swift_proto_library = "swift_proto_library")
-swift_proto_library = _swift_proto_library
-
 ```
 
 ### Mandatory Attributes
@@ -270,14 +234,6 @@ swift_grpc_library(
 	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 	flavor = "client",
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("@build_bazel_rules_swift//swift:swift.bzl", _swift_grpc_library = "swift_grpc_library")
-swift_grpc_library = _swift_grpc_library
-
 ```
 
 ### Mandatory Attributes

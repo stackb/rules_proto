@@ -65,6 +65,16 @@ type Rule struct {
 	Experimental bool
 	// Not compatible with remote execution
 	RemoteIncompatible bool
+	// Bazel build flags
+	Flags []*Flag
+}
+
+// Flag captures information about a bazel build flag.
+type Flag struct {
+	Category    string
+	Name        string
+	Value       string
+	Description string
 }
 
 type Attr struct {
@@ -175,7 +185,6 @@ func action(c *cli.Context) error {
 		mustWriteLanguageExamples(dir, lang)
 	}
 
-	mustWriteMakefile(dir, languages)
 	mustWriteReadme(dir, c.String("header"), c.String("footer"), struct {
 		Ref, Sha256 string
 	}{
@@ -328,6 +337,7 @@ func mustWriteLanguageExamples(dir string, lang *Language) {
 		os.MkdirAll(exampleDir, os.ModePerm)
 		mustWriteLanguageExampleWorkspace(exampleDir, lang, rule)
 		mustWriteLanguageExampleBuildFile(exampleDir, lang, rule)
+		mustWriteLanguageExampleBazelrcFile(exampleDir, lang, rule)
 	}
 }
 
@@ -336,16 +346,6 @@ func mustWriteLanguageExampleWorkspace(dir string, lang *Language, rule *Rule) {
 	depth := strings.Split(lang.Dir, "/")
 	// +2 as we are in the example/{rule} subdirectory
 	relpath := strings.Repeat("../", len(depth)+2)
-
-	// http_archive(
-	// 	name = "bazel_toolchains",
-	// 	sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
-	// 	strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
-	// 	urls = [
-	// 		"https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
-	// 		"https://github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
-	// 	],
-	// )
 
 	out.w(`load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -367,45 +367,13 @@ func mustWriteLanguageExampleBuildFile(dir string, lang *Language, rule *Rule) {
 	out.MustWrite(path.Join(dir, "BUILD.bazel"))
 }
 
-func mustWriteMakefile(dir string, languages []*Language) {
+func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
-
-	allClean := make([]string, len(languages))
-
-	for _, lang := range languages {
-		buildNames := make([]string, len(lang.Rules))
-		cleanNames := make([]string, len(lang.Rules))
-
-		for i, rule := range lang.Rules {
-			buildNames[i] = rule.Name
-			cleanNames[i] = "clean_" + rule.Name
-
-			out.w("%s: ", rule.Name)
-			out.w("\t(cd %s && bazel build //...)", path.Join(lang.Dir, "example", rule.Name))
-			out.ln()
-
-			out.w("clean_%s: ", rule.Name)
-			out.w("\t(cd %s && bazel clean)", path.Join(lang.Dir, "example", rule.Name))
-			out.ln()
-
-		}
-
-		if len(buildNames) > 0 {
-			out.w("%s: %s", lang.Name, strings.Join(buildNames, " "))
-			out.ln()
-
-			out.w("clean_%s: %s", lang.Name, strings.Join(cleanNames, " "))
-			out.ln()
-
-			allClean = append(allClean, "clean_"+lang.Name)
-
-		}
+	for _, f := range rule.Flags {
+		out.w(fmt.Sprintf("# %s", f.Description))
+		out.w(fmt.Sprintf("%s --%s=%s", f.Category, f.Name, f.Value))
 	}
-
-	out.w("all_clean: %s", strings.Join(allClean, " "))
-	out.ln()
-
-	out.MustWrite(path.Join(dir, "Makefile.examples"))
+	out.MustWrite(path.Join(dir, ".bazelrc"))
 }
 
 func mustWriteLanguageReadme(dir string, lang *Language) {
@@ -455,13 +423,17 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 		out.w("```")
 		out.ln()
 
-		out.w("### `IMPLEMENTATION`")
-		out.ln()
+		if len(rule.Flags) > 0 {
+			out.w("### `Flags`")
+			out.ln()
 
-		out.w("```python")
-		out.t(rule.Implementation, &ruleData{lang, rule})
-		out.w("```")
-		out.ln()
+			out.w("| Category | Flag | Value | Description |")
+			out.w("| --- | --- | --- | --- |")
+			for _, f := range rule.Flags {
+				out.w(fmt.Sprintf("| %s | %s | %s | %s |", f.Category, f.Name, f.Value, f.Description))
+			}
+			out.ln()
+		}
 
 		out.w("### Mandatory Attributes")
 		out.ln()

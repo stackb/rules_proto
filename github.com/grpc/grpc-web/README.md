@@ -39,20 +39,6 @@ closure_grpc_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def closure_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/grpc/grpc-web:closure")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -102,20 +88,6 @@ commonjs_grpc_compile(
     name = "greeter_grpc-web_grpc",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def commonjs_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/grpc/grpc-web:commonjs")),
-        ],
-        **kwargs
-    )
 ```
 
 ### Mandatory Attributes
@@ -169,20 +141,6 @@ commonjs_dts_grpc_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def commonjs_dts_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/grpc/grpc-web:commonjs_dts")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -234,20 +192,6 @@ ts_grpc_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def ts_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/grpc/grpc-web:ts")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -297,63 +241,6 @@ closure_grpc_library(
     name = "greeter_grpc-web_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//github.com/grpc/grpc-web:closure_grpc_compile.bzl", "closure_grpc_compile")
-load("//closure:closure_proto_compile.bzl", "closure_proto_compile")
-load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
-
-def closure_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_pb_grpc = name + "_pb_grpc"
-
-    closure_proto_compile(
-        name = name_pb,
-        deps = deps,
-        transitive = True,
-        visibility = visibility,
-    )
-
-    closure_grpc_compile(
-        name = name_pb_grpc,
-        deps = deps,
-        transitive = True,
-        visibility = visibility,
-        verbose = verbose,
-    )
-
-    closure_js_library(
-        name = name,
-        srcs = [name_pb, name_pb_grpc],
-        deps = [
-            "@com_github_grpc_grpc_web//javascript/net/grpc/web:abstractclientbase",
-            "@com_github_grpc_grpc_web//javascript/net/grpc/web:clientreadablestream",
-            "@com_github_grpc_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
-            "@com_github_grpc_grpc_web//javascript/net/grpc/web:error",
-            "@io_bazel_rules_closure//closure/library",
-            "@io_bazel_rules_closure//closure/protobuf:jspb",
-		],
-		suppress = [
-            "JSC_LATE_PROVIDE_ERROR",
-            "JSC_UNDEFINED_VARIABLE",
-            "JSC_IMPLICITLY_NULLABLE_JSDOC",
-            "JSC_STRICT_INEXISTENT_PROPERTY",
-            "JSC_POSSIBLE_INEXISTENT_PROPERTY",
-            "JSC_UNRECOGNIZED_TYPE_ERROR",
-            "JSC_UNUSED_PRIVATE_PROPERTY",
-			"JSC_EXTRA_REQUIRE_WARNING",
-			"JSC_INVALID_INTERFACE_MEMBER_DECLARATION",
-		],
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes

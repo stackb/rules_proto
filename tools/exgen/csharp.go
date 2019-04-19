@@ -134,6 +134,15 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
+var csharpLibraryFlags = []*Flag{
+	{
+		Category:    "build",
+		Name:        "strategy",
+		Value:       "CoreCompile=standalone",
+		Description: "dotnet SDK desperately wants to find the HOME directory",
+	},
+}
+
 func makeCsharp() *Language {
 	return &Language{
 		Dir:  "csharp",
@@ -191,6 +200,7 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				Implementation: csharpProtoLibraryRuleTemplate,
 				Doc:            "Generates csharp protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags:          csharpLibraryFlags,
 			},
 			&Rule{
 				Name:           "csharp_grpc_library",
@@ -201,6 +211,7 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates csharp protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags:          csharpLibraryFlags,
 			},
 		},
 	}
