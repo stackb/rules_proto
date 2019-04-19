@@ -97,7 +97,7 @@ def {{ .Rule.Name }}(**kwargs):
         name = name,
         srcs = [name_pb],
         deps = [
-            "@google.protobuf//:core",
+            "@google.protobuf//:netstandard1.0_core",
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
         ],
         visibility = visibility,
@@ -126,10 +126,10 @@ def {{ .Rule.Name }}(**kwargs):
         name = name,
         srcs = [name_pb],
         deps = [
-            "@google.protobuf//:core",
+            "@google.protobuf//:netstandard1.0_core",
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-            "@grpc.core//:core",
-            "@system.interactive.async//:core",
+            "@grpc.core//:netstandard1.5_core",
+            "@system.interactive.async//:netstandard2.0_core",
         ],
         visibility = visibility,
     )`)
