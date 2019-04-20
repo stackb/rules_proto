@@ -259,8 +259,8 @@ def build_bazel_rules_android(**kwargs):
     """Android Rules
     """
     name = "build_bazel_rules_android"
-    ref = get_ref(name, "60f03a20cefbe1e110ae0ac7f25359822e9ea24a", kwargs)
-    sha256 = get_sha256(name, "4305b6cf6b098752a19fdb1abdc9ae2e069f5ff61359bfc3c752e4b4c862d18e", kwargs)
+    ref = get_ref(name, "ac9d2df31b2b9c77c1c43d4a3cfce789758320c5", kwargs) # Apr 2019
+    sha256 = get_sha256(name, "5bbead25993489d50290d8361f16fd08958c6b7b78e260091a0fd4f691518fb9", kwargs)
     github_archive(name, "bazelbuild", "rules_android", ref, sha256)
 
 

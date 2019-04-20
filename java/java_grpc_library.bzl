@@ -7,7 +7,7 @@ def java_grpc_library(**kwargs):
 
     name_pb = name + "_pb"
 
-	java_grpc_compile(
+    java_grpc_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -16,7 +16,7 @@ def java_grpc_library(**kwargs):
         transitive = kwargs.pop("transitive", True),
     )
 
-	native.java_library(
+    native.java_library(
         name = name,
         srcs = [name_pb],
         deps = [str(Label("//java:grpc_deps"))],
