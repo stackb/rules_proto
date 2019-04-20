@@ -118,6 +118,7 @@ func makeRuby() *Language {
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates *.rb protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				NoTravisCI:     true,
 			},
 			&Rule{
 				Name:           "ruby_grpc_library",
@@ -126,6 +127,7 @@ func makeRuby() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates *.rb protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				NoTravisCI:     true,
 			},
 		},
 	}

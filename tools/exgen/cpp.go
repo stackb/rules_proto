@@ -39,7 +39,6 @@ def {{ .Rule.Name }}(**kwargs):
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        transitive = transitive,
         verbose = kwargs.pop("verbose", 0),
         transitivity = kwargs.pop("transitivity", {}),
         transitive = kwargs.pop("transitive", True),

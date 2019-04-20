@@ -85,7 +85,6 @@ def {{ .Rule.Name }}(**kwargs):
     go_grpc_compile(
         name = name_pb,
         deps = deps,
-        transitive = kwargs.pop("transitive", True),
         plugin_options = get_importmappings(kwargs.pop("importmap", {})),
         visibility = visibility,
         verbose = kwargs.pop("verbose", 0),
