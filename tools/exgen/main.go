@@ -41,8 +41,9 @@ type Language struct {
 	// Does the langaguage has a routeguide server?  If so, this is the bazel target to run it.
 	RouteGuideServer, RouteGuideClient string
 
-	// Exclude lang in TravisCI configuration
-	NoTravisCI bool
+	// If not the empty string, one-word reason why excluded from TravisCI
+	// configuration
+	TravisExclusionReason string
 
 	// Additional travis-specific env vars in the form "K=V"
 	TravisEnvVars []string
@@ -85,8 +86,9 @@ type Rule struct {
 	// Bazel build flags
 	Flags []*Flag
 
-	// Exclude rule in TravisCI configuration
-	NoTravisCI bool
+	// If not the empty string, one-word reason why excluded from TravisCI
+	// configuration
+	TravisExclusionReason string
 
 	// Additional travis-specific env vars in the form "K=V"
 	TravisEnvVars []string
@@ -515,14 +517,18 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.w("## Rules")
 	out.ln()
 
-	out.w("> If rule has no status (not tested), don't trust it!")
-	out.ln()
-
 	out.w("| Status | Lang | Rule | Description")
 	out.w("| ---    | ---: | :--- | :--- |")
 	for _, lang := range languages {
+		travisExclusionReason := lang.TravisExclusionReason
 		for _, rule := range lang.Rules {
 			travisLink := fmt.Sprintf("[![Build Status](https://travis-ci.org/stackb/rules_proto.svg?branch=travis)](https://travis-ci.org/stackb/rules_proto)")
+			if travisExclusionReason == "" {
+				travisExclusionReason = rule.TravisExclusionReason
+			}
+			if travisExclusionReason != "" {
+				travisLink = travisExclusionReason
+			}
 			dirLink := fmt.Sprintf("[%s](/%s)", lang.Name, lang.Dir)
 			ruleLink := fmt.Sprintf("[%s](/%s#%s)", rule.Name, lang.Dir, rule.Name)
 			exampleLink := fmt.Sprintf("[example](/%s/example/%s)", lang.Name, rule.Name)
@@ -543,11 +549,11 @@ func mustWriteTravisYml(dir, header, footer string, data interface{}, languages 
 	out.tpl(header, data)
 
 	for _, lang := range languages {
-		if lang.NoTravisCI {
+		if lang.TravisExclusionReason != "" {
 			continue
 		}
 		for _, rule := range lang.Rules {
-			if rule.NoTravisCI {
+			if rule.TravisExclusionReason != "" {
 				continue
 			}
 			env := make([]string, 0)

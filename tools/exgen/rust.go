@@ -89,6 +89,7 @@ func makeRust() *Language {
 	return &Language{
 		Dir:  "rust",
 		Name: "rust",
+		TravisExclusionReason: "experimental",
 		Rules: []*Rule{
 			&Rule{
 				Name:           "rust_proto_compile",

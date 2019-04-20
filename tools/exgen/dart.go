@@ -103,9 +103,9 @@ def {{ .Rule.Name }}(**kwargs):
 
 func makeDart() *Language {
 	return &Language{
-		Dir:        "dart",
-		Name:       "dart",
-		NoTravisCI: true,
+		Dir:  "dart",
+		Name: "dart",
+		TravisExclusionReason: "experimental",
 		Rules: []*Rule{
 			&Rule{
 				Name:           "dart_proto_compile",

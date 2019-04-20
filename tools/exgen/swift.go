@@ -38,9 +38,10 @@ var swiftGrpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_pro
 
 func makeSwift() *Language {
 	return &Language{
-		Dir:        "swift",
-		Name:       "swift",
-		NoTravisCI: true,
+		Dir:  "swift",
+		Name: "swift",
+		TravisExclusionReason: "travis incompatible",
+
 		Rules: []*Rule{
 			&Rule{
 				Experimental:   true,
