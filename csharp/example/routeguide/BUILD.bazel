@@ -14,7 +14,7 @@ core_library(
     ],
     deps = [
         ":routeguide",
-        "@newtonsoft.json//:core",
+        "@newtonsoft.json//:netcoreapp2.0_core",
     ],
 )
 
@@ -22,23 +22,6 @@ core_binary(
     name = "reflect",
     srcs = [
         "Reflect.cs",
-    ],
-    deps = [
-        ":routeguide",
-        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.console.dll",
-        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.core.dll",
-        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.dll",
-        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.reflection.dll",
-        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.runtime.dll",
-        "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.runtime.extensions.dll",
-    ],
-)
-
-core_binary(
-    name = "class1",
-    srcs = [
-        "Class1.cs",
     ],
     deps = [
         ":routeguide",
@@ -61,8 +44,8 @@ core_binary(
     deps = [
         ":routeguide",
         ":util",
-        "@google.protobuf//:core",
-        "@grpc.core//:core",
+        "@google.protobuf//:netstandard1.0_core",
+        "@grpc.core//:netstandard1.5_core",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:netstandard.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.collections.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.console.dll",
@@ -84,7 +67,7 @@ core_binary(
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.linq.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.xdocument.dll",
-        "@system.interactive.async//:core",
+        "@system.interactive.async//:netstandard2.0_core",
     ],
 )
 
@@ -97,8 +80,8 @@ core_binary(
     deps = [
         ":routeguide",
         ":util",
-        "@google.protobuf//:core",
-        "@grpc.core//:core",
+        "@google.protobuf//:netstandard1.0_core",
+        "@grpc.core//:netstandard1.5_core",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:netstandard.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.collections.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.console.dll",
@@ -120,6 +103,6 @@ core_binary(
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.linq.dll",
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.xdocument.dll",
-        "@system.interactive.async//:core",
+        "@system.interactive.async//:netstandard2.0_core",
     ],
 )
