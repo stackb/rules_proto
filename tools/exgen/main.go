@@ -220,21 +220,23 @@ func action(c *cli.Context) error {
 		mustWriteLanguageExamples(dir, lang)
 	}
 
+	bazelVersions := []string{
+		"BAZEL=0.24.1",
+	}
+
 	mustWriteReadme(dir, c.String("header"), c.String("footer"), struct {
 		Ref, Sha256 string
 	}{
 		Ref:    ref,
 		Sha256: sha256,
-	}, languages)
+	}, languages, bazelVersions)
 
 	mustWriteTravisYml(dir, c.String("travis_header"), c.String("travis_footer"), struct {
 		Ref, Sha256 string
 	}{
 		Ref:    ref,
 		Sha256: sha256,
-	}, languages, []string{
-		"BAZEL=0.24.1",
-	})
+	}, languages, bazelVersions)
 
 	return nil
 }
@@ -508,8 +510,10 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 	out.MustWrite(path.Join(dir, lang.Dir, "README.md"))
 }
 
-func mustWriteReadme(dir, header, footer string, data interface{}, languages []*Language) {
+func mustWriteReadme(dir, header, footer string, data interface{}, languages []*Language, versions []string) {
 	out := &LineWriter{}
+
+	headVersion := versions[0]
 
 	out.tpl(header, data)
 	out.ln()
@@ -522,7 +526,7 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	for _, lang := range languages {
 		travisExclusionReason := lang.TravisExclusionReason
 		for _, rule := range lang.Rules {
-			travisLink := fmt.Sprintf("[![Build Status](https://travis-ci.org/stackb/rules_proto.svg?branch=travis)](https://travis-ci.org/stackb/rules_proto)")
+			travisLink := fmt.Sprintf("[![%s](https://travis-ci.org/stackb/rules_proto.svg?branch=travis)](https://travis-ci.org/stackb/rules_proto)", headVersion)
 			if travisExclusionReason == "" {
 				travisExclusionReason = rule.TravisExclusionReason
 			}
