@@ -32,6 +32,7 @@ import (
 	"log"
 	"math"
 	"net"
+	"os"
 	"sync"
 	"time"
 
@@ -222,7 +223,11 @@ func newServer() *routeGuideServer {
 
 func main() {
 	flag.Parse()
-	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *port))
+	serverPort := fmt.Sprintf("%d", *port)
+	if os.Getenv("SERVER_PORT") != "" {
+		serverPort = os.Getenv("SERVER_PORT")
+	}
+	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%s", serverPort))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}

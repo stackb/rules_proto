@@ -1,4 +1,18 @@
-load("//example/routeguide:routeguide_test.bzl", "routeguide_test")
+load("//example/routeguide:routeguide_test.bzl", "routeguide_test", "routeguide_test_matrix")
+
+routeguide_test_matrix(
+    clients = [
+        "//cpp/example/routeguide:client",
+    ],
+    servers = [
+        "//cpp/example/routeguide:server",
+        "//go/example/routeguide/server",
+        "//csharp/example/routeguide:server",
+        "//java/example/routeguide:server",
+        "//python/example/routeguide:server",
+    ],
+)
+
 
 routeguide_test(
     name = "cpp_cpp",
@@ -22,6 +36,8 @@ routeguide_test(
     name = "cpp_csharp",
     client = "//cpp/example/routeguide:client",
     server = "//csharp/example/routeguide:server",
+    data = ["//csharp/example/routeguide:server"],
+    tags = ["no-sandbox"],
     database = "//example/proto:routeguide_features",
     port = 50072,
     size = "small",

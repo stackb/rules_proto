@@ -154,8 +154,11 @@ class Program
 
     static void Main(string[] args)
     {
-        const int Port = 50072;
-
+        var Port = 50072;
+        var PortVar = System.Environment.GetEnvironmentVariable("SERVER_PORT");
+        if (!String.IsNullOrEmpty(PortVar)) {
+            Port = Int32.Parse(PortVar);
+        }
         var features = RouteGuideUtil.ParseFeatures(RouteGuideUtil.DefaultFeaturesFile);
 
         Server server = new Server

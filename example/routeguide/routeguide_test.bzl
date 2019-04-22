@@ -2,12 +2,16 @@ def _routeguide_test_impl(ctx):
   
     server = None
     for f in ctx.files.server:
-        if f.basename == "server.bash" or f.basename == "server" or f.basename == "server.jar":
+        if f.basename == "server.bash" or f.basename == "server" or f.basename == "server_deploy.jar":
             server = f
+
     client = None
     for f in ctx.files.client:
         if f.basename == "client.bash" or f.basename == "client" or f.basename == "client.jar":
             client = f
+
+    if not server:
+        fail("Failed to identify server entrypoint file in %r" % ctx.files.server)
 
     server_entrypoint = server.short_path
     if server.extension == "jar":
@@ -15,7 +19,7 @@ def _routeguide_test_impl(ctx):
 
     ctx.actions.write(ctx.outputs.executable, """
 set -x
-find .
+find . | grep manifest_prep
 export DATABASE_FILE={database_file}
 export SERVER_PORT={server_port}
 {server} &
@@ -74,9 +78,39 @@ routeguide_test = rule(
             default = 0,
         ),
     },
-    # outputs = {
-    #     "stdout": "%{name}.stdout",
-    #     "stderr": "%{name}.stderr",
-    # },
     test = True,
 )
+
+def get_parent_dirname(label):
+    if label.startswith("//"):
+        label = label[2:]
+    segments = label.split(sep = "/", maxsplit = 2)
+    return segments[0]
+
+def routeguide_test_matrix(clients = [], servers = [], database = "//example/proto:routeguide_features"):
+    port = 50051
+
+    for server in servers:
+        sname = get_parent_dirname(server)
+        # print("%s -> %s" % (sname, server))
+        for client in clients:
+            cname = get_parent_dirname(client)
+            # print("%s -> %s" % (cname, client))
+            tags = []
+            if cname == "csharp" or sname == "csharp":
+                tags.append("no-sandbox")
+                
+            routeguide_test(
+                name = "%s_%s_%d" % (cname, sname, port),
+                client = client,
+                server = server,
+                database = database,
+                port = port,
+                data = [
+                    client,
+                    server,
+                ],
+                tags = tags,
+                size = "small",
+            )
+            port += 1

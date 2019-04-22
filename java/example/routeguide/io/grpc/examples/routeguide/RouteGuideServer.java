@@ -100,7 +100,12 @@ public class RouteGuideServer {
    * Main method.  This comment makes the linter happy.
    */
   public static void main(String[] args) throws Exception {
-    RouteGuideServer server = new RouteGuideServer(50074);
+    int port = 50074;
+    String serverPort = System.getenv("SERVER_PORT");
+    if (serverPort != null && !serverPort.isEmpty()) {
+      port = Integer.parseInt(serverPort);
+    }
+    RouteGuideServer server = new RouteGuideServer(port);
     server.start();
     server.blockUntilShutdown();
   }

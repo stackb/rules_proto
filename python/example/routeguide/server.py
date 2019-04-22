@@ -16,7 +16,7 @@
 from concurrent import futures
 import time
 import math
-
+import os
 import grpc
 
 # Recommend to the directory structure of client.runfiles to figure out the
@@ -120,6 +120,8 @@ def serve():
     routeguide_pb2_grpc.add_RouteGuideServicer_to_server(
         RouteGuideServicer(), server)
     port = '50076'
+    if os.environ["SERVER_PORT"]:
+        port = os.environ["SERVER_PORT"]
     server.add_insecure_port('[::]:' + port)
     print("Python RouteGuide Server listing on :%s..." % port)
     server.start()
