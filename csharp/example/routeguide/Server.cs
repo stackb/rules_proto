@@ -154,7 +154,7 @@ class Program
 
     static void Main(string[] args)
     {
-        var Port = 50072;
+        var Port = 50051;
         var PortVar = System.Environment.GetEnvironmentVariable("SERVER_PORT");
         if (!String.IsNullOrEmpty(PortVar)) {
             Port = Int32.Parse(PortVar);

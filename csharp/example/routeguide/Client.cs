@@ -215,7 +215,13 @@ class Program
     {
         Console.WriteLine("Starting Client...");
 
-        var channel = new Channel("127.0.0.1:50051", ChannelCredentials.Insecure);
+        var Port = 50051;
+        var PortVar = System.Environment.GetEnvironmentVariable("SERVER_PORT");
+        if (!String.IsNullOrEmpty(PortVar)) {
+            Port = Int32.Parse(PortVar);
+        }
+
+        var channel = new Channel("127.0.0.1:"+Port, ChannelCredentials.Insecure);
         var routeGuideClient = new RouteGuide.RouteGuide.RouteGuideClient(channel);
         var client = new Client(routeGuideClient);
 

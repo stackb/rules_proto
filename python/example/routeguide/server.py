@@ -18,6 +18,7 @@ import time
 import math
 import os
 import grpc
+import logging
 
 # Recommend to the directory structure of client.runfiles to figure out the
 # correct import here.
@@ -100,7 +101,7 @@ class RouteGuideServicer(routeguide_pb2_grpc.RouteGuideServicer):
             prev_point = point
 
         elapsed_time = time.time() - start_time
-        return routeguide_pb.RouteSummary(
+        return routeguide_pb2.RouteSummary(
             point_count=point_count,
             feature_count=feature_count,
             distance=int(distance),
@@ -133,4 +134,5 @@ def serve():
 
 
 if __name__ == '__main__':
+    logging.basicConfig()
     serve()

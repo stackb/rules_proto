@@ -68,7 +68,7 @@ core_binary(
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.xdocument.dll",
         "@system.interactive.async//:netstandard2.0_core",
     ],
-    visibility = ["//example/benchmark:__pkg__"],
+    visibility = ["//example/routeguide:__pkg__"],
 )
 
 core_binary(

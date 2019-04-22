@@ -17,9 +17,6 @@
  */
 
 const async = require('async');
-const fs = require('fs');
-const parseArgs = require('minimist');
-const path = require('path');
 const _ = require('lodash');
 const grpc = require('grpc');
 
@@ -62,8 +59,14 @@ const services = routeguide.routeguide_grpc_pb;
 const featureList = require('./example/proto/routeguide_features.json');
 console.log(`Loaded ${featureList.length} from feature database`);
 
+let port = '50051';
+if (process.env.SERVER_PORT) {
+  port = process.env.SERVER_PORT;
+}
+const addr = 'localhost:'+port;
+
 const client = new services.RouteGuideClient(
-  'localhost:50051',
+  addr,
   grpc.credentials.createInsecure());
 
 const COORD_FACTOR = 1e7;
@@ -253,12 +256,14 @@ function runRouteChat(callback) {
  * Run all of the demos in order
  */
 function main() {
-  async.series([
-    runGetFeature,
-    runListFeatures,
-    runRecordRoute,
-    runRouteChat
-  ]);
+  client.waitForReady(4000, () => {
+    async.series([
+      runGetFeature,
+      runListFeatures,
+      runRecordRoute,
+      runRouteChat
+    ]);  
+  });
 }
 
 if (require.main === module) {

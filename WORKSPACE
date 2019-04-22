@@ -154,6 +154,7 @@ yarn_modules(
     name = "grpc_node_modules",
     deps = {
         "grpc": "1.15.1",
+        "async": "2.6.1",
     },
 )
 

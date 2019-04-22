@@ -27,7 +27,6 @@ const parseArgs = require('minimist');
 const path = require('path');
 const _ = require('lodash');
 const grpc = require('grpc');
-
 const COORD_FACTOR = 1e7;
 
 /**
