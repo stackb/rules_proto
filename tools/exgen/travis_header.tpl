@@ -12,3 +12,4 @@ os:
   # - osx DISABLE FOR NOW UNTIL LINUX WORKING
 
 env:
+  - BAZEL=0.24.1 COMMAND='bazel test //example/routeguide:*'

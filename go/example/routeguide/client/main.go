@@ -25,6 +25,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"io"
 	"log"
 	"math/rand"
@@ -167,12 +168,13 @@ func main() {
 		opts = append(opts, grpc.WithInsecure())
 	}
 
-	if os.Getenv("ROUTEGUIDE_SERVER_ADDRESS") != "" {
-		addr := os.Getenv("ROUTEGUIDE_SERVER_ADDRESS")
-		serverAddr = &addr
+	address := *serverAddr
+
+	if os.Getenv("SERVER_PORT") != "" {
+		address = fmt.Sprintf("localhost:%s", os.Getenv("SERVER_PORT"))
 	}
 
-	conn, err := grpc.Dial(*serverAddr, opts...)
+	conn, err := grpc.Dial(address, opts...)
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
 	}

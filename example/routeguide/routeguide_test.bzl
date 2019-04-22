@@ -10,9 +10,16 @@ def _routeguide_test_impl(ctx):
         if f.basename == "client.bash" or f.basename == "client" or f.basename == "client.jar":
             client = f
 
+    if not client:
+        fail("Failed to identify client entrypoint file in %r" % ctx.files.client)
+
     if not server:
         fail("Failed to identify server entrypoint file in %r" % ctx.files.server)
 
+    client_entrypoint = client.short_path
+    if client.extension == "jar":
+        client_entrypoint = "java -jar %s" % client.short_path
+    
     server_entrypoint = server.short_path
     if server.extension == "jar":
         server_entrypoint = "java -jar %s" % server.short_path
@@ -26,8 +33,7 @@ export SERVER_PORT={server_port}
 sleep 1
 {client}
     """.format(
-        client = ctx.file.client.short_path,
-        # server = ctx.file.server.short_path,
+        client = client_entrypoint,
         server = server_entrypoint,
         database_file = ctx.file.database.short_path,
         server_port = ctx.attr.port,
@@ -48,7 +54,7 @@ routeguide_test = rule(
             doc = "Client binary",
             executable = True,
             mandatory = True,
-            single_file = True,
+            # single_file = True,
             allow_files = True,
             cfg = "target",
         ),

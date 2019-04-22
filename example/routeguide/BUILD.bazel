@@ -3,6 +3,8 @@ load("//example/routeguide:routeguide_test.bzl", "routeguide_test", "routeguide_
 routeguide_test_matrix(
     clients = [
         "//cpp/example/routeguide:client",
+        "//go/example/routeguide/client",
+        "//java/example/routeguide:client",
     ],
     servers = [
         "//cpp/example/routeguide:server",
@@ -10,6 +12,7 @@ routeguide_test_matrix(
         "//csharp/example/routeguide:server",
         "//java/example/routeguide:server",
         "//python/example/routeguide:server",
+        "//node/example/routeguide:server",
     ],
 )
 

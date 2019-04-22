@@ -17,7 +17,7 @@ java_binary(
         ":serverlib",
         "//java:grpc_netty",
     ],
-    visibility = ["//example/benchmark:__pkg__"],
+    visibility = ["//example/routeguide:__pkg__"],
 )
 
 java_library(
