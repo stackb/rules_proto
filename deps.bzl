@@ -194,6 +194,7 @@ def boringssl(**kwargs):
 def com_github_nanopb_nanopb(**kwargs):
     name = "com_github_nanopb_nanopb"
     ref = get_ref(name, "ae9901f2a31500e8fdc93fa9804d24851c58bb1e", kwargs)
+    # should be 8bbbb1e78d4ddb0a1919276924ab10d11b631df48b657d960e0c795a25515735?
     sha256 = get_sha256(name, "7aa0ab179eff56241b6cded9cd07324af2395ad56d5478e2f7dabdb42b65d3fb", kwargs)
     github_archive(name, "nanopb", "nanopb", ref, sha256)
 
@@ -250,8 +251,8 @@ def grpc_ecosystem_grpc_gateway(**kwargs):
 
 def org_pubref_rules_node(**kwargs):
     name = "org_pubref_rules_node"
-    ref = get_ref(name, "fbefffbf8bb031e84be8180c725391039f175c2c", kwargs)
-    sha256 = get_sha256(name, "142c5392425fd023a071d694655b34755ce3eb20cbb51bf84a9c410053df73cd", kwargs)
+    ref = get_ref(name, "c7b9ae3eb2fa75bec2fdd4d188b57ab431796f5d", kwargs) # PR#80
+    sha256 = get_sha256(name, "b4a10f3325dd44ddabf9a75778cb7f183abe629815b8cd3a9c761490fcb6ba8b", kwargs)
     github_archive(name, "pubref", "rules_node", ref, sha256)
 
 

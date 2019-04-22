@@ -51,6 +51,7 @@ scala_binary(
         ":routeguide_scala_grpc",
         ":service",
     ],
+    visibility = ["//example/benchmark:__pkg__"],
 )
 
 # TODO: routeguide server implementations

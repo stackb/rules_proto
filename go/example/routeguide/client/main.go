@@ -28,6 +28,7 @@ import (
 	"io"
 	"log"
 	"math/rand"
+	"os"
 	"time"
 
 	"google.golang.org/grpc"
@@ -165,6 +166,12 @@ func main() {
 	} else {
 		opts = append(opts, grpc.WithInsecure())
 	}
+
+	if os.Getenv("ROUTEGUIDE_SERVER_ADDRESS") != "" {
+		addr := os.Getenv("ROUTEGUIDE_SERVER_ADDRESS")
+		serverAddr = &addr
+	}
+
 	conn, err := grpc.Dial(*serverAddr, opts...)
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)

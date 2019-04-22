@@ -27,6 +27,8 @@ class Feature;
 
 std::string GetDbFileContent(int argc, char** argv);
 
+std::string GetServerAddress();
+
 void ParseDb(const std::string& db, std::vector<Feature>* feature_list);
 
 }  // namespace routeguide

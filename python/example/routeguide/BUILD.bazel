@@ -26,6 +26,7 @@ py_binary(
         ":resources",
         ":routeguide",
     ],
+    visibility = ["//example/benchmark:__pkg__"],
 )
 
 py_binary(
@@ -39,4 +40,5 @@ py_binary(
         ":resources",
         ":routeguide",
     ],
+    visibility = ["//example/benchmark:__pkg__"],
 )

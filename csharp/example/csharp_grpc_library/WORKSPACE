@@ -32,12 +32,6 @@ core_register_sdk(
 
 dotnet_repositories()
 
-# Default core_sdk
-core_register_sdk("v2.1.503", name = "core_sdk")
-
-# Default net_sdk
-net_register_sdk("net472", name = "net_sdk")
-
 load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
 
 nuget_packages()

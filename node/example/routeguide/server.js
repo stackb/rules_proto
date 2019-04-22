@@ -18,6 +18,7 @@
 
 const featureDb = require('./example/proto/routeguide_features.json');
 const routeguide = require('node/example/routeguide/routeguide')
+// const routeguide = require('example/proto/routeguide/routeguide')
 const messages = routeguide.routeguide_pb;
 const services = routeguide.routeguide_grpc_pb;
 
@@ -220,7 +221,7 @@ function getServer() {
 }
 
 if (require.main === module) {
-  const addr = '0.0.0.0:50051';
+  const addr = '0.0.0.0:50075';
   // If this is run as a script, start a server on an unused port
   const routeServer = getServer();
   routeServer.bind(addr, grpc.ServerCredentials.createInsecure());
@@ -237,7 +238,7 @@ if (require.main === module) {
   });
 
   console.log(`Feature database contains ${feature_list.length} entries.`);
-  console.log(`Server listening at ${addr}...`)
+  console.log(`Node server listening at ${addr}...`)
   routeServer.start();
 }
 

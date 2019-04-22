@@ -50,7 +50,7 @@ var (
 	certFile   = flag.String("cert_file", "", "The TLS cert file")
 	keyFile    = flag.String("key_file", "", "The TLS key file")
 	jsonDBFile = flag.String("json_db_file", "example/proto/routeguide_features.json", "A json file containing a list of features")
-	port       = flag.Int("port", 50051, "The server port")
+	port       = flag.Int("port", 50073, "The server port")
 )
 
 type routeGuideServer struct {
@@ -242,6 +242,6 @@ func main() {
 	}
 	grpcServer := grpc.NewServer(opts...)
 	pb.RegisterRouteGuideServer(grpcServer, newServer())
-	log.Printf("Server listening on :%d...", *port)
+	log.Printf("Golang server listening on :%d...", *port)
 	grpcServer.Serve(lis)
 }

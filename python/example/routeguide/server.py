@@ -119,7 +119,7 @@ def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     routeguide_pb2_grpc.add_RouteGuideServicer_to_server(
         RouteGuideServicer(), server)
-    port = '50051'
+    port = '50076'
     server.add_insecure_port('[::]:' + port)
     print("Python RouteGuide Server listing on :%s..." % port)
     server.start()

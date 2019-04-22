@@ -68,7 +68,7 @@ public class RouteGuideServer {
   /** Start serving requests. */
   public void start() throws IOException {
     server.start();
-    logger.info("Server started, listening on " + port);
+    logger.info("Java server started, listening on " + port);
     Runtime.getRuntime().addShutdownHook(new Thread() {
       @Override
       public void run() {
@@ -100,7 +100,7 @@ public class RouteGuideServer {
    * Main method.  This comment makes the linter happy.
    */
   public static void main(String[] args) throws Exception {
-    RouteGuideServer server = new RouteGuideServer(50051);
+    RouteGuideServer server = new RouteGuideServer(50074);
     server.start();
     server.blockUntilShutdown();
   }

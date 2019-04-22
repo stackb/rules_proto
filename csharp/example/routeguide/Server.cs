@@ -154,7 +154,7 @@ class Program
 
     static void Main(string[] args)
     {
-        const int Port = 50051;
+        const int Port = 50072;
 
         var features = RouteGuideUtil.ParseFeatures(RouteGuideUtil.DefaultFeaturesFile);
 
@@ -166,7 +166,7 @@ class Program
 
         server.Start();
 
-        Console.WriteLine("RouteGuide server listening on port " + Port + ".  Type 'exit' or CTRL+C to stop.");
+        Console.WriteLine("C# server listening on port " + Port + ".  Type 'exit' or CTRL+C to stop.");
 
         string command = "";
         do

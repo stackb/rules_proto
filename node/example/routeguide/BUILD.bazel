@@ -16,6 +16,7 @@ node_module(
 node_binary(
     name = "client",
     entrypoint = ":clientlib",
+    visibility = ["//example/benchmark:__pkg__"],
 )
 
 node_module(
@@ -28,4 +29,5 @@ node_module(
 node_binary(
     name = "server",
     entrypoint = ":serverlib",
+    visibility = ["//example/benchmark:__pkg__"],
 )
