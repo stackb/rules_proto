@@ -32,9 +32,16 @@ routeguide_test(
     client = "//cpp/example/routeguide:client",
     server = "//java/example/routeguide:server_deploy.jar",
     database = "//example/proto:routeguide_features",
-    # data = [
-    #     "//java/example/routeguide:server",
-    # ],
     port = 50074,
+    size = "small",
+)
+
+routeguide_test(
+    name = "cpp_python",
+    client = "//cpp/example/routeguide:client",
+    server = "//python/example/routeguide:server",
+    data = ["//python/example/routeguide:server"],
+    database = "//example/proto:routeguide_features",
+    port = 50076,
     size = "small",
 )

@@ -1,22 +1,21 @@
 def _routeguide_test_impl(ctx): 
   
-    # server = None
-    # for f in ctx.files.server:
-    #     if f.basename == "server.bash" or f.basename == "server":
-    #         server = f
-    # client = None
-    # for f in ctx.files.client:
-    #     if f.basename == "client.bash" or f.basename == "client":
-    #         client = f
+    server = None
+    for f in ctx.files.server:
+        if f.basename == "server.bash" or f.basename == "server" or f.basename == "server.jar":
+            server = f
+    client = None
+    for f in ctx.files.client:
+        if f.basename == "client.bash" or f.basename == "client" or f.basename == "client.jar":
+            client = f
 
-    server_entrypoint = ctx.file.server.short_path
-    if ctx.file.server.extension == "jar":
-        server_entrypoint = "java -jar %s" % ctx.file.server.short_path
+    server_entrypoint = server.short_path
+    if server.extension == "jar":
+        server_entrypoint = "java -jar %s" % server.short_path
 
     ctx.actions.write(ctx.outputs.executable, """
 set -x
 find .
-ls -al .
 export DATABASE_FILE={database_file}
 export SERVER_PORT={server_port}
 {server} &
@@ -32,73 +31,12 @@ sleep 1
 
     return [DefaultInfo(
         runfiles = ctx.runfiles(
-            files = ctx.files.client + ctx.files.server + [ctx.file.database],
+            files = ctx.files.client + ctx.files.server + [ctx.file.database] + ctx.files.data,
             collect_data = True,
+            collect_default = True,
         ),
     )]
   
-    # ctx.actions.run(
-    #     mnemonic = "RouteguideTest",
-    #     progress_message = "%s vs %s" % (ctx.file.client.short_path, ctx.file.server.short_path),
-    #     inputs = [
-    #         ctx.file.client,
-    #         ctx.file.server,
-    #         ctx.file.database,
-    #     ],
-    #     outputs = [
-    #         ctx.outputs.stdout,
-    #         ctx.outputs.stderr,
-    #     ],
-    #     executable = ctx.outputs.executable,
-    #     env = {
-    #         # "CLIENT": ctx.file.client.path,
-    #         # "SERVER": ctx.file.server.path,
-    #         # "STDOUT_FILE": ctx.outputs.stdout.path,
-    #         # "STDERR_FILE": ctx.outputs.stderr.path,
-    #         "DATABASE_FILE": ctx.file.database.path,
-    #         "SLEEP": "%d" % ctx.attr.server_sleep,
-    #         "SERVER_PORT": "%d" % ctx.attr.port,
-    #     },
-    #     use_default_shell_env = False,
-    #     # command = """
-    #     # set -x
-    #     # "${SERVER}" &
-    #     # sleep "${SLEEP}"
-    #     # "${CLIENT}"
-    #     # """,
-    # )
-
-    # # ctx.actions.run_shell(
-    # #     mnemonic = "RouteguideTest",
-    # #     progress_message = "%s vs %s" % (ctx.file.client.short_path, ctx.file.server.short_path),
-    # #     inputs = [
-    # #         ctx.file.client,
-    # #         ctx.file.server,
-    # #         ctx.file.database,
-    # #     ],
-    # #     outputs = [
-    # #         ctx.outputs.executable,
-    # #     ],
-    # #     env = {
-    # #         "CLIENT": ctx.file.client.path,
-    # #         "SERVER": ctx.file.server.path,
-    # #         "DATABASE_FILE": ctx.file.database.path,
-    # #         "SERVER_PORT": "%d" % ctx.attr.port,
-    # #         "SLEEP": "%d" % ctx.attr.server_sleep,
-    # #     },
-    # #     use_default_shell_env = False,
-    # #     command = """
-    # #     set -x
-    # #     "${SERVER}" &
-    # #     sleep "${SLEEP}"
-    # #     "${CLIENT}"
-    # #     """,
-    # # )
-
-    # return [DefaultInfo(
-    #     runfiles = ctx.runfiles(collect_data = True),
-    # )]
-
 routeguide_test = rule(
     implementation = _routeguide_test_impl,
     attrs = {
@@ -114,7 +52,7 @@ routeguide_test = rule(
             doc = "Server binary",
             executable = True,
             mandatory = True,
-            single_file = True,
+            # single_file = True,
             allow_files = True,
             cfg = "target",
         ),
