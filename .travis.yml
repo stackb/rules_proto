@@ -28,6 +28,10 @@ env:
   - BAZEL=0.24.1 LANG=csharp RULE=csharp_grpc_compile
   - BAZEL=0.24.1 LANG=csharp RULE=csharp_proto_library
   - BAZEL=0.24.1 LANG=csharp RULE=csharp_grpc_library
+  - BAZEL=0.24.1 LANG=dart RULE=dart_proto_compile
+  - BAZEL=0.24.1 LANG=dart RULE=dart_grpc_compile
+  - BAZEL=0.24.1 LANG=dart RULE=dart_proto_library
+  - BAZEL=0.24.1 LANG=dart RULE=dart_grpc_library
   - BAZEL=0.24.1 LANG=go RULE=go_proto_compile
   - BAZEL=0.24.1 LANG=go RULE=go_grpc_compile
   - BAZEL=0.24.1 LANG=go RULE=go_proto_library
