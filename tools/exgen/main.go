@@ -132,22 +132,22 @@ func main() {
 		&cli.StringFlag{
 			Name:  "header",
 			Usage: "Template for the main readme header",
-			Value: "tools/exgen/header.tpl",
+			Value: "tools/exgen/README.header.md",
 		},
 		&cli.StringFlag{
 			Name:  "footer",
 			Usage: "Template for the main readme footer",
-			Value: "tools/exgen/footer.tpl",
+			Value: "tools/exgen/README.footer.md",
 		},
 		&cli.StringFlag{
 			Name:  "travis_header",
 			Usage: "Template for the travis header",
-			Value: "tools/exgen/travis_header.tpl",
+			Value: "tools/exgen/travis.header.yml",
 		},
 		&cli.StringFlag{
 			Name:  "travis_footer",
 			Usage: "Template for the travis footer",
-			Value: "tools/exgen/travis_footer.tpl",
+			Value: "tools/exgen/travis.footer.yml",
 		},
 		&cli.StringFlag{
 			Name:  "ref",

@@ -1,9 +1,10 @@
 load("//example/routeguide:routeguide_test.bzl", "routeguide_test", "routeguide_test_matrix")
 
-# This generates a set of routeguide_test rules, one foreach combination of
+#
+# This generates a set of routeguide_test rules, one for each combination of
 # client & server. The way most routeguide clients are written, they don't
 # actually fail hard if the routeguide procedure does not go as planned.
-# Generally, the tests should range between 1-10 seconds.  
+# Generally, the tests should range between 2-10 seconds.  
 # If tests are abnormally fast it likely signals an error that should be
 # investigated.
 #
