@@ -17,6 +17,7 @@ ruby_binary(
         ":routeguide",
         "@routeguide_gems_bundle//:libs",
     ],
+    visibility = ["//example/routeguide:__pkg__"],
 )
 
 ruby_binary(
@@ -28,4 +29,5 @@ ruby_binary(
         ":routeguide",
         "@routeguide_gems_bundle//:libs",
     ],
+    visibility = ["//example/routeguide:__pkg__"],
 )

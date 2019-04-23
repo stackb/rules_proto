@@ -12,7 +12,8 @@ os:
   # - osx DISABLE FOR NOW UNTIL LINUX WORKING
 
 env:
-  - BAZEL=0.24.1 BAZEL_TEST='//example/routeguide:*'
+  - BAZEL=0.24.1 BAZEL_COMMAND='test //example/routeguide:*'
+  - BAZEL=0.24.1 BAZEL_COMMAND='build //swift/example/routeguide:*'
   - BAZEL=0.24.1 LANG=android RULE=android_proto_compile
   - BAZEL=0.24.1 LANG=android RULE=android_grpc_compile
   - BAZEL=0.24.1 LANG=android RULE=android_proto_library
@@ -49,6 +50,8 @@ env:
   - BAZEL=0.24.1 LANG=python RULE=python_grpc_library
   - BAZEL=0.24.1 LANG=ruby RULE=ruby_proto_compile
   - BAZEL=0.24.1 LANG=ruby RULE=ruby_grpc_compile
+  - BAZEL=0.24.1 LANG=ruby RULE=ruby_proto_library
+  - BAZEL=0.24.1 LANG=ruby RULE=ruby_grpc_library
   - BAZEL=0.24.1 LANG=scala RULE=scala_proto_compile
   - BAZEL=0.24.1 LANG=scala RULE=scala_grpc_compile
   - BAZEL=0.24.1 LANG=scala RULE=scala_proto_library
@@ -91,9 +94,9 @@ before_install:
 
 script:
   - |
-    if [ "${BAZEL_TEST}" != "" ] 
+    if [ "${BAZEL_COMMAND}" != "" ] 
     then
-      bazel test "${BAZEL_TEST}"
+      bazel "${BAZEL_COMMAND}"
     else
       cd "${LANG}/example/${RULE}" && bazel build //:*
     fi

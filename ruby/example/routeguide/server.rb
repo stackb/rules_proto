@@ -168,12 +168,16 @@ def main
     raw_data = MultiJson.load(f.read)
   end
   feature_db = Hash[raw_data.map { |x| [x['location'], x['name']] }]
-  port = '0.0.0.0:50051'
+  port = "50051"
+  if ENV['SERVER_PORT']
+    port = ENV['SERVER_PORT']
+  end
+  address = "0.0.0.0:#{port}"
   s = GRPC::RpcServer.new
-  s.add_http2_port(port, :this_port_is_insecure)
+  s.add_http2_port(address, :this_port_is_insecure)
   impl = ServerImpl.new(feature_db)
   s.handle(impl)
-  puts "Listening insecurely on #{port}"
+  puts "Listening insecurely on #{address}"
   s.run_till_terminated
 end
 

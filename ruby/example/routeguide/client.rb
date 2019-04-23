@@ -159,7 +159,12 @@ class SleepingEnumerator
 end
 
 def main
-  stub = RouteGuide::Stub.new('localhost:50051', :this_channel_is_insecure)
+  port = "50051"
+  if ENV['SERVER_PORT']
+    port = ENV['SERVER_PORT']
+  end
+  address = "localhost:#{port}"
+  stub = RouteGuide::Stub.new(address, :this_channel_is_insecure)
   run_get_feature(stub)
   run_list_features(stub)
   run_route_chat(stub)

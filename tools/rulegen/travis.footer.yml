@@ -13,9 +13,9 @@ before_install:
 
 script:
   - |
-    if [ "${BAZEL_TEST}" != "" ] 
+    if [ "${BAZEL_COMMAND}" != "" ] 
     then
-      bazel test "${BAZEL_TEST}"
+      bazel "${BAZEL_COMMAND}"
     else
       cd "${LANG}/example/${RULE}" && bazel build //:*
     fi
