@@ -13,11 +13,11 @@ before_install:
 
 script:
   - |
-    if [ -z "${BAZEL_TEST}" ] 
+    if [ "${BAZEL_TEST}" != "" ] 
     then
-      cd "${LANG}/example/${RULE}" && bazel build //:*
-    else
       bazel test "${BAZEL_TEST}"
+    else
+      cd "${LANG}/example/${RULE}" && bazel build //:*
     fi
 
 notifications:
