@@ -19,6 +19,7 @@ routeguide_test_matrix(
         "//python/example/routeguide:client",
         "//node/example/routeguide:client",
         "//csharp/example/routeguide:client",
+        "//scala/example/routeguide:client_deploy.jar",
     ],
     servers = [
         "//cpp/example/routeguide:server",

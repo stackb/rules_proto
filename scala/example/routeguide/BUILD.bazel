@@ -24,6 +24,7 @@ scala_library(
         "//scala:grpc_deps",
         "@com_thesamet_scalapb_scalapb_json4s//jar",
         "@org_json4s_json4s_ast_2_12//jar",
+        "@org_json4s_json4s_core_2_12//jar",
         "@org_json4s_json4s_jackson_2_12//jar",
     ],
 )
@@ -51,7 +52,7 @@ scala_binary(
         ":routeguide_scala_grpc",
         ":service",
     ],
-    visibility = ["//example/benchmark:__pkg__"],
+    visibility = ["//example/routeguide:__pkg__"],
 )
 
 # TODO: routeguide server implementations

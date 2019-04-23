@@ -15,7 +15,7 @@ def _routeguide_test_impl(ctx):
 
     client = None
     for f in ctx.files.client:
-        if f.basename == "client.bash" or f.basename == "client" or f.basename == "client.jar":
+        if f.basename == "client.bash" or f.basename == "client" or f.basename == "client_deploy.jar":
             client = f
 
     if not client:

@@ -5,6 +5,7 @@ load(
     "io_bazel_rules_go",
     "io_bazel_rules_scala",
     "org_json4s_json4s_ast_2_12",
+    "org_json4s_json4s_core_2_12",
     "org_json4s_json4s_jackson_2_12",
 )
 
@@ -31,5 +32,6 @@ def scala_grpc_library(**kwargs):
 
     # This one actually only needed for routeguide example
     com_thesamet_scalapb_scalapb_json4s(**kwargs)
+    org_json4s_json4s_core_2_12(**kwargs)
     org_json4s_json4s_jackson_2_12(**kwargs)
     org_json4s_json4s_ast_2_12(**kwargs)

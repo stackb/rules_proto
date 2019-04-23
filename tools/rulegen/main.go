@@ -526,7 +526,7 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	for _, lang := range languages {
 		travisExclusionReason := lang.TravisExclusionReason
 		for _, rule := range lang.Rules {
-			travisLink := fmt.Sprintf("[![%s](https://travis-ci.org/stackb/rules_proto.svg?branch=travis)](https://travis-ci.org/stackb/rules_proto)", headVersion)
+			travisLink := fmt.Sprintf("[![%s](https://travis-ci.org/stackb/rules_proto.svg?branch=master)](https://travis-ci.org/stackb/rules_proto)", headVersion)
 			if travisExclusionReason == "" {
 				travisExclusionReason = rule.TravisExclusionReason
 			}

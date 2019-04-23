@@ -208,12 +208,6 @@ load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_library")
 
 scala_grpc_library()
 
-# load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-# go_rules_dependencies()
-
-# go_register_toolchains()
-
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
 
 scala_repositories()

@@ -401,6 +401,15 @@ def org_json4s_json4s_jackson_2_12(**kwargs):
     jar(name, artifact, sha1)
 
 
+def org_json4s_json4s_core_2_12(**kwargs):
+    """json parsing library for scala - core
+    """
+    name = "org_json4s_json4s_core_2_12"
+    artifact = get_artifact(name, "org.json4s:json4s-core_2.12:3.6.1", kwargs)
+    sha1 = get_sha1(name, "7a619365089281c6015b80c499ff3b3cb196572f", kwargs)
+    jar(name, artifact, sha1)
+
+
 def org_json4s_json4s_ast_2_12(**kwargs):
     """json parsing library for scala
     """
