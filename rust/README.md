@@ -24,7 +24,11 @@ load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 
 rust_repositories()
 
-load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
+load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
+
+bazel_version(name = "bazel_version")
+
+load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
 ```
@@ -77,7 +81,11 @@ load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 
 rust_repositories()
 
-load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
+load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
+
+bazel_version(name = "bazel_version")
+
+load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
 ```
@@ -130,7 +138,11 @@ load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 
 rust_repositories()
 
-load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
+load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
+
+bazel_version(name = "bazel_version")
+
+load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
 ```
@@ -183,7 +195,11 @@ load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 
 rust_repositories()
 
-load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
+load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
+
+bazel_version(name = "bazel_version")
+
+load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
 ```

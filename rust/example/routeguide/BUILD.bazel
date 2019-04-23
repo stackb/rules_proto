@@ -11,8 +11,9 @@ rust_binary(
     srcs = ["client.rs"],
     deps = [
         ":routeguide",
-        "//rust/cargo:grpc",
+        "@io_bazel_rules_rust//proto/raze:grpc",
     ],
+    visibility = ["//example/routeguide:__pkg__"],
 )
 
 rust_binary(
@@ -22,8 +23,22 @@ rust_binary(
     data = ["//example/proto:routeguide_features"],
     deps = [
         ":routeguide",
-        "//rust/cargo:futures",
-        "//rust/cargo:grpc",
-        "//rust/cargo:tls_api_stub",
+        "@io_bazel_rules_rust//proto/raze:grpc",
+        "@raze__futures_cpupool__0_1_8//:futures_cpupool",
+        "@raze__futures__0_1_25//:futures",
+        "@io_bazel_rules_rust//proto/raze:tls_api_stub",
+    ],
+    visibility = ["//example/routeguide:__pkg__"],
+)
+
+rust_library(
+    name = "lib",
+    srcs = ["lib.rs"],
+    deps = [
+        ":routeguide",
+        "@io_bazel_rules_rust//proto/raze:protobuf",
+        "@io_bazel_rules_rust//proto/raze:grpc",
+        "@raze__futures__0_1_25//:futures",
+        "@io_bazel_rules_rust//proto/raze:tls_api_stub",
     ],
 )

@@ -295,6 +295,54 @@ load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
 dart_grpc_deps()
 
 
+
+# **************************************************************
+#
+#
+# gazelle & buildifier
+#
+# **************************************************************
+
+load("//:deps.bzl", "bazel_gazelle", "com_github_bazelbuild_buildtools")
+
+com_github_bazelbuild_buildtools()
+
+load("@com_github_bazelbuild_buildtools//buildifier:deps.bzl", "buildifier_dependencies")
+
+buildifier_dependencies()
+
+bazel_gazelle()
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+
+gazelle_dependencies()
+
+# gazelle:repo bazel_gazelle
+
+
+# **************************************************************
+#
+#
+# rust
+#
+# **************************************************************
+
+load("//rust:deps.bzl", "rust_grpc_library")
+
+rust_grpc_library()
+
+load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+
+rust_repositories()
+
+load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
+
+bazel_version(name = "bazel_version")
+
+load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
+
+raze_fetch_remote_crates()
+
 # =========================================
 
 # PROTOBUF_VERSION = "3.6.1.3"
@@ -639,28 +687,6 @@ dart_grpc_deps()
 
 
 
-# **************************************************************
-#
-#
-# gazelle & buildifier
-#
-# **************************************************************
-
-load("//:deps.bzl", "bazel_gazelle", "com_github_bazelbuild_buildtools")
-
-com_github_bazelbuild_buildtools()
-
-load("@com_github_bazelbuild_buildtools//buildifier:deps.bzl", "buildifier_dependencies")
-
-buildifier_dependencies()
-
-bazel_gazelle()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
-
-gazelle_dependencies()
-
-# gazelle:repo bazel_gazelle
 
 # **************************************************************
 #

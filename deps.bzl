@@ -230,8 +230,8 @@ def io_bazel_rules_scala(**kwargs):
 
 def io_bazel_rules_rust(**kwargs):
     name = "io_bazel_rules_rust"
-    ref = get_ref(name, "88022d175adb48aa5f8904f95dfc716c543b3f1e", kwargs)
-    sha256 = get_sha256(name, "d9832945f0fa7097ee548bd6fecfc814bd19759561dd7b06723e1c6a1879aa71", kwargs)
+    ref = get_ref(name, "2215277a2be52263ca5cd4e547cc4a50e320b828", kwargs)
+    sha256 = get_sha256(name, "55d2ff891c25ebf589aff604c8f1b41afa3fe88dbc3b6f912cd44974111b413e", kwargs)
     github_archive(name, "bazelbuild", "rules_rust", ref, sha256)
 
 

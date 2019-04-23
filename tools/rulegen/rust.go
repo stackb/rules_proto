@@ -8,7 +8,11 @@ load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 
 rust_repositories()
 
-load("@build_stack_rules_proto//rust/cargo:crates.bzl", "raze_fetch_remote_crates")
+load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
+
+bazel_version(name = "bazel_version")
+
+load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()`)
 
@@ -42,7 +46,7 @@ def {{ .Rule.Name }}(**kwargs):
         name = name,
         srcs = [name_pb, name_lib],
         deps = [
-            str(Label("//rust/cargo:protobuf")),
+            "@io_bazel_rules_rust//proto/raze:protobuf",
         ],
         visibility = visibility,
     )`)
@@ -77,10 +81,10 @@ def {{ .Rule.Name }}(**kwargs):
         name = name,
         srcs = [name_pb, name_lib],
         deps = [
-            str(Label("//rust/cargo:protobuf")),
-            str(Label("//rust/cargo:grpc")),
-            str(Label("//rust/cargo:tls_api")),
-            str(Label("//rust/cargo:tls_api_stub")),
+            "@io_bazel_rules_rust//proto/raze:protobuf",
+            "@io_bazel_rules_rust//proto/raze:grpc",
+            "@io_bazel_rules_rust//proto/raze:tls_api",
+            "@io_bazel_rules_rust//proto/raze:tls_api_stub",
         ],
         visibility = visibility,
     )`)
@@ -89,7 +93,6 @@ func makeRust() *Language {
 	return &Language{
 		Dir:  "rust",
 		Name: "rust",
-		TravisExclusionReason: "experimental",
 		Rules: []*Rule{
 			&Rule{
 				Name:           "rust_proto_compile",

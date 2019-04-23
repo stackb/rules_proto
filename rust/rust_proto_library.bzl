@@ -28,7 +28,7 @@ def rust_proto_library(**kwargs):
         name = name,
         srcs = [name_pb, name_lib],
         deps = [
-            str(Label("//rust/cargo:protobuf")),
+            "@io_bazel_rules_rust//proto/raze:protobuf",
         ],
         visibility = visibility,
     )
