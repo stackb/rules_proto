@@ -14,5 +14,5 @@ def protobuf(**kwargs):
     com_google_protobuf(**kwargs)
     external_protobuf_clib(**kwargs)
     external_protobuf_headers(**kwargs)
-    # external_zlib(**kwargs)
+    external_zlib(**kwargs)
 
