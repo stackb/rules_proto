@@ -8,7 +8,7 @@ def dart_proto_library(**kwargs):
 
     name_pb = name + "_pb"
 
-	dart_proto_compile(
+    dart_proto_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -17,7 +17,7 @@ def dart_proto_library(**kwargs):
         transitive = kwargs.pop("transitive", True),
     )
 
-	dart_library(
+    dart_library(
         name = name,
         srcs = [name_pb],
         deps = [

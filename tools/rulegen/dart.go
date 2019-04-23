@@ -52,7 +52,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-	dart_proto_compile(
+    dart_proto_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -61,7 +61,7 @@ def {{ .Rule.Name }}(**kwargs):
         transitive = kwargs.pop("transitive", True),
     )
 
-	dart_library(
+    dart_library(
         name = name,
         srcs = [name_pb],
         deps = [
@@ -90,7 +90,7 @@ def {{ .Rule.Name }}(**kwargs):
         transitive = kwargs.pop("transitive", True),
     )
 
-	dart_library(
+    dart_library(
         name = name,
         srcs = [name_pb],
         deps = [
@@ -115,7 +115,6 @@ func makeDart() *Language {
 				Example:        protoCompileExampleTemplate,
 				Doc:            "Generates dart protobuf artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Experimental:   true,
 			},
 			&Rule{
 				Name:           "dart_grpc_compile",
@@ -125,7 +124,6 @@ func makeDart() *Language {
 				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates dart protobuf+gRPC artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Experimental:   true,
 			},
 			&Rule{
 				Name:           "dart_proto_library",
@@ -134,7 +132,6 @@ func makeDart() *Language {
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates dart protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Experimental:   true,
 			},
 			&Rule{
 				Name:           "dart_grpc_library",
@@ -143,7 +140,6 @@ func makeDart() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates dart protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Experimental:   true,
 			},
 		},
 	}

@@ -17,7 +17,7 @@ def dart_grpc_library(**kwargs):
         transitive = kwargs.pop("transitive", True),
     )
 
-	dart_library(
+    dart_library(
         name = name,
         srcs = [name_pb],
         deps = [

@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import 'dart:async';
+import 'dart:io';
 import 'dart:math' show Random;
 
 import 'package:grpc/grpc.dart';
@@ -27,8 +28,15 @@ class Client {
   RouteGuideClient stub;
 
   Future<Null> main(List<String> args) async {
+
+    int port = 50051;
+    final serverPort = Platform.environment['SERVER_PORT'];
+    if (serverPort != null) {
+      port = int.parse(serverPort, onError: (val) => port);
+    }
+
     channel = new ClientChannel('127.0.0.1',
-        port: 8080,
+        port: port,
         options: const ChannelOptions(
             credentials: const ChannelCredentials.insecure()));
     stub = new RouteGuideClient(channel,
