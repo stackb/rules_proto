@@ -15,7 +15,7 @@ script:
   - |
     if [ "${BAZEL_COMMAND}" != "" ] 
     then
-      bazel "${BAZEL_COMMAND}"
+      bazel "${BAZEL_COMMAND}" "${BAZEL_TARGET}"
     else
       cd "${LANG}/example/${RULE}" && bazel build //:*
     fi

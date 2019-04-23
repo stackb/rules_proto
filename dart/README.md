@@ -47,6 +47,12 @@ dart_proto_compile(
 )
 ```
 
+### `Flags`
+
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
+
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -107,6 +113,12 @@ dart_grpc_compile(
 )
 ```
 
+### `Flags`
+
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
+
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -166,6 +178,12 @@ dart_proto_library(
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
+
+### `Flags`
+
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
 
 ### Mandatory Attributes
 
@@ -230,6 +248,12 @@ dart_grpc_library(
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
+
+### `Flags`
+
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
 
 ### Mandatory Attributes
 
