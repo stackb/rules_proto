@@ -26,7 +26,7 @@ def node_proto_library(**kwargs):
 
     node_module(
         name = name,
-        data = [name_pb],
+        srcs = [name_pb],
         index = name_index,
         deps = [
             "@proto_node_modules//:_all_",

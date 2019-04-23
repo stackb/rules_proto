@@ -44,10 +44,6 @@ go_library(
 # Utility program to generate documentation and examples
 go_binary(
     name = "exgen",
-    data = [
-        "footer.tpl",
-        "header.tpl",
-    ],
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
 )
