@@ -7,6 +7,11 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file"
 #     path = "/home/pcj/github/pubref/rules_node",
 # )
 
+# local_repository(
+#     name = "com_github_yugui_rules_ruby",
+#     path = "/home/pcj/github/yugui/rules_ruby",
+# )
+
 # **************************************************************
 #
 #
@@ -21,7 +26,6 @@ cpp_grpc_library()
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
-
 
 # **************************************************************
 #
@@ -38,7 +42,6 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
 closure_repositories()
 
-
 # **************************************************************
 #
 #
@@ -50,9 +53,10 @@ load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
 
 csharp_grpc_library()
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", 
-    "dotnet_register_toolchains", 
+load(
+    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
     "core_register_sdk",
+    "dotnet_register_toolchains",
     "dotnet_repositories",
 )
 
@@ -68,7 +72,7 @@ dotnet_register_toolchains(
 
 core_register_sdk(
     name = "core_sdk",
-    core_version = core_version
+    core_version = core_version,
 )
 
 dotnet_repositories()
@@ -84,7 +88,6 @@ nuget_protobuf_packages()
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_grpc_packages()
-
 
 # **************************************************************
 #
@@ -102,7 +105,6 @@ load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_depen
 go_rules_dependencies()
 
 go_register_toolchains()
-
 
 # **************************************************************
 #
@@ -122,7 +124,6 @@ grpc_java_repositories(omit_com_google_protobuf = True)
 load("@build_stack_rules_proto//java:deps.bzl", "java_grpc_library")
 
 java_grpc_library()
-
 
 # **************************************************************
 #
@@ -157,7 +158,6 @@ yarn_modules(
         "async": "2.6.1",
     },
 )
-
 
 # **************************************************************
 #
@@ -196,7 +196,6 @@ load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
 
 grpc_pip_install()
 
-
 # **************************************************************
 #
 #
@@ -219,7 +218,6 @@ scala_register_toolchains()
 load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
 
 scala_proto_repositories()
-
 
 # **************************************************************
 #
@@ -246,7 +244,6 @@ load(
 
 apple_support_dependencies()
 
-
 # **************************************************************
 #
 #
@@ -269,7 +266,6 @@ bundle_install(
     gemfile = "//ruby:Gemfile",
     gemfile_lock = "//ruby:Gemfile.lock",
 )
-
 
 # **************************************************************
 #
@@ -294,8 +290,6 @@ load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
 
 dart_grpc_deps()
 
-
-
 # **************************************************************
 #
 #
@@ -318,7 +312,6 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 gazelle_dependencies()
 
 # gazelle:repo bazel_gazelle
-
 
 # **************************************************************
 #
@@ -380,8 +373,8 @@ raze_fetch_remote_crates()
 
 # csharp_grpc_library()
 
-# load("@io_bazel_rules_dotnet//dotnet:defs.bzl", 
-#     "dotnet_register_toolchains", 
+# load("@io_bazel_rules_dotnet//dotnet:defs.bzl",
+#     "dotnet_register_toolchains",
 #     "core_register_sdk",
 #     "dotnet_repositories",
 # )
@@ -599,7 +592,6 @@ raze_fetch_remote_crates()
 
 # apple_support_dependencies()
 
-
 # # =======================================
 
 # # load("//ruby:deps.bzl", "ruby_grpc_library")
@@ -684,9 +676,6 @@ raze_fetch_remote_crates()
 # load("@com_github_bazelbuild_buildtools//buildifier:deps.bzl", "buildifier_dependencies")
 
 # buildifier_dependencies()
-
-
-
 
 # **************************************************************
 #

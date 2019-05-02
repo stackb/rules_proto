@@ -73,7 +73,7 @@ def {{ .Rule.Name }}(**kwargs):
             name_pb_grpc + "/descriptor.source.bin",
         ],
         suppress = [
-            "JSC_IMPLICITLY_NULLABLE_JSDOC",            
+            "JSC_IMPLICITLY_NULLABLE_JSDOC",
         ],
         library_level_checks = False,
         visibility = visibility,

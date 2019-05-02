@@ -3,7 +3,6 @@ load(
     "com_github_grpc_grpc",
     "com_github_yugui_rules_ruby",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",

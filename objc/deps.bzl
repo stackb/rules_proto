@@ -2,7 +2,6 @@ load(
     "//:deps.bzl",
     "com_github_grpc_grpc",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",

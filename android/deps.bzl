@@ -7,7 +7,6 @@ load(
     "gmaven_rules",
     "io_grpc_grpc_java",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",

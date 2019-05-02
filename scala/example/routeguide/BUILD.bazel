@@ -8,7 +8,7 @@ scala_grpc_library(
 )
 
 # Alternative example using the proto_library impl in rules_scala
-#  
+#
 # scalapb_proto_library(
 #     name = "routeguide_scalapb_grpc",
 #     deps = ["//example/proto:routeguide_proto"],
@@ -47,12 +47,12 @@ scala_binary(
     ],
     main_class = "example.RouteGuideClient",
     resources = ["route_guide_db.json"],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":persistence",
         ":routeguide_scala_grpc",
         ":service",
     ],
-    visibility = ["//example/routeguide:__pkg__"],
 )
 
 # TODO: routeguide server implementations

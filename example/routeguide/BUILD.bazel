@@ -4,7 +4,7 @@ load("//example/routeguide:routeguide_test.bzl", "routeguide_test", "routeguide_
 # This generates a set of routeguide_test rules, one for each combination of
 # client & server. The way most routeguide clients are written, they don't
 # actually fail hard if the routeguide procedure does not go as planned.
-# Generally, the tests should range between 2-10 seconds.  
+# Generally, the tests should range between 2-10 seconds.
 # If tests are abnormally fast it likely signals an error that should be
 # investigated.
 #
@@ -37,7 +37,7 @@ routeguide_test_matrix(
         # no sandbox any csharp test
         "csharp": "no-sandbox",
         # ruby clients and servers don't run due to a problem with their
-        # launcher script being run outside the original package.  Make them 
+        # launcher script being run outside the original package.  Make them
         # manual only, but including them here anyway
         "ruby": "manual",
 

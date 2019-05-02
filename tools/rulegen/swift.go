@@ -16,24 +16,22 @@ load(
     "apple_support_dependencies",
 )
 
-apple_support_dependencies()
-
-`)
+apple_support_dependencies()`)
 
 var swiftProtoLibraryRuleTemplate = mustTemplate(`load("@build_bazel_rules_swift//swift:swift.bzl", _swift_proto_library = "swift_proto_library")
-swift_proto_library = _swift_proto_library
-`)
+
+swift_proto_library = _swift_proto_library`)
 
 var swiftGrpcLibraryRuleTemplate = mustTemplate(`load("@build_bazel_rules_swift//swift:swift.bzl", _swift_grpc_library = "swift_grpc_library")
-swift_grpc_library = _swift_grpc_library
-`)
+
+swift_grpc_library = _swift_grpc_library`)
 
 var swiftGrpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "person_{{ .Lang.Name }}_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
-	flavor = "client",
+    flavor = "client",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )`)
 
 func makeSwift() *Language {

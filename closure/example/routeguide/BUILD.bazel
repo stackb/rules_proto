@@ -5,7 +5,6 @@ load(
     "closure_js_test",
     # "closure_proto_library",
 )
-
 load("//closure:closure_proto_library.bzl", "closure_proto_library")
 
 closure_proto_library(
@@ -20,9 +19,9 @@ closure_js_library(
         "main.js",
     ],
     deps = [
-        "@io_bazel_rules_closure//closure/protobuf:jspb",
-        "@io_bazel_rules_closure//closure/library",
         ":routeguide",
+        "@io_bazel_rules_closure//closure/library",
+        "@io_bazel_rules_closure//closure/protobuf:jspb",
     ],
 )
 
@@ -32,8 +31,8 @@ closure_js_binary(
     debug = True,
     entry_points = ["goog:my.jspb.test.main"],
     output_wrapper = "(function(){%output%}).call(this);",
+    visibility = ["//example/benchmark:__pkg__"],
     deps = [
         ":main",
     ],
-    visibility = ["//example/benchmark:__pkg__"],
 )

@@ -136,9 +136,10 @@ load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_proto_library")
 
 csharp_proto_library()
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", 
-    "dotnet_register_toolchains", 
+load(
+    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
     "core_register_sdk",
+    "dotnet_register_toolchains",
     "dotnet_repositories",
 )
 
@@ -154,7 +155,7 @@ dotnet_register_toolchains(
 
 core_register_sdk(
     name = "core_sdk",
-    core_version = core_version
+    core_version = core_version,
 )
 
 dotnet_repositories()
@@ -218,9 +219,10 @@ load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
 
 csharp_grpc_library()
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", 
-    "dotnet_register_toolchains", 
+load(
+    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
     "core_register_sdk",
+    "dotnet_register_toolchains",
     "dotnet_repositories",
 )
 
@@ -236,7 +238,7 @@ dotnet_register_toolchains(
 
 core_register_sdk(
     name = "core_sdk",
-    core_version = core_version
+    core_version = core_version,
 )
 
 dotnet_repositories()

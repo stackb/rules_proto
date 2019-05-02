@@ -8,7 +8,6 @@ load(
     "org_json4s_json4s_core_2_12",
     "org_json4s_json4s_jackson_2_12",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",

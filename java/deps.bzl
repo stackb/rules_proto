@@ -1,17 +1,14 @@
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
-
 load(
     "//:deps.bzl",
     "com_google_guava_guava",
     "com_google_protobuf",
     "io_grpc_grpc_java",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",
 )
-
 
 # From https://github.com/grpc/grpc-java/blob/master/repositories.bzl
 def javax_annotation_javax_annotation_api(**kwargs):

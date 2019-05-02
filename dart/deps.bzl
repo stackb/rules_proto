@@ -4,7 +4,6 @@ load(
     "io_bazel_rules_dart",
     "io_bazel_rules_go",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",
@@ -80,12 +79,11 @@ def dart_pub_deps_grpc(**kwargs):
             override = {
                 "async": "2.2.0",
                 "googlapis_auth": "0.2.7",
-                "http": "0.12.0+2", 
+                "http": "0.12.0+2",
                 "http_parser": "3.1.3",
                 "pedantic": "1.5.0",
             },
         )
-
 
 def dart_proto_compile(**kwargs):
     protobuf(**kwargs)

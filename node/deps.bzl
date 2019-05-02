@@ -3,7 +3,6 @@ load(
     "com_github_grpc_grpc",
     "org_pubref_rules_node",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",

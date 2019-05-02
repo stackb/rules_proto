@@ -3,7 +3,6 @@ load(
     "get_ref",
     "get_sha256",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",
@@ -13,10 +12,10 @@ load(
 load("//closure:buildozer_http_archive.bzl", "buildozer_http_archive")
 
 def io_bazel_rules_closure(**kwargs):
-    name = "io_bazel_rules_closure" 
+    name = "io_bazel_rules_closure"
 
     # PR#361 - includes closure_js_library.library_level_checks
-    ref = get_ref(name, "e86d8021f22277fe129a572cd019e846243d4531", kwargs) # PR #361
+    ref = get_ref(name, "e86d8021f22277fe129a572cd019e846243d4531", kwargs)  # PR #361
     sha256 = get_sha256(name, "481b6b522c2894906380b4b9c008b2c37ab86eeb182229d75bf453db89ed79bc", kwargs)
 
     # ref = get_ref(name, "50d3dc9e6d27a5577a0f95708466718825d579f4", kwargs) # HEAD April 2019

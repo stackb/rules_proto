@@ -13,7 +13,7 @@ def _get_js_variable_name(file):
 
 def _get_js_output_file_name(ctx, file):
     filename = file.short_path
-    filename = filename[len(ctx.label.package)+1:]
+    filename = filename[len(ctx.label.package) + 1:]
     return filename
 
 def _node_module_index_impl(ctx):

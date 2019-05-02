@@ -35,8 +35,6 @@ load(
 )
 
 apple_support_dependencies()
-
-
 ```
 
 ### `BUILD.bazel`
@@ -98,8 +96,6 @@ load(
 )
 
 apple_support_dependencies()
-
-
 ```
 
 ### `BUILD.bazel`
@@ -159,8 +155,6 @@ load(
 )
 
 apple_support_dependencies()
-
-
 ```
 
 ### `BUILD.bazel`
@@ -220,8 +214,6 @@ load(
 )
 
 apple_support_dependencies()
-
-
 ```
 
 ### `BUILD.bazel`
@@ -231,8 +223,8 @@ load("@build_stack_rules_proto//swift:swift_grpc_library.bzl", "swift_grpc_libra
 
 swift_grpc_library(
     name = "person_swift_library",
-	deps = ["@build_stack_rules_proto//example/proto:person_proto"],
-	flavor = "client",
+    flavor = "client",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
 

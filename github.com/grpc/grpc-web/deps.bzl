@@ -2,7 +2,6 @@ load(
     "//:deps.bzl",
     "com_github_grpc_grpc_web",
 )
-
 load(
     "//closure:deps.bzl",
     "closure_proto_compile",

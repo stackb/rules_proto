@@ -40,6 +40,7 @@ core_binary(
         "Client.cs",
     ],
     data = ["//example/proto:routeguide_features"],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
         ":util",
@@ -68,7 +69,6 @@ core_binary(
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.xdocument.dll",
         "@system.interactive.async//:netstandard2.0_core",
     ],
-    visibility = ["//example/routeguide:__pkg__"],
 )
 
 core_binary(
@@ -77,6 +77,7 @@ core_binary(
         "Server.cs",
     ],
     data = ["//example/proto:routeguide_features"],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
         ":util",
@@ -105,5 +106,4 @@ core_binary(
         "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.xml.xdocument.dll",
         "@system.interactive.async//:netstandard2.0_core",
     ],
-    visibility = ["//example/routeguide:__pkg__"],
 )

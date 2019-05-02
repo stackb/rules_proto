@@ -8,11 +8,11 @@ dart_vm_binary(
         "client_bin.dart",
     ],
     script_file = "client_bin.dart",
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":clientlib",
         "@vendor_convert//:convert",
     ],
-    visibility = ["//example/routeguide:__pkg__"],
 )
 
 dart_vm_binary(
@@ -21,11 +21,11 @@ dart_vm_binary(
         "server_bin.dart",
     ],
     script_file = "server_bin.dart",
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":serverlib",
         "@vendor_convert//:convert",
     ],
-    visibility = ["//example/routeguide:__pkg__"],
 )
 
 dart_library(

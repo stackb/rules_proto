@@ -2,7 +2,6 @@ load(
     "//:deps.bzl",
     "io_bazel_rules_go",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",

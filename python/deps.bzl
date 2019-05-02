@@ -4,7 +4,6 @@ load(
     "io_bazel_rules_python",
     "six",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",

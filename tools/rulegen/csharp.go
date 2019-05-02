@@ -4,9 +4,10 @@ var csharpProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_pro
 
 {{ .Rule.Name }}()
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", 
-    "dotnet_register_toolchains", 
+load(
+    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
     "core_register_sdk",
+    "dotnet_register_toolchains",
     "dotnet_repositories",
 )
 
@@ -22,7 +23,7 @@ dotnet_register_toolchains(
 
 core_register_sdk(
     name = "core_sdk",
-    core_version = core_version
+    core_version = core_version,
 )
 
 dotnet_repositories()
@@ -39,9 +40,10 @@ var csharpGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_prot
 
 {{ .Rule.Name }}()
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", 
-    "dotnet_register_toolchains", 
+load(
+    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
     "core_register_sdk",
+    "dotnet_register_toolchains",
     "dotnet_repositories",
 )
 
@@ -57,7 +59,7 @@ dotnet_register_toolchains(
 
 core_register_sdk(
     name = "core_sdk",
-    core_version = core_version
+    core_version = core_version,
 )
 
 dotnet_repositories()

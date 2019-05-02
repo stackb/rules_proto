@@ -2,7 +2,6 @@ load(
     "//:deps.bzl",
     "build_bazel_rules_swift",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",

@@ -1,6 +1,4 @@
-
-def _routeguide_test_impl(ctx): 
-  
+def _routeguide_test_impl(ctx):
     server = None
     for f in ctx.files.server:
         if f.basename == "server.bash" or f.basename == "server" or f.basename == "server_deploy.jar":
@@ -24,7 +22,6 @@ def _routeguide_test_impl(ctx):
     client_entrypoint = client.short_path
     if client.extension == "jar":
         client_entrypoint = "java -jar %s" % client.short_path
-    
 
     ctx.actions.write(ctx.outputs.executable, """
 set -x
@@ -50,7 +47,7 @@ sleep 2
             collect_default = True,
         ),
     )]
-  
+
 routeguide_test = rule(
     implementation = _routeguide_test_impl,
     attrs = {
@@ -92,11 +89,10 @@ def get_parent_dirname(label):
     return segments[0]
 
 def routeguide_test_matrix(
-    clients = [], 
-    servers = [], 
-    database = "//example/proto:routeguide_features",
-    tagmap = {},
-):
+        clients = [],
+        servers = [],
+        database = "//example/proto:routeguide_features",
+        tagmap = {}):
     port = 50051
 
     for server in servers:

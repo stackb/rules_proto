@@ -12,12 +12,12 @@ java_binary(
     ],
     main_class = "io.grpc.examples.routeguide.RouteGuideClient",
     resources = ["route_guide_db.json"],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
         ":serverlib",
         "//java:grpc_netty",
     ],
-    visibility = ["//example/routeguide:__pkg__"],
 )
 
 java_library(
@@ -36,9 +36,9 @@ java_binary(
     name = "server",
     main_class = "io.grpc.examples.routeguide.RouteGuideServer",
     resources = ["route_guide_db.json"],
+    visibility = ["//example/routeguide:__pkg__"],
     runtime_deps = [
         ":serverlib",
         "//java:grpc_netty",
     ],
-    visibility = ["//example/routeguide:__pkg__"],
 )

@@ -8,7 +8,6 @@ load(
     "closure_proto_compile",
     "io_bazel_rules_closure",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",

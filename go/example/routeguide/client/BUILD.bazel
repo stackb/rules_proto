@@ -4,8 +4,8 @@ load("//go:go_grpc_library.bzl", "go_grpc_library")
 go_grpc_library(
     name = "routeguide",
     importpath = "google.golang.org/grpc/examples/route_guide/routeguide",
-    deps = ["//example/proto:routeguide_proto"],
     visibility = ["//visibility:public"],
+    deps = ["//example/proto:routeguide_proto"],
 )
 
 go_library(

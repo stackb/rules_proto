@@ -3,7 +3,6 @@ load(
     "com_github_grpc_grpc",
     "external_protobuf_clib",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",
