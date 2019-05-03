@@ -1,6 +1,5 @@
 load(
     "//:deps.bzl",
-    "com_google_protobuf",
     "io_bazel_rules_dart",
     "io_bazel_rules_go",
 )

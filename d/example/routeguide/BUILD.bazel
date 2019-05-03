@@ -1,0 +1,11 @@
+load("//d:d_proto_library.bzl", "d_proto_library")
+load("//d:d_proto_compile.bzl", "d_proto_compile")
+load("@io_bazel_rules_d//d:d.bzl", "d_library")
+
+d_proto_compile(
+    name = "routeguide",
+    # In this case we need to specify the package name
+    package = "routeguide",
+    verbose = 0,
+    deps = ["//example/proto:routeguide_proto"],
+)

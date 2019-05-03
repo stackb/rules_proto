@@ -196,6 +196,7 @@ func action(c *cli.Context) error {
 		makeClosure(),
 		makeCpp(),
 		makeCsharp(),
+		makeD(),
 		makeDart(),
 		makeGo(),
 		makeJava(),
