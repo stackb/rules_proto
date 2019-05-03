@@ -13,4 +13,3 @@ os:
 
 env:
   - BAZEL=0.24.1 BAZEL_COMMAND=test BAZEL_TARGET='//example/routeguide:*'
-  - BAZEL=0.24.1 CC=clang BAZEL_COMMAND=build BAZEL_TARGET='//swift/example/routeguide:*'

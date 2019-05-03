@@ -20,7 +20,6 @@ var dProtoCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto/
 
 {{ .Rule.Name }}(
     name = "person_{{ .Lang.Name }}_proto",
-    package = "example.proto",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )`)
 

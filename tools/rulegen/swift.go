@@ -39,7 +39,6 @@ func makeSwift() *Language {
 		Dir:  "swift",
 		Name: "swift",
 		TravisExclusionReason: "travis incompatible",
-
 		Rules: []*Rule{
 			&Rule{
 				Experimental:   true,
