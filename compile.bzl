@@ -268,7 +268,7 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
 
     Args:
       ctx: the <ctx> object
-      output: the package output directory <string>
+      outdir: the package output directory <string>
       plugin: the <PluginInfo> object.
       plugin_outfiles: The <dict<string,<File>>.  For example, {closure: "library.js"}
 
@@ -278,17 +278,24 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
 
     arg = outdir
     if plugin.outdir:
+        fail("plugin.outdir", plugin.outdir)
         arg = plugin.outdir.replace("{name}", outdir)
     elif plugin.out:
+        fail("plugin.out")
         outfile = plugin_outfiles[plugin.name]
 
         #arg = "%s" % (outdir)
         #arg = "%s/%s" % (outdir, outfile.short_path)
         arg = outfile.path
+    else:
+        print("no outdir or out: %s" % outdir)
 
     # Collate a list of options from the plugin itself PLUS options from the
     # global plugin_options list (if they exist)
-    options = getattr(plugin, "options", []) + ctx.attr.plugin_options
+    options = []
+    options += getattr(plugin, "options", [])
+    options += getattr(ctx.attr, "plugin_options", [])
+
     if options:
         arg = "%s:%s" % (",".join(_get_plugin_options(ctx, options)), arg)
     return "--%s_out=%s" % (plugin.name, arg)
@@ -344,7 +351,7 @@ def _apply_plugin_transitivity_rules(ctx, targets, plugin):
             fail("Unknown transitivity rule '%s'" % rule)
     return targets
 
-def _get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
+def get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
     """Get the predicted generated outputs for a given plugin
 
     Args:
@@ -402,9 +409,6 @@ def proto_compile_impl(ctx):
 
     # <File> the protoc tool
     protoc = ctx.executable.protoc
-
-    # <bool> if this is a gRPC compilation
-    has_services = ctx.attr.has_services
 
     # <File> for the output descriptor.  Often used as the sibling in
     # 'declare_file' actions.
@@ -513,7 +517,7 @@ def proto_compile_impl(ctx):
                 targets[src] = proto
 
     ###
-    ### Part 3cb: apply transitivity rules
+    ### Part 3b: apply transitivity rules
     ###
 
     # If the 'transitive = true' was enabled, we collected all the protos into
@@ -529,7 +533,7 @@ def proto_compile_impl(ctx):
     ###
     for src, proto in targets.items():
         for plugin in plugins:
-            outputs = _get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin)
+            outputs = get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin)
 
     ###
     ### Part 4: build list of arguments for protoc
@@ -611,6 +615,7 @@ def proto_compile_impl(ctx):
         descriptor = descriptor,
     ), DefaultInfo(files = depset(files))]
 
+
 proto_compile = rule(
     implementation = proto_compile_impl,
     attrs = {
@@ -629,9 +634,6 @@ proto_compile = rule(
         ),
         "outputs": attr.output_list(
             doc = "Escape mechanism to explicitly declare files that will be generated",
-        ),
-        "has_services": attr.bool(
-            doc = "If the proto files(s) have a service rpc, generate grpc outputs",
         ),
         "protoc": attr.label(
             doc = "The protoc tool",
@@ -681,7 +683,6 @@ def invoke_transitive(proto_compile_rule, name_suffix, kwargs):
     """
 
     deps = kwargs.get("deps")
-    has_services = kwargs.get("has_services")
     include_imports = kwargs.get("include_imports")
     include_source_info = kwargs.get("include_source_info")
     name = kwargs.get("name")
@@ -698,7 +699,6 @@ def invoke_transitive(proto_compile_rule, name_suffix, kwargs):
     proto_compile_rule(
         name = rule_name,
         deps = deps,
-        has_services = has_services,
         include_imports = include_imports,
         include_source_info = include_source_info,
         outputs = outputs,
