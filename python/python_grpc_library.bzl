@@ -5,7 +5,6 @@ load("@grpc_py_deps//:requirements.bzl", grpc_requirements = "all_requirements")
 def python_grpc_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
@@ -13,8 +12,9 @@ def python_grpc_library(**kwargs):
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        transitive = True,
-        verbose = verbose,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     native.py_library(

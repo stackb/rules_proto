@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import 'dart:async';
+import 'dart:io';
 import 'dart:math' show atan2, cos, max, min, pi, sin, sqrt;
 
 import 'package:grpc/grpc.dart' as grpc;
@@ -143,8 +144,13 @@ class RouteGuideService extends RouteGuideServiceBase {
 
 class Server {
   Future<Null> main(List<String> args) async {
+    int port = 50051;
+    final serverPort = Platform.environment['SERVER_PORT'];
+    if (serverPort != null) {
+      port = int.parse(serverPort, onError: (val) => port);
+    }
     final server = new grpc.Server([new RouteGuideService()]);
-    await server.serve(port: 8080);
+    await server.serve(port: port);
     print('Server listening on port ${server.port}...');
   }
 }

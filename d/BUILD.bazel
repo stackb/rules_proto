@@ -1,0 +1,10 @@
+load("//:plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "d",
+    outputs = [
+        ".d",
+    ],
+    tool = "@com_github_dcarp_protobuf_d//:protoc-gen-d",
+    visibility = ["//visibility:public"],
+)

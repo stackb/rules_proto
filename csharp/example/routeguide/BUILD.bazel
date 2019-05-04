@@ -3,7 +3,6 @@ load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_binary", "core_library")
 
 csharp_grpc_library(
     name = "routeguide",
-    verbose = 3,
     deps = ["//example/proto:routeguide_proto"],
 )
 
@@ -41,6 +40,7 @@ core_binary(
         "Client.cs",
     ],
     data = ["//example/proto:routeguide_features"],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
         ":util",
@@ -77,6 +77,7 @@ core_binary(
         "Server.cs",
     ],
     data = ["//example/proto:routeguide_features"],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
         ":util",

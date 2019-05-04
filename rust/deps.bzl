@@ -1,11 +1,14 @@
 load(
     "//:deps.bzl",
-    "com_google_protobuf",
     "io_bazel_rules_rust",
+)
+load(
+    "//protobuf:deps.bzl",
+    "protobuf",
 )
 
 def rust_proto_compile(**kwargs):
-    com_google_protobuf(**kwargs)
+    protobuf(**kwargs)
     io_bazel_rules_rust(**kwargs)
 
 def rust_grpc_compile(**kwargs):

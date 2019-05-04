@@ -22,6 +22,7 @@ py_binary(
     ],
     data = ["//example/proto:routeguide_features"],
     imports = ["."],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":resources",
         ":routeguide",
@@ -35,6 +36,7 @@ py_binary(
     ],
     data = ["//example/proto:routeguide_features"],
     imports = ["."],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":resources",
         ":routeguide",

@@ -5,8 +5,6 @@ def closure_proto_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
     visibility = kwargs.get("visibility")
-    transitive = kwargs.pop("transitive", True)
-    transitivity = kwargs.get("transitivity")
 
     name_pb = name + "_pb"
 
@@ -14,8 +12,8 @@ def closure_proto_library(**kwargs):
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        transitive = transitive,
-        transitivity = transitivity,
+        transitive = kwargs.pop("transitive", True),
+        transitivity = kwargs.pop("transitivity", {}),
     )
 
     closure_js_library(
@@ -24,7 +22,14 @@ def closure_proto_library(**kwargs):
         deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
         visibility = visibility,
         internal_descriptors = [name_pb + "/descriptor.source.bin"],
-        lenient = True,
+        suppress = [
+            "JSC_LATE_PROVIDE_ERROR",
+            "JSC_UNDEFINED_VARIABLE",
+            "JSC_IMPLICITLY_NULLABLE_JSDOC",
+            "JSC_STRICT_INEXISTENT_PROPERTY",
+            "JSC_POSSIBLE_INEXISTENT_PROPERTY",
+            "JSC_UNRECOGNIZED_TYPE_ERROR",
+        ],
     )
     name = kwargs.get("name")
     deps = kwargs.get("deps")

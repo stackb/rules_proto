@@ -1,12 +1,15 @@
 load(
     "//:deps.bzl",
     "com_github_grpc_grpc",
-    "com_google_protobuf",
     "org_pubref_rules_node",
+)
+load(
+    "//protobuf:deps.bzl",
+    "protobuf",
 )
 
 def node_proto_compile(**kwargs):
-    com_google_protobuf(**kwargs)
+    protobuf(**kwargs)
 
 def node_grpc_compile(**kwargs):
     node_proto_compile(**kwargs)

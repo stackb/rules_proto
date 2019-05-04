@@ -25,9 +25,11 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"io"
 	"log"
 	"math/rand"
+	"os"
 	"time"
 
 	"google.golang.org/grpc"
@@ -165,7 +167,14 @@ func main() {
 	} else {
 		opts = append(opts, grpc.WithInsecure())
 	}
-	conn, err := grpc.Dial(*serverAddr, opts...)
+
+	address := *serverAddr
+
+	if os.Getenv("SERVER_PORT") != "" {
+		address = fmt.Sprintf("localhost:%s", os.Getenv("SERVER_PORT"))
+	}
+
+	conn, err := grpc.Dial(address, opts...)
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
 	}

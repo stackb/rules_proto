@@ -216,12 +216,22 @@ class RouteGuideClient {
 };
 
 int main(int argc, char** argv) {
+  std::string server_address = routeguide::GetServerAddress();
+
+  std::cout << "Server Address: " << server_address << std::endl;
+
   // Expect only arg: --db_path=path/to/route_guide_db.json.
   std::string db = routeguide::GetDbFileContent(argc, argv);
+
+  std::cout << "Starting server..." << std::endl;
+
   RouteGuideClient guide(
-      grpc::CreateChannel("localhost:50051",
+      grpc::CreateChannel(server_address,
                           grpc::InsecureChannelCredentials()),
       db);
+
+  std::cout << "Server started." << std::endl;
+
 
   std::cout << "-------------- GetFeature --------------" << std::endl;
   guide.GetFeature();

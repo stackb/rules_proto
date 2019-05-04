@@ -23,6 +23,10 @@ use routeguide::*;
 fn parse_args() -> (String, u16) {
     let mut name = "world".to_owned();
     let mut port = 50051;
+    match env::var("SERVER_PORT") {
+        Ok(val) => port = u16::from_str(&val).unwrap(),
+        Err(_e) => println!("SERVER_PORT not set (using default)"),
+    }
     for arg in env::args().skip(1) {
         if arg.starts_with("-p=") {
             port = u16::from_str(&arg[3..]).unwrap()

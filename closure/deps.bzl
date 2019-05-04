@@ -1,8 +1,11 @@
 load(
     "//:deps.bzl",
-    "com_google_protobuf",
     "get_ref",
     "get_sha256",
+)
+load(
+    "//protobuf:deps.bzl",
+    "protobuf",
 )
 
 # Special thing to get around maven jar issues
@@ -10,8 +13,13 @@ load("//closure:buildozer_http_archive.bzl", "buildozer_http_archive")
 
 def io_bazel_rules_closure(**kwargs):
     name = "io_bazel_rules_closure"
-    ref = get_ref(name, "9889e2348259a5aad7e805547c1a0cf311cfcd91", kwargs)
-    sha256 = get_sha256(name, "43c9b882fa921923bcba764453f4058d102bece35a37c9f6383c713004aacff1", kwargs)
+
+    # PR#361 - includes closure_js_library.library_level_checks
+    ref = get_ref(name, "e86d8021f22277fe129a572cd019e846243d4531", kwargs)  # PR #361
+    sha256 = get_sha256(name, "481b6b522c2894906380b4b9c008b2c37ab86eeb182229d75bf453db89ed79bc", kwargs)
+
+    # ref = get_ref(name, "50d3dc9e6d27a5577a0f95708466718825d579f4", kwargs) # HEAD April 2019
+    # sha256 = get_sha256(name, "1c05fea22c9630cf1047f25d008780756373a60ddd4d2a6993cf9858279c5da6", kwargs)
 
     if "io_bazel_rules_closure" not in native.existing_rules():
         buildozer_http_archive(
@@ -33,7 +41,7 @@ def io_bazel_rules_closure(**kwargs):
         )
 
 def closure_proto_compile(**kwargs):
-    com_google_protobuf(**kwargs)
+    protobuf(**kwargs)
 
 def closure_proto_library(**kwargs):
     closure_proto_compile(**kwargs)

@@ -530,14 +530,4 @@ grpc-web: closure_grpc_compile commonjs_grpc_compile commonjs_dts_grpc_compile t
 
 clean_grpc-web: clean_closure_grpc_compile clean_commonjs_grpc_compile clean_commonjs_dts_grpc_compile clean_ts_grpc_compile clean_closure_grpc_library
 
-ts_proto_compile: 
-	(cd github.com/improbable-eng/ts-protoc-gen/example/ts_proto_compile && bazel build //...)
-
-clean_ts_proto_compile: 
-	(cd github.com/improbable-eng/ts-protoc-gen/example/ts_proto_compile && bazel clean)
-
-ts-protoc-gen: ts_proto_compile
-
-clean_ts-protoc-gen: clean_ts_proto_compile
-
-all_clean:                     clean_android clean_closure clean_cpp clean_csharp clean_dart clean_go clean_java clean_node clean_objc clean_php clean_python clean_ruby clean_rust clean_scala clean_swift clean_gogo clean_grpc-gateway clean_grpc.js clean_grpc-web clean_ts-protoc-gen
+all_clean:                    clean_android clean_closure clean_cpp clean_csharp clean_dart clean_go clean_java clean_node clean_objc clean_php clean_python clean_ruby clean_rust clean_scala clean_swift clean_gogo clean_grpc-gateway clean_grpc.js clean_grpc-web

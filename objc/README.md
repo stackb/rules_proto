@@ -30,20 +30,6 @@ objc_proto_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def objc_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//objc:objc")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -91,21 +77,6 @@ objc_grpc_compile(
     name = "greeter_objc_grpc",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def objc_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//objc:objc")),
-            str(Label("//objc:grpc_objc")),
-        ],
-        **kwargs
-    )
 ```
 
 ### Mandatory Attributes

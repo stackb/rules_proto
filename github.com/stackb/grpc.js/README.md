@@ -18,10 +18,6 @@ load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "closure_gr
 
 closure_grpc_compile()
 
-load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
-
-closure_repositories(omit_com_google_protobuf = True)
-
 load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
@@ -38,20 +34,6 @@ closure_grpc_compile(
     name = "greeter_grpc.js_grpc",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def closure_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/stackb/grpc.js:grpc.js")),
-        ],
-        **kwargs
-    )
 ```
 
 ### Mandatory Attributes
@@ -107,67 +89,6 @@ closure_grpc_library(
     name = "greeter_grpc.js_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//github.com/stackb/grpc.js:closure_grpc_compile.bzl", "closure_grpc_compile")
-load("//closure:closure_proto_compile.bzl", "closure_proto_compile")
-load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
-
-def closure_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-    transitive = kwargs.pop("transitive", True)
-    transitivity = kwargs.get("transitivity")
-
-    name_pb = name + "_pb"
-    name_pb_grpc = name + "_pb_grpc"
-
-    closure_proto_compile(
-        name = name_pb,
-        deps = deps,
-        transitive = transitive,
-        transitivity = transitivity,
-        visibility = visibility,
-    )
-
-    closure_grpc_compile(
-        name = name_pb_grpc,
-        deps = deps,
-        transitive = transitive,
-        transitivity = transitivity,
-        visibility = visibility,
-        verbose = verbose,
-    )
-
-    closure_deps = kwargs.get("closure_deps", [])
-
-    closure_js_library(
-        name = name,
-        srcs = [name_pb, name_pb_grpc],
-        deps = [
-            "@io_bazel_rules_closure//closure/library",
-            "@io_bazel_rules_closure//closure/protobuf:jspb",
-            "@com_github_stackb_grpc_js//js/grpc/stream:observer",
-            "@com_github_stackb_grpc_js//js/grpc/stream/observer:call",
-            "@com_github_stackb_grpc_js//js/grpc",
-            "@com_github_stackb_grpc_js//js/grpc:api",
-            "@com_github_stackb_grpc_js//js/grpc:options",
-        ] + closure_deps,
-        internal_descriptors = [
-            name_pb + "/descriptor.source.bin",
-            name_pb_grpc + "/descriptor.source.bin",
-        ],
-        lenient = True,
-        suppress = [
-            "JSC_WRONG_ARGUMENT_COUNT",
-        ],
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes

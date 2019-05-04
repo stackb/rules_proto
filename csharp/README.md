@@ -3,6 +3,12 @@
 **NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
 
 ~~~python
+The user's home directory could not be determined. Set the 'DOTNET_CLI_HOME' environment variable to specify the directory to use.
+~~~
+
+or
+
+~~~python
 System.ArgumentNullException: Value cannot be null.
 Parameter name: path1
    at System.IO.Path.Combine(String path1, String path2)
@@ -12,7 +18,7 @@ Parameter name: path1
    at Microsoft.DotNet.Cli.Program.Main(String[] args)
 ~~~
 
-To remedy this, use --spawn_strategy=standalone for the csharp rules.
+To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put it in your .bazelrc file).
 
 **NOTE 2**: the csharp nuget dependency sha256 values do not appear stable.
 
@@ -46,20 +52,6 @@ csharp_proto_compile(
     name = "person_csharp_proto",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def csharp_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//csharp:csharp")),
-        ],
-        **kwargs
-    )
 ```
 
 ### Mandatory Attributes
@@ -111,21 +103,6 @@ csharp_grpc_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def csharp_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//csharp:csharp")),
-            str(Label("//csharp:grpc_csharp")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -159,10 +136,27 @@ load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_proto_library")
 
 csharp_proto_library()
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
+load(
+    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
+    "core_register_sdk",
+    "dotnet_register_toolchains",
+    "dotnet_repositories",
+)
 
-dotnet_register_toolchains("host")
-#dotnet_register_toolchains(dotnet_version="4.2.3")
+core_version = "v2.1.503"
+
+dotnet_register_toolchains(
+    core_version = core_version,
+)
+
+dotnet_register_toolchains(
+    core_version = core_version,
+)
+
+core_register_sdk(
+    name = "core_sdk",
+    core_version = core_version,
+)
 
 dotnet_repositories()
 
@@ -186,38 +180,11 @@ csharp_proto_library(
 )
 ```
 
-### `IMPLEMENTATION`
+### `Flags`
 
-```python
-load("//csharp:csharp_proto_compile.bzl", "csharp_proto_compile")
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
-
-def csharp_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-    transitive = kwargs.get("transitive")
-
-    name_pb = name + "_pb"
-    csharp_proto_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        transitive = transitive,
-        verbose = verbose,
-    )
-
-    core_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            "@google.protobuf//:core",
-            "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-        ],
-        visibility = visibility,
-    )
-```
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | strategy | CoreCompile=standalone | dotnet SDK desperately wants to find the HOME directory |
 
 ### Mandatory Attributes
 
@@ -252,14 +219,27 @@ load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
 
 csharp_grpc_library()
 
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+load(
+    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
+    "core_register_sdk",
+    "dotnet_register_toolchains",
+    "dotnet_repositories",
+)
 
-grpc_deps()
+core_version = "v2.1.503"
 
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
+dotnet_register_toolchains(
+    core_version = core_version,
+)
 
-dotnet_register_toolchains("host")
-#dotnet_register_toolchains(dotnet_version="4.2.3")
+dotnet_register_toolchains(
+    core_version = core_version,
+)
+
+core_register_sdk(
+    name = "core_sdk",
+    core_version = core_version,
+)
 
 dotnet_repositories()
 
@@ -268,9 +248,10 @@ load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "pa
 nuget_packages()
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
-load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_protobuf_packages()
+
+load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_grpc_packages()
 ```
@@ -286,40 +267,11 @@ csharp_grpc_library(
 )
 ```
 
-### `IMPLEMENTATION`
+### `Flags`
 
-```python
-load("//csharp:csharp_grpc_compile.bzl", "csharp_grpc_compile")
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
-
-def csharp_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-    transitive = kwargs.get("transitive")
-
-    name_pb = name + "_pb"
-    csharp_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        transitive = transitive,
-        verbose = verbose,
-    )
-
-    core_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            "@google.protobuf//:core",
-            "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-            "@grpc.core//:core",
-            "@system.interactive.async//:core",
-        ],
-        visibility = visibility,
-    )
-```
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | strategy | CoreCompile=standalone | dotnet SDK desperately wants to find the HOME directory |
 
 ### Mandatory Attributes
 

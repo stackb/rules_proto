@@ -9,9 +9,10 @@ rust_grpc_library(
 rust_binary(
     name = "client",
     srcs = ["client.rs"],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
-        "//rust/cargo:grpc",
+        "@io_bazel_rules_rust//proto/raze:grpc",
     ],
 )
 
@@ -20,10 +21,24 @@ rust_binary(
     srcs = ["server.rs"],
     args = ["example/proto/routeguide_features.json"],
     data = ["//example/proto:routeguide_features"],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
-        "//rust/cargo:futures",
-        "//rust/cargo:grpc",
-        "//rust/cargo:tls_api_stub",
+        "@io_bazel_rules_rust//proto/raze:grpc",
+        "@io_bazel_rules_rust//proto/raze:tls_api_stub",
+        "@raze__futures__0_1_25//:futures",
+        "@raze__futures_cpupool__0_1_8//:futures_cpupool",
+    ],
+)
+
+rust_library(
+    name = "lib",
+    srcs = ["lib.rs"],
+    deps = [
+        ":routeguide",
+        "@io_bazel_rules_rust//proto/raze:grpc",
+        "@io_bazel_rules_rust//proto/raze:protobuf",
+        "@io_bazel_rules_rust//proto/raze:tls_api_stub",
+        "@raze__futures__0_1_25//:futures",
     ],
 )

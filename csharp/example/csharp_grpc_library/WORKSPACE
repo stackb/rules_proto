@@ -1,12 +1,4 @@
-http_archive(
-    name = "bazel_toolchains",
-    sha256 = "4329663fe6c523425ad4d3c989a8ac026b04e1acedeceb56aa4b190fa7f3973c",
-    strip_prefix = "bazel-toolchains-bc09b995c137df042bb80a395b73d7ce6f26afbe",
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
-        "https://github.com/bazelbuild/bazel-toolchains/archive/bc09b995c137df042bb80a395b73d7ce6f26afbe.tar.gz",
-    ],
-)
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 local_repository(
     name = "build_stack_rules_proto",
@@ -17,33 +9,38 @@ load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
 
 csharp_grpc_library()
 
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+load(
+    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
+    "core_register_sdk",
+    "dotnet_register_toolchains",
+    "dotnet_repositories",
+)
 
-grpc_deps()
-
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "dotnet_register_toolchains", "dotnet_repositories")
+core_version = "v2.1.503"
 
 dotnet_register_toolchains(
-    net_roslyn_version = "2.7.0",
-    net_version = "4.7.2",
-    core_version = "v2.1.503",
+    core_version = core_version,
+)
+
+dotnet_register_toolchains(
+    core_version = core_version,
+)
+
+core_register_sdk(
+    name = "core_sdk",
+    core_version = core_version,
 )
 
 dotnet_repositories()
-
-# Default core_sdk
-core_register_sdk("v2.1.503", name = "core_sdk")
-
-# Default net_sdk
-net_register_sdk("net472", name = "net_sdk")
 
 load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
 
 nuget_packages()
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
-load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_protobuf_packages()
+
+load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_grpc_packages()

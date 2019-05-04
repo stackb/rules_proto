@@ -3,15 +3,3 @@ load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 buildifier(
     name = "buildifier",
 )
-
-filegroup(
-    name = "node_modules",
-    srcs = glob([
-        "node_modules/**/*.js",
-        "node_modules/**/*.d.ts",
-        "node_modules/**/*.json",
-    ]),
-    visibility = [
-        "//github.com/improbable-eng/ts-protoc-gen:__subpackages__",
-    ],
-)

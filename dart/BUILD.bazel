@@ -41,11 +41,12 @@ dart_vm_snapshot(
     srcs = ["dart_protoc_plugin.dart"],
     script_file = "dart_protoc_plugin.dart",
     deps = [
+        "@vendor_crypto//:crypto",
         "@vendor_front_end//:front_end",
         "@vendor_glob//:glob",
         "@vendor_html//:html",
         "@vendor_logging//:logging",
-        "@vendor_plugin//:plugin",
+        "@vendor_meta//:meta",
         "@vendor_protoc_plugin//:protoc_plugin",
         "@vendor_pub_semver//:pub_semver",
         "@vendor_typed_data//:typed_data",

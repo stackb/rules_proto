@@ -578,7 +578,7 @@ def proto_compile_impl(ctx):
         command = command,
         inputs = protos + data,
         outputs = outputs + [descriptor] + ctx.outputs.outputs,
-        tools = [protoc] + plugin_tools.values()
+        tools = [protoc] + plugin_tools.values(),
     )
 
     ###

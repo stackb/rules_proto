@@ -1,12 +1,15 @@
 load(
     "//:deps.bzl",
     "com_github_grpc_grpc",
-    "com_google_protobuf",
     "io_bazel_rules_dotnet",
+)
+load(
+    "//protobuf:deps.bzl",
+    "protobuf",
 )
 
 def csharp_proto_compile(**kwargs):
-    com_google_protobuf(**kwargs)
+    protobuf(**kwargs)
 
 def csharp_grpc_compile(**kwargs):
     csharp_proto_compile(**kwargs)

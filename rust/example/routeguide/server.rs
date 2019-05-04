@@ -1,153 +1,248 @@
-// Copyright 2018 The Bazel Authors. All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 extern crate routeguide;
 extern crate grpc;
 extern crate tls_api_stub;
 extern crate futures;
 
-use std::thread;
-use std::env;
-use std::str::FromStr;
-use std::iter;
-use futures::future::{Future};
-use futures::Stream;
+use crate::routeguide::routeguide_grpc::RouteGuide;
+use crate::routeguide::routeguide::Point;
+use crate::routeguide::routeguide::Feature;
+use crate::routeguide::routeguide::RouteNote;
+use crate::routeguide::routeguide::RouteSummary;
+use crate::routeguide::routeguide::Rectangle;
+
+use grpc::ServerHandlerContext;
+use grpc::ServerRequestSingle;
+use grpc::ServerResponseUnarySink;
+use grpc::ServerResponseSink;
+use grpc::ServerRequest;
+use std::collections::HashMap;
+use futures::stream;
+use futures::stream::Stream;
+use std::time::Instant;
+use futures::future::Future;
+use std::f64;
+use std::sync::Mutex;
 use futures::Async;
-use futures::Poll;
+use std::sync::Arc;
+use grpc::Metadata;
+use std::path::Path;
+use std::fs;
+use std::io::Read;
+use json::JsonValue;
 
-use routeguide::*;
 
-struct RouteGuideImpl;
+// https://github.com/grpc/grpc-go/blob/master/examples/route_guide/server/server.go
+#[derive(Default)]
+pub struct RouteGuideImpl {
+    saved_features: Vec<Feature>,
+    route_notes: Arc<Mutex<HashMap<String, Vec<RouteNote>>>>,
+}
 
-//
-// NOTE: this is a first step just to get this class to *compile*, much less
-// operate correctly.
-//
+impl RouteGuideImpl {
+    pub fn new_and_load_db() -> RouteGuideImpl {
+        RouteGuideImpl {
+            saved_features: load_features(Path::new(ROUTE_GUIDE_DB_PATH)),
+            route_notes: Default::default(),
+        }
+    }
+}
 
 impl RouteGuide for RouteGuideImpl {
-  fn list_features(&self, _m: grpc::RequestOptions, _rect: Rectangle) -> grpc::StreamingResponse<Feature> {
-    // Send back 13 dummy list response objects
-    let iter = iter::repeat(()).map(|_| {
-      let s = "MyTestFileName.bin".to_owned();
-      let mut feature = Feature::new();
-      feature.set_name(s);
-      feature
-    }).take(13);
-    grpc::StreamingResponse::iter(iter)
-  }
+    fn get_feature(&self, _o: ServerHandlerContext, req: ServerRequestSingle<Point>, resp: ServerResponseUnarySink<Feature>) -> grpc::Result<()> {
+        for feature in &*self.saved_features {
+            if feature.get_location() == &req.message {
+                return resp.finish(feature.clone());
+            }
+        }
 
-  fn record_route(&self, _o: grpc::RequestOptions, _p: grpc::StreamingRequest<Point>) -> grpc::SingleResponse<RouteSummary> {
-    // let result = p.into_iter(() -> {
+        resp.finish(Feature {
+            location: Some(req.message).into(),
+            ..Default::default()
+        })
+    }
 
-    // });
-    //  {
-    //   let summary = RouteSummary::new();
-    //   summary
-    // };
-    // let iter = iter::repeat(()).map(|_| {
-    //   let mut summary = RouteSummary::new();
-    //   summary
-    // }).take(13);
+    fn list_features(&self, o: ServerHandlerContext, mut req: ServerRequestSingle<Rectangle>, resp: ServerResponseSink<Feature>) -> grpc::Result<()> {
+        let req = req.take_message();
+        // TODO: do not clone
+        let stream = stream::iter_ok(self.saved_features.clone())
+            .filter_map(move |feature| {
+                if in_range(feature.get_location(), &req) {
+                    return Some(feature);
+                } else {
+                    return None;
+                }
+            });
+        o.pump(stream, resp);
+        Ok(())
+    }
 
-    // match p.iter() {
-    //   Err(e) => panic!("{:?}", e),
-    //   Ok((_, stream)) => {
-    //     for item in stream {
-    //       let point = item.unwrap();
-    //       println!("> {}", point);
-    //     }
-    //   }
-    // }
-    let summary = RouteSummary::new();
-    let fut = RouteSummaryFuture::new(summary);
+    fn record_route(&self, o: ServerHandlerContext, req: ServerRequest<Point>, resp: ServerResponseUnarySink<RouteSummary>) -> grpc::Result<()> {
+        let start_time = Instant::now();
 
-    grpc::SingleResponse::no_metadata(fut)
-  }
+        struct State {
+            point_count: u32,
+            feature_count: u32,
+            distance: u32,
+            last_point: Option<Point>,
+        }
 
-  fn route_chat(&self, _o: grpc::RequestOptions, _p: grpc::StreamingRequest<RouteNote>) -> grpc::StreamingResponse<RouteNote> {
-    let note = RouteNote::new();
-    let fut = RouteNoteStream::new(note);
-    grpc::StreamingResponse::no_metadata(fut)
-  }
+        let state = State {
+            point_count: 0,
+            feature_count: 0,
+            distance: 0,
+            last_point: None,
+        };
 
-  fn get_feature(&self, _o: grpc::RequestOptions, _p: Point) -> grpc::SingleResponse<Feature> {
-    let mut r = Feature::new();
-    r.set_name(format!("test"));
-    grpc::SingleResponse::completed(r)
-  }
+        let saved_features = self.saved_features.clone();
 
-}
+        let f = req.into_stream()
+            .fold(state, move |mut state, point| {
+                state.point_count += 1;
+                for feature in &saved_features {
+                    if feature.get_location() == &point {
+                        state.feature_count += 1;
+                    }
+                }
+                if let Some(last_point) = &state.last_point {
+                    state.distance += calc_distance(last_point, &point);
+                }
+                state.last_point = Some(point);
+                Ok::<_, grpc::Error>(state)
+            })
+            .map(move |state| {
+                RouteSummary {
+                    point_count: state.point_count as i32,
+                    feature_count: state.feature_count as i32,
+                    distance: state.distance as i32,
+                    elapsed_time: start_time.elapsed().as_secs() as i32,
+                    ..Default::default()
+                }
+            });
+        o.pump_future(f, resp);
+        Ok(())
+    }
 
-fn main() {
-    let mut server = grpc::ServerBuilder::<tls_api_stub::TlsAcceptor>::new();
-    let port = u16::from_str(&env::args().nth(1).unwrap_or("50051".to_owned())).unwrap();
-    server.http.set_port(port);
-    server.add_service(RouteGuideServer::new_service_def(RouteGuideImpl));
-    server.http.set_cpu_pool_threads(4);
-    let server = server.build().expect("server");
-    let port = server.local_addr().port().unwrap();
-    println!("RouteGuide server started on port {}", port);
+    fn route_chat(&self, o: ServerHandlerContext, req: ServerRequest<RouteNote>, mut resp: ServerResponseSink<RouteNote>) -> grpc::Result<()> {
+        let mut req = req.into_stream();
 
-    loop {
-        thread::park();
+        let route_notes_map = self.route_notes.clone();
+
+        o.spawn_poll_fn(move || {
+            loop {
+                // Wait until resp is writable
+                if let Async::NotReady = resp.poll()? {
+                    return Ok(Async::NotReady);
+                }
+
+                match req.poll()? {
+                    Async::NotReady => return Ok(Async::NotReady),
+                    Async::Ready(Some(note)) => {
+                        let key = serialize(note.get_location());
+
+                        let mut route_notes_map = route_notes_map.lock().unwrap();
+
+                        let route_notes = route_notes_map.entry(key).or_insert(Vec::new());
+                        route_notes.push(note);
+
+                        for note in route_notes {
+                            resp.send_data(note.clone())?;
+                        }
+                    }
+                    Async::Ready(None) => {
+                        resp.send_trailers(Metadata::new())?;
+                        return Ok(Async::Ready(()));
+                    }
+                }
+            }
+        });
+        Ok(())
     }
 }
 
-#[derive(Debug)]
-struct RouteSummaryFuture {
-    summary: RouteSummary,
+fn in_range(point: &Point, rect: &Rectangle) -> bool {
+    let left = f64::min(rect.get_lo().longitude as f64, rect.get_hi().longitude as f64);
+    let right = f64::max(rect.get_lo().longitude as f64, rect.get_hi().longitude as f64);
+    let top = f64::max(rect.get_lo().latitude as f64, rect.get_hi().latitude as f64);
+    let bottom = f64::min(rect.get_lo().latitude as f64, rect.get_hi().latitude as f64);
+
+    point.longitude as f64 >= left &&
+        point.longitude as f64 <= right &&
+        point.latitude as f64 >= bottom &&
+        point.latitude as f64 <= top
 }
 
-impl RouteSummaryFuture {
-  fn new(summary: RouteSummary) -> RouteSummaryFuture {
-    RouteSummaryFuture {
-      summary: summary,
+fn to_radians(num: f64) -> f64 {
+    num * f64::consts::PI / 180.
+}
+
+fn calc_distance(p1: &Point, p2: &Point) -> u32 {
+    let cord_factor: f64 = 1e7;
+    let r = 6371000.; // earth radius in metres
+    let lat1 = to_radians(p1.latitude as f64 / cord_factor);
+    let lat2 = to_radians(p2.latitude as f64 / cord_factor);
+    let lng1 = to_radians(p1.longitude as f64 / cord_factor);
+    let lng2 = to_radians(p2.longitude as f64 / cord_factor);
+    let dlat = lat2 - lat1;
+    let dlng = lng2 - lng1;
+
+    let a = f64::sin(dlat/2.) * f64::sin(dlat/2.) +
+        f64::cos(lat1) * f64::cos(lat2)*
+            f64::sin(dlng / 2.) * f64::sin(dlng / 2.);
+    let c = 2. * f64::atan2(f64::sqrt(a), f64::sqrt(1. - a));
+
+    let distance = r * c;
+    distance as u32
+}
+
+fn serialize(point: &Point) -> String {
+    format!("{} {}", point.latitude, point.longitude)
+}
+
+const ROUTE_GUIDE_DB_PATH: &str = "testdata/route_guide_db.json";
+
+fn load_features(path: &Path) -> Vec<Feature> {
+    let mut file = fs::File::open(path).expect("open");
+    let mut s = String::new();
+    file.read_to_string(&mut s).expect("read");
+
+    // TODO: use protobuf mapper when new version is released
+
+    let json_value = json::parse(&s).expect("parse json");
+    let array = match json_value {
+        JsonValue::Array(array) => array,
+        _ => panic!(),
+    };
+
+    array.into_iter().map(|item| {
+        let object = match item {
+            JsonValue::Object(object) => object,
+            _ => panic!(),
+        };
+
+        let location = match object.get("location").expect("location") {
+            JsonValue::Object(object) => object,
+            _ => panic!(),
+        };
+
+        Feature {
+            name: object.get("name").expect("name").as_str().expect("unwrap").to_owned(),
+            location: Some(Point {
+                latitude: location.get("latitude").expect("latitude").as_i32().unwrap(),
+                longitude: location.get("longitude").expect("longitude").as_i32().unwrap(),
+                ..Default::default()
+            }).into(),
+            ..Default::default()
+        }
+    }).collect()
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_load_features() {
+        let features = load_features(Path::new(ROUTE_GUIDE_DB_PATH));
+        assert!(features.len() > 0);
     }
-  }
-}
-
-impl Future for RouteSummaryFuture {
-  type Item = RouteSummary;
-  type Error = grpc::Error;
-
-  fn poll(&mut self) -> Poll<RouteSummary, grpc::Error> {
-    Ok(Async::Ready(self.summary.to_owned()))
-  }
-}
-
-#[derive(Debug)]
-struct RouteNoteStream {
-    note: RouteNote,
-}
-
-impl RouteNoteStream {
-  fn new(note: RouteNote) -> RouteNoteStream {
-    RouteNoteStream {
-      note: note,
-    }
-  }
-}
-
-impl Stream for RouteNoteStream {
-  type Item = RouteNote;
-  type Error = grpc::Error;
-
-  // fn poll(&mut self) -> Poll<RouteNote, grpc::Error> {
-  //   Ok(Async::Ready(self.note))
-  // }
-
-  fn poll(&mut self) -> Result<Async<Option<RouteNote>>, grpc::Error> {
-    Ok(Async::Ready(std::option::Option::Some(self.note.to_owned())))
-  }
 }

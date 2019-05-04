@@ -11,8 +11,6 @@
 
 ## `dart_proto_compile`
 
-> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
-
 Generates dart protobuf artifacts
 
 ### `WORKSPACE`
@@ -49,19 +47,11 @@ dart_proto_compile(
 )
 ```
 
-### `IMPLEMENTATION`
+### `Flags`
 
-```python
-load("//:compile.bzl", "proto_compile")
-
-def dart_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//dart:dart")),
-        ],
-        **kwargs
-    )
-```
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
 
 ### Mandatory Attributes
 
@@ -86,8 +76,6 @@ def dart_proto_compile(**kwargs):
 ---
 
 ## `dart_grpc_compile`
-
-> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates dart protobuf+gRPC artifacts
 
@@ -125,19 +113,11 @@ dart_grpc_compile(
 )
 ```
 
-### `IMPLEMENTATION`
+### `Flags`
 
-```python
-load("//:compile.bzl", "proto_compile")
-
-def dart_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//dart:grpc_dart")),
-        ],
-        **kwargs
-    )
-```
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
 
 ### Mandatory Attributes
 
@@ -162,8 +142,6 @@ def dart_grpc_compile(**kwargs):
 ---
 
 ## `dart_proto_library`
-
-> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates dart protobuf library
 
@@ -201,35 +179,11 @@ dart_proto_library(
 )
 ```
 
-### `IMPLEMENTATION`
+### `Flags`
 
-```python
-load("//dart:dart_proto_compile.bzl", "dart_proto_compile")
-load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
-
-def dart_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    dart_proto_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = verbose,
-    )
-    dart_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            str(Label("@vendor_protobuf//:protobuf")),
-        ],
-        pub_pkg_name = name,
-        visibility = visibility,
-    )
-```
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
 
 ### Mandatory Attributes
 
@@ -254,8 +208,6 @@ def dart_proto_library(**kwargs):
 ---
 
 ## `dart_grpc_library`
-
-> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates dart protobuf+gRPC library
 
@@ -297,36 +249,11 @@ dart_grpc_library(
 )
 ```
 
-### `IMPLEMENTATION`
+### `Flags`
 
-```python
-load("//dart:dart_grpc_compile.bzl", "dart_grpc_compile")
-load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
-
-def dart_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    dart_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = verbose,
-    )
-    dart_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            str(Label("@vendor_protobuf//:protobuf")),
-            str(Label("@vendor_grpc//:grpc")),
-        ],
-        pub_pkg_name = name,
-        visibility = visibility,
-    )
-```
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
 
 ### Mandatory Attributes
 

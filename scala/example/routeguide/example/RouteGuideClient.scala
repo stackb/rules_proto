@@ -14,7 +14,7 @@ import io.grpc.stub.StreamObserver
 import io.grpc.examples.routeguide.routeguide.{Feature, Point, RouteNote, RouteSummary, Rectangle, RouteGuideGrpc}
 
 import scala.io.StdIn
-import scala.util.{Random, Try}
+import scala.util.{Random, Try, Success, Failure}
 
 class RouteGuideClient(host: String, port: Int) {
 
@@ -84,7 +84,7 @@ class RouteGuideClient(host: String, port: Int) {
     */
   @throws[InterruptedException]
   def recordRoute(features: Seq[Feature], numPoints: Int): Unit = {
-    logger.info("*** RecordRoute")
+    logger.info("*** RecordRoute features=" + features.size)
     val finishLatch = new CountDownLatch(1)
     val responseObserver = new StreamObserver[RouteSummary]() {
       override def onNext(summary: RouteSummary): Unit = {
@@ -175,20 +175,32 @@ class RouteGuideClient(host: String, port: Int) {
 object RouteGuideClient extends App {
   val logger = Logger.getLogger(getClass.getName)
 
-  val features: Seq[Feature] = Try {
-    RouteGuidePersistence.parseFeatures(RouteGuidePersistence.defaultFeatureFile)
-  } getOrElse {
-    logger.warning("Can't load feature list from file")
-    Seq.empty
-  }
+// This isn't working due to some issue with the json4s library - not a priority to solve it
+//
+//  val features: Seq[Feature] = Try {
+//    RouteGuidePersistence.parseFeatures(RouteGuidePersistence.defaultFeatureFile)
+//  } recoverWith {
+//    case e: Throwable => 
+//      logger.warning("features load failed: " + e)
+//      Failure(e)
+//  } getOrElse {
+//    logger.warning("Can't load feature list from file")
+//    Seq.empty
+//  }
 
-  val client = new RouteGuideClient("localhost", 50051)
+  val features = RouteGuidePersistence.getFeatures
+
+  val port = if (System.getenv("SERVER_PORT") != null) {
+    System.getenv("SERVER_PORT").toInt
+  } else 50051
+
+  val client = new RouteGuideClient("localhost", port)
   var stop = false
 
   try {
     client.getFeature(409146138, -746188906)
     client.listFeatures(400000000, -750000000, 420000000, -730000000)
-    client.recordRoute(features, 10)
+    client.recordRoute(features, 2)
     val finishLatch = client.routeChat
     if (!finishLatch.await(1, TimeUnit.MINUTES)) logger.warning("routeChat can not finish within 1 minutes")
   } finally client.shutdown()

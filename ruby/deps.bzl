@@ -2,11 +2,14 @@ load(
     "//:deps.bzl",
     "com_github_grpc_grpc",
     "com_github_yugui_rules_ruby",
-    "com_google_protobuf",
+)
+load(
+    "//protobuf:deps.bzl",
+    "protobuf",
 )
 
 def ruby_proto_compile(**kwargs):
-    com_google_protobuf(**kwargs)
+    protobuf(**kwargs)
 
 def ruby_grpc_compile(**kwargs):
     ruby_proto_compile(**kwargs)

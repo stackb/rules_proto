@@ -32,20 +32,6 @@ node_proto_compile(
 )
 ```
 
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def node_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//node:js")),
-        ],
-        **kwargs
-    )
-```
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -93,21 +79,6 @@ node_grpc_compile(
     name = "greeter_node_grpc",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//:compile.bzl", "proto_compile")
-
-def node_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//node:js")),
-            str(Label("//node:grpc_js")),
-        ],
-        **kwargs
-    )
 ```
 
 ### Mandatory Attributes
@@ -164,42 +135,6 @@ node_proto_library(
     name = "person_node_library",
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//node:node_proto_compile.bzl", "node_proto_compile")
-load("//node:node_module_index.bzl", "node_module_index")
-load("@org_pubref_rules_node//node:rules.bzl", "node_module")
-
-def node_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_index = name + "_index"
-
-    node_proto_compile(
-        name = name_pb,
-        deps = deps,
-        transitive = True,
-        visibility = visibility,
-    )
-    node_module_index(
-        name = name_index,
-        compilation = name_pb,
-    )
-    node_module(
-        name = name,
-        srcs = [name_pb],
-        index = name_index,
-        deps = [
-            "@proto_node_modules//:_all_",
-        ],
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes
@@ -267,43 +202,6 @@ node_grpc_library(
     name = "greeter_node_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
-```
-
-### `IMPLEMENTATION`
-
-```python
-load("//node:node_grpc_compile.bzl", "node_grpc_compile")
-load("//node:node_module_index.bzl", "node_module_index")
-load("@org_pubref_rules_node//node:rules.bzl", "node_module")
-
-def node_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_index = name + "_index"
-
-    node_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        transitive = True,
-        visibility = visibility,
-    )
-    node_module_index(
-        name = name_index,
-        compilation = name_pb,
-    )
-    node_module(
-        name = name,
-        srcs = [name_pb],
-        index = name_index,
-        deps = [
-            "@proto_node_modules//:_all_",
-            "@grpc_node_modules//:_all_",
-        ],
-        visibility = visibility,
-    )
 ```
 
 ### Mandatory Attributes

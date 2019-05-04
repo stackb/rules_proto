@@ -7,9 +7,13 @@ load(
     "gmaven_rules",
     "io_grpc_grpc_java",
 )
+load(
+    "//protobuf:deps.bzl",
+    "protobuf",
+)
 
 def android_proto_compile(**kwargs):
-    com_google_protobuf(**kwargs)
+    protobuf(**kwargs)
     com_google_protobuf_lite(**kwargs)
 
 def android_grpc_compile(**kwargs):

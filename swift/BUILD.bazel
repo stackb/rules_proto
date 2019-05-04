@@ -3,58 +3,13 @@ load("//:plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "swift",
     outputs = [".pb.swift"],
-    #tool = "@com_github_apple_swift_swift_protobuf//:ProtoCompilerPlugin",
-    tool = ":protoc-gen-swift",
+    tool = "@com_github_apple_swift_protobuf//:ProtoCompilerPlugin",
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
     name = "grpc_swift",
-    outputs = [".grpc.pb.swift"],
-    tool = "@com_github_apple_swift_swift_protobuf//:ProtoCompilerPlugin",
-    #tool = ":protoc-gen-swift",
-    visibility = ["//visibility:public"],
-)
-
-#load("//go:library.bzl", "go_proto_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-
-go_proto_library(
-    name = "compiler_plugin",
-    importpath = "google.golang.org/protobuf/compiler_plugin",
-    proto = "@com_google_protobuf//:compiler_plugin_proto",
-)
-
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_embed_data", "go_library")
-
-go_embed_data(
-    name = "assets",
-    srcs = [
-        "@com_github_apple_swift_swift_protobuf//:ProtoCompilerPlugin",
-    ],
-    package = "main",
-    var = "assets",
-)
-
-go_library(
-    name = "go_default_library",
-    srcs = [
-        "protoc-gen-swift.go",
-        ":assets",  # keep
-    ],
-    importpath = "github.com/stackb/rules_proto/swift/protoc-gen-swift",
-    visibility = ["//visibility:public"],
-    deps = [
-        "compiler_plugin",
-        "@com_github_golang_protobuf//proto:go_default_library",
-    ],
-)
-
-go_binary(
-    name = "protoc-gen-swift",
-    data = [
-        "@com_github_apple_swift_swift_protobuf//:ProtoCompilerPlugin",
-    ],
-    embed = [":go_default_library"],
+    outputs = [".grpc.swift"],
+    tool = "@com_github_grpc_grpc_swift//:protoc-gen-swiftgrpc",
     visibility = ["//visibility:public"],
 )

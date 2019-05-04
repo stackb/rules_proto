@@ -69,79 +69,79 @@ def packages():
         mono_lib = "lib/net45/CommandLine.dll",
         net_deps = {
             "net461": [
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.collections.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.console.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.diagnostics.debug.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.globalization.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.io.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.linq.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.linq.expressions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.reflection.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.reflection.extensions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.reflection.typeextensions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.resources.resourcemanager.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.runtime.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.runtime.extensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.collections.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.console.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.diagnostics.debug.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.globalization.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.io.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.linq.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.linq.expressions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.reflection.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.reflection.extensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.reflection.typeextensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.resources.resourcemanager.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.runtime.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net461_system.runtime.extensions.dll",
             ],
             "net462": [
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.collections.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.console.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.diagnostics.debug.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.globalization.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.io.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.linq.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.linq.expressions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.reflection.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.reflection.extensions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.reflection.typeextensions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.resources.resourcemanager.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.runtime.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.runtime.extensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.collections.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.console.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.diagnostics.debug.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.globalization.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.io.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.linq.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.linq.expressions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.reflection.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.reflection.extensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.reflection.typeextensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.resources.resourcemanager.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.runtime.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net462_system.runtime.extensions.dll",
             ],
             "net47": [
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.collections.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.console.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.diagnostics.debug.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.globalization.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.io.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.linq.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.linq.expressions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.reflection.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.reflection.extensions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.reflection.typeextensions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.resources.resourcemanager.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.runtime.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.runtime.extensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.collections.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.console.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.diagnostics.debug.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.globalization.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.io.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.linq.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.linq.expressions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.reflection.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.reflection.extensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.reflection.typeextensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.resources.resourcemanager.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.runtime.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net47_system.runtime.extensions.dll",
             ],
             "net471": [
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.collections.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.console.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.diagnostics.debug.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.globalization.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.io.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.linq.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.linq.expressions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.reflection.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.reflection.extensions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.reflection.typeextensions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.resources.resourcemanager.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.runtime.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.runtime.extensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.collections.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.console.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.diagnostics.debug.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.globalization.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.io.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.linq.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.linq.expressions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.reflection.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.reflection.extensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.reflection.typeextensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.resources.resourcemanager.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.runtime.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net471_system.runtime.extensions.dll",
             ],
             "net472": [
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.collections.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.console.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.diagnostics.debug.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.globalization.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.io.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.linq.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.linq.expressions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.reflection.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.reflection.extensions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.reflection.typeextensions.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.resources.resourcemanager.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.runtime.dll",
-               "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.runtime.extensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.collections.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.console.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.diagnostics.debug.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.globalization.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.io.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.linq.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.linq.expressions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.reflection.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.reflection.extensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.reflection.typeextensions.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.resources.resourcemanager.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.runtime.dll",
+                "@io_bazel_rules_dotnet//dotnet/stdlib.net:net472_system.runtime.extensions.dll",
             ],
         },
         mono_deps = [
@@ -161,62 +161,62 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.5/CommandLine.dll",
-               "lib/netstandard1.5/CommandLine.xml",
+                "lib/netstandard1.5/CommandLine.dll",
+                "lib/netstandard1.5/CommandLine.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.5/CommandLine.dll",
-               "lib/netstandard1.5/CommandLine.xml",
+                "lib/netstandard1.5/CommandLine.dll",
+                "lib/netstandard1.5/CommandLine.xml",
             ],
         },
         net_files = {
             "net45": [
-               "lib/net45/CommandLine.dll",
-               "lib/net45/CommandLine.XML",
+                "lib/net45/CommandLine.dll",
+                "lib/net45/CommandLine.XML",
             ],
             "net451": [
-               "lib/net45/CommandLine.dll",
-               "lib/net45/CommandLine.XML",
+                "lib/net45/CommandLine.dll",
+                "lib/net45/CommandLine.XML",
             ],
             "net452": [
-               "lib/net45/CommandLine.dll",
-               "lib/net45/CommandLine.XML",
+                "lib/net45/CommandLine.dll",
+                "lib/net45/CommandLine.XML",
             ],
             "net46": [
-               "lib/net45/CommandLine.dll",
-               "lib/net45/CommandLine.XML",
+                "lib/net45/CommandLine.dll",
+                "lib/net45/CommandLine.XML",
             ],
             "net461": [
-               "lib/net45/CommandLine.dll",
-               "lib/net45/CommandLine.XML",
+                "lib/net45/CommandLine.dll",
+                "lib/net45/CommandLine.XML",
             ],
             "net462": [
-               "lib/net45/CommandLine.dll",
-               "lib/net45/CommandLine.XML",
+                "lib/net45/CommandLine.dll",
+                "lib/net45/CommandLine.XML",
             ],
             "net47": [
-               "lib/net45/CommandLine.dll",
-               "lib/net45/CommandLine.XML",
+                "lib/net45/CommandLine.dll",
+                "lib/net45/CommandLine.XML",
             ],
             "net471": [
-               "lib/net45/CommandLine.dll",
-               "lib/net45/CommandLine.XML",
+                "lib/net45/CommandLine.dll",
+                "lib/net45/CommandLine.XML",
             ],
             "net472": [
-               "lib/net45/CommandLine.dll",
-               "lib/net45/CommandLine.XML",
+                "lib/net45/CommandLine.dll",
+                "lib/net45/CommandLine.XML",
             ],
             "netstandard1.5": [
-               "lib/netstandard1.5/CommandLine.dll",
-               "lib/netstandard1.5/CommandLine.xml",
+                "lib/netstandard1.5/CommandLine.dll",
+                "lib/netstandard1.5/CommandLine.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.5/CommandLine.dll",
-               "lib/netstandard1.5/CommandLine.xml",
+                "lib/netstandard1.5/CommandLine.dll",
+                "lib/netstandard1.5/CommandLine.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.5/CommandLine.dll",
-               "lib/netstandard1.5/CommandLine.xml",
+                "lib/netstandard1.5/CommandLine.dll",
+                "lib/netstandard1.5/CommandLine.xml",
             ],
         },
         mono_files = [
@@ -255,82 +255,82 @@ def packages():
         mono_lib = "lib/net45/Newtonsoft.Json.dll",
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard2.0/Newtonsoft.Json.dll",
-               "lib/netstandard2.0/Newtonsoft.Json.xml",
+                "lib/netstandard2.0/Newtonsoft.Json.dll",
+                "lib/netstandard2.0/Newtonsoft.Json.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard2.0/Newtonsoft.Json.dll",
-               "lib/netstandard2.0/Newtonsoft.Json.xml",
+                "lib/netstandard2.0/Newtonsoft.Json.dll",
+                "lib/netstandard2.0/Newtonsoft.Json.xml",
             ],
         },
         net_files = {
             "net45": [
-               "lib/net45/Newtonsoft.Json.dll",
-               "lib/net45/Newtonsoft.Json.xml",
+                "lib/net45/Newtonsoft.Json.dll",
+                "lib/net45/Newtonsoft.Json.xml",
             ],
             "net451": [
-               "lib/net45/Newtonsoft.Json.dll",
-               "lib/net45/Newtonsoft.Json.xml",
+                "lib/net45/Newtonsoft.Json.dll",
+                "lib/net45/Newtonsoft.Json.xml",
             ],
             "net452": [
-               "lib/net45/Newtonsoft.Json.dll",
-               "lib/net45/Newtonsoft.Json.xml",
+                "lib/net45/Newtonsoft.Json.dll",
+                "lib/net45/Newtonsoft.Json.xml",
             ],
             "net46": [
-               "lib/net45/Newtonsoft.Json.dll",
-               "lib/net45/Newtonsoft.Json.xml",
+                "lib/net45/Newtonsoft.Json.dll",
+                "lib/net45/Newtonsoft.Json.xml",
             ],
             "net461": [
-               "lib/net45/Newtonsoft.Json.dll",
-               "lib/net45/Newtonsoft.Json.xml",
+                "lib/net45/Newtonsoft.Json.dll",
+                "lib/net45/Newtonsoft.Json.xml",
             ],
             "net462": [
-               "lib/net45/Newtonsoft.Json.dll",
-               "lib/net45/Newtonsoft.Json.xml",
+                "lib/net45/Newtonsoft.Json.dll",
+                "lib/net45/Newtonsoft.Json.xml",
             ],
             "net47": [
-               "lib/net45/Newtonsoft.Json.dll",
-               "lib/net45/Newtonsoft.Json.xml",
+                "lib/net45/Newtonsoft.Json.dll",
+                "lib/net45/Newtonsoft.Json.xml",
             ],
             "net471": [
-               "lib/net45/Newtonsoft.Json.dll",
-               "lib/net45/Newtonsoft.Json.xml",
+                "lib/net45/Newtonsoft.Json.dll",
+                "lib/net45/Newtonsoft.Json.xml",
             ],
             "net472": [
-               "lib/net45/Newtonsoft.Json.dll",
-               "lib/net45/Newtonsoft.Json.xml",
+                "lib/net45/Newtonsoft.Json.dll",
+                "lib/net45/Newtonsoft.Json.xml",
             ],
             "netstandard1.0": [
-               "lib/netstandard1.0/Newtonsoft.Json.dll",
-               "lib/netstandard1.0/Newtonsoft.Json.xml",
+                "lib/netstandard1.0/Newtonsoft.Json.dll",
+                "lib/netstandard1.0/Newtonsoft.Json.xml",
             ],
             "netstandard1.1": [
-               "lib/netstandard1.0/Newtonsoft.Json.dll",
-               "lib/netstandard1.0/Newtonsoft.Json.xml",
+                "lib/netstandard1.0/Newtonsoft.Json.dll",
+                "lib/netstandard1.0/Newtonsoft.Json.xml",
             ],
             "netstandard1.2": [
-               "lib/netstandard1.0/Newtonsoft.Json.dll",
-               "lib/netstandard1.0/Newtonsoft.Json.xml",
+                "lib/netstandard1.0/Newtonsoft.Json.dll",
+                "lib/netstandard1.0/Newtonsoft.Json.xml",
             ],
             "netstandard1.3": [
-               "lib/netstandard1.3/Newtonsoft.Json.dll",
-               "lib/netstandard1.3/Newtonsoft.Json.xml",
+                "lib/netstandard1.3/Newtonsoft.Json.dll",
+                "lib/netstandard1.3/Newtonsoft.Json.xml",
             ],
             "netstandard1.4": [
-               "lib/netstandard1.3/Newtonsoft.Json.dll",
-               "lib/netstandard1.3/Newtonsoft.Json.xml",
+                "lib/netstandard1.3/Newtonsoft.Json.dll",
+                "lib/netstandard1.3/Newtonsoft.Json.xml",
             ],
             "netstandard1.5": [
-               "lib/netstandard1.3/Newtonsoft.Json.dll",
-               "lib/netstandard1.3/Newtonsoft.Json.xml",
+                "lib/netstandard1.3/Newtonsoft.Json.dll",
+                "lib/netstandard1.3/Newtonsoft.Json.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.3/Newtonsoft.Json.dll",
-               "lib/netstandard1.3/Newtonsoft.Json.xml",
+                "lib/netstandard1.3/Newtonsoft.Json.dll",
+                "lib/netstandard1.3/Newtonsoft.Json.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard2.0/Newtonsoft.Json.dll",
-               "lib/netstandard2.0/Newtonsoft.Json.xml",
+                "lib/netstandard2.0/Newtonsoft.Json.dll",
+                "lib/netstandard2.0/Newtonsoft.Json.xml",
             ],
         },
         mono_files = [
@@ -363,58 +363,58 @@ def packages():
         mono_lib = "lib/net46/NuGet.Frameworks.dll",
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.Frameworks.dll",
-               "lib/netstandard1.6/NuGet.Frameworks.xml",
+                "lib/netstandard1.6/NuGet.Frameworks.dll",
+                "lib/netstandard1.6/NuGet.Frameworks.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.Frameworks.dll",
-               "lib/netstandard1.6/NuGet.Frameworks.xml",
+                "lib/netstandard1.6/NuGet.Frameworks.dll",
+                "lib/netstandard1.6/NuGet.Frameworks.xml",
             ],
         },
         net_files = {
             "net45": [
-               "lib/net40/NuGet.Frameworks.dll",
-               "lib/net40/NuGet.Frameworks.xml",
+                "lib/net40/NuGet.Frameworks.dll",
+                "lib/net40/NuGet.Frameworks.xml",
             ],
             "net451": [
-               "lib/net40/NuGet.Frameworks.dll",
-               "lib/net40/NuGet.Frameworks.xml",
+                "lib/net40/NuGet.Frameworks.dll",
+                "lib/net40/NuGet.Frameworks.xml",
             ],
             "net452": [
-               "lib/net40/NuGet.Frameworks.dll",
-               "lib/net40/NuGet.Frameworks.xml",
+                "lib/net40/NuGet.Frameworks.dll",
+                "lib/net40/NuGet.Frameworks.xml",
             ],
             "net46": [
-               "lib/net46/NuGet.Frameworks.dll",
-               "lib/net46/NuGet.Frameworks.xml",
+                "lib/net46/NuGet.Frameworks.dll",
+                "lib/net46/NuGet.Frameworks.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.Frameworks.dll",
-               "lib/net46/NuGet.Frameworks.xml",
+                "lib/net46/NuGet.Frameworks.dll",
+                "lib/net46/NuGet.Frameworks.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.Frameworks.dll",
-               "lib/net46/NuGet.Frameworks.xml",
+                "lib/net46/NuGet.Frameworks.dll",
+                "lib/net46/NuGet.Frameworks.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.Frameworks.dll",
-               "lib/net46/NuGet.Frameworks.xml",
+                "lib/net46/NuGet.Frameworks.dll",
+                "lib/net46/NuGet.Frameworks.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.Frameworks.dll",
-               "lib/net46/NuGet.Frameworks.xml",
+                "lib/net46/NuGet.Frameworks.dll",
+                "lib/net46/NuGet.Frameworks.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.Frameworks.dll",
-               "lib/net46/NuGet.Frameworks.xml",
+                "lib/net46/NuGet.Frameworks.dll",
+                "lib/net46/NuGet.Frameworks.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.Frameworks.dll",
-               "lib/netstandard1.6/NuGet.Frameworks.xml",
+                "lib/netstandard1.6/NuGet.Frameworks.dll",
+                "lib/netstandard1.6/NuGet.Frameworks.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.Frameworks.dll",
-               "lib/netstandard1.6/NuGet.Frameworks.xml",
+                "lib/netstandard1.6/NuGet.Frameworks.dll",
+                "lib/netstandard1.6/NuGet.Frameworks.xml",
             ],
         },
         mono_files = [
@@ -443,54 +443,54 @@ def packages():
         mono_lib = "lib/net46/NuGet.Common.dll",
         core_deps = {
             "net46": [
-               "@nuget.frameworks//:net46_net",
+                "@nuget.frameworks//:net46_net",
             ],
             "net461": [
-               "@nuget.frameworks//:net461_net",
+                "@nuget.frameworks//:net461_net",
             ],
             "net462": [
-               "@nuget.frameworks//:net462_net",
+                "@nuget.frameworks//:net462_net",
             ],
             "net47": [
-               "@nuget.frameworks//:net47_net",
+                "@nuget.frameworks//:net47_net",
             ],
             "net471": [
-               "@nuget.frameworks//:net471_net",
+                "@nuget.frameworks//:net471_net",
             ],
             "net472": [
-               "@nuget.frameworks//:net472_net",
+                "@nuget.frameworks//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.frameworks//:netstandard1.6_net",
+                "@nuget.frameworks//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.frameworks//:netstandard2.0_net",
+                "@nuget.frameworks//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.frameworks//:net46_net",
+                "@nuget.frameworks//:net46_net",
             ],
             "net461": [
-               "@nuget.frameworks//:net461_net",
+                "@nuget.frameworks//:net461_net",
             ],
             "net462": [
-               "@nuget.frameworks//:net462_net",
+                "@nuget.frameworks//:net462_net",
             ],
             "net47": [
-               "@nuget.frameworks//:net47_net",
+                "@nuget.frameworks//:net47_net",
             ],
             "net471": [
-               "@nuget.frameworks//:net471_net",
+                "@nuget.frameworks//:net471_net",
             ],
             "net472": [
-               "@nuget.frameworks//:net472_net",
+                "@nuget.frameworks//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.frameworks//:netstandard1.6_net",
+                "@nuget.frameworks//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.frameworks//:netstandard2.0_net",
+                "@nuget.frameworks//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -498,46 +498,46 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.Common.dll",
-               "lib/netstandard1.6/NuGet.Common.xml",
+                "lib/netstandard1.6/NuGet.Common.dll",
+                "lib/netstandard1.6/NuGet.Common.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.Common.dll",
-               "lib/netstandard1.6/NuGet.Common.xml",
+                "lib/netstandard1.6/NuGet.Common.dll",
+                "lib/netstandard1.6/NuGet.Common.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.Common.dll",
-               "lib/net46/NuGet.Common.xml",
+                "lib/net46/NuGet.Common.dll",
+                "lib/net46/NuGet.Common.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.Common.dll",
-               "lib/net46/NuGet.Common.xml",
+                "lib/net46/NuGet.Common.dll",
+                "lib/net46/NuGet.Common.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.Common.dll",
-               "lib/net46/NuGet.Common.xml",
+                "lib/net46/NuGet.Common.dll",
+                "lib/net46/NuGet.Common.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.Common.dll",
-               "lib/net46/NuGet.Common.xml",
+                "lib/net46/NuGet.Common.dll",
+                "lib/net46/NuGet.Common.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.Common.dll",
-               "lib/net46/NuGet.Common.xml",
+                "lib/net46/NuGet.Common.dll",
+                "lib/net46/NuGet.Common.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.Common.dll",
-               "lib/net46/NuGet.Common.xml",
+                "lib/net46/NuGet.Common.dll",
+                "lib/net46/NuGet.Common.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.Common.dll",
-               "lib/netstandard1.6/NuGet.Common.xml",
+                "lib/netstandard1.6/NuGet.Common.dll",
+                "lib/netstandard1.6/NuGet.Common.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.Common.dll",
-               "lib/netstandard1.6/NuGet.Common.xml",
+                "lib/netstandard1.6/NuGet.Common.dll",
+                "lib/netstandard1.6/NuGet.Common.xml",
             ],
         },
         mono_files = [
@@ -566,54 +566,54 @@ def packages():
         mono_lib = "lib/net46/NuGet.Configuration.dll",
         core_deps = {
             "net46": [
-               "@nuget.common//:net46_net",
+                "@nuget.common//:net46_net",
             ],
             "net461": [
-               "@nuget.common//:net461_net",
+                "@nuget.common//:net461_net",
             ],
             "net462": [
-               "@nuget.common//:net462_net",
+                "@nuget.common//:net462_net",
             ],
             "net47": [
-               "@nuget.common//:net47_net",
+                "@nuget.common//:net47_net",
             ],
             "net471": [
-               "@nuget.common//:net471_net",
+                "@nuget.common//:net471_net",
             ],
             "net472": [
-               "@nuget.common//:net472_net",
+                "@nuget.common//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.common//:netstandard1.6_net",
+                "@nuget.common//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.common//:netstandard2.0_net",
+                "@nuget.common//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.common//:net46_net",
+                "@nuget.common//:net46_net",
             ],
             "net461": [
-               "@nuget.common//:net461_net",
+                "@nuget.common//:net461_net",
             ],
             "net462": [
-               "@nuget.common//:net462_net",
+                "@nuget.common//:net462_net",
             ],
             "net47": [
-               "@nuget.common//:net47_net",
+                "@nuget.common//:net47_net",
             ],
             "net471": [
-               "@nuget.common//:net471_net",
+                "@nuget.common//:net471_net",
             ],
             "net472": [
-               "@nuget.common//:net472_net",
+                "@nuget.common//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.common//:netstandard1.6_net",
+                "@nuget.common//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.common//:netstandard2.0_net",
+                "@nuget.common//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -621,46 +621,46 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.Configuration.dll",
-               "lib/netstandard1.6/NuGet.Configuration.xml",
+                "lib/netstandard1.6/NuGet.Configuration.dll",
+                "lib/netstandard1.6/NuGet.Configuration.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.Configuration.dll",
-               "lib/netstandard1.6/NuGet.Configuration.xml",
+                "lib/netstandard1.6/NuGet.Configuration.dll",
+                "lib/netstandard1.6/NuGet.Configuration.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.Configuration.dll",
-               "lib/net46/NuGet.Configuration.xml",
+                "lib/net46/NuGet.Configuration.dll",
+                "lib/net46/NuGet.Configuration.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.Configuration.dll",
-               "lib/net46/NuGet.Configuration.xml",
+                "lib/net46/NuGet.Configuration.dll",
+                "lib/net46/NuGet.Configuration.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.Configuration.dll",
-               "lib/net46/NuGet.Configuration.xml",
+                "lib/net46/NuGet.Configuration.dll",
+                "lib/net46/NuGet.Configuration.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.Configuration.dll",
-               "lib/net46/NuGet.Configuration.xml",
+                "lib/net46/NuGet.Configuration.dll",
+                "lib/net46/NuGet.Configuration.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.Configuration.dll",
-               "lib/net46/NuGet.Configuration.xml",
+                "lib/net46/NuGet.Configuration.dll",
+                "lib/net46/NuGet.Configuration.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.Configuration.dll",
-               "lib/net46/NuGet.Configuration.xml",
+                "lib/net46/NuGet.Configuration.dll",
+                "lib/net46/NuGet.Configuration.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.Configuration.dll",
-               "lib/netstandard1.6/NuGet.Configuration.xml",
+                "lib/netstandard1.6/NuGet.Configuration.dll",
+                "lib/netstandard1.6/NuGet.Configuration.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.Configuration.dll",
-               "lib/netstandard1.6/NuGet.Configuration.xml",
+                "lib/netstandard1.6/NuGet.Configuration.dll",
+                "lib/netstandard1.6/NuGet.Configuration.xml",
             ],
         },
         mono_files = [
@@ -689,46 +689,46 @@ def packages():
         mono_lib = "lib/net46/NuGet.Versioning.dll",
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.Versioning.dll",
-               "lib/netstandard1.6/NuGet.Versioning.xml",
+                "lib/netstandard1.6/NuGet.Versioning.dll",
+                "lib/netstandard1.6/NuGet.Versioning.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.Versioning.dll",
-               "lib/netstandard1.6/NuGet.Versioning.xml",
+                "lib/netstandard1.6/NuGet.Versioning.dll",
+                "lib/netstandard1.6/NuGet.Versioning.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.Versioning.dll",
-               "lib/net46/NuGet.Versioning.xml",
+                "lib/net46/NuGet.Versioning.dll",
+                "lib/net46/NuGet.Versioning.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.Versioning.dll",
-               "lib/net46/NuGet.Versioning.xml",
+                "lib/net46/NuGet.Versioning.dll",
+                "lib/net46/NuGet.Versioning.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.Versioning.dll",
-               "lib/net46/NuGet.Versioning.xml",
+                "lib/net46/NuGet.Versioning.dll",
+                "lib/net46/NuGet.Versioning.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.Versioning.dll",
-               "lib/net46/NuGet.Versioning.xml",
+                "lib/net46/NuGet.Versioning.dll",
+                "lib/net46/NuGet.Versioning.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.Versioning.dll",
-               "lib/net46/NuGet.Versioning.xml",
+                "lib/net46/NuGet.Versioning.dll",
+                "lib/net46/NuGet.Versioning.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.Versioning.dll",
-               "lib/net46/NuGet.Versioning.xml",
+                "lib/net46/NuGet.Versioning.dll",
+                "lib/net46/NuGet.Versioning.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.Versioning.dll",
-               "lib/netstandard1.6/NuGet.Versioning.xml",
+                "lib/netstandard1.6/NuGet.Versioning.dll",
+                "lib/netstandard1.6/NuGet.Versioning.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.Versioning.dll",
-               "lib/netstandard1.6/NuGet.Versioning.xml",
+                "lib/netstandard1.6/NuGet.Versioning.dll",
+                "lib/netstandard1.6/NuGet.Versioning.xml",
             ],
         },
         mono_files = [
@@ -757,70 +757,70 @@ def packages():
         mono_lib = "lib/net46/NuGet.Packaging.Core.dll",
         core_deps = {
             "net46": [
-               "@nuget.common//:net46_net",
-               "@nuget.versioning//:net46_net",
+                "@nuget.common//:net46_net",
+                "@nuget.versioning//:net46_net",
             ],
             "net461": [
-               "@nuget.common//:net461_net",
-               "@nuget.versioning//:net461_net",
+                "@nuget.common//:net461_net",
+                "@nuget.versioning//:net461_net",
             ],
             "net462": [
-               "@nuget.common//:net462_net",
-               "@nuget.versioning//:net462_net",
+                "@nuget.common//:net462_net",
+                "@nuget.versioning//:net462_net",
             ],
             "net47": [
-               "@nuget.common//:net47_net",
-               "@nuget.versioning//:net47_net",
+                "@nuget.common//:net47_net",
+                "@nuget.versioning//:net47_net",
             ],
             "net471": [
-               "@nuget.common//:net471_net",
-               "@nuget.versioning//:net471_net",
+                "@nuget.common//:net471_net",
+                "@nuget.versioning//:net471_net",
             ],
             "net472": [
-               "@nuget.common//:net472_net",
-               "@nuget.versioning//:net472_net",
+                "@nuget.common//:net472_net",
+                "@nuget.versioning//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.common//:netstandard1.6_net",
-               "@nuget.versioning//:netstandard1.6_net",
+                "@nuget.common//:netstandard1.6_net",
+                "@nuget.versioning//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.common//:netstandard2.0_net",
-               "@nuget.versioning//:netstandard2.0_net",
+                "@nuget.common//:netstandard2.0_net",
+                "@nuget.versioning//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.common//:net46_net",
-               "@nuget.versioning//:net46_net",
+                "@nuget.common//:net46_net",
+                "@nuget.versioning//:net46_net",
             ],
             "net461": [
-               "@nuget.common//:net461_net",
-               "@nuget.versioning//:net461_net",
+                "@nuget.common//:net461_net",
+                "@nuget.versioning//:net461_net",
             ],
             "net462": [
-               "@nuget.common//:net462_net",
-               "@nuget.versioning//:net462_net",
+                "@nuget.common//:net462_net",
+                "@nuget.versioning//:net462_net",
             ],
             "net47": [
-               "@nuget.common//:net47_net",
-               "@nuget.versioning//:net47_net",
+                "@nuget.common//:net47_net",
+                "@nuget.versioning//:net47_net",
             ],
             "net471": [
-               "@nuget.common//:net471_net",
-               "@nuget.versioning//:net471_net",
+                "@nuget.common//:net471_net",
+                "@nuget.versioning//:net471_net",
             ],
             "net472": [
-               "@nuget.common//:net472_net",
-               "@nuget.versioning//:net472_net",
+                "@nuget.common//:net472_net",
+                "@nuget.versioning//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.common//:netstandard1.6_net",
-               "@nuget.versioning//:netstandard1.6_net",
+                "@nuget.common//:netstandard1.6_net",
+                "@nuget.versioning//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.common//:netstandard2.0_net",
-               "@nuget.versioning//:netstandard2.0_net",
+                "@nuget.common//:netstandard2.0_net",
+                "@nuget.versioning//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -829,46 +829,46 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.Packaging.Core.dll",
-               "lib/netstandard1.6/NuGet.Packaging.Core.xml",
+                "lib/netstandard1.6/NuGet.Packaging.Core.dll",
+                "lib/netstandard1.6/NuGet.Packaging.Core.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.Packaging.Core.dll",
-               "lib/netstandard1.6/NuGet.Packaging.Core.xml",
+                "lib/netstandard1.6/NuGet.Packaging.Core.dll",
+                "lib/netstandard1.6/NuGet.Packaging.Core.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.Packaging.Core.dll",
-               "lib/net46/NuGet.Packaging.Core.xml",
+                "lib/net46/NuGet.Packaging.Core.dll",
+                "lib/net46/NuGet.Packaging.Core.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.Packaging.Core.dll",
-               "lib/net46/NuGet.Packaging.Core.xml",
+                "lib/net46/NuGet.Packaging.Core.dll",
+                "lib/net46/NuGet.Packaging.Core.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.Packaging.Core.dll",
-               "lib/net46/NuGet.Packaging.Core.xml",
+                "lib/net46/NuGet.Packaging.Core.dll",
+                "lib/net46/NuGet.Packaging.Core.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.Packaging.Core.dll",
-               "lib/net46/NuGet.Packaging.Core.xml",
+                "lib/net46/NuGet.Packaging.Core.dll",
+                "lib/net46/NuGet.Packaging.Core.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.Packaging.Core.dll",
-               "lib/net46/NuGet.Packaging.Core.xml",
+                "lib/net46/NuGet.Packaging.Core.dll",
+                "lib/net46/NuGet.Packaging.Core.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.Packaging.Core.dll",
-               "lib/net46/NuGet.Packaging.Core.xml",
+                "lib/net46/NuGet.Packaging.Core.dll",
+                "lib/net46/NuGet.Packaging.Core.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.Packaging.Core.dll",
-               "lib/netstandard1.6/NuGet.Packaging.Core.xml",
+                "lib/netstandard1.6/NuGet.Packaging.Core.dll",
+                "lib/netstandard1.6/NuGet.Packaging.Core.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.Packaging.Core.dll",
-               "lib/netstandard1.6/NuGet.Packaging.Core.xml",
+                "lib/netstandard1.6/NuGet.Packaging.Core.dll",
+                "lib/netstandard1.6/NuGet.Packaging.Core.xml",
             ],
         },
         mono_files = [
@@ -897,70 +897,70 @@ def packages():
         mono_lib = "lib/net46/NuGet.Packaging.dll",
         core_deps = {
             "net46": [
-               "@nuget.packaging.core//:net46_net",
-               "@newtonsoft.json//:net46_net",
+                "@nuget.packaging.core//:net46_net",
+                "@newtonsoft.json//:net46_net",
             ],
             "net461": [
-               "@nuget.packaging.core//:net461_net",
-               "@newtonsoft.json//:net461_net",
+                "@nuget.packaging.core//:net461_net",
+                "@newtonsoft.json//:net461_net",
             ],
             "net462": [
-               "@nuget.packaging.core//:net462_net",
-               "@newtonsoft.json//:net462_net",
+                "@nuget.packaging.core//:net462_net",
+                "@newtonsoft.json//:net462_net",
             ],
             "net47": [
-               "@nuget.packaging.core//:net47_net",
-               "@newtonsoft.json//:net47_net",
+                "@nuget.packaging.core//:net47_net",
+                "@newtonsoft.json//:net47_net",
             ],
             "net471": [
-               "@nuget.packaging.core//:net471_net",
-               "@newtonsoft.json//:net471_net",
+                "@nuget.packaging.core//:net471_net",
+                "@newtonsoft.json//:net471_net",
             ],
             "net472": [
-               "@nuget.packaging.core//:net472_net",
-               "@newtonsoft.json//:net472_net",
+                "@nuget.packaging.core//:net472_net",
+                "@newtonsoft.json//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.packaging.core//:netstandard1.6_net",
-               "@newtonsoft.json//:netstandard1.6_net",
+                "@nuget.packaging.core//:netstandard1.6_net",
+                "@newtonsoft.json//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.packaging.core//:netstandard2.0_net",
-               "@newtonsoft.json//:netstandard2.0_net",
+                "@nuget.packaging.core//:netstandard2.0_net",
+                "@newtonsoft.json//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.packaging.core//:net46_net",
-               "@newtonsoft.json//:net46_net",
+                "@nuget.packaging.core//:net46_net",
+                "@newtonsoft.json//:net46_net",
             ],
             "net461": [
-               "@nuget.packaging.core//:net461_net",
-               "@newtonsoft.json//:net461_net",
+                "@nuget.packaging.core//:net461_net",
+                "@newtonsoft.json//:net461_net",
             ],
             "net462": [
-               "@nuget.packaging.core//:net462_net",
-               "@newtonsoft.json//:net462_net",
+                "@nuget.packaging.core//:net462_net",
+                "@newtonsoft.json//:net462_net",
             ],
             "net47": [
-               "@nuget.packaging.core//:net47_net",
-               "@newtonsoft.json//:net47_net",
+                "@nuget.packaging.core//:net47_net",
+                "@newtonsoft.json//:net47_net",
             ],
             "net471": [
-               "@nuget.packaging.core//:net471_net",
-               "@newtonsoft.json//:net471_net",
+                "@nuget.packaging.core//:net471_net",
+                "@newtonsoft.json//:net471_net",
             ],
             "net472": [
-               "@nuget.packaging.core//:net472_net",
-               "@newtonsoft.json//:net472_net",
+                "@nuget.packaging.core//:net472_net",
+                "@newtonsoft.json//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.packaging.core//:netstandard1.6_net",
-               "@newtonsoft.json//:netstandard1.6_net",
+                "@nuget.packaging.core//:netstandard1.6_net",
+                "@newtonsoft.json//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.packaging.core//:netstandard2.0_net",
-               "@newtonsoft.json//:netstandard2.0_net",
+                "@nuget.packaging.core//:netstandard2.0_net",
+                "@newtonsoft.json//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -969,46 +969,46 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.Packaging.dll",
-               "lib/netstandard1.6/NuGet.Packaging.xml",
+                "lib/netstandard1.6/NuGet.Packaging.dll",
+                "lib/netstandard1.6/NuGet.Packaging.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.Packaging.dll",
-               "lib/netstandard1.6/NuGet.Packaging.xml",
+                "lib/netstandard1.6/NuGet.Packaging.dll",
+                "lib/netstandard1.6/NuGet.Packaging.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.Packaging.dll",
-               "lib/net46/NuGet.Packaging.xml",
+                "lib/net46/NuGet.Packaging.dll",
+                "lib/net46/NuGet.Packaging.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.Packaging.dll",
-               "lib/net46/NuGet.Packaging.xml",
+                "lib/net46/NuGet.Packaging.dll",
+                "lib/net46/NuGet.Packaging.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.Packaging.dll",
-               "lib/net46/NuGet.Packaging.xml",
+                "lib/net46/NuGet.Packaging.dll",
+                "lib/net46/NuGet.Packaging.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.Packaging.dll",
-               "lib/net46/NuGet.Packaging.xml",
+                "lib/net46/NuGet.Packaging.dll",
+                "lib/net46/NuGet.Packaging.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.Packaging.dll",
-               "lib/net46/NuGet.Packaging.xml",
+                "lib/net46/NuGet.Packaging.dll",
+                "lib/net46/NuGet.Packaging.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.Packaging.dll",
-               "lib/net46/NuGet.Packaging.xml",
+                "lib/net46/NuGet.Packaging.dll",
+                "lib/net46/NuGet.Packaging.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.Packaging.dll",
-               "lib/netstandard1.6/NuGet.Packaging.xml",
+                "lib/netstandard1.6/NuGet.Packaging.dll",
+                "lib/netstandard1.6/NuGet.Packaging.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.Packaging.dll",
-               "lib/netstandard1.6/NuGet.Packaging.xml",
+                "lib/netstandard1.6/NuGet.Packaging.dll",
+                "lib/netstandard1.6/NuGet.Packaging.xml",
             ],
         },
         mono_files = [
@@ -1037,70 +1037,70 @@ def packages():
         mono_lib = "lib/net46/NuGet.Protocol.dll",
         core_deps = {
             "net46": [
-               "@nuget.configuration//:net46_net",
-               "@nuget.packaging//:net46_net",
+                "@nuget.configuration//:net46_net",
+                "@nuget.packaging//:net46_net",
             ],
             "net461": [
-               "@nuget.configuration//:net461_net",
-               "@nuget.packaging//:net461_net",
+                "@nuget.configuration//:net461_net",
+                "@nuget.packaging//:net461_net",
             ],
             "net462": [
-               "@nuget.configuration//:net462_net",
-               "@nuget.packaging//:net462_net",
+                "@nuget.configuration//:net462_net",
+                "@nuget.packaging//:net462_net",
             ],
             "net47": [
-               "@nuget.configuration//:net47_net",
-               "@nuget.packaging//:net47_net",
+                "@nuget.configuration//:net47_net",
+                "@nuget.packaging//:net47_net",
             ],
             "net471": [
-               "@nuget.configuration//:net471_net",
-               "@nuget.packaging//:net471_net",
+                "@nuget.configuration//:net471_net",
+                "@nuget.packaging//:net471_net",
             ],
             "net472": [
-               "@nuget.configuration//:net472_net",
-               "@nuget.packaging//:net472_net",
+                "@nuget.configuration//:net472_net",
+                "@nuget.packaging//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.configuration//:netstandard1.6_net",
-               "@nuget.packaging//:netstandard1.6_net",
+                "@nuget.configuration//:netstandard1.6_net",
+                "@nuget.packaging//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.configuration//:netstandard2.0_net",
-               "@nuget.packaging//:netstandard2.0_net",
+                "@nuget.configuration//:netstandard2.0_net",
+                "@nuget.packaging//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.configuration//:net46_net",
-               "@nuget.packaging//:net46_net",
+                "@nuget.configuration//:net46_net",
+                "@nuget.packaging//:net46_net",
             ],
             "net461": [
-               "@nuget.configuration//:net461_net",
-               "@nuget.packaging//:net461_net",
+                "@nuget.configuration//:net461_net",
+                "@nuget.packaging//:net461_net",
             ],
             "net462": [
-               "@nuget.configuration//:net462_net",
-               "@nuget.packaging//:net462_net",
+                "@nuget.configuration//:net462_net",
+                "@nuget.packaging//:net462_net",
             ],
             "net47": [
-               "@nuget.configuration//:net47_net",
-               "@nuget.packaging//:net47_net",
+                "@nuget.configuration//:net47_net",
+                "@nuget.packaging//:net47_net",
             ],
             "net471": [
-               "@nuget.configuration//:net471_net",
-               "@nuget.packaging//:net471_net",
+                "@nuget.configuration//:net471_net",
+                "@nuget.packaging//:net471_net",
             ],
             "net472": [
-               "@nuget.configuration//:net472_net",
-               "@nuget.packaging//:net472_net",
+                "@nuget.configuration//:net472_net",
+                "@nuget.packaging//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.configuration//:netstandard1.6_net",
-               "@nuget.packaging//:netstandard1.6_net",
+                "@nuget.configuration//:netstandard1.6_net",
+                "@nuget.packaging//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.configuration//:netstandard2.0_net",
-               "@nuget.packaging//:netstandard2.0_net",
+                "@nuget.configuration//:netstandard2.0_net",
+                "@nuget.packaging//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -1109,46 +1109,46 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.Protocol.dll",
-               "lib/netstandard1.6/NuGet.Protocol.xml",
+                "lib/netstandard1.6/NuGet.Protocol.dll",
+                "lib/netstandard1.6/NuGet.Protocol.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.Protocol.dll",
-               "lib/netstandard1.6/NuGet.Protocol.xml",
+                "lib/netstandard1.6/NuGet.Protocol.dll",
+                "lib/netstandard1.6/NuGet.Protocol.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.Protocol.dll",
-               "lib/net46/NuGet.Protocol.xml",
+                "lib/net46/NuGet.Protocol.dll",
+                "lib/net46/NuGet.Protocol.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.Protocol.dll",
-               "lib/net46/NuGet.Protocol.xml",
+                "lib/net46/NuGet.Protocol.dll",
+                "lib/net46/NuGet.Protocol.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.Protocol.dll",
-               "lib/net46/NuGet.Protocol.xml",
+                "lib/net46/NuGet.Protocol.dll",
+                "lib/net46/NuGet.Protocol.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.Protocol.dll",
-               "lib/net46/NuGet.Protocol.xml",
+                "lib/net46/NuGet.Protocol.dll",
+                "lib/net46/NuGet.Protocol.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.Protocol.dll",
-               "lib/net46/NuGet.Protocol.xml",
+                "lib/net46/NuGet.Protocol.dll",
+                "lib/net46/NuGet.Protocol.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.Protocol.dll",
-               "lib/net46/NuGet.Protocol.xml",
+                "lib/net46/NuGet.Protocol.dll",
+                "lib/net46/NuGet.Protocol.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.Protocol.dll",
-               "lib/netstandard1.6/NuGet.Protocol.xml",
+                "lib/netstandard1.6/NuGet.Protocol.dll",
+                "lib/netstandard1.6/NuGet.Protocol.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.Protocol.dll",
-               "lib/netstandard1.6/NuGet.Protocol.xml",
+                "lib/netstandard1.6/NuGet.Protocol.dll",
+                "lib/netstandard1.6/NuGet.Protocol.xml",
             ],
         },
         mono_files = [
@@ -1177,54 +1177,54 @@ def packages():
         mono_lib = "lib/net46/NuGet.Credentials.dll",
         core_deps = {
             "net46": [
-               "@nuget.protocol//:net46_net",
+                "@nuget.protocol//:net46_net",
             ],
             "net461": [
-               "@nuget.protocol//:net461_net",
+                "@nuget.protocol//:net461_net",
             ],
             "net462": [
-               "@nuget.protocol//:net462_net",
+                "@nuget.protocol//:net462_net",
             ],
             "net47": [
-               "@nuget.protocol//:net47_net",
+                "@nuget.protocol//:net47_net",
             ],
             "net471": [
-               "@nuget.protocol//:net471_net",
+                "@nuget.protocol//:net471_net",
             ],
             "net472": [
-               "@nuget.protocol//:net472_net",
+                "@nuget.protocol//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.protocol//:netstandard1.6_net",
+                "@nuget.protocol//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.protocol//:netstandard2.0_net",
+                "@nuget.protocol//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.protocol//:net46_net",
+                "@nuget.protocol//:net46_net",
             ],
             "net461": [
-               "@nuget.protocol//:net461_net",
+                "@nuget.protocol//:net461_net",
             ],
             "net462": [
-               "@nuget.protocol//:net462_net",
+                "@nuget.protocol//:net462_net",
             ],
             "net47": [
-               "@nuget.protocol//:net47_net",
+                "@nuget.protocol//:net47_net",
             ],
             "net471": [
-               "@nuget.protocol//:net471_net",
+                "@nuget.protocol//:net471_net",
             ],
             "net472": [
-               "@nuget.protocol//:net472_net",
+                "@nuget.protocol//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.protocol//:netstandard1.6_net",
+                "@nuget.protocol//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.protocol//:netstandard2.0_net",
+                "@nuget.protocol//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -1232,36 +1232,36 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.Credentials.dll",
+                "lib/netstandard1.6/NuGet.Credentials.dll",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.Credentials.dll",
+                "lib/netstandard1.6/NuGet.Credentials.dll",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.Credentials.dll",
+                "lib/net46/NuGet.Credentials.dll",
             ],
             "net461": [
-               "lib/net46/NuGet.Credentials.dll",
+                "lib/net46/NuGet.Credentials.dll",
             ],
             "net462": [
-               "lib/net46/NuGet.Credentials.dll",
+                "lib/net46/NuGet.Credentials.dll",
             ],
             "net47": [
-               "lib/net46/NuGet.Credentials.dll",
+                "lib/net46/NuGet.Credentials.dll",
             ],
             "net471": [
-               "lib/net46/NuGet.Credentials.dll",
+                "lib/net46/NuGet.Credentials.dll",
             ],
             "net472": [
-               "lib/net46/NuGet.Credentials.dll",
+                "lib/net46/NuGet.Credentials.dll",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.Credentials.dll",
+                "lib/netstandard1.6/NuGet.Credentials.dll",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.Credentials.dll",
+                "lib/netstandard1.6/NuGet.Credentials.dll",
             ],
         },
         mono_files = [
@@ -1289,54 +1289,54 @@ def packages():
         mono_lib = "lib/net46/NuGet.Resolver.dll",
         core_deps = {
             "net46": [
-               "@nuget.protocol//:net46_net",
+                "@nuget.protocol//:net46_net",
             ],
             "net461": [
-               "@nuget.protocol//:net461_net",
+                "@nuget.protocol//:net461_net",
             ],
             "net462": [
-               "@nuget.protocol//:net462_net",
+                "@nuget.protocol//:net462_net",
             ],
             "net47": [
-               "@nuget.protocol//:net47_net",
+                "@nuget.protocol//:net47_net",
             ],
             "net471": [
-               "@nuget.protocol//:net471_net",
+                "@nuget.protocol//:net471_net",
             ],
             "net472": [
-               "@nuget.protocol//:net472_net",
+                "@nuget.protocol//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.protocol//:netstandard1.6_net",
+                "@nuget.protocol//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.protocol//:netstandard2.0_net",
+                "@nuget.protocol//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.protocol//:net46_net",
+                "@nuget.protocol//:net46_net",
             ],
             "net461": [
-               "@nuget.protocol//:net461_net",
+                "@nuget.protocol//:net461_net",
             ],
             "net462": [
-               "@nuget.protocol//:net462_net",
+                "@nuget.protocol//:net462_net",
             ],
             "net47": [
-               "@nuget.protocol//:net47_net",
+                "@nuget.protocol//:net47_net",
             ],
             "net471": [
-               "@nuget.protocol//:net471_net",
+                "@nuget.protocol//:net471_net",
             ],
             "net472": [
-               "@nuget.protocol//:net472_net",
+                "@nuget.protocol//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.protocol//:netstandard1.6_net",
+                "@nuget.protocol//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.protocol//:netstandard2.0_net",
+                "@nuget.protocol//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -1344,46 +1344,46 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.Resolver.dll",
-               "lib/netstandard1.6/NuGet.Resolver.xml",
+                "lib/netstandard1.6/NuGet.Resolver.dll",
+                "lib/netstandard1.6/NuGet.Resolver.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.Resolver.dll",
-               "lib/netstandard1.6/NuGet.Resolver.xml",
+                "lib/netstandard1.6/NuGet.Resolver.dll",
+                "lib/netstandard1.6/NuGet.Resolver.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.Resolver.dll",
-               "lib/net46/NuGet.Resolver.xml",
+                "lib/net46/NuGet.Resolver.dll",
+                "lib/net46/NuGet.Resolver.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.Resolver.dll",
-               "lib/net46/NuGet.Resolver.xml",
+                "lib/net46/NuGet.Resolver.dll",
+                "lib/net46/NuGet.Resolver.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.Resolver.dll",
-               "lib/net46/NuGet.Resolver.xml",
+                "lib/net46/NuGet.Resolver.dll",
+                "lib/net46/NuGet.Resolver.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.Resolver.dll",
-               "lib/net46/NuGet.Resolver.xml",
+                "lib/net46/NuGet.Resolver.dll",
+                "lib/net46/NuGet.Resolver.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.Resolver.dll",
-               "lib/net46/NuGet.Resolver.xml",
+                "lib/net46/NuGet.Resolver.dll",
+                "lib/net46/NuGet.Resolver.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.Resolver.dll",
-               "lib/net46/NuGet.Resolver.xml",
+                "lib/net46/NuGet.Resolver.dll",
+                "lib/net46/NuGet.Resolver.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.Resolver.dll",
-               "lib/netstandard1.6/NuGet.Resolver.xml",
+                "lib/netstandard1.6/NuGet.Resolver.dll",
+                "lib/netstandard1.6/NuGet.Resolver.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.Resolver.dll",
-               "lib/netstandard1.6/NuGet.Resolver.xml",
+                "lib/netstandard1.6/NuGet.Resolver.dll",
+                "lib/netstandard1.6/NuGet.Resolver.xml",
             ],
         },
         mono_files = [
@@ -1412,70 +1412,70 @@ def packages():
         mono_lib = "lib/net46/NuGet.LibraryModel.dll",
         core_deps = {
             "net46": [
-               "@nuget.common//:net46_net",
-               "@nuget.versioning//:net46_net",
+                "@nuget.common//:net46_net",
+                "@nuget.versioning//:net46_net",
             ],
             "net461": [
-               "@nuget.common//:net461_net",
-               "@nuget.versioning//:net461_net",
+                "@nuget.common//:net461_net",
+                "@nuget.versioning//:net461_net",
             ],
             "net462": [
-               "@nuget.common//:net462_net",
-               "@nuget.versioning//:net462_net",
+                "@nuget.common//:net462_net",
+                "@nuget.versioning//:net462_net",
             ],
             "net47": [
-               "@nuget.common//:net47_net",
-               "@nuget.versioning//:net47_net",
+                "@nuget.common//:net47_net",
+                "@nuget.versioning//:net47_net",
             ],
             "net471": [
-               "@nuget.common//:net471_net",
-               "@nuget.versioning//:net471_net",
+                "@nuget.common//:net471_net",
+                "@nuget.versioning//:net471_net",
             ],
             "net472": [
-               "@nuget.common//:net472_net",
-               "@nuget.versioning//:net472_net",
+                "@nuget.common//:net472_net",
+                "@nuget.versioning//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.common//:netstandard1.6_net",
-               "@nuget.versioning//:netstandard1.6_net",
+                "@nuget.common//:netstandard1.6_net",
+                "@nuget.versioning//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.common//:netstandard2.0_net",
-               "@nuget.versioning//:netstandard2.0_net",
+                "@nuget.common//:netstandard2.0_net",
+                "@nuget.versioning//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.common//:net46_net",
-               "@nuget.versioning//:net46_net",
+                "@nuget.common//:net46_net",
+                "@nuget.versioning//:net46_net",
             ],
             "net461": [
-               "@nuget.common//:net461_net",
-               "@nuget.versioning//:net461_net",
+                "@nuget.common//:net461_net",
+                "@nuget.versioning//:net461_net",
             ],
             "net462": [
-               "@nuget.common//:net462_net",
-               "@nuget.versioning//:net462_net",
+                "@nuget.common//:net462_net",
+                "@nuget.versioning//:net462_net",
             ],
             "net47": [
-               "@nuget.common//:net47_net",
-               "@nuget.versioning//:net47_net",
+                "@nuget.common//:net47_net",
+                "@nuget.versioning//:net47_net",
             ],
             "net471": [
-               "@nuget.common//:net471_net",
-               "@nuget.versioning//:net471_net",
+                "@nuget.common//:net471_net",
+                "@nuget.versioning//:net471_net",
             ],
             "net472": [
-               "@nuget.common//:net472_net",
-               "@nuget.versioning//:net472_net",
+                "@nuget.common//:net472_net",
+                "@nuget.versioning//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.common//:netstandard1.6_net",
-               "@nuget.versioning//:netstandard1.6_net",
+                "@nuget.common//:netstandard1.6_net",
+                "@nuget.versioning//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.common//:netstandard2.0_net",
-               "@nuget.versioning//:netstandard2.0_net",
+                "@nuget.common//:netstandard2.0_net",
+                "@nuget.versioning//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -1484,46 +1484,46 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.LibraryModel.dll",
-               "lib/netstandard1.6/NuGet.LibraryModel.xml",
+                "lib/netstandard1.6/NuGet.LibraryModel.dll",
+                "lib/netstandard1.6/NuGet.LibraryModel.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.LibraryModel.dll",
-               "lib/netstandard1.6/NuGet.LibraryModel.xml",
+                "lib/netstandard1.6/NuGet.LibraryModel.dll",
+                "lib/netstandard1.6/NuGet.LibraryModel.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.LibraryModel.dll",
-               "lib/net46/NuGet.LibraryModel.xml",
+                "lib/net46/NuGet.LibraryModel.dll",
+                "lib/net46/NuGet.LibraryModel.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.LibraryModel.dll",
-               "lib/net46/NuGet.LibraryModel.xml",
+                "lib/net46/NuGet.LibraryModel.dll",
+                "lib/net46/NuGet.LibraryModel.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.LibraryModel.dll",
-               "lib/net46/NuGet.LibraryModel.xml",
+                "lib/net46/NuGet.LibraryModel.dll",
+                "lib/net46/NuGet.LibraryModel.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.LibraryModel.dll",
-               "lib/net46/NuGet.LibraryModel.xml",
+                "lib/net46/NuGet.LibraryModel.dll",
+                "lib/net46/NuGet.LibraryModel.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.LibraryModel.dll",
-               "lib/net46/NuGet.LibraryModel.xml",
+                "lib/net46/NuGet.LibraryModel.dll",
+                "lib/net46/NuGet.LibraryModel.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.LibraryModel.dll",
-               "lib/net46/NuGet.LibraryModel.xml",
+                "lib/net46/NuGet.LibraryModel.dll",
+                "lib/net46/NuGet.LibraryModel.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.LibraryModel.dll",
-               "lib/netstandard1.6/NuGet.LibraryModel.xml",
+                "lib/netstandard1.6/NuGet.LibraryModel.dll",
+                "lib/netstandard1.6/NuGet.LibraryModel.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.LibraryModel.dll",
-               "lib/netstandard1.6/NuGet.LibraryModel.xml",
+                "lib/netstandard1.6/NuGet.LibraryModel.dll",
+                "lib/netstandard1.6/NuGet.LibraryModel.xml",
             ],
         },
         mono_files = [
@@ -1552,70 +1552,70 @@ def packages():
         mono_lib = "lib/net46/NuGet.DependencyResolver.Core.dll",
         core_deps = {
             "net46": [
-               "@nuget.librarymodel//:net46_net",
-               "@nuget.protocol//:net46_net",
+                "@nuget.librarymodel//:net46_net",
+                "@nuget.protocol//:net46_net",
             ],
             "net461": [
-               "@nuget.librarymodel//:net461_net",
-               "@nuget.protocol//:net461_net",
+                "@nuget.librarymodel//:net461_net",
+                "@nuget.protocol//:net461_net",
             ],
             "net462": [
-               "@nuget.librarymodel//:net462_net",
-               "@nuget.protocol//:net462_net",
+                "@nuget.librarymodel//:net462_net",
+                "@nuget.protocol//:net462_net",
             ],
             "net47": [
-               "@nuget.librarymodel//:net47_net",
-               "@nuget.protocol//:net47_net",
+                "@nuget.librarymodel//:net47_net",
+                "@nuget.protocol//:net47_net",
             ],
             "net471": [
-               "@nuget.librarymodel//:net471_net",
-               "@nuget.protocol//:net471_net",
+                "@nuget.librarymodel//:net471_net",
+                "@nuget.protocol//:net471_net",
             ],
             "net472": [
-               "@nuget.librarymodel//:net472_net",
-               "@nuget.protocol//:net472_net",
+                "@nuget.librarymodel//:net472_net",
+                "@nuget.protocol//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.librarymodel//:netstandard1.6_net",
-               "@nuget.protocol//:netstandard1.6_net",
+                "@nuget.librarymodel//:netstandard1.6_net",
+                "@nuget.protocol//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.librarymodel//:netstandard2.0_net",
-               "@nuget.protocol//:netstandard2.0_net",
+                "@nuget.librarymodel//:netstandard2.0_net",
+                "@nuget.protocol//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.librarymodel//:net46_net",
-               "@nuget.protocol//:net46_net",
+                "@nuget.librarymodel//:net46_net",
+                "@nuget.protocol//:net46_net",
             ],
             "net461": [
-               "@nuget.librarymodel//:net461_net",
-               "@nuget.protocol//:net461_net",
+                "@nuget.librarymodel//:net461_net",
+                "@nuget.protocol//:net461_net",
             ],
             "net462": [
-               "@nuget.librarymodel//:net462_net",
-               "@nuget.protocol//:net462_net",
+                "@nuget.librarymodel//:net462_net",
+                "@nuget.protocol//:net462_net",
             ],
             "net47": [
-               "@nuget.librarymodel//:net47_net",
-               "@nuget.protocol//:net47_net",
+                "@nuget.librarymodel//:net47_net",
+                "@nuget.protocol//:net47_net",
             ],
             "net471": [
-               "@nuget.librarymodel//:net471_net",
-               "@nuget.protocol//:net471_net",
+                "@nuget.librarymodel//:net471_net",
+                "@nuget.protocol//:net471_net",
             ],
             "net472": [
-               "@nuget.librarymodel//:net472_net",
-               "@nuget.protocol//:net472_net",
+                "@nuget.librarymodel//:net472_net",
+                "@nuget.protocol//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.librarymodel//:netstandard1.6_net",
-               "@nuget.protocol//:netstandard1.6_net",
+                "@nuget.librarymodel//:netstandard1.6_net",
+                "@nuget.protocol//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.librarymodel//:netstandard2.0_net",
-               "@nuget.protocol//:netstandard2.0_net",
+                "@nuget.librarymodel//:netstandard2.0_net",
+                "@nuget.protocol//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -1624,46 +1624,46 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.DependencyResolver.Core.dll",
-               "lib/netstandard1.6/NuGet.DependencyResolver.Core.xml",
+                "lib/netstandard1.6/NuGet.DependencyResolver.Core.dll",
+                "lib/netstandard1.6/NuGet.DependencyResolver.Core.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.DependencyResolver.Core.dll",
-               "lib/netstandard1.6/NuGet.DependencyResolver.Core.xml",
+                "lib/netstandard1.6/NuGet.DependencyResolver.Core.dll",
+                "lib/netstandard1.6/NuGet.DependencyResolver.Core.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.DependencyResolver.Core.dll",
-               "lib/net46/NuGet.DependencyResolver.Core.xml",
+                "lib/net46/NuGet.DependencyResolver.Core.dll",
+                "lib/net46/NuGet.DependencyResolver.Core.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.DependencyResolver.Core.dll",
-               "lib/net46/NuGet.DependencyResolver.Core.xml",
+                "lib/net46/NuGet.DependencyResolver.Core.dll",
+                "lib/net46/NuGet.DependencyResolver.Core.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.DependencyResolver.Core.dll",
-               "lib/net46/NuGet.DependencyResolver.Core.xml",
+                "lib/net46/NuGet.DependencyResolver.Core.dll",
+                "lib/net46/NuGet.DependencyResolver.Core.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.DependencyResolver.Core.dll",
-               "lib/net46/NuGet.DependencyResolver.Core.xml",
+                "lib/net46/NuGet.DependencyResolver.Core.dll",
+                "lib/net46/NuGet.DependencyResolver.Core.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.DependencyResolver.Core.dll",
-               "lib/net46/NuGet.DependencyResolver.Core.xml",
+                "lib/net46/NuGet.DependencyResolver.Core.dll",
+                "lib/net46/NuGet.DependencyResolver.Core.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.DependencyResolver.Core.dll",
-               "lib/net46/NuGet.DependencyResolver.Core.xml",
+                "lib/net46/NuGet.DependencyResolver.Core.dll",
+                "lib/net46/NuGet.DependencyResolver.Core.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.DependencyResolver.Core.dll",
-               "lib/netstandard1.6/NuGet.DependencyResolver.Core.xml",
+                "lib/netstandard1.6/NuGet.DependencyResolver.Core.dll",
+                "lib/netstandard1.6/NuGet.DependencyResolver.Core.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.DependencyResolver.Core.dll",
-               "lib/netstandard1.6/NuGet.DependencyResolver.Core.xml",
+                "lib/netstandard1.6/NuGet.DependencyResolver.Core.dll",
+                "lib/netstandard1.6/NuGet.DependencyResolver.Core.xml",
             ],
         },
         mono_files = [
@@ -1692,54 +1692,54 @@ def packages():
         mono_lib = "lib/net46/NuGet.ProjectModel.dll",
         core_deps = {
             "net46": [
-               "@nuget.dependencyresolver.core//:net46_net",
+                "@nuget.dependencyresolver.core//:net46_net",
             ],
             "net461": [
-               "@nuget.dependencyresolver.core//:net461_net",
+                "@nuget.dependencyresolver.core//:net461_net",
             ],
             "net462": [
-               "@nuget.dependencyresolver.core//:net462_net",
+                "@nuget.dependencyresolver.core//:net462_net",
             ],
             "net47": [
-               "@nuget.dependencyresolver.core//:net47_net",
+                "@nuget.dependencyresolver.core//:net47_net",
             ],
             "net471": [
-               "@nuget.dependencyresolver.core//:net471_net",
+                "@nuget.dependencyresolver.core//:net471_net",
             ],
             "net472": [
-               "@nuget.dependencyresolver.core//:net472_net",
+                "@nuget.dependencyresolver.core//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.dependencyresolver.core//:netstandard1.6_net",
+                "@nuget.dependencyresolver.core//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.dependencyresolver.core//:netstandard2.0_net",
+                "@nuget.dependencyresolver.core//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.dependencyresolver.core//:net46_net",
+                "@nuget.dependencyresolver.core//:net46_net",
             ],
             "net461": [
-               "@nuget.dependencyresolver.core//:net461_net",
+                "@nuget.dependencyresolver.core//:net461_net",
             ],
             "net462": [
-               "@nuget.dependencyresolver.core//:net462_net",
+                "@nuget.dependencyresolver.core//:net462_net",
             ],
             "net47": [
-               "@nuget.dependencyresolver.core//:net47_net",
+                "@nuget.dependencyresolver.core//:net47_net",
             ],
             "net471": [
-               "@nuget.dependencyresolver.core//:net471_net",
+                "@nuget.dependencyresolver.core//:net471_net",
             ],
             "net472": [
-               "@nuget.dependencyresolver.core//:net472_net",
+                "@nuget.dependencyresolver.core//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.dependencyresolver.core//:netstandard1.6_net",
+                "@nuget.dependencyresolver.core//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.dependencyresolver.core//:netstandard2.0_net",
+                "@nuget.dependencyresolver.core//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -1747,46 +1747,46 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.ProjectModel.dll",
-               "lib/netstandard1.6/NuGet.ProjectModel.xml",
+                "lib/netstandard1.6/NuGet.ProjectModel.dll",
+                "lib/netstandard1.6/NuGet.ProjectModel.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.ProjectModel.dll",
-               "lib/netstandard1.6/NuGet.ProjectModel.xml",
+                "lib/netstandard1.6/NuGet.ProjectModel.dll",
+                "lib/netstandard1.6/NuGet.ProjectModel.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.ProjectModel.dll",
-               "lib/net46/NuGet.ProjectModel.xml",
+                "lib/net46/NuGet.ProjectModel.dll",
+                "lib/net46/NuGet.ProjectModel.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.ProjectModel.dll",
-               "lib/net46/NuGet.ProjectModel.xml",
+                "lib/net46/NuGet.ProjectModel.dll",
+                "lib/net46/NuGet.ProjectModel.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.ProjectModel.dll",
-               "lib/net46/NuGet.ProjectModel.xml",
+                "lib/net46/NuGet.ProjectModel.dll",
+                "lib/net46/NuGet.ProjectModel.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.ProjectModel.dll",
-               "lib/net46/NuGet.ProjectModel.xml",
+                "lib/net46/NuGet.ProjectModel.dll",
+                "lib/net46/NuGet.ProjectModel.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.ProjectModel.dll",
-               "lib/net46/NuGet.ProjectModel.xml",
+                "lib/net46/NuGet.ProjectModel.dll",
+                "lib/net46/NuGet.ProjectModel.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.ProjectModel.dll",
-               "lib/net46/NuGet.ProjectModel.xml",
+                "lib/net46/NuGet.ProjectModel.dll",
+                "lib/net46/NuGet.ProjectModel.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.ProjectModel.dll",
-               "lib/netstandard1.6/NuGet.ProjectModel.xml",
+                "lib/netstandard1.6/NuGet.ProjectModel.dll",
+                "lib/netstandard1.6/NuGet.ProjectModel.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.ProjectModel.dll",
-               "lib/netstandard1.6/NuGet.ProjectModel.xml",
+                "lib/netstandard1.6/NuGet.ProjectModel.dll",
+                "lib/netstandard1.6/NuGet.ProjectModel.xml",
             ],
         },
         mono_files = [
@@ -1815,70 +1815,70 @@ def packages():
         mono_lib = "lib/net46/NuGet.Commands.dll",
         core_deps = {
             "net46": [
-               "@nuget.credentials//:net46_net",
-               "@nuget.projectmodel//:net46_net",
+                "@nuget.credentials//:net46_net",
+                "@nuget.projectmodel//:net46_net",
             ],
             "net461": [
-               "@nuget.credentials//:net461_net",
-               "@nuget.projectmodel//:net461_net",
+                "@nuget.credentials//:net461_net",
+                "@nuget.projectmodel//:net461_net",
             ],
             "net462": [
-               "@nuget.credentials//:net462_net",
-               "@nuget.projectmodel//:net462_net",
+                "@nuget.credentials//:net462_net",
+                "@nuget.projectmodel//:net462_net",
             ],
             "net47": [
-               "@nuget.credentials//:net47_net",
-               "@nuget.projectmodel//:net47_net",
+                "@nuget.credentials//:net47_net",
+                "@nuget.projectmodel//:net47_net",
             ],
             "net471": [
-               "@nuget.credentials//:net471_net",
-               "@nuget.projectmodel//:net471_net",
+                "@nuget.credentials//:net471_net",
+                "@nuget.projectmodel//:net471_net",
             ],
             "net472": [
-               "@nuget.credentials//:net472_net",
-               "@nuget.projectmodel//:net472_net",
+                "@nuget.credentials//:net472_net",
+                "@nuget.projectmodel//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.credentials//:netstandard1.6_net",
-               "@nuget.projectmodel//:netstandard1.6_net",
+                "@nuget.credentials//:netstandard1.6_net",
+                "@nuget.projectmodel//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.credentials//:netstandard2.0_net",
-               "@nuget.projectmodel//:netstandard2.0_net",
+                "@nuget.credentials//:netstandard2.0_net",
+                "@nuget.projectmodel//:netstandard2.0_net",
             ],
         },
         net_deps = {
             "net46": [
-               "@nuget.credentials//:net46_net",
-               "@nuget.projectmodel//:net46_net",
+                "@nuget.credentials//:net46_net",
+                "@nuget.projectmodel//:net46_net",
             ],
             "net461": [
-               "@nuget.credentials//:net461_net",
-               "@nuget.projectmodel//:net461_net",
+                "@nuget.credentials//:net461_net",
+                "@nuget.projectmodel//:net461_net",
             ],
             "net462": [
-               "@nuget.credentials//:net462_net",
-               "@nuget.projectmodel//:net462_net",
+                "@nuget.credentials//:net462_net",
+                "@nuget.projectmodel//:net462_net",
             ],
             "net47": [
-               "@nuget.credentials//:net47_net",
-               "@nuget.projectmodel//:net47_net",
+                "@nuget.credentials//:net47_net",
+                "@nuget.projectmodel//:net47_net",
             ],
             "net471": [
-               "@nuget.credentials//:net471_net",
-               "@nuget.projectmodel//:net471_net",
+                "@nuget.credentials//:net471_net",
+                "@nuget.projectmodel//:net471_net",
             ],
             "net472": [
-               "@nuget.credentials//:net472_net",
-               "@nuget.projectmodel//:net472_net",
+                "@nuget.credentials//:net472_net",
+                "@nuget.projectmodel//:net472_net",
             ],
             "netstandard1.6": [
-               "@nuget.credentials//:netstandard1.6_net",
-               "@nuget.projectmodel//:netstandard1.6_net",
+                "@nuget.credentials//:netstandard1.6_net",
+                "@nuget.projectmodel//:netstandard1.6_net",
             ],
             "netstandard2.0": [
-               "@nuget.credentials//:netstandard2.0_net",
-               "@nuget.projectmodel//:netstandard2.0_net",
+                "@nuget.credentials//:netstandard2.0_net",
+                "@nuget.projectmodel//:netstandard2.0_net",
             ],
         },
         mono_deps = [
@@ -1887,46 +1887,46 @@ def packages():
         ],
         core_files = {
             "netcoreapp2.0": [
-               "lib/netstandard1.6/NuGet.Commands.dll",
-               "lib/netstandard1.6/NuGet.Commands.xml",
+                "lib/netstandard1.6/NuGet.Commands.dll",
+                "lib/netstandard1.6/NuGet.Commands.xml",
             ],
             "netcoreapp2.1": [
-               "lib/netstandard1.6/NuGet.Commands.dll",
-               "lib/netstandard1.6/NuGet.Commands.xml",
+                "lib/netstandard1.6/NuGet.Commands.dll",
+                "lib/netstandard1.6/NuGet.Commands.xml",
             ],
         },
         net_files = {
             "net46": [
-               "lib/net46/NuGet.Commands.dll",
-               "lib/net46/NuGet.Commands.xml",
+                "lib/net46/NuGet.Commands.dll",
+                "lib/net46/NuGet.Commands.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.Commands.dll",
-               "lib/net46/NuGet.Commands.xml",
+                "lib/net46/NuGet.Commands.dll",
+                "lib/net46/NuGet.Commands.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.Commands.dll",
-               "lib/net46/NuGet.Commands.xml",
+                "lib/net46/NuGet.Commands.dll",
+                "lib/net46/NuGet.Commands.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.Commands.dll",
-               "lib/net46/NuGet.Commands.xml",
+                "lib/net46/NuGet.Commands.dll",
+                "lib/net46/NuGet.Commands.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.Commands.dll",
-               "lib/net46/NuGet.Commands.xml",
+                "lib/net46/NuGet.Commands.dll",
+                "lib/net46/NuGet.Commands.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.Commands.dll",
-               "lib/net46/NuGet.Commands.xml",
+                "lib/net46/NuGet.Commands.dll",
+                "lib/net46/NuGet.Commands.xml",
             ],
             "netstandard1.6": [
-               "lib/netstandard1.6/NuGet.Commands.dll",
-               "lib/netstandard1.6/NuGet.Commands.xml",
+                "lib/netstandard1.6/NuGet.Commands.dll",
+                "lib/netstandard1.6/NuGet.Commands.xml",
             ],
             "netstandard2.0": [
-               "lib/netstandard1.6/NuGet.Commands.dll",
-               "lib/netstandard1.6/NuGet.Commands.xml",
+                "lib/netstandard1.6/NuGet.Commands.dll",
+                "lib/netstandard1.6/NuGet.Commands.xml",
             ],
         },
         mono_files = [
@@ -1952,31 +1952,31 @@ def packages():
         mono_lib = "lib/net40/Microsoft.Web.XmlTransform.dll",
         net_files = {
             "net45": [
-               "lib/net40/Microsoft.Web.XmlTransform.dll",
+                "lib/net40/Microsoft.Web.XmlTransform.dll",
             ],
             "net451": [
-               "lib/net40/Microsoft.Web.XmlTransform.dll",
+                "lib/net40/Microsoft.Web.XmlTransform.dll",
             ],
             "net452": [
-               "lib/net40/Microsoft.Web.XmlTransform.dll",
+                "lib/net40/Microsoft.Web.XmlTransform.dll",
             ],
             "net46": [
-               "lib/net40/Microsoft.Web.XmlTransform.dll",
+                "lib/net40/Microsoft.Web.XmlTransform.dll",
             ],
             "net461": [
-               "lib/net40/Microsoft.Web.XmlTransform.dll",
+                "lib/net40/Microsoft.Web.XmlTransform.dll",
             ],
             "net462": [
-               "lib/net40/Microsoft.Web.XmlTransform.dll",
+                "lib/net40/Microsoft.Web.XmlTransform.dll",
             ],
             "net47": [
-               "lib/net40/Microsoft.Web.XmlTransform.dll",
+                "lib/net40/Microsoft.Web.XmlTransform.dll",
             ],
             "net471": [
-               "lib/net40/Microsoft.Web.XmlTransform.dll",
+                "lib/net40/Microsoft.Web.XmlTransform.dll",
             ],
             "net472": [
-               "lib/net40/Microsoft.Web.XmlTransform.dll",
+                "lib/net40/Microsoft.Web.XmlTransform.dll",
             ],
         },
         mono_files = [
@@ -1998,34 +1998,34 @@ def packages():
         mono_lib = "lib/net46/NuGet.PackageManagement.dll",
         net_deps = {
             "net46": [
-               "@nuget.commands//:net46_net",
-               "@nuget.resolver//:net46_net",
-               "@microsoft.web.xdt//:net46_net",
+                "@nuget.commands//:net46_net",
+                "@nuget.resolver//:net46_net",
+                "@microsoft.web.xdt//:net46_net",
             ],
             "net461": [
-               "@nuget.commands//:net461_net",
-               "@nuget.resolver//:net461_net",
-               "@microsoft.web.xdt//:net461_net",
+                "@nuget.commands//:net461_net",
+                "@nuget.resolver//:net461_net",
+                "@microsoft.web.xdt//:net461_net",
             ],
             "net462": [
-               "@nuget.commands//:net462_net",
-               "@nuget.resolver//:net462_net",
-               "@microsoft.web.xdt//:net462_net",
+                "@nuget.commands//:net462_net",
+                "@nuget.resolver//:net462_net",
+                "@microsoft.web.xdt//:net462_net",
             ],
             "net47": [
-               "@nuget.commands//:net47_net",
-               "@nuget.resolver//:net47_net",
-               "@microsoft.web.xdt//:net47_net",
+                "@nuget.commands//:net47_net",
+                "@nuget.resolver//:net47_net",
+                "@microsoft.web.xdt//:net47_net",
             ],
             "net471": [
-               "@nuget.commands//:net471_net",
-               "@nuget.resolver//:net471_net",
-               "@microsoft.web.xdt//:net471_net",
+                "@nuget.commands//:net471_net",
+                "@nuget.resolver//:net471_net",
+                "@microsoft.web.xdt//:net471_net",
             ],
             "net472": [
-               "@nuget.commands//:net472_net",
-               "@nuget.resolver//:net472_net",
-               "@microsoft.web.xdt//:net472_net",
+                "@nuget.commands//:net472_net",
+                "@nuget.resolver//:net472_net",
+                "@microsoft.web.xdt//:net472_net",
             ],
         },
         mono_deps = [
@@ -2035,28 +2035,28 @@ def packages():
         ],
         net_files = {
             "net46": [
-               "lib/net46/NuGet.PackageManagement.dll",
-               "lib/net46/NuGet.PackageManagement.xml",
+                "lib/net46/NuGet.PackageManagement.dll",
+                "lib/net46/NuGet.PackageManagement.xml",
             ],
             "net461": [
-               "lib/net46/NuGet.PackageManagement.dll",
-               "lib/net46/NuGet.PackageManagement.xml",
+                "lib/net46/NuGet.PackageManagement.dll",
+                "lib/net46/NuGet.PackageManagement.xml",
             ],
             "net462": [
-               "lib/net46/NuGet.PackageManagement.dll",
-               "lib/net46/NuGet.PackageManagement.xml",
+                "lib/net46/NuGet.PackageManagement.dll",
+                "lib/net46/NuGet.PackageManagement.xml",
             ],
             "net47": [
-               "lib/net46/NuGet.PackageManagement.dll",
-               "lib/net46/NuGet.PackageManagement.xml",
+                "lib/net46/NuGet.PackageManagement.dll",
+                "lib/net46/NuGet.PackageManagement.xml",
             ],
             "net471": [
-               "lib/net46/NuGet.PackageManagement.dll",
-               "lib/net46/NuGet.PackageManagement.xml",
+                "lib/net46/NuGet.PackageManagement.dll",
+                "lib/net46/NuGet.PackageManagement.xml",
             ],
             "net472": [
-               "lib/net46/NuGet.PackageManagement.dll",
-               "lib/net46/NuGet.PackageManagement.xml",
+                "lib/net46/NuGet.PackageManagement.dll",
+                "lib/net46/NuGet.PackageManagement.xml",
             ],
         },
         mono_files = [

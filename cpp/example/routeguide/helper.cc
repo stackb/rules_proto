@@ -28,29 +28,30 @@
 namespace routeguide {
 
 std::string GetDbFileContent(int argc, char** argv) {
-  std::string db_path;
-  std::string arg_str("--db_path");
-  if (argc > 1) {
-    std::string argv_1 = argv[1];
-    size_t start_position = argv_1.find(arg_str);
-    if (start_position != std::string::npos) {
-      start_position += arg_str.size();
-      if (argv_1[start_position] == ' ' ||
-          argv_1[start_position] == '=') {
-        db_path = argv_1.substr(start_position + 1);
-      }
-    }
-  } else {
-    db_path = "example/proto/routeguide_features.json";
+  std::string db_path("example/proto/routeguide_features.json");
+  if (std::getenv("DATABASE_FILE")) {
+    db_path = std::getenv("DATABASE_FILE");
   }
+
   std::ifstream db_file(db_path);
   if (!db_file.is_open()) {
     std::cout << "Failed to open " << db_path << std::endl;
     return "";
   }
+
   std::stringstream db;
   db << db_file.rdbuf();
   return db.str();
+}
+
+std::string GetServerAddress() {
+  std::string server_host("0.0.0.0");
+  std::string server_port("50051");
+  if (std::getenv("SERVER_PORT")) {
+    server_port = std::getenv("SERVER_PORT");
+  }
+  std::string server_address = server_host + ":" + server_port;
+  return server_address;
 }
 
 // A simple parser for the json db file. It requires the db file to have the

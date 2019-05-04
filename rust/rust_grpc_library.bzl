@@ -13,8 +13,10 @@ def rust_grpc_library(**kwargs):
     rust_grpc_compile(
         name = name_pb,
         deps = deps,
-        transitive = True,
         visibility = visibility,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
 
     rust_proto_lib(
@@ -26,10 +28,10 @@ def rust_grpc_library(**kwargs):
         name = name,
         srcs = [name_pb, name_lib],
         deps = [
-            str(Label("//rust/cargo:protobuf")),
-            str(Label("//rust/cargo:grpc")),
-            str(Label("//rust/cargo:tls_api")),
-            str(Label("//rust/cargo:tls_api_stub")),
+            "@io_bazel_rules_rust//proto/raze:protobuf",
+            "@io_bazel_rules_rust//proto/raze:grpc",
+            "@io_bazel_rules_rust//proto/raze:tls_api",
+            "@io_bazel_rules_rust//proto/raze:tls_api_stub",
         ],
         visibility = visibility,
     )

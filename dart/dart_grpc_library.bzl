@@ -12,8 +12,11 @@ def dart_grpc_library(**kwargs):
         name = name_pb,
         deps = deps,
         visibility = visibility,
-        verbose = verbose,
+        verbose = kwargs.pop("verbose", 0),
+        transitivity = kwargs.pop("transitivity", {}),
+        transitive = kwargs.pop("transitive", True),
     )
+
     dart_library(
         name = name,
         srcs = [name_pb],

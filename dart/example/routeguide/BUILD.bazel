@@ -3,31 +3,33 @@ load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
 load("@io_bazel_rules_dart//dart/build_rules:vm.bzl", "dart_vm_binary")
 
 dart_vm_binary(
-    name = "client_bin",
+    name = "client",
     srcs = [
         "client_bin.dart",
     ],
     script_file = "client_bin.dart",
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
-        ":client",
+        ":clientlib",
         "@vendor_convert//:convert",
     ],
 )
 
 dart_vm_binary(
-    name = "server_bin",
+    name = "server",
     srcs = [
         "server_bin.dart",
     ],
     script_file = "server_bin.dart",
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
-        ":server",
+        ":serverlib",
         "@vendor_convert//:convert",
     ],
 )
 
 dart_library(
-    name = "server",
+    name = "serverlib",
     srcs = [
         "server.dart",
     ],
@@ -37,7 +39,7 @@ dart_library(
 )
 
 dart_library(
-    name = "client",
+    name = "clientlib",
     srcs = [
         "client.dart",
     ],

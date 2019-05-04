@@ -13,6 +13,7 @@ ruby_binary(
     args = ["example/proto/routeguide_features.json"],
     data = ["//example/proto:routeguide_features"],
     includes = ["."],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
         "@routeguide_gems_bundle//:libs",
@@ -24,6 +25,7 @@ ruby_binary(
     srcs = ["server.rb"],
     args = ["example/proto/routeguide_features.json"],
     data = ["//example/proto:routeguide_features"],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
         "@routeguide_gems_bundle//:libs",
