@@ -1,4 +1,6 @@
 load("//:plugin.bzl", "ProtoPluginInfo")
+load("//:compile.bzl", "ProtoCompileInfo")
+
 load("//:compile.bzl", 
     "rust_keywords",
     # "ProtoCompileInfo",
@@ -14,8 +16,10 @@ def proto_compile_impl(ctx):
         aspect = dep[ProtoLibraryAspectNodeInfo]
         files += aspect.outputs
 
-    # print("final files: %r" % files)
-    return [DefaultInfo(files = depset(files))]
+    return [ProtoCompileInfo(
+        label = ctx.label,
+        outputs = files,
+    ), DefaultInfo(files = depset(files))]
 
 
 proto_compile_attrs = {
