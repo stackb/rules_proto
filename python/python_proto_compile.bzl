@@ -41,5 +41,3 @@ def python_proto_compile(**kwargs):
         verbose_string = "%s" % kwargs.get("verbose", 0),
         plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
         **kwargs)
-
-py_proto_compile = python_proto_compile

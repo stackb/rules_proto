@@ -1,13 +1,13 @@
-load("//python:python_grpc_library.bzl", "py_grpc_library")
-load("//python:python_proto_compile.bzl", "py_proto_compile")
+load("//python:python_grpc_library.bzl", "python_grpc_library")
+load("//python:python_proto_compile.bzl", "python_proto_compile")
 
-py_proto_compile(
+python_proto_compile(
     name = "person",
     deps = ["//example/proto:person_proto"],
     verbose = 0,
 )
 
-py_grpc_library(
+python_grpc_library(
     name = "routeguide",
     deps = ["//example/proto:routeguide_proto"],
 )

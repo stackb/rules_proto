@@ -325,6 +325,51 @@ def {{ .Rule.Name }}(**kwargs):
         **kwargs
     )`)
 
+var aspectRuleTemplate = mustTemplate(`load("//:plugin.bzl", "ProtoPluginInfo")
+
+load("//:aspect.bzl", 
+    "ProtoLibraryAspectNodeInfo", 
+    "proto_compile_aspect_attrs", 
+    "proto_compile_aspect_impl",
+    "proto_compile_attrs",
+    "proto_compile_impl",
+)
+
+# "Aspects should be top-level values in extension files that define them."
+
+{{ .Rule.Name }}_aspect = aspect(
+    implementation = proto_compile_aspect_impl,
+    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
+    attr_aspects = ["deps"],
+    attrs = dict(proto_compile_aspect_attrs, 
+        _plugins = attr.label_list(
+            doc = "List of protoc plugins to apply",
+            providers = [ProtoPluginInfo],
+            default = [{{ range .Rule.Plugins }}
+                str(Label("{{ . }}")),{{ end }}
+            ],
+        ),
+    ),
+)
+
+_rule = rule(
+    implementation = proto_compile_impl,
+    attrs = dict(proto_compile_attrs, 
+        deps = attr.label_list(
+            mandatory = True,
+            providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
+            aspects = [{{ .Rule.Name }}_aspect],
+        ),    
+    ),
+)
+
+def {{ .Rule.Name }}(**kwargs):
+    _rule(
+        verbose_string = "%s" % kwargs.get("verbose", 0),
+        plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
+        **kwargs)
+`)
+
 var usageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()`)

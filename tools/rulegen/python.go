@@ -116,14 +116,17 @@ def python_grpc_library(**kwargs):
 # Alias
 py_grpc_library = python_grpc_library`)
 
+var pythonLangNotes = mustTemplate(`"The python rules use an aspect-based implementation (aspect.bzl) rather than the traditional implementation (compile.bzl)"`)
+
 func makePython() *Language {
 	return &Language{
-		Dir:  "python",
-		Name: "python",
+		Dir:   "python",
+		Name:  "python",
+		Notes: pythonLangNotes,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "python_proto_compile",
-				Implementation: compileRuleTemplate,
+				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//python:python"},
 				Usage:          usageTemplate,
 				Example:        protoCompileExampleTemplate,
@@ -132,7 +135,7 @@ func makePython() *Language {
 			},
 			&Rule{
 				Name:           "python_grpc_compile",
-				Implementation: compileRuleTemplate,
+				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//python:python", "//python:grpc_python"},
 				Usage:          pythonGrpcCompileUsageTemplate,
 				Example:        grpcCompileExampleTemplate,
