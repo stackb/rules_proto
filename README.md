@@ -147,7 +147,7 @@ message Thing {
 }
 ```
 
-**Step 2**: write a `BUILD.bazel` file with a native `proto_library` rule:
+**Step 2**: write a `BAZEL.build` file with a native `proto_library` rule:
 
 ```python
 proto_library(

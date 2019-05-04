@@ -1,5 +1,7 @@
 # `python`
 
+"The python rules use an aspect-based implementation (aspect.bzl) rather than the traditional implementation (compile.bzl)"
+
 | Rule | Description |
 | ---: | :--- |
 | [python_proto_compile](#python_proto_compile) | Generates *.py protobuf artifacts |
