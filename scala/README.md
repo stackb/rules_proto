@@ -23,7 +23,7 @@ load("@build_stack_rules_proto//scala:deps.bzl", "scala_proto_compile")
 scala_proto_compile()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -89,7 +89,7 @@ load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_compile")
 scala_grpc_compile()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -153,7 +153,7 @@ load("@build_stack_rules_proto//scala:deps.bzl", "scala_proto_library")
 scala_proto_library()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -219,7 +219,7 @@ load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_library")
 scala_grpc_library()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 

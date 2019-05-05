@@ -55,10 +55,6 @@ objc_upper_segments = {
     "https": "HTTPS",
 }
 
-# Hack - providers indexing is by int, but I have not idea how to get the actual
-# provider object here.
-ProtoInfoProvider = 0
-
 def _capitalize(s):
     """Capitalize a string - only first letter
     Args:
@@ -278,17 +274,10 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
 
     arg = outdir
     if plugin.outdir:
-        fail("plugin.outdir", plugin.outdir)
         arg = plugin.outdir.replace("{name}", outdir)
     elif plugin.out:
-        fail("plugin.out")
         outfile = plugin_outfiles[plugin.name]
-
-        #arg = "%s" % (outdir)
-        #arg = "%s/%s" % (outdir, outfile.short_path)
         arg = outfile.path
-    else:
-        print("no outdir or out: %s" % outdir)
 
     # Collate a list of options from the plugin itself PLUS options from the
     # global plugin_options list (if they exist)
@@ -418,7 +407,7 @@ def proto_compile_impl(ctx):
     outdir = descriptor.dirname
 
     # <list<ProtoInfo>> A list of ProtoInfo
-    deps = [dep.proto for dep in ctx.attr.deps]
+    deps = [ dep[ProtoInfo] for dep in ctx.attr.deps ]
 
     # <list<PluginInfo>> A list of PluginInfo
     plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
@@ -622,7 +611,7 @@ proto_compile = rule(
         "deps": attr.label_list(
             doc = "proto_library dependencies",
             mandatory = True,
-            providers = ["proto"],
+            providers = [ProtoInfo],
         ),
         "plugins": attr.label_list(
             doc = "List of protoc plugins to apply",

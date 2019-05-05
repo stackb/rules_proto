@@ -192,8 +192,8 @@ def com_google_protobuf(**kwargs):
 
 def com_github_grpc_grpc(**kwargs):
     name = "com_github_grpc_grpc"
-    ref = get_ref(name, "v1.18.0", kwargs)
-    sha256 = get_sha256(name, "069a52a166382dd7b99bf8e7e805f6af40d797cfcee5f80e530ca3fc75fd06e2", kwargs)
+    ref = get_ref(name, "v1.20.1", kwargs)
+    sha256 = get_sha256(name, "ba8b08a697b66e14af35da07753583cf32ff3d14dcd768f91b1bbe2e6c07c349", kwargs)
     github_archive(name, "grpc", "grpc", ref, sha256)
 
 def io_bazel_rules_dotnet(**kwargs):
@@ -216,8 +216,8 @@ def io_bazel_rules_rust(**kwargs):
 
 def com_github_yugui_rules_ruby(**kwargs):
     name = "com_github_yugui_rules_ruby"
-    ref = get_ref(name, "933aa144b2683a37bd949bf9ec2ac532382770d8", kwargs)  # PR#8,
-    sha256 = get_sha256(name, "c3177fd260fbf9434eec0183276cd3f37469ed120b8dd1f71be7b4af34725bed", kwargs)
+    ref = get_ref(name, "73479cdc6a34a8d940cc3c904badf7a2ae6bdc6d", kwargs)  # PR#8,
+    sha256 = get_sha256(name, "bd88b1aa144f70bb3f069ff3ddc5ddba032311ce27fb40b7276db694dcb63490", kwargs)
     github_archive(name, "yugui", "rules_ruby", ref, sha256)
 
 def grpc_ecosystem_grpc_gateway(**kwargs):
@@ -228,8 +228,8 @@ def grpc_ecosystem_grpc_gateway(**kwargs):
 
 def org_pubref_rules_node(**kwargs):
     name = "org_pubref_rules_node"
-    ref = get_ref(name, "c7b9ae3eb2fa75bec2fdd4d188b57ab431796f5d", kwargs)  # PR#80
-    sha256 = get_sha256(name, "b4a10f3325dd44ddabf9a75778cb7f183abe629815b8cd3a9c761490fcb6ba8b", kwargs)
+    ref = get_ref(name, "9ebfa90ca3283bb0f92ae5f337173a5a5a4d98aa", kwargs)  
+    sha256 = get_sha256(name, "cb1bf3d64c0b323bc515748902df9fef9ecfcc37c7aa84253d7e99d876f1196a", kwargs)
     github_archive(name, "pubref", "rules_node", ref, sha256)
 
 def build_bazel_rules_android(**kwargs):
@@ -263,8 +263,8 @@ def io_bazel_rules_go(**kwargs):
     """Go Rules
     """
     name = "io_bazel_rules_go"
-    ref = get_ref(name, "2d792dea8d22c552f455623bb15eb4f61fcb2f1b", kwargs)  # 0.16.5
-    sha256 = get_sha256(name, "6afe04f13fd9a1ad8f02a44ebd0c61a825c01e8745cadb7db13ee7a68d9d492c", kwargs)
+    ref = get_ref(name, "4fec67d1fcefe7c80d6f4cc2ae0841c9d90e429a", kwargs) # post-18.3
+    sha256 = get_sha256(name, "2ab9320c583b05b805a7f8f4005fd081606505a64308051008d32148d7f98e1f", kwargs)
     github_archive(name, "bazelbuild", "rules_go", ref, sha256)
 
 def io_bazel_rules_python(**kwargs):
@@ -303,9 +303,9 @@ def io_bazel_rules_dart(**kwargs):
     """Dart Rules
     """
     name = "io_bazel_rules_dart"
-    ref = get_ref(name, "78a4e1ba257bbe9a9d7a064c8cde8c5317059e17", kwargs)  # ~11/27/2018
-    sha256 = get_sha256(name, "7e699c457f45151e5c61dce6bdcaf14e4cb840d95af86c13a9e7eecc49fd39a3", kwargs)
-    github_archive(name, "dart-lang", "rules_dart", ref, sha256)
+    ref = get_ref(name, "07aa5a42827f74d707ad3abcd3edbc14c7cad837", kwargs)  # Mar 11 (fork of dart-lang/rules_dart)
+    sha256 = get_sha256(name, "836aa1908fda2c5f25f5a8dc298399d60252006c2953d170b95a33bfc5b5de14", kwargs)
+    github_archive(name, "FKint", "rules_dart", ref, sha256)
 
 def io_bazel_rules_d(**kwargs):
     """d Rules

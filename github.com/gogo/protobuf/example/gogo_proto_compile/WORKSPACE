@@ -9,7 +9,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_proto_
 
 gogo_proto_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 

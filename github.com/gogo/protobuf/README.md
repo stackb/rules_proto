@@ -28,7 +28,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_proto_
 
 gogo_proto_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -81,7 +81,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_grpc_c
 
 gogo_grpc_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -134,7 +134,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_proto_
 
 gogo_proto_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -192,7 +192,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_grpc_l
 
 gogo_grpc_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -249,7 +249,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_pr
 
 gogofast_proto_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -302,7 +302,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_gr
 
 gogofast_grpc_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -355,7 +355,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_pr
 
 gogofast_proto_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -413,7 +413,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_gr
 
 gogofast_grpc_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -470,7 +470,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_
 
 gogofaster_proto_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -523,7 +523,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_
 
 gogofaster_grpc_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -576,7 +576,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_
 
 gogofaster_proto_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -634,7 +634,7 @@ load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_
 
 gogofaster_grpc_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 

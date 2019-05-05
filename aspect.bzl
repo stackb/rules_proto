@@ -277,7 +277,7 @@ def proto_compile_aspect_impl(target, ctx):
     #
     pathsep = ctx.configuration.host_path_separator
     args.append("--descriptor_set_in=%s" % pathsep.join(
-        [f.path for f in descriptor_sets]    
+        [f.path for f in descriptor_sets.to_list()]    
     ))
 
     #

@@ -4,7 +4,7 @@ var goUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir
 
 {{ .Rule.Name }}()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 

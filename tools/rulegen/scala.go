@@ -5,7 +5,7 @@ var scalaUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.
 {{ .Rule.Name }}()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
