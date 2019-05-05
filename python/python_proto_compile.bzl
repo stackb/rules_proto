@@ -1,4 +1,6 @@
 load("//:plugin.bzl", "ProtoPluginInfo")
+
+
 load(
     "//:aspect.bzl",
     "ProtoLibraryAspectNodeInfo",
@@ -28,8 +30,7 @@ python_proto_compile_aspect = aspect(
 
 _rule = rule(
     implementation = proto_compile_impl,
-    attrs = dict(
-        proto_compile_attrs,
+    attrs = dict(proto_compile_attrs, 
         deps = attr.label_list(
             mandatory = True,
             providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
@@ -44,3 +45,4 @@ def python_proto_compile(**kwargs):
         plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
         **kwargs
     )
+

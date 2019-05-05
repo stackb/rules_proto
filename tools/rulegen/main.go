@@ -327,8 +327,9 @@ def {{ .Rule.Name }}(**kwargs):
 
 var aspectRuleTemplate = mustTemplate(`load("//:plugin.bzl", "ProtoPluginInfo")
 
+
 load(
-    "//:aspect.bzl", 
+    "//:aspect.bzl",
     "ProtoLibraryAspectNodeInfo",
     "proto_compile_aspect_attrs",
     "proto_compile_aspect_impl",
@@ -343,7 +344,7 @@ load(
     provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
     attrs = dict(
-        proto_compile_aspect_attrs, 
+        proto_compile_aspect_attrs,
         _plugins = attr.label_list(
             doc = "List of protoc plugins to apply",
             providers = [ProtoPluginInfo],
@@ -361,7 +362,7 @@ _rule = rule(
             mandatory = True,
             providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
             aspects = [{{ .Rule.Name }}_aspect],
-        ),    
+        ),
     ),
 )
 
