@@ -333,3 +333,66 @@ Follow the pattern seen in the multiple examples in this repository.  The basic 
 
 Contributions welcome; please create Issues or GitHub pull requests.
 
+## ProtoInfo provider
+
+A few notes about the 'proto' provider.  Bazel initially implemented
+[providers](https://docs.bazel.build/versions/master/skylark/lib/Provider.html)
+using simple strings.  For example, one could write a rule that depends on
+`proto_library` rules as follows:
+
+```python
+my_custom_rule = rule(
+    implementation = my_custom_rule_impl,
+    attrs = {
+        "deps": attr.label_list(
+            doc = "proto_library dependencies",
+            mandatory = True,
+            providers = ["proto"],
+        ),
+    }
+) 
+```
+
+We can then collect a list of the provided "info" objects as follows:
+
+```python
+def my_custom_rule_impl(ctx):
+    # list<ProtoInfo> A list of ProtoInfo values
+    deps = [ dep.proto for dep in ctx.attr.deps ]
+```
+
+This style of provider usage is now considered "legacy".  As of bazel 0.22.0
+(Jan 2019)
+[4817df](https://github.com/bazelbuild/bazel/commit/4817df1e862fe2de3b17905dbbc0c7badff6bb4b),
+the
+[ProtoInfo](https://docs.bazel.build/versions/master/skylark/lib/ProtoInfo.html)
+provider was introduced.  Rules using this provider should be changed to:
+
+```python
+my_custom_rule = rule(
+    implementation = my_custom_rule_impl,
+    attrs = {
+        "deps": attr.label_list(
+            doc = "proto_library dependencies",
+            mandatory = True,
+            providers = [ProtoInfo],
+        ),
+ 
+```
+
+```python
+def my_custom_rule_impl(ctx):
+    # <list<ProtoInfo>> A list of ProtoInfo
+    deps = [ dep[ProtoInfo] for dep in ctx.attr.deps ]
+```
+
+A flag to toggle availability of the "legacy" provider was introduced in
+[e3f4ce](https://github.com/bazelbuild/bazel/commit/e3f4ce739f0dbe0fea2b5580655fc96012d162cd)
+as `--incompatible_disable_legacy_proto_provider`.  Therefore, if you still want
+the legacy behavior specify
+`--incompatible_disable_legacy_proto_provider=false`.
+
+Additional reading:
+
+- https://github.com/bazelbuild/bazel/issues/3701
+- https://github.com/bazelbuild/bazel/issues/6901
