@@ -327,9 +327,10 @@ def {{ .Rule.Name }}(**kwargs):
 
 var aspectRuleTemplate = mustTemplate(`load("//:plugin.bzl", "ProtoPluginInfo")
 
-load("//:aspect.bzl", 
-    "ProtoLibraryAspectNodeInfo", 
-    "proto_compile_aspect_attrs", 
+load(
+    "//:aspect.bzl", 
+    "ProtoLibraryAspectNodeInfo",
+    "proto_compile_aspect_attrs",
     "proto_compile_aspect_impl",
     "proto_compile_attrs",
     "proto_compile_impl",
@@ -341,7 +342,8 @@ load("//:aspect.bzl",
     implementation = proto_compile_aspect_impl,
     provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
-    attrs = dict(proto_compile_aspect_attrs, 
+    attrs = dict(
+        proto_compile_aspect_attrs, 
         _plugins = attr.label_list(
             doc = "List of protoc plugins to apply",
             providers = [ProtoPluginInfo],
@@ -367,7 +369,8 @@ def {{ .Rule.Name }}(**kwargs):
     _rule(
         verbose_string = "%s" % kwargs.get("verbose", 0),
         plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
-        **kwargs)
+        **kwargs
+    )
 `)
 
 var usageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
