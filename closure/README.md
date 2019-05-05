@@ -83,7 +83,7 @@ closure_proto_library(
 
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
-| build | incompatible_disallow_struct_provider_syntax | false | com_github_grpc_grpc/bazel/generate_cc.bzl: 81 |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 

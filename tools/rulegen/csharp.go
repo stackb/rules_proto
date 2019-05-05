@@ -142,12 +142,18 @@ var csharpLibraryFlags = []*Flag{
 		Value:       "CoreCompile=standalone",
 		Description: "dotnet SDK desperately wants to find the HOME directory",
 	},
+	{
+		Category: "build",
+		Name:     "incompatible_disallow_struct_provider_syntax",
+		Value:    "false",
+	},
 }
 
 func makeCsharp() *Language {
 	return &Language{
-		Dir:  "csharp",
-		Name: "csharp",
+		Dir:   "csharp",
+		Name:  "csharp",
+		Flags: cppFlags,
 		Notes: mustTemplate(`**NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
 
 ~~~python

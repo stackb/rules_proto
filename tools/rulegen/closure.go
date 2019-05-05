@@ -69,10 +69,9 @@ func makeClosure() *Language {
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
 				Flags: []*Flag{
 					{
-						Category:    "build",
-						Name:        "incompatible_disallow_struct_provider_syntax",
-						Value:       "false",
-						Description: "com_github_grpc_grpc/bazel/generate_cc.bzl: 81",
+						Category: "build",
+						Name:     "incompatible_disallow_struct_provider_syntax",
+						Value:    "false",
 					},
 				},
 			},
