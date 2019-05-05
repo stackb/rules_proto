@@ -99,12 +99,13 @@ var rubyFlags = []*Flag{
 
 func makeRuby() *Language {
 	return &Language{
-		Dir:  "ruby",
-		Name: "ruby",
+		Dir:   "ruby",
+		Name:  "ruby",
+		Notes: aspectLangNotes,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "ruby_proto_compile",
-				Implementation: compileRuleTemplate,
+				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//ruby:ruby"},
 				Usage:          usageTemplate,
 				Example:        protoCompileExampleTemplate,
@@ -113,7 +114,7 @@ func makeRuby() *Language {
 			},
 			&Rule{
 				Name:           "ruby_grpc_compile",
-				Implementation: compileRuleTemplate,
+				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//ruby:ruby", "//ruby:grpc_ruby"},
 				Usage:          grpcUsageTemplate,
 				Example:        grpcCompileExampleTemplate,

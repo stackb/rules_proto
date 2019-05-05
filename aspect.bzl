@@ -303,6 +303,9 @@ def proto_compile_aspect_impl(target, ctx):
 
     command = " ".join([protoc.path] + args) # SAME
 
+    inputs = import_files.to_list() + descriptor_sets.to_list() + data
+    tools = [protoc] + plugin_tools.values()
+
     # SAME
     if verbose > 0:
         print("%s: %s" % (mnemonic, command))
@@ -313,15 +316,9 @@ def proto_compile_aspect_impl(target, ctx):
     if verbose > 3:
         command = "env && " + command
         for f in outputs:
-            print("expected output:", f.path)    
-
-    inputs = import_files.to_list() + descriptor_sets.to_list() + data
-    tools = [protoc] + plugin_tools.values()
-
-    if verbose > 4:
+            print("EXPECTED OUTPUT:", f.path)    
         print("INPUTS:", inputs)
         print("TOOLS:", tools)
-        print("OUTPUTS:", outputs)
         for arg in args:
             print("ARG:", arg)
 

@@ -410,6 +410,8 @@ var grpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )`)
 
+var aspectLangNotes = mustTemplate(`"The {{ .Name }} compile rules use an aspect-based implementation (aspect.bzl) rather than the traditional implementation (compile.bzl)"`)
+
 func mustWriteLanguageRules(dir string, lang *Language) {
 	for _, rule := range lang.Rules {
 		mustWriteLanguageRule(dir, lang, rule)

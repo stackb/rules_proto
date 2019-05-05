@@ -14,10 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Sample app that connects to a Route Guide service.
-#
-# Usage: $ path/to/route_guide_client.rb path/to/route_guide_db.json &
-
 this_dir = File.expand_path(File.dirname(__FILE__))
 lib_dir = File.join(File.dirname(this_dir), 'lib')
 $LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)

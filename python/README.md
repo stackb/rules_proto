@@ -1,6 +1,6 @@
 # `python`
 
-"The python rules use an aspect-based implementation (aspect.bzl) rather than the traditional implementation (compile.bzl)"
+"The python compile rules use an aspect-based implementation (aspect.bzl) rather than the traditional implementation (compile.bzl)"
 
 | Rule | Description |
 | ---: | :--- |

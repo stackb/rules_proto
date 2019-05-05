@@ -1,5 +1,7 @@
 # `ruby`
 
+"The ruby compile rules use an aspect-based implementation (aspect.bzl) rather than the traditional implementation (compile.bzl)"
+
 | Rule | Description |
 | ---: | :--- |
 | [ruby_proto_compile](#ruby_proto_compile) | Generates *.ruby protobuf artifacts |
