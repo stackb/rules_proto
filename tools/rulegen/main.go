@@ -470,6 +470,7 @@ func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule)
 	out := &LineWriter{}
 	out.w("# Start with --all_incompatible_changes by default")
 	out.w("build --all_incompatible_changes")
+	out.w("build --incompatible_use_toolchain_resolution_for_java_rules=false")
 	for _, f := range lang.Flags {
 		out.w("# %s", f.Description)
 		out.w("%s --%s=%s", f.Category, f.Name, f.Value)

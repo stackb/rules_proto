@@ -1,4 +1,5 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
+build --incompatible_use_toolchain_resolution_for_java_rules=false
 # ruby/binary.bzl is still using cfg=data
 build --incompatible_disallow_data_transition=false

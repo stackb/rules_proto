@@ -1,2 +1,3 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
+build --incompatible_use_toolchain_resolution_for_java_rules=false

@@ -47,8 +47,9 @@ def {{ .Rule.Name }}(**kwargs):
 
 func makeClosure() *Language {
 	return &Language{
-		Dir:  "closure",
-		Name: "closure",
+		Dir:   "closure",
+		Name:  "closure",
+		Flags: cppFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "closure_proto_compile",
@@ -66,6 +67,14 @@ func makeClosure() *Language {
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates a closure_library with compiled protobuf *.js files",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category:    "build",
+						Name:        "incompatible_disallow_struct_provider_syntax",
+						Value:       "false",
+						Description: "com_github_grpc_grpc/bazel/generate_cc.bzl: 81",
+					},
+				},
 			},
 		},
 	}

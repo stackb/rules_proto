@@ -1,4 +1,5 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
+build --incompatible_use_toolchain_resolution_for_java_rules=false
 # dotnet SDK desperately wants to find the HOME directory
 build --strategy=CoreCompile=standalone

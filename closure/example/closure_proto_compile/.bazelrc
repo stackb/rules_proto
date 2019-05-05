@@ -1,2 +1,5 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
+build --incompatible_use_toolchain_resolution_for_java_rules=false
+# compile.bzl proto_compile declares an output
+build --incompatible_no_rule_outputs_param=false
