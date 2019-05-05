@@ -44,4 +44,3 @@ def ruby_proto_compile(**kwargs):
         plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
         **kwargs
     )
-

@@ -370,8 +370,7 @@ def {{ .Rule.Name }}(**kwargs):
         verbose_string = "%s" % kwargs.get("verbose", 0),
         plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
         **kwargs
-    )
-`)
+    )`)
 
 var usageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 

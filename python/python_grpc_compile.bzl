@@ -45,4 +45,3 @@ def python_grpc_compile(**kwargs):
         plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
         **kwargs
     )
-
