@@ -1,3 +1,15 @@
 build --strategy=CoreCompile=standalone
+
+build --all_incompatible_changes 
 build --incompatible_no_rule_outputs_param=false
-#build --incompatible_disallow_data_transition=false # needed for dart
+build --incompatible_disallow_struct_provider_syntax=false 
+build --incompatible_use_jdk11_as_host_javabase=false 
+build --incompatible_use_toolchain_resolution_for_java_rules=false 
+build --incompatible_disable_legacy_proto_provider=false 
+build --incompatible_enable_cc_toolchain_resolution=false 
+build --incompatible_require_ctx_in_configure_features=false 
+build --incompatible_depset_is_not_iterable=false 
+build --incompatible_no_transitive_loads=false
+build --incompatible_disable_deprecated_attr_params=false
+build --incompatible_depset_union=false
+build --incompatible_new_actions_api=false

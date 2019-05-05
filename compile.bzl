@@ -647,6 +647,7 @@ proto_compile = rule(
             doc = "Transitive rules.  When the 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
         ),
     },
+    # TODO(pcj) remove this
     outputs = {
         "descriptor": "%{name}/descriptor.source.bin",
     },

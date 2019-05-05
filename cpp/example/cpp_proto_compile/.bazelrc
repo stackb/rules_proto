@@ -1,0 +1,4 @@
+# Start with --all_incompatible_changes by default
+build --all_incompatible_changes
+# compile.bzl proto_compile declares an output
+build --incompatible_no_rule_outputs_param=false

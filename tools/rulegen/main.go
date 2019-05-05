@@ -38,6 +38,9 @@ type Language struct {
 	// List of available plugins
 	Plugins map[string]*Plugin
 
+	// Bazel build flags required / suggested
+	Flags []*Flag
+
 	// Does the langaguage has a routeguide server?  If so, this is the bazel target to run it.
 	RouteGuideServer, RouteGuideClient string
 
@@ -83,7 +86,7 @@ type Rule struct {
 	// Not compatible with remote execution
 	RemoteIncompatible bool
 
-	// Bazel build flags
+	// Bazel build flags required / suggested
 	Flags []*Flag
 
 	// If not the empty string, one-word reason why excluded from TravisCI
@@ -465,6 +468,12 @@ func mustWriteLanguageExampleBuildFile(dir string, lang *Language, rule *Rule) {
 
 func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
+	out.w("# Start with --all_incompatible_changes by default")
+	out.w("build --all_incompatible_changes")
+	for _, f := range lang.Flags {
+		out.w("# %s", f.Description)
+		out.w("%s --%s=%s", f.Category, f.Name, f.Value)
+	}
 	for _, f := range rule.Flags {
 		out.w("# %s", f.Description)
 		out.w("%s --%s=%s", f.Category, f.Name, f.Value)

@@ -1,0 +1,2 @@
+# Start with --all_incompatible_changes by default
+build --all_incompatible_changes

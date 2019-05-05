@@ -57,10 +57,20 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
+var cppFlags = []*Flag{
+	{
+		Category:    "build",
+		Name:        "incompatible_no_rule_outputs_param",
+		Value:       "false",
+		Description: "compile.bzl proto_compile declares an output",
+	},
+}
+
 func makeCpp() *Language {
 	return &Language{
-		Dir:  "cpp",
-		Name: "cpp",
+		Dir:   "cpp",
+		Name:  "cpp",
+		Flags: cppFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "cpp_proto_compile",
@@ -95,6 +105,26 @@ func makeCpp() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates *.h,*.cc protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category:    "build",
+						Name:        "incompatible_disable_legacy_proto_provider",
+						Value:       "false",
+						Description: "grpc/gprc has not migrated to ProtoInfo provider",
+					},
+					{
+						Category:    "build",
+						Name:        "incompatible_depset_is_not_iterable",
+						Value:       "false",
+						Description: "com_github_grpc_grpc/bazel/generate_cc.bzl line 10, in generate_cc_impl",
+					},
+					{
+						Category:    "build",
+						Name:        "incompatible_disallow_struct_provider_syntax",
+						Value:       "false",
+						Description: "com_github_grpc_grpc/bazel/generate_cc.bzl: 81",
+					},
+				},
 			},
 		},
 	}
