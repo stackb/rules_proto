@@ -228,7 +228,7 @@ def grpc_ecosystem_grpc_gateway(**kwargs):
 
 def org_pubref_rules_node(**kwargs):
     name = "org_pubref_rules_node"
-    ref = get_ref(name, "9ebfa90ca3283bb0f92ae5f337173a5a5a4d98aa", kwargs)  
+    ref = get_ref(name, "9ebfa90ca3283bb0f92ae5f337173a5a5a4d98aa", kwargs)
     sha256 = get_sha256(name, "cb1bf3d64c0b323bc515748902df9fef9ecfcc37c7aa84253d7e99d876f1196a", kwargs)
     github_archive(name, "pubref", "rules_node", ref, sha256)
 
@@ -263,7 +263,7 @@ def io_bazel_rules_go(**kwargs):
     """Go Rules
     """
     name = "io_bazel_rules_go"
-    ref = get_ref(name, "4fec67d1fcefe7c80d6f4cc2ae0841c9d90e429a", kwargs) # post-18.3
+    ref = get_ref(name, "4fec67d1fcefe7c80d6f4cc2ae0841c9d90e429a", kwargs)  # post-18.3
     sha256 = get_sha256(name, "2ab9320c583b05b805a7f8f4005fd081606505a64308051008d32148d7f98e1f", kwargs)
     github_archive(name, "bazelbuild", "rules_go", ref, sha256)
 

@@ -3,8 +3,8 @@ load("//python:python_proto_compile.bzl", "python_proto_compile")
 
 python_proto_compile(
     name = "person",
-    deps = ["//example/proto:person_proto"],
     verbose = 0,
+    deps = ["//example/proto:person_proto"],
 )
 
 python_grpc_library(

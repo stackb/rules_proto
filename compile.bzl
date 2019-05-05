@@ -407,7 +407,7 @@ def proto_compile_impl(ctx):
     outdir = descriptor.dirname
 
     # <list<ProtoInfo>> A list of ProtoInfo
-    deps = [ dep[ProtoInfo] for dep in ctx.attr.deps ]
+    deps = [dep[ProtoInfo] for dep in ctx.attr.deps]
 
     # <list<PluginInfo>> A list of PluginInfo
     plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
@@ -603,7 +603,6 @@ def proto_compile_impl(ctx):
         args = args,
         descriptor = descriptor,
     ), DefaultInfo(files = depset(files))]
-
 
 proto_compile = rule(
     implementation = proto_compile_impl,
