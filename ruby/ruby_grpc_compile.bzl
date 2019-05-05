@@ -30,7 +30,7 @@ ruby_grpc_compile_aspect = aspect(
 _rule = rule(
     implementation = proto_compile_impl,
     attrs = dict(
-        proto_compile_attrs, 
+        proto_compile_attrs,
         deps = attr.label_list(
             mandatory = True,
             providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
