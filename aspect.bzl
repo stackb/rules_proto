@@ -153,7 +153,7 @@ def proto_compile_aspect_impl(target, ctx):
 
     # <list<ProtoInfo>> A list of ProtoInfo
     # deps = [dep.proto for dep in ctx.attr.deps]
-    deps = [dep.proto for dep in node.attr.deps]  # DIFFERENT
+    deps = [dep[ProtoInfo] for dep in node.attr.deps]  # DIFFERENT
 
     # <list<PluginInfo>> A list of PluginInfo
     plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr._plugins]  # ~~SAME~~ SLIGHTLY DIFFERENT
@@ -290,8 +290,6 @@ def proto_compile_aspect_impl(target, ctx):
 
     args += ["--plugin=protoc-gen-%s=%s" % (k, v.path) for k, v in plugin_tools.items()]  # SAME
 
-    # args += [proto.path for proto in targets.values()]
-    # args += [_proto_path(f) for proto in targets.values()] # DIDN'T WORK
     args += [_proto_path(f) for f in protos]
 
     mnemonic = "ProtoCompile"  # SAME
@@ -314,6 +312,7 @@ def proto_compile_aspect_impl(target, ctx):
             print("EXPECTED OUTPUT:", f.path)
         print("INPUTS:", inputs)
         print("TOOLS:", tools)
+        print("COMMAND:", command)
         for arg in args:
             print("ARG:", arg)
 
@@ -349,7 +348,14 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles, plugin_options):
       <string> for the protoc arg list.
     """
     label_name = ctx.label.name
-    arg = ctx.bin_dir.path
+    arg = "%s/%s" % (ctx.bin_dir.path, ctx.label.workspace_root)
+
+    # Graveyard of failed attempts (above)....
+    # arg = "%s/%s" % (ctx.bin_dir.path, ctx.label.package)
+    # arg = ctx.bin_dir.path
+    # arg = ctx.label.workspace_root
+    # arg = ctx.build_file_path
+    # arg = "."
 
     if plugin.outdir:
         arg = plugin.outdir.replace("{name}", outdir)

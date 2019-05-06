@@ -83,6 +83,12 @@ python_grpc_compile(
 )
 ```
 
+### `Flags`
+
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_enable_cc_toolchain_resolution | false |  |
+
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |

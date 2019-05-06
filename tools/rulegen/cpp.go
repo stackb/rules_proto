@@ -58,12 +58,12 @@ def {{ .Rule.Name }}(**kwargs):
     )`)
 
 var commonLangFlags = []*Flag{
-	{
-		Category:    "build",
-		Name:        "incompatible_no_rule_outputs_param",
-		Value:       "false",
-		Description: "compile.bzl proto_compile declares an output",
-	},
+	// {
+	// 	Category:    "build",
+	// 	Name:        "incompatible_no_rule_outputs_param",
+	// 	Value:       "false",
+	// 	Description: "compile.bzl proto_compile declares an output",
+	// },
 }
 
 func makeCpp() *Language {

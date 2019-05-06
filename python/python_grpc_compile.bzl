@@ -33,7 +33,7 @@ _rule = rule(
         proto_compile_attrs,
         deps = attr.label_list(
             mandatory = True,
-            providers = ["proto", "proto_compile", ProtoLibraryAspectNodeInfo],
+            providers = [ProtoInfo, "proto_compile", ProtoLibraryAspectNodeInfo],
             aspects = [python_grpc_compile_aspect],
         ),
     ),

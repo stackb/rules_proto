@@ -120,6 +120,7 @@ func makePython() *Language {
 	return &Language{
 		Dir:   "python",
 		Name:  "python",
+		Flags: commonLangFlags,
 		Notes: aspectLangNotes,
 		Rules: []*Rule{
 			&Rule{
@@ -139,6 +140,13 @@ func makePython() *Language {
 				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates *.py protobuf+gRPC artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Name:     "incompatible_enable_cc_toolchain_resolution",
+						Value:    "false",
+						Category: "build",
+					},
+				},
 			},
 			&Rule{
 				Name:           "python_proto_library",
