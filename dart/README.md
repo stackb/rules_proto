@@ -51,7 +51,13 @@ dart_proto_compile(
 
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
-| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
+| build | incompatible_no_transitive_loads | false |  |
+| build | incompatible_disable_deprecated_attr_params | false |  |
+| build | incompatible_enable_cc_toolchain_resolution | false |  |
+| build | incompatible_require_ctx_in_configure_features | false |  |
+| build | incompatible_depset_is_not_iterable | false |  |
+| build | incompatible_depset_union | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 
@@ -117,7 +123,13 @@ dart_grpc_compile(
 
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
-| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
+| build | incompatible_no_transitive_loads | false |  |
+| build | incompatible_disable_deprecated_attr_params | false |  |
+| build | incompatible_enable_cc_toolchain_resolution | false |  |
+| build | incompatible_require_ctx_in_configure_features | false |  |
+| build | incompatible_depset_is_not_iterable | false |  |
+| build | incompatible_depset_union | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 
@@ -183,7 +195,13 @@ dart_proto_library(
 
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
-| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
+| build | incompatible_no_transitive_loads | false |  |
+| build | incompatible_disable_deprecated_attr_params | false |  |
+| build | incompatible_enable_cc_toolchain_resolution | false |  |
+| build | incompatible_require_ctx_in_configure_features | false |  |
+| build | incompatible_depset_is_not_iterable | false |  |
+| build | incompatible_depset_union | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 
@@ -253,7 +271,13 @@ dart_grpc_library(
 
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
-| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
+| build | incompatible_no_transitive_loads | false |  |
+| build | incompatible_disable_deprecated_attr_params | false |  |
+| build | incompatible_enable_cc_toolchain_resolution | false |  |
+| build | incompatible_require_ctx_in_configure_features | false |  |
+| build | incompatible_depset_is_not_iterable | false |  |
+| build | incompatible_depset_union | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 
