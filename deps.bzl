@@ -204,8 +204,8 @@ def io_bazel_rules_dotnet(**kwargs):
 
 def io_bazel_rules_scala(**kwargs):
     name = "io_bazel_rules_scala"
-    ref = get_ref(name, "6a9f81aa29563a07cc69a2555e54ac3cdfd396ed", kwargs)  # Apr 14 2019 (merged #725)
-    sha256 = get_sha256(name, "d746ba9606bf05c5987e61cf02750ea12724341b3cfd1724bf9ab0bd03c47284", kwargs)
+    ref = get_ref(name, "14d9742496859faaf860b1adfc8126f3ed077921", kwargs)  # May 3, 2019
+    sha256 = get_sha256(name, "72fc4357b29ec93951d472ee22a4cc3f30e170234a4ec73ff678f43f7e276bd4", kwargs)
     github_archive(name, "bazelbuild", "rules_scala", ref, sha256)
 
 def io_bazel_rules_rust(**kwargs):
