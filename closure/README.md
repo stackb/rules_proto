@@ -84,6 +84,7 @@ closure_proto_library(
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
 | build | incompatible_disallow_struct_provider_syntax | false |  |
+| build | incompatible_use_toolchain_resolution_for_java_rules | false |  |
 
 ### Mandatory Attributes
 

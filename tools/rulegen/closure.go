@@ -73,6 +73,11 @@ func makeClosure() *Language {
 						Name:     "incompatible_disallow_struct_provider_syntax",
 						Value:    "false",
 					},
+					{
+						Category: "build",
+						Name:     "incompatible_use_toolchain_resolution_for_java_rules",
+						Value:    "false",
+					},
 				},
 			},
 		},
