@@ -52,8 +52,9 @@ def {{ .Rule.Name }}(**kwargs):
 
 func makeObjc() *Language {
 	return &Language{
-		Dir:  "objc",
-		Name: "objc",
+		Dir:   "objc",
+		Name:  "objc",
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "objc_proto_compile",
