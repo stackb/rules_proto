@@ -108,8 +108,9 @@ def {{ .Rule.Name }}(**kwargs):
 
 func makeD() *Language {
 	return &Language{
-		Dir:  "d",
-		Name: "d",
+		Dir:   "d",
+		Name:  "d",
+		Flags: cppFlags,
 		Plugins: map[string]*Plugin{
 			"//d:d": &Plugin{
 				Tool: "@com_github_dcarp_protobuf_d//:protoc-gen-d",
@@ -124,6 +125,13 @@ func makeD() *Language {
 				Example:        dProtoCompileExampleTemplate,
 				Doc:            "Generates d protobuf artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category: "build",
+						Name:     "incompatible_disallow_struct_provider_syntax",
+						Value:    "false",
+					},
+				},
 			},
 			// &Rule{
 			// 	Name:           "d_grpc_compile",
