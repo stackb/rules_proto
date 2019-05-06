@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"path/filepath"
 	"syscall"
 )
 
@@ -14,6 +15,8 @@ func main() {
 	// ./bazel-out/host/bin/external/build_stack_rules_proto/scala/compiler_plugin_deploy.jar
 	// ./bazel-out/host/bin/external/build_stack_rules_proto/scala/linux_amd64_stripped
 	// ./bazel-out/host/bin/external/build_stack_rules_proto/scala/linux_amd64_stripped/protoc-gen-scala
+
+	listFiles(".")
 
 	jar := mustFindInSandbox(path.Dir(os.Args[0]), "compiler_plugin_deploy.jar")
 	err, exitCode := run("external/local_jdk/jre/bin/java", append([]string{"-jar", jar}, os.Args...), ".", nil)
@@ -83,4 +86,17 @@ func run(entrypoint string, args []string, dir string, env []string) (error, int
 		exitCode = ws.ExitStatus()
 	}
 	return err, exitCode
+}
+
+// listFiles - convenience debugging function to log the files under a given dir
+func listFiles(dir string) error {
+	log.Println("Listing files under " + dir)
+	return filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			log.Printf("%v\n", err)
+			return err
+		}
+		log.Println(path)
+		return nil
+	})
 }
