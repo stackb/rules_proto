@@ -112,6 +112,7 @@ func makeAndroid() *Language {
 	return &Language{
 		Dir:  "android",
 		Name: "android",
+		BazelCIExclusionReason: "WIP to get android running again",
 		Rules: []*Rule{
 			&Rule{
 				Name:           "android_proto_compile",

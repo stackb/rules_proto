@@ -3,26 +3,6 @@ tasks:
   ubuntu1604:
     build_targets:
     - "..."
-  android_proto_compile:
-    platform: ubuntu1804
-    working_directory: android/example/android_proto_compile
-    build_targets:
-      - "..."
-  android_grpc_compile:
-    platform: ubuntu1804
-    working_directory: android/example/android_grpc_compile
-    build_targets:
-      - "..."
-  android_proto_library:
-    platform: ubuntu1804
-    working_directory: android/example/android_proto_library
-    build_targets:
-      - "..."
-  android_grpc_library:
-    platform: ubuntu1804
-    working_directory: android/example/android_grpc_library
-    build_targets:
-      - "..."
   closure_proto_compile:
     platform: ubuntu1804
     working_directory: closure/example/closure_proto_compile

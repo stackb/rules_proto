@@ -50,6 +50,10 @@ type Language struct {
 
 	// Additional travis-specific env vars in the form "K=V"
 	TravisEnvVars []string
+
+	// If not the empty string, one-word reason why excluded from bazelci
+	// configuration
+	BazelCIExclusionReason string
 }
 
 type Rule struct {
@@ -95,6 +99,10 @@ type Rule struct {
 
 	// Additional travis-specific env vars in the form "K=V"
 	TravisEnvVars []string
+
+	// If not the empty string, one-word reason why excluded from bazelci
+	// configuration
+	BazelCIExclusionReason string
 }
 
 // Flag captures information about a bazel build flag.
@@ -668,7 +676,14 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	out.tpl(header, data)
 
 	for _, lang := range languages {
+		if lang.BazelCIExclusionReason != "" {
+			continue
+		}
 		for _, rule := range lang.Rules {
+			if lang.BazelCIExclusionReason != "" {
+				continue
+			}
+
 			exampleDir := path.Join(dir, lang.Dir, "example", rule.Name)
 
 			out.w("  %s:", rule.Name)
