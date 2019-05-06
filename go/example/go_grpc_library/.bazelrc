@@ -1,5 +1,4 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
-build --incompatible_no_rule_outputs_param=false
 # /tools/cpp/toolchain_utils.bzl: line 41, in find_cpp_toolchain: In order to use find_cpp_toolch... In order to use find_cpp_toolchain, you must include the '@bazel_tools//tools/cpp:toolchain_type' in the toolchains argument to your rule.
  --is_cc_toolchain_resolution_enabled_do_not_use=true

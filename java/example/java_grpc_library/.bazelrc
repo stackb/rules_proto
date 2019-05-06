@@ -1,5 +1,4 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
-build --incompatible_no_rule_outputs_param=false
 # bazel_tools/tools/jdk/java_toolchain_alias.bzl
 build --incompatible_disallow_struct_provider_syntax=false
