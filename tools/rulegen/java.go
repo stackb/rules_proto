@@ -124,6 +124,11 @@ func makeJava() *Language {
 						Value:       "false",
 						Description: "bazel_tools/tools/jdk/java_toolchain_alias.bzl",
 					},
+					{
+						Category: "build",
+						Name:     "incompatible_use_toolchain_resolution_for_java_rules",
+						Value:    "false",
+					},
 				},
 			},
 		},

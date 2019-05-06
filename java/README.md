@@ -186,6 +186,7 @@ java_grpc_library(
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
 | build | incompatible_disallow_struct_provider_syntax | false | bazel_tools/tools/jdk/java_toolchain_alias.bzl |
+| build | incompatible_use_toolchain_resolution_for_java_rules | false |  |
 
 ### Mandatory Attributes
 

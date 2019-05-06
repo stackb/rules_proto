@@ -1,6 +1,8 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
 # 
+build --incompatible_enable_cc_toolchain_resolution=false
+# 
 build --incompatible_no_transitive_loads=false
 # 
 build --incompatible_disable_deprecated_attr_params=false

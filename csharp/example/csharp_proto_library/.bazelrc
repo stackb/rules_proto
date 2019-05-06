@@ -1,5 +1,7 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
+# 
+build --incompatible_enable_cc_toolchain_resolution=false
 # dotnet SDK desperately wants to find the HOME directory
 build --strategy=CoreCompile=standalone
 # 
