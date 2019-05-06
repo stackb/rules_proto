@@ -666,6 +666,19 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	out := &LineWriter{}
 
 	out.tpl(header, data)
+
+	for _, lang := range languages {
+		for _, rule := range lang.Rules {
+			exampleDir := path.Join(dir, lang.Dir, "example", rule.Name)
+
+			out.w("  %s:", rule.Name)
+			out.w("    platform: ubuntu1804")
+			out.w("    working_directory: %s", exampleDir)
+			out.w("    build_targets:")
+			out.w(`      - "..."`)
+		}
+	}
+
 	out.tpl(footer, data)
 
 	out.MustWrite(path.Join(dir, ".bazelci", "presubmit.yml"))
