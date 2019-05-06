@@ -89,18 +89,19 @@ def {{ .Rule.Name }}(**kwargs):
     )`)
 
 var rubyFlags = []*Flag{
-	{
-		Category:    "build",
-		Name:        "incompatible_disallow_data_transition",
-		Value:       "false",
-		Description: "ruby/binary.bzl is still using cfg=data",
-	},
+	// {
+	// 	Category:    "build",
+	// 	Name:        "incompatible_disallow_data_transition",
+	// 	Value:       "false",
+	// 	Description: "ruby/binary.bzl is still using cfg=data",
+	// },
 }
 
 func makeRuby() *Language {
 	return &Language{
 		Dir:   "ruby",
 		Name:  "ruby",
+		Flags: commonLangFlags,
 		Notes: aspectLangNotes,
 		Rules: []*Rule{
 			&Rule{

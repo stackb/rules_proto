@@ -1,5 +1,3 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
 build --incompatible_no_rule_outputs_param=false
-# ruby/binary.bzl is still using cfg=data
-build --incompatible_disallow_data_transition=false

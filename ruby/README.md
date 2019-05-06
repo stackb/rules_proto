@@ -140,12 +140,6 @@ ruby_proto_library(
 )
 ```
 
-### `Flags`
-
-| Category | Flag | Value | Description |
-| --- | --- | --- | --- |
-| build | incompatible_disallow_data_transition | false | ruby/binary.bzl is still using cfg=data |
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -206,12 +200,6 @@ ruby_grpc_library(
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
-
-### `Flags`
-
-| Category | Flag | Value | Description |
-| --- | --- | --- | --- |
-| build | incompatible_disallow_data_transition | false | ruby/binary.bzl is still using cfg=data |
 
 ### Mandatory Attributes
 
