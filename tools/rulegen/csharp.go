@@ -153,7 +153,7 @@ func makeCsharp() *Language {
 	return &Language{
 		Dir:   "csharp",
 		Name:  "csharp",
-		Flags: cppFlags,
+		Flags: commonLangFlags,
 		Notes: mustTemplate(`**NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
 
 ~~~python

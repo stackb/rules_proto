@@ -74,6 +74,7 @@ func makeJava() *Language {
 		Name:             "java",
 		RouteGuideClient: "//java/example/routeguide:client",
 		RouteGuideServer: "//java/example/routeguide:server",
+		Flags:            commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "java_proto_compile",
@@ -100,6 +101,14 @@ func makeJava() *Language {
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates a jar with compiled protobuf *.class files",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category:    "build",
+						Name:        "incompatible_disallow_struct_provider_syntax",
+						Value:       "false",
+						Description: "bazel_tools/tools/jdk/java_toolchain_alias.bzl",
+					},
+				},
 			},
 			&Rule{
 				Name:           "java_grpc_library",
@@ -108,6 +117,14 @@ func makeJava() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates a jar with compiled protobuf+gRPC *.class files",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category:    "build",
+						Name:        "incompatible_disallow_struct_provider_syntax",
+						Value:       "false",
+						Description: "bazel_tools/tools/jdk/java_toolchain_alias.bzl",
+					},
+				},
 			},
 		},
 	}

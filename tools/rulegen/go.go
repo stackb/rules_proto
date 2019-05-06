@@ -163,6 +163,16 @@ func makeGo() *Language {
 	return &Language{
 		Dir:  "go",
 		Name: "go",
+		// incompatible_disable_legacy_flags_cc_toolchain_api
+		// incompatible_disable_tools_defaults_package
+		// incompatible_enable_cc_toolchain_resolution
+		//
+		// incompatible_enable_legacy_cpp_toolchain_skylark_api
+		Flags: append(commonLangFlags, &Flag{
+			Name:        "is_cc_toolchain_resolution_enabled_do_not_use",
+			Value:       "true",
+			Description: "/tools/cpp/toolchain_utils.bzl: line 41, in find_cpp_toolchain: In order to use find_cpp_toolch... In order to use find_cpp_toolchain, you must include the '@bazel_tools//tools/cpp:toolchain_type' in the toolchains argument to your rule.",
+		}),
 		Plugins: map[string]*Plugin{
 			"//go:go": &Plugin{
 				Tool: "@com_github_golang_protobuf//protoc-gen-go",

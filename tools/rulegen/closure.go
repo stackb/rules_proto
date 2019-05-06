@@ -49,7 +49,7 @@ func makeClosure() *Language {
 	return &Language{
 		Dir:   "closure",
 		Name:  "closure",
-		Flags: cppFlags,
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "closure_proto_compile",

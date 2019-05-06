@@ -149,7 +149,7 @@ func makeDart() *Language {
 	return &Language{
 		Dir:   "dart",
 		Name:  "dart",
-		Flags: cppFlags,
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "dart_proto_compile",

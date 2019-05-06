@@ -57,7 +57,7 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var cppFlags = []*Flag{
+var commonLangFlags = []*Flag{
 	{
 		Category:    "build",
 		Name:        "incompatible_no_rule_outputs_param",
@@ -70,7 +70,7 @@ func makeCpp() *Language {
 	return &Language{
 		Dir:   "cpp",
 		Name:  "cpp",
-		Flags: cppFlags,
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "cpp_proto_compile",

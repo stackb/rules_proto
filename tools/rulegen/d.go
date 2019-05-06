@@ -110,7 +110,7 @@ func makeD() *Language {
 	return &Language{
 		Dir:   "d",
 		Name:  "d",
-		Flags: cppFlags,
+		Flags: commonLangFlags,
 		Plugins: map[string]*Plugin{
 			"//d:d": &Plugin{
 				Tool: "@com_github_dcarp_protobuf_d//:protoc-gen-d",
