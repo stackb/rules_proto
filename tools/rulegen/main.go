@@ -665,34 +665,8 @@ func mustWriteTravisYml(dir, header, footer string, data interface{}, languages 
 func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, languages []*Language, envVars []string) {
 	out := &LineWriter{}
 
-	for _, lang := range languages {
-		if lang.TravisExclusionReason != "" {
-			continue
-		}
-		for _, rule := range lang.Rules {
-			if rule.TravisExclusionReason != "" {
-				continue
-			}
-			env := make([]string, 0)
-			for _, v := range envVars {
-				env = append(env, v)
-			}
-			for _, v := range lang.TravisEnvVars {
-				env = append(env, v)
-			}
-			for _, v := range rule.TravisEnvVars {
-				env = append(env, v)
-			}
-			env = append(env, "LANG="+lang.Dir)
-			env = append(env, "RULE="+rule.Name)
-
-			out.w("  - %s", strings.Join(env, " "))
-		}
-	}
-	out.ln()
-
+	out.tpl(header, data)
 	out.tpl(footer, data)
-	out.ln()
 
 	out.MustWrite(path.Join(dir, ".bazelci", "presubmit.yml"))
 }
