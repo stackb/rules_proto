@@ -2,8 +2,9 @@ package main
 
 func makePhp() *Language {
 	return &Language{
-		Dir:  "php",
-		Name: "php",
+		Dir:   "php",
+		Name:  "php",
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "php_proto_compile",
