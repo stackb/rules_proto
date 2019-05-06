@@ -1,4 +1,2 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
-# 
-build --incompatible_disallow_struct_provider_syntax=false

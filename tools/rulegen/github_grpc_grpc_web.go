@@ -113,6 +113,13 @@ func makeGithubComGrpcGrpcWeb() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates protobuf closure library *.js files",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category: "build",
+						Name:     "incompatible_disallow_struct_provider_syntax",
+						Value:    "false",
+					},
+				},
 			},
 		},
 	}

@@ -243,6 +243,12 @@ closure_grpc_library(
 )
 ```
 
+### `Flags`
+
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
+
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |

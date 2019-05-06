@@ -169,9 +169,10 @@ func makeGo() *Language {
 		//
 		// incompatible_enable_legacy_cpp_toolchain_skylark_api
 		Flags: append(commonLangFlags, &Flag{
-			Name:        "is_cc_toolchain_resolution_enabled_do_not_use",
-			Value:       "true",
-			Description: "/tools/cpp/toolchain_utils.bzl: line 41, in find_cpp_toolchain: In order to use find_cpp_toolch... In order to use find_cpp_toolchain, you must include the '@bazel_tools//tools/cpp:toolchain_type' in the toolchains argument to your rule.",
+			Category:    "build",
+			Name:        "incompatible_enable_cc_toolchain_resolution",
+			Value:       "false",
+			Description: "In order to use find_cpp_toolchain, you must include the '@bazel_tools//tools/cpp:toolchain_type' in the toolchains argument to your rule.",
 		}),
 		Plugins: map[string]*Plugin{
 			"//go:go": &Plugin{
