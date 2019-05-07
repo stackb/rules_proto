@@ -10,8 +10,8 @@ proto_plugin(
     name = "grpc_python",
     outputs = ["_pb2_grpc.py"],
     tool = "@com_github_grpc_grpc//:grpc_python_plugin",
-    visibility = ["//visibility:public"],
     transitivity = {
         "google/protobuf": "exclude",
     },
+    visibility = ["//visibility:public"],
 )
