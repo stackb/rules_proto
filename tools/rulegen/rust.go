@@ -122,6 +122,7 @@ func makeRust() *Language {
 				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates rust protobuf+gRPC artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				BazelCIExclusionReason: "experimental",
 			},
 			&Rule{
 				Name:           "rust_proto_library",
@@ -138,6 +139,7 @@ func makeRust() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates rust protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				BazelCIExclusionReason: "experimental",
 			},
 		},
 	}
