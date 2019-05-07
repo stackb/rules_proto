@@ -1,2 +1,0 @@
-# dotnet SDK desperately wants to find the HOME directory
-build --strategy=CoreCompile=standalone

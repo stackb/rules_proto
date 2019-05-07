@@ -38,6 +38,9 @@ type Language struct {
 	// List of available plugins
 	Plugins map[string]*Plugin
 
+	// Bazel build flags required / suggested
+	Flags []*Flag
+
 	// Does the langaguage has a routeguide server?  If so, this is the bazel target to run it.
 	RouteGuideServer, RouteGuideClient string
 
@@ -46,7 +49,11 @@ type Language struct {
 	TravisExclusionReason string
 
 	// Additional travis-specific env vars in the form "K=V"
-	TravisEnvVars []string
+	PresubmitEnvVars map[string]string
+
+	// If not the empty string, one-word reason why excluded from bazelci
+	// configuration
+	BazelCIExclusionReason string
 }
 
 type Rule struct {
@@ -83,7 +90,7 @@ type Rule struct {
 	// Not compatible with remote execution
 	RemoteIncompatible bool
 
-	// Bazel build flags
+	// Bazel build flags required / suggested
 	Flags []*Flag
 
 	// If not the empty string, one-word reason why excluded from TravisCI
@@ -91,7 +98,11 @@ type Rule struct {
 	TravisExclusionReason string
 
 	// Additional travis-specific env vars in the form "K=V"
-	TravisEnvVars []string
+	PresubmitEnvVars map[string]string
+
+	// If not the empty string, one-word reason why excluded from bazelci
+	// configuration
+	BazelCIExclusionReason string
 }
 
 // Flag captures information about a bazel build flag.
@@ -148,6 +159,16 @@ func main() {
 			Name:  "travis_footer",
 			Usage: "Template for the travis footer",
 			Value: "tools/rulegen/travis.footer.yml",
+		},
+		&cli.StringFlag{
+			Name:  "presubmit_header",
+			Usage: "Template for the bazelci presubmit header",
+			Value: "tools/rulegen/presubmit.header.yml",
+		},
+		&cli.StringFlag{
+			Name:  "presubmit_footer",
+			Usage: "Template for the bazelci presubmit footer",
+			Value: "tools/rulegen/presubmit.footer.yml",
 		},
 		&cli.StringFlag{
 			Name:  "ref",
@@ -232,7 +253,14 @@ func action(c *cli.Context) error {
 		Sha256: sha256,
 	}, languages, bazelVersions)
 
-	mustWriteTravisYml(dir, c.String("travis_header"), c.String("travis_footer"), struct {
+	// mustWriteTravisYml(dir, c.String("travis_header"), c.String("travis_footer"), struct {
+	// 	Ref, Sha256 string
+	// }{
+	// 	Ref:    ref,
+	// 	Sha256: sha256,
+	// }, languages, bazelVersions)
+
+	mustWriteBazelciPresubmitYml(dir, c.String("presubmit_header"), c.String("presubmit_footer"), struct {
 		Ref, Sha256 string
 	}{
 		Ref:    ref,
@@ -325,6 +353,53 @@ def {{ .Rule.Name }}(**kwargs):
         **kwargs
     )`)
 
+var aspectRuleTemplate = mustTemplate(`load("//:plugin.bzl", "ProtoPluginInfo")
+load(
+    "//:aspect.bzl",
+    "ProtoLibraryAspectNodeInfo",
+    "proto_compile_aspect_attrs",
+    "proto_compile_aspect_impl",
+    "proto_compile_attrs",
+    "proto_compile_impl",
+)
+
+# "Aspects should be top-level values in extension files that define them."
+
+{{ .Rule.Name }}_aspect = aspect(
+    implementation = proto_compile_aspect_impl,
+    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
+    attr_aspects = ["deps"],
+    attrs = dict(
+        proto_compile_aspect_attrs,
+        _plugins = attr.label_list(
+            doc = "List of protoc plugins to apply",
+            providers = [ProtoPluginInfo],
+            default = [{{ range .Rule.Plugins }}
+                str(Label("{{ . }}")),{{ end }}
+            ],
+        ),
+    ),
+)
+
+_rule = rule(
+    implementation = proto_compile_impl,
+    attrs = dict(
+        proto_compile_attrs,
+        deps = attr.label_list(
+            mandatory = True,
+            providers = [ProtoInfo, "proto_compile", ProtoLibraryAspectNodeInfo],
+            aspects = [{{ .Rule.Name }}_aspect],
+        ),
+    ),
+)
+
+def {{ .Rule.Name }}(**kwargs):
+    _rule(
+        verbose_string = "%s" % kwargs.get("verbose", 0),
+        plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
+        **kwargs
+    )`)
+
 var usageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()`)
@@ -365,6 +440,8 @@ var grpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )`)
 
+var aspectLangNotes = mustTemplate(`"The {{ .Name }} compile rules use an aspect-based implementation (aspect.bzl) rather than the traditional implementation (compile.bzl)"`)
+
 func mustWriteLanguageRules(dir string, lang *Language) {
 	for _, rule := range lang.Rules {
 		mustWriteLanguageRule(dir, lang, rule)
@@ -380,7 +457,7 @@ func mustWriteLanguageRule(dir string, lang *Language, rule *Rule) {
 
 func mustWriteLanguageExamples(dir string, lang *Language) {
 	for _, rule := range lang.Rules {
-		exampleDir := path.Join(dir, lang.Dir, "example", rule.Name)
+		exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
 		os.MkdirAll(exampleDir, os.ModePerm)
 		mustWriteLanguageExampleWorkspace(exampleDir, lang, rule)
 		mustWriteLanguageExampleBuildFile(exampleDir, lang, rule)
@@ -416,6 +493,12 @@ func mustWriteLanguageExampleBuildFile(dir string, lang *Language, rule *Rule) {
 
 func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
+	out.w("# Start with --all_incompatible_changes by default")
+	out.w("build --all_incompatible_changes")
+	for _, f := range lang.Flags {
+		out.w("# %s", f.Description)
+		out.w("%s --%s=%s", f.Category, f.Name, f.Value)
+	}
 	for _, f := range rule.Flags {
 		out.w("# %s", f.Description)
 		out.w("%s --%s=%s", f.Category, f.Name, f.Value)
@@ -525,19 +608,19 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.w("| Status | Lang | Rule | Description")
 	out.w("| ---    | ---: | :--- | :--- |")
 	for _, lang := range languages {
-		travisExclusionReason := lang.TravisExclusionReason
+		ciExclusionReason := lang.BazelCIExclusionReason
 		for _, rule := range lang.Rules {
-			travisLink := fmt.Sprintf("[![%s](https://travis-ci.org/stackb/rules_proto.svg?branch=master)](https://travis-ci.org/stackb/rules_proto)", headVersion)
-			if travisExclusionReason == "" {
-				travisExclusionReason = rule.TravisExclusionReason
+			ciLink := fmt.Sprintf("[![%s](https://badge.buildkite.com/4eafd3b619b9febae679bac4ce75b6b74643d48384e7f36eeb.svg)](https://buildkite.com/bazel/rules-proto)", headVersion)
+			if ciExclusionReason == "" {
+				ciExclusionReason = rule.BazelCIExclusionReason
 			}
-			if travisExclusionReason != "" {
-				travisLink = travisExclusionReason
+			if ciExclusionReason != "" {
+				ciLink = ciExclusionReason
 			}
 			dirLink := fmt.Sprintf("[%s](/%s)", lang.Name, lang.Dir)
 			ruleLink := fmt.Sprintf("[%s](/%s#%s)", rule.Name, lang.Dir, rule.Name)
-			exampleLink := fmt.Sprintf("[example](/%s/example/%s)", lang.Name, rule.Name)
-			out.w("| %s | %s | %s | %s (%s) |", travisLink, dirLink, ruleLink, rule.Doc, exampleLink)
+			exampleLink := fmt.Sprintf("[example](/%scexample/%s)", lang.Name, rule.Name)
+			out.w("| %s | %s | %s | %s (%s) |", ciLink, dirLink, ruleLink, rule.Doc, exampleLink)
 		}
 	}
 	out.ln()
@@ -565,12 +648,6 @@ func mustWriteTravisYml(dir, header, footer string, data interface{}, languages 
 			for _, v := range envVars {
 				env = append(env, v)
 			}
-			for _, v := range lang.TravisEnvVars {
-				env = append(env, v)
-			}
-			for _, v := range rule.TravisEnvVars {
-				env = append(env, v)
-			}
 			env = append(env, "LANG="+lang.Dir)
 			env = append(env, "RULE="+rule.Name)
 
@@ -583,6 +660,64 @@ func mustWriteTravisYml(dir, header, footer string, data interface{}, languages 
 	out.ln()
 
 	out.MustWrite(path.Join(dir, ".travis.yml"))
+}
+
+func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, languages []*Language, envVars []string) {
+	out := &LineWriter{}
+
+	out.tpl(header, data)
+
+	//
+	// First time around for main code
+	//
+	out.w("  ubuntu1604:")
+	out.w("    environment:")
+	out.w("      CC: clang")
+	out.w("    test_targets:")
+	out.w(`    - "//example/routeguide/..."`)
+	out.w("    build_targets:")
+	for _, lang := range languages {
+		if lang.BazelCIExclusionReason != "" || lang.Name == "rust" || lang.Name == "ruby" || lang.Name == "swift" {
+			continue
+		}
+		out.w(`    - "//%s/..."`, lang.Dir)
+	}
+
+	//
+	// Second time around for examples
+	//
+	for _, lang := range languages {
+		if lang.BazelCIExclusionReason != "" {
+			continue
+		}
+		for _, rule := range lang.Rules {
+			if rule.BazelCIExclusionReason != "" {
+				continue
+			}
+
+			exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
+
+			out.w("  %s:", rule.Name)
+			out.w("    platform: ubuntu1604")
+			out.w("    build_targets:")
+			out.w(`      - "..."`)
+			out.w("    working_directory: %s", exampleDir)
+
+			if len(lang.PresubmitEnvVars) > 0 || len(rule.PresubmitEnvVars) > 0 {
+				out.w("    environment:")
+				for k, v := range lang.PresubmitEnvVars {
+					out.w("      %s: %s", k, v)
+				}
+				for k, v := range rule.PresubmitEnvVars {
+					out.w("      %s: %s", k, v)
+				}
+			}
+		}
+	}
+
+	out.tpl(footer, data)
+
+	out.MustWrite(path.Join(dir, ".bazelci", "presubmit.yml"))
 }
 
 // ********************************

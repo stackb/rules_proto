@@ -20,10 +20,8 @@ import os
 import grpc
 import logging
 
-# Recommend to the directory structure of client.runfiles to figure out the
-# correct import here.
-from routeguide_pb.example.proto import routeguide_pb2
-from routeguide_pb.example.proto import routeguide_pb2_grpc
+from example.proto import routeguide_pb2
+from example.proto import routeguide_pb2_grpc
 
 import resources
 
@@ -121,8 +119,8 @@ def serve():
     routeguide_pb2_grpc.add_RouteGuideServicer_to_server(
         RouteGuideServicer(), server)
     port = '50076'
-    if os.environ["SERVER_PORT"]:
-        port = os.environ["SERVER_PORT"]
+    if os.environ.get("SERVER_PORT"):
+        port = os.environ.get("SERVER_PORT")
     server.add_insecure_port('[::]:' + port)
     print("Python RouteGuide Server listing on :%s..." % port)
     server.start()

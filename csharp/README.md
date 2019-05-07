@@ -185,6 +185,7 @@ csharp_proto_library(
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
 | build | strategy | CoreCompile=standalone | dotnet SDK desperately wants to find the HOME directory |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 
@@ -272,6 +273,7 @@ csharp_grpc_library(
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
 | build | strategy | CoreCompile=standalone | dotnet SDK desperately wants to find the HOME directory |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 

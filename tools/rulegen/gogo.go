@@ -103,6 +103,11 @@ func makeGogo() *Language {
 		Dir:     "github.com/gogo/protobuf",
 		Name:    "gogo",
 		Plugins: make(map[string]*Plugin),
+		Flags: append(commonLangFlags, &Flag{
+			Category: "build",
+			Name:     "incompatible_require_ctx_in_configure_features",
+			Value:    "false",
+		}),
 	}
 
 	addGogoRules(lang, "gogo")

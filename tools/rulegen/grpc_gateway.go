@@ -4,17 +4,17 @@ var grpcGatewayUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:de
 
 io_bazel_rules_go()
 
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains()
+
 bazel_gazelle()
 
 load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
-
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
@@ -65,6 +65,11 @@ func makeGrpcGateway() *Language {
 	return &Language{
 		Dir:  "github.com/grpc-ecosystem/grpc-gateway",
 		Name: "grpc-gateway",
+		Flags: append(commonLangFlags, &Flag{
+			Category: "build",
+			Name:     "incompatible_require_ctx_in_configure_features",
+			Value:    "false",
+		}),
 		Rules: []*Rule{
 			&Rule{
 				Name:           "gateway_grpc_compile",

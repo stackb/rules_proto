@@ -21,8 +21,8 @@ import grpc
 
 # Recommend to the directory structure of client.runfiles to figure out the
 # correct import here.
-from routeguide_pb.example.proto import routeguide_pb2
-from routeguide_pb.example.proto import routeguide_pb2_grpc
+from example.proto import routeguide_pb2
+from example.proto import routeguide_pb2_grpc
 
 import resources
 
@@ -106,8 +106,8 @@ def run():
     # used in circumstances in which the with statement does not fit the needs
     # of the code.
     port = '50051'
-    if os.environ["SERVER_PORT"]:
-        port = os.environ["SERVER_PORT"]
+    if os.environ.get("SERVER_PORT"):
+        port = os.environ.get("SERVER_PORT")
 
     with grpc.insecure_channel('localhost:'+port) as channel:
         stub = routeguide_pb2_grpc.RouteGuideStub(channel)

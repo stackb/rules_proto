@@ -4,7 +4,7 @@ var goUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir
 
 {{ .Rule.Name }}()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -163,6 +163,22 @@ func makeGo() *Language {
 	return &Language{
 		Dir:  "go",
 		Name: "go",
+		// incompatible_disable_legacy_flags_cc_toolchain_api
+		// incompatible_disable_tools_defaults_package
+		// incompatible_enable_cc_toolchain_resolution
+		//
+		// incompatible_enable_legacy_cpp_toolchain_skylark_api
+		Flags: append(commonLangFlags, &Flag{
+			Category:    "build",
+			Name:        "incompatible_enable_cc_toolchain_resolution",
+			Value:       "false",
+			Description: "In order to use find_cpp_toolchain, you must include the '@bazel_tools//tools/cpp:toolchain_type' in the toolchains argument to your rule.",
+		}, &Flag{
+			Category:    "build",
+			Name:        "incompatible_require_ctx_in_configure_features",
+			Value:       "false",
+			Description: `/external/io_bazel_rules_rust/rust/private/rustc.bzl", line 143, in _get_linker_and_args cc_common.configure_features(cc_toolchain = cc_toolchain, reque..., ...) Incompatible flag --incompatible_require_ctx_in_configure_features has been flipped, and the mandatory parameter 'ctx' of cc_common.configure_features is missing`,
+		}),
 		Plugins: map[string]*Plugin{
 			"//go:go": &Plugin{
 				Tool: "@com_github_golang_protobuf//protoc-gen-go",

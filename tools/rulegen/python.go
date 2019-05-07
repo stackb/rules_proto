@@ -118,12 +118,14 @@ py_grpc_library = python_grpc_library`)
 
 func makePython() *Language {
 	return &Language{
-		Dir:  "python",
-		Name: "python",
+		Dir:   "python",
+		Name:  "python",
+		Flags: commonLangFlags,
+		Notes: aspectLangNotes,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "python_proto_compile",
-				Implementation: compileRuleTemplate,
+				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//python:python"},
 				Usage:          usageTemplate,
 				Example:        protoCompileExampleTemplate,
@@ -132,12 +134,19 @@ func makePython() *Language {
 			},
 			&Rule{
 				Name:           "python_grpc_compile",
-				Implementation: compileRuleTemplate,
+				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//python:python", "//python:grpc_python"},
 				Usage:          pythonGrpcCompileUsageTemplate,
 				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates *.py protobuf+gRPC artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Name:     "incompatible_enable_cc_toolchain_resolution",
+						Value:    "false",
+						Category: "build",
+					},
+				},
 			},
 			&Rule{
 				Name:           "python_proto_library",

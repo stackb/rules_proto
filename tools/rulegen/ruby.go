@@ -88,23 +88,16 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var rubyFlags = []*Flag{
-	{
-		Category:    "build",
-		Name:        "incompatible_disallow_data_transition",
-		Value:       "false",
-		Description: "ruby/binary.bzl is still using cfg=data",
-	},
-}
-
 func makeRuby() *Language {
 	return &Language{
-		Dir:  "ruby",
-		Name: "ruby",
+		Dir:   "ruby",
+		Name:  "ruby",
+		Flags: commonLangFlags,
+		Notes: aspectLangNotes,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "ruby_proto_compile",
-				Implementation: compileRuleTemplate,
+				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//ruby:ruby"},
 				Usage:          usageTemplate,
 				Example:        protoCompileExampleTemplate,
@@ -113,7 +106,7 @@ func makeRuby() *Language {
 			},
 			&Rule{
 				Name:           "ruby_grpc_compile",
-				Implementation: compileRuleTemplate,
+				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//ruby:ruby", "//ruby:grpc_ruby"},
 				Usage:          grpcUsageTemplate,
 				Example:        grpcCompileExampleTemplate,
@@ -127,7 +120,6 @@ func makeRuby() *Language {
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates *.rb protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags:          rubyFlags,
 			},
 			&Rule{
 				Name:           "ruby_grpc_library",
@@ -136,7 +128,6 @@ func makeRuby() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates *.rb protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags:          rubyFlags,
 			},
 		},
 	}

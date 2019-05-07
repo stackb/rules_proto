@@ -133,10 +133,6 @@ android_proto_library()
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
 
 android_sdk_repository(name = "androidsdk")
-
-load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
-
-gmaven_rules()
 ```
 
 ### `BUILD.bazel`
@@ -149,6 +145,14 @@ android_proto_library(
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )
 ```
+
+### `Flags`
+
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_remove_native_maven_jar | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
+| build | incompatible_use_toolchain_resolution_for_java_rules | false |  |
 
 ### Mandatory Attributes
 
@@ -196,10 +200,6 @@ android_grpc_library()
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
 
 android_sdk_repository(name = "androidsdk")
-
-load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
-
-gmaven_rules()
 ```
 
 ### `BUILD.bazel`
@@ -212,6 +212,14 @@ android_grpc_library(
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
+
+### `Flags`
+
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_remove_native_maven_jar | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
+| build | incompatible_use_toolchain_resolution_for_java_rules | false |  |
 
 ### Mandatory Attributes
 

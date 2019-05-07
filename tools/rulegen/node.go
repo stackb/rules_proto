@@ -124,8 +124,9 @@ def {{ .Rule.Name }}(**kwargs):
 
 func makeNode() *Language {
 	return &Language{
-		Dir:  "node",
-		Name: "node",
+		Dir:   "node",
+		Name:  "node",
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "node_proto_compile",

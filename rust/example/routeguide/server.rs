@@ -1,15 +1,9 @@
-extern crate routeguide;
-extern crate grpc;
-extern crate tls_api_stub;
-extern crate futures;
-
-use crate::routeguide::routeguide_grpc::RouteGuide;
-use crate::routeguide::routeguide::Point;
-use crate::routeguide::routeguide::Feature;
-use crate::routeguide::routeguide::RouteNote;
-use crate::routeguide::routeguide::RouteSummary;
-use crate::routeguide::routeguide::Rectangle;
-
+use crate::routeguide_grpc::RouteGuide;
+use crate::routeguide::Point;
+use crate::routeguide::Feature;
+use crate::routeguide::RouteNote;
+use crate::routeguide::RouteSummary;
+use crate::routeguide::Rectangle;
 use grpc::ServerHandlerContext;
 use grpc::ServerRequestSingle;
 use grpc::ServerResponseUnarySink;
@@ -31,7 +25,7 @@ use std::io::Read;
 use json::JsonValue;
 
 
-// https://github.com/grpc/grpc-go/blob/master/examples/route_guide/server/server.go
+// https://github.com/grpc/grpc-go/blob/master/examples/routeguide/server/server.go
 #[derive(Default)]
 pub struct RouteGuideImpl {
     saved_features: Vec<Feature>,
@@ -41,7 +35,7 @@ pub struct RouteGuideImpl {
 impl RouteGuideImpl {
     pub fn new_and_load_db() -> RouteGuideImpl {
         RouteGuideImpl {
-            saved_features: load_features(Path::new(ROUTE_GUIDE_DB_PATH)),
+            saved_features: load_features(Path::new(routeguide_DB_PATH)),
             route_notes: Default::default(),
         }
     }
@@ -198,7 +192,7 @@ fn serialize(point: &Point) -> String {
     format!("{} {}", point.latitude, point.longitude)
 }
 
-const ROUTE_GUIDE_DB_PATH: &str = "testdata/route_guide_db.json";
+const routeguide_DB_PATH: &str = "testdata/routeguide_db.json";
 
 fn load_features(path: &Path) -> Vec<Feature> {
     let mut file = fs::File::open(path).expect("open");
@@ -242,7 +236,7 @@ mod test {
 
     #[test]
     fn test_load_features() {
-        let features = load_features(Path::new(ROUTE_GUIDE_DB_PATH));
+        let features = load_features(Path::new(routeguide_DB_PATH));
         assert!(features.len() > 0);
     }
 }

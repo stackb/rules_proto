@@ -18,11 +18,7 @@ load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
 
-android_sdk_repository(name = "androidsdk")
-
-load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
-
-gmaven_rules()`)
+android_sdk_repository(name = "androidsdk")`)
 
 var androidGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 
@@ -40,11 +36,7 @@ load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
 
-android_sdk_repository(name = "androidsdk")
-
-load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
-
-gmaven_rules()`)
+android_sdk_repository(name = "androidsdk")`)
 
 var androidProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@build_bazel_rules_android//android:rules.bzl", "android_library")
@@ -112,6 +104,11 @@ func makeAndroid() *Language {
 	return &Language{
 		Dir:  "android",
 		Name: "android",
+		Flags: append([]*Flag{}, &Flag{
+			Category: "build",
+			Name:     "incompatible_disable_deprecated_attr_params",
+			Value:    "false",
+		}),
 		Rules: []*Rule{
 			&Rule{
 				Name:           "android_proto_compile",
@@ -144,6 +141,23 @@ func makeAndroid() *Language {
 				Implementation: androidProtoLibraryRuleTemplate,
 				Doc:            "Generates android protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category: "build",
+						Name:     "incompatible_remove_native_maven_jar",
+						Value:    "false",
+					},
+					{
+						Category: "build",
+						Name:     "incompatible_disallow_struct_provider_syntax",
+						Value:    "false",
+					},
+					{
+						Category: "build",
+						Name:     "incompatible_use_toolchain_resolution_for_java_rules",
+						Value:    "false",
+					},
+				},
 			},
 			&Rule{
 				Name:           "android_grpc_library",
@@ -154,6 +168,23 @@ func makeAndroid() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates android protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category: "build",
+						Name:     "incompatible_remove_native_maven_jar",
+						Value:    "false",
+					},
+					{
+						Category: "build",
+						Name:     "incompatible_disallow_struct_provider_syntax",
+						Value:    "false",
+					},
+					{
+						Category: "build",
+						Name:     "incompatible_use_toolchain_resolution_for_java_rules",
+						Value:    "false",
+					},
+				},
 			},
 		},
 	}

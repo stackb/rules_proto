@@ -1,5 +1,7 @@
 # `python`
 
+"The python compile rules use an aspect-based implementation (aspect.bzl) rather than the traditional implementation (compile.bzl)"
+
 | Rule | Description |
 | ---: | :--- |
 | [python_proto_compile](#python_proto_compile) | Generates *.py protobuf artifacts |
@@ -80,6 +82,12 @@ python_grpc_compile(
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
+
+### `Flags`
+
+| Category | Flag | Value | Description |
+| --- | --- | --- | --- |
+| build | incompatible_enable_cc_toolchain_resolution | false |  |
 
 ### Mandatory Attributes
 

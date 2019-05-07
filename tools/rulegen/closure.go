@@ -47,8 +47,9 @@ def {{ .Rule.Name }}(**kwargs):
 
 func makeClosure() *Language {
 	return &Language{
-		Dir:  "closure",
-		Name: "closure",
+		Dir:   "closure",
+		Name:  "closure",
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "closure_proto_compile",
@@ -66,6 +67,18 @@ func makeClosure() *Language {
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates a closure_library with compiled protobuf *.js files",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category: "build",
+						Name:     "incompatible_disallow_struct_provider_syntax",
+						Value:    "false",
+					},
+					{
+						Category: "build",
+						Name:     "incompatible_use_toolchain_resolution_for_java_rules",
+						Value:    "false",
+					},
+				},
 			},
 		},
 	}

@@ -38,7 +38,20 @@ func makeSwift() *Language {
 	return &Language{
 		Dir:  "swift",
 		Name: "swift",
-		TravisExclusionReason: "travis incompatible",
+		// TravisExclusionReason: "travis incompatible",
+		BazelCIExclusionReason: "experimental",
+		PresubmitEnvVars: map[string]string{
+			"CC": "clang",
+		},
+		Flags: append(commonLangFlags, &Flag{
+			Category: "build",
+			Name:     "incompatible_require_ctx_in_configure_features",
+			Value:    "false",
+		}, &Flag{
+			Category: "build",
+			Name:     "strategy=SwiftCompile",
+			Value:    "standalone",
+		}),
 		Rules: []*Rule{
 			&Rule{
 				Experimental:   true,

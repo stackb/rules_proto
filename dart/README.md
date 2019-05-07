@@ -21,7 +21,7 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_proto_compile")
 dart_proto_compile()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -51,7 +51,13 @@ dart_proto_compile(
 
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
-| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
+| build | incompatible_no_transitive_loads | false |  |
+| build | incompatible_disable_deprecated_attr_params | false |  |
+| build | incompatible_enable_cc_toolchain_resolution | false |  |
+| build | incompatible_require_ctx_in_configure_features | false |  |
+| build | incompatible_depset_is_not_iterable | false |  |
+| build | incompatible_depset_union | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 
@@ -87,7 +93,7 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_grpc_compile")
 dart_grpc_compile()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -117,7 +123,13 @@ dart_grpc_compile(
 
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
-| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
+| build | incompatible_no_transitive_loads | false |  |
+| build | incompatible_disable_deprecated_attr_params | false |  |
+| build | incompatible_enable_cc_toolchain_resolution | false |  |
+| build | incompatible_require_ctx_in_configure_features | false |  |
+| build | incompatible_depset_is_not_iterable | false |  |
+| build | incompatible_depset_union | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 
@@ -153,7 +165,7 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_proto_library")
 dart_proto_library()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -183,7 +195,13 @@ dart_proto_library(
 
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
-| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
+| build | incompatible_no_transitive_loads | false |  |
+| build | incompatible_disable_deprecated_attr_params | false |  |
+| build | incompatible_enable_cc_toolchain_resolution | false |  |
+| build | incompatible_require_ctx_in_configure_features | false |  |
+| build | incompatible_depset_is_not_iterable | false |  |
+| build | incompatible_depset_union | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 
@@ -219,7 +237,7 @@ load("@build_stack_rules_proto//dart:deps.bzl", "dart_grpc_library")
 dart_grpc_library()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -253,7 +271,13 @@ dart_grpc_library(
 
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
-| build | incompatible_disallow_data_transition | false | vm.bzl is still using cfg=data |
+| build | incompatible_no_transitive_loads | false |  |
+| build | incompatible_disable_deprecated_attr_params | false |  |
+| build | incompatible_enable_cc_toolchain_resolution | false |  |
+| build | incompatible_require_ctx_in_configure_features | false |  |
+| build | incompatible_depset_is_not_iterable | false |  |
+| build | incompatible_depset_union | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 

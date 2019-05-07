@@ -5,7 +5,7 @@ var dartUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.D
 {{ .Rule.Name }}()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -24,7 +24,7 @@ var dartGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto/
 {{ .Rule.Name }}()
 
 # rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -102,18 +102,54 @@ def {{ .Rule.Name }}(**kwargs):
     )`)
 
 var dartFlags = []*Flag{
+	// {
+	// 	Category:    "build",
+	// 	Name:        "incompatible_disallow_data_transition",
+	// 	Value:       "false",
+	// 	Description: "vm.bzl is still using cfg=data",
+	// },
 	{
-		Category:    "build",
-		Name:        "incompatible_disallow_data_transition",
-		Value:       "false",
-		Description: "vm.bzl is still using cfg=data",
+		Category: "build",
+		Name:     "incompatible_no_transitive_loads",
+		Value:    "false",
+	},
+	{
+		Category: "build",
+		Name:     "incompatible_disable_deprecated_attr_params",
+		Value:    "false",
+	},
+	{
+		Category: "build",
+		Name:     "incompatible_enable_cc_toolchain_resolution",
+		Value:    "false",
+	},
+	{
+		Category: "build",
+		Name:     "incompatible_require_ctx_in_configure_features",
+		Value:    "false",
+	},
+	{
+		Category: "build",
+		Name:     "incompatible_depset_is_not_iterable",
+		Value:    "false",
+	},
+	{
+		Category: "build",
+		Name:     "incompatible_depset_union",
+		Value:    "false",
+	},
+	{
+		Category: "build",
+		Name:     "incompatible_disallow_struct_provider_syntax",
+		Value:    "false",
 	},
 }
 
 func makeDart() *Language {
 	return &Language{
-		Dir:  "dart",
-		Name: "dart",
+		Dir:   "dart",
+		Name:  "dart",
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "dart_proto_compile",

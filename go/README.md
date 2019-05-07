@@ -20,7 +20,7 @@ load("@build_stack_rules_proto//go:deps.bzl", "go_proto_compile")
 
 go_proto_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -73,7 +73,7 @@ load("@build_stack_rules_proto//go:deps.bzl", "go_grpc_compile")
 
 go_grpc_compile()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -126,7 +126,7 @@ load("@build_stack_rules_proto//go:deps.bzl", "go_proto_library")
 
 go_proto_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -183,7 +183,7 @@ load("@build_stack_rules_proto//go:deps.bzl", "go_grpc_library")
 
 go_grpc_library()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 

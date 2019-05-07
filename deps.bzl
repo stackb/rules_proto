@@ -1,5 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
+# load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
 
 # https://raw.githubusercontent.com/grpc/grpc/master/third_party/zlib.BUILD
 ZLIB_BUILD = """
@@ -65,7 +65,7 @@ def jar(name, artifact, sha1):
     """Declare a maven_jar
     """
     if name not in native.existing_rules():
-        maven_jar(
+        native.maven_jar(
             name = name,
             artifact = artifact,
             sha1 = sha1,
@@ -204,20 +204,20 @@ def io_bazel_rules_dotnet(**kwargs):
 
 def io_bazel_rules_scala(**kwargs):
     name = "io_bazel_rules_scala"
-    ref = get_ref(name, "6a9f81aa29563a07cc69a2555e54ac3cdfd396ed", kwargs)  # Apr 14 2019 (merged #725)
-    sha256 = get_sha256(name, "d746ba9606bf05c5987e61cf02750ea12724341b3cfd1724bf9ab0bd03c47284", kwargs)
+    ref = get_ref(name, "14d9742496859faaf860b1adfc8126f3ed077921", kwargs)  # May 3, 2019
+    sha256 = get_sha256(name, "72fc4357b29ec93951d472ee22a4cc3f30e170234a4ec73ff678f43f7e276bd4", kwargs)
     github_archive(name, "bazelbuild", "rules_scala", ref, sha256)
 
 def io_bazel_rules_rust(**kwargs):
     name = "io_bazel_rules_rust"
-    ref = get_ref(name, "2215277a2be52263ca5cd4e547cc4a50e320b828", kwargs)
-    sha256 = get_sha256(name, "55d2ff891c25ebf589aff604c8f1b41afa3fe88dbc3b6f912cd44974111b413e", kwargs)
+    ref = get_ref(name, "d28b121396974a628b9cdb29b6ed7f4e370edb4e", kwargs)  # May 8, 2019
+    sha256 = get_sha256(name, "58b8786e00b3489ce127e001670fd991547bb7db315e8a214915a2fa0b83743f", kwargs)
     github_archive(name, "bazelbuild", "rules_rust", ref, sha256)
 
 def com_github_yugui_rules_ruby(**kwargs):
     name = "com_github_yugui_rules_ruby"
-    ref = get_ref(name, "933aa144b2683a37bd949bf9ec2ac532382770d8", kwargs)  # PR#8,
-    sha256 = get_sha256(name, "c3177fd260fbf9434eec0183276cd3f37469ed120b8dd1f71be7b4af34725bed", kwargs)
+    ref = get_ref(name, "73479cdc6a34a8d940cc3c904badf7a2ae6bdc6d", kwargs)  # PR#8,
+    sha256 = get_sha256(name, "bd88b1aa144f70bb3f069ff3ddc5ddba032311ce27fb40b7276db694dcb63490", kwargs)
     github_archive(name, "yugui", "rules_ruby", ref, sha256)
 
 def grpc_ecosystem_grpc_gateway(**kwargs):
@@ -228,8 +228,8 @@ def grpc_ecosystem_grpc_gateway(**kwargs):
 
 def org_pubref_rules_node(**kwargs):
     name = "org_pubref_rules_node"
-    ref = get_ref(name, "c7b9ae3eb2fa75bec2fdd4d188b57ab431796f5d", kwargs)  # PR#80
-    sha256 = get_sha256(name, "b4a10f3325dd44ddabf9a75778cb7f183abe629815b8cd3a9c761490fcb6ba8b", kwargs)
+    ref = get_ref(name, "9ebfa90ca3283bb0f92ae5f337173a5a5a4d98aa", kwargs)
+    sha256 = get_sha256(name, "cb1bf3d64c0b323bc515748902df9fef9ecfcc37c7aa84253d7e99d876f1196a", kwargs)
     github_archive(name, "pubref", "rules_node", ref, sha256)
 
 def build_bazel_rules_android(**kwargs):
@@ -263,8 +263,8 @@ def io_bazel_rules_go(**kwargs):
     """Go Rules
     """
     name = "io_bazel_rules_go"
-    ref = get_ref(name, "2d792dea8d22c552f455623bb15eb4f61fcb2f1b", kwargs)  # 0.16.5
-    sha256 = get_sha256(name, "6afe04f13fd9a1ad8f02a44ebd0c61a825c01e8745cadb7db13ee7a68d9d492c", kwargs)
+    ref = get_ref(name, "4fec67d1fcefe7c80d6f4cc2ae0841c9d90e429a", kwargs)  # post-18.3
+    sha256 = get_sha256(name, "2ab9320c583b05b805a7f8f4005fd081606505a64308051008d32148d7f98e1f", kwargs)
     github_archive(name, "bazelbuild", "rules_go", ref, sha256)
 
 def io_bazel_rules_python(**kwargs):
@@ -283,7 +283,7 @@ def six(**kwargs):
             build_file_content = """
 genrule(
   name = "copy_six",
-  srcs = ["six-1.10.0/six.py"],
+  srcs = ["six-1.12.0/six.py"],
   outs = ["six.py"],
   cmd = "cp $< $(@)",
 )
@@ -295,17 +295,17 @@ py_library(
   visibility = ["//visibility:public"],
 )
         """,
-            sha256 = "105f8d68616f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a",
-            urls = ["https://pypi.python.org/packages/source/s/six/six-1.10.0.tar.gz#md5=34eed507548117b2ab523ab14b2f8b55"],
+            sha256 = "105f8d68613f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a",
+            urls = ["https://pypi.python.org/packages/source/s/six/six-1.12.0.tar.gz"],
         )
 
 def io_bazel_rules_dart(**kwargs):
     """Dart Rules
     """
     name = "io_bazel_rules_dart"
-    ref = get_ref(name, "78a4e1ba257bbe9a9d7a064c8cde8c5317059e17", kwargs)  # ~11/27/2018
-    sha256 = get_sha256(name, "7e699c457f45151e5c61dce6bdcaf14e4cb840d95af86c13a9e7eecc49fd39a3", kwargs)
-    github_archive(name, "dart-lang", "rules_dart", ref, sha256)
+    ref = get_ref(name, "07aa5a42827f74d707ad3abcd3edbc14c7cad837", kwargs)  # Mar 11 (fork of dart-lang/rules_dart)
+    sha256 = get_sha256(name, "836aa1908fda2c5f25f5a8dc298399d60252006c2953d170b95a33bfc5b5de14", kwargs)
+    github_archive(name, "FKint", "rules_dart", ref, sha256)
 
 def io_bazel_rules_d(**kwargs):
     """d Rules
@@ -319,17 +319,17 @@ def com_google_protobuf_lite(**kwargs):
     """A different branch of google/protobuf that contains the protobuf_lite plugin
     """
     name = "com_google_protobuf_lite"
-    ref = get_ref(name, "d5e9baa5841d501996ddacbba6ad6da1912e8eeb", kwargs)  # ivuca #66
-    sha256 = get_sha256(name, "c836a2046acb9635e259c3e639dc2ca50d4550d0350f1c98236fb203065e0359", kwargs)
+    ref = get_ref(name, "3cf3be9959928bf8a7133d323eaf6a5a8d5afdd7", kwargs)  # latest as of Apr 9, 2019
+    sha256 = get_sha256(name, "9f28fd96ccd1f87e0b2d23c622db2a87c87ff91dc30dd13a6dd3bff11738e608", kwargs)
     github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
-def gmaven_rules(**kwargs):
-    """A catalog of maven & android jars on google maven server
+def rules_jvm_external(**kwargs):
+    """Fetch maven artifacts
     """
-    name = "gmaven_rules"
-    ref = get_ref(name, "20180927-1", kwargs)
-    sha256 = get_sha256(name, "ddaa0f5811253e82f67ee637dc8caf3989e4517bac0368355215b0dcfa9844d6", kwargs)
-    github_archive(name, "bazelbuild", "gmaven_rules", ref, sha256)
+    name = "rules_jvm_external"
+    ref = get_ref(name, "e359007344bc53133e1e54c891670d08453d4827", kwargs)  # May 7 2019
+    sha256 = get_sha256(name, "150c8cd5a3abe8b2da09235ebe5aedd0a379440d9f6a15d1c99c2b1e560a09f9", kwargs)
+    github_archive(name, "bazelbuild", "rules_jvm_external", ref, sha256)
 
 def io_grpc_grpc_java(**kwargs):
     """grpc java plugin and jars
@@ -348,7 +348,7 @@ def com_google_guava_guava(**kwargs):
     jar(name, artifact, sha1)
 
 def com_google_guava_guava_android(**kwargs):
-    """grpc java plugin and jars
+    """android-specific guava 
     """
     name = "com_google_guava_guava_android"
     artifact = get_artifact(name, "com.google.guava:guava:27.0.1-android", kwargs)

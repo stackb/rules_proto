@@ -1,2 +1,0 @@
-# vm.bzl is still using cfg=data
-build --incompatible_disallow_data_transition=false
