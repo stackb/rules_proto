@@ -4,17 +4,17 @@ var grpcGatewayUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:de
 
 io_bazel_rules_go()
 
-bazel_gazelle()
-
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}()
-
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
+
+bazel_gazelle()
+
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
+{{ .Rule.Name }}()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 

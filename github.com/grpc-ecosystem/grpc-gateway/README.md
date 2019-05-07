@@ -19,17 +19,17 @@ load("@build_stack_rules_proto//:deps.bzl", "bazel_gazelle", "io_bazel_rules_go"
 
 io_bazel_rules_go()
 
-bazel_gazelle()
-
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_grpc_compile")
-
-gateway_grpc_compile()
-
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
+
+bazel_gazelle()
+
+load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_grpc_compile")
+
+gateway_grpc_compile()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
@@ -80,17 +80,17 @@ load("@build_stack_rules_proto//:deps.bzl", "bazel_gazelle", "io_bazel_rules_go"
 
 io_bazel_rules_go()
 
-bazel_gazelle()
-
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_swagger_compile")
-
-gateway_swagger_compile()
-
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
+
+bazel_gazelle()
+
+load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_swagger_compile")
+
+gateway_swagger_compile()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
@@ -141,17 +141,17 @@ load("@build_stack_rules_proto//:deps.bzl", "bazel_gazelle", "io_bazel_rules_go"
 
 io_bazel_rules_go()
 
-bazel_gazelle()
-
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_grpc_library")
-
-gateway_grpc_library()
-
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
+
+bazel_gazelle()
+
+load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_grpc_library")
+
+gateway_grpc_library()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
