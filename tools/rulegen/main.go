@@ -610,8 +610,7 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	for _, lang := range languages {
 		ciExclusionReason := lang.BazelCIExclusionReason
 		for _, rule := range lang.Rules {
-			ciLink := fmt.Sprintf("[![%s](https://badge.buildkite.com/4eafd3b619b9febae679bac4ce75b6b74643d48384e7f36eeb.svg)](https://buildkite.com/bazel/rules-proto", headVersion)
-			// ciLink := fmt.Sprintf("[![%s](https://travis-ci.org/stackb/rules_proto.svg?branch=master)](https://travis-ci.org/stackb/rules_proto)", headVersion)
+			ciLink := fmt.Sprintf("[![%s](https://badge.buildkite.com/4eafd3b619b9febae679bac4ce75b6b74643d48384e7f36eeb.svg)](https://buildkite.com/bazel/rules-proto)", headVersion)
 			if ciExclusionReason == "" {
 				ciExclusionReason = rule.BazelCIExclusionReason
 			}
