@@ -127,6 +127,7 @@ java_proto_library(
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
 | build | incompatible_disallow_struct_provider_syntax | false | bazel_tools/tools/jdk/java_toolchain_alias.bzl |
+| build | incompatible_remove_native_maven_jar | false |  |
 
 ### Mandatory Attributes
 

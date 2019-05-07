@@ -108,6 +108,11 @@ func makeJava() *Language {
 						Value:       "false",
 						Description: "bazel_tools/tools/jdk/java_toolchain_alias.bzl",
 					},
+					{
+						Category: "build",
+						Name:     "incompatible_remove_native_maven_jar",
+						Value:    "false",
+					},
 				},
 			},
 			&Rule{
