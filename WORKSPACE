@@ -351,6 +351,42 @@ load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
 
+# **************************************************************
+#
+#
+# android
+#
+# **************************************************************
+
+load("@build_stack_rules_proto//:deps.bzl", "rules_jvm_external")
+
+rules_jvm_external()
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+maven_install(
+    name = "maven_android",
+    artifacts = [
+        "com.android.support:appcompat-v7:28.0.0",
+    ],
+    repositories = [
+        "https://maven.google.com",
+        "https://repo1.maven.org/maven2",
+    ],
+    # Fail if a checksum file for the artifact is missing in the repository.
+    # Falls through "SHA-1" and "MD5". Defaults to True.
+    fail_on_missing_checksum = False,
+)
+
+load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_library")
+
+android_grpc_library()
+
+load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
+
+android_sdk_repository(name = "androidsdk")
+
+
 # =========================================
 
 # PROTOBUF_VERSION = "3.6.1.3"

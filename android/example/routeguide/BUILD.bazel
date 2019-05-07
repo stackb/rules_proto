@@ -1,5 +1,4 @@
 load("//android:android_grpc_library.bzl", "android_grpc_library")
-load("@gmaven_rules//:defs.bzl", "gmaven_artifact")
 
 android_grpc_library(
     name = "routeguide",
@@ -10,7 +9,6 @@ android_grpc_library(
 #     name = "clientlib",
 #     manifest = "AndroidManifest.xml",
 #     custom_package = "io.grpc.routeguideexample",
-
 # )
 
 # NOTE: at the moment this is not a routeguide client at all.  Only testing that
@@ -26,9 +24,6 @@ android_binary(
     resource_files = glob(["src/main/res/**"]),
     deps = [
         ":routeguide",
-        "@com_android_support_appcompat_v7_28_0_0//aar",
-        #gmaven_artifact("com.android.support:appcompat-v7:28.0.0"),
+        "@maven_android//:com_android_support_appcompat_v7_28_0_0",
     ],
-    #'@com_android_support_design_27_0_1//aar',
-    #gmaven_artifact("com.google.android.gms:play-services:aar:12.0.0"),
 )

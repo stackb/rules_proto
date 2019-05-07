@@ -2,6 +2,7 @@
 tasks:
   rbe_ubuntu1604:
     build_targets:
+    - "//android/..."
     - "//closure/..."
     - "//cpp/..."
     - "//csharp/..."
@@ -21,6 +22,26 @@ tasks:
     - "//github.com/grpc-ecosystem/grpc-gateway/..."
     - "//github.com/stackb/grpc.js/..."
     - "//github.com/grpc/grpc-web/..."
+  android_proto_compile:
+    platform: rbe_ubuntu1604
+    build_targets:
+      - "..."
+    working_directory: example/android/android_proto_compile
+  android_grpc_compile:
+    platform: rbe_ubuntu1604
+    build_targets:
+      - "..."
+    working_directory: example/android/android_grpc_compile
+  android_proto_library:
+    platform: rbe_ubuntu1604
+    build_targets:
+      - "..."
+    working_directory: example/android/android_proto_library
+  android_grpc_library:
+    platform: rbe_ubuntu1604
+    build_targets:
+      - "..."
+    working_directory: example/android/android_grpc_library
   closure_proto_compile:
     platform: rbe_ubuntu1604
     build_targets:

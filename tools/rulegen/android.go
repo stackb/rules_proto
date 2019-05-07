@@ -18,11 +18,7 @@ load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
 
-android_sdk_repository(name = "androidsdk")
-
-load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
-
-gmaven_rules()`)
+android_sdk_repository(name = "androidsdk")`)
 
 var androidGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 
@@ -40,11 +36,7 @@ load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
 
-android_sdk_repository(name = "androidsdk")
-
-load("@gmaven_rules//:gmaven.bzl", "gmaven_rules")
-
-gmaven_rules()`)
+android_sdk_repository(name = "androidsdk")`)
 
 var androidProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@build_bazel_rules_android//android:rules.bzl", "android_library")
@@ -112,7 +104,12 @@ func makeAndroid() *Language {
 	return &Language{
 		Dir:  "android",
 		Name: "android",
-		BazelCIExclusionReason: "WIP to get android running again",
+		Flags: append([]*Flag{}, &Flag{
+			Category: "build",
+			Name:     "incompatible_disable_deprecated_attr_params",
+			Value:    "false",
+		}),
+		// BazelCIExclusionReason: "WIP to get android running again",
 		Rules: []*Rule{
 			&Rule{
 				Name:           "android_proto_compile",

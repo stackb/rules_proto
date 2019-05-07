@@ -319,8 +319,8 @@ def com_google_protobuf_lite(**kwargs):
     """A different branch of google/protobuf that contains the protobuf_lite plugin
     """
     name = "com_google_protobuf_lite"
-    ref = get_ref(name, "d5e9baa5841d501996ddacbba6ad6da1912e8eeb", kwargs)  # ivuca #66
-    sha256 = get_sha256(name, "c836a2046acb9635e259c3e639dc2ca50d4550d0350f1c98236fb203065e0359", kwargs)
+    ref = get_ref(name, "3cf3be9959928bf8a7133d323eaf6a5a8d5afdd7", kwargs)  # latest as of Apr 9, 2019
+    sha256 = get_sha256(name, "9f28fd96ccd1f87e0b2d23c622db2a87c87ff91dc30dd13a6dd3bff11738e608", kwargs)
     github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
 def gmaven_rules(**kwargs):
@@ -330,6 +330,14 @@ def gmaven_rules(**kwargs):
     ref = get_ref(name, "20180927-1", kwargs)
     sha256 = get_sha256(name, "ddaa0f5811253e82f67ee637dc8caf3989e4517bac0368355215b0dcfa9844d6", kwargs)
     github_archive(name, "bazelbuild", "gmaven_rules", ref, sha256)
+
+def rules_jvm_external(**kwargs):
+    """Fetch maven artifacts
+    """
+    name = "rules_jvm_external"
+    ref = get_ref(name, "e359007344bc53133e1e54c891670d08453d4827", kwargs)  # May 7 2019
+    sha256 = get_sha256(name, "150c8cd5a3abe8b2da09235ebe5aedd0a379440d9f6a15d1c99c2b1e560a09f9", kwargs)
+    github_archive(name, "bazelbuild", "rules_jvm_external", ref, sha256)
 
 def io_grpc_grpc_java(**kwargs):
     """grpc java plugin and jars
@@ -348,7 +356,7 @@ def com_google_guava_guava(**kwargs):
     jar(name, artifact, sha1)
 
 def com_google_guava_guava_android(**kwargs):
-    """grpc java plugin and jars
+    """android-specific guava 
     """
     name = "com_google_guava_guava_android"
     artifact = get_artifact(name, "com.google.guava:guava:27.0.1-android", kwargs)
