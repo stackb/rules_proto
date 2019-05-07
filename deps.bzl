@@ -1,5 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
+# load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
 
 # https://raw.githubusercontent.com/grpc/grpc/master/third_party/zlib.BUILD
 ZLIB_BUILD = """
@@ -65,7 +65,7 @@ def jar(name, artifact, sha1):
     """Declare a maven_jar
     """
     if name not in native.existing_rules():
-        maven_jar(
+        native.maven_jar(
             name = name,
             artifact = artifact,
             sha1 = sha1,
