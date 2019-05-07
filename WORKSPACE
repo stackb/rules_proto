@@ -369,13 +369,13 @@ maven_install(
     artifacts = [
         "com.android.support:appcompat-v7:28.0.0",
     ],
+    # Fail if a checksum file for the artifact is missing in the repository.
+    # Falls through "SHA-1" and "MD5". Defaults to True.
+    fail_on_missing_checksum = False,
     repositories = [
         "https://maven.google.com",
         "https://repo1.maven.org/maven2",
     ],
-    # Fail if a checksum file for the artifact is missing in the repository.
-    # Falls through "SHA-1" and "MD5". Defaults to True.
-    fail_on_missing_checksum = False,
 )
 
 load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_library")

@@ -598,6 +598,8 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out := &LineWriter{}
 
 	headVersion := versions[0]
+	badgeImageURL := "https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master"
+	ciLink := fmt.Sprintf("[![%s](%s)](https://buildkite.com/bazel/rules-proto)", headVersion, badgeImageURL)
 
 	out.tpl(header, data)
 	out.ln()
@@ -610,7 +612,6 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	for _, lang := range languages {
 		ciExclusionReason := lang.BazelCIExclusionReason
 		for _, rule := range lang.Rules {
-			ciLink := fmt.Sprintf("[![%s](https://badge.buildkite.com/4eafd3b619b9febae679bac4ce75b6b74643d48384e7f36eeb.svg)](https://buildkite.com/bazel/rules-proto)", headVersion)
 			if ciExclusionReason == "" {
 				ciExclusionReason = rule.BazelCIExclusionReason
 			}
