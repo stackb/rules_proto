@@ -88,15 +88,6 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var rubyFlags = []*Flag{
-	// {
-	// 	Category:    "build",
-	// 	Name:        "incompatible_disallow_data_transition",
-	// 	Value:       "false",
-	// 	Description: "ruby/binary.bzl is still using cfg=data",
-	// },
-}
-
 func makeRuby() *Language {
 	return &Language{
 		Dir:   "ruby",
@@ -129,7 +120,6 @@ func makeRuby() *Language {
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates *.rb protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags:          rubyFlags,
 			},
 			&Rule{
 				Name:           "ruby_grpc_library",
@@ -138,7 +128,6 @@ func makeRuby() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates *.rb protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags:          rubyFlags,
 			},
 		},
 	}
