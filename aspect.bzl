@@ -350,8 +350,10 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles, plugin_options):
     """
     label_name = ctx.label.name
     arg = "%s/%s" % (ctx.bin_dir.path, ctx.label.workspace_root)
-    if ctx.label.package:
-        arg += "/" + ctx.label.package
+
+    # Works for rust but not python!
+    # if ctx.label.package:
+    #     arg += "/" + ctx.label.package
 
     # Graveyard of failed attempts (above)....
     # arg = "%s/%s" % (ctx.bin_dir.path, ctx.label.package)
