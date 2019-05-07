@@ -46,11 +46,12 @@ func makeSwift() *Language {
 			Category: "build",
 			Name:     "incompatible_require_ctx_in_configure_features",
 			Value:    "false",
-		}, &Flag{
-			Category: "build",
-			Name:     "spawn_strategy",
-			Value:    "local",
 		}),
+		// , &Flag{
+		// 	Category: "build",
+		// 	Name:     "spawn_strategy",
+		// 	Value:    "local",
+		// }
 		Rules: []*Rule{
 			&Rule{
 				Experimental:   true,
