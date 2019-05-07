@@ -42,7 +42,11 @@ func makeSwift() *Language {
 		PresubmitEnvVars: map[string]string{
 			"CC": "clang",
 		},
-		Flags: commonLangFlags,
+		Flags: append(commonLangFlags, &Flag{
+			Category: "build",
+			Name:     "incompatible_require_ctx_in_configure_features",
+			Value:    "false",
+		}),
 		Rules: []*Rule{
 			&Rule{
 				Experimental:   true,
