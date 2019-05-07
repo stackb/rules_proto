@@ -141,6 +141,13 @@ func makeAndroid() *Language {
 				Implementation: androidProtoLibraryRuleTemplate,
 				Doc:            "Generates android protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category: "build",
+						Name:     "incompatible_remove_native_maven_jar",
+						Value:    "false",
+					},
+				},
 			},
 			&Rule{
 				Name:           "android_grpc_library",
@@ -151,6 +158,13 @@ func makeAndroid() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates android protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Category: "build",
+						Name:     "incompatible_remove_native_maven_jar",
+						Value:    "false",
+					},
+				},
 			},
 		},
 	}
