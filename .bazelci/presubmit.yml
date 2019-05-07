@@ -4,367 +4,367 @@ tasks:
     build_targets:
     - "..."
   closure_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: closure/example/closure_proto_compile
     build_targets:
       - "..."
   closure_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: closure/example/closure_proto_library
     build_targets:
       - "..."
   cpp_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: cpp/example/cpp_proto_compile
     build_targets:
       - "..."
   cpp_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: cpp/example/cpp_grpc_compile
     build_targets:
       - "..."
   cpp_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: cpp/example/cpp_proto_library
     build_targets:
       - "..."
   cpp_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: cpp/example/cpp_grpc_library
     build_targets:
       - "..."
   csharp_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: csharp/example/csharp_proto_compile
     build_targets:
       - "..."
   csharp_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: csharp/example/csharp_grpc_compile
     build_targets:
       - "..."
   csharp_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: csharp/example/csharp_proto_library
     build_targets:
       - "..."
   csharp_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: csharp/example/csharp_grpc_library
     build_targets:
       - "..."
   d_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: d/example/d_proto_compile
     build_targets:
       - "..."
   dart_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: dart/example/dart_proto_compile
     build_targets:
       - "..."
   dart_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: dart/example/dart_grpc_compile
     build_targets:
       - "..."
   dart_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: dart/example/dart_proto_library
     build_targets:
       - "..."
   dart_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: dart/example/dart_grpc_library
     build_targets:
       - "..."
   go_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: go/example/go_proto_compile
     build_targets:
       - "..."
   go_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: go/example/go_grpc_compile
     build_targets:
       - "..."
   go_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: go/example/go_proto_library
     build_targets:
       - "..."
   go_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: go/example/go_grpc_library
     build_targets:
       - "..."
   java_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: java/example/java_proto_compile
     build_targets:
       - "..."
   java_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: java/example/java_grpc_compile
     build_targets:
       - "..."
   java_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: java/example/java_proto_library
     build_targets:
       - "..."
   java_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: java/example/java_grpc_library
     build_targets:
       - "..."
   node_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: node/example/node_proto_compile
     build_targets:
       - "..."
   node_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: node/example/node_grpc_compile
     build_targets:
       - "..."
   node_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: node/example/node_proto_library
     build_targets:
       - "..."
   node_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: node/example/node_grpc_library
     build_targets:
       - "..."
   objc_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: objc/example/objc_proto_compile
     build_targets:
       - "..."
   objc_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: objc/example/objc_grpc_compile
     build_targets:
       - "..."
   php_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: php/example/php_proto_compile
     build_targets:
       - "..."
   php_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: php/example/php_grpc_compile
     build_targets:
       - "..."
   python_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: python/example/python_proto_compile
     build_targets:
       - "..."
   python_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: python/example/python_grpc_compile
     build_targets:
       - "..."
   python_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: python/example/python_proto_library
     build_targets:
       - "..."
   python_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: python/example/python_grpc_library
     build_targets:
       - "..."
   ruby_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: ruby/example/ruby_proto_compile
     build_targets:
       - "..."
   ruby_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: ruby/example/ruby_grpc_compile
     build_targets:
       - "..."
   ruby_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: ruby/example/ruby_proto_library
     build_targets:
       - "..."
   ruby_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: ruby/example/ruby_grpc_library
     build_targets:
       - "..."
   rust_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: rust/example/rust_proto_compile
     build_targets:
       - "..."
   rust_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: rust/example/rust_grpc_compile
     build_targets:
       - "..."
   rust_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: rust/example/rust_proto_library
     build_targets:
       - "..."
   rust_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: rust/example/rust_grpc_library
     build_targets:
       - "..."
   scala_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: scala/example/scala_proto_compile
     build_targets:
       - "..."
   scala_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: scala/example/scala_grpc_compile
     build_targets:
       - "..."
   scala_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: scala/example/scala_proto_library
     build_targets:
       - "..."
   scala_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: scala/example/scala_grpc_library
     build_targets:
       - "..."
   swift_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: swift/example/swift_proto_compile
     build_targets:
       - "..."
   swift_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: swift/example/swift_grpc_compile
     build_targets:
       - "..."
   swift_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: swift/example/swift_proto_library
     build_targets:
       - "..."
   swift_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: swift/example/swift_grpc_library
     build_targets:
       - "..."
   gogo_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogo_proto_compile
     build_targets:
       - "..."
   gogo_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogo_grpc_compile
     build_targets:
       - "..."
   gogo_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogo_proto_library
     build_targets:
       - "..."
   gogo_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogo_grpc_library
     build_targets:
       - "..."
   gogofast_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogofast_proto_compile
     build_targets:
       - "..."
   gogofast_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogofast_grpc_compile
     build_targets:
       - "..."
   gogofast_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogofast_proto_library
     build_targets:
       - "..."
   gogofast_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogofast_grpc_library
     build_targets:
       - "..."
   gogofaster_proto_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogofaster_proto_compile
     build_targets:
       - "..."
   gogofaster_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogofaster_grpc_compile
     build_targets:
       - "..."
   gogofaster_proto_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogofaster_proto_library
     build_targets:
       - "..."
   gogofaster_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogofaster_grpc_library
     build_targets:
       - "..."
   gateway_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_compile
     build_targets:
       - "..."
   gateway_swagger_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/grpc-ecosystem/grpc-gateway/example/gateway_swagger_compile
     build_targets:
       - "..."
   gateway_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/grpc-ecosystem/grpc-gateway/example/gateway_grpc_library
     build_targets:
       - "..."
   closure_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/stackb/grpc.js/example/closure_grpc_compile
     build_targets:
       - "..."
   closure_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/stackb/grpc.js/example/closure_grpc_library
     build_targets:
       - "..."
   closure_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/grpc/grpc-web/example/closure_grpc_compile
     build_targets:
       - "..."
   commonjs_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/grpc/grpc-web/example/commonjs_grpc_compile
     build_targets:
       - "..."
   commonjs_dts_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/grpc/grpc-web/example/commonjs_dts_grpc_compile
     build_targets:
       - "..."
   ts_grpc_compile:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/grpc/grpc-web/example/ts_grpc_compile
     build_targets:
       - "..."
   closure_grpc_library:
-    platform: ubuntu1804
+    platform: ubuntu1604
     working_directory: github.com/grpc/grpc-web/example/closure_grpc_library
     build_targets:
       - "..."

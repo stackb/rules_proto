@@ -687,7 +687,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 			exampleDir := path.Join(dir, lang.Dir, "example", rule.Name)
 
 			out.w("  %s:", rule.Name)
-			out.w("    platform: ubuntu1804")
+			out.w("    platform: ubuntu1604")
 			out.w("    working_directory: %s", exampleDir)
 			out.w("    build_targets:")
 			out.w(`      - "..."`)
