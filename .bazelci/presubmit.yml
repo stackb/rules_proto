@@ -243,21 +243,11 @@ tasks:
     build_targets:
       - "..."
     working_directory: example/rust/rust_proto_compile
-  rust_grpc_compile:
-    platform: ubuntu1604
-    build_targets:
-      - "..."
-    working_directory: example/rust/rust_grpc_compile
   rust_proto_library:
     platform: ubuntu1604
     build_targets:
       - "..."
     working_directory: example/rust/rust_proto_library
-  rust_grpc_library:
-    platform: ubuntu1604
-    build_targets:
-      - "..."
-    working_directory: example/rust/rust_grpc_library
   scala_proto_compile:
     platform: ubuntu1604
     build_targets:

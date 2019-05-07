@@ -692,7 +692,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 			continue
 		}
 		for _, rule := range lang.Rules {
-			if lang.BazelCIExclusionReason != "" {
+			if rule.BazelCIExclusionReason != "" {
 				continue
 			}
 
