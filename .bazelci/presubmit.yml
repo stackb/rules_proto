@@ -339,6 +339,8 @@ tasks:
       - --action_env=PATH
     build_targets:
       - "..."
+    environment:
+      CC: clang
   swift_grpc_compile:
     platform: ubuntu1604
     working_directory: swift/example/swift_grpc_compile
@@ -346,6 +348,8 @@ tasks:
       - --action_env=PATH
     build_targets:
       - "..."
+    environment:
+      CC: clang
   swift_proto_library:
     platform: ubuntu1604
     working_directory: swift/example/swift_proto_library
@@ -353,6 +357,8 @@ tasks:
       - --action_env=PATH
     build_targets:
       - "..."
+    environment:
+      CC: clang
   swift_grpc_library:
     platform: ubuntu1604
     working_directory: swift/example/swift_grpc_library
@@ -360,6 +366,8 @@ tasks:
       - --action_env=PATH
     build_targets:
       - "..."
+    environment:
+      CC: clang
   gogo_proto_compile:
     platform: ubuntu1604
     working_directory: github.com/gogo/protobuf/example/gogo_proto_compile

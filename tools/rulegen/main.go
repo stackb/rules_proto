@@ -49,7 +49,7 @@ type Language struct {
 	TravisExclusionReason string
 
 	// Additional travis-specific env vars in the form "K=V"
-	TravisEnvVars []string
+	PresubmitEnvVars map[string]string
 
 	// If not the empty string, one-word reason why excluded from bazelci
 	// configuration
@@ -98,7 +98,7 @@ type Rule struct {
 	TravisExclusionReason string
 
 	// Additional travis-specific env vars in the form "K=V"
-	TravisEnvVars []string
+	PresubmitEnvVars map[string]string
 
 	// If not the empty string, one-word reason why excluded from bazelci
 	// configuration
@@ -494,7 +494,7 @@ func mustWriteLanguageExampleBuildFile(dir string, lang *Language, rule *Rule) {
 func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
 	out.w("# Start with --all_incompatible_changes by default")
-	// out.w("build --all_incompatible_changes")
+	out.w("build --all_incompatible_changes")
 	// out.w("build --incompatible_no_rule_outputs_param=false")
 	// out.w("build --incompatible_use_toolchain_resolution_for_java_rules=false")
 	for _, f := range lang.Flags {
@@ -650,12 +650,6 @@ func mustWriteTravisYml(dir, header, footer string, data interface{}, languages 
 			for _, v := range envVars {
 				env = append(env, v)
 			}
-			for _, v := range lang.TravisEnvVars {
-				env = append(env, v)
-			}
-			for _, v := range rule.TravisEnvVars {
-				env = append(env, v)
-			}
 			env = append(env, "LANG="+lang.Dir)
 			env = append(env, "RULE="+rule.Name)
 
@@ -693,6 +687,16 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 			out.w("      - --action_env=PATH")
 			out.w("    build_targets:")
 			out.w(`      - "..."`)
+
+			if len(lang.PresubmitEnvVars) > 0 || len(rule.PresubmitEnvVars) > 0 {
+				out.w("    environment:")
+				for k, v := range lang.PresubmitEnvVars {
+					out.w("      %s: %s", k, v)
+				}
+				for k, v := range rule.PresubmitEnvVars {
+					out.w("      %s: %s", k, v)
+				}
+			}
 		}
 	}
 
