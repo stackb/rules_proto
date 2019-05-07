@@ -1,6 +1,0 @@
-load("@build_stack_rules_proto//swift:swift_grpc_compile.bzl", "swift_grpc_compile")
-
-swift_grpc_compile(
-    name = "greeter_swift_grpc",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
-)

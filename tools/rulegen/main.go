@@ -457,7 +457,8 @@ func mustWriteLanguageRule(dir string, lang *Language, rule *Rule) {
 
 func mustWriteLanguageExamples(dir string, lang *Language) {
 	for _, rule := range lang.Rules {
-		exampleDir := path.Join(dir, lang.Dir, "example", rule.Name)
+		// exampleDir := path.Join(dir, lang.Dir, "example", rule.Name)
+		exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
 		os.MkdirAll(exampleDir, os.ModePerm)
 		mustWriteLanguageExampleWorkspace(exampleDir, lang, rule)
 		mustWriteLanguageExampleBuildFile(exampleDir, lang, rule)

@@ -1,6 +1,0 @@
-load("@build_stack_rules_proto//csharp:csharp_grpc_library.bzl", "csharp_grpc_library")
-
-csharp_grpc_library(
-    name = "greeter_csharp_library",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
-)

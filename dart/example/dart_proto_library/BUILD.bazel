@@ -1,6 +1,0 @@
-load("@build_stack_rules_proto//dart:dart_proto_library.bzl", "dart_proto_library")
-
-dart_proto_library(
-    name = "person_dart_library",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
-)
