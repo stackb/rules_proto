@@ -699,8 +699,8 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 			out.w("  %s:", rule.Name)
 			out.w("    platform: ubuntu1604")
 			out.w("    working_directory: %s", exampleDir)
-			out.w("    build_flags:")
-			out.w("      - --action_env=PATH")
+			// out.w("    build_flags:")
+			// out.w("      - --action_env=PATH")
 			out.w("    build_targets:")
 			out.w(`      - "..."`)
 

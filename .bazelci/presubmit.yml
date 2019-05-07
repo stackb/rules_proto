@@ -24,337 +24,241 @@ tasks:
   closure_proto_compile:
     platform: ubuntu1604
     working_directory: example/closure/closure_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   closure_proto_library:
     platform: ubuntu1604
     working_directory: example/closure/closure_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   cpp_proto_compile:
     platform: ubuntu1604
     working_directory: example/cpp/cpp_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   cpp_grpc_compile:
     platform: ubuntu1604
     working_directory: example/cpp/cpp_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   cpp_proto_library:
     platform: ubuntu1604
     working_directory: example/cpp/cpp_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   cpp_grpc_library:
     platform: ubuntu1604
     working_directory: example/cpp/cpp_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   csharp_proto_compile:
     platform: ubuntu1604
     working_directory: example/csharp/csharp_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   csharp_grpc_compile:
     platform: ubuntu1604
     working_directory: example/csharp/csharp_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   csharp_proto_library:
     platform: ubuntu1604
     working_directory: example/csharp/csharp_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   csharp_grpc_library:
     platform: ubuntu1604
     working_directory: example/csharp/csharp_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   d_proto_compile:
     platform: ubuntu1604
     working_directory: example/d/d_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   dart_proto_compile:
     platform: ubuntu1604
     working_directory: example/dart/dart_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   dart_grpc_compile:
     platform: ubuntu1604
     working_directory: example/dart/dart_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   dart_proto_library:
     platform: ubuntu1604
     working_directory: example/dart/dart_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   dart_grpc_library:
     platform: ubuntu1604
     working_directory: example/dart/dart_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   go_proto_compile:
     platform: ubuntu1604
     working_directory: example/go/go_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   go_grpc_compile:
     platform: ubuntu1604
     working_directory: example/go/go_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   go_proto_library:
     platform: ubuntu1604
     working_directory: example/go/go_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   go_grpc_library:
     platform: ubuntu1604
     working_directory: example/go/go_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   java_proto_compile:
     platform: ubuntu1604
     working_directory: example/java/java_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   java_grpc_compile:
     platform: ubuntu1604
     working_directory: example/java/java_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   java_proto_library:
     platform: ubuntu1604
     working_directory: example/java/java_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   java_grpc_library:
     platform: ubuntu1604
     working_directory: example/java/java_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   node_proto_compile:
     platform: ubuntu1604
     working_directory: example/node/node_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   node_grpc_compile:
     platform: ubuntu1604
     working_directory: example/node/node_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   node_proto_library:
     platform: ubuntu1604
     working_directory: example/node/node_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   node_grpc_library:
     platform: ubuntu1604
     working_directory: example/node/node_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   objc_proto_compile:
     platform: ubuntu1604
     working_directory: example/objc/objc_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   objc_grpc_compile:
     platform: ubuntu1604
     working_directory: example/objc/objc_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   php_proto_compile:
     platform: ubuntu1604
     working_directory: example/php/php_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   php_grpc_compile:
     platform: ubuntu1604
     working_directory: example/php/php_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   python_proto_compile:
     platform: ubuntu1604
     working_directory: example/python/python_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   python_grpc_compile:
     platform: ubuntu1604
     working_directory: example/python/python_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   python_proto_library:
     platform: ubuntu1604
     working_directory: example/python/python_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   python_grpc_library:
     platform: ubuntu1604
     working_directory: example/python/python_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   ruby_proto_compile:
     platform: ubuntu1604
     working_directory: example/ruby/ruby_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   ruby_grpc_compile:
     platform: ubuntu1604
     working_directory: example/ruby/ruby_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   ruby_proto_library:
     platform: ubuntu1604
     working_directory: example/ruby/ruby_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   ruby_grpc_library:
     platform: ubuntu1604
     working_directory: example/ruby/ruby_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   rust_proto_compile:
     platform: ubuntu1604
     working_directory: example/rust/rust_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   rust_grpc_compile:
     platform: ubuntu1604
     working_directory: example/rust/rust_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   rust_proto_library:
     platform: ubuntu1604
     working_directory: example/rust/rust_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   rust_grpc_library:
     platform: ubuntu1604
     working_directory: example/rust/rust_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   scala_proto_compile:
     platform: ubuntu1604
     working_directory: example/scala/scala_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   scala_grpc_compile:
     platform: ubuntu1604
     working_directory: example/scala/scala_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   scala_proto_library:
     platform: ubuntu1604
     working_directory: example/scala/scala_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   scala_grpc_library:
     platform: ubuntu1604
     working_directory: example/scala/scala_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   swift_proto_compile:
     platform: ubuntu1604
     working_directory: example/swift/swift_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
     environment:
@@ -362,8 +266,6 @@ tasks:
   swift_grpc_compile:
     platform: ubuntu1604
     working_directory: example/swift/swift_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
     environment:
@@ -371,8 +273,6 @@ tasks:
   swift_proto_library:
     platform: ubuntu1604
     working_directory: example/swift/swift_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
     environment:
@@ -380,8 +280,6 @@ tasks:
   swift_grpc_library:
     platform: ubuntu1604
     working_directory: example/swift/swift_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
     environment:
@@ -389,154 +287,110 @@ tasks:
   gogo_proto_compile:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogo_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogo_grpc_compile:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogo_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogo_proto_library:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogo_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogo_grpc_library:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogo_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogofast_proto_compile:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogofast_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogofast_grpc_compile:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogofast_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogofast_proto_library:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogofast_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogofast_grpc_library:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogofast_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogofaster_proto_compile:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogofaster_proto_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogofaster_grpc_compile:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogofaster_proto_library:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogofaster_proto_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gogofaster_grpc_library:
     platform: ubuntu1604
     working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gateway_grpc_compile:
     platform: ubuntu1604
     working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gateway_swagger_compile:
     platform: ubuntu1604
     working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_swagger_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   gateway_grpc_library:
     platform: ubuntu1604
     working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   closure_grpc_compile:
     platform: ubuntu1604
     working_directory: example/github.com/stackb/grpc.js/closure_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   closure_grpc_library:
     platform: ubuntu1604
     working_directory: example/github.com/stackb/grpc.js/closure_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   closure_grpc_compile:
     platform: ubuntu1604
     working_directory: example/github.com/grpc/grpc-web/closure_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   commonjs_grpc_compile:
     platform: ubuntu1604
     working_directory: example/github.com/grpc/grpc-web/commonjs_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   commonjs_dts_grpc_compile:
     platform: ubuntu1604
     working_directory: example/github.com/grpc/grpc-web/commonjs_dts_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   ts_grpc_compile:
     platform: ubuntu1604
     working_directory: example/github.com/grpc/grpc-web/ts_grpc_compile
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
   closure_grpc_library:
     platform: ubuntu1604
     working_directory: example/github.com/grpc/grpc-web/closure_grpc_library
-    build_flags:
-      - --action_env=PATH
     build_targets:
       - "..."
