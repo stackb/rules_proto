@@ -8,7 +8,7 @@ import (
 	"time"
 
 	gwruntime "github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/stackb/rules_proto/github.com/grpc-ecosystem/grpc-gateway/examples/api"
+	api "github.com/stackb/rules_proto/github.com/grpc-ecosystem/grpc-gateway/examples/api"
 	"google.golang.org/grpc"
 )
 
