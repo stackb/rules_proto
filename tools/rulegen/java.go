@@ -113,6 +113,11 @@ func makeJava() *Language {
 						Name:     "incompatible_remove_native_maven_jar",
 						Value:    "false",
 					},
+					{
+						Category: "build",
+						Name:     "incompatible_use_toolchain_resolution_for_java_rules",
+						Value:    "false",
+					},
 				},
 			},
 			&Rule{

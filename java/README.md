@@ -128,6 +128,7 @@ java_proto_library(
 | --- | --- | --- | --- |
 | build | incompatible_disallow_struct_provider_syntax | false | bazel_tools/tools/jdk/java_toolchain_alias.bzl |
 | build | incompatible_remove_native_maven_jar | false |  |
+| build | incompatible_use_toolchain_resolution_for_java_rules | false |  |
 
 ### Mandatory Attributes
 
