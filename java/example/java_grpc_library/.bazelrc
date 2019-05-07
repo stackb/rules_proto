@@ -1,5 +1,4 @@
 # Start with --all_incompatible_changes by default
-build --all_incompatible_changes
 # 
 build --incompatible_enable_cc_toolchain_resolution=false
 # bazel_tools/tools/jdk/java_toolchain_alias.bzl
