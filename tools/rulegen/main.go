@@ -670,6 +670,21 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 
 	out.tpl(header, data)
 
+	//
+	// First time around for main code
+	//
+	out.w("  ubuntu1604:")
+	out.w("    build_targets:")
+	for _, lang := range languages {
+		if lang.BazelCIExclusionReason != "" {
+			continue
+		}
+		out.w(`    - "//%s/..."`, lang.Dir)
+	}
+
+	//
+	// Second time around for examples
+	//
 	for _, lang := range languages {
 		if lang.BazelCIExclusionReason != "" {
 			continue

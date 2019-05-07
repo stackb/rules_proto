@@ -1,0 +1,10 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+local_repository(
+    name = "build_stack_rules_proto",
+    path = "../../../",
+)
+
+load("@build_stack_rules_proto//php:deps.bzl", "php_proto_compile")
+
+php_proto_compile()

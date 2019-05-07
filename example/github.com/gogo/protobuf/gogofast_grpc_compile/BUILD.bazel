@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofast_grpc_compile.bzl", "gogofast_grpc_compile")
+
+gogofast_grpc_compile(
+    name = "greeter_gogo_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)

@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_proto_compile.bzl", "gogofaster_proto_compile")
+
+gogofaster_proto_compile(
+    name = "person_gogo_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)

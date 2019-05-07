@@ -1,5 +1,2 @@
 ---
 tasks:
-  ubuntu1604:
-    build_targets:
-    - "..."

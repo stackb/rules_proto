@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//github.com/grpc/grpc-web:ts_grpc_compile.bzl", "ts_grpc_compile")
+
+ts_grpc_compile(
+    name = "greeter_grpc-web_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)

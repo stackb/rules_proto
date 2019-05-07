@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//python:python_proto_compile.bzl", "python_proto_compile")
+
+python_proto_compile(
+    name = "person_python_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)

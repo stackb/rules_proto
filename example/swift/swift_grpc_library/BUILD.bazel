@@ -1,0 +1,7 @@
+load("@build_stack_rules_proto//swift:swift_grpc_library.bzl", "swift_grpc_library")
+
+swift_grpc_library(
+    name = "person_swift_library",
+    flavor = "client",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)

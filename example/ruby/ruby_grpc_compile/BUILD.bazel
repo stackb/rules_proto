@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//ruby:ruby_grpc_compile.bzl", "ruby_grpc_compile")
+
+ruby_grpc_compile(
+    name = "greeter_ruby_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)

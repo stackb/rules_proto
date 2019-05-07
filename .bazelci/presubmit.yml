@@ -2,7 +2,25 @@
 tasks:
   ubuntu1604:
     build_targets:
-    - "..."
+    - "//closure/..."
+    - "//cpp/..."
+    - "//csharp/..."
+    - "//d/..."
+    - "//dart/..."
+    - "//go/..."
+    - "//java/..."
+    - "//node/..."
+    - "//objc/..."
+    - "//php/..."
+    - "//python/..."
+    - "//ruby/..."
+    - "//rust/..."
+    - "//scala/..."
+    - "//swift/..."
+    - "//github.com/gogo/protobuf/..."
+    - "//github.com/grpc-ecosystem/grpc-gateway/..."
+    - "//github.com/stackb/grpc.js/..."
+    - "//github.com/grpc/grpc-web/..."
   closure_proto_compile:
     platform: ubuntu1604
     working_directory: closure/example/closure_proto_compile

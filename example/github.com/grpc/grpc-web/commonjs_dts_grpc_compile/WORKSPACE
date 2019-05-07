@@ -1,0 +1,16 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+local_repository(
+    name = "build_stack_rules_proto",
+    path = "../../../../../",
+)
+
+load("@build_stack_rules_proto//github.com/grpc/grpc-web:deps.bzl", "commonjs_dts_grpc_compile")
+
+commonjs_dts_grpc_compile()
+
+load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
+
+closure_repositories(
+    omit_com_google_protobuf = True,
+)

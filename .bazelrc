@@ -15,3 +15,5 @@ build --incompatible_no_transitive_loads=false
 build --incompatible_require_ctx_in_configure_features=false 
 build --incompatible_use_jdk11_as_host_javabase=false 
 build --incompatible_use_toolchain_resolution_for_java_rules=false 
+build --incompatible_remove_native_maven_jar=false
+build --strategy=SwiftCompile=standalone

@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//scala:scala_proto_library.bzl", "scala_proto_library")
+
+scala_proto_library(
+    name = "person_scala_library",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)
