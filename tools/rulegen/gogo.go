@@ -103,6 +103,7 @@ func makeGogo() *Language {
 		Dir:     "github.com/gogo/protobuf",
 		Name:    "gogo",
 		Plugins: make(map[string]*Plugin),
+		Flags:   commonLangFlags,
 	}
 
 	addGogoRules(lang, "gogo")
