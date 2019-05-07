@@ -150,7 +150,7 @@ def external_zlib(**kwargs):
 
 def com_github_bazelbuild_bazel_gazelle(**kwargs):
     if "com_github_bazelbuild_bazel_gazelle" not in native.existing_rules():
-        sha1 = "4bee5cae22da3b948d90293aff01928dd3b9f41a"
+        sha1 = "a79ae21dcb2e1f4d36c2b99bb14e27816c5f4100"
         http_archive(
             name = "com_github_bazelbuild_bazel_gazelle",
             strip_prefix = "bazel-gazelle-" + sha1,
