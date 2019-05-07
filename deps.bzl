@@ -283,7 +283,7 @@ def six(**kwargs):
             build_file_content = """
 genrule(
   name = "copy_six",
-  srcs = ["six-1.10.0/six.py"],
+  srcs = ["six-1.12.0/six.py"],
   outs = ["six.py"],
   cmd = "cp $< $(@)",
 )
@@ -295,8 +295,8 @@ py_library(
   visibility = ["//visibility:public"],
 )
         """,
-            sha256 = "105f8d68616f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a",
-            urls = ["https://pypi.python.org/packages/source/s/six/six-1.10.0.tar.gz#md5=34eed507548117b2ab523ab14b2f8b55"],
+            sha256 = "105f8d68613f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a",
+            urls = ["https://pypi.python.org/packages/source/s/six/six-1.12.0.tar.gz"],
         )
 
 def io_bazel_rules_dart(**kwargs):
@@ -322,14 +322,6 @@ def com_google_protobuf_lite(**kwargs):
     ref = get_ref(name, "3cf3be9959928bf8a7133d323eaf6a5a8d5afdd7", kwargs)  # latest as of Apr 9, 2019
     sha256 = get_sha256(name, "9f28fd96ccd1f87e0b2d23c622db2a87c87ff91dc30dd13a6dd3bff11738e608", kwargs)
     github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
-
-def gmaven_rules(**kwargs):
-    """A catalog of maven & android jars on google maven server
-    """
-    name = "gmaven_rules"
-    ref = get_ref(name, "20180927-1", kwargs)
-    sha256 = get_sha256(name, "ddaa0f5811253e82f67ee637dc8caf3989e4517bac0368355215b0dcfa9844d6", kwargs)
-    github_archive(name, "bazelbuild", "gmaven_rules", ref, sha256)
 
 def rules_jvm_external(**kwargs):
     """Fetch maven artifacts

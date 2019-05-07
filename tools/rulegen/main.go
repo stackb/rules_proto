@@ -676,7 +676,9 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	//
 	out.w("  ubuntu1604:")
 	out.w("    environment:")
-	out.w("      CC: clang # needed for swift")
+	out.w("      CC: clang")
+	out.w("    test_targets:")
+	out.w(`    - "//example/routeguide/..."`)
 	out.w("    build_targets:")
 	for _, lang := range languages {
 		if lang.BazelCIExclusionReason != "" {
@@ -700,13 +702,10 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 			exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
 
 			out.w("  %s:", rule.Name)
-			out.w("    platform: u			out.w("    platform: ubuntu1604environment  CC	 clang # needed for swift
-		buntu1604")		buntu1604")
+			out.w("    platform: ubuntu1604")
 			out.w("    build_targets:")
 			out.w(`      - "..."`)
 			out.w("    working_directory: %s", exampleDir)
-			// out.w("    build_flags:")
-			// out.w("      - --action_env=PATH")
 
 			if len(lang.PresubmitEnvVars) > 0 || len(rule.PresubmitEnvVars) > 0 {
 				out.w("    environment:")

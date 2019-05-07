@@ -1,6 +1,10 @@
 ---
 tasks:
   ubuntu1604:
+    environment:
+      CC: clang
+    test_targets:
+    - "//example/routeguide/..."
     build_targets:
     - "//android/..."
     - "//closure/..."
