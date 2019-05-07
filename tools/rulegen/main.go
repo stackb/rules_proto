@@ -253,12 +253,12 @@ func action(c *cli.Context) error {
 		Sha256: sha256,
 	}, languages, bazelVersions)
 
-	mustWriteTravisYml(dir, c.String("travis_header"), c.String("travis_footer"), struct {
-		Ref, Sha256 string
-	}{
-		Ref:    ref,
-		Sha256: sha256,
-	}, languages, bazelVersions)
+	// mustWriteTravisYml(dir, c.String("travis_header"), c.String("travis_footer"), struct {
+	// 	Ref, Sha256 string
+	// }{
+	// 	Ref:    ref,
+	// 	Sha256: sha256,
+	// }, languages, bazelVersions)
 
 	mustWriteBazelciPresubmitYml(dir, c.String("presubmit_header"), c.String("presubmit_footer"), struct {
 		Ref, Sha256 string
