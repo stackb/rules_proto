@@ -109,7 +109,6 @@ func makeAndroid() *Language {
 			Name:     "incompatible_disable_deprecated_attr_params",
 			Value:    "false",
 		}),
-		// BazelCIExclusionReason: "WIP to get android running again",
 		Rules: []*Rule{
 			&Rule{
 				Name:           "android_proto_compile",

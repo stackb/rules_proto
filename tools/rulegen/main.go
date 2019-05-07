@@ -611,19 +611,20 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.w("| Status | Lang | Rule | Description")
 	out.w("| ---    | ---: | :--- | :--- |")
 	for _, lang := range languages {
-		travisExclusionReason := lang.TravisExclusionReason
+		ciExclusionReason := lang.BazelCIExclusionReason
 		for _, rule := range lang.Rules {
-			travisLink := fmt.Sprintf("[![%s](https://travis-ci.org/stackb/rules_proto.svg?branch=master)](https://travis-ci.org/stackb/rules_proto)", headVersion)
-			if travisExclusionReason == "" {
-				travisExclusionReason = rule.TravisExclusionReason
+			ciLink := fmt.Sprintf("[![%s](https://badge.buildkite.com/4eafd3b619b9febae679bac4ce75b6b74643d48384e7f36eeb.svg)](https://buildkite.com/bazel/rules-proto", headVersion)
+			// ciLink := fmt.Sprintf("[![%s](https://travis-ci.org/stackb/rules_proto.svg?branch=master)](https://travis-ci.org/stackb/rules_proto)", headVersion)
+			if ciExclusionReason == "" {
+				ciExclusionReason = rule.BazelCIExclusionReason
 			}
-			if travisExclusionReason != "" {
-				travisLink = travisExclusionReason
+			if ciExclusionReason != "" {
+				ciLink = ciExclusionReason
 			}
 			dirLink := fmt.Sprintf("[%s](/%s)", lang.Name, lang.Dir)
 			ruleLink := fmt.Sprintf("[%s](/%s#%s)", rule.Name, lang.Dir, rule.Name)
-			exampleLink := fmt.Sprintf("[example](/%s/example/%s)", lang.Name, rule.Name)
-			out.w("| %s | %s | %s | %s (%s) |", travisLink, dirLink, ruleLink, rule.Doc, exampleLink)
+			exampleLink := fmt.Sprintf("[example](/%scexample/%s)", lang.Name, rule.Name)
+			out.w("| %s | %s | %s | %s (%s) |", ciLink, dirLink, ruleLink, rule.Doc, exampleLink)
 		}
 	}
 	out.ln()
