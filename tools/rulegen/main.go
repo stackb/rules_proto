@@ -50,10 +50,6 @@ type Language struct {
 
 	// Additional travis-specific env vars in the form "K=V"
 	PresubmitEnvVars map[string]string
-
-	// If not the empty string, one-word reason why excluded from bazelci
-	// configuration
-	BazelCIExclusionReason string
 }
 
 type Rule struct {
@@ -597,9 +593,7 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 func mustWriteReadme(dir, header, footer string, data interface{}, languages []*Language, versions []string) {
 	out := &LineWriter{}
 
-	headVersion := versions[0]
 	badgeImageURL := "https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master"
-	ciLink := fmt.Sprintf("[![%s](%s)](https://buildkite.com/bazel/rules-proto)", headVersion, badgeImageURL)
 
 	out.tpl(header, data)
 	out.ln()
@@ -610,17 +604,14 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.w("| Status | Lang | Rule | Description")
 	out.w("| ---    | ---: | :--- | :--- |")
 	for _, lang := range languages {
-		ciExclusionReason := lang.BazelCIExclusionReason
 		for _, rule := range lang.Rules {
-			if ciExclusionReason == "" {
-				ciExclusionReason = rule.BazelCIExclusionReason
-			}
-			if ciExclusionReason != "" {
-				ciLink = ciExclusionReason
+			ciLink := fmt.Sprintf("[![Build Status](%s)](https://buildkite.com/bazel/rules-proto)", badgeImageURL)
+			if rule.BazelCIExclusionReason != "" {
+				ciLink = rule.BazelCIExclusionReason
 			}
 			dirLink := fmt.Sprintf("[%s](/%s)", lang.Name, lang.Dir)
 			ruleLink := fmt.Sprintf("[%s](/%s#%s)", rule.Name, lang.Dir, rule.Name)
-			exampleLink := fmt.Sprintf("[example](/%scexample/%s)", lang.Name, rule.Name)
+			exampleLink := fmt.Sprintf("[example](/example/%s/%s)", lang.Name, rule.Name)
 			out.w("| %s | %s | %s | %s (%s) |", ciLink, dirLink, ruleLink, rule.Doc, exampleLink)
 		}
 	}
@@ -678,7 +669,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	out.w(`    - "//example/routeguide/..."`)
 	out.w("    build_targets:")
 	for _, lang := range languages {
-		if lang.BazelCIExclusionReason != "" || lang.Name == "rust" || lang.Name == "ruby" || lang.Name == "swift" {
+		if lang.Name == "rust" || lang.Name == "ruby" || lang.Name == "swift" {
 			continue
 		}
 		out.w(`    - "//%s/..."`, lang.Dir)
@@ -688,9 +679,6 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	// Second time around for examples
 	//
 	for _, lang := range languages {
-		if lang.BazelCIExclusionReason != "" {
-			continue
-		}
 		for _, rule := range lang.Rules {
 			if rule.BazelCIExclusionReason != "" {
 				continue

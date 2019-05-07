@@ -39,7 +39,6 @@ func makeSwift() *Language {
 		Dir:  "swift",
 		Name: "swift",
 		// TravisExclusionReason: "travis incompatible",
-		BazelCIExclusionReason: "experimental",
 		PresubmitEnvVars: map[string]string{
 			"CC": "clang",
 		},
@@ -64,6 +63,7 @@ func makeSwift() *Language {
 				Example:        protoCompileExampleTemplate,
 				Doc:            "Generates swift protobuf artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				BazelCIExclusionReason: "experimental",
 			},
 			&Rule{
 				Experimental:   true,
@@ -76,6 +76,7 @@ func makeSwift() *Language {
 				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates swift protobuf+gRPC artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				BazelCIExclusionReason: "experimental",
 			},
 			&Rule{
 				Name:           "swift_proto_library",
@@ -86,6 +87,7 @@ func makeSwift() *Language {
 				Implementation: swiftProtoLibraryRuleTemplate,
 				Doc:            "Generates swift protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				BazelCIExclusionReason: "experimental",
 			},
 			&Rule{
 				Name:           "swift_grpc_library",
@@ -96,6 +98,7 @@ func makeSwift() *Language {
 				Example:        swiftGrpcLibraryExampleTemplate,
 				Doc:            "Generates swift protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				BazelCIExclusionReason: "experimental",
 			},
 		},
 	}
