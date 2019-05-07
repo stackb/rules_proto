@@ -278,34 +278,6 @@ tasks:
     build_targets:
       - "..."
     working_directory: example/scala/scala_grpc_library
-  swift_proto_compile:
-    platform: ubuntu1604
-    build_targets:
-      - "..."
-    working_directory: example/swift/swift_proto_compile
-    environment:
-      CC: clang
-  swift_grpc_compile:
-    platform: ubuntu1604
-    build_targets:
-      - "..."
-    working_directory: example/swift/swift_grpc_compile
-    environment:
-      CC: clang
-  swift_proto_library:
-    platform: ubuntu1604
-    build_targets:
-      - "..."
-    working_directory: example/swift/swift_proto_library
-    environment:
-      CC: clang
-  swift_grpc_library:
-    platform: ubuntu1604
-    build_targets:
-      - "..."
-    working_directory: example/swift/swift_grpc_library
-    environment:
-      CC: clang
   gogo_proto_compile:
     platform: ubuntu1604
     build_targets:
