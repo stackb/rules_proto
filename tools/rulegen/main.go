@@ -457,7 +457,6 @@ func mustWriteLanguageRule(dir string, lang *Language, rule *Rule) {
 
 func mustWriteLanguageExamples(dir string, lang *Language) {
 	for _, rule := range lang.Rules {
-		// exampleDir := path.Join(dir, lang.Dir, "example", rule.Name)
 		exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
 		os.MkdirAll(exampleDir, os.ModePerm)
 		mustWriteLanguageExampleWorkspace(exampleDir, lang, rule)
@@ -496,8 +495,6 @@ func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule)
 	out := &LineWriter{}
 	out.w("# Start with --all_incompatible_changes by default")
 	out.w("build --all_incompatible_changes")
-	// out.w("build --incompatible_no_rule_outputs_param=false")
-	// out.w("build --incompatible_use_toolchain_resolution_for_java_rules=false")
 	for _, f := range lang.Flags {
 		out.w("# %s", f.Description)
 		out.w("%s --%s=%s", f.Category, f.Name, f.Value)
@@ -681,7 +678,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	out.w(`    - "//example/routeguide/..."`)
 	out.w("    build_targets:")
 	for _, lang := range languages {
-		if lang.BazelCIExclusionReason != "" {
+		if lang.BazelCIExclusionReason != "" || lang.Name == "rust" || lang.Name == "ruby" || lang.Name == "swift" {
 			continue
 		}
 		out.w(`    - "//%s/..."`, lang.Dir)

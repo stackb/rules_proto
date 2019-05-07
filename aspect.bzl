@@ -19,6 +19,7 @@ def proto_compile_impl(ctx):
     return [ProtoCompileInfo(
         label = ctx.label,
         outputs = files,
+        files = files,
     ), DefaultInfo(files = depset(files))]
 
 proto_compile_attrs = {
@@ -349,6 +350,8 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles, plugin_options):
     """
     label_name = ctx.label.name
     arg = "%s/%s" % (ctx.bin_dir.path, ctx.label.workspace_root)
+    if ctx.label.package:
+        arg += "/" + ctx.label.package
 
     # Graveyard of failed attempts (above)....
     # arg = "%s/%s" % (ctx.bin_dir.path, ctx.label.package)
