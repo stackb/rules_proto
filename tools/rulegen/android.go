@@ -147,6 +147,11 @@ func makeAndroid() *Language {
 						Name:     "incompatible_remove_native_maven_jar",
 						Value:    "false",
 					},
+					{
+						Category: "build",
+						Name:     "incompatible_disallow_struct_provider_syntax",
+						Value:    "false",
+					},
 				},
 			},
 			&Rule{
@@ -162,6 +167,11 @@ func makeAndroid() *Language {
 					{
 						Category: "build",
 						Name:     "incompatible_remove_native_maven_jar",
+						Value:    "false",
+					},
+					{
+						Category: "build",
+						Name:     "incompatible_disallow_struct_provider_syntax",
 						Value:    "false",
 					},
 				},
