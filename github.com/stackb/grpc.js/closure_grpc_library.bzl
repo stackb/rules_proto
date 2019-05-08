@@ -43,7 +43,12 @@ def closure_grpc_library(**kwargs):
             name_pb + "/descriptor.source.bin",
         ],
         suppress = [
+            "JSC_LATE_PROVIDE_ERROR",
+            "JSC_UNDEFINED_VARIABLE",
             "JSC_IMPLICITLY_NULLABLE_JSDOC",
+            "JSC_STRICT_INEXISTENT_PROPERTY",
+            "JSC_POSSIBLE_INEXISTENT_PROPERTY",
+            "JSC_UNRECOGNIZED_TYPE_ERROR",
         ],
         visibility = visibility,
     )
