@@ -36,6 +36,7 @@ closure_js_library(
     ],
     deps = [
         ":routeguide",
+        ":routeguide_pb_lib",
         "@io_bazel_rules_closure//closure/library/promise",
     ],
 )

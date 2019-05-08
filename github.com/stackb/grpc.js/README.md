@@ -17,12 +17,6 @@ Generates protobuf closure grpc *.js files
 load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "closure_grpc_compile")
 
 closure_grpc_compile()
-
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
 ```
 
 ### `BUILD.bazel`
@@ -71,13 +65,7 @@ closure_grpc_library()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
-closure_repositories(omit_com_google_protobuf = True)
-
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
+closure_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -96,6 +84,7 @@ closure_grpc_library(
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
 | build | incompatible_use_toolchain_resolution_for_java_rules | false |  |
+| build | incompatible_disallow_struct_provider_syntax | false |  |
 
 ### Mandatory Attributes
 

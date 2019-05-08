@@ -8,9 +8,3 @@ local_repository(
 load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "closure_grpc_compile")
 
 closure_grpc_compile()
-
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
