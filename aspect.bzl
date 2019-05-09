@@ -329,6 +329,13 @@ def proto_compile_aspect_impl(target, ctx):
         outputs = outputs,
     )
 
+    #
+    # Gather transitive outputs
+    #
+    deps = [dep[ProtoLibraryAspectNodeInfo] for dep in node.attr.deps]
+    for dep in deps:
+        outputs += dep.outputs
+
     info = ProtoLibraryAspectNodeInfo(
         outputs = outputs,
     )
@@ -417,10 +424,7 @@ def _get_plugin_outputs(ctx, descriptor, outputs, proto, plugin):
         # sibling = _get_output_sibling_file(output, proto, descriptor)
         sibling = proto
 
-        # print("FILENAME: %s" % filename)
-        # output = ctx.actions.declare_file(filename, sibling = sibling)
-        output = ctx.actions.declare_file(filename)
-        # output = ctx.new_file(filename, root = descriptor)
+        output = ctx.actions.declare_file(filename, sibling = sibling)
 
         # print("Using sibling file '%s' for '%s' => '%s'" % (sibling.path, filename, output.path))
         outputs.append(output)
@@ -550,7 +554,7 @@ def _get_output_filename(src, plugin, pattern):
         filename = pattern.replace("{basename|rust_keyword}", _rust_keyword(basename))
     else:
         filename = basename + pattern
-
+    
     return filename
 
 def _get_proto_filename(src):
