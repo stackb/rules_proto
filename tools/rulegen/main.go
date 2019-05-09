@@ -611,7 +611,7 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 			}
 			dirLink := fmt.Sprintf("[%s](/%s)", lang.Name, lang.Dir)
 			ruleLink := fmt.Sprintf("[%s](/%s#%s)", rule.Name, lang.Dir, rule.Name)
-			exampleLink := fmt.Sprintf("[example](/example/%s/%s)", lang.Name, rule.Name)
+			exampleLink := fmt.Sprintf("[example](/example/%s/%s)", lang.Dir, rule.Name)
 			out.w("| %s | %s | %s | %s (%s) |", ciLink, dirLink, ruleLink, rule.Doc, exampleLink)
 		}
 	}
