@@ -20,7 +20,7 @@
 #
 # javadoc_library(
 #     name = "javadoc",
-#     srcs = ["//proto/api:java_pb"],
+#     srcjars = ["//proto/api:java_pb"],
 #     deps = ["//proto/api:java"],
 #     doctitle = "My gRPC Java API",
 #     root_packages = [
@@ -76,7 +76,7 @@ def _javadoc_library(ctx):
 
     jar_command = "%s/bin/jar cf %s -C tmp ." % (java_home, ctx.outputs.jar.path)
 
-    unjar_command = "%s/bin/jar xf %s" % (java_home, " ".join([f.path for f in ctx.files.srcs]))
+    unjar_command = "%s/bin/jar xf %s" % (java_home, " ".join([f.path for f in ctx.files.srcjars]))
 
     srcs = depset(transitive = [src.files for src in ctx.attr.srcjars]).to_list()
     ctx.actions.run_shell(
