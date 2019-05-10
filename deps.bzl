@@ -1,5 +1,4 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-# load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
 
 # https://raw.githubusercontent.com/grpc/grpc/master/third_party/zlib.BUILD
 ZLIB_BUILD = """
@@ -59,16 +58,6 @@ def github_archive(name, org, repo, ref, sha256):
                 "https://github.com/%s/%s/archive/%s.tar.gz" % (org, repo, ref),
             ],
             sha256 = sha256,
-        )
-
-def jar(name, artifact, sha1):
-    """Declare a maven_jar
-    """
-    if name not in native.existing_rules():
-        native.maven_jar(
-            name = name,
-            artifact = artifact,
-            sha1 = sha1,
         )
 
 def get_ref(name, default, kwargs):
@@ -339,53 +328,6 @@ def io_grpc_grpc_java(**kwargs):
     sha256 = get_sha256(name, "1eeb136874a58a0a311a0701016aced96919f501ced0372013eb1708724ab046", kwargs)
     github_archive(name, "grpc", "grpc-java", ref, sha256)
 
-def com_google_guava_guava(**kwargs):
-    """grpc java plugin and jars
-    """
-    name = "com_google_guava_guava"
-    artifact = get_artifact(name, "com.google.guava:guava:20.0", kwargs)
-    sha1 = get_sha1(name, "89507701249388e1ed5ddcf8c41f4ce1be7831ef", kwargs)
-    jar(name, artifact, sha1)
-
-def com_google_guava_guava_android(**kwargs):
-    """android-specific guava 
-    """
-    name = "com_google_guava_guava_android"
-    artifact = get_artifact(name, "com.google.guava:guava:27.0.1-android", kwargs)
-    sha1 = get_sha1(name, "b7e1c37f66ef193796ccd7ea6e80c2b05426182d", kwargs)
-    jar(name, artifact, sha1)
-
-def com_thesamet_scalapb_scalapb_json4s(**kwargs):
-    """json parsing library for scala
-    """
-    name = "com_thesamet_scalapb_scalapb_json4s"
-    artifact = get_artifact(name, "com.thesamet.scalapb:scalapb-json4s_2.12:0.7.1", kwargs)
-    sha1 = get_sha1(name, "808eeb6cfaa359a6c6a3dd2ea2c0374caee30c28", kwargs)
-    jar(name, artifact, sha1)
-
-def org_json4s_json4s_jackson_2_12(**kwargs):
-    """json parsing library for scala
-    """
-    name = "org_json4s_json4s_jackson_2_12"
-    artifact = get_artifact(name, "org.json4s:json4s-jackson_2.12:3.6.1", kwargs)
-    sha1 = get_sha1(name, "864cf214dcd5686929f1c7f8d61344195c828b35", kwargs)
-    jar(name, artifact, sha1)
-
-def org_json4s_json4s_core_2_12(**kwargs):
-    """json parsing library for scala - core
-    """
-    name = "org_json4s_json4s_core_2_12"
-    artifact = get_artifact(name, "org.json4s:json4s-core_2.12:3.6.1", kwargs)
-    sha1 = get_sha1(name, "7a619365089281c6015b80c499ff3b3cb196572f", kwargs)
-    jar(name, artifact, sha1)
-
-def org_json4s_json4s_ast_2_12(**kwargs):
-    """json parsing library for scala
-    """
-    name = "org_json4s_json4s_ast_2_12"
-    artifact = get_artifact(name, "org.json4s:json4s-ast_2.12:3.6.1", kwargs)
-    sha1 = get_sha1(name, "cf937592788dfa654acb9679b97eb1e691bf69f8", kwargs)
-    jar(name, artifact, sha1)
 
 def com_github_scalapb_scalapb(**kwargs):
     """scala compiler plugin
