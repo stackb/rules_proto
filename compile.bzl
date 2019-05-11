@@ -553,20 +553,15 @@ def proto_compile_impl(ctx):
 
     mnemonic = "ProtoCompile"
 
-    command = " ".join([protoc.path] + args)
-
-    if verbose > 0:
-        print("%s: %s" % (mnemonic, command))
-    if verbose > 1:
-        command += " && echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find ."
-    if verbose > 2:
-        command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . && " + command
     if verbose > 3:
-        command = "env && " + command
         for f in outputs:
             print("expected output: %q", f.path)
 
-    ctx.actions.run_shell(
+    resolved_inputs, input_manifests = ctx.resolve_tools(tools=[plugin.executable_target for plugin in plugins if plugin.executable])
+
+    ctx.actions.run(
+        executable=protoc,
+        arguments = args,
         mnemonic = mnemonic,
         command = command,
         inputs = protos + data,
