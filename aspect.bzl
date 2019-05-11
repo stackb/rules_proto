@@ -213,7 +213,7 @@ def proto_compile_aspect_impl(target, ctx):
     for plugin in plugins:
         if plugin.executable:
             plugin_tools[plugin.name] = plugin.executable
-        data += plugin.data + get_plugin_runfiles(plugin.tool)
+        data += plugin.data
 
         filename = _get_plugin_out(ctx, plugin)
         if not filename:
@@ -295,8 +295,6 @@ def proto_compile_aspect_impl(target, ctx):
 
     mnemonic = "ProtoCompile"  # SAME
 
-    command = " ".join([protoc.path] + args)  # SAME
-
     inputs = import_files.to_list() + descriptor_sets.to_list() + data
     tools = [protoc] + plugin_tools.values()
 
@@ -309,17 +307,20 @@ def proto_compile_aspect_impl(target, ctx):
         for arg in args:
             print("ARG:", arg)
 
-    ctx.actions.run_shell(
+    resolved_inputs, input_manifests = ctx.resolve_tools(tools=[plugin.executable_target for plugin in plugins if plugin.executable])
+
+    ctx.actions.run(
         mnemonic = mnemonic,  # SAME
         executable=protoc,  # SAME
         arguments = args,
 
         # This is different!
-        inputs = inputs,
+        inputs = inputs + resolved_inputs.to_list(),
         tools = tools,
 
         # outputs = outputs + [descriptor] + ctx.outputs.outputs, # compile.bzl
         outputs = outputs,
+        input_manifests=input_manifests,
     )
 
     #
@@ -685,29 +686,3 @@ def _apply_plugin_transitivity_rules(ctx, targets, plugin):
 #         # print("Using sibling file '%s' for '%s' => '%s'" % (sibling.path, filename, output.path))
 #         outputs.append(output)
 #     return outputs
-
-def get_plugin_runfiles(tool):
-    """Gather runfiles for a plugin.
-    """
-    files = []
-    if not tool:
-        return files
-
-    info = tool[DefaultInfo]
-    if not info:
-        return files
-
-    if info.files:
-        files += info.files.to_list()
-
-    if info.default_runfiles:
-        runfiles = info.default_runfiles
-        if runfiles.files:
-            files += runfiles.files.to_list()
-
-    if info.data_runfiles:
-        runfiles = info.data_runfiles
-        if runfiles.files:
-            files += runfiles.files.to_list()
-
-    return files

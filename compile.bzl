@@ -362,32 +362,6 @@ def get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
         outputs.append(ctx.actions.declare_file(filename, sibling = sibling))
     return outputs
 
-def get_plugin_runfiles(tool):
-    """Gather runfiles for a plugin.
-    """
-    files = []
-    if not tool:
-        return files
-
-    info = tool[DefaultInfo]
-    if not info:
-        return files
-
-    if info.files:
-        files += info.files.to_list()
-
-    if info.default_runfiles:
-        runfiles = info.default_runfiles
-        if runfiles.files:
-            files += runfiles.files.to_list()
-
-    if info.data_runfiles:
-        runfiles = info.data_runfiles
-        if runfiles.files:
-            files += runfiles.files.to_list()
-
-    return files
-
 def proto_compile_impl(ctx):
     ###
     ### Part 1: setup variables used in scope
@@ -463,7 +437,7 @@ def proto_compile_impl(ctx):
     for plugin in plugins:
         if plugin.executable:
             plugin_tools[plugin.name] = plugin.executable
-        data += plugin.data + get_plugin_runfiles(plugin.tool)
+        data += plugin.data
 
         filename = _get_plugin_out(ctx, plugin)
         if not filename:
@@ -563,10 +537,10 @@ def proto_compile_impl(ctx):
         executable=protoc,
         arguments = args,
         mnemonic = mnemonic,
-        command = command,
-        inputs = protos + data,
+        inputs = protos + data + resolved_inputs.to_list(),
         outputs = outputs + [descriptor] + ctx.outputs.outputs,
         tools = [protoc] + plugin_tools.values(),
+        input_manifests = input_manifests
     )
 
     ###
