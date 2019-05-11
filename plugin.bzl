@@ -8,12 +8,14 @@ ProtoPluginInfo = provider(fields = {
     "outdir": "whether to use the package output dir",
     "data": "additional data",
     "transitivity": "transitivity properties",
+    "executable_target": "plugin tool target",
 })
 
 def _proto_plugin_impl(ctx):
     return [ProtoPluginInfo(
         data = ctx.files.data,
         executable = ctx.executable.tool,
+        executable_target = ctx.attr.tool,
         name = ctx.label.name,
         options = ctx.attr.options,
         out = ctx.attr.out,
