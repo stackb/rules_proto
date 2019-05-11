@@ -301,25 +301,18 @@ def proto_compile_aspect_impl(target, ctx):
     tools = [protoc] + plugin_tools.values()
 
     # SAME
-    if verbose > 0:
-        print("%s: %s" % (mnemonic, command))
-    if verbose > 1:
-        command += " && echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find . -type f "
-    if verbose > 2:
-        command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . -type l && " + command
     if verbose > 3:
-        command = "env && " + command
         for f in outputs:
             print("EXPECTED OUTPUT:", f.path)
         print("INPUTS:", inputs)
         print("TOOLS:", tools)
-        print("COMMAND:", command)
         for arg in args:
             print("ARG:", arg)
 
     ctx.actions.run_shell(
         mnemonic = mnemonic,  # SAME
-        command = command,  # SAME
+        executable=protoc,  # SAME
+        arguments = args,
 
         # This is different!
         inputs = inputs,
