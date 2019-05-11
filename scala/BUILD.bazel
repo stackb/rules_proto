@@ -5,7 +5,7 @@ proto_plugin(
     # Use the proto basename and pipe the value to the scala_keyword function.
     # Ths function will append '_pb' if the basename is a scala keyword.
     out = "{name}.jar",
-    tool = ":protoc-gen-scala",
+    tool = ":compiler_plugin",
     visibility = ["//visibility:public"],
 )
 
@@ -18,7 +18,7 @@ proto_plugin(
         "grpc",
         # "java_conversions", # causes weird import problems
     ],
-    tool = ":protoc-gen-scala",
+    tool = ":compiler_plugin",
     visibility = ["//visibility:public"],
 )
 
@@ -77,18 +77,6 @@ scala_binary(
     ],
 )
 
-# Curiously this didn't work
-#
-# genrule(
-#     name = "gen_protoc_gen_scala",
-#     srcs = ["compiler_plugin_deploy.jar", "@local_jdk//:bin/java"],
-#     outs = ["protoc-gen-scala.sh"],
-#     cmd = """
-#     echo '$(location @local_jdk//:bin/java) -jar $(location protoc_gen_deploy.jar) $$@' > $@
-#     """,
-#     executable = True,
-# )
-
 # ======================================================================
 #
 # Unable to get either bazel or maybe protoc to call a plugin whose
@@ -97,23 +85,23 @@ scala_binary(
 # protoc_gen_scala_deploy.jar'.  Either figure out how to do this in java
 # directly or write the wrapper in C++ to remove the go dependency here.
 #
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-
-go_library(
-    name = "go_default_library",
-    srcs = [
-        "protoc-gen-scala.go",
-    ],
-    importpath = "github.com/stackb/rules_proto/scala/protoc-gen-scala",
-    visibility = ["//visibility:public"],
-)
-
-go_binary(
-    name = "protoc-gen-scala",
-    data = [
-        ":compiler_plugin_deploy.jar",
-        "@bazel_tools//tools/jdk:jre",
-    ],
-    embed = [":go_default_library"],
-    visibility = ["//visibility:public"],
-)
+#load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+#
+#go_library(
+#    name = "go_default_library",
+#    srcs = [
+#        "protoc-gen-scala.go",
+#    ],
+#    importpath = "github.com/stackb/rules_proto/scala/protoc-gen-scala",
+#    visibility = ["//visibility:public"],
+#)
+#
+#go_binary(
+#    name = "protoc-gen-scala",
+#    data = [
+#        ":compiler_plugin_deploy.jar",
+#        "@bazel_tools//tools/jdk:jre",
+#    ],
+#    embed = [":go_default_library"],
+#    visibility = ["//visibility:public"],
+#)
