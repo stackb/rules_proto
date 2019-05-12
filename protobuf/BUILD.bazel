@@ -1,0 +1,11 @@
+sh_binary(
+    name = "protoc_debug_wrapper",
+    srcs = [
+        "protoc_debug_wrapper.sh",
+    ],
+    data = [
+        "@com_google_protobuf//:protoc",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
+)

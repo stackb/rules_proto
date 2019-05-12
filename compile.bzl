@@ -422,6 +422,9 @@ def proto_compile_impl(ctx):
     # single binaries.
     data = []
 
+    # Enviourment variables for protoc execution.
+    env = {}
+
     ###
     ### Part 2: gather plugin.out artifacts
     ###
@@ -527,6 +530,14 @@ def proto_compile_impl(ctx):
 
     mnemonic = "ProtoCompile"
 
+    if verbose > 0:
+        print("%s: %s %s" % (mnemonic, protoc, " ".join(args)))
+    if verbose > 1:
+        # Replace the protoc binary with the wrapper, so
+        # it'll print debug info according to
+        # the `verbose` env variable.
+        protoc = ctx.executable._protoc_debug_wrapper
+        env["verbose"] = str(verbose)
     if verbose > 3:
         for f in outputs:
             print("expected output: %q", f.path)
@@ -540,7 +551,8 @@ def proto_compile_impl(ctx):
         inputs = protos + data + resolved_inputs.to_list(),
         outputs = outputs + [descriptor] + ctx.outputs.outputs,
         tools = [protoc] + plugin_tools.values(),
-        input_manifests = input_manifests
+        input_manifests = input_manifests,
+        env = env,
     )
 
     ###
@@ -614,6 +626,11 @@ proto_compile = rule(
         ),
         "transitivity": attr.string_dict(
             doc = "Transitive rules.  When the 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
+        ),
+        "_protoc_debug_wrapper": attr.label(
+            default = "//protobuf:protoc_debug_wrapper",
+            cfg = "host",
+            executable = True,
         ),
     },
     # TODO(pcj) remove this

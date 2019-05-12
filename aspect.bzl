@@ -73,6 +73,11 @@ proto_compile_aspect_attrs = {
         doc = "Increase verbose level for more debugging",
         values = ["", "None", "0", "1", "2", "3", "4"],
     ),
+    "_protoc_debug_wrapper": attr.label(
+        default = "//protobuf:protoc_debug_wrapper",
+        cfg = "host",
+        executable = True,
+    ),
     # "plugin_options": attr.string_list(
     #     doc = "List of additional 'global' options to add (applies to all plugins)",
     # ),
@@ -196,6 +201,8 @@ def proto_compile_aspect_impl(target, ctx):
     # single binaries.
     data = []
 
+    env = {}
+
     ###
     ### Part 2: gather plugin.out artifacts
     ###
@@ -299,6 +306,14 @@ def proto_compile_aspect_impl(target, ctx):
     tools = [protoc] + plugin_tools.values()
 
     # SAME
+    if verbose > 0:
+        print("%s: %s %s" % (mnemonic, protoc, " ".join(args)))
+    if verbose > 1:
+        # Replace the protoc binary with the wrapper, so
+        # it'll print debug info according to
+        # the `verbose` env variable.
+        env["verbose"] = str(verbose)
+        protoc = ctx.executable._protoc_debug_wrapper
     if verbose > 3:
         for f in outputs:
             print("EXPECTED OUTPUT:", f.path)
@@ -320,7 +335,8 @@ def proto_compile_aspect_impl(target, ctx):
 
         # outputs = outputs + [descriptor] + ctx.outputs.outputs, # compile.bzl
         outputs = outputs,
-        input_manifests=input_manifests,
+        input_manifests = input_manifests,
+        env = env,
     )
 
     #
@@ -548,7 +564,7 @@ def _get_output_filename(src, plugin, pattern):
         filename = pattern.replace("{basename|rust_keyword}", _rust_keyword(basename))
     else:
         filename = basename + pattern
-    
+
     return filename
 
 def _get_proto_filename(src):
