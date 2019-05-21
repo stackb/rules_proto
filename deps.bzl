@@ -284,7 +284,7 @@ py_library(
   visibility = ["//visibility:public"],
 )
         """,
-            sha256 = "105f8d68613f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a",
+            sha256 = "d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73",
             urls = ["https://pypi.python.org/packages/source/s/six/six-1.12.0.tar.gz"],
         )
 
