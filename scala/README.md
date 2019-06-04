@@ -6,8 +6,8 @@ Rules for `scala_grpc_{compile|library}` don't produce code that compiles!  Use 
 | ---: | :--- |
 | [scala_proto_compile](#scala_proto_compile) | Generates *.scala protobuf artifacts |
 | [scala_grpc_compile](#scala_grpc_compile) | Generates *.scala protobuf+gRPC artifacts |
-| [scala_proto_library](#scala_proto_library) | Generates *.py protobuf library |
-| [scala_grpc_library](#scala_grpc_library) | Generates *.py protobuf+gRPC library |
+| [scala_proto_library](#scala_proto_library) | Generates *.scala protobuf library |
+| [scala_grpc_library](#scala_grpc_library) | Generates *.scala protobuf+gRPC library |
 
 ---
 
@@ -143,7 +143,7 @@ scala_grpc_compile(
 
 ## `scala_proto_library`
 
-Generates *.py protobuf library
+Generates *.scala protobuf library
 
 ### `WORKSPACE`
 
@@ -209,7 +209,7 @@ scala_proto_library(
 
 > NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
-Generates *.py protobuf+gRPC library
+Generates *.scala protobuf+gRPC library
 
 ### `WORKSPACE`
 
