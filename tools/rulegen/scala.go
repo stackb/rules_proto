@@ -135,7 +135,7 @@ func makeScala() *Language {
 				Implementation: scalaProtoLibraryRuleTemplate,
 				Usage:          scalaUsageTemplate,
 				Example:        protoLibraryExampleTemplate,
-				Doc:            "Generates *.py protobuf library",
+				Doc:            "Generates *.scala protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
@@ -143,7 +143,7 @@ func makeScala() *Language {
 				Implementation: scalaGrpcLibraryRuleTemplate,
 				Usage:          scalaUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,
-				Doc:            "Generates *.py protobuf+gRPC library",
+				Doc:            "Generates *.scala protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
 				Experimental:   true,
 			},

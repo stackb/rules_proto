@@ -1,3 +1,7 @@
+rulegen:
+	bazel build //tools/rulegen && \
+		bazel-bin/tools/rulegen/linux_amd64_stripped/rulegen \
+			--ref=`git rev-parse HEAD`
 
 # A collection of targets that build routeguide clients
 clients:
