@@ -85,7 +85,7 @@ routeguide_test = rule(
 def get_parent_dirname(label):
     if label.startswith("//"):
         label = label[2:]
-    segments = label.split(sep = "/", maxsplit = 2)
+    segments = label.split("/", 2)
     return segments[0]
 
 def routeguide_test_matrix(
