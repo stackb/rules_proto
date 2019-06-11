@@ -15,6 +15,19 @@ _objc_upper_segments = {
 }
 
 
+ProtoCompileInfo = provider(fields = {
+    "label": "label object",
+    "plugins": "ProtoPluginInfo object",
+    "descriptor": "descriptor set file",
+    "outputs": "generated protoc outputs",
+    "files": "final generated files",
+    "protos": "generated protos (copies)",
+    "args": "proto arguments",
+    "tools": "proto tools",
+    "verbose": "verbose level",
+})
+
+
 def capitalize(s):
     """Capitalize a string - only first letter
     Args:

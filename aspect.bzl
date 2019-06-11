@@ -1,7 +1,7 @@
 load("//:plugin.bzl", "ProtoPluginInfo")
-load("//:compile.bzl", "ProtoCompileInfo")
 load(
     "//:common.bzl",
+    "ProtoCompileInfo",
     _capitalize = "capitalize",
     _get_output_sibling_file = "get_output_sibling_file",
     _get_plugin_out = "get_plugin_out",
