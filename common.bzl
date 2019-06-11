@@ -1,44 +1,14 @@
 # Common data and functions shared by compile.bzl and aspect.bzl
 
-rust_keywords = {
-    "as": True,
-    "break": True,
-    "const": True,
-    "continue": True,
-    "crate": True,
-    "else": True,
-    "enum": True,
-    "extern": True,
-    "false": True,
-    "fn": True,
-    "for": True,
-    "if": True,
-    "impl": True,
-    "let": True,
-    "loop": True,
-    "match": True,
-    "mod": True,
-    "move": True,
-    "mut": True,
-    "pub": True,
-    "ref": True,
-    "return": True,
-    "self": True,
-    "Self": True,
-    "static": True,
-    "struct": True,
-    "super": True,
-    "trait": True,
-    "true": True,
-    "type": True,
-    "unsafe": True,
-    "use": True,
-    "where": True,
-    "while": True,
-}
+_rust_keywords = [
+    "as", "break", "const", "continue", "crate", "else", "enum", "extern",
+    "false", "fn", "for", "if", "impl", "let", "loop", "match", "mod", "move",
+    "mut", "pub", "ref", "return", "self", "Self", "static", "struct", "super",
+    "trait", "true", "type", "unsafe", "use", "where", "while",
+]
 
 
-objc_upper_segments = {
+_objc_upper_segments = {
     "url": "URL",
     "http": "HTTP",
     "https": "HTTPS",
@@ -69,7 +39,7 @@ def pascal_objc(s):
     """
     segments = []
     for segment in s.split("_"):
-        repl = objc_upper_segments.get(segment)
+        repl = _objc_upper_segments.get(segment)
         if repl:
             segment = repl
         else:
@@ -95,7 +65,7 @@ def rust_keyword(s):
     Returns:
         (string): The appended string.
     """
-    return s + "_pb" if rust_keywords.get(s) else s
+    return s + "_pb" if s in _rust_keywords else s
 
 
 def get_output_sibling_file(pattern, proto, descriptor):
