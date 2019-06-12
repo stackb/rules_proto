@@ -337,3 +337,44 @@ def get_output_filename(src, plugin, pattern):
         filename = basename + pattern
 
     return filename
+
+
+def copy_proto(ctx, descriptor, src):
+    """Copy a proto to the 'staging area'
+
+    Args:
+      ctx: the <ctx> object
+      descriptor: the descriptor <File> that marks the root of the 'staging area'.
+      src: the source .proto <File>
+
+    Returns:
+      <Generated File> for the copied .proto
+    """
+    proto = ctx.actions.declare_file(get_proto_filename(src), sibling = descriptor)
+    ctx.actions.run_shell(
+        mnemonic = "CopyProto",
+        inputs = [src],
+        outputs = [proto],
+        command = "cp %s %s" % (src.path, proto.path),
+    )
+    return proto
+
+
+# Shamelessly taken from https://github.com/bazelbuild/rules_go
+def proto_path(proto):
+    """
+    The proto path is not really a file path
+    It's the path to the proto that was seen when the descriptor file was generated.
+    """
+    path = proto.path
+    root = proto.root.path
+    ws = proto.owner.workspace_root
+    if path.startswith(root):
+        path = path[len(root):]
+    if path.startswith("/"):
+        path = path[1:]
+    if path.startswith(ws):
+        path = path[len(ws):]
+    if path.startswith("/"):
+        path = path[1:]
+    return path

@@ -16,8 +16,77 @@ load(
     "get_string_list_attr",
     _pascal_case = "pascal_case",
     _pascal_objc = "pascal_objc",
+    _proto_path = "proto_path",
     _rust_keyword = "rust_keyword",
 )
+
+
+def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles, plugin_options):
+    """Build the --java_out argument
+    Args:
+      ctx: the <ctx> object
+      output: the package output directory <string>
+      plugin: the <PluginInfo> object.
+      plugin_outfiles: The <dict<string,<File>>.  For example, {closure: "library.js"}
+    Returns
+      <string> for the protoc arg list.
+    """
+    label_name = ctx.label.name
+    arg = "%s/%s" % (ctx.bin_dir.path, ctx.label.workspace_root)
+
+    # Works for rust but not python!
+    #if ctx.label.package:
+    #    arg += "/" + ctx.label.package
+
+    # Graveyard of failed attempts (above)....
+    # arg = "%s/%s" % (ctx.bin_dir.path, ctx.label.package)
+    # arg = ctx.bin_dir.path
+    # arg = ctx.label.workspace_root
+    # arg = ctx.build_file_path
+    # arg = "."
+
+    if plugin.outdir:
+        arg = plugin.outdir.replace("{name}", outdir)
+    elif plugin.out:
+        outfile = plugin_outfiles[plugin.name]
+
+        #arg = "%s" % (outdir)
+        #arg = "%s/%s" % (outdir, outfile.short_path)
+        arg = outfile.path
+
+    # Collate a list of options from the plugin itself PLUS options from the
+    # global plugin_options list (if they exist)
+    options = getattr(plugin, "options", []) + plugin_options
+    if options:
+        arg = "%s:%s" % (",".join(_get_plugin_options(label_name, options)), arg)
+    return "--%s_out=%s" % (plugin.name, arg)
+
+
+def _get_plugin_outputs(ctx, descriptor, outputs, proto, plugin):
+    """Get the predicted generated outputs for a given plugin
+
+    Args:
+      ctx: the <ctx> object
+      descriptor: the descriptor <Generated File>
+      outputs: the list of outputs.
+      proto: the source .proto <Source File>
+      plugin: the <PluginInfo> object.
+    Returns:
+      <list<Generated File>> the augmented list of files that will be generated
+    """
+    for output in plugin.outputs:
+        filename = _get_output_filename(proto, plugin, output)
+        if not filename:
+            continue
+
+        # sibling = _get_output_sibling_file(output, proto, descriptor)
+        sibling = proto
+
+        output = ctx.actions.declare_file(filename, sibling = sibling)
+
+        # print("Using sibling file '%s' for '%s' => '%s'" % (sibling.path, filename, output.path))
+        outputs.append(output)
+    return outputs
 
 
 def proto_compile_impl(ctx):
@@ -327,120 +396,3 @@ def proto_compile_aspect_impl(target, ctx):
         proto_compile = info,
         providers = [info],
     )
-
-
-def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles, plugin_options):
-    """Build the --java_out argument
-    Args:
-      ctx: the <ctx> object
-      output: the package output directory <string>
-      plugin: the <PluginInfo> object.
-      plugin_outfiles: The <dict<string,<File>>.  For example, {closure: "library.js"}
-    Returns
-      <string> for the protoc arg list.
-    """
-    label_name = ctx.label.name
-    arg = "%s/%s" % (ctx.bin_dir.path, ctx.label.workspace_root)
-
-    # Works for rust but not python!
-    # if ctx.label.package:
-    #     arg += "/" + ctx.label.package
-
-    # Graveyard of failed attempts (above)....
-    # arg = "%s/%s" % (ctx.bin_dir.path, ctx.label.package)
-    # arg = ctx.bin_dir.path
-    # arg = ctx.label.workspace_root
-    # arg = ctx.build_file_path
-    # arg = "."
-
-    if plugin.outdir:
-        arg = plugin.outdir.replace("{name}", outdir)
-    elif plugin.out:
-        outfile = plugin_outfiles[plugin.name]
-
-        #arg = "%s" % (outdir)
-        #arg = "%s/%s" % (outdir, outfile.short_path)
-        arg = outfile.path
-
-    # Collate a list of options from the plugin itself PLUS options from the
-    # global plugin_options list (if they exist)
-    options = getattr(plugin, "options", []) + plugin_options
-    if options:
-        arg = "%s:%s" % (",".join(_get_plugin_options(label_name, options)), arg)
-    return "--%s_out=%s" % (plugin.name, arg)
-
-
-# Shamelessly taken from https://github.com/bazelbuild/rules_go
-def _proto_path(proto):
-    """
-    The proto path is not really a file path
-    It's the path to the proto that was seen when the descriptor file was generated.
-    """
-    path = proto.path
-    root = proto.root.path
-    ws = proto.owner.workspace_root
-    if path.startswith(root):
-        path = path[len(root):]
-    if path.startswith("/"):
-        path = path[1:]
-    if path.startswith(ws):
-        path = path[len(ws):]
-    if path.startswith("/"):
-        path = path[1:]
-    return path
-
-
-def _get_plugin_outputs(ctx, descriptor, outputs, proto, plugin):
-    """Get the predicted generated outputs for a given plugin
-
-    Args:
-      ctx: the <ctx> object
-      descriptor: the descriptor <Generated File>
-      outputs: the list of outputs.
-      proto: the source .proto <Source File>
-      plugin: the <PluginInfo> object.
-    Returns:
-      <list<Generated File>> the augmented list of files that will be generated
-    """
-    for output in plugin.outputs:
-        filename = _get_output_filename(proto, plugin, output)
-        if not filename:
-            continue
-
-        # sibling = _get_output_sibling_file(output, proto, descriptor)
-        sibling = proto
-
-        output = ctx.actions.declare_file(filename, sibling = sibling)
-
-        # print("Using sibling file '%s' for '%s' => '%s'" % (sibling.path, filename, output.path))
-        outputs.append(output)
-    return outputs
-
-
-# def get_plugin_outputs(ctx, descriptor, outputs, proto, plugin):
-#     """Get the predicted generated outputs for a given plugin
-
-#     Args:
-#       ctx: the <ctx> object
-#       descriptor: the descriptor <Generated File>
-#       outputs: the list of outputs.
-#       proto: the source .proto <Source File>
-#       plugin: the <PluginInfo> object.
-
-#     Returns:
-#       <list<Generated File>> the augmented list of files that will be generated
-#     """
-#     for output in plugin.outputs:
-#         filename = _get_output_filename(proto, plugin, output)
-#         if not filename:
-#             continue
-#         # sibling = _get_output_sibling_file(output, proto, descriptor)
-#         # sibling = proto
-#         # print("FILENAME: %s" % filename)
-#         # output = ctx.actions.declare_file(filename, sibling = sibling)
-#         output = ctx.actions.declare_file(filename)
-#         # output = ctx.new_file(filename, root = descriptor)
-
-#         # print("Using sibling file '%s' for '%s' => '%s'" % (sibling.path, filename, output.path))
-#         outputs.append(output)
-#     return outputs

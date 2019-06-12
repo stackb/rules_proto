@@ -5,6 +5,7 @@ load(
     _apply_plugin_transitivity_rules = "apply_plugin_transitivity_rules",
     _capitalize = "capitalize",
     _copy_jar_to_srcjar = "copy_jar_to_srcjar",
+    "copy_proto",
     _get_output_filename = "get_output_filename",
     _get_output_sibling_file = "get_output_sibling_file",
     _get_plugin_option = "get_plugin_option",
@@ -16,27 +17,6 @@ load(
     _pascal_objc = "pascal_objc",
     _rust_keyword = "rust_keyword",
 )
-
-
-def copy_proto(ctx, descriptor, src):
-    """Copy a proto to the 'staging area'
-
-    Args:
-      ctx: the <ctx> object
-      descriptor: the descriptor <File> that marks the root of the 'staging area'.
-      src: the source .proto <File>
-
-    Returns:
-      <Generated File> for the copied .proto
-    """
-    proto = ctx.actions.declare_file(_get_proto_filename(src), sibling = descriptor)
-    ctx.actions.run_shell(
-        mnemonic = "CopyProto",
-        inputs = [src],
-        outputs = [proto],
-        command = "cp %s %s" % (src.path, proto.path),
-    )
-    return proto
 
 
 def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
