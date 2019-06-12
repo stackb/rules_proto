@@ -18,7 +18,7 @@ servers:
 		//cpp/example/routeguide:server \
 		//go/example/routeguide/server \
 		//java/example/routeguide:server \
-		//python/example/routeguide:server
+		//python/example/routeguide:server \
 		//scala/example/routeguide:server \
 
 
