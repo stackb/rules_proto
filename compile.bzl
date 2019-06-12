@@ -2,9 +2,15 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 load(
     "//:common.bzl",
     "ProtoCompileInfo",
+    _apply_plugin_transitivity_rules = "apply_plugin_transitivity_rules",
     _capitalize = "capitalize",
+    _copy_jar_to_srcjar = "copy_jar_to_srcjar",
     _get_output_sibling_file = "get_output_sibling_file",
+    _get_plugin_option = "get_plugin_option",
+    _get_plugin_options = "get_plugin_options",
     _get_plugin_out = "get_plugin_out",
+    "get_plugin_runfiles",
+    _get_proto_filename = "get_proto_filename",
     _pascal_case = "pascal_case",
     _pascal_objc = "pascal_objc",
     _rust_keyword = "rust_keyword",
@@ -58,20 +64,6 @@ def _get_output_filename(src, plugin, pattern):
 
     return filename
 
-def _get_proto_filename(src):
-    """Assemble the filename for a proto
-
-    Args:
-      src: the .proto <File>
-
-    Returns:
-      <string> of the filename.
-    """
-    parts = src.short_path.split("/")
-    if len(parts) > 1 and parts[0] == "..":
-        return "/".join(parts[2:])
-    return src.short_path
-
 def copy_proto(ctx, descriptor, src):
     """Copy a proto to the 'staging area'
 
@@ -91,49 +83,6 @@ def copy_proto(ctx, descriptor, src):
         command = "cp %s %s" % (src.path, proto.path),
     )
     return proto
-
-def _copy_jar_to_srcjar(ctx, jar):
-    """Copy .jar to .srcjar
-
-    Args:
-      ctx: the <ctx> object
-      jar: the <Generated File> of a jar containing source files.
-
-    Returns:
-      <Generated File> for the renamed file
-    """
-    srcjar = ctx.actions.declare_file("%s/%s.srcjar" % (ctx.label.name, ctx.label.name))
-    ctx.actions.run_shell(
-        mnemonic = "CopySrcjar",
-        inputs = [jar],
-        outputs = [srcjar],
-        command = "mv %s %s" % (jar.path, srcjar.path),
-    )
-    return srcjar
-
-def _get_plugin_option(ctx, option):
-    """Build a plugin option
-
-    Args:
-      ctx: the <ctx> object
-      option: string from the <PluginInfo>
-
-    Returns:
-      <string> for the --plugin_out= arg
-    """
-    return option.replace("{name}", ctx.label.name)
-
-def _get_plugin_options(ctx, options):
-    """Build a plugin option list
-
-    Args:
-      ctx: the <ctx> object
-      options: list<string> options from the <PluginInfo>
-
-    Returns:
-      <string> for the --plugin_out= arg
-    """
-    return [_get_plugin_option(ctx, option) for option in options]
 
 def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
     """Build the --java_out argument
@@ -162,59 +111,9 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
     options += getattr(ctx.attr, "plugin_options", [])
 
     if options:
-        arg = "%s:%s" % (",".join(_get_plugin_options(ctx, options)), arg)
+        arg = "%s:%s" % (",".join(_get_plugin_options(ctx.label.name, options)), arg)
     return "--%s_out=%s" % (plugin.name, arg)
 
-def _apply_plugin_transitivity_rules(ctx, targets, plugin):
-    """Process the proto target list according to plugin transitivity rules
-
-    Args:
-      ctx: the <ctx> object
-      targets: the dict<string,File> of .proto files that we intend to compile.
-      plugin: the <PluginInfo> object.
-
-    Returns:
-      <list<File>> the possibly filtered list of .proto <File>s
-    """
-
-    # Iterate transitivity rules like '{ "google/protobuf": "exclude" }'. The
-    # only rule type implemented is "exclude", which checks if the pathname or
-    # dirname ends with the given pattern.  If so, remove that item in the
-    # targets list.
-    #
-    # Why does this feature exist?  Well, library rules like C# require all the
-    # proto files to be present during the compilation (collected via transitive
-    # sources).  However, since the well-known types are already present in the
-    # library dependencies, we don't actually want to compile well-known types
-    # (but do want to compile everything else).
-    #
-    transitivity = {}
-    transitivity.update(plugin.transitivity)
-    transitivity.update(ctx.attr.transitivity)
-
-    for pattern, rule in transitivity.items():
-        if rule == "exclude":
-            for key, target in targets.items():
-                if ctx.attr.verbose > 2:
-                    print("Checking '%s' endswith '%s'" % (target.short_path, pattern))
-                if target.dirname.endswith(pattern) or target.path.endswith(pattern):
-                    targets.pop(key)
-                    if ctx.attr.verbose > 2:
-                        print("Removing '%s' from the list of files to compile as plugin '%s' excluded it" % (target.short_path, plugin.name))
-                elif ctx.attr.verbose > 2:
-                    print("Keeping '%s' (not excluded)" % (target.short_path))
-        elif rule == "include":
-            for key, target in targets.items():
-                if target.dirname.endswith(pattern) or target.path.endswith(pattern):
-                    if ctx.attr.verbose > 2:
-                        print("Keeping '%s' (explicitly included)" % (target.short_path))
-                else:
-                    targets.pop(key)
-                    if ctx.attr.verbose > 2:
-                        print("Removing '%s' from the list of files to compile as plugin '%s' did not include it" % (target.short_path, plugin.name))
-        else:
-            fail("Unknown transitivity rule '%s'" % rule)
-    return targets
 
 def get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
     """Get the predicted generated outputs for a given plugin
@@ -237,32 +136,6 @@ def get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
         sibling = _get_output_sibling_file(output, proto, descriptor)
         outputs.append(ctx.actions.declare_file(filename, sibling = sibling))
     return outputs
-
-def get_plugin_runfiles(tool):
-    """Gather runfiles for a plugin.
-    """
-    files = []
-    if not tool:
-        return files
-
-    info = tool[DefaultInfo]
-    if not info:
-        return files
-
-    if info.files:
-        files += info.files.to_list()
-
-    if info.default_runfiles:
-        runfiles = info.default_runfiles
-        if runfiles.files:
-            files += runfiles.files.to_list()
-
-    if info.data_runfiles:
-        runfiles = info.data_runfiles
-        if runfiles.files:
-            files += runfiles.files.to_list()
-
-    return files
 
 def proto_compile_impl(ctx):
     ###
