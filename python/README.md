@@ -199,7 +199,7 @@ protobuf_pip_install()
 
 pip_import(
     name = "grpc_py_deps",
-    requirements = "@build_stack_rules_proto//python:requirements.txt",
+    requirements = "@build_stack_rules_proto//python/requirements:grpc.txt",
 )
 
 load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
