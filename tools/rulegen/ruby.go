@@ -93,11 +93,10 @@ func makeRuby() *Language {
 		Dir:   "ruby",
 		Name:  "ruby",
 		Flags: commonLangFlags,
-		Notes: aspectLangNotes,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "ruby_proto_compile",
-				Implementation: aspectRuleTemplate,
+				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//ruby:ruby"},
 				Usage:          usageTemplate,
 				Example:        protoCompileExampleTemplate,
@@ -106,7 +105,7 @@ func makeRuby() *Language {
 			},
 			&Rule{
 				Name:           "ruby_grpc_compile",
-				Implementation: aspectRuleTemplate,
+				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//ruby:ruby", "//ruby:grpc_ruby"},
 				Usage:          grpcUsageTemplate,
 				Example:        grpcCompileExampleTemplate,

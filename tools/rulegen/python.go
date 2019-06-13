@@ -121,11 +121,10 @@ func makePython() *Language {
 		Dir:   "python",
 		Name:  "python",
 		Flags: commonLangFlags,
-		Notes: aspectLangNotes,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "python_proto_compile",
-				Implementation: aspectRuleTemplate,
+				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//python:python"},
 				Usage:          usageTemplate,
 				Example:        protoCompileExampleTemplate,
@@ -134,7 +133,7 @@ func makePython() *Language {
 			},
 			&Rule{
 				Name:           "python_grpc_compile",
-				Implementation: aspectRuleTemplate,
+				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//python:python", "//python:grpc_python"},
 				Usage:          pythonGrpcCompileUsageTemplate,
 				Example:        grpcCompileExampleTemplate,
