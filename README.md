@@ -13,7 +13,6 @@ Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 </tr></table>
 
 
-
 ## Rules
 
 | Status | Lang | Rule | Description

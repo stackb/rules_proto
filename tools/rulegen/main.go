@@ -499,6 +499,7 @@ func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule)
 		out.w("# %s", f.Description)
 		out.w("%s --%s=%s", f.Category, f.Name, f.Value)
 	}
+	out.ln()
 	out.MustWrite(path.Join(dir, ".bazelrc"))
 }
 
@@ -581,11 +582,9 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 				out.w("| %s   | `%s` | `%s`    | %s          |", attr.Name, attr.Type, attr.Default, attr.Doc)
 			}
 		}
-		out.ln()
+        out.ln()
 
 	}
-
-	out.ln()
 
 	out.MustWrite(path.Join(dir, lang.Dir, "README.md"))
 }
@@ -618,7 +617,6 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.ln()
 
 	out.tpl(footer, data)
-	out.ln()
 
 	out.MustWrite(path.Join(dir, "README.md"))
 }

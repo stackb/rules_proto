@@ -11,4 +11,3 @@ Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 <td>rules_proto</td>
 <td>gRPC</td>
 </tr></table>
-

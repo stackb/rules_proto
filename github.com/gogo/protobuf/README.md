@@ -677,4 +677,3 @@ gogofaster_grpc_library(
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
-
