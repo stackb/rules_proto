@@ -306,7 +306,7 @@ var protoCompileAttrs = []*Attr{
 		Name:      "verbose",
 		Type:      "int",
 		Default:   "0",
-		Doc:       "1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*",
+		Doc:       "1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
 		Mandatory: false,
 	},
 	&Attr{

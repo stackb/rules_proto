@@ -48,7 +48,7 @@ python_proto_compile(
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
-| verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
+| verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
@@ -102,7 +102,7 @@ python_grpc_compile(
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
-| verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
+| verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
@@ -146,7 +146,7 @@ python_proto_aspect_compile(
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
-| verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
+| verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
@@ -200,7 +200,7 @@ python_grpc_aspect_compile(
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
-| verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
+| verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
@@ -257,7 +257,7 @@ python_proto_library(
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
-| verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
+| verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
@@ -327,7 +327,7 @@ python_grpc_library(
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
-| verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
+| verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
 | transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
