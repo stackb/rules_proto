@@ -59,7 +59,6 @@ gogo_proto_compile(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -112,7 +111,6 @@ gogo_grpc_compile(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -170,7 +168,6 @@ gogo_proto_library(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -227,7 +224,6 @@ gogo_grpc_library(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -280,7 +276,6 @@ gogofast_proto_compile(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -333,7 +328,6 @@ gogofast_grpc_compile(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -391,7 +385,6 @@ gogofast_proto_library(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -448,7 +441,6 @@ gogofast_grpc_library(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -501,7 +493,6 @@ gogofaster_proto_compile(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -554,7 +545,6 @@ gogofaster_grpc_compile(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -612,7 +602,6 @@ gogofaster_proto_library(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
@@ -669,7 +658,6 @@ gogofaster_grpc_library(
 | plugins   | `list<ProtoPluginInfo>` | `[]`    | List of labels that provide a `ProtoPluginInfo`          |
 | plugin_options   | `list<string>` | `[]`    | List of additional 'global' plugin options (applies to all plugins)          |
 | outputs   | `list<generated file>` | `[]`    | List of additional expected generated file outputs          |
-| has_services   | `bool` | `False`    | If the proto files(s) have a service rpc, generate grpc outputs          |
 | protoc   | `executable file` | `@com_google_protobuf//:protoc`    | The protocol compiler tool          |
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show sandbox after*, 3: *show sandbox before*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |

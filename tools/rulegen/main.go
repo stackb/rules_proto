@@ -296,13 +296,6 @@ var protoCompileAttrs = []*Attr{
 		Mandatory: false,
 	},
 	&Attr{
-		Name:      "has_services",
-		Type:      "bool",
-		Default:   "False",
-		Doc:       "If the proto files(s) have a service rpc, generate grpc outputs",
-		Mandatory: false,
-	},
-	&Attr{
 		Name:      "protoc",
 		Type:      "executable file",
 		Default:   "@com_google_protobuf//:protoc",
