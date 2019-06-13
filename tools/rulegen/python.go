@@ -148,6 +148,31 @@ func makePython() *Language {
 				},
 			},
 			&Rule{
+				Name:           "python_proto_aspect_compile",
+				Implementation: aspectRuleTemplate,
+				Plugins:        []string{"//python:python"},
+				Usage:          usageTemplate,
+				Example:        protoCompileExampleTemplate,
+				Doc:            "Generates *.py protobuf artifacts using aspect based compilation",
+				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+			},
+			&Rule{
+				Name:           "python_grpc_aspect_compile",
+				Implementation: aspectRuleTemplate,
+				Plugins:        []string{"//python:python", "//python:grpc_python"},
+				Usage:          pythonGrpcCompileUsageTemplate,
+				Example:        grpcCompileExampleTemplate,
+				Doc:            "Generates *.py protobuf+gRPC artifacts using aspect based compilation",
+				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Flags: []*Flag{
+					{
+						Name:     "incompatible_enable_cc_toolchain_resolution",
+						Value:    "false",
+						Category: "build",
+					},
+				},
+			},
+			&Rule{
 				Name:           "python_proto_library",
 				Implementation: pythonProtoLibraryRuleTemplate,
 				Usage:          pythonProtoLibraryUsageTemplate,

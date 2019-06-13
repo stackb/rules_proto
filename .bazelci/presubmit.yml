@@ -208,6 +208,16 @@ tasks:
     build_targets:
       - "..."
     working_directory: example/python/python_grpc_compile
+  python_proto_aspect_compile:
+    platform: ubuntu1604
+    build_targets:
+      - "..."
+    working_directory: example/python/python_proto_aspect_compile
+  python_grpc_aspect_compile:
+    platform: ubuntu1604
+    build_targets:
+      - "..."
+    working_directory: example/python/python_grpc_aspect_compile
   python_proto_library:
     platform: ubuntu1604
     build_targets:

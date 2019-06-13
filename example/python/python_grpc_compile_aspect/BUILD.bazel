@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//python:python_grpc_compile_aspect.bzl", "python_grpc_compile_aspect")
+
+python_grpc_compile_aspect(
+    name = "greeter_python_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)

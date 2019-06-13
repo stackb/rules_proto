@@ -10,7 +10,7 @@ load(
 
 # "Aspects should be top-level values in extension files that define them."
 
-python_grpc_compile_aspect = aspect(
+python_proto_aspect_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
     provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
@@ -21,7 +21,6 @@ python_grpc_compile_aspect = aspect(
             providers = [ProtoPluginInfo],
             default = [
                 str(Label("//python:python")),
-                str(Label("//python:grpc_python")),
             ],
         ),
     ),
@@ -34,12 +33,12 @@ _rule = rule(
         deps = attr.label_list(
             mandatory = True,
             providers = [ProtoInfo, "proto_compile", ProtoLibraryAspectNodeInfo],
-            aspects = [python_grpc_compile_aspect],
+            aspects = [python_proto_aspect_compile_aspect],
         ),
     ),
 )
 
-def python_grpc_compile(**kwargs):
+def python_proto_aspect_compile(**kwargs):
     _rule(
         verbose_string = "%s" % kwargs.get("verbose", 0),
         plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
