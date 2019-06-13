@@ -14,7 +14,7 @@ load(
 
 
 def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
-    """Build the --java_out argument
+    """Build the --<plugin>_out argument
 
     Args:
       ctx: the <ctx> object
@@ -223,7 +223,6 @@ def proto_compile_impl(ctx):
         args += [get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles)]
 
     args += ["--plugin=protoc-gen-%s=%s" % (k, v.path) for k, v in plugin_tools.items()]
-
     args += [proto.path for proto in targets.values()]
 
     ###
@@ -231,7 +230,6 @@ def proto_compile_impl(ctx):
     ###
 
     mnemonic = "ProtoCompile"
-
     command = " ".join([protoc.path] + args)
 
     if verbose > 0:
@@ -272,16 +270,19 @@ def proto_compile_impl(ctx):
         if len(plugin_outfiles) > 0:
             files += plugin_outfiles.values()
 
-    return [ProtoCompileInfo(
-        label = ctx.label,
-        plugins = plugins,
-        protos = protos,
-        outputs = outputs,
-        files = files,
-        tools = plugin_tools,
-        args = args,
-        descriptor = descriptor,
-    ), DefaultInfo(files = depset(files))]
+    return [
+        ProtoCompileInfo(
+            label = ctx.label,
+            plugins = plugins,
+            protos = protos,
+            outputs = outputs,
+            files = files,
+            tools = plugin_tools,
+            args = args,
+            descriptor = descriptor,
+        ),
+        DefaultInfo(files = depset(files))
+    ]
 
 
 proto_compile = rule(

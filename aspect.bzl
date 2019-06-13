@@ -22,7 +22,7 @@ ProtoLibraryAspectNodeInfo = provider(
 
 
 def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles, plugin_options):
-    """Build the --java_out argument
+    """Build the --<plugin>_out argument
     Args:
       ctx: the <ctx> object
       output: the package output directory <string>
@@ -90,11 +90,8 @@ def _get_plugin_outputs(ctx, descriptor, outputs, proto, plugin):
 
 
 def proto_compile_impl(ctx):
-    files = []
-    for dep in ctx.attr.deps:
-        aspect = dep[ProtoLibraryAspectNodeInfo]
-        files += aspect.outputs
-
+    # Aggregate output files created by the aspect as it has walked the deps
+    files = [file for dep in ctx.attr.deps for file in dep[ProtoLibraryAspectNodeInfo].outputs]
     return [ProtoCompileInfo(
         label = ctx.label,
         outputs = files,
