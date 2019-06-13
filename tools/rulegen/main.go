@@ -335,12 +335,11 @@ var protoCompileAttrs = []*Attr{
 var compileRuleTemplate = mustTemplate(`load("//:compile.bzl", "proto_compile")
 
 def {{ .Rule.Name }}(**kwargs):
-    proto_compile(
-        plugins = [{{ range .Rule.Plugins }}
-            str(Label("{{ . }}")),{{ end }}
-        ],
-        **kwargs
-    )`)
+    # Prepend the {{ .Lang.Name }} plugins and call generic compile
+    kwargs["plugins"] = kwargs.get("plugins", []) + [{{ range .Rule.Plugins }}
+        Label("{{ . }}"),{{ end }}
+    ]
+    proto_compile(**kwargs)`)
 
 var aspectRuleTemplate = mustTemplate(`load("//:plugin.bzl", "ProtoPluginInfo")
 load(

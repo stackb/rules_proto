@@ -1,9 +1,8 @@
 load("//:compile.bzl", "proto_compile")
 
 def closure_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/grpc/grpc-web:closure")),
-        ],
-        **kwargs
-    )
+    # Prepend the grpc-web plugins and call generic compile
+    kwargs["plugins"] = kwargs.get("plugins", []) + [
+        Label("//github.com/grpc/grpc-web:closure"),
+    ]
+    proto_compile(**kwargs)

@@ -1,9 +1,8 @@
 load("//:compile.bzl", "proto_compile")
 
 def scala_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//scala:scala")),
-        ],
-        **kwargs
-    )
+    # Prepend the scala plugins and call generic compile
+    kwargs["plugins"] = kwargs.get("plugins", []) + [
+        Label("//scala:scala"),
+    ]
+    proto_compile(**kwargs)

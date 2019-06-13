@@ -1,10 +1,9 @@
 load("//:compile.bzl", "proto_compile")
 
 def python_grpc_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//python:python")),
-            str(Label("//python:grpc_python")),
-        ],
-        **kwargs
-    )
+    # Prepend the python plugins and call generic compile
+    kwargs["plugins"] = kwargs.get("plugins", []) + [
+        Label("//python:python"),
+        Label("//python:grpc_python"),
+    ]
+    proto_compile(**kwargs)

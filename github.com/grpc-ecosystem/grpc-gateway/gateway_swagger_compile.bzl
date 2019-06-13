@@ -1,9 +1,8 @@
 load("//:compile.bzl", "proto_compile")
 
 def gateway_swagger_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//github.com/grpc-ecosystem/grpc-gateway:swagger")),
-        ],
-        **kwargs
-    )
+    # Prepend the grpc-gateway plugins and call generic compile
+    kwargs["plugins"] = kwargs.get("plugins", []) + [
+        Label("//github.com/grpc-ecosystem/grpc-gateway:swagger"),
+    ]
+    proto_compile(**kwargs)

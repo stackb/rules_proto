@@ -1,9 +1,8 @@
 load("//:compile.bzl", "proto_compile")
 
 def node_proto_compile(**kwargs):
-    proto_compile(
-        plugins = [
-            str(Label("//node:js")),
-        ],
-        **kwargs
-    )
+    # Prepend the node plugins and call generic compile
+    kwargs["plugins"] = kwargs.get("plugins", []) + [
+        Label("//node:js"),
+    ]
+    proto_compile(**kwargs)
