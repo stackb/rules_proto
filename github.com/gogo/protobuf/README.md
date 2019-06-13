@@ -63,7 +63,7 @@ gogo_proto_compile(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -115,7 +115,7 @@ gogo_grpc_compile(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -172,7 +172,7 @@ gogo_proto_library(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -228,7 +228,7 @@ gogo_grpc_library(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -280,7 +280,7 @@ gogofast_proto_compile(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -332,7 +332,7 @@ gogofast_grpc_compile(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -389,7 +389,7 @@ gogofast_proto_library(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -445,7 +445,7 @@ gogofast_grpc_library(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -497,7 +497,7 @@ gogofaster_proto_compile(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -549,7 +549,7 @@ gogofaster_grpc_compile(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -606,7 +606,7 @@ gogofaster_proto_library(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
@@ -662,6 +662,6 @@ gogofaster_grpc_library(
 | verbose   | `int` | `0`    | 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `False`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
+| transitive   | `bool` | `True`    | Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
 | importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |

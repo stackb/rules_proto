@@ -326,7 +326,7 @@ var protoCompileAttrs = []*Attr{
 	&Attr{
 		Name:      "transitive",
 		Type:      "bool",
-		Default:   "False",
+		Default:   "True",
 		Doc:       "Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies",
 		Mandatory: false,
 	},
