@@ -1,14 +1,14 @@
 # Start with --all_incompatible_changes by default
 build --all_incompatible_changes
-# 
+#
 build --incompatible_enable_cc_toolchain_resolution=false
 # In order to use find_cpp_toolchain, you must include the '@bazel_tools//tools/cpp:toolchain_type' in the toolchains argument to your rule.
 build --incompatible_enable_cc_toolchain_resolution=false
-# 
+#
 build --incompatible_require_ctx_in_configure_features=false
 # /external/io_bazel_rules_scala/scala/scala_import.bzl", line 73, in _create_provider java_common.create_provider(use_ijar = False, compile_time_jar...]), <3 more arguments>) java_common.create_provider is deprecated and cannot be used when --incompatible_disallow_legacy_javainfo is set. Please migrate to the JavaInfo constructor.
 build --incompatible_disallow_legacy_javainfo=false
 # external/io_bazel_rules_scala/scala/scala_import.bzl
 build --incompatible_disallow_struct_provider_syntax=false
-# 
+#
 build --incompatible_use_toolchain_resolution_for_java_rules=false

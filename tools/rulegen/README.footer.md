@@ -256,7 +256,7 @@ my_custom_rule = rule(
             providers = ["proto"],
         ),
     }
-) 
+)
 ```
 
 We can then collect a list of the provided "info" objects as follows:
@@ -283,7 +283,7 @@ my_custom_rule = rule(
             mandatory = True,
             providers = [ProtoInfo],
         ),
- 
+
 ```
 
 ```python

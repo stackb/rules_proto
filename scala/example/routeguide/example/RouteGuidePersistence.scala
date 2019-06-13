@@ -22,7 +22,7 @@ object RouteGuidePersistence {
     val features: Seq[Feature] = Seq(
       Feature(
         name = "Patriots Path, Mendham, NJ 07945, USA",
-        location = Some(Point(407838351, -746143763))), 
+        location = Some(Point(407838351, -746143763))),
       Feature(
         name = "101 New Jersey 10, Whippany, NJ 07981, USA",
         location = Some(Point(408122808, -743999179)))

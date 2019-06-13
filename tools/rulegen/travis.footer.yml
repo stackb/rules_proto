@@ -13,7 +13,7 @@ before_install:
 
 script:
   - |
-    if [ "${BAZEL_COMMAND}" != "" ] 
+    if [ "${BAZEL_COMMAND}" != "" ]
     then
       bazel "${BAZEL_COMMAND}" "${BAZEL_TARGET}"
     else

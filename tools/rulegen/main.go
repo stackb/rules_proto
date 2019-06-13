@@ -492,11 +492,19 @@ func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule)
 	out.w("# Start with --all_incompatible_changes by default")
 	out.w("build --all_incompatible_changes")
 	for _, f := range lang.Flags {
-		out.w("# %s", f.Description)
+		if f.Description != "" {
+			out.w("# %s", f.Description)
+		} else {
+			out.w("#")
+		}
 		out.w("%s --%s=%s", f.Category, f.Name, f.Value)
 	}
 	for _, f := range rule.Flags {
-		out.w("# %s", f.Description)
+		if f.Description != "" {
+			out.w("# %s", f.Description)
+		} else {
+			out.w("#")
+		}
 		out.w("%s --%s=%s", f.Category, f.Name, f.Value)
 	}
 	out.ln()

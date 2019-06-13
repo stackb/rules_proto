@@ -40,14 +40,14 @@ pending_clients:
 		//ruby/example/routeguide:client \
 		//github.com/grpc/grpc-web/example/routeguide/closure:bundle \
 		//github.com/stackb/grpc.js/example/routeguide/client:bundle \
- 		//rust/example/routeguide:client 
+		//rust/example/routeguide:client
 
 pending_servers:
 	bazel build \
 		//dart/example/routeguide:server \
 		//node/example/routeguide:server \
 		//ruby/example/routeguide:server \
-		//rust/example/routeguide:server  
+		//rust/example/routeguide:server
 
 
 
@@ -60,11 +60,11 @@ closure_test:
 csharp:
 	bazel build \
 		//csharp/example/routeguide:server \
-		//csharp/example/routeguide:client 
+		//csharp/example/routeguide:client
 
 rust:
 	bazel build \
 		//csharp/example/routeguide:server \
-		//csharp/example/routeguide:client 
+		//csharp/example/routeguide:client
 
 all: clients servers tests

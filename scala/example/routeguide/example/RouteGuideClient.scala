@@ -180,7 +180,7 @@ object RouteGuideClient extends App {
 //  val features: Seq[Feature] = Try {
 //    RouteGuidePersistence.parseFeatures(RouteGuidePersistence.defaultFeatureFile)
 //  } recoverWith {
-//    case e: Throwable => 
+//    case e: Throwable =>
 //      logger.warning("features load failed: " + e)
 //      Failure(e)
 //  } getOrElse {
