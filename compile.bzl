@@ -2,20 +2,14 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 load(
     "//:common.bzl",
     "ProtoCompileInfo",
-    _apply_plugin_transitivity_rules = "apply_plugin_transitivity_rules",
-    _capitalize = "capitalize",
-    _copy_jar_to_srcjar = "copy_jar_to_srcjar",
+    "apply_plugin_transitivity_rules",
+    "copy_jar_to_srcjar",
     "copy_proto",
-    _get_output_filename = "get_output_filename",
-    _get_output_sibling_file = "get_output_sibling_file",
-    _get_plugin_option = "get_plugin_option",
-    _get_plugin_options = "get_plugin_options",
-    _get_plugin_out = "get_plugin_out",
+    "get_output_filename",
+    "get_output_sibling_file",
+    "get_plugin_options",
+    "get_plugin_out",
     "get_plugin_runfiles",
-    _get_proto_filename = "get_proto_filename",
-    _pascal_case = "pascal_case",
-    _pascal_objc = "pascal_objc",
-    _rust_keyword = "rust_keyword",
 )
 
 
@@ -46,7 +40,7 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
     options += getattr(ctx.attr, "plugin_options", [])
 
     if options:
-        arg = "%s:%s" % (",".join(_get_plugin_options(ctx.label.name, options)), arg)
+        arg = "%s:%s" % (",".join(get_plugin_options(ctx.label.name, options)), arg)
     return "--%s_out=%s" % (plugin.name, arg)
 
 
@@ -65,10 +59,10 @@ def get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
       <list<Generated File>> the augmented list of files that will be generated
     """
     for output in plugin.outputs:
-        filename = _get_output_filename(src, plugin, output)
+        filename = get_output_filename(src, plugin, output)
         if not filename:
             continue
-        sibling = _get_output_sibling_file(output, proto, descriptor)
+        sibling = get_output_sibling_file(output, proto, descriptor)
         outputs.append(ctx.actions.declare_file(filename, sibling = sibling))
     return outputs
 
@@ -150,14 +144,14 @@ def proto_compile_impl(ctx):
             plugin_tools[plugin.name] = plugin.executable
         data += plugin.data + get_plugin_runfiles(plugin.tool)
 
-        filename = _get_plugin_out(ctx.label.name, plugin)
+        filename = get_plugin_out(ctx.label.name, plugin)
         if not filename:
             continue
         out = ctx.actions.declare_file(filename, sibling = descriptor)
         outputs.append(out)
         plugin_outfiles[plugin.name] = out
         if out.path.endswith(".jar"):
-            srcjar = _copy_jar_to_srcjar(ctx, out)
+            srcjar = copy_jar_to_srcjar(ctx, out)
             srcjars.append(srcjar)
 
     ###
@@ -200,7 +194,7 @@ def proto_compile_impl(ctx):
     # might be incompatible with the plugin transitivity rules.
     if ctx.attr.transitive:
         for plugin in plugins:
-            targets = _apply_plugin_transitivity_rules(ctx, targets, plugin)
+            targets = apply_plugin_transitivity_rules(ctx, targets, plugin)
 
     ###
     ### Part 3c: collect generated artifacts for all in the target list of protos to compile

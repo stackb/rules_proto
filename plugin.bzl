@@ -10,6 +10,7 @@ ProtoPluginInfo = provider(fields = {
     "transitivity": "transitivity properties",
 })
 
+
 def _proto_plugin_impl(ctx):
     return [ProtoPluginInfo(
         data = ctx.files.data,
@@ -22,6 +23,7 @@ def _proto_plugin_impl(ctx):
         tool = ctx.attr.tool,
         transitivity = ctx.attr.transitivity,
     )]
+
 
 proto_plugin = rule(
     implementation = _proto_plugin_impl,
