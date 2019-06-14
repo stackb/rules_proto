@@ -312,6 +312,7 @@ proto_compile = rule(
         ),
         "verbose": attr.int(
             doc = "Increase verbose level for more debugging",
+            default = 0,
         ),
         "include_imports": attr.bool(
             doc = "Pass the --include_imports argument to the protoc_plugin",
@@ -323,9 +324,11 @@ proto_compile = rule(
         ),
         "transitive": attr.bool(
             doc = "Emit transitive artifacts",
+            default = True,
         ),
         "transitivity": attr.string_dict(
             doc = "Transitive rules.  When the 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
+            default = {},
         ),
     },
     # TODO(pcj) remove this

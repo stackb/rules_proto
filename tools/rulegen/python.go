@@ -47,62 +47,50 @@ load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
 
 grpc_pip_install()`)
 
-var pythonProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:python_proto_compile.bzl", "python_proto_compile")
+var pythonProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@protobuf_py_deps//:requirements.bzl", protobuf_requirements = "all_requirements")
 
 def python_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
     python_proto_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create {{ .Lang.Name }} library
     native.py_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         deps = protobuf_requirements,
         # This magically adds REPOSITORY_NAME/PACKAGE_NAME/{name_pb} to PYTHONPATH
         imports = [name_pb],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )
 
 # Alias
 py_proto_library = python_proto_library`)
 
-var pythonGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:python_grpc_compile.bzl", "python_grpc_compile")
+var pythonGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@protobuf_py_deps//:requirements.bzl", protobuf_requirements = "all_requirements")
 load("@grpc_py_deps//:requirements.bzl", grpc_requirements = "all_requirements")
 
 def python_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
     python_grpc_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create {{ .Lang.Name }} library
     native.py_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         deps = depset(protobuf_requirements + grpc_requirements).to_list(),
         # This magically adds REPOSITORY_NAME/PACKAGE_NAME/{name_pb} to PYTHONPATH
         imports = [name_pb],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )
 
 # Alias

@@ -1,7 +1,7 @@
 load("//:compile.bzl", "proto_compile")
 
 def php_grpc_compile(**kwargs):
-    # Prepend the php plugins and call generic compile
+    # Append the php plugins and call generic compile
     kwargs["plugins"] = kwargs.get("plugins", []) + [
         Label("//php:php"),
         Label("//php:grpc_php"),

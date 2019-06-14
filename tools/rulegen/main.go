@@ -343,7 +343,7 @@ var protoCompileAttrs = []*Attr{
 var compileRuleTemplate = mustTemplate(`load("//:compile.bzl", "proto_compile")
 
 def {{ .Rule.Name }}(**kwargs):
-    # Prepend the {{ .Lang.Name }} plugins and call generic compile
+    # Append the {{ .Lang.Name }} plugins and call generic compile
     kwargs["plugins"] = kwargs.get("plugins", []) + [{{ range .Rule.Plugins }}
         Label("{{ . }}"),{{ end }}
     ]

@@ -1,7 +1,7 @@
 load("//:compile.bzl", "proto_compile")
 
 def cpp_proto_compile(**kwargs):
-    # Prepend the cpp plugins and call generic compile
+    # Append the cpp plugins and call generic compile
     kwargs["plugins"] = kwargs.get("plugins", []) + [
         Label("//cpp:cpp"),
     ]
