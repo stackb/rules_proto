@@ -1,13 +1,5 @@
 package main
 
-var pythonGrpcCompileUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}()
-
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-
-grpc_deps()`)
-
 var pythonProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
@@ -135,7 +127,7 @@ func makePython() *Language {
 				Name:           "python_grpc_compile",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//python:python", "//python:grpc_python"},
-				Usage:          pythonGrpcCompileUsageTemplate,
+				Usage:          grpcUsageTemplate,
 				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates *.py protobuf+gRPC artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
@@ -160,7 +152,7 @@ func makePython() *Language {
 				Name:           "python_grpc_aspect_compile",
 				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//python:python", "//python:grpc_python"},
-				Usage:          pythonGrpcCompileUsageTemplate,
+				Usage:          grpcUsageTemplate,
 				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates *.py protobuf+gRPC artifacts using aspect based compilation",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
