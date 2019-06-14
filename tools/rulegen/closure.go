@@ -12,25 +12,19 @@ var closureProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
     {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        transitive = kwargs.pop("transitive", True),
-        transitivity = kwargs.pop("transitivity", {}),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create {{ .Lang.Name }} library
     closure_js_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
         internal_descriptors = [name_pb + "/descriptor.source.bin"],
         suppress = [
             "JSC_LATE_PROVIDE_ERROR",
@@ -40,10 +34,7 @@ def {{ .Rule.Name }}(**kwargs):
             "JSC_POSSIBLE_INEXISTENT_PROPERTY",
             "JSC_UNRECOGNIZED_TYPE_ERROR",
         ],
-    )
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")`)
+    )`)
 
 func makeClosure() *Language {
 	return &Language{

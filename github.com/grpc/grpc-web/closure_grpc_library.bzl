@@ -3,33 +3,21 @@ load("//closure:closure_proto_compile.bzl", "closure_proto_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def closure_grpc_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_pb_grpc = name + "_pb_grpc"
-
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
+    name_pb_grpc = kwargs.get("name") + "_pb_grpc"
     closure_proto_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
-
     closure_grpc_compile(
         name = name_pb_grpc,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create closure library
     closure_js_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb, name_pb_grpc],
         deps = [
             "@com_github_grpc_grpc_web//javascript/net/grpc/web:abstractclientbase",
@@ -50,5 +38,5 @@ def closure_grpc_library(**kwargs):
             "JSC_EXTRA_REQUIRE_WARNING",
             "JSC_INVALID_INTERFACE_MEMBER_DECLARATION",
         ],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )

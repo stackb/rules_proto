@@ -54,22 +54,15 @@ load("//node:node_module_index.bzl", "node_module_index")
 load("@org_pubref_rules_node//node:rules.bzl", "node_module")
 
 def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_index = name + "_index"
-
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
+    name_index = kwargs.get("name") + "_index"
     {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create index
     node_module_index(
         name = name_index,
         compilation = name_pb,
@@ -77,6 +70,7 @@ def {{ .Rule.Name }}(**kwargs):
 `
 
 var nodeProtoLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + `
+    # Create {{ .Lang.Name }} library
     node_module(
         name = name,
         srcs = [name_pb],
@@ -84,19 +78,20 @@ var nodeProtoLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + 
         deps = [
             "@proto_node_modules//:_all_",
         ],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )`)
 
 var nodeGrpcLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + `
+    # Create {{ .Lang.Name }} library
     node_module(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         index = name_index,
         deps = [
             "@proto_node_modules//:_all_",
             "@grpc_node_modules//:_all_",
         ],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )`)
 
 func makeNode() *Language {

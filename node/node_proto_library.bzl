@@ -3,27 +3,21 @@ load("//node:node_module_index.bzl", "node_module_index")
 load("@org_pubref_rules_node//node:rules.bzl", "node_module")
 
 def node_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_index = name + "_index"
-
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
+    name_index = kwargs.get("name") + "_index"
     node_proto_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create index
     node_module_index(
         name = name_index,
         compilation = name_pb,
     )
 
+    # Create node library
     node_module(
         name = name,
         srcs = [name_pb],
@@ -31,5 +25,5 @@ def node_proto_library(**kwargs):
         deps = [
             "@proto_node_modules//:_all_",
         ],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )

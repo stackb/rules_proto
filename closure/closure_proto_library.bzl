@@ -2,25 +2,19 @@ load("//closure:closure_proto_compile.bzl", "closure_proto_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def closure_proto_library(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
     closure_proto_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        transitive = kwargs.pop("transitive", True),
-        transitivity = kwargs.pop("transitivity", {}),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create closure library
     closure_js_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
         internal_descriptors = [name_pb + "/descriptor.source.bin"],
         suppress = [
             "JSC_LATE_PROVIDE_ERROR",
@@ -31,6 +25,3 @@ def closure_proto_library(**kwargs):
             "JSC_UNRECOGNIZED_TYPE_ERROR",
         ],
     )
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")

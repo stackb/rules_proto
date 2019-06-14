@@ -48,36 +48,30 @@ var csharpLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 
 def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
     {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 `
 
 var csharpProtoLibraryRuleTemplate = mustTemplate(csharpLibraryRuleTemplateString + `
+    # Create {{ .Lang.Name }} library
     core_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
             "@google.protobuf//:netstandard1.0_core",
             "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
         ],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )`)
 
 var csharpGrpcLibraryRuleTemplate = mustTemplate(csharpLibraryRuleTemplateString + `
+    # Create {{ .Lang.Name }} library
     core_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
             "@google.protobuf//:netstandard1.0_core",
@@ -85,7 +79,7 @@ var csharpGrpcLibraryRuleTemplate = mustTemplate(csharpLibraryRuleTemplateString
             "@grpc.core//:netstandard1.5_core",
             "@system.interactive.async//:netstandard2.0_core",
         ],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )`)
 
 var csharpLibraryFlags = []*Flag{

@@ -2,26 +2,19 @@ package main
 
 var objcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
-	{{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create {{ .Lang.Name }} library
     native.objc_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         includes = [name_pb],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )
 `)
 

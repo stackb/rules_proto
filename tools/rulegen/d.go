@@ -45,57 +45,43 @@ var dProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:d_proto_com
 load("@io_bazel_rules_d//d:d.bzl", "d_library")
 
 def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
     {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create {{ .Lang.Name }} library
     d_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
-			"@com_github_dcarp_protobuf_d//:protosrc",
+            "@com_github_dcarp_protobuf_d//:protosrc",
             "@com_github_dcarp_protobuf_d//:protobuf",
 		],
-		imports = ["external/com_github_dcarp_protobuf_d/src"],
-        visibility = visibility,
+        imports = ["external/com_github_dcarp_protobuf_d/src"],
+        visibility = kwargs.get("visibility"),
     )`)
 
 var dGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:d_grpc_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_d//d:d.bzl", "d_library")
 
 def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
     {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create {{ .Lang.Name }} library
     d_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
         ],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )`)
 
 func makeD() *Language {

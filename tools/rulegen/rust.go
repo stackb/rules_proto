@@ -21,20 +21,12 @@ load("//{{ .Lang.Dir }}:rust_proto_lib.bzl", "rust_proto_lib")
 load("@io_bazel_rules_rust//rust:rust.bzl", "rust_library")
 
 def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_lib = name + "_lib"
-
+    # Compile protos
+    name_pb = kwargs.get("name") + "_pb"
+    name_lib = kwargs.get("name") + "_lib"
     {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
+        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
     rust_proto_lib(
@@ -44,18 +36,20 @@ def {{ .Rule.Name }}(**kwargs):
 `
 
 var rustProtoLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + `
+    # Create {{ .Lang.Name }} library
     rust_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb, name_lib],
         deps = [
             "@io_bazel_rules_rust//proto/raze:protobuf",
         ],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )`)
 
 var rustGrpcLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + `
+    # Create {{ .Lang.Name }} library
     rust_library(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb, name_lib],
         deps = [
             "@io_bazel_rules_rust//proto/raze:protobuf",
@@ -63,7 +57,7 @@ var rustGrpcLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + `
             "@io_bazel_rules_rust//proto/raze:tls_api",
             "@io_bazel_rules_rust//proto/raze:tls_api_stub",
         ],
-        visibility = visibility,
+        visibility = kwargs.get("visibility"),
     )`)
 
 func makeRust() *Language {
