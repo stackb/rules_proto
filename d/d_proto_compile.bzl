@@ -6,8 +6,7 @@ def d_proto_compile(**kwargs):
     # predict the output location.
     package = kwargs.get("package")
     if package and not kwargs.get("plugins"):
-        name = kwargs.get("name")
-        name_plugin = name + "_plugin"
+        name_plugin = kwargs.get("name") + "_plugin"
         proto_plugin(
             name = name_plugin,
             outputs = ["{package}/%s/{basename}.d" % package],

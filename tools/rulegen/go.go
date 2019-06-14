@@ -18,8 +18,7 @@ def {{ .Rule.Name }}(**kwargs):
     # predict the output location.
     importpath = kwargs.get("importpath")
     if importpath and not kwargs.get("plugins"):
-        name = kwargs.get("name")
-        name_plugin = name + "_plugin"
+        name_plugin = kwargs.get("name") + "_plugin"
         proto_plugin(
             name = name_plugin,
             outputs = ["{package}/%s/{basename}.pb.go" % importpath],
