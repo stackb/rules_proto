@@ -263,6 +263,8 @@ func action(c *cli.Context) error {
 		Sha256: sha256,
 	}, languages, bazelVersions)
 
+	mustWriteExamplesMakefile(dir, languages)
+
 	return nil
 }
 
@@ -588,7 +590,7 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 				out.w("| %s   | `%s` | `%s`    | %s          |", attr.Name, attr.Type, attr.Default, attr.Doc)
 			}
 		}
-        out.ln()
+		out.ln()
 
 	}
 
@@ -711,6 +713,37 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	out.tpl(footer, data)
 
 	out.MustWrite(path.Join(dir, ".bazelci", "presubmit.yml"))
+}
+
+func mustWriteExamplesMakefile(dir string, languages []*Language) {
+	out := &LineWriter{}
+
+	var allNames []string
+	for _, lang := range languages {
+		var langNames []string
+		// Create rules for each example
+		for _, rule := range lang.Rules {
+			exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
+
+			var name = fmt.Sprintf("%s_%s_example", lang.Name, rule.Name)
+			allNames = append(langNames, name)
+			langNames = append(langNames, name)
+			out.w("%s:", name)
+			out.w("	cd %s; \\", exampleDir)
+			out.w("	bazel build //...")
+			out.ln()
+		}
+
+		// Create grouped rules for each language
+		out.w("%s_examples: %s", lang.Name, strings.Join(langNames, " "))
+		out.ln()
+	}
+
+	// Write all examples rule
+	out.w("all_examples: %s", strings.Join(allNames, " "))
+	out.ln()
+
+	out.MustWrite(path.Join(dir, "example", "Makefile.mk"))
 }
 
 // ********************************

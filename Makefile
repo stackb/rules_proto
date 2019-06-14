@@ -68,3 +68,6 @@ rust:
 		//csharp/example/routeguide:client
 
 all: clients servers tests
+
+# Pull in examples makefile
+include example/Makefile.mk
