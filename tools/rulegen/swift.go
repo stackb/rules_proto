@@ -18,13 +18,9 @@ load(
 
 apple_support_dependencies()`)
 
-var swiftProtoLibraryRuleTemplate = mustTemplate(`load("@build_bazel_rules_swift//swift:swift.bzl", _swift_proto_library = "swift_proto_library")
+var swiftLibraryRuleTemplate = mustTemplate(`load("@build_bazel_rules_swift//swift:swift.bzl", _{{ .Lang.Name }}_{{ .Rule.Kind }}_library = "{{ .Lang.Name }}_{{ .Rule.Kind }}_library")
 
-swift_proto_library = _swift_proto_library`)
-
-var swiftGrpcLibraryRuleTemplate = mustTemplate(`load("@build_bazel_rules_swift//swift:swift.bzl", _swift_grpc_library = "swift_grpc_library")
-
-swift_grpc_library = _swift_grpc_library`)
+{{ .Lang.Name }}_{{ .Rule.Kind }}_library = _{{ .Lang.Name }}_{{ .Rule.Kind }}_library`)
 
 var swiftGrpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
@@ -55,7 +51,6 @@ func makeSwift() *Language {
 			&Rule{
 				Experimental:   true,
 				Name:           "swift_proto_compile",
-				Base:           "swift",
 				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//swift:swift"},
@@ -68,7 +63,6 @@ func makeSwift() *Language {
 			&Rule{
 				Experimental:   true,
 				Name:           "swift_grpc_compile",
-				Base:           "swift",
 				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//swift:grpc_swift"},
@@ -80,20 +74,18 @@ func makeSwift() *Language {
 			},
 			&Rule{
 				Name:           "swift_proto_library",
-				Base:           "swift",
 				Kind:           "proto",
+				Implementation: swiftLibraryRuleTemplate,
 				Usage:          swiftUsageTemplate,
 				Example:        protoLibraryExampleTemplate,
-				Implementation: swiftProtoLibraryRuleTemplate,
 				Doc:            "Generates swift protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
 				BazelCIExclusionReason: "experimental",
 			},
 			&Rule{
 				Name:           "swift_grpc_library",
-				Base:           "swift",
 				Kind:           "grpc",
-				Implementation: swiftGrpcLibraryRuleTemplate,
+				Implementation: swiftLibraryRuleTemplate,
 				Usage:          swiftUsageTemplate,
 				Example:        swiftGrpcLibraryExampleTemplate,
 				Doc:            "Generates swift protobuf+gRPC library",

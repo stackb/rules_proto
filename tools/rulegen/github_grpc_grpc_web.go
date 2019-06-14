@@ -72,6 +72,7 @@ func makeGithubComGrpcGrpcWeb() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "closure_grpc_compile",
+				Kind:           "grpc",
 				Usage:          grpcWebUsageTemplate,
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//github.com/grpc/grpc-web:closure"},
@@ -81,6 +82,7 @@ func makeGithubComGrpcGrpcWeb() *Language {
 			},
 			&Rule{
 				Name:           "commonjs_grpc_compile",
+				Kind:           "grpc",
 				Usage:          grpcWebUsageTemplate,
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//github.com/grpc/grpc-web:commonjs"},
@@ -90,6 +92,7 @@ func makeGithubComGrpcGrpcWeb() *Language {
 			},
 			&Rule{
 				Name:           "commonjs_dts_grpc_compile",
+				Kind:           "grpc",
 				Usage:          grpcWebUsageTemplate,
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//github.com/grpc/grpc-web:commonjs_dts"},
@@ -99,6 +102,7 @@ func makeGithubComGrpcGrpcWeb() *Language {
 			},
 			&Rule{
 				Name:           "ts_grpc_compile",
+				Kind:           "grpc",
 				Usage:          grpcWebUsageTemplate,
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//github.com/grpc/grpc-web:ts"},
@@ -108,6 +112,7 @@ func makeGithubComGrpcGrpcWeb() *Language {
 			},
 			&Rule{
 				Name:           "closure_grpc_library",
+				Kind:           "grpc",
 				Usage:          grpcWebUsageTemplate,
 				Implementation: grpcWebGrpcLibraryRuleTemplate,
 				Example:        grpcLibraryExampleTemplate,

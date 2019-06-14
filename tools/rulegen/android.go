@@ -1,8 +1,6 @@
 package main
 
-var androidProtoLibraryUsageTemplate = mustTemplate(`# The set of dependencies loaded here is excessive for android proto alone
-# (but simplifies our setup)
-load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+var androidLibraryUsageTemplateString = `load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 
 io_grpc_grpc_java()
 
@@ -18,27 +16,13 @@ load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
 
-android_sdk_repository(name = "androidsdk")`)
+android_sdk_repository(name = "androidsdk")`
 
-var androidGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+var androidGrpcLibraryUsageTemplate = mustTemplate(androidLibraryUsageTemplateString)
 
-io_grpc_grpc_java()
+var androidProtoLibraryUsageTemplate = mustTemplate("# The set of dependencies loaded here is excessive for android proto alone\n# (but simplifies our setup)\n" + androidLibraryUsageTemplateString)
 
-load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
-
-grpc_java_repositories(
-    omit_com_google_protobuf = True,
-)
-
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}()
-
-load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
-
-android_sdk_repository(name = "androidsdk")`)
-
-var androidProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
+var androidLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@build_bazel_rules_android//android:rules.bzl", "android_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -48,7 +32,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-    {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -61,41 +45,10 @@ def {{ .Rule.Name }}(**kwargs):
         name = name,
         srcs = [name_pb],
         deps = [
-            str(Label("//android:proto_deps")),
+            str(Label("//android:{{ .Rule.Kind }}_deps")),
         ],
         exports = [
-            str(Label("//android:proto_deps")),
-        ],
-        visibility = visibility,
-    )`)
-
-var androidGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
-load("@build_bazel_rules_android//android:rules.bzl", "android_library")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
-    {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
-    android_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [
-            str(Label("//android:grpc_deps")),
-        ],
-        exports = [
-            str(Label("//android:grpc_deps")),
+            str(Label("//android:{{ .Rule.Kind }}_deps")),
         ],
         visibility = visibility,
     )`)
@@ -112,7 +65,6 @@ func makeAndroid() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "android_proto_compile",
-				Base:           "android",
 				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//android:javalite"},
@@ -123,7 +75,6 @@ func makeAndroid() *Language {
 			},
 			&Rule{
 				Name:           "android_grpc_compile",
-				Base:           "android",
 				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//android:javalite", "//android:grpc_javalite"},
@@ -134,11 +85,10 @@ func makeAndroid() *Language {
 			},
 			&Rule{
 				Name:           "android_proto_library",
-				Base:           "android",
 				Kind:           "proto",
+				Implementation: androidLibraryRuleTemplate,
 				Usage:          androidProtoLibraryUsageTemplate,
 				Example:        protoLibraryExampleTemplate,
-				Implementation: androidProtoLibraryRuleTemplate,
 				Doc:            "Generates android protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
 				Flags: []*Flag{
@@ -161,9 +111,8 @@ func makeAndroid() *Language {
 			},
 			&Rule{
 				Name:           "android_grpc_library",
-				Base:           "android",
 				Kind:           "grpc",
-				Implementation: androidGrpcLibraryRuleTemplate,
+				Implementation: androidLibraryRuleTemplate,
 				Usage:          androidGrpcLibraryUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates android protobuf+gRPC library",

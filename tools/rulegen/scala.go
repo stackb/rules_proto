@@ -23,7 +23,7 @@ load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_reposito
 
 scala_proto_repositories()`)
 
-var scalaProtoLibraryRuleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:scala_proto_compile.bzl", "scala_proto_compile")
+var scalaLibraryRuleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -33,7 +33,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-    scala_proto_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -45,38 +45,9 @@ def {{ .Rule.Name }}(**kwargs):
     scala_library(
         name = name,
         srcs = [name_pb],
-        deps = [str(Label("//scala:proto_deps"))],
+        deps = [str(Label("//scala:{{ .Rule.Kind }}_deps"))],
         exports = [
-            str(Label("//scala:proto_deps")),
-        ],
-        visibility = visibility,
-    )`)
-
-var scalaGrpcLibraryRuleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:scala_grpc_compile.bzl", "scala_grpc_compile")
-load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
-    scala_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
-    scala_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [str(Label("//scala:grpc_deps"))],
-        exports = [
-            str(Label("//scala:grpc_deps")),
+            str(Label("//scala:{{ .Rule.Kind }}_deps")),
         ],
         visibility = visibility,
     )`)
@@ -113,6 +84,7 @@ func makeScala() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "scala_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//scala:scala"},
 				Usage:          scalaUsageTemplate,
@@ -122,6 +94,7 @@ func makeScala() *Language {
 			},
 			&Rule{
 				Name:           "scala_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//scala:grpc_scala"},
 				Usage:          scalaUsageTemplate,
@@ -132,7 +105,8 @@ func makeScala() *Language {
 			},
 			&Rule{
 				Name:           "scala_proto_library",
-				Implementation: scalaProtoLibraryRuleTemplate,
+				Kind:           "proto",
+				Implementation: scalaLibraryRuleTemplate,
 				Usage:          scalaUsageTemplate,
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates *.scala protobuf library",
@@ -140,7 +114,8 @@ func makeScala() *Language {
 			},
 			&Rule{
 				Name:           "scala_grpc_library",
-				Implementation: scalaGrpcLibraryRuleTemplate,
+				Kind:           "grpc",
+				Implementation: scalaLibraryRuleTemplate,
 				Usage:          scalaUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates *.scala protobuf+gRPC library",

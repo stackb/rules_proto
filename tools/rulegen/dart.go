@@ -1,6 +1,6 @@
 package main
 
-var dartUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var dartUsageTemplateString = `load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -17,32 +17,17 @@ dart_repositories()
 
 load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
 
-dart_protoc_plugin_deps()`)
+dart_protoc_plugin_deps()`
 
-var dartGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var dartProtoUsageTemplate = mustTemplate(dartUsageTemplateString)
 
-{{ .Rule.Name }}()
-
-# rules_go used here to compile a wrapper around the protoc-gen-grpc plugin
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
-
-dart_repositories()
-
-load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-
-dart_protoc_plugin_deps()
+var dartGrpcLibraryUsageTemplate = mustTemplate(dartUsageTemplateString + `
 
 load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
 
 dart_grpc_deps()`)
 
-var dartProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:dart_proto_compile.bzl", "dart_proto_compile")
+var dartLibraryRuleTemplateString = `load("//{{ .Lang.Dir}}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -52,7 +37,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-    dart_proto_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -60,7 +45,9 @@ def {{ .Rule.Name }}(**kwargs):
         transitivity = kwargs.pop("transitivity", {}),
         transitive = kwargs.pop("transitive", True),
     )
+`
 
+var dartProtoLibraryRuleTemplate = mustTemplate(dartLibraryRuleTemplateString + `
     dart_library(
         name = name,
         srcs = [name_pb],
@@ -71,25 +58,7 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var dartGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:dart_grpc_compile.bzl", "dart_grpc_compile")
-load("@io_bazel_rules_dart//dart/build_rules:core.bzl", "dart_library")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    dart_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
+var dartGrpcLibraryRuleTemplate = mustTemplate(dartLibraryRuleTemplateString + `
     dart_library(
         name = name,
         srcs = [name_pb],
@@ -153,9 +122,10 @@ func makeDart() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "dart_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//dart:dart"},
-				Usage:          dartUsageTemplate,
+				Usage:          dartProtoUsageTemplate,
 				Example:        protoCompileExampleTemplate,
 				Doc:            "Generates dart protobuf artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
@@ -163,9 +133,10 @@ func makeDart() *Language {
 			},
 			&Rule{
 				Name:           "dart_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//dart:grpc_dart"},
-				Usage:          dartUsageTemplate,
+				Usage:          dartProtoUsageTemplate,
 				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates dart protobuf+gRPC artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
@@ -173,8 +144,9 @@ func makeDart() *Language {
 			},
 			&Rule{
 				Name:           "dart_proto_library",
+				Kind:           "proto",
 				Implementation: dartProtoLibraryRuleTemplate,
-				Usage:          dartUsageTemplate,
+				Usage:          dartProtoUsageTemplate,
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates dart protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
@@ -182,6 +154,7 @@ func makeDart() *Language {
 			},
 			&Rule{
 				Name:           "dart_grpc_library",
+				Kind:           "grpc",
 				Implementation: dartGrpcLibraryRuleTemplate,
 				Usage:          dartGrpcLibraryUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,

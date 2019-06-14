@@ -16,7 +16,7 @@ load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()`)
 
-var rustProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:rust_proto_compile.bzl", "rust_proto_compile")
+var rustLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("//{{ .Lang.Dir }}:rust_proto_lib.bzl", "rust_proto_lib")
 load("@io_bazel_rules_rust//rust:rust.bzl", "rust_library")
 
@@ -28,7 +28,7 @@ def {{ .Rule.Name }}(**kwargs):
     name_pb = name + "_pb"
     name_lib = name + "_lib"
 
-    rust_proto_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -41,7 +41,9 @@ def {{ .Rule.Name }}(**kwargs):
         name = name_lib,
         compilation = name_pb,
     )
+`
 
+var rustProtoLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + `
     rust_library(
         name = name,
         srcs = [name_pb, name_lib],
@@ -51,32 +53,7 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var rustGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:rust_grpc_compile.bzl", "rust_grpc_compile")
-load("//{{ .Lang.Dir }}:rust_proto_lib.bzl", "rust_proto_lib")
-load("@io_bazel_rules_rust//rust:rust.bzl", "rust_library")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_lib = name + "_lib"
-
-    rust_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
-    rust_proto_lib(
-        name = name_lib,
-        compilation = name_pb,
-    )
-
+var rustGrpcLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + `
     rust_library(
         name = name,
         srcs = [name_pb, name_lib],
@@ -107,6 +84,7 @@ func makeRust() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "rust_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//rust:rust"},
 				Usage:          rustUsageTemplate,
@@ -116,6 +94,7 @@ func makeRust() *Language {
 			},
 			&Rule{
 				Name:           "rust_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//rust:rust", "//rust:grpc_rust"},
 				Usage:          rustUsageTemplate,
@@ -126,6 +105,7 @@ func makeRust() *Language {
 			},
 			&Rule{
 				Name:           "rust_proto_library",
+				Kind:           "proto",
 				Implementation: rustProtoLibraryRuleTemplate,
 				Usage:          rustUsageTemplate,
 				Example:        protoLibraryExampleTemplate,
@@ -134,6 +114,7 @@ func makeRust() *Language {
 			},
 			&Rule{
 				Name:           "rust_grpc_library",
+				Kind:           "grpc",
 				Implementation: rustGrpcLibraryRuleTemplate,
 				Usage:          rustUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,

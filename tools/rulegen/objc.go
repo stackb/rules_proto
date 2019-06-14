@@ -1,6 +1,6 @@
 package main
 
-var objcProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:objc_proto_compile.bzl", "objc_proto_compile")
+var objcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
@@ -8,32 +8,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-	objc_proto_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
-    native.objc_library(
-        name = name,
-        srcs = [name_pb],
-        includes = [name_pb],
-        visibility = visibility,
-    )
-`)
-
-var objcGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:objc_grpc_compile.bzl", "objc_grpc_compile")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    objc_grpc_compile(
+	{{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -58,6 +33,7 @@ func makeObjc() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "objc_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//objc:objc"},
 				Usage:          usageTemplate,
@@ -67,6 +43,7 @@ func makeObjc() *Language {
 			},
 			&Rule{
 				Name:           "objc_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//objc:objc", "//objc:grpc_objc"},
 				Usage:          grpcUsageTemplate,
@@ -76,7 +53,8 @@ func makeObjc() *Language {
 			},
 			// &Rule{
 			// 	Name:           "objc_proto_library",
-			// 	Implementation: objcProtoLibraryRuleTemplate,
+			//  Kind:           "proto",
+			// 	Implementation: objcLibraryRuleTemplate,
 			// 	Usage:          usageTemplate,
 			// 	Example:        protoLibraryExampleTemplate,
 			// 	Doc:            "Generates objc protobuf library",
@@ -84,7 +62,8 @@ func makeObjc() *Language {
 			// },
 			// &Rule{
 			// 	Name:           "objc_grpc_library",
-			// 	Implementation: objcGrpcLibraryRuleTemplate,
+			//  Kind:           "grpc",
+			// 	Implementation: objcLibraryRuleTemplate,
 			// 	Usage:          grpcUsageTemplate,
 			// 	Example:        grpcLibraryExampleTemplate,
 			// 	Doc:            "Generates objc protobuf+gRPC library",

@@ -36,7 +36,7 @@ def {{ .Rule.Name }}(**kwargs):
         **kwargs
     )`)
 
-var goProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
+var goLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
@@ -58,7 +58,9 @@ def {{ .Rule.Name }}(**kwargs):
         transitivity = kwargs.pop("transitivity", {}),
         transitive = kwargs.pop("transitive", True),
     )
+`
 
+var goProtoLibraryRuleTemplate = mustTemplate(goLibraryRuleTemplateString + `
     go_library(
         name = name,
         srcs = [name_pb],
@@ -69,29 +71,7 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var goGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:go_grpc_compile.bzl", "go_grpc_compile")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("//go:utils.bzl", "get_importmappings")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    importpath = kwargs.get("importpath")
-    visibility = kwargs.get("visibility")
-    go_deps = kwargs.get("go_deps", [])
-
-    name_pb = name + "_pb"
-
-    go_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        plugin_options = get_importmappings(kwargs.pop("importmap", {})),
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
+var goGrpcLibraryRuleTemplate = mustTemplate(goLibraryRuleTemplateString + `
     go_library(
         name = name,
         srcs = [name_pb],

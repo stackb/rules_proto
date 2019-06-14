@@ -8,14 +8,6 @@ load("@io_bazel_rules_d//d:d.bzl", "d_repositories")
 
 d_repositories()`)
 
-var dGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}()
-
-load("@io_bazel_rules_d//d:d.bzl", "d_repositories")
-
-d_repositories()`)
-
 var dProtoCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
@@ -49,7 +41,7 @@ def {{ .Rule.Name }}(**kwargs):
         **kwargs
     )`)
 
-var dProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:d_proto_compile.bzl", "d_proto_compile")
+var dProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:d_proto_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_d//d:d.bzl", "d_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -59,7 +51,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-    d_proto_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -79,7 +71,7 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var dGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:d_grpc_compile.bzl", "d_grpc_compile")
+var dGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir}}:d_grpc_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_d//d:d.bzl", "d_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -89,7 +81,7 @@ def {{ .Rule.Name }}(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    d_grpc_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -119,6 +111,7 @@ func makeD() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "d_proto_compile",
+				Kind:           "proto",
 				Implementation: dCompileRuleTemplate,
 				Plugins:        []string{"//d:d"},
 				Usage:          dUsageTemplate,
@@ -135,6 +128,7 @@ func makeD() *Language {
 			},
 			// &Rule{
 			// 	Name:           "d_grpc_compile",
+			//  Kind:           "grpc",
 			// 	Implementation: compileRuleTemplate,
 			// 	Plugins:        []string{"//d:grpc_d"},
 			// 	Usage:          dUsageTemplate,
@@ -144,6 +138,7 @@ func makeD() *Language {
 			// },
 			// &Rule{
 			// 	Name:           "d_proto_library",
+			//  Kind:           "proto",
 			// 	Implementation: dProtoLibraryRuleTemplate,
 			// 	Usage:          dUsageTemplate,
 			// 	Example:        protoLibraryExampleTemplate,
@@ -152,8 +147,9 @@ func makeD() *Language {
 			// },
 			// &Rule{
 			// 	Name:           "d_grpc_library",
+			//  Kind:           "grpc",
 			// 	Implementation: dGrpcLibraryRuleTemplate,
-			// 	Usage:          dGrpcLibraryUsageTemplate,
+			// 	Usage:          dUsageTemplate,
 			// 	Example:        grpcLibraryExampleTemplate,
 			// 	Doc:            "Generates d protobuf+gRPC library",
 			// 	Attrs:          append(protoCompileAttrs, []*Attr{}...),

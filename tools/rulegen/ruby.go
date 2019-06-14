@@ -36,7 +36,7 @@ bundle_install(
     gemfile_lock = "//ruby:Gemfile.lock",
 )`)
 
-var rubyProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:ruby_proto_compile.bzl", "ruby_proto_compile")
+var rubyLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -46,33 +46,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-    ruby_proto_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
-    ruby_library(
-        name = name,
-        srcs = [name_pb],
-        includes = ["{package}/%s" % name_pb],
-        visibility = visibility,
-    )`)
-
-var rubyGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:ruby_grpc_compile.bzl", "ruby_grpc_compile")
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
-    ruby_grpc_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -96,6 +70,7 @@ func makeRuby() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "ruby_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//ruby:ruby"},
 				Usage:          usageTemplate,
@@ -105,6 +80,7 @@ func makeRuby() *Language {
 			},
 			&Rule{
 				Name:           "ruby_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//ruby:ruby", "//ruby:grpc_ruby"},
 				Usage:          grpcUsageTemplate,
@@ -114,7 +90,8 @@ func makeRuby() *Language {
 			},
 			&Rule{
 				Name:           "ruby_proto_library",
-				Implementation: rubyProtoLibraryRuleTemplate,
+				Kind:           "proto",
+				Implementation: rubyLibraryRuleTemplate,
 				Usage:          rubyProtoLibraryUsageTemplate,
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates *.rb protobuf library",
@@ -122,7 +99,8 @@ func makeRuby() *Language {
 			},
 			&Rule{
 				Name:           "ruby_grpc_library",
-				Implementation: rubyGrpcLibraryRuleTemplate,
+				Kind:           "grpc",
+				Implementation: rubyLibraryRuleTemplate,
 				Usage:          rubyGrpcLibraryUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates *.rb protobuf+gRPC library",

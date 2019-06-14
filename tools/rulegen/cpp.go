@@ -1,6 +1,6 @@
 package main
 
-var cppProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:cpp_proto_compile.bzl", "cpp_proto_compile")
+var cppLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
@@ -8,7 +8,7 @@ def {{ .Rule.Name }}(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
-    cpp_proto_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -16,7 +16,9 @@ def {{ .Rule.Name }}(**kwargs):
         transitivity = kwargs.pop("transitivity", {}),
         transitive = kwargs.pop("transitive", True),
     )
+`
 
+var cppProtoLibraryRuleTemplate = mustTemplate(cppLibraryRuleTemplateString + `
     native.cc_library(
         name = name,
         srcs = [name_pb],
@@ -27,23 +29,7 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var cppGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:cpp_grpc_compile.bzl", "cpp_grpc_compile")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    cpp_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
+var cppGrpcLibraryRuleTemplate = mustTemplate(cppLibraryRuleTemplateString + `
     native.cc_library(
         name = name,
         srcs = [name_pb],
@@ -57,14 +43,6 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var commonLangFlags = []*Flag{
-	{
-		Category: "build",
-		Name:     "incompatible_enable_cc_toolchain_resolution",
-		Value:    "false",
-	},
-}
-
 func makeCpp() *Language {
 	return &Language{
 		Dir:   "cpp",
@@ -73,6 +51,7 @@ func makeCpp() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "cpp_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//cpp:cpp"},
 				Usage:          usageTemplate,
@@ -82,6 +61,7 @@ func makeCpp() *Language {
 			},
 			&Rule{
 				Name:           "cpp_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//cpp:cpp", "//cpp:grpc_cpp"},
 				Usage:          grpcUsageTemplate,
@@ -91,6 +71,7 @@ func makeCpp() *Language {
 			},
 			&Rule{
 				Name:           "cpp_proto_library",
+				Kind:           "proto",
 				Implementation: cppProtoLibraryRuleTemplate,
 				Usage:          usageTemplate,
 				Example:        protoLibraryExampleTemplate,
@@ -99,6 +80,7 @@ func makeCpp() *Language {
 			},
 			&Rule{
 				Name:           "cpp_grpc_library",
+				Kind:           "grpc",
 				Implementation: cppGrpcLibraryRuleTemplate,
 				Usage:          grpcUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,

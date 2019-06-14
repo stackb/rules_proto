@@ -12,7 +12,7 @@ load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()`)
 
-var javaProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:java_proto_compile.bzl", "java_proto_compile")
+var javaLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
@@ -21,7 +21,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-    java_proto_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -33,37 +33,9 @@ def {{ .Rule.Name }}(**kwargs):
     native.java_library(
         name = name,
         srcs = [name_pb],
-        deps = [str(Label("//java:proto_deps"))],
+        deps = [str(Label("//java:{{ .Rule.Kind }}_deps"))],
         exports = [
-            str(Label("//java:proto_deps")),
-        ],
-        visibility = visibility,
-    )`)
-
-var javaGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:java_grpc_compile.bzl", "java_grpc_compile")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-
-    java_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
-    native.java_library(
-        name = name,
-        srcs = [name_pb],
-        deps = [str(Label("//java:grpc_deps"))],
-        exports = [
-            str(Label("//java:grpc_deps")),
+            str(Label("//java:{{ .Rule.Kind }}_deps")),
         ],
         visibility = visibility,
     )`)
@@ -78,6 +50,7 @@ func makeJava() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "java_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//java:java"},
 				Usage:          usageTemplate,
@@ -87,6 +60,7 @@ func makeJava() *Language {
 			},
 			&Rule{
 				Name:           "java_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//java:java", "//java:grpc_java"},
 				Usage:          usageTemplate,
@@ -96,7 +70,8 @@ func makeJava() *Language {
 			},
 			&Rule{
 				Name:           "java_proto_library",
-				Implementation: javaProtoLibraryRuleTemplate,
+				Kind:           "proto",
+				Implementation: javaLibraryRuleTemplate,
 				Usage:          usageTemplate,
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates a jar with compiled protobuf *.class files",
@@ -122,7 +97,8 @@ func makeJava() *Language {
 			},
 			&Rule{
 				Name:           "java_grpc_library",
-				Implementation: javaGrpcLibraryRuleTemplate,
+				Kind:           "grpc",
+				Implementation: javaLibraryRuleTemplate,
 				Usage:          javaGrpcUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates a jar with compiled protobuf+gRPC *.class files",

@@ -8,6 +8,7 @@ func makePhp() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "php_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//php:php"},
 				Usage:          usageTemplate,
@@ -17,6 +18,7 @@ func makePhp() *Language {
 			},
 			&Rule{
 				Name:           "php_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//php:php", "//php:grpc_php"},
 				Usage:          grpcUsageTemplate,

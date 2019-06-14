@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-var gogoProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
+var gogoLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Rule.Base }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("//go:utils.bzl", "get_importmappings")
 
@@ -23,7 +23,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-    {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
+    {{ .Rule.Base }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
@@ -32,7 +32,9 @@ def {{ .Rule.Name }}(**kwargs):
         transitivity = kwargs.pop("transitivity", {}),
         transitive = kwargs.pop("transitive", True),
     )
+`
 
+var gogoProtoLibraryRuleTemplate = mustTemplate(gogoLibraryRuleTemplateString + `
     go_library(
         name = name,
         srcs = [name_pb],
@@ -43,37 +45,7 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var gogoGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("//go:utils.bzl", "get_importmappings")
-
-wkt_mappings = get_importmappings({
-    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
-})
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    importpath = kwargs.get("importpath")
-    visibility = kwargs.get("visibility")
-    go_deps = kwargs.get("go_deps", [])
-
-    name_pb = name + "_pb"
-
-    {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
-        name = name_pb,
-        deps = deps,
-        plugin_options = get_importmappings(kwargs.pop("importmap", {})) + wkt_mappings,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
+var gogoGrpcLibraryRuleTemplate = mustTemplate(gogoLibraryRuleTemplateString + `
     go_library(
         name = name,
         srcs = [name_pb],

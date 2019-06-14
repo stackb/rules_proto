@@ -8,7 +8,7 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
 closure_repositories()`)
 
-var closureProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:closure_proto_compile.bzl", "closure_proto_compile")
+var closureProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -18,7 +18,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-    closure_proto_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -53,6 +53,7 @@ func makeClosure() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "closure_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//closure:js"},
 				Usage:          usageTemplate,
@@ -62,6 +63,7 @@ func makeClosure() *Language {
 			},
 			&Rule{
 				Name:           "closure_proto_library",
+				Kind:           "proto",
 				Implementation: closureProtoLibraryRuleTemplate,
 				Usage:          closureLibraryUsageTemplate,
 				Example:        protoLibraryExampleTemplate,

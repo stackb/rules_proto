@@ -7,6 +7,7 @@ def csharp_grpc_library(**kwargs):
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
+
     csharp_grpc_compile(
         name = name_pb,
         deps = deps,

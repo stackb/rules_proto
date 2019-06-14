@@ -73,6 +73,7 @@ func makeGrpcGateway() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "gateway_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//github.com/grpc-ecosystem/grpc-gateway:grpc-gateway"},
 				Usage:          grpcGatewayUsageTemplate,
@@ -82,6 +83,7 @@ func makeGrpcGateway() *Language {
 			},
 			&Rule{
 				Name:           "gateway_swagger_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//github.com/grpc-ecosystem/grpc-gateway:swagger"},
 				Usage:          grpcGatewayUsageTemplate,
@@ -91,6 +93,7 @@ func makeGrpcGateway() *Language {
 			},
 			&Rule{
 				Name:           "gateway_grpc_library",
+				Kind:           "grpc",
 				Implementation: grpcGatewayLibraryRuleTemplate,
 				Usage:          grpcGatewayUsageTemplate,
 				Example:        grpcGatewayLibraryExampleTemplate,

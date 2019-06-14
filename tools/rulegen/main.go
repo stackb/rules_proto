@@ -266,6 +266,14 @@ func action(c *cli.Context) error {
 	return nil
 }
 
+var commonLangFlags = []*Flag{
+	{
+		Category: "build",
+		Name:     "incompatible_enable_cc_toolchain_resolution",
+		Value:    "false",
+	},
+}
+
 var protoCompileAttrs = []*Attr{
 	&Attr{
 		Name:      "deps",

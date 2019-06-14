@@ -1,6 +1,6 @@
 package main
 
-var csharpProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var csharpLibraryUsageTemplateString = `load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -34,49 +34,17 @@ nuget_packages()
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
 
-nuget_protobuf_packages()`)
+nuget_protobuf_packages()`
 
-var csharpGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var csharpProtoLibraryUsageTemplate = mustTemplate(csharpLibraryUsageTemplateString)
 
-{{ .Rule.Name }}()
-
-load(
-    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
-    "core_register_sdk",
-    "dotnet_register_toolchains",
-    "dotnet_repositories",
-)
-
-core_version = "v2.1.503"
-
-dotnet_register_toolchains(
-    core_version = core_version,
-)
-
-dotnet_register_toolchains(
-    core_version = core_version,
-)
-
-core_register_sdk(
-    name = "core_sdk",
-    core_version = core_version,
-)
-
-dotnet_repositories()
-
-load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
-
-nuget_packages()
-
-load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
-
-nuget_protobuf_packages()
+var csharpGrpcLibraryUsageTemplate = mustTemplate(csharpLibraryUsageTemplateString + `
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_grpc_packages()`)
 
-var csharpProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
+var csharpLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -86,7 +54,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     name_pb = name + "_pb"
 
-    {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -94,7 +62,9 @@ def {{ .Rule.Name }}(**kwargs):
         transitivity = kwargs.pop("transitivity", {}),
         transitive = kwargs.pop("transitive", True),
     )
+`
 
+var csharpProtoLibraryRuleTemplate = mustTemplate(csharpLibraryRuleTemplateString + `
     core_library(
         name = name,
         srcs = [name_pb],
@@ -105,24 +75,7 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var csharpGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
-load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_library")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
+var csharpGrpcLibraryRuleTemplate = mustTemplate(csharpLibraryRuleTemplateString + `
     core_library(
         name = name,
         srcs = [name_pb],
@@ -178,7 +131,6 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 		Rules: []*Rule{
 			&Rule{
 				Name:           "csharp_proto_compile",
-				Base:           "csharp",
 				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//csharp:csharp"},
@@ -189,7 +141,6 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 			},
 			&Rule{
 				Name:           "csharp_grpc_compile",
-				Base:           "csharp",
 				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//csharp:csharp", "//csharp:grpc_csharp"},
@@ -200,18 +151,16 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 			},
 			&Rule{
 				Name:           "csharp_proto_library",
-				Base:           "csharp",
 				Kind:           "proto",
+				Implementation: csharpProtoLibraryRuleTemplate,
 				Usage:          csharpProtoLibraryUsageTemplate,
 				Example:        protoLibraryExampleTemplate,
-				Implementation: csharpProtoLibraryRuleTemplate,
 				Doc:            "Generates csharp protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
 				Flags:          csharpLibraryFlags,
 			},
 			&Rule{
 				Name:           "csharp_grpc_library",
-				Base:           "csharp",
 				Kind:           "grpc",
 				Implementation: csharpGrpcLibraryRuleTemplate,
 				Usage:          csharpGrpcLibraryUsageTemplate,

@@ -99,6 +99,7 @@ func makeGrpcJs() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "closure_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//github.com/stackb/grpc.js:grpc.js"},
 				Usage:          grpcjsUsageTemplate,
@@ -108,6 +109,7 @@ func makeGrpcJs() *Language {
 			},
 			&Rule{
 				Name:           "closure_grpc_library",
+				Kind:           "grpc",
 				Implementation: grpcjsGrpcLibraryRuleTemplate,
 				Usage:          grpcjsLibraryUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,

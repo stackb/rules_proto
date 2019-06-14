@@ -49,7 +49,7 @@ yarn_modules(
     },
 )`)
 
-var nodeProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:node_proto_compile.bzl", "node_proto_compile")
+var nodeLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("//node:node_module_index.bzl", "node_module_index")
 load("@org_pubref_rules_node//node:rules.bzl", "node_module")
 
@@ -61,7 +61,7 @@ def {{ .Rule.Name }}(**kwargs):
     name_pb = name + "_pb"
     name_index = name + "_index"
 
-    node_proto_compile(
+    {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
         deps = deps,
         visibility = visibility,
@@ -74,7 +74,9 @@ def {{ .Rule.Name }}(**kwargs):
         name = name_index,
         compilation = name_pb,
     )
+`
 
+var nodeProtoLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + `
     node_module(
         name = name,
         srcs = [name_pb],
@@ -85,32 +87,7 @@ def {{ .Rule.Name }}(**kwargs):
         visibility = visibility,
     )`)
 
-var nodeGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:node_grpc_compile.bzl", "node_grpc_compile")
-load("//node:node_module_index.bzl", "node_module_index")
-load("@org_pubref_rules_node//node:rules.bzl", "node_module")
-
-def {{ .Rule.Name }}(**kwargs):
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")
-
-    name_pb = name + "_pb"
-    name_index = name + "_index"
-
-    node_grpc_compile(
-        name = name_pb,
-        deps = deps,
-        visibility = visibility,
-        verbose = kwargs.pop("verbose", 0),
-        transitivity = kwargs.pop("transitivity", {}),
-        transitive = kwargs.pop("transitive", True),
-    )
-
-    node_module_index(
-        name = name_index,
-        compilation = name_pb,
-    )
-
+var nodeGrpcLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + `
     node_module(
         name = name,
         srcs = [name_pb],
@@ -130,6 +107,7 @@ func makeNode() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "node_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//node:js"},
 				Usage:          usageTemplate,
@@ -139,6 +117,7 @@ func makeNode() *Language {
 			},
 			&Rule{
 				Name:           "node_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//node:js", "//node:grpc_js"},
 				Usage:          nodeGrpcCompileUsageTemplate,
@@ -148,6 +127,7 @@ func makeNode() *Language {
 			},
 			&Rule{
 				Name:           "node_proto_library",
+				Kind:           "proto",
 				Implementation: nodeProtoLibraryRuleTemplate,
 				Usage:          nodeProtoLibraryUsageTemplate,
 				Example:        protoLibraryExampleTemplate,
@@ -156,6 +136,7 @@ func makeNode() *Language {
 			},
 			&Rule{
 				Name:           "node_grpc_library",
+				Kind:           "grpc",
 				Implementation: nodeGrpcLibraryRuleTemplate,
 				Usage:          nodeGrpcLibraryUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,

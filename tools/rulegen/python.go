@@ -116,6 +116,7 @@ func makePython() *Language {
 		Rules: []*Rule{
 			&Rule{
 				Name:           "python_proto_compile",
+				Kind:           "proto",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//python:python"},
 				Usage:          usageTemplate,
@@ -125,6 +126,7 @@ func makePython() *Language {
 			},
 			&Rule{
 				Name:           "python_grpc_compile",
+				Kind:           "grpc",
 				Implementation: compileRuleTemplate,
 				Plugins:        []string{"//python:python", "//python:grpc_python"},
 				Usage:          grpcUsageTemplate,
@@ -141,6 +143,7 @@ func makePython() *Language {
 			},
 			&Rule{
 				Name:           "python_proto_aspect_compile",
+				Kind:           "proto",
 				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//python:python"},
 				Usage:          usageTemplate,
@@ -150,6 +153,7 @@ func makePython() *Language {
 			},
 			&Rule{
 				Name:           "python_grpc_aspect_compile",
+				Kind:           "grpc",
 				Implementation: aspectRuleTemplate,
 				Plugins:        []string{"//python:python", "//python:grpc_python"},
 				Usage:          grpcUsageTemplate,
@@ -166,6 +170,7 @@ func makePython() *Language {
 			},
 			&Rule{
 				Name:           "python_proto_library",
+				Kind:           "proto",
 				Implementation: pythonProtoLibraryRuleTemplate,
 				Usage:          pythonProtoLibraryUsageTemplate,
 				Example:        protoLibraryExampleTemplate,
@@ -174,6 +179,7 @@ func makePython() *Language {
 			},
 			&Rule{
 				Name:           "python_grpc_library",
+				Kind:           "grpc",
 				Implementation: pythonGrpcLibraryRuleTemplate,
 				Usage:          pythonGrpcLibraryUsageTemplate,
 				Example:        grpcLibraryExampleTemplate,
