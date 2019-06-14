@@ -30,7 +30,7 @@ scala_library(
 )
 
 scala_library(
-    name = "service",
+    name = "server",
     srcs = [
         "example/AtomicRef.scala",
         "example/RouteGuideService.scala",
@@ -51,7 +51,7 @@ scala_binary(
     deps = [
         ":persistence",
         ":routeguide_scala_grpc",
-        ":service",
+        ":server",
     ],
 )
 
