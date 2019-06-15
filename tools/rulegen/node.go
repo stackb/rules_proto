@@ -72,7 +72,7 @@ def {{ .Rule.Name }}(**kwargs):
 var nodeProtoLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + `
     # Create {{ .Lang.Name }} library
     node_module(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         index = name_index,
         deps = [

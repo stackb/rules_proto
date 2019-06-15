@@ -19,7 +19,7 @@ def node_proto_library(**kwargs):
 
     # Create node library
     node_module(
-        name = name,
+        name = kwargs.get("name"),
         srcs = [name_pb],
         index = name_index,
         deps = [
