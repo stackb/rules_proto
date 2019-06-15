@@ -19,24 +19,22 @@ def _get_js_output_file_name(ctx, file):
 def _node_module_index_impl(ctx):
     compilation = ctx.attr.compilation[ProtoCompileInfo]
 
-    index_js = ctx.actions.declare_file("%s/index.js" % (compilation.label.name))
-
+    # Find all files to require
     exports = {}
-
     for output in compilation.outputs:
-        if output.path.endswith("_pb.js"):
-            name = _get_js_variable_name(output)
-            exports[name] = _get_js_output_file_name(ctx, output)
-        elif output.path.endswith("_grpc_pb.js"):
+        if output.path.endswith("_pb.js") or :
             name = _get_js_variable_name(output)
             exports[name] = _get_js_output_file_name(ctx, output)
 
+    # Build file content
     content = []
     content.append("module.exports = {")
     for name, path in exports.items():
         content.append("    '%s': require('./%s')," % (name, path))
     content.append("}")
 
+    # Write file
+    index_js = ctx.actions.declare_file("%s/index.js" % (compilation.label.name))
     ctx.actions.write(
         output = index_js,
         content = "\n".join(content),
