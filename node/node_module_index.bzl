@@ -7,7 +7,6 @@ NodeModuleIndexInfo = provider(fields = {
 
 def _get_js_variable_name(file):
     name = file.basename.rstrip(".js")
-
     # Deal with special characters here?
     return name
 
@@ -22,7 +21,7 @@ def _node_module_index_impl(ctx):
     # Find all files to require
     exports = {}
     for output in compilation.outputs:
-        if output.path.endswith("_pb.js") or :
+        if output.path.endswith("_pb.js"):
             name = _get_js_variable_name(output)
             exports[name] = _get_js_output_file_name(ctx, output)
 
