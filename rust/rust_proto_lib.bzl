@@ -1,4 +1,4 @@
-load("//:compile.bzl", "ProtoCompileInfo")
+load("//:common.bzl", "ProtoCompileInfo")
 
 RustProtoLibInfo = provider(fields = {
     "name": "rule name",
