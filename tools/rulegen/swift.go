@@ -38,7 +38,11 @@ func makeSwift() *Language {
 		PresubmitEnvVars: map[string]string{
 			"CC": "clang",
 		},
-		Flags: commonLangFlags,
+		Flags: append(commonLangFlags, &Flag{
+			Category: "build",
+			Name:     "strategy=SwiftCompile",
+			Value:    "standalone",
+		}),
 		Rules: []*Rule{
 			&Rule{
 				Experimental:   true,
