@@ -50,11 +50,7 @@ func makeAndroid() *Language {
 	return &Language{
 		Dir:  "android",
 		Name: "android",
-		Flags: append([]*Flag{}, &Flag{
-			Category: "build",
-			Name:     "incompatible_disable_deprecated_attr_params",
-			Value:    "false",
-		}),
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "android_proto_compile",
@@ -84,23 +80,6 @@ func makeAndroid() *Language {
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates android protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags: []*Flag{
-					{
-						Category: "build",
-						Name:     "incompatible_remove_native_maven_jar",
-						Value:    "false",
-					},
-					{
-						Category: "build",
-						Name:     "incompatible_disallow_struct_provider_syntax",
-						Value:    "false",
-					},
-					{
-						Category: "build",
-						Name:     "incompatible_use_toolchain_resolution_for_java_rules",
-						Value:    "false",
-					},
-				},
 			},
 			&Rule{
 				Name:           "android_grpc_library",
@@ -110,23 +89,6 @@ func makeAndroid() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates android protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags: []*Flag{
-					{
-						Category: "build",
-						Name:     "incompatible_remove_native_maven_jar",
-						Value:    "false",
-					},
-					{
-						Category: "build",
-						Name:     "incompatible_disallow_struct_provider_syntax",
-						Value:    "false",
-					},
-					{
-						Category: "build",
-						Name:     "incompatible_use_toolchain_resolution_for_java_rules",
-						Value:    "false",
-					},
-				},
 			},
 		},
 	}

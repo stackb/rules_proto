@@ -58,11 +58,7 @@ func makeGrpcGateway() *Language {
 	return &Language{
 		Dir:  "github.com/grpc-ecosystem/grpc-gateway",
 		Name: "grpc-gateway",
-		Flags: append(commonLangFlags, &Flag{
-			Category: "build",
-			Name:     "incompatible_require_ctx_in_configure_features",
-			Value:    "false",
-		}),
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "gateway_grpc_compile",

@@ -73,17 +73,7 @@ func makeRust() *Language {
 	return &Language{
 		Dir:  "rust",
 		Name: "rust",
-		Flags: append(commonLangFlags, &Flag{
-			Category:    "build",
-			Name:        "incompatible_enable_cc_toolchain_resolution",
-			Value:       "false",
-			Description: "In order to use find_cpp_toolchain, you must include the '@bazel_tools//tools/cpp:toolchain_type' in the toolchains argument to your rule.",
-		}, &Flag{
-			Category:    "build",
-			Name:        "incompatible_require_ctx_in_configure_features",
-			Value:       "false",
-			Description: `/external/io_bazel_rules_rust/rust/private/rustc.bzl", line 143, in _get_linker_and_args cc_common.configure_features(cc_toolchain = cc_toolchain, reque..., ...) Incompatible flag --incompatible_require_ctx_in_configure_features has been flipped, and the mandatory parameter 'ctx' of cc_common.configure_features is missing`,
-		}),
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Name:           "rust_proto_compile",

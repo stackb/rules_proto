@@ -64,50 +64,6 @@ var dartGrpcLibraryRuleTemplate = mustTemplate(dartLibraryRuleTemplateString + `
         visibility = kwargs.get("visibility"),
     )`)
 
-var dartFlags = []*Flag{
-	// {
-	// 	Category:    "build",
-	// 	Name:        "incompatible_disallow_data_transition",
-	// 	Value:       "false",
-	// 	Description: "vm.bzl is still using cfg=data",
-	// },
-	{
-		Category: "build",
-		Name:     "incompatible_no_transitive_loads",
-		Value:    "false",
-	},
-	{
-		Category: "build",
-		Name:     "incompatible_disable_deprecated_attr_params",
-		Value:    "false",
-	},
-	{
-		Category: "build",
-		Name:     "incompatible_enable_cc_toolchain_resolution",
-		Value:    "false",
-	},
-	{
-		Category: "build",
-		Name:     "incompatible_require_ctx_in_configure_features",
-		Value:    "false",
-	},
-	{
-		Category: "build",
-		Name:     "incompatible_depset_is_not_iterable",
-		Value:    "false",
-	},
-	{
-		Category: "build",
-		Name:     "incompatible_depset_union",
-		Value:    "false",
-	},
-	{
-		Category: "build",
-		Name:     "incompatible_disallow_struct_provider_syntax",
-		Value:    "false",
-	},
-}
-
 func makeDart() *Language {
 	return &Language{
 		Dir:   "dart",
@@ -123,7 +79,6 @@ func makeDart() *Language {
 				Example:        protoCompileExampleTemplate,
 				Doc:            "Generates dart protobuf artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags:          dartFlags,
 			},
 			&Rule{
 				Name:           "dart_grpc_compile",
@@ -134,7 +89,6 @@ func makeDart() *Language {
 				Example:        grpcCompileExampleTemplate,
 				Doc:            "Generates dart protobuf+gRPC artifacts",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags:          dartFlags,
 			},
 			&Rule{
 				Name:           "dart_proto_library",
@@ -144,7 +98,6 @@ func makeDart() *Language {
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates dart protobuf library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags:          dartFlags,
 			},
 			&Rule{
 				Name:           "dart_grpc_library",
@@ -154,7 +107,6 @@ func makeDart() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates dart protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags:          dartFlags,
 			},
 		},
 	}

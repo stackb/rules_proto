@@ -82,12 +82,6 @@ python_grpc_compile(
 )
 ```
 
-### `Flags`
-
-| Category | Flag | Value | Description |
-| --- | --- | --- | --- |
-| build | incompatible_enable_cc_toolchain_resolution | false |  |
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |
@@ -179,12 +173,6 @@ python_grpc_aspect_compile(
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
 ```
-
-### `Flags`
-
-| Category | Flag | Value | Description |
-| --- | --- | --- | --- |
-| build | incompatible_enable_cc_toolchain_resolution | false |  |
 
 ### Mandatory Attributes
 

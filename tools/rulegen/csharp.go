@@ -89,11 +89,6 @@ var csharpLibraryFlags = []*Flag{
 		Value:       "CoreCompile=standalone",
 		Description: "dotnet SDK desperately wants to find the HOME directory",
 	},
-	{
-		Category: "build",
-		Name:     "incompatible_disallow_struct_provider_syntax",
-		Value:    "false",
-	},
 }
 
 func makeCsharp() *Language {

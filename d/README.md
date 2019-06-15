@@ -33,12 +33,6 @@ d_proto_compile(
 )
 ```
 
-### `Flags`
-
-| Category | Flag | Value | Description |
-| --- | --- | --- | --- |
-| build | incompatible_disallow_struct_provider_syntax | false |  |
-
 ### Mandatory Attributes
 
 | Name | Type | Default | Description |

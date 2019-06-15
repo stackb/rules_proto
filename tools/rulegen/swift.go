@@ -38,15 +38,7 @@ func makeSwift() *Language {
 		PresubmitEnvVars: map[string]string{
 			"CC": "clang",
 		},
-		Flags: append(commonLangFlags, &Flag{
-			Category: "build",
-			Name:     "incompatible_require_ctx_in_configure_features",
-			Value:    "false",
-		}, &Flag{
-			Category: "build",
-			Name:     "strategy=SwiftCompile",
-			Value:    "standalone",
-		}),
+		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
 				Experimental:   true,

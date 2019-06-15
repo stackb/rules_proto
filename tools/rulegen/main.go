@@ -268,13 +268,7 @@ func action(c *cli.Context) error {
 	return nil
 }
 
-var commonLangFlags = []*Flag{
-	{
-		Category: "build",
-		Name:     "incompatible_enable_cc_toolchain_resolution",
-		Value:    "false",
-	},
-}
+var commonLangFlags = []*Flag{}
 
 var protoCompileAttrs = []*Attr{
 	&Attr{
@@ -489,8 +483,6 @@ func mustWriteLanguageExampleBuildFile(dir string, lang *Language, rule *Rule) {
 
 func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
-	out.w("# Start with --all_incompatible_changes by default")
-	out.w("build --all_incompatible_changes")
 	for _, f := range lang.Flags {
 		if f.Description != "" {
 			out.w("# %s", f.Description)

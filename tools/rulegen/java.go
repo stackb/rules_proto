@@ -69,24 +69,6 @@ func makeJava() *Language {
 				Example:        protoLibraryExampleTemplate,
 				Doc:            "Generates a jar with compiled protobuf *.class files",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags: []*Flag{
-					{
-						Category:    "build",
-						Name:        "incompatible_disallow_struct_provider_syntax",
-						Value:       "false",
-						Description: "bazel_tools/tools/jdk/java_toolchain_alias.bzl",
-					},
-					{
-						Category: "build",
-						Name:     "incompatible_remove_native_maven_jar",
-						Value:    "false",
-					},
-					{
-						Category: "build",
-						Name:     "incompatible_use_toolchain_resolution_for_java_rules",
-						Value:    "false",
-					},
-				},
 			},
 			&Rule{
 				Name:           "java_grpc_library",
@@ -96,19 +78,6 @@ func makeJava() *Language {
 				Example:        grpcLibraryExampleTemplate,
 				Doc:            "Generates a jar with compiled protobuf+gRPC *.class files",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags: []*Flag{
-					{
-						Category:    "build",
-						Name:        "incompatible_disallow_struct_provider_syntax",
-						Value:       "false",
-						Description: "bazel_tools/tools/jdk/java_toolchain_alias.bzl",
-					},
-					{
-						Category: "build",
-						Name:     "incompatible_use_toolchain_resolution_for_java_rules",
-						Value:    "false",
-					},
-				},
 			},
 		},
 	}
