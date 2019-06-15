@@ -730,7 +730,7 @@ func mustWriteExamplesMakefile(dir string, languages []*Language) {
 			langNames = append(langNames, name)
 			out.w("%s:", name)
 			out.w("	cd %s; \\", exampleDir)
-			out.w("	bazel build //...")
+			out.w("	bazel build --disk_cache=../../bazel-disk-cache //...")
 			out.ln()
 		}
 
