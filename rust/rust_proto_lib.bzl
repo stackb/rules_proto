@@ -5,36 +5,27 @@ RustProtoLibInfo = provider(fields = {
     "lib": "lib.rs file",
 })
 
-def _basename(f):
+def _strip_extension(f):
     return f.basename[:-len(f.extension) - 1]
 
 def _rust_proto_lib_impl(ctx):
     """Generate a lib.rs file for the crates."""
     compilation = ctx.attr.compilation[ProtoCompileInfo]
-    deps = ctx.attr.deps
     srcs = compilation.outputs
     lib_rs = ctx.actions.declare_file("%s/lib.rs" % compilation.label.name)
 
-    # Search in the plugin list for 'protoc_gen_rust_grpc' or similar.
-    grpc = False
-    # for plugin in compilation.plugins:
-    #     if plugin.executable.path.endswith("grpc"):
-    #         grpc = True
-    #         break
-
+    # Add externs
     content = ["extern crate protobuf;"]
-    if grpc:
+    if ctx.attr.grpc:
         content.append("extern crate grpc;")
         content.append("extern crate tls_api;")
 
-    # for dep in deps:
-    #   content.append("extern crate %s;" % dep.label.name)
-    #   content.append("pub use %s::*;" % dep.label.name)
-    for f in srcs:
-        print("src: " + f.path)
-        content.append("pub mod %s;" % _basename(f))
-        content.append("pub use %s::*;" % _basename(f))
+    # List each output
+    for f in compilation.outputs:
+        content.append("pub mod %s;" % _strip_extension(f))
+        content.append("pub use %s::*;" % _strip_extension(f))
 
+    # Write file
     ctx.actions.write(
         lib_rs,
         "\n".join(content),
@@ -55,9 +46,9 @@ rust_proto_lib = rule(
             providers = [ProtoCompileInfo],
             mandatory = True,
         ),
-        "deps": attr.label_list(
-            # providers = [""],
-        ),
+        "grpc": attr.bool(
+            mandatory = True,
+        )
     },
     output_to_genfiles = True,
 )

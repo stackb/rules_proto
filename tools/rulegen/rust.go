@@ -28,14 +28,16 @@ def {{ .Rule.Name }}(**kwargs):
         name = name_pb,
         **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
-
-    rust_proto_lib(
-        name = name_lib,
-        compilation = name_pb,
-    )
 `
 
 var rustProtoLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + `
+    # Create lib file
+    rust_proto_lib(
+        name = name_lib,
+        compilation = name_pb,
+        grpc = False,
+    )
+
     # Create {{ .Lang.Name }} library
     rust_library(
         name = kwargs.get("name"),
@@ -47,6 +49,13 @@ var rustProtoLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + 
     )`)
 
 var rustGrpcLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + `
+    # Create lib file
+    rust_proto_lib(
+        name = name_lib,
+        compilation = name_pb,
+        grpc = True,
+    )
+
     # Create {{ .Lang.Name }} library
     rust_library(
         name = kwargs.get("name"),

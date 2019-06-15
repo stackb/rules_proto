@@ -11,9 +11,11 @@ def rust_proto_library(**kwargs):
         **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
     )
 
+    # Create lib file
     rust_proto_lib(
         name = name_lib,
         compilation = name_pb,
+        grpc = False,
     )
 
     # Create rust library
