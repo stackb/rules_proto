@@ -12,9 +12,9 @@ def java_grpc_library(**kwargs):
     native.java_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [str(Label("//java:grpc_deps"))],
+        deps = [Label("//java:grpc_deps")],
         exports = [
-            str(Label("//java:grpc_deps")),
+            Label("//java:grpc_deps"),
         ],
         visibility = kwargs.get("visibility"),
     )

@@ -13,9 +13,9 @@ def scala_proto_library(**kwargs):
     scala_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [str(Label("//scala:proto_deps"))],
+        deps = [Label("//scala:proto_deps")],
         exports = [
-            str(Label("//scala:proto_deps")),
+            Label("//scala:proto_deps"),
         ],
         visibility = kwargs.get("visibility"),
     )

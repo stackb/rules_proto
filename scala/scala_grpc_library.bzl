@@ -13,9 +13,9 @@ def scala_grpc_library(**kwargs):
     scala_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [str(Label("//scala:grpc_deps"))],
+        deps = [Label("//scala:grpc_deps")],
         exports = [
-            str(Label("//scala:grpc_deps")),
+            Label("//scala:grpc_deps"),
         ],
         visibility = kwargs.get("visibility"),
     )

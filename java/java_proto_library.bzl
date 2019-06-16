@@ -12,9 +12,9 @@ def java_proto_library(**kwargs):
     native.java_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [str(Label("//java:proto_deps"))],
+        deps = [Label("//java:proto_deps")],
         exports = [
-            str(Label("//java:proto_deps")),
+            Label("//java:proto_deps"),
         ],
         visibility = kwargs.get("visibility"),
     )

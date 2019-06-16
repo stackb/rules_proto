@@ -369,7 +369,7 @@ load(
             doc = "List of protoc plugins to apply",
             providers = [ProtoPluginInfo],
             default = [{{ range .Rule.Plugins }}
-                str(Label("{{ . }}")),{{ end }}
+                Label("{{ . }}"),{{ end }}
             ],
         ),
     ),

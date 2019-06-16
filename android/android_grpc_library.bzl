@@ -14,10 +14,10 @@ def android_grpc_library(**kwargs):
         name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
-            str(Label("//android:grpc_deps")),
+            Label("//android:grpc_deps"),
         ],
         exports = [
-            str(Label("//android:grpc_deps")),
+            Label("//android:grpc_deps"),
         ],
         visibility = kwargs.get("visibility"),
     )

@@ -28,7 +28,7 @@ def dart_pub_deps_protoc_plugin(**kwargs):
     if name not in native.existing_rules():
         dart_pub_deps(
             name = name,
-            spec = str(Label("//dart:pubspec.yaml")),
+            spec = Label("//dart:pubspec.yaml"),
 
             # these overrides were determined by manually browsing
             # pub.dartlang.org, starting at protoc_plugin and going through all
@@ -69,7 +69,7 @@ def dart_pub_deps_grpc(**kwargs):
     if name not in native.existing_rules():
         dart_pub_deps(
             name = name,
-            spec = str(Label("//dart:pubspec-grpc.yaml")),
+            spec = Label("//dart:pubspec-grpc.yaml"),
 
             # these overrides were determined by manually browsing
             # pub.dartlang.org, starting at grpc and going through all

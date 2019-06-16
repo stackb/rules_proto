@@ -29,7 +29,7 @@ def {{ .Rule.Name }}(**kwargs):
 
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
-        kwargs["plugins"] = [str(Label("{{ index .Rule.Plugins 0 }}"))]
+        kwargs["plugins"] = [Label("{{ index .Rule.Plugins 0 }}")]
 
     proto_compile(
         **kwargs

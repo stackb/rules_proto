@@ -14,10 +14,10 @@ def android_proto_library(**kwargs):
         name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
-            str(Label("//android:proto_deps")),
+            Label("//android:proto_deps"),
         ],
         exports = [
-            str(Label("//android:proto_deps")),
+            Label("//android:proto_deps"),
         ],
         visibility = kwargs.get("visibility"),
     )

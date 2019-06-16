@@ -14,8 +14,8 @@ def dart_grpc_library(**kwargs):
         name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
-            str(Label("@vendor_protobuf//:protobuf")),
-            str(Label("@vendor_grpc//:grpc")),
+            Label("@vendor_protobuf//:protobuf"),
+            Label("@vendor_grpc//:grpc"),
         ],
         pub_pkg_name = kwargs.get("name"),
         visibility = kwargs.get("visibility"),

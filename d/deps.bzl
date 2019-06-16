@@ -14,7 +14,7 @@ def com_github_dcarp_protobuf_d():
         urls = ["https://github.com/dcarp/protobuf-d/archive/v0.5.0.tar.gz"],
         strip_prefix = "protobuf-d-0.5.0",
         sha256 = "67a037dc29242f0d2f099746da67f40afff27c07f9ab48dda53d5847620db421",
-        build_file = str(Label("//d:com_github_dcarp_protobuf_d.BUILD.bazel")),
+        build_file = Label("//d:com_github_dcarp_protobuf_d.BUILD.bazel"),
     )
 
 def d_proto_compile(**kwargs):

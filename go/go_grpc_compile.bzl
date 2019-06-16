@@ -17,7 +17,7 @@ def go_grpc_compile(**kwargs):
 
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
-        kwargs["plugins"] = [str(Label("//go:grpc_go"))]
+        kwargs["plugins"] = [Label("//go:grpc_go")]
 
     proto_compile(
         **kwargs

@@ -38,10 +38,10 @@ def {{ .Rule.Name }}(**kwargs):
         name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
-            str(Label("//android:{{ .Rule.Kind }}_deps")),
+            Label("//android:{{ .Rule.Kind }}_deps"),
         ],
         exports = [
-            str(Label("//android:{{ .Rule.Kind }}_deps")),
+            Label("//android:{{ .Rule.Kind }}_deps"),
         ],
         visibility = kwargs.get("visibility"),
     )`)

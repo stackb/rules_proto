@@ -20,8 +20,8 @@ python_grpc_aspect_compile_aspect = aspect(
             doc = "List of protoc plugins to apply",
             providers = [ProtoPluginInfo],
             default = [
-                str(Label("//python:python")),
-                str(Label("//python:grpc_python")),
+                Label("//python:python"),
+                Label("//python:grpc_python"),
             ],
         ),
     ),

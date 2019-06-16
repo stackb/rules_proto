@@ -26,9 +26,9 @@ def {{ .Rule.Name }}(**kwargs):
     native.java_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [str(Label("//java:{{ .Rule.Kind }}_deps"))],
+        deps = [Label("//java:{{ .Rule.Kind }}_deps")],
         exports = [
-            str(Label("//java:{{ .Rule.Kind }}_deps")),
+            Label("//java:{{ .Rule.Kind }}_deps"),
         ],
         visibility = kwargs.get("visibility"),
     )`)

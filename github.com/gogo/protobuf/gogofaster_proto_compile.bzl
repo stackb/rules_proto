@@ -17,7 +17,7 @@ def gogofaster_proto_compile(**kwargs):
 
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
-        kwargs["plugins"] = [str(Label("//github.com/gogo/protobuf:gogofaster"))]
+        kwargs["plugins"] = [Label("//github.com/gogo/protobuf:gogofaster")]
 
     proto_compile(
         **kwargs

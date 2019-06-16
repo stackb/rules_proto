@@ -17,7 +17,7 @@ def d_proto_compile(**kwargs):
 
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
-        kwargs["plugins"] = [str(Label("//d:d"))]
+        kwargs["plugins"] = [Label("//d:d")]
 
     proto_compile(
         **kwargs

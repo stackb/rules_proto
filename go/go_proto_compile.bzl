@@ -17,7 +17,7 @@ def go_proto_compile(**kwargs):
 
     # Define the default plugin if still not defined
     if not kwargs.get("plugins"):
-        kwargs["plugins"] = [str(Label("//go:go"))]
+        kwargs["plugins"] = [Label("//go:go")]
 
     proto_compile(
         **kwargs

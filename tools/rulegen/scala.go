@@ -38,9 +38,9 @@ def {{ .Rule.Name }}(**kwargs):
     scala_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [str(Label("//scala:{{ .Rule.Kind }}_deps"))],
+        deps = [Label("//scala:{{ .Rule.Kind }}_deps")],
         exports = [
-            str(Label("//scala:{{ .Rule.Kind }}_deps")),
+            Label("//scala:{{ .Rule.Kind }}_deps"),
         ],
         visibility = kwargs.get("visibility"),
     )`)
