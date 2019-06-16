@@ -289,29 +289,29 @@ proto_compile = rule(
     implementation = proto_compile_impl,
     attrs = {
         "deps": attr.label_list(
-            doc = "proto_library dependencies",
-            mandatory = True,
+            doc = "List of labels that provide a `ProtoInfo` (such as `native.proto_library`)",
             providers = [ProtoInfo],
+            mandatory = True,
         ),
         "plugins": attr.label_list(
-            doc = "List of protoc plugins to apply",
+            doc = "List of labels that provide a `ProtoPluginInfo` used as plugins to protoc",
             providers = [ProtoPluginInfo],
             mandatory = True,
         ),
         "plugin_options": attr.string_list(
-            doc = "List of additional 'global' options to add (applies to all plugins)",
+            doc = "List of additional 'global' plugin options (applies to all plugins). To apply plugin specific options, use the `options` attribute on `proto_plugin`",
         ),
         "outputs": attr.output_list(
-            doc = "Escape mechanism to explicitly declare files that will be generated",
+            doc = "List of additional expected generated file outputs",
         ),
         "protoc": attr.label(
-            doc = "The protoc tool",
+            doc = "The protocol compiler tool",
             default = "@com_google_protobuf//:protoc",
             cfg = "host",
             executable = True,
         ),
         "verbose": attr.int(
-            doc = "Increase verbose level for more debugging",
+            doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
             default = 0,
         ),
         "include_imports": attr.bool(
@@ -323,15 +323,14 @@ proto_compile = rule(
             default = True,
         ),
         "transitive": attr.bool(
-            doc = "Emit transitive artifacts",
+            doc = "Generate outputs for both *.proto directly named in `deps` AND all their transitive proto_library dependencies",
             default = True,
         ),
         "transitivity": attr.string_dict(
-            doc = "Transitive rules.  When the 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
+            doc = "Transitive filters to apply when the 'transitive' property is enabled. This string_dict can be used to exclude or explicitly include protos from the compilation list by using `exclude` or `include` respectively as the dict value",
             default = {},
         ),
     },
-    # TODO(pcj) remove this
     outputs = {
         "descriptor": "%{name}/descriptor.source.bin",
     },

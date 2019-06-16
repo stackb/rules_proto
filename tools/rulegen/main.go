@@ -277,7 +277,7 @@ var protoCompileAttrs = []*Attr{
 		Name:      "deps",
 		Type:      "list<ProtoInfo>",
 		Default:   "[]",
-		Doc:       "List of labels that provide a `ProtoInfo` (`native.proto_library`)",
+		Doc:       "List of labels that provide a `ProtoInfo` (such as `native.proto_library`)",
 		Mandatory: true,
 	},
 	&Attr{
@@ -291,7 +291,7 @@ var protoCompileAttrs = []*Attr{
 		Name:      "plugin_options",
 		Type:      "list<string>",
 		Default:   "[]",
-		Doc:       "List of additional 'global' plugin options (applies to all plugins)",
+		Doc:       "List of additional 'global' plugin options (applies to all plugins). To apply plugin specific options, use the `options` attribute on `proto_plugin`",
 		Mandatory: false,
 	},
 	&Attr{
@@ -312,7 +312,7 @@ var protoCompileAttrs = []*Attr{
 		Name:      "verbose",
 		Type:      "int",
 		Default:   "0",
-		Doc:       "1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
+		Doc:       "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
 		Mandatory: false,
 	},
 	&Attr{
@@ -333,7 +333,14 @@ var protoCompileAttrs = []*Attr{
 		Name:      "transitive",
 		Type:      "bool",
 		Default:   "True",
-		Doc:       "Generated outputs for *.proto directly named in `deps` AND all transitive proto_library dependencies",
+		Doc:       "Generate outputs for both *.proto directly named in `deps` AND all their transitive proto_library dependencies",
+		Mandatory: false,
+	},
+    &Attr{
+		Name:      "transitivity",
+		Type:      "string_dict",
+        Default:   "{}",
+		Doc:       "Transitive filters to apply when the 'transitive' property is enabled. This string_dict can be used to exclude or explicitly include protos from the compilation list by using `exclude` or `include` respectively as the dict value",
 		Mandatory: false,
 	},
 }
