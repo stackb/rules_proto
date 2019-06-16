@@ -10,7 +10,7 @@ load(
 
 # "Aspects should be top-level values in extension files that define them."
 
-ruby_grpc_compile_aspect = aspect(
+ruby_proto_aspect_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
     provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
@@ -20,8 +20,7 @@ ruby_grpc_compile_aspect = aspect(
             doc = "List of protoc plugins to apply",
             providers = [ProtoPluginInfo],
             default = [
-                str(Label("//ruby:ruby")),
-                str(Label("//ruby:grpc_ruby")),
+                Label("//ruby:ruby"),
             ],
         ),
     ),
@@ -34,12 +33,12 @@ _rule = rule(
         deps = attr.label_list(
             mandatory = True,
             providers = [ProtoInfo, "proto_compile", ProtoLibraryAspectNodeInfo],
-            aspects = [ruby_grpc_compile_aspect],
+            aspects = [ruby_proto_aspect_compile_aspect],
         ),
     ),
 )
 
-def ruby_grpc_compile(**kwargs):
+def ruby_proto_aspect_compile(**kwargs):
     _rule(
         verbose_string = "%s" % kwargs.get("verbose", 0),
         plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
