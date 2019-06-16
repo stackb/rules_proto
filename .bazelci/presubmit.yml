@@ -388,3 +388,18 @@ tasks:
     build_targets:
       - "..."
     working_directory: example/github.com/grpc/grpc-web/closure_grpc_library
+  test_workspace_proto_source_root:
+    platform: ubuntu1604
+    test_targets:
+      - "..."
+    working_directory: test_workspaces/proto_source_root
+  test_workspace_shared_proto:
+    platform: ubuntu1604
+    test_targets:
+      - "..."
+    working_directory: test_workspaces/shared_proto
+  test_workspace_strip_import_prefix:
+    platform: ubuntu1604
+    test_targets:
+      - "..."
+    working_directory: test_workspaces/strip_import_prefix

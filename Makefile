@@ -71,3 +71,6 @@ all: clients servers tests
 
 # Pull in examples makefile
 include example/Makefile.mk
+
+# Pull in test workspaces makefile
+include test_workspaces/Makefile.mk

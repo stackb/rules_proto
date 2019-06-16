@@ -7,6 +7,7 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -264,6 +265,7 @@ func action(c *cli.Context) error {
 	}, languages, bazelVersions)
 
 	mustWriteExamplesMakefile(dir, languages)
+	mustWriteTestWorkspacesMakefile(dir)
 
 	return nil
 }
@@ -702,6 +704,15 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 		}
 	}
 
+	// Add test workspaces
+	for _, testWorkspace := range findTestWorkspaceNames(dir) {
+		out.w("  test_workspace_%s:", testWorkspace)
+		out.w("    platform: ubuntu1604")
+		out.w("    test_targets:")
+		out.w(`      - "..."`)
+		out.w("    working_directory: %s", path.Join(dir, "test_workspaces", testWorkspace))
+	}
+
 	out.tpl(footer, data)
 
 	out.MustWrite(path.Join(dir, ".bazelci", "presubmit.yml"))
@@ -718,11 +729,11 @@ func mustWriteExamplesMakefile(dir string, languages []*Language) {
 			exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
 
 			var name = fmt.Sprintf("%s_%s_example", lang.Name, rule.Name)
-			allNames = append(langNames, name)
+			allNames = append(allNames, name)
 			langNames = append(langNames, name)
 			out.w("%s:", name)
 			out.w("	cd %s; \\", exampleDir)
-			out.w("	bazel build --disk_cache=../../bazel-disk-cache //...")
+			out.w("	bazel build --disk_cache=../../bazel-disk-cache //... ; \\")
 			out.w("	bazel shutdown")
 			out.ln()
 		}
@@ -734,9 +745,47 @@ func mustWriteExamplesMakefile(dir string, languages []*Language) {
 
 	// Write all examples rule
 	out.w("all_examples: %s", strings.Join(allNames, " "))
-	out.ln()
 
+	out.ln()
 	out.MustWrite(path.Join(dir, "example", "Makefile.mk"))
+}
+
+func mustWriteTestWorkspacesMakefile(dir string) {
+	out := &LineWriter{}
+
+	// For each test workspace, add makefile rule
+	var allNames []string
+	for _, testWorkspace := range findTestWorkspaceNames(dir) {
+		var name = fmt.Sprintf("test_workspace_%s", testWorkspace)
+		allNames = append(allNames, name)
+		out.w("%s:", name)
+		out.w("	cd %s; \\", path.Join(dir, "test_workspaces", testWorkspace))
+		out.w("	bazel test --disk_cache=../bazel-disk-cache //... ; \\")
+		out.w("	bazel shutdown")
+		out.ln()
+	}
+
+	// Write all test workspaces rule
+	out.w("all_test_workspaces: %s", strings.Join(allNames, " "))
+
+	out.ln()
+	out.MustWrite(path.Join(dir, "test_workspaces", "Makefile.mk"))
+}
+
+func findTestWorkspaceNames(dir string) []string {
+	files, err := ioutil.ReadDir(path.Join(dir, "test_workspaces"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var testWorkspaces []string
+	for _, file := range files {
+		if file.IsDir() && !strings.HasPrefix(file.Name(), ".") {
+			testWorkspaces = append(testWorkspaces, file.Name())
+		}
+	}
+
+	return testWorkspaces
 }
 
 // ********************************

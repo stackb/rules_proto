@@ -1,0 +1,47 @@
+package(default_visibility = ["//visibility:private"])
+
+load("@build_stack_rules_proto//python:python_proto_library.bzl", "python_proto_library")
+
+# Use the same base proto in two different trees. The rules should not tread
+# on each other and try to write the same file.
+
+proto_library(
+    name = "proto_lib_a",
+    srcs = ["demo.proto"],
+)
+
+proto_library(
+    name = "proto_lib_b",
+    srcs = ["demo.proto"],
+)
+
+python_proto_library(
+    name = "py_lib_a",
+    deps = ["proto_lib_a"],
+)
+
+python_proto_library(
+    name = "py_lib_b",
+    deps = ["proto_lib_b"],
+)
+
+py_test(
+    name = "test_a",
+    main = "main.py",
+    srcs = ["main.py"],
+    deps = ["py_lib_a"],
+)
+
+py_test(
+    name = "test_b",
+    main = "main.py",
+    srcs = ["main.py"],
+    deps = ["py_lib_b"],
+)
+
+py_test(
+    name = "test_both",
+    main = "main.py",
+    srcs = ["main.py"],
+    deps = ["py_lib_a", "py_lib_b"],
+)
