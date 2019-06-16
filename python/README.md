@@ -105,6 +105,8 @@ python_grpc_compile(
 
 ## `python_proto_aspect_compile`
 
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
+
 Generates *.py protobuf artifacts using aspect based compilation
 
 ### `WORKSPACE`
@@ -148,6 +150,8 @@ python_proto_aspect_compile(
 ---
 
 ## `python_grpc_aspect_compile`
+
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates *.py protobuf+gRPC artifacts using aspect based compilation
 
