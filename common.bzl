@@ -81,25 +81,6 @@ def rust_keyword(s):
     return s + "_pb" if s in _rust_keywords else s
 
 
-def describe(name, obj, exclude):
-    """Print the properties of the given struct obj
-    Args:
-      name: the name of the struct we are introspecting.
-      obj: the struct to introspect
-      exclude: a list of names *not* to print (function names)
-    """
-    for k in dir(obj):
-        if hasattr(obj, k) and k not in exclude:
-            v = getattr(obj, k)
-            t = type(v)
-            print("%s.%s<%r> = %s" % (name, k, t, v))
-
-
-def get_bool_attr(attr, name):
-    value = getattr(attr, name, "False")
-    return value == "True"
-
-
 def get_int_attr(attr, name):
     value = getattr(attr, name)
     if value == "":
@@ -378,51 +359,3 @@ def proto_path(proto):
     if path.startswith("/"):
         path = path[1:]
     return path
-
-
-def invoke_transitive(proto_compile_rule, name_suffix, kwargs):
-    """Invoke a proto_compile rule using kwargs
-
-    Invoke is a convenience function for library rules that call proto_compile
-    rules.  Rather than having to do the same boilerplate across many different
-    files, this function centralizes the logic of calling proto_compile rules
-    using kwargs.
-
-    Args:
-      proto_compile_rule: the rule function to invoke
-      name_suffix: a suffix for the kwargs.name to use for the rule
-      kwargs: the **kwargs dict, passed directly (not decontucted)
-
-    Returns:
-      The name of the invoked rule. This can be used in the srcs label of a library rule.
-    """
-
-    deps = kwargs.get("deps")
-    include_imports = kwargs.get("include_imports")
-    include_source_info = kwargs.get("include_source_info")
-    name = kwargs.get("name")
-    outputs = kwargs.get("outputs")
-    plugin_options = kwargs.get("plugin_options")
-    plugins = kwargs.get("plugins")
-    protoc = kwargs.get("protoc")
-    transitive = kwargs.get("transitive", True)
-    verbose = kwargs.get("verbose")
-    visibility = kwargs.get("visibility")
-
-    rule_name = name + name_suffix
-
-    proto_compile_rule(
-        name = rule_name,
-        deps = deps,
-        include_imports = include_imports,
-        include_source_info = include_source_info,
-        outputs = outputs,
-        plugin_options = plugin_options,
-        plugins = plugins,
-        protoc = protoc,
-        transitive = transitive,
-        verbose = verbose,
-        visibility = visibility,
-    )
-
-    return rule_name
