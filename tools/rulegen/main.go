@@ -665,6 +665,8 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	out.w("  ubuntu1604:")
 	out.w("    environment:")
 	out.w("      CC: clang")
+	out.w("    test_flags:")
+	out.w(`    - "--test_output=errors"`)
 	out.w("    test_targets:")
 	out.w(`    - "//example/routeguide/..."`)
 	out.w("    build_targets:")
@@ -708,6 +710,8 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	for _, testWorkspace := range findTestWorkspaceNames(dir) {
 		out.w("  test_workspace_%s:", testWorkspace)
 		out.w("    platform: ubuntu1604")
+		out.w("    test_flags:")
+		out.w(`    - "--test_output=errors"`)
 		out.w("    test_targets:")
 		out.w(`      - "..."`)
 		out.w("    working_directory: %s", path.Join(dir, "test_workspaces", testWorkspace))
@@ -760,7 +764,7 @@ func mustWriteTestWorkspacesMakefile(dir string) {
 		allNames = append(allNames, name)
 		out.w("%s:", name)
 		out.w("	cd %s; \\", path.Join(dir, "test_workspaces", testWorkspace))
-		out.w("	bazel test --disk_cache=../bazel-disk-cache //... ; \\")
+		out.w("	bazel test --disk_cache=../bazel-disk-cache --test_output=errors //... ; \\")
 		out.w("	bazel shutdown")
 		out.ln()
 	}
@@ -780,7 +784,7 @@ func findTestWorkspaceNames(dir string) []string {
 
 	var testWorkspaces []string
 	for _, file := range files {
-		if file.IsDir() && !strings.HasPrefix(file.Name(), ".") {
+		if file.IsDir() && !strings.HasPrefix(file.Name(), ".") && !strings.HasPrefix(file.Name(), "bazel-") {
 			testWorkspaces = append(testWorkspaces, file.Name())
 		}
 	}
