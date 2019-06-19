@@ -239,30 +239,26 @@ func action(c *cli.Context) error {
 		mustWriteLanguageExamples(dir, lang)
 	}
 
-	bazelVersions := []string{
-		"BAZEL=0.24.1",
-	}
-
 	mustWriteReadme(dir, c.String("header"), c.String("footer"), struct {
 		Ref, Sha256 string
 	}{
 		Ref:    ref,
 		Sha256: sha256,
-	}, languages, bazelVersions)
+	}, languages)
 
 	// mustWriteTravisYml(dir, c.String("travis_header"), c.String("travis_footer"), struct {
 	// 	Ref, Sha256 string
 	// }{
 	// 	Ref:    ref,
 	// 	Sha256: sha256,
-	// }, languages, bazelVersions)
+	// }, languages, []string{})
 
 	mustWriteBazelciPresubmitYml(dir, c.String("presubmit_header"), c.String("presubmit_footer"), struct {
 		Ref, Sha256 string
 	}{
 		Ref:    ref,
 		Sha256: sha256,
-	}, languages, bazelVersions)
+	}, languages, []string{})
 
 	mustWriteExamplesMakefile(dir, languages)
 	mustWriteTestWorkspacesMakefile(dir)
@@ -591,7 +587,7 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 	out.MustWrite(path.Join(dir, lang.Dir, "README.md"))
 }
 
-func mustWriteReadme(dir, header, footer string, data interface{}, languages []*Language, versions []string) {
+func mustWriteReadme(dir, header, footer string, data interface{}, languages []*Language) {
 	out := &LineWriter{}
 
 	badgeImageURL := "https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master"
