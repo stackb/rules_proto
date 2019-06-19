@@ -13,7 +13,7 @@ def cpp_grpc_library(**kwargs):
         name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
-            "//external:protobuf_clib",
+            "@com_google_protobuf//:protoc_lib",
             "@com_github_grpc_grpc//:grpc++",
             "@com_github_grpc_grpc//:grpc++_reflection",
         ],
