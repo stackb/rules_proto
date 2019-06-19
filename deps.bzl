@@ -174,15 +174,14 @@ def com_github_nanopb_nanopb(**kwargs):
 
 def com_google_protobuf(**kwargs):
     name = "com_google_protobuf"
-    ref = get_ref(name, "v3.7.1", kwargs)
-    sha256 = get_sha256(name, "f1748989842b46fa208b2a6e4e2785133cfcc3e4d43c17fecb023733f0f5443f", kwargs)
-
+    ref = get_ref(name, "v3.8.0", kwargs)
+    sha256 = get_sha256(name, "03d2e5ef101aee4c2f6ddcf145d2a04926b9c19e7086944df3842b1b8502b783", kwargs)
     github_archive(name, "google", "protobuf", ref, sha256)
 
 def com_github_grpc_grpc(**kwargs):
     name = "com_github_grpc_grpc"
-    ref = get_ref(name, "v1.20.1", kwargs)
-    sha256 = get_sha256(name, "ba8b08a697b66e14af35da07753583cf32ff3d14dcd768f91b1bbe2e6c07c349", kwargs)
+    ref = get_ref(name, "v1.21.0", kwargs)
+    sha256 = get_sha256(name, "8da7f32cc8978010d2060d740362748441b81a34e5425e108596d3fcd63a97f2", kwargs)
     github_archive(name, "grpc", "grpc", ref, sha256)
 
 def io_bazel_rules_dotnet(**kwargs):
@@ -199,8 +198,8 @@ def io_bazel_rules_scala(**kwargs):
 
 def io_bazel_rules_rust(**kwargs):
     name = "io_bazel_rules_rust"
-    ref = get_ref(name, "d28b121396974a628b9cdb29b6ed7f4e370edb4e", kwargs)  # May 8, 2019
-    sha256 = get_sha256(name, "58b8786e00b3489ce127e001670fd991547bb7db315e8a214915a2fa0b83743f", kwargs)
+    ref = get_ref(name, "8417c8954efbd0cefc8dd84517b2afff5e907d5a", kwargs)  # 2019-06-19
+    sha256 = get_sha256(name, "29d9fc1cdbd737c51db5983d1ac8e64cdc684c4683bafbcc624d3d81de92a32f", kwargs)
     github_archive(name, "bazelbuild", "rules_rust", ref, sha256)
 
 def com_github_yugui_rules_ruby(**kwargs):
