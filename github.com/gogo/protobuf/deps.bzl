@@ -4,9 +4,9 @@ load(
 )
 
 # Same as rules_go as rules_go is already loading gogo protobuf
-
 def gogo_proto_compile(**kwargs):
     io_bazel_rules_go(**kwargs)
+    native.register_toolchains(str(Label("//protobuf:protoc_toolchain")))
 
 def gogo_grpc_compile(**kwargs):
     gogo_proto_compile(**kwargs)
