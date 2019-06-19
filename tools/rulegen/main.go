@@ -302,13 +302,6 @@ var protoCompileAttrs = []*Attr{
 		Mandatory: false,
 	},
 	&Attr{
-		Name:      "protoc",
-		Type:      "executable file",
-		Default:   "@com_google_protobuf//:protoc",
-		Doc:       "The protocol compiler tool",
-		Mandatory: false,
-	},
-	&Attr{
 		Name:      "verbose",
 		Type:      "int",
 		Default:   "0",
