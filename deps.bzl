@@ -233,7 +233,7 @@ def build_bazel_rules_swift(**kwargs):
     """
     name = "build_bazel_rules_swift"
     ref = get_ref(name, "c935de3d04a8d24feb09a57df3b33a328be5d863", kwargs)  # 0.11.1
-    sha256 = get_sha256(name, "96a86afcbdab215f8363e65a10cf023b752e90b23abf02272c4fc668fcb70311", kwargs)
+    sha256 = get_sha256(name, "797593aef1401c3fedfe0762ec073bfe7619ab8e4e26558614a1daa491e501a4", kwargs)
     github_archive(name, "bazelbuild", "rules_swift", ref, sha256)
 
 def com_github_apple_swift_swift_protobuf(**kwargs):
