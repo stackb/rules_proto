@@ -72,11 +72,14 @@ def proto_compile_impl(ctx):
     ### Part 1: setup variables used in scope
     ###
 
+    # <struct> The resolved protoc toolchain
+    protoc_toolchain_info = ctx.toolchains["@build_stack_rules_proto//protobuf:toolchain_type"]
+
+    # <Target> The resolved protoc compiler from the protoc toolchain
+    protoc = protoc_toolchain_info.protoc
+
     # <int> verbose level
     verbose = ctx.attr.verbose
-
-    # <File> the protoc tool
-    protoc = ctx.executable.protoc
 
     # <File> for the output descriptor.  Often used as the sibling in
     # 'declare_file' actions.
@@ -304,12 +307,6 @@ proto_compile = rule(
         "outputs": attr.output_list(
             doc = "List of additional expected generated file outputs",
         ),
-        "protoc": attr.label(
-            doc = "The protocol compiler tool",
-            default = "@com_google_protobuf//:protoc",
-            cfg = "host",
-            executable = True,
-        ),
         "verbose": attr.int(
             doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
             default = 0,
@@ -335,4 +332,5 @@ proto_compile = rule(
         "descriptor": "%{name}/descriptor.source.bin",
     },
     output_to_genfiles = True,
+    toolchains = ["@build_stack_rules_proto//protobuf:toolchain_type"],
 )

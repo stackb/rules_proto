@@ -15,3 +15,4 @@ def protobuf(**kwargs):
     external_protobuf_clib(**kwargs)
     external_protobuf_headers(**kwargs)
     external_zlib(**kwargs)
+    native.register_toolchains(str(Label("//protobuf:protoc_toolchain")))
