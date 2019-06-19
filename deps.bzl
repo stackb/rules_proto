@@ -105,6 +105,18 @@ def com_google_protobuf(**kwargs):
     sha256 = get_sha256(name, "03d2e5ef101aee4c2f6ddcf145d2a04926b9c19e7086944df3842b1b8502b783", kwargs)
     github_archive(name, "google", "protobuf", ref, sha256)
 
+    if "protobuf_clib" not in native.existing_rules():
+        native.bind(
+            name = "protobuf_clib",
+            actual = "@com_google_protobuf//:protoc_lib",
+        )
+
+    if "protobuf_headers" not in native.existing_rules():
+        native.bind(
+            name = "protobuf_headers",
+            actual = "@com_google_protobuf//:protobuf_headers",
+        )
+
 def com_github_grpc_grpc(**kwargs):
     name = "com_github_grpc_grpc"
     ref = get_ref(name, "v1.21.0", kwargs)
