@@ -225,16 +225,16 @@ def build_bazel_rules_android(**kwargs):
     """Android Rules
     """
     name = "build_bazel_rules_android"
-    ref = get_ref(name, "ac9d2df31b2b9c77c1c43d4a3cfce789758320c5", kwargs)  # Apr 2019
-    sha256 = get_sha256(name, "5bbead25993489d50290d8361f16fd08958c6b7b78e260091a0fd4f691518fb9", kwargs)
+    ref = get_ref(name, "9ab1134546364c6de84fc6c80b4202fdbebbbb35", kwargs)  # 2019-06-19
+    sha256 = get_sha256(name, "f329928c62ade05ceda72c4e145fd300722e6e592627d43580dd0a8211c14612", kwargs)
     github_archive(name, "bazelbuild", "rules_android", ref, sha256)
 
 def build_bazel_rules_swift(**kwargs):
     """swift Rules
     """
     name = "build_bazel_rules_swift"
-    ref = get_ref(name, "004597eeb9b3e0a2bda6c9f6232f8687a01e73b0", kwargs)  # Apr 12, 2019
-    sha256 = get_sha256(name, "1fa65113903c03d0c7ae0fd79cfcf5cda1695d96411afa58a8022569db53e3c2", kwargs)
+    ref = get_ref(name, "c935de3d04a8d24feb09a57df3b33a328be5d863", kwargs)  # 0.11.1
+    sha256 = get_sha256(name, "96a86afcbdab215f8363e65a10cf023b752e90b23abf02272c4fc668fcb70311", kwargs)
     github_archive(name, "bazelbuild", "rules_swift", ref, sha256)
 
 def com_github_apple_swift_swift_protobuf(**kwargs):
@@ -252,16 +252,16 @@ def io_bazel_rules_go(**kwargs):
     """Go Rules
     """
     name = "io_bazel_rules_go"
-    ref = get_ref(name, "4fec67d1fcefe7c80d6f4cc2ae0841c9d90e429a", kwargs)  # post-18.3
-    sha256 = get_sha256(name, "2ab9320c583b05b805a7f8f4005fd081606505a64308051008d32148d7f98e1f", kwargs)
+    ref = get_ref(name, "6fc21c78143ff1d4ea98100e8fd7a928d45abd00", kwargs)  # 0.18.6
+    sha256 = get_sha256(name, "f04d2373bcaf8aa09bccb08a98a57e721306c8f6043a2a0ee610fd6853dcde3d", kwargs)
     github_archive(name, "bazelbuild", "rules_go", ref, sha256)
 
 def io_bazel_rules_python(**kwargs):
     """python Rules
     """
     name = "io_bazel_rules_python"
-    ref = get_ref(name, "965d4b4a63e6462204ae671d7c3f02b25da37941", kwargs)  # 2019-03-07
-    sha256 = get_sha256(name, "3e55ec4f7e151b048e950965f956c1e0633fc76449905f40dba671574eac574c", kwargs)
+    ref = get_ref(name, "fdbb17a4118a1728d19e638a5291b4c4266ea5b8", kwargs)  # 2019-06-19
+    sha256 = get_sha256(name, "9a3d71e348da504a9c4c5e8abd4cb822f7afb32c613dc6ee8b8535333a81a938", kwargs)
     github_archive(name, "bazelbuild", "rules_python", ref, sha256)
 
 def six(**kwargs):
