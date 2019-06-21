@@ -564,7 +564,7 @@ def proto_compile_impl(ctx):
     if verbose > 3:
         command = "env && " + command
         for f in outputs:
-            print("expected output: %q", f.path)
+            print("expected output: ", f.path)
 
     ctx.actions.run_shell(
         mnemonic = mnemonic,
