@@ -12,6 +12,7 @@ def gateway_grpc_compile(**kwargs):
     bazel_gazelle(**kwargs)
     com_github_bazelbuild_buildtools(**kwargs)
     grpc_ecosystem_grpc_gateway(**kwargs)
+    native.register_toolchains(str(Label("//protobuf:protoc_toolchain")))
 
     go_repository(
         name = "org_golang_google_genproto",
