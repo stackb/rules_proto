@@ -3,130 +3,16 @@
 package main
 
 import (
-	"bytes"
-	"crypto/sha256"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
-	"net/http"
 	"os"
 	"path"
 	"strings"
-	"text/template"
 
 	"github.com/urfave/cli"
 )
 
-// Language represents one directory in this repo
-type Language struct {
-	// Directory in the repo where this language is rooted.  Typically this is
-	// the same as the name
-	Dir string
-
-	// Name of the language
-	Name string
-
-	// Workspace usage
-	Usage string
-
-	// List of rules
-	Rules []*Rule
-
-	// Additional nodes about the language
-	Notes *template.Template
-
-	// List of available plugins
-	Plugins map[string]*Plugin
-
-	// Bazel build flags required / suggested
-	Flags []*Flag
-
-	// Does the langaguage has a routeguide server?  If so, this is the bazel target to run it.
-	RouteGuideServer, RouteGuideClient string
-
-	// If not the empty string, one-word reason why excluded from TravisCI
-	// configuration
-	TravisExclusionReason string
-
-	// Additional travis-specific env vars in the form "K=V"
-	PresubmitEnvVars map[string]string
-}
-
-type Rule struct {
-	// Name of the rule
-	Name string
-
-	// Base name of the rule (typically the lang name)
-	Base string
-
-	// Kind of the rule (proto|grpc)
-	Kind string
-
-	// Description
-	Doc string
-
-	// Temmplate for workspace
-	Usage *template.Template
-
-	// Template for build file
-	Example *template.Template
-
-	// Template for bzl file
-	Implementation *template.Template
-
-	// List of attributes
-	Attrs []*Attr
-
-	// List of plugins
-	Plugins []string
-
-	// Not expected to be functional
-	Experimental bool
-
-	// Not compatible with remote execution
-	RemoteIncompatible bool
-
-	// Bazel build flags required / suggested
-	Flags []*Flag
-
-	// If not the empty string, one-word reason why excluded from TravisCI
-	// configuration
-	TravisExclusionReason string
-
-	// Additional travis-specific env vars in the form "K=V"
-	PresubmitEnvVars map[string]string
-
-	// If not the empty string, one-word reason why excluded from bazelci
-	// configuration
-	BazelCIExclusionReason string
-}
-
-// Flag captures information about a bazel build flag.
-type Flag struct {
-	Category    string
-	Name        string
-	Value       string
-	Description string
-}
-
-type Attr struct {
-	Name      string
-	Type      string
-	Default   string
-	Doc       string
-	Mandatory bool
-}
-
-type Plugin struct {
-	Tool    string
-	Options []string
-}
-
-type ruleData struct {
-	Lang *Language
-	Rule *Rule
-}
 
 func main() {
 	app := cli.NewApp()
@@ -193,6 +79,7 @@ func main() {
 
 	app.Run(os.Args)
 }
+
 
 func action(c *cli.Context) error {
 	dir := c.String("dir")
@@ -266,169 +153,6 @@ func action(c *cli.Context) error {
 	return nil
 }
 
-var commonLangFlags = []*Flag{}
-
-var protoCompileAttrs = []*Attr{
-	&Attr{
-		Name:      "deps",
-		Type:      "list<ProtoInfo>",
-		Default:   "[]",
-		Doc:       "List of labels that provide a `ProtoInfo` (such as `native.proto_library`)",
-		Mandatory: true,
-	},
-	&Attr{
-		Name:      "plugins",
-		Type:      "list<ProtoPluginInfo>",
-		Default:   "[]",
-		Doc:       "List of labels that provide a `ProtoPluginInfo`",
-		Mandatory: false,
-	},
-	&Attr{
-		Name:      "plugin_options",
-		Type:      "list<string>",
-		Default:   "[]",
-		Doc:       "List of additional 'global' plugin options (applies to all plugins). To apply plugin specific options, use the `options` attribute on `proto_plugin`",
-		Mandatory: false,
-	},
-	&Attr{
-		Name:      "outputs",
-		Type:      "list<generated file>",
-		Default:   "[]",
-		Doc:       "List of additional expected generated file outputs",
-		Mandatory: false,
-	},
-	&Attr{
-		Name:      "verbose",
-		Type:      "int",
-		Default:   "0",
-		Doc:       "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
-		Mandatory: false,
-	},
-	&Attr{
-		Name:      "include_imports",
-		Type:      "bool",
-		Default:   "True",
-		Doc:       "Pass the --include_imports argument to the protoc_plugin",
-		Mandatory: false,
-	},
-	&Attr{
-		Name:      "include_source_info",
-		Type:      "bool",
-		Default:   "True",
-		Doc:       "Pass the --include_source_info argument to the protoc_plugin",
-		Mandatory: false,
-	},
-	&Attr{
-		Name:      "transitive",
-		Type:      "bool",
-		Default:   "True",
-		Doc:       "Generate outputs for both *.proto directly named in `deps` AND all their transitive proto_library dependencies",
-		Mandatory: false,
-	},
-    &Attr{
-		Name:      "transitivity",
-		Type:      "string_dict",
-        Default:   "{}",
-		Doc:       "Transitive filters to apply when the 'transitive' property is enabled. This string_dict can be used to exclude or explicitly include protos from the compilation list by using `exclude` or `include` respectively as the dict value",
-		Mandatory: false,
-	},
-}
-
-var compileRuleTemplate = mustTemplate(`load("//:compile.bzl", "proto_compile")
-
-def {{ .Rule.Name }}(**kwargs):
-    # Append the {{ .Lang.Name }} plugins and call generic compile
-    kwargs["plugins"] = kwargs.get("plugins", []) + [{{ range .Rule.Plugins }}
-        Label("{{ . }}"),{{ end }}
-    ]
-    proto_compile(**kwargs)`)
-
-var aspectRuleTemplate = mustTemplate(`load("//:plugin.bzl", "ProtoPluginInfo")
-load(
-    "//:aspect.bzl",
-    "ProtoLibraryAspectNodeInfo",
-    "proto_compile_aspect_attrs",
-    "proto_compile_aspect_impl",
-    "proto_compile_attrs",
-    "proto_compile_impl",
-)
-
-# "Aspects should be top-level values in extension files that define them."
-
-{{ .Rule.Name }}_aspect = aspect(
-    implementation = proto_compile_aspect_impl,
-    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
-    attr_aspects = ["deps"],
-    attrs = dict(
-        proto_compile_aspect_attrs,
-        _plugins = attr.label_list(
-            doc = "List of protoc plugins to apply",
-            providers = [ProtoPluginInfo],
-            default = [{{ range .Rule.Plugins }}
-                Label("{{ . }}"),{{ end }}
-            ],
-        ),
-    ),
-)
-
-_rule = rule(
-    implementation = proto_compile_impl,
-    attrs = dict(
-        proto_compile_attrs,
-        deps = attr.label_list(
-            mandatory = True,
-            providers = [ProtoInfo, "proto_compile", ProtoLibraryAspectNodeInfo],
-            aspects = [{{ .Rule.Name }}_aspect],
-        ),
-    ),
-)
-
-def {{ .Rule.Name }}(**kwargs):
-    _rule(
-        verbose_string = "%s" % kwargs.get("verbose", 0),
-        plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
-        **kwargs
-    )`)
-
-var usageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}()`)
-
-var grpcUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}()
-
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-
-grpc_deps()`)
-
-var protoCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}(
-    name = "person_{{ .Lang.Name }}_proto",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
-)`)
-
-var grpcCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}(
-    name = "greeter_{{ .Lang.Name }}_grpc",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
-)`)
-
-var protoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}(
-    name = "person_{{ .Lang.Name }}_library",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
-)`)
-
-var grpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}(
-    name = "greeter_{{ .Lang.Name }}_library",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
-)`)
 
 func mustWriteLanguageRules(dir string, lang *Language) {
 	for _, rule := range lang.Rules {
@@ -436,12 +160,14 @@ func mustWriteLanguageRules(dir string, lang *Language) {
 	}
 }
 
+
 func mustWriteLanguageRule(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
 	out.t(rule.Implementation, &ruleData{lang, rule})
 	out.ln()
 	out.MustWrite(path.Join(dir, lang.Dir, rule.Name+".bzl"))
 }
+
 
 func mustWriteLanguageExamples(dir string, lang *Language) {
 	for _, rule := range lang.Rules {
@@ -452,6 +178,7 @@ func mustWriteLanguageExamples(dir string, lang *Language) {
 		mustWriteLanguageExampleBazelrcFile(exampleDir, lang, rule)
 	}
 }
+
 
 func mustWriteLanguageExampleWorkspace(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
@@ -472,12 +199,14 @@ local_repository(
 	out.MustWrite(path.Join(dir, "WORKSPACE"))
 }
 
+
 func mustWriteLanguageExampleBuildFile(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
 	out.t(rule.Example, &ruleData{lang, rule})
 	out.ln()
 	out.MustWrite(path.Join(dir, "BUILD.bazel"))
 }
+
 
 func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
@@ -500,6 +229,7 @@ func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule)
 	out.ln()
 	out.MustWrite(path.Join(dir, ".bazelrc"))
 }
+
 
 func mustWriteLanguageReadme(dir string, lang *Language) {
 	out := &LineWriter{}
@@ -587,6 +317,7 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 	out.MustWrite(path.Join(dir, lang.Dir, "README.md"))
 }
 
+
 func mustWriteReadme(dir, header, footer string, data interface{}, languages []*Language) {
 	out := &LineWriter{}
 
@@ -619,6 +350,7 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.MustWrite(path.Join(dir, "README.md"))
 }
 
+
 func mustWriteTravisYml(dir, header, footer string, data interface{}, languages []*Language, envVars []string) {
 	out := &LineWriter{}
 
@@ -649,6 +381,7 @@ func mustWriteTravisYml(dir, header, footer string, data interface{}, languages 
 
 	out.MustWrite(path.Join(dir, ".travis.yml"))
 }
+
 
 func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, languages []*Language, envVars []string) {
 	out := &LineWriter{}
@@ -718,6 +451,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	out.MustWrite(path.Join(dir, ".bazelci", "presubmit.yml"))
 }
 
+
 func mustWriteExamplesMakefile(dir string, languages []*Language) {
 	out := &LineWriter{}
 
@@ -750,6 +484,7 @@ func mustWriteExamplesMakefile(dir string, languages []*Language) {
 	out.MustWrite(path.Join(dir, "example", "Makefile.mk"))
 }
 
+
 func mustWriteTestWorkspacesMakefile(dir string) {
 	out := &LineWriter{}
 
@@ -772,6 +507,7 @@ func mustWriteTestWorkspacesMakefile(dir string) {
 	out.MustWrite(path.Join(dir, "test_workspaces", "Makefile.mk"))
 }
 
+
 func findTestWorkspaceNames(dir string) []string {
 	files, err := ioutil.ReadDir(path.Join(dir, "test_workspaces"))
 	if err != nil {
@@ -786,87 +522,4 @@ func findTestWorkspaceNames(dir string) []string {
 	}
 
 	return testWorkspaces
-}
-
-// ********************************
-// Utility types
-// ********************************
-
-type LineWriter struct {
-	lines []string
-}
-
-func (w *LineWriter) w(s string, args ...interface{}) {
-	w.lines = append(w.lines, fmt.Sprintf(s, args...))
-}
-
-func (w *LineWriter) t(t *template.Template, data interface{}) {
-	var buf bytes.Buffer
-	err := t.Execute(&buf, data)
-	if err != nil {
-		log.Fatalf("%v", err)
-	}
-	w.lines = append(w.lines, buf.String())
-}
-
-func (w *LineWriter) tpl(filename string, data interface{}) {
-	tpl, err := template.ParseFiles(filename)
-	if err != nil {
-		log.Fatalf("Failed to parse %s: %v", filename, err)
-	}
-	w.t(tpl, data)
-}
-
-func (w *LineWriter) ln() {
-	w.lines = append(w.lines, "")
-}
-
-func (w *LineWriter) MustWrite(filepath string) {
-	err := writeFile(filepath, strings.Join(w.lines, "\n"))
-	if err != nil {
-		log.Fatalf("FAIL %s: %v", filepath, err)
-	}
-}
-
-// ********************************
-// Utility functions
-// ********************************
-
-func mustTemplate(tpl string) *template.Template {
-	return template.Must(template.New("").Option("missingkey=error").Parse(tpl))
-}
-
-func writeFile(filepath, content string) error {
-	fo, err := os.Create(filepath)
-	if err != nil {
-		return err
-	}
-	defer fo.Close()
-
-	_, err = io.Copy(fo, strings.NewReader(content))
-	if err != nil {
-		return err
-	}
-
-	log.Printf("Wrote %s", filepath)
-	return nil
-}
-
-func mustGetSha256(url string) string {
-	response, err := http.Get(url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer response.Body.Close()
-
-	h := sha256.New()
-	if _, err := io.Copy(h, response.Body); err != nil {
-		log.Fatal(err)
-	}
-
-	sha256 := fmt.Sprintf("%x", h.Sum(nil))
-
-	log.Printf("sha256 for %s is %q", url, sha256)
-
-	return sha256
 }

@@ -5,6 +5,7 @@ go_library(
     srcs = [
         "android.go",
         "closure.go",
+        "common.go",
         "cpp.go",
         "csharp.go",
         "d.go",
@@ -24,6 +25,8 @@ go_library(
         "rust.go",
         "scala.go",
         "swift.go",
+        "types.go",
+        "util.go",
     ],
     importpath = "github.com/stackb/rules_proto/tools/rulegen",
     deps = [
