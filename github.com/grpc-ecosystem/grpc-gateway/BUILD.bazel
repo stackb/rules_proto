@@ -11,6 +11,10 @@ proto_plugin(
     #     "logtostderr=true",
     # ],
     tool = "@grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway",
+    transitivity = {
+        "google/api": "exclude",
+        "google/protobuf": "exclude",
+    },
     visibility = ["//visibility:public"],
 )
 
@@ -25,5 +29,9 @@ proto_plugin(
     #     "json_names_for_fields",
     # ],
     tool = "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger",
+    transitivity = {
+        "google/api": "exclude",
+        "google/protobuf": "exclude",
+    },
     visibility = ["//visibility:public"],
 )
