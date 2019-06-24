@@ -36,24 +36,6 @@ def get_sha1(name, default, kwargs):
     key = name + "_sha1"
     return kwargs.get(key, default)
 
-def external_nanopb(**kwargs):
-    com_github_nanopb_nanopb(**kwargs)
-    name = "nanopb"
-    if name not in native.existing_rules():
-        native.bind(
-            name = name,
-            actual = "@com_github_nanopb_nanopb//:nanopb",
-        )
-
-def external_libssl(**kwargs):
-    boringssl(**kwargs)
-    name = "libssl"
-    if name not in native.existing_rules():
-        native.bind(
-            name = name,
-            actual = "@boringssl//:ssl",
-        )
-
 def external_zlib(**kwargs):
     if "zlib" not in native.existing_rules():
         http_archive(
@@ -64,40 +46,11 @@ def external_zlib(**kwargs):
             urls = ["https://zlib.net/zlib-1.2.11.tar.gz"],
         )
 
-def com_github_bazelbuild_bazel_gazelle(**kwargs):
-    if "com_github_bazelbuild_bazel_gazelle" not in native.existing_rules():
-        sha1 = "a79ae21dcb2e1f4d36c2b99bb14e27816c5f4100"
-        http_archive(
-            name = "com_github_bazelbuild_bazel_gazelle",
-            strip_prefix = "bazel-gazelle-" + sha1,
-            url = "https://github.com/bazelbuild/bazel-gazelle/archive/%s.tar.gz" % sha1,
-            patch_cmds = [
-                # Expose the go_library targets so we can use it!
-                "sed -i 's|//:__subpackages__|//visibility:public|g' internal/rule/BUILD.bazel",
-            ],
-        )
-
 def com_github_bazelbuild_buildtools(**kwargs):
     name = "com_github_bazelbuild_buildtools"
     ref = get_ref(name, "6415663945d3248207da955aafa1fa2af1a0f2ed", kwargs)
     sha256 = get_sha256(name, "d1e28237d1f4c2255c504246b4f3fd36f74d590f2974491b4399a84c58b495ed", kwargs)
     github_archive(name, "bazelbuild", "buildtools", ref, sha256)
-
-def boringssl(**kwargs):
-    if "boringssl" not in native.existing_rules():
-        http_archive(
-            name = "boringssl",
-            # on the chromium-stable-with-bazel branch
-            url = "https://boringssl.googlesource.com/boringssl/+archive/dcd3e6e6ecddf059adb48fca45bc7346a108bdd9.tar.gz",
-        )
-
-def com_github_nanopb_nanopb(**kwargs):
-    name = "com_github_nanopb_nanopb"
-    ref = get_ref(name, "ae9901f2a31500e8fdc93fa9804d24851c58bb1e", kwargs)
-
-    # should be 8bbbb1e78d4ddb0a1919276924ab10d11b631df48b657d960e0c795a25515735?
-    sha256 = get_sha256(name, "7aa0ab179eff56241b6cded9cd07324af2395ad56d5478e2f7dabdb42b65d3fb", kwargs)
-    github_archive(name, "nanopb", "nanopb", ref, sha256)
 
 def com_google_protobuf(**kwargs):
     name = "com_google_protobuf"
