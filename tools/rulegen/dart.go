@@ -79,6 +79,8 @@ func makeDart() *Language {
 				BuildExample:     protoCompileExampleTemplate,
 				Doc:              "Generates dart protobuf artifacts",
 				Attrs:            append(protoCompileAttrs, []*Attr{}...),
+				Experimental:     true,
+				BazelCIExclusionReason: "experimental",
 			},
 			&Rule{
 				Name:             "dart_grpc_compile",
@@ -89,6 +91,8 @@ func makeDart() *Language {
 				BuildExample:     grpcCompileExampleTemplate,
 				Doc:              "Generates dart protobuf+gRPC artifacts",
 				Attrs:            append(protoCompileAttrs, []*Attr{}...),
+				Experimental:     true,
+				BazelCIExclusionReason: "experimental",
 			},
 			&Rule{
 				Name:             "dart_proto_library",
@@ -98,6 +102,8 @@ func makeDart() *Language {
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates dart protobuf library",
 				Attrs:            append(protoCompileAttrs, []*Attr{}...),
+				Experimental:     true,
+				BazelCIExclusionReason: "experimental",
 			},
 			&Rule{
 				Name:             "dart_grpc_library",
@@ -107,6 +113,8 @@ func makeDart() *Language {
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates dart protobuf+gRPC library",
 				Attrs:            append(protoCompileAttrs, []*Attr{}...),
+				Experimental:     true,
+				BazelCIExclusionReason: "experimental",
 			},
 		},
 	}

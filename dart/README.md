@@ -11,6 +11,8 @@
 
 ## `dart_proto_compile`
 
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
+
 Generates dart protobuf artifacts
 
 ### `WORKSPACE`
@@ -69,6 +71,8 @@ dart_proto_compile(
 ---
 
 ## `dart_grpc_compile`
+
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates dart protobuf+gRPC artifacts
 
@@ -129,6 +133,8 @@ dart_grpc_compile(
 
 ## `dart_proto_library`
 
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
+
 Generates dart protobuf library
 
 ### `WORKSPACE`
@@ -187,6 +193,8 @@ dart_proto_library(
 ---
 
 ## `dart_grpc_library`
+
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates dart protobuf+gRPC library
 

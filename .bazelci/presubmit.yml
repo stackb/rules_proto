@@ -100,26 +100,6 @@ tasks:
     build_targets:
       - "..."
     working_directory: example/d/d_proto_compile
-  dart_proto_compile:
-    platform: ubuntu1604
-    build_targets:
-      - "..."
-    working_directory: example/dart/dart_proto_compile
-  dart_grpc_compile:
-    platform: ubuntu1604
-    build_targets:
-      - "..."
-    working_directory: example/dart/dart_grpc_compile
-  dart_proto_library:
-    platform: ubuntu1604
-    build_targets:
-      - "..."
-    working_directory: example/dart/dart_proto_library
-  dart_grpc_library:
-    platform: ubuntu1604
-    build_targets:
-      - "..."
-    working_directory: example/dart/dart_grpc_library
   go_proto_compile:
     platform: ubuntu1604
     build_targets:
