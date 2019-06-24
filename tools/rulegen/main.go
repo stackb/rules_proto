@@ -194,7 +194,7 @@ local_repository(
 )`, relpath)
 
 	out.ln()
-	out.t(rule.Usage, &ruleData{lang, rule})
+	out.t(rule.WorkspaceExample, &ruleData{lang, rule})
 	out.ln()
 	out.MustWrite(path.Join(dir, "WORKSPACE"))
 }
@@ -202,7 +202,7 @@ local_repository(
 
 func mustWriteLanguageExampleBuildFile(dir string, lang *Language, rule *Rule) {
 	out := &LineWriter{}
-	out.t(rule.Example, &ruleData{lang, rule})
+	out.t(rule.BuildExample, &ruleData{lang, rule})
 	out.ln()
 	out.MustWrite(path.Join(dir, "BUILD.bazel"))
 }
@@ -266,7 +266,7 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 		out.ln()
 
 		out.w("```python")
-		out.t(rule.Usage, &ruleData{lang, rule})
+		out.t(rule.WorkspaceExample, &ruleData{lang, rule})
 		out.w("```")
 		out.ln()
 
@@ -274,7 +274,7 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 		out.ln()
 
 		out.w("```python")
-		out.t(rule.Example, &ruleData{lang, rule})
+		out.t(rule.BuildExample, &ruleData{lang, rule})
 		out.w("```")
 		out.ln()
 

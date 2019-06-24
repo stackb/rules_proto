@@ -1,6 +1,6 @@
 package main
 
-var csharpLibraryUsageTemplateString = `load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var csharpLibraryWorkspaceTemplateString = `load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -36,9 +36,9 @@ load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_package
 
 nuget_protobuf_packages()`
 
-var csharpProtoLibraryUsageTemplate = mustTemplate(csharpLibraryUsageTemplateString)
+var csharpProtoLibraryWorkspaceTemplate = mustTemplate(csharpLibraryWorkspaceTemplateString)
 
-var csharpGrpcLibraryUsageTemplate = mustTemplate(csharpLibraryUsageTemplateString + `
+var csharpGrpcLibraryWorkspaceTemplate = mustTemplate(csharpLibraryWorkspaceTemplateString + `
 
 load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
@@ -119,44 +119,44 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 **NOTE 2**: the csharp nuget dependency sha256 values do not appear stable.`),
 		Rules: []*Rule{
 			&Rule{
-				Name:           "csharp_proto_compile",
-				Kind:           "proto",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//csharp:csharp"},
-				Usage:          usageTemplate,
-				Example:        protoCompileExampleTemplate,
-				Doc:            "Generates csharp protobuf artifacts",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "csharp_proto_compile",
+				Kind:             "proto",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//csharp:csharp"},
+				WorkspaceExample: protoWorkspaceTemplate,
+				BuildExample:     protoCompileExampleTemplate,
+				Doc:              "Generates csharp protobuf artifacts",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "csharp_grpc_compile",
-				Kind:           "grpc",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//csharp:csharp", "//csharp:grpc_csharp"},
-				Usage:          grpcUsageTemplate,
-				Example:        grpcCompileExampleTemplate,
-				Doc:            "Generates csharp protobuf+gRPC artifacts",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "csharp_grpc_compile",
+				Kind:             "grpc",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//csharp:csharp", "//csharp:grpc_csharp"},
+				WorkspaceExample: grpcWorkspaceTemplate,
+				BuildExample:     grpcCompileExampleTemplate,
+				Doc:              "Generates csharp protobuf+gRPC artifacts",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "csharp_proto_library",
-				Kind:           "proto",
-				Implementation: csharpProtoLibraryRuleTemplate,
-				Usage:          csharpProtoLibraryUsageTemplate,
-				Example:        protoLibraryExampleTemplate,
-				Doc:            "Generates csharp protobuf library",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags:          csharpLibraryFlags,
+				Name:             "csharp_proto_library",
+				Kind:             "proto",
+				Implementation:   csharpProtoLibraryRuleTemplate,
+				WorkspaceExample: csharpProtoLibraryWorkspaceTemplate,
+				BuildExample:     protoLibraryExampleTemplate,
+				Doc:              "Generates csharp protobuf library",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
+				Flags:            csharpLibraryFlags,
 			},
 			&Rule{
-				Name:           "csharp_grpc_library",
-				Kind:           "grpc",
-				Implementation: csharpGrpcLibraryRuleTemplate,
-				Usage:          csharpGrpcLibraryUsageTemplate,
-				Example:        grpcLibraryExampleTemplate,
-				Doc:            "Generates csharp protobuf+gRPC library",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
-				Flags:          csharpLibraryFlags,
+				Name:             "csharp_grpc_library",
+				Kind:             "grpc",
+				Implementation:   csharpGrpcLibraryRuleTemplate,
+				WorkspaceExample: csharpGrpcLibraryWorkspaceTemplate,
+				BuildExample:     grpcLibraryExampleTemplate,
+				Doc:              "Generates csharp protobuf+gRPC library",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
+				Flags:            csharpLibraryFlags,
 			},
 		},
 	}

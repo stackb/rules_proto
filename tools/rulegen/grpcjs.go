@@ -1,16 +1,16 @@
 package main
 
-var grpcjsLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var grpcjsWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
+{{ .Rule.Name }}()`)
+
+var grpcjsLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
 closure_repositories()`)
-
-var grpcjsUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}()`)
 
 var grpcjsGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:closure_grpc_compile.bzl", "closure_grpc_compile")
 load("//closure:closure_proto_compile.bzl", "closure_proto_compile")
@@ -84,23 +84,23 @@ func makeGrpcJs() *Language {
 		Name: "grpc.js",
 		Rules: []*Rule{
 			&Rule{
-				Name:           "closure_grpc_compile",
-				Kind:           "grpc",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//github.com/stackb/grpc.js:grpc.js"},
-				Usage:          grpcjsUsageTemplate,
-				Example:        grpcCompileExampleTemplate,
-				Doc:            "Generates protobuf closure grpc *.js files",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "closure_grpc_compile",
+				Kind:             "grpc",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//github.com/stackb/grpc.js:grpc.js"},
+				WorkspaceExample: grpcjsWorkspaceTemplate,
+				BuildExample:     grpcCompileExampleTemplate,
+				Doc:              "Generates protobuf closure grpc *.js files",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "closure_grpc_library",
-				Kind:           "grpc",
-				Implementation: grpcjsGrpcLibraryRuleTemplate,
-				Usage:          grpcjsLibraryUsageTemplate,
-				Example:        grpcLibraryExampleTemplate,
-				Doc:            "Generates protobuf closure library *.js files",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "closure_grpc_library",
+				Kind:             "grpc",
+				Implementation:   grpcjsGrpcLibraryRuleTemplate,
+				WorkspaceExample: grpcjsLibraryWorkspaceTemplate,
+				BuildExample:     grpcLibraryExampleTemplate,
+				Doc:              "Generates protobuf closure library *.js files",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 		},
 	}

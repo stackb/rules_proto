@@ -1,6 +1,6 @@
 package main
 
-var nodeGrpcCompileUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var nodeGrpcCompileWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -8,7 +8,7 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()`)
 
-var nodeProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var nodeProtoLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -23,7 +23,7 @@ yarn_modules(
     },
 )`)
 
-var nodeGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var nodeGrpcLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -101,42 +101,42 @@ func makeNode() *Language {
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
-				Name:           "node_proto_compile",
-				Kind:           "proto",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//node:js"},
-				Usage:          usageTemplate,
-				Example:        protoCompileExampleTemplate,
-				Doc:            "Generates node *.js protobuf artifacts",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "node_proto_compile",
+				Kind:             "proto",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//node:js"},
+				WorkspaceExample: protoWorkspaceTemplate,
+				BuildExample:     protoCompileExampleTemplate,
+				Doc:              "Generates node *.js protobuf artifacts",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "node_grpc_compile",
-				Kind:           "grpc",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//node:js", "//node:grpc_js"},
-				Usage:          nodeGrpcCompileUsageTemplate,
-				Example:        grpcCompileExampleTemplate,
-				Doc:            "Generates node *.js protobuf+gRPC artifacts",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "node_grpc_compile",
+				Kind:             "grpc",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//node:js", "//node:grpc_js"},
+				WorkspaceExample: nodeGrpcCompileWorkspaceTemplate,
+				BuildExample:     grpcCompileExampleTemplate,
+				Doc:              "Generates node *.js protobuf+gRPC artifacts",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "node_proto_library",
-				Kind:           "proto",
-				Implementation: nodeProtoLibraryRuleTemplate,
-				Usage:          nodeProtoLibraryUsageTemplate,
-				Example:        protoLibraryExampleTemplate,
-				Doc:            "Generates node *.js protobuf library",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "node_proto_library",
+				Kind:             "proto",
+				Implementation:   nodeProtoLibraryRuleTemplate,
+				WorkspaceExample: nodeProtoLibraryWorkspaceTemplate,
+				BuildExample:     protoLibraryExampleTemplate,
+				Doc:              "Generates node *.js protobuf library",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "node_grpc_library",
-				Kind:           "grpc",
-				Implementation: nodeGrpcLibraryRuleTemplate,
-				Usage:          nodeGrpcLibraryUsageTemplate,
-				Example:        grpcLibraryExampleTemplate,
-				Doc:            "Generates node *.js protobuf+gRPC library",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "node_grpc_library",
+				Kind:             "grpc",
+				Implementation:   nodeGrpcLibraryRuleTemplate,
+				WorkspaceExample: nodeGrpcLibraryWorkspaceTemplate,
+				BuildExample:     grpcLibraryExampleTemplate,
+				Doc:              "Generates node *.js protobuf+gRPC library",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 		},
 	}

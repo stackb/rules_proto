@@ -1,6 +1,6 @@
 package main
 
-var closureLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var closureLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -43,23 +43,23 @@ func makeClosure() *Language {
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
-				Name:           "closure_proto_compile",
-				Kind:           "proto",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//closure:js"},
-				Usage:          usageTemplate,
-				Example:        protoCompileExampleTemplate,
-				Doc:            "Generates closure *.js protobuf+gRPC files",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "closure_proto_compile",
+				Kind:             "proto",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//closure:js"},
+				WorkspaceExample: protoWorkspaceTemplate,
+				BuildExample:     protoCompileExampleTemplate,
+				Doc:              "Generates closure *.js protobuf+gRPC files",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "closure_proto_library",
-				Kind:           "proto",
-				Implementation: closureProtoLibraryRuleTemplate,
-				Usage:          closureLibraryUsageTemplate,
-				Example:        protoLibraryExampleTemplate,
-				Doc:            "Generates a closure_library with compiled protobuf *.js files",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "closure_proto_library",
+				Kind:             "proto",
+				Implementation:   closureProtoLibraryRuleTemplate,
+				WorkspaceExample: closureLibraryWorkspaceTemplate,
+				BuildExample:     protoLibraryExampleTemplate,
+				Doc:              "Generates a closure_library with compiled protobuf *.js files",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 		},
 	}

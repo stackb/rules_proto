@@ -15,7 +15,7 @@ type Language struct {
 	Name string
 
 	// Workspace usage
-	Usage string
+	WorkspaceExample string
 
 	// List of rules
 	Rules []*Rule
@@ -55,10 +55,10 @@ type Rule struct {
 	Doc string
 
 	// Temmplate for workspace
-	Usage *template.Template
+	WorkspaceExample *template.Template
 
 	// Template for build file
-	Example *template.Template
+	BuildExample *template.Template
 
 	// Template for bzl file
 	Implementation *template.Template

@@ -1,6 +1,6 @@
 package main
 
-var androidLibraryUsageTemplateString = `load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+var androidLibraryWorkspaceTemplateString = `load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 
 io_grpc_grpc_java()
 
@@ -18,9 +18,9 @@ load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repo
 
 android_sdk_repository(name = "androidsdk")`
 
-var androidGrpcLibraryUsageTemplate = mustTemplate(androidLibraryUsageTemplateString)
+var androidGrpcLibraryWorkspaceTemplate = mustTemplate(androidLibraryWorkspaceTemplateString)
 
-var androidProtoLibraryUsageTemplate = mustTemplate("# The set of dependencies loaded here is excessive for android proto alone\n# (but simplifies our setup)\n" + androidLibraryUsageTemplateString)
+var androidProtoLibraryWorkspaceTemplate = mustTemplate("# The set of dependencies loaded here is excessive for android proto alone\n# (but simplifies our setup)\n" + androidLibraryWorkspaceTemplateString)
 
 var androidLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@build_bazel_rules_android//android:rules.bzl", "android_library")
@@ -53,42 +53,42 @@ func makeAndroid() *Language {
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
-				Name:           "android_proto_compile",
-				Kind:           "proto",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//android:javalite"},
-				Usage:          usageTemplate,
-				Example:        protoCompileExampleTemplate,
-				Doc:            "Generates android protobuf artifacts",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "android_proto_compile",
+				Kind:             "proto",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//android:javalite"},
+				WorkspaceExample: protoWorkspaceTemplate,
+				BuildExample:     protoCompileExampleTemplate,
+				Doc:              "Generates android protobuf artifacts",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "android_grpc_compile",
-				Kind:           "grpc",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//android:javalite", "//android:grpc_javalite"},
-				Usage:          javaGrpcUsageTemplate,
-				Example:        grpcCompileExampleTemplate,
-				Doc:            "Generates android protobuf+gRPC artifacts",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "android_grpc_compile",
+				Kind:             "grpc",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//android:javalite", "//android:grpc_javalite"},
+				WorkspaceExample: javaGrpcWorkspaceTemplate,
+				BuildExample:     grpcCompileExampleTemplate,
+				Doc:              "Generates android protobuf+gRPC artifacts",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "android_proto_library",
-				Kind:           "proto",
-				Implementation: androidLibraryRuleTemplate,
-				Usage:          androidProtoLibraryUsageTemplate,
-				Example:        protoLibraryExampleTemplate,
-				Doc:            "Generates android protobuf library",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "android_proto_library",
+				Kind:             "proto",
+				Implementation:   androidLibraryRuleTemplate,
+				WorkspaceExample: androidProtoLibraryWorkspaceTemplate,
+				BuildExample:     protoLibraryExampleTemplate,
+				Doc:              "Generates android protobuf library",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "android_grpc_library",
-				Kind:           "grpc",
-				Implementation: androidLibraryRuleTemplate,
-				Usage:          androidGrpcLibraryUsageTemplate,
-				Example:        grpcLibraryExampleTemplate,
-				Doc:            "Generates android protobuf+gRPC library",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "android_grpc_library",
+				Kind:             "grpc",
+				Implementation:   androidLibraryRuleTemplate,
+				WorkspaceExample: androidGrpcLibraryWorkspaceTemplate,
+				BuildExample:     grpcLibraryExampleTemplate,
+				Doc:              "Generates android protobuf+gRPC library",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 		},
 	}

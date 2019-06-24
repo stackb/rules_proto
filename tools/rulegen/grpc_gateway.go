@@ -1,6 +1,6 @@
 package main
 
-var grpcGatewayUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.bzl", "bazel_gazelle", "io_bazel_rules_go")
+var grpcGatewayWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.bzl", "bazel_gazelle", "io_bazel_rules_go")
 
 io_bazel_rules_go()
 
@@ -61,33 +61,33 @@ func makeGrpcGateway() *Language {
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
-				Name:           "gateway_grpc_compile",
-				Kind:           "grpc",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//github.com/grpc-ecosystem/grpc-gateway:grpc-gateway"},
-				Usage:          grpcGatewayUsageTemplate,
-				Example:        grpcGatewayCompileExampleTemplate,
-				Doc:            "Generates grpc-gateway *.go files",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "gateway_grpc_compile",
+				Kind:             "grpc",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//github.com/grpc-ecosystem/grpc-gateway:grpc-gateway"},
+				WorkspaceExample: grpcGatewayWorkspaceTemplate,
+				BuildExample:     grpcGatewayCompileExampleTemplate,
+				Doc:              "Generates grpc-gateway *.go files",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "gateway_swagger_compile",
-				Kind:           "grpc",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//github.com/grpc-ecosystem/grpc-gateway:swagger"},
-				Usage:          grpcGatewayUsageTemplate,
-				Example:        grpcGatewayCompileExampleTemplate,
-				Doc:            "Generates grpc-gateway swagger *.json files",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "gateway_swagger_compile",
+				Kind:             "grpc",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//github.com/grpc-ecosystem/grpc-gateway:swagger"},
+				WorkspaceExample: grpcGatewayWorkspaceTemplate,
+				BuildExample:     grpcGatewayCompileExampleTemplate,
+				Doc:              "Generates grpc-gateway swagger *.json files",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "gateway_grpc_library",
-				Kind:           "grpc",
-				Implementation: grpcGatewayLibraryRuleTemplate,
-				Usage:          grpcGatewayUsageTemplate,
-				Example:        grpcGatewayLibraryExampleTemplate,
-				Doc:            "Generates grpc-gateway library files",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "gateway_grpc_library",
+				Kind:             "grpc",
+				Implementation:   grpcGatewayLibraryRuleTemplate,
+				WorkspaceExample: grpcGatewayWorkspaceTemplate,
+				BuildExample:     grpcGatewayLibraryExampleTemplate,
+				Doc:              "Generates grpc-gateway library files",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 		},
 	}

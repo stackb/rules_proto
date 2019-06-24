@@ -1,6 +1,6 @@
 package main
 
-var pythonProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var pythonProtoLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -17,7 +17,7 @@ load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install
 
 protobuf_pip_install()`)
 
-var pythonGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var pythonGrpcLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -103,64 +103,64 @@ func makePython() *Language {
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
-				Name:           "python_proto_compile",
-				Kind:           "proto",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//python:python"},
-				Usage:          usageTemplate,
-				Example:        protoCompileExampleTemplate,
-				Doc:            "Generates *.py protobuf artifacts",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "python_proto_compile",
+				Kind:             "proto",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//python:python"},
+				WorkspaceExample: protoWorkspaceTemplate,
+				BuildExample:     protoCompileExampleTemplate,
+				Doc:              "Generates *.py protobuf artifacts",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "python_grpc_compile",
-				Kind:           "grpc",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//python:python", "//python:grpc_python"},
-				Usage:          grpcUsageTemplate,
-				Example:        grpcCompileExampleTemplate,
-				Doc:            "Generates *.py protobuf+gRPC artifacts",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "python_grpc_compile",
+				Kind:             "grpc",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//python:python", "//python:grpc_python"},
+				WorkspaceExample: grpcWorkspaceTemplate,
+				BuildExample:     grpcCompileExampleTemplate,
+				Doc:              "Generates *.py protobuf+gRPC artifacts",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "python_proto_aspect_compile",
-				Kind:           "proto",
-				Implementation: aspectRuleTemplate,
-				Experimental:   true,
-				Plugins:        []string{"//python:python"},
-				Usage:          usageTemplate,
-				Example:        protoCompileExampleTemplate,
-				Doc:            "Generates *.py protobuf artifacts using aspect based compilation",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "python_proto_aspect_compile",
+				Kind:             "proto",
+				Implementation:   aspectRuleTemplate,
+				Experimental:     true,
+				Plugins:          []string{"//python:python"},
+				WorkspaceExample: protoWorkspaceTemplate,
+				BuildExample:     protoCompileExampleTemplate,
+				Doc:              "Generates *.py protobuf artifacts using aspect based compilation",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "python_grpc_aspect_compile",
-				Kind:           "grpc",
-				Implementation: aspectRuleTemplate,
-				Experimental:   true,
-				Plugins:        []string{"//python:python", "//python:grpc_python"},
-				Usage:          grpcUsageTemplate,
-				Example:        grpcCompileExampleTemplate,
-				Doc:            "Generates *.py protobuf+gRPC artifacts using aspect based compilation",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "python_grpc_aspect_compile",
+				Kind:             "grpc",
+				Implementation:   aspectRuleTemplate,
+				Experimental:     true,
+				Plugins:          []string{"//python:python", "//python:grpc_python"},
+				WorkspaceExample: grpcWorkspaceTemplate,
+				BuildExample:     grpcCompileExampleTemplate,
+				Doc:              "Generates *.py protobuf+gRPC artifacts using aspect based compilation",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "python_proto_library",
-				Kind:           "proto",
-				Implementation: pythonProtoLibraryRuleTemplate,
-				Usage:          pythonProtoLibraryUsageTemplate,
-				Example:        protoLibraryExampleTemplate,
-				Doc:            "Generates *.py protobuf library",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "python_proto_library",
+				Kind:             "proto",
+				Implementation:   pythonProtoLibraryRuleTemplate,
+				WorkspaceExample: pythonProtoLibraryWorkspaceTemplate,
+				BuildExample:     protoLibraryExampleTemplate,
+				Doc:              "Generates *.py protobuf library",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "python_grpc_library",
-				Kind:           "grpc",
-				Implementation: pythonGrpcLibraryRuleTemplate,
-				Usage:          pythonGrpcLibraryUsageTemplate,
-				Example:        grpcLibraryExampleTemplate,
-				Doc:            "Generates *.py protobuf+gRPC library",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "python_grpc_library",
+				Kind:             "grpc",
+				Implementation:   pythonGrpcLibraryRuleTemplate,
+				WorkspaceExample: pythonGrpcLibraryWorkspaceTemplate,
+				BuildExample:     grpcLibraryExampleTemplate,
+				Doc:              "Generates *.py protobuf+gRPC library",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 		},
 	}

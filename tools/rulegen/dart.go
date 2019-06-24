@@ -1,6 +1,6 @@
 package main
 
-var dartUsageTemplateString = `load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var dartWorkspaceTemplateString = `load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
 
@@ -19,9 +19,9 @@ load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_d
 
 dart_protoc_plugin_deps()`
 
-var dartProtoUsageTemplate = mustTemplate(dartUsageTemplateString)
+var dartProtoWorkspaceTemplate = mustTemplate(dartWorkspaceTemplateString)
 
-var dartGrpcLibraryUsageTemplate = mustTemplate(dartUsageTemplateString + `
+var dartGrpcWorkspaceTemplate = mustTemplate(dartWorkspaceTemplateString + `
 
 load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
 
@@ -71,42 +71,42 @@ func makeDart() *Language {
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
-				Name:           "dart_proto_compile",
-				Kind:           "proto",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//dart:dart"},
-				Usage:          dartProtoUsageTemplate,
-				Example:        protoCompileExampleTemplate,
-				Doc:            "Generates dart protobuf artifacts",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "dart_proto_compile",
+				Kind:             "proto",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//dart:dart"},
+				WorkspaceExample: dartProtoWorkspaceTemplate,
+				BuildExample:     protoCompileExampleTemplate,
+				Doc:              "Generates dart protobuf artifacts",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "dart_grpc_compile",
-				Kind:           "grpc",
-				Implementation: compileRuleTemplate,
-				Plugins:        []string{"//dart:grpc_dart"},
-				Usage:          dartProtoUsageTemplate,
-				Example:        grpcCompileExampleTemplate,
-				Doc:            "Generates dart protobuf+gRPC artifacts",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "dart_grpc_compile",
+				Kind:             "grpc",
+				Implementation:   compileRuleTemplate,
+				Plugins:          []string{"//dart:grpc_dart"},
+				WorkspaceExample: dartProtoWorkspaceTemplate,
+				BuildExample:     grpcCompileExampleTemplate,
+				Doc:              "Generates dart protobuf+gRPC artifacts",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "dart_proto_library",
-				Kind:           "proto",
+				Name:             "dart_proto_library",
+				Kind:             "proto",
 				Implementation: dartProtoLibraryRuleTemplate,
-				Usage:          dartProtoUsageTemplate,
-				Example:        protoLibraryExampleTemplate,
-				Doc:            "Generates dart protobuf library",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				WorkspaceExample: dartProtoWorkspaceTemplate,
+				BuildExample:     protoLibraryExampleTemplate,
+				Doc:              "Generates dart protobuf library",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 			&Rule{
-				Name:           "dart_grpc_library",
-				Kind:           "grpc",
-				Implementation: dartGrpcLibraryRuleTemplate,
-				Usage:          dartGrpcLibraryUsageTemplate,
-				Example:        grpcLibraryExampleTemplate,
-				Doc:            "Generates dart protobuf+gRPC library",
-				Attrs:          append(protoCompileAttrs, []*Attr{}...),
+				Name:             "dart_grpc_library",
+				Kind:             "grpc",
+				Implementation:   dartGrpcLibraryRuleTemplate,
+				WorkspaceExample: dartGrpcWorkspaceTemplate,
+				BuildExample:     grpcLibraryExampleTemplate,
+				Doc:              "Generates dart protobuf+gRPC library",
+				Attrs:            append(protoCompileAttrs, []*Attr{}...),
 			},
 		},
 	}
