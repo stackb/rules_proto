@@ -12,7 +12,7 @@ load(
 
 python_proto_aspect_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
-    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
+    provides = [ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
     attrs = dict(
         proto_compile_aspect_attrs,
@@ -32,7 +32,7 @@ _rule = rule(
         proto_compile_attrs,
         deps = attr.label_list(
             mandatory = True,
-            providers = [ProtoInfo, "proto_compile", ProtoLibraryAspectNodeInfo],
+            providers = [ProtoInfo, ProtoLibraryAspectNodeInfo],
             aspects = [python_proto_aspect_compile_aspect],
         ),
     ),

@@ -95,7 +95,7 @@ load(
 
 {{ .Rule.Name }}_aspect = aspect(
     implementation = proto_compile_aspect_impl,
-    provides = ["proto_compile", ProtoLibraryAspectNodeInfo],
+    provides = [ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
     attrs = dict(
         proto_compile_aspect_attrs,
@@ -115,7 +115,7 @@ _rule = rule(
         proto_compile_attrs,
         deps = attr.label_list(
             mandatory = True,
-            providers = [ProtoInfo, "proto_compile", ProtoLibraryAspectNodeInfo],
+            providers = [ProtoInfo, ProtoLibraryAspectNodeInfo],
             aspects = [{{ .Rule.Name }}_aspect],
         ),
     ),
