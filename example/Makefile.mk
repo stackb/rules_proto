@@ -327,118 +327,118 @@ swift_examples: swift_swift_proto_compile_example swift_swift_grpc_compile_examp
 
 gogo_gogo_proto_compile_example:
 	cd example/github.com/gogo/protobuf/gogo_proto_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogo_grpc_compile_example:
 	cd example/github.com/gogo/protobuf/gogo_grpc_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogo_proto_library_example:
 	cd example/github.com/gogo/protobuf/gogo_proto_library; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogo_grpc_library_example:
 	cd example/github.com/gogo/protobuf/gogo_grpc_library; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogofast_proto_compile_example:
 	cd example/github.com/gogo/protobuf/gogofast_proto_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogofast_grpc_compile_example:
 	cd example/github.com/gogo/protobuf/gogofast_grpc_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogofast_proto_library_example:
 	cd example/github.com/gogo/protobuf/gogofast_proto_library; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogofast_grpc_library_example:
 	cd example/github.com/gogo/protobuf/gogofast_grpc_library; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogofaster_proto_compile_example:
 	cd example/github.com/gogo/protobuf/gogofaster_proto_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogofaster_grpc_compile_example:
 	cd example/github.com/gogo/protobuf/gogofaster_grpc_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogofaster_proto_library_example:
 	cd example/github.com/gogo/protobuf/gogofaster_proto_library; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_gogofaster_grpc_library_example:
 	cd example/github.com/gogo/protobuf/gogofaster_grpc_library; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 gogo_examples: gogo_gogo_proto_compile_example gogo_gogo_grpc_compile_example gogo_gogo_proto_library_example gogo_gogo_grpc_library_example gogo_gogofast_proto_compile_example gogo_gogofast_grpc_compile_example gogo_gogofast_proto_library_example gogo_gogofast_grpc_library_example gogo_gogofaster_proto_compile_example gogo_gogofaster_grpc_compile_example gogo_gogofaster_proto_library_example gogo_gogofaster_grpc_library_example
 
 grpc-gateway_gateway_grpc_compile_example:
 	cd example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 grpc-gateway_gateway_swagger_compile_example:
 	cd example/github.com/grpc-ecosystem/grpc-gateway/gateway_swagger_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 grpc-gateway_gateway_grpc_library_example:
 	cd example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_library; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 grpc-gateway_examples: grpc-gateway_gateway_grpc_compile_example grpc-gateway_gateway_swagger_compile_example grpc-gateway_gateway_grpc_library_example
 
 grpc.js_closure_grpc_compile_example:
 	cd example/github.com/stackb/grpc.js/closure_grpc_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 grpc.js_closure_grpc_library_example:
 	cd example/github.com/stackb/grpc.js/closure_grpc_library; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 grpc.js_examples: grpc.js_closure_grpc_compile_example grpc.js_closure_grpc_library_example
 
 grpc-web_closure_grpc_compile_example:
 	cd example/github.com/grpc/grpc-web/closure_grpc_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 grpc-web_commonjs_grpc_compile_example:
 	cd example/github.com/grpc/grpc-web/commonjs_grpc_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 grpc-web_commonjs_dts_grpc_compile_example:
 	cd example/github.com/grpc/grpc-web/commonjs_dts_grpc_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 grpc-web_ts_grpc_compile_example:
 	cd example/github.com/grpc/grpc-web/ts_grpc_compile; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 grpc-web_closure_grpc_library_example:
 	cd example/github.com/grpc/grpc-web/closure_grpc_library; \
-	bazel build --disk_cache=../../bazel-disk-cache //... ; \
+	bazel build --disk_cache=../../../../bazel-disk-cache //... ; \
 	bazel shutdown
 
 grpc-web_examples: grpc-web_closure_grpc_compile_example grpc-web_commonjs_grpc_compile_example grpc-web_commonjs_dts_grpc_compile_example grpc-web_ts_grpc_compile_example grpc-web_closure_grpc_library_example

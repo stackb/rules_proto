@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"regexp"
 	"strings"
 
 	"github.com/urfave/cli"
@@ -454,10 +455,15 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 
 func mustWriteExamplesMakefile(dir string, languages []*Language) {
 	out := &LineWriter{}
+	slashRegex := regexp.MustCompile("/")
 
 	var allNames []string
 	for _, lang := range languages {
 		var langNames []string
+
+		// Calculate depth of lang dir
+		langDepth := len(slashRegex.FindAllStringIndex(lang.Dir, -1))
+
 		// Create rules for each example
 		for _, rule := range lang.Rules {
 			exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
@@ -467,7 +473,7 @@ func mustWriteExamplesMakefile(dir string, languages []*Language) {
 			langNames = append(langNames, name)
 			out.w("%s:", name)
 			out.w("	cd %s; \\", exampleDir)
-			out.w("	bazel build --disk_cache=../../bazel-disk-cache //... ; \\")
+			out.w("	bazel build --disk_cache=%s../../bazel-disk-cache //... ; \\", strings.Repeat("../", langDepth))
 			out.w("	bazel shutdown")
 			out.ln()
 		}
