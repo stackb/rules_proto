@@ -176,7 +176,7 @@ Each language `{lang}` has a top-level subdirectory that contains:
 3. `{lang}/BUILD.bazel`: contains `proto_plugin()` declarations for the available
    plugins for that language.
 
-4. `{lang}/example/{rule}/`: contains a generated `WORKSPACE` and `BUILD.bazel`
+4. `example/{lang}/{rule}/`: contains a generated `WORKSPACE` and `BUILD.bazel`
 demonstrating standalone usage.
 
 5. `{lang}/example/routeguide/`: routeguide example implementation, if possible.
