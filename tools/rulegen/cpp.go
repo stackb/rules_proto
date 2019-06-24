@@ -17,7 +17,7 @@ var cppProtoLibraryRuleTemplate = mustTemplate(cppLibraryRuleTemplateString + `
         name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
-            "//external:protobuf_clib",
+            "@com_google_protobuf//:protoc_lib",
         ],
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
@@ -29,9 +29,9 @@ var cppGrpcLibraryRuleTemplate = mustTemplate(cppLibraryRuleTemplateString + `
         name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
-            "//external:protobuf_clib",
+            "@com_google_protobuf//:protoc_lib",
             "@com_github_grpc_grpc//:grpc++",
-            "@com_github_grpc_grpc//:grpc++_reflection",
+            #"@com_github_grpc_grpc//:grpc++_reflection", # Disabled until fixed upstream
         ],
         # This seems magical to me.
         includes = [name_pb],
