@@ -421,7 +421,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 			out.w("  %s:", rule.Name)
 			out.w("    platform: ubuntu1604")
 			out.w("    build_targets:")
-			out.w(`      - "..."`)
+			out.w(`      - "//..."`)
 			out.w("    working_directory: %s", exampleDir)
 
 			if len(lang.PresubmitEnvVars) > 0 || len(rule.PresubmitEnvVars) > 0 {
@@ -443,7 +443,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 		out.w("    test_flags:")
 		out.w(`    - "--test_output=errors"`)
 		out.w("    test_targets:")
-		out.w(`      - "..."`)
+		out.w(`      - "//..."`)
 		out.w("    working_directory: %s", path.Join(dir, "test_workspaces", testWorkspace))
 	}
 
