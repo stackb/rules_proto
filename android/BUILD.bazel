@@ -1,10 +1,9 @@
 load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
-    name = "javalite",
+    name = "java",
     out = "{name}.jar",
     options = ["lite"],
-    tool = "@com_google_protobuf_lite//:protoc_gen_javalite",
     visibility = ["//visibility:public"],
 )
 
@@ -21,7 +20,7 @@ java_library(
     visibility = ["//visibility:public"],
     exports = [
         "@com_google_guava_guava_android//jar",
-        "@com_google_protobuf//:protobuf_java",
+        "@com_google_protobuf//:protobuf_javalite",
         "@javax_annotation_javax_annotation_api//jar",
     ],
 )

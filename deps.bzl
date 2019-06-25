@@ -56,7 +56,7 @@ def com_google_protobuf(**kwargs):
     name = "com_google_protobuf"
     ref = get_ref(name, "v3.8.0", kwargs)
     sha256 = get_sha256(name, "03d2e5ef101aee4c2f6ddcf145d2a04926b9c19e7086944df3842b1b8502b783", kwargs)
-    github_archive(name, "google", "protobuf", ref, sha256)
+    github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
     if "protobuf_clib" not in native.existing_rules():
         native.bind(
@@ -194,14 +194,6 @@ def io_bazel_rules_d(**kwargs):
     ref = get_ref(name, "99c22ceeac4b883f97b1a420f98d4540e47978ca", kwargs)
     sha256 = get_sha256(name, "ba8eb23c5753de0ba6e743e27e40f0eef1c3b08b3eaabd1bf782f87bca1ada2c", kwargs)
     github_archive(name, "bazelbuild", "rules_d", ref, sha256)
-
-def com_google_protobuf_lite(**kwargs):
-    """A different branch of google/protobuf that contains the protobuf_lite plugin
-    """
-    name = "com_google_protobuf_lite"
-    ref = get_ref(name, "3cf3be9959928bf8a7133d323eaf6a5a8d5afdd7", kwargs)  # latest as of Apr 9, 2019
-    sha256 = get_sha256(name, "9f28fd96ccd1f87e0b2d23c622db2a87c87ff91dc30dd13a6dd3bff11738e608", kwargs)
-    github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
 def rules_jvm_external(**kwargs):
     """Fetch maven artifacts
