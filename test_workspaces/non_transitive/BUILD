@@ -12,18 +12,18 @@ proto_library(
 proto_library(
     name = "layer_proto_lib",
     srcs = ["layer.proto"],
-    deps = ["base_proto_lib"]
+    deps = ["base_proto_lib"],
 )
 
 python_proto_library(
     name = "py_lib",
-    deps = ["layer_proto_lib"],
     transitive = False,
+    deps = ["layer_proto_lib"],
 )
 
 py_test(
     name = "test",
-    main = "main.py",
     srcs = ["main.py"],
+    main = "main.py",
     deps = ["py_lib"],
 )

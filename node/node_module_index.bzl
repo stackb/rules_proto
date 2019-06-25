@@ -7,6 +7,7 @@ NodeModuleIndexInfo = provider(fields = {
 
 def _get_js_variable_name(file):
     name = file.basename.rstrip(".js")
+
     # Deal with special characters here?
     return name
 

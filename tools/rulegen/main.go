@@ -385,7 +385,7 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 	// Write task for main code
 	//
 	out.w("  main:")
-	out.w("    name: build all")
+	out.w("    name: build & test all")
 	out.w("    platform: ubuntu1604")
 	out.w("    environment:")
 	out.w("      CC: clang")

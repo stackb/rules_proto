@@ -1,11 +1,9 @@
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
-
 load(
     "//:deps.bzl",
     "com_google_protobuf",
     "io_grpc_grpc_java",
 )
-
 load(
     "//protobuf:deps.bzl",
     "protobuf",

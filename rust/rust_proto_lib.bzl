@@ -48,7 +48,7 @@ rust_proto_lib = rule(
         ),
         "grpc": attr.bool(
             mandatory = True,
-        )
+        ),
     },
     output_to_genfiles = True,
 )

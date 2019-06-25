@@ -284,7 +284,7 @@ def proto_compile_impl(ctx):
             args = args,
             descriptor = descriptor,
         ),
-        DefaultInfo(files = depset(files))
+        DefaultInfo(files = depset(files)),
     ]
 
 

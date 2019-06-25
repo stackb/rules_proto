@@ -11,7 +11,7 @@ protoc_toolchain = rule(
             doc = "The protocol compiler tool",
             default = "@com_google_protobuf//:protoc",
             executable = True,
-            cfg = "host", # TODO: Change to exec when available
+            cfg = "host",  # TODO: Change to exec when available
         ),
     },
     provides = [platform_common.ToolchainInfo],

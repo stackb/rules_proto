@@ -6,7 +6,9 @@ local_repository(
 )
 
 load("@build_stack_rules_proto//python:deps.bzl", "python_grpc_library", "python_proto_library")
+
 python_grpc_library()
+
 python_proto_library()
 
 load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")

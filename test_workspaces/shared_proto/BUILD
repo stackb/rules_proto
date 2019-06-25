@@ -27,21 +27,24 @@ python_proto_library(
 
 py_test(
     name = "test_a",
-    main = "main.py",
     srcs = ["main.py"],
+    main = "main.py",
     deps = ["py_lib_a"],
 )
 
 py_test(
     name = "test_b",
-    main = "main.py",
     srcs = ["main.py"],
+    main = "main.py",
     deps = ["py_lib_b"],
 )
 
 py_test(
     name = "test_both",
-    main = "main.py",
     srcs = ["main.py"],
-    deps = ["py_lib_a", "py_lib_b"],
+    main = "main.py",
+    deps = [
+        "py_lib_a",
+        "py_lib_b",
+    ],
 )

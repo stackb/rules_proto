@@ -7,7 +7,7 @@ load("@build_stack_rules_proto//python:python_proto_library.bzl", "python_proto_
 proto_library(
     name = "proto_lib",
     srcs = ["demo.proto"],
-    proto_source_root = "package"
+    proto_source_root = "package",
 )
 
 python_proto_library(
@@ -17,7 +17,7 @@ python_proto_library(
 
 py_test(
     name = "test",
-    main = "main.py",
     srcs = ["main.py"],
+    main = "main.py",
     deps = ["py_lib"],
 )

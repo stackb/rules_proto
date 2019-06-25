@@ -1,5 +1,4 @@
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
-
 load(
     "//:deps.bzl",
     "build_bazel_rules_android",
