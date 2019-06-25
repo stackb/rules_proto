@@ -1,6 +1,8 @@
 ---
 tasks:
-  ubuntu1604:
+  main:
+    name: build & test all
+    platform: ubuntu1604
     environment:
       CC: clang
     test_flags:

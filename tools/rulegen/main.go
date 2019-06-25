@@ -45,16 +45,6 @@ func main() {
 			Value: "tools/rulegen/travis.footer.yml",
 		},
 		&cli.StringFlag{
-			Name:  "presubmit_header",
-			Usage: "Template for the bazelci presubmit header",
-			Value: "tools/rulegen/presubmit.header.yml",
-		},
-		&cli.StringFlag{
-			Name:  "presubmit_footer",
-			Usage: "Template for the bazelci presubmit footer",
-			Value: "tools/rulegen/presubmit.footer.yml",
-		},
-		&cli.StringFlag{
 			Name:  "ref",
 			Usage: "Version ref to use for main readme",
 			Value: "{GIT_COMMIT_ID}",
@@ -141,7 +131,7 @@ func action(c *cli.Context) error {
 	// 	Sha256: sha256,
 	// }, languages, []string{})
 
-	mustWriteBazelciPresubmitYml(dir, c.String("presubmit_header"), c.String("presubmit_footer"), struct {
+	mustWriteBazelciPresubmitYml(dir, struct {
 		Ref, Sha256 string
 	}{
 		Ref:    ref,
@@ -384,15 +374,19 @@ func mustWriteTravisYml(dir, header, footer string, data interface{}, languages 
 }
 
 
-func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, languages []*Language, envVars []string) {
+func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Language, envVars []string) {
 	out := &LineWriter{}
 
-	out.tpl(header, data)
+	// Write header
+	out.w("---")
+	out.w("tasks:")
 
 	//
-	// First time around for main code
+	// Write task for main code
 	//
-	out.w("  ubuntu1604:")
+	out.w("  main:")
+	out.w("    name: build all")
+	out.w("    platform: ubuntu1604")
 	out.w("    environment:")
 	out.w("      CC: clang")
 	out.w("    test_flags:")
@@ -408,7 +402,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	}
 
 	//
-	// Second time around for examples
+	// Write tasks for examples
 	//
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {
@@ -449,8 +443,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 		out.w("    working_directory: %s", path.Join(dir, "test_workspaces", testWorkspace))
 	}
 
-	out.tpl(footer, data)
-
+	out.ln()
 	out.MustWrite(path.Join(dir, ".bazelci", "presubmit.yml"))
 }
 
