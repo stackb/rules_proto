@@ -418,7 +418,8 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 
 			exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
 
-			out.w("  %s:", rule.Name)
+			out.w("  %s_%s:", lang.Name, rule.Name)
+			out.w("    name: '%s: %s'", lang.Name, rule.Name)
 			out.w("    platform: ubuntu1604")
 			out.w("    build_targets:")
 			out.w(`      - "//..."`)
@@ -439,6 +440,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	// Add test workspaces
 	for _, testWorkspace := range findTestWorkspaceNames(dir) {
 		out.w("  test_workspace_%s:", testWorkspace)
+		out.w("    name: 'test workspace: %s'", testWorkspace)
 		out.w("    platform: ubuntu1604")
 		out.w("    test_flags:")
 		out.w(`    - "--test_output=errors"`)
