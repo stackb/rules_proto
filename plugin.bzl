@@ -1,38 +1,41 @@
 ProtoPluginInfo = provider(fields = {
-    "name": "proto plugin name",
-    "outputs": "outputs to be generated",
-    "tool": "plugin tool",
-    "executable": "plugin tool executable",
-    "options": "proto options",
-    "out": "aggregate proto output",
-    "outdir": "whether to use the package output dir",
-    "data": "additional data",
-    "transitivity": "transitivity properties",
+    "name": "The proto plugin name",
+    "options": "A list of options to pass to the compiler for this plugin",
+    "outputs": "Output filenames generated on a per-proto basis. Example: '{basename}_pb2.py",
+    "out": "Output filename generated on a per-plugin basis; to be used in the value for --NAME-out=OUT",
+    "outdir": "If present, overrides the file.path from out; to be used in the value for --NAME-out=OUT",
+    "tool": "The plugin binary. If absent, it is assumed the plugin is built-in to protoc itself",
+    "tool_executable": "The plugin binary executable. If absent, it is assumed the plugin is built-in to protoc itself",
+    "transitivity": "Transitive exclusions. When the compile.bzl 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
+    "data": "Additional files required for running the plugin",
 })
 
 
 def _proto_plugin_impl(ctx):
-    return [ProtoPluginInfo(
-        data = ctx.files.data,
-        executable = ctx.executable.tool,
-        name = ctx.label.name,
-        options = ctx.attr.options,
-        out = ctx.attr.out,
-        outdir = ctx.attr.outdir,
-        outputs = ctx.attr.outputs,
-        tool = ctx.attr.tool,
-        transitivity = ctx.attr.transitivity,
-    )]
+    # Build ProtoPluginInfo provider
+    return [
+        ProtoPluginInfo(
+            name = ctx.attr.name,
+            options = ctx.attr.options,
+            outputs = ctx.attr.outputs,
+            out = ctx.attr.out,
+            outdir = ctx.attr.outdir,
+            tool = ctx.attr.tool,
+            tool_executable = ctx.executable.tool,
+            transitivity = ctx.attr.transitivity,
+            data = ctx.files.data,
+        )
+    ]
 
 
 proto_plugin = rule(
     implementation = _proto_plugin_impl,
     attrs = {
         "options": attr.string_list(
-            doc = "An list of options to pass to the compiler.",
+            doc = "A list of options to pass to the compiler for this plugin",
         ),
         "outputs": attr.string_list(
-            doc = "Output filenames generated on a per-proto basis.  Example: '{basename}_pb2.py'",
+            doc = "Output filenames generated on a per-proto basis. Example: '{basename}_pb2.py'",
         ),
         "out": attr.string(
             doc = "Output filename generated on a per-plugin basis; to be used in the value for --NAME-out=OUT",
@@ -41,16 +44,16 @@ proto_plugin = rule(
             doc = "If present, overrides the file.path from out; to be used in the value for --NAME-out=OUT",
         ),
         "tool": attr.label(
-            doc = "The plugin binary.  If absent, assume the plugin is a built-in to protoc itself",
+            doc = "The plugin binary. If absent, it is assumed the plugin is built-in to protoc itself",
             cfg = "host",
             allow_files = True,
             executable = True,
         ),
         "transitivity": attr.string_dict(
-            doc = "Transitive exclusions.  When the compile.bzl 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
+            doc = "Transitive exclusions. When the compile.bzl 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
         ),
         "data": attr.label_list(
-            doc = "Additional files that should travel with the plugin",
+            doc = "Additional files required for running the plugin",
             allow_files = True,
         ),
     },
