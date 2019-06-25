@@ -100,69 +100,22 @@ def proto_compile_impl(ctx):
 
 
 proto_compile_attrs = {
-    # "plugins": attr.label_list(
-    #     doc = "List of protoc plugins to apply",
-    #     providers = [ProtoPluginInfo],
-    #     mandatory = True,
-    # ),
-    "plugin_options": attr.string_list(
-        doc = "List of additional 'global' options to add (applies to all plugins)",
-    ),
-    "plugin_options_string": attr.string(
-        doc = "(internal) List of additional 'global' options to add (applies to all plugins)",
-    ),
-    "outputs": attr.output_list(
-        doc = "Escape mechanism to explicitly declare files that will be generated",
-    ),
-    "has_services": attr.bool(
-        doc = "If the proto files(s) have a service rpc, generate grpc outputs",
-    ),
-    # "protoc": attr.label(
-    #     doc = "The protoc tool",
-    #     default = "@com_google_protobuf//:protoc",
-    #     cfg = "host",
-    #     executable = True,
-    # ),
     "verbose": attr.int(
-        doc = "Increase verbose level for more debugging",
+        doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
     ),
     "verbose_string": attr.string(
-        doc = "Increase verbose level for more debugging",
-    ),
-    # "include_imports": attr.bool(
-    #     doc = "Pass the --include_imports argument to the protoc_plugin",
-    #     default = True,
-    # ),
-    # "include_source_info": attr.bool(
-    #     doc = "Pass the --include_source_info argument to the protoc_plugin",
-    #     default = True,
-    # ),
-    "transitive": attr.bool(
-        doc = "Emit transitive artifacts",
-    ),
-    "transitivity": attr.string_dict(
-        doc = "Transitive rules.  When the 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
+        doc = "String version of the verbose string, used for aspect",
+        default = "0",
     ),
 }
 
 
 proto_compile_aspect_attrs = {
     "verbose_string": attr.string(
-        doc = "Increase verbose level for more debugging",
+        doc = "String version of the verbose string, used for aspect",
         values = ["", "None", "0", "1", "2", "3", "4"],
+        default = "0",
     ),
-    # "plugin_options": attr.string_list(
-    #     doc = "List of additional 'global' options to add (applies to all plugins)",
-    # ),
-    # "outputs": attr.output_list(
-    #     doc = "Escape mechanism to explicitly declare files that will be generated",
-    # ),
-    # "transitive": attr.bool(
-    #     doc = "Emit transitive artifacts",
-    # ),
-    # "transitivity": attr.string_dict(
-    #     doc = "Transitive rules.  When the 'transitive' property is enabled, this string_dict can be used to exclude protos from the compilation list",
-    # ),
 }
 
 
@@ -182,9 +135,11 @@ def proto_compile_aspect_impl(target, ctx):
     # verbose = ctx.attr.verbose
     verbose = get_int_attr(ctx.attr, "verbose_string")  # DIFFERENT
 
-    # <File> the protoc tool
-    # protoc = ctx.executable.protoc
-    protoc = node.executable._proto_compiler  # DIFFERENT
+    # <struct> The resolved protoc toolchain
+    protoc_toolchain_info = ctx.toolchains["@build_stack_rules_proto//protobuf:toolchain_type"]
+
+    # <Target> The resolved protoc compiler from the protoc toolchain
+    protoc = protoc_toolchain_info.protoc_executable
 
     # <File> for the output descriptor.  Often used as the sibling in
     # 'declare_file' actions.
