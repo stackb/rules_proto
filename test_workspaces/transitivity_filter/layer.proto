@@ -1,5 +1,0 @@
-syntax = "proto3";
-
-message layer {
-    bool field = 1;
-}

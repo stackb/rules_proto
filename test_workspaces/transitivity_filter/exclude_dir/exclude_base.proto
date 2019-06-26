@@ -1,5 +1,0 @@
-syntax = "proto3";
-
-message exclude_base {
-    bool field = 1;
-}

@@ -453,14 +453,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/github.com/grpc/grpc-web/closure_grpc_library
-  test_workspace_non_transitive:
-    name: 'test workspace: non_transitive'
-    platform: ubuntu1604
-    test_flags:
-    - "--test_output=errors"
-    test_targets:
-      - "//..."
-    working_directory: test_workspaces/non_transitive
   test_workspace_proto_source_root:
     name: 'test workspace: proto_source_root'
     platform: ubuntu1604
@@ -485,11 +477,3 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/strip_import_prefix
-  test_workspace_transitivity_filter:
-    name: 'test workspace: transitivity_filter'
-    platform: ubuntu1604
-    test_flags:
-    - "--test_output=errors"
-    test_targets:
-      - "//..."
-    working_directory: test_workspaces/transitivity_filter

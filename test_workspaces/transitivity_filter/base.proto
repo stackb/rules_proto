@@ -1,5 +1,0 @@
-syntax = "proto3";
-
-message base {
-    bool field = 1;
-}
