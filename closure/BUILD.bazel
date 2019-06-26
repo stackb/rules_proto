@@ -2,13 +2,13 @@ load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "js",
-    outputs = [".js"],
+    outputs = ["{basename}.js"],
     options = [
         "import_style=closure",
         "binary",
         "error_on_name_conflict",
         "add_require_for_enums",
-        "library={name}",
+        #"library={name}",
     ],
     visibility = ["//visibility:public"],
 )
