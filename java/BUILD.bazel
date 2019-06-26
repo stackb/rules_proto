@@ -9,7 +9,7 @@ proto_plugin(
 # TODO: look into the "enable_deprecated" plugin option.
 proto_plugin(
     name = "grpc_java",
-    out = "{name}.jar",
+    out = "{name}_grpc.jar",
     tool = "@io_grpc_grpc_java//compiler:grpc_java_plugin",
     visibility = ["//visibility:public"],
 )

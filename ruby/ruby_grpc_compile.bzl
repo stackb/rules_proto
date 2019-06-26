@@ -47,6 +47,6 @@ _rule = rule(
 # Create macro for converting attrs and passing to compile
 def ruby_grpc_compile(**kwargs):
     _rule(
-        verbose_string = "%s" % kwargs.get("verbose", 0),
+        verbose_string = "{}".format(kwargs.get("verbose", 0)),
         **kwargs
     )
