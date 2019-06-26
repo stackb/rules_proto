@@ -2,7 +2,7 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 load(
     "//:common.bzl",
     "ProtoCompileInfo",
-    "apply_plugin_transitivity_rules",
+    "apply_plugin_exclusion_rules",
     "copy_jar_to_srcjar",
     "copy_proto",
     "get_output_filename",
@@ -27,9 +27,7 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
     """
 
     arg = outdir
-    if plugin.outdir:
-        arg = plugin.outdir.replace("{name}", outdir)
-    elif plugin.out:
+    if plugin.out:
         outfile = plugin_outfiles[plugin.name]
         arg = outfile.path
 
@@ -44,7 +42,7 @@ def get_plugin_out_arg(ctx, outdir, plugin, plugin_outfiles):
     return "--%s_out=%s" % (plugin.name, arg)
 
 
-def get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
+def get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin, proto_info):
     """Get the predicted generated outputs for a given plugin
 
     Args:
@@ -59,7 +57,7 @@ def get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin):
       <list<Generated File>> the augmented list of files that will be generated
     """
     for output in plugin.outputs:
-        filename = get_output_filename(src, plugin, output)
+        filename = get_output_filename(src, output, proto_info)
         if not filename:
             continue
         sibling = get_output_sibling_file(output, proto, descriptor)
@@ -143,8 +141,8 @@ def proto_compile_impl(ctx):
     # post-process them to have a 'srcjar' extension (java_library rules don't
     # accept source jars with a 'jar' extension)
     for plugin in plugins:
-        if plugin.executable:
-            plugin_tools[plugin.name] = plugin.executable
+        if plugin.tool_executable:
+            plugin_tools[plugin.name] = plugin.tool_executable
         data += plugin.data + get_plugin_runfiles(plugin.tool)
 
         filename = get_plugin_out(ctx.label.name, plugin)
@@ -197,14 +195,14 @@ def proto_compile_impl(ctx):
     # might be incompatible with the plugin transitivity rules.
     if ctx.attr.transitive:
         for plugin in plugins:
-            targets = apply_plugin_transitivity_rules(ctx, targets, plugin)
+            targets = apply_plugin_exclusion_rules(ctx, targets, plugin)
 
     ###
     ### Part 3c: collect generated artifacts for all in the target list of protos to compile
     ###
     for src, proto in targets.items():
         for plugin in plugins:
-            outputs = get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin)
+            outputs = get_plugin_outputs(ctx, descriptor, outputs, src, proto, plugin, deps[0])
 
     ###
     ### Part 4: build list of arguments for protoc

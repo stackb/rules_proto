@@ -223,8 +223,8 @@ def get_plugin_options(label_name, options):
     return [get_plugin_option(label_name, option) for option in options]
 
 
-def apply_plugin_transitivity_rules(ctx, targets, plugin):
-    """Process the proto target list according to plugin transitivity rules
+def apply_plugin_exclusion_rules(ctx, targets, plugin):
+    """Process the proto target list according to plugin exclusion rules
 
     Args:
       ctx: the <ctx> object
@@ -235,43 +235,16 @@ def apply_plugin_transitivity_rules(ctx, targets, plugin):
       <list<File>> the possibly filtered list of .proto <File>s
     """
 
-    # Iterate transitivity rules like '{ "google/protobuf": "exclude" }'. The
-    # only rule type implemented is "exclude", which checks if the pathname or
-    # dirname ends with the given pattern.  If so, remove that item in the
-    # targets list.
-    #
-    # Why does this feature exist?  Well, library rules like C# require all the
-    # proto files to be present during the compilation (collected via transitive
-    # sources).  However, since the well-known types are already present in the
-    # library dependencies, we don't actually want to compile well-known types
-    # (but do want to compile everything else).
-    #
-    transitivity = {}
-    transitivity.update(plugin.transitivity)
-    transitivity.update(ctx.attr.transitivity)
-
-    for pattern, rule in transitivity.items():
-        if rule == "exclude":
-            for key, target in targets.items():
+    for pattern in plugin.exclusions:
+        for key, target in targets.items():
+            if ctx.attr.verbose > 2:
+                print("Checking '{}' endswith '{}'".format(target.short_path, pattern))
+            if target.dirname.endswith(pattern) or target.path.endswith(pattern):
+                targets.pop(key)
                 if ctx.attr.verbose > 2:
-                    print("Checking '{}' endswith '{}'".format(target.short_path, pattern))
-                if target.dirname.endswith(pattern) or target.path.endswith(pattern):
-                    targets.pop(key)
-                    if ctx.attr.verbose > 2:
-                        print("Removing '{}' from the list of files to compile as plugin '{}' excluded it".format(target.short_path, plugin.name))
-                elif ctx.attr.verbose > 2:
-                    print("Keeping '{}' (not excluded)".format(target.short_path))
-        elif rule == "include":
-            for key, target in targets.items():
-                if target.dirname.endswith(pattern) or target.path.endswith(pattern):
-                    if ctx.attr.verbose > 2:
-                        print("Keeping '{}' (explicitly included)".format(target.short_path))
-                else:
-                    targets.pop(key)
-                    if ctx.attr.verbose > 2:
-                        print("Removing '{}' from the list of files to compile as plugin '{}' did not include it".format(target.short_path, plugin.name))
-        else:
-            fail("Unknown transitivity rule '{}'".format(rule))
+                    print("Removing '{}' from the list of files to compile as plugin '{}' excluded it".format(target.short_path, plugin.name))
+            elif ctx.attr.verbose > 2:
+                print("Keeping '{}' (not excluded)".format(target.short_path))
     return targets
 
 
