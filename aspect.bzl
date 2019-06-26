@@ -5,7 +5,6 @@ load(
     "copy_file",
     "get_int_attr",
     "get_output_filename",
-    "get_plugin_options",
     "descriptor_proto_path",
 )
 
@@ -242,7 +241,9 @@ def proto_compile_aspect_impl(target, ctx):
         # Add plugin out arg
         out_arg = out_file.path if out_file else full_outdir
         if plugin.options:
-            out_arg = "{}:{}".format(",".join(get_plugin_options(ctx.label.name, plugin.options)), out_arg)
+            out_arg = "{}:{}".format(",".join(
+                [option.replace("{name}", ctx.label.name) for option in plugin.options]
+            ), out_arg)
         args.add("--{}_out={}".format(plugin.name, out_arg))
 
         # Add source proto files as descriptor paths

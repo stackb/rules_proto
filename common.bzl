@@ -103,13 +103,6 @@ def get_int_attr(attr, name):
     return int(value)
 
 
-def get_string_list_attr(attr, name):
-    value = getattr(attr, name, "")
-    if value == "":
-        return []
-    return value.split(";")
-
-
 def get_output_sibling_file(pattern, proto, descriptor):
     """Get the correct place to
 
