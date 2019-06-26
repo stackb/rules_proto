@@ -77,7 +77,12 @@ def proto_compile_aspect_impl(target, ctx):
     rel_outdir = '{}/{}_verb{}'.format(ctx.label.name, ctx.attr._prefix, verbose)
 
     # <string> The full path to the directory where the outputs will be generated
-    full_outdir = "{}/{}/{}/{}".format(ctx.bin_dir.path, ctx.label.workspace_root, ctx.label.package, rel_outdir)
+    full_outdir = ctx.bin_dir.path + '/'
+    if ctx.label.workspace_root:
+        full_outdir += ctx.label.workspace_root + '/'
+    if ctx.label.package:
+        full_outdir += ctx.label.package + '/'
+    full_outdir += rel_outdir
 
     # <list<PluginInfo>> A list of PluginInfo providers for the requested
     # plugins
