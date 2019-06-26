@@ -207,12 +207,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/php/php_proto_compile
-  php_php_grpc_compile:
-    name: 'php: php_grpc_compile'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/php/php_grpc_compile
   python_python_proto_compile:
     name: 'python: python_proto_compile'
     platform: ubuntu1604
