@@ -100,23 +100,23 @@ func addGogoRules(language *Language, base string) {
 			Name:             base + "_proto_compile",
 			Base:             base,
 			Kind:             "proto",
-			Implementation:   goCompileRuleTemplate,
+			Implementation:   aspectRuleTemplate,
 			Plugins:          []string{protoPlugin},
 			WorkspaceExample: goWorkspaceTemplate,
 			BuildExample:     protoCompileExampleTemplate,
 			Doc:              fmt.Sprintf("Generates %s protobuf artifacts", base),
-			Attrs:            append(protoCompileAttrs, goProtoAttrs...),
+			Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
 		},
 		&Rule{
 			Name:             base + "_grpc_compile",
 			Base:             base,
 			Kind:             "grpc",
-			Implementation:   goCompileRuleTemplate,
+			Implementation:   aspectRuleTemplate,
 			Plugins:          []string{grpcPlugin},
 			WorkspaceExample: goWorkspaceTemplate,
 			BuildExample:     grpcCompileExampleTemplate,
 			Doc:              fmt.Sprintf("Generates %s protobuf+gRPC artifacts", base),
-			Attrs:            append(protoCompileAttrs, goProtoAttrs...),
+			Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
 		},
 
 		&Rule{
@@ -127,7 +127,7 @@ func addGogoRules(language *Language, base string) {
 			WorkspaceExample: goWorkspaceTemplate,
 			BuildExample:     gogoProtoLibraryExampleTemplate,
 			Doc:              fmt.Sprintf("Generates %s protobuf library", base),
-			Attrs:            append(protoCompileAttrs, goProtoAttrs...),
+			Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
 		},
 		&Rule{
 			Name:             base + "_grpc_library",
@@ -137,7 +137,7 @@ func addGogoRules(language *Language, base string) {
 			WorkspaceExample: goWorkspaceTemplate,
 			BuildExample:     goGrpcLibraryExampleTemplate,
 			Doc:              fmt.Sprintf("Generates %s protobuf+gRPC library", base),
-			Attrs:            append(protoCompileAttrs, goProtoAttrs...),
+			Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
 		},
 	)
 }
