@@ -3,8 +3,8 @@ load("//:plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "cpp",
     outputs = [
-        "{basename}.pb.h",
-        "{basename}.pb.cc",
+        "{protopath}.pb.h",
+        "{protopath}.pb.cc",
     ],
     visibility = ["//visibility:public"],
 )
@@ -15,9 +15,9 @@ proto_plugin(
         "generate_mock_code=true",
     ],
     outputs = [
-        "{basename}.grpc.pb.h",
-        "{basename}.grpc.pb.cc",
-        "{basename}_mock.grpc.pb.h",
+        "{protopath}.grpc.pb.h",
+        "{protopath}.grpc.pb.cc",
+        "{protopath}_mock.grpc.pb.h",
     ],
     tool = "@com_github_grpc_grpc//:grpc_cpp_plugin",
     visibility = ["//visibility:public"],

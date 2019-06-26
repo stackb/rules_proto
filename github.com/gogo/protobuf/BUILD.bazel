@@ -2,7 +2,7 @@ load("//:plugin.bzl", "proto_plugin")
 
 [proto_plugin(
     name = name,
-    outputs = [".pb.go"],
+    outputs = ["{protopath}.pb.go"],
     tool = "@com_github_gogo_protobuf//protoc-gen-" + name,
     exclusions = [
         "google/protobuf",
@@ -19,7 +19,7 @@ load("//:plugin.bzl", "proto_plugin")
 [proto_plugin(
     name = "grpc_" + name,
     options = ["plugins=grpc"],
-    outputs = [".pb.go"],
+    outputs = ["{protopath}.pb.go"],
     tool = "@com_github_gogo_protobuf//protoc-gen-" + name,
     exclusions = [
         "google/protobuf",
