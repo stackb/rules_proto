@@ -302,10 +302,10 @@ def get_output_filename(src_file, pattern, proto_info):
     elif "{basename|pascal}" in pattern:
         filename = pattern.replace("{basename|pascal}", pascal_case(basename))
     elif "{protopath|pascal}" in pattern:
-        filename = pattern.replace("{protopath|pascal}", "/".join(
+        filename = pattern.replace("{protopath|pascal}", "/".join([
             protopath_partitions[0],
-            pascal_case(protopath_partitions[1])
-        ))
+            pascal_case(protopath_partitions[2])
+        ]))
     elif "{basename|python}" in pattern:
         filename = pattern.replace("{basename|python}", python_path(basename))
     elif "{protopath|python}" in pattern:
@@ -317,10 +317,10 @@ def get_output_filename(src_file, pattern, proto_info):
     elif "{basename|pascal|objc}" in pattern:
         filename = pattern.replace("{basename|pascal|objc}", pascal_objc(basename))
     elif "{protopath|pascal|objc}" in pattern:
-        filename = pattern.replace("{protopath|pascal|objc}", "/".join(
+        filename = pattern.replace("{protopath|pascal|objc}", "/".join([
             protopath_partitions[0],
-            pascal_objc(protopath_partitions[1])
-        ))
+            pascal_objc(protopath_partitions[2])
+        ]))
     elif "{basename|rust_keyword}" in pattern:
         filename = pattern.replace("{basename|rust_keyword}", rust_keyword(basename))
     elif "{protopath|rust_keyword}" in pattern:
