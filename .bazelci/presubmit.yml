@@ -249,18 +249,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/ruby/ruby_grpc_compile
-  ruby_ruby_proto_aspect_compile:
-    name: 'ruby: ruby_proto_aspect_compile'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/ruby/ruby_proto_aspect_compile
-  ruby_ruby_grpc_aspect_compile:
-    name: 'ruby: ruby_grpc_aspect_compile'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/ruby/ruby_grpc_aspect_compile
   ruby_ruby_proto_library:
     name: 'ruby: ruby_proto_library'
     platform: ubuntu1604

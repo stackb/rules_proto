@@ -129,7 +129,7 @@ func makePython() *Language {
 				WorkspaceExample: pythonProtoLibraryWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates *.py protobuf library",
-				Attrs:            protoCompileAttrs,
+				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
 				Name:             "python_grpc_library",
@@ -138,7 +138,7 @@ func makePython() *Language {
 				WorkspaceExample: pythonGrpcLibraryWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates *.py protobuf+gRPC library",
-				Attrs:            protoCompileAttrs,
+				Attrs:            aspectProtoCompileAttrs,
 			},
 		},
 	}
