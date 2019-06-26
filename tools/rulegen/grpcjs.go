@@ -86,12 +86,12 @@ func makeGrpcJs() *Language {
 			&Rule{
 				Name:             "closure_grpc_compile",
 				Kind:             "grpc",
-				Implementation:   compileRuleTemplate,
+				Implementation:   aspectRuleTemplate,
 				Plugins:          []string{"//github.com/stackb/grpc.js:grpc.js"},
 				WorkspaceExample: grpcjsWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
 				Doc:              "Generates protobuf closure grpc *.js files",
-				Attrs:            append(protoCompileAttrs, []*Attr{}...),
+				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
 				Name:             "closure_grpc_library",
@@ -100,7 +100,7 @@ func makeGrpcJs() *Language {
 				WorkspaceExample: grpcjsLibraryWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates protobuf closure library *.js files",
-				Attrs:            append(protoCompileAttrs, []*Attr{}...),
+				Attrs:            aspectProtoCompileAttrs,
 			},
 		},
 	}
