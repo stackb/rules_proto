@@ -54,20 +54,6 @@ var protoCompileAttrs = []*Attr{
 		Doc:       "Pass the --include_source_info argument to the protoc_plugin",
 		Mandatory: false,
 	},
-	&Attr{
-		Name:      "transitive",
-		Type:      "bool",
-		Default:   "True",
-		Doc:       "Generate outputs for both *.proto directly named in `deps` AND all their transitive proto_library dependencies",
-		Mandatory: false,
-	},
-    &Attr{
-		Name:      "transitivity",
-		Type:      "string_dict",
-        Default:   "{}",
-		Doc:       "Transitive filters to apply when the 'transitive' property is enabled. This string_dict can be used to exclude or explicitly include protos from the compilation list by using `exclude` or `include` respectively as the dict value",
-		Mandatory: false,
-	},
 }
 
 

@@ -4,8 +4,8 @@ proto_plugin(
     name = "grpc.js",
     outputs = [".grpc.js"],
     tool = "@com_github_stackb_grpc_js//protoc-gen-grpc-js",
-    transitivity = {
-        "google/protobuf": "exclude",
-    },
+    exclusions = [
+        "google/protobuf",
+    ],
     visibility = ["//visibility:public"],
 )

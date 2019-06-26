@@ -4,9 +4,9 @@ load("//:plugin.bzl", "proto_plugin")
     name = name,
     outputs = [".pb.go"],
     tool = "@com_github_gogo_protobuf//protoc-gen-" + name,
-    transitivity = {
-        "google/protobuf": "exclude",
-    },
+    exclusions = [
+        "google/protobuf",
+    ],
     visibility = ["//visibility:public"],
 ) for name in [
     "gogo",
@@ -21,9 +21,9 @@ load("//:plugin.bzl", "proto_plugin")
     options = ["plugins=grpc"],
     outputs = [".pb.go"],
     tool = "@com_github_gogo_protobuf//protoc-gen-" + name,
-    transitivity = {
-        "google/protobuf": "exclude",
-    },
+    exclusions = [
+        "google/protobuf",
+    ],
     visibility = ["//visibility:public"],
 ) for name in [
     "gogo",

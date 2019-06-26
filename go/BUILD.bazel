@@ -5,9 +5,9 @@ proto_plugin(
     options = ["paths=source_relative"],
     outputs = [".pb.go"],
     tool = "@com_github_golang_protobuf//protoc-gen-go",
-    transitivity = {
-        "google/protobuf": "exclude",
-    },
+    exclusions = [
+        "google/protobuf",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -19,8 +19,8 @@ proto_plugin(
     ],
     outputs = [".pb.go"],
     tool = "@com_github_golang_protobuf//protoc-gen-go",
-    transitivity = {
-        "google/protobuf": "exclude",
-    },
+    exclusions = [
+        "google/protobuf",
+    ],
     visibility = ["//visibility:public"],
 )

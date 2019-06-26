@@ -3,9 +3,9 @@ load("//:plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "python",
     outputs = ["_pb2.py"],
-    transitivity = {
-        "google/protobuf": "exclude",
-    },
+    exclusions = [
+        "google/protobuf",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -13,8 +13,8 @@ proto_plugin(
     name = "grpc_python",
     outputs = ["_pb2_grpc.py"],
     tool = "@com_github_grpc_grpc//:grpc_python_plugin",
-    transitivity = {
-        "google/protobuf": "exclude",
-    },
+    exclusions = [
+        "google/protobuf",
+    ],
     visibility = ["//visibility:public"],
 )

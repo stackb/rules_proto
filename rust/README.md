@@ -60,8 +60,6 @@ rust_proto_compile(
 | verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `True`    | Generate outputs for both *.proto directly named in `deps` AND all their transitive proto_library dependencies          |
-| transitivity   | `string_dict` | `{}`    | Transitive filters to apply when the 'transitive' property is enabled. This string_dict can be used to exclude or explicitly include protos from the compilation list by using `exclude` or `include` respectively as the dict value          |
 
 ---
 
@@ -116,8 +114,6 @@ rust_grpc_compile(
 | verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `True`    | Generate outputs for both *.proto directly named in `deps` AND all their transitive proto_library dependencies          |
-| transitivity   | `string_dict` | `{}`    | Transitive filters to apply when the 'transitive' property is enabled. This string_dict can be used to exclude or explicitly include protos from the compilation list by using `exclude` or `include` respectively as the dict value          |
 
 ---
 
@@ -172,8 +168,6 @@ rust_proto_library(
 | verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `True`    | Generate outputs for both *.proto directly named in `deps` AND all their transitive proto_library dependencies          |
-| transitivity   | `string_dict` | `{}`    | Transitive filters to apply when the 'transitive' property is enabled. This string_dict can be used to exclude or explicitly include protos from the compilation list by using `exclude` or `include` respectively as the dict value          |
 
 ---
 
@@ -228,5 +222,3 @@ rust_grpc_library(
 | verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | include_imports   | `bool` | `True`    | Pass the --include_imports argument to the protoc_plugin          |
 | include_source_info   | `bool` | `True`    | Pass the --include_source_info argument to the protoc_plugin          |
-| transitive   | `bool` | `True`    | Generate outputs for both *.proto directly named in `deps` AND all their transitive proto_library dependencies          |
-| transitivity   | `string_dict` | `{}`    | Transitive filters to apply when the 'transitive' property is enabled. This string_dict can be used to exclude or explicitly include protos from the compilation list by using `exclude` or `include` respectively as the dict value          |

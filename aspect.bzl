@@ -93,8 +93,8 @@ def proto_compile_aspect_impl(target, ctx):
     ###
 
     # Each plugin is isolated to its own execution of protoc, as plugins may
-    # have differing transitivity exclusions that cannot be expressed in a
-    # single protoc execution for all plugins
+    # have differing exclusions that cannot be expressed in a single protoc
+    # execution for all plugins
 
     for plugin in plugins:
 
@@ -119,24 +119,24 @@ def proto_compile_aspect_impl(target, ctx):
 
 
         ###
-        ### Part 2.2: gather proto files and filter by transitivity
+        ### Part 2.2: gather proto files and filter by exclusions
         ###
 
         # <list<File>> The filtered set of .proto files to compile
         protos = []
 
         for proto in proto_info.direct_sources:
-            # Check transitivity for exclusion
+            # Check for exclusion
             if any([
-                proto.dirname.endswith(trans_pattern) or proto.path.endswith(trans_pattern)
-                for trans_pattern, trans_type in plugin.transitivity.items() if trans_type == 'exclude'
+                proto.dirname.endswith(exclusion) or proto.path.endswith(exclusion)
+                for exclusion in plugin.exclusions
             ]):
                 continue
 
             # Proto not excluded
             protos.append(proto)
 
-        # Skip plugin if all proto files have been excluded by transitivity
+        # Skip plugin if all proto files have now been excluded
         if len(protos) == 0:
             if verbose > 2:
                 print('Skipping plugin "{}" for "{}" as all proto files have been excluded'.format(plugin.name, ctx.label))
