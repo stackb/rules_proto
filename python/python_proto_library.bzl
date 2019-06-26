@@ -14,7 +14,6 @@ def python_proto_library(**kwargs):
         name = kwargs.get("name"),
         srcs = [name_pb],
         deps = protobuf_requirements,
-        # This magically adds REPOSITORY_NAME/PACKAGE_NAME/{name_pb} to PYTHONPATH
         imports = [name_pb],
         visibility = kwargs.get("visibility"),
     )
