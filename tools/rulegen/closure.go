@@ -45,12 +45,12 @@ func makeClosure() *Language {
 			&Rule{
 				Name:             "closure_proto_compile",
 				Kind:             "proto",
-				Implementation:   compileRuleTemplate,
+				Implementation:   aspectRuleTemplate,
 				Plugins:          []string{"//closure:js"},
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
 				Doc:              "Generates closure *.js protobuf+gRPC files",
-				Attrs:            append(protoCompileAttrs, []*Attr{}...),
+				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
 				Name:             "closure_proto_library",
@@ -59,7 +59,7 @@ func makeClosure() *Language {
 				WorkspaceExample: closureLibraryWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates a closure_library with compiled protobuf *.js files",
-				Attrs:            append(protoCompileAttrs, []*Attr{}...),
+				Attrs:            aspectProtoCompileAttrs,
 			},
 		},
 	}

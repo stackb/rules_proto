@@ -2,7 +2,7 @@ load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "js",
-    out = "{name}.js",
+    outputs = [".js"],
     options = [
         "import_style=closure",
         "binary",
@@ -10,6 +10,5 @@ proto_plugin(
         "add_require_for_enums",
         "library={name}",
     ],
-    outdir = "{name}",
     visibility = ["//visibility:public"],
 )
