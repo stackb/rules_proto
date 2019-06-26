@@ -128,6 +128,9 @@ def proto_compile_aspect_impl(target, ctx):
         # <list<File>> Files required for running the plugins
         plugin_runfiles = []
 
+        # <list<opaque>> Plugin input manifests
+        plugin_input_manifests = None
+
         # Add plugin executable if not a built-in plugin
         plugin_tool = None
         if plugin.tool_executable:
@@ -135,7 +138,8 @@ def proto_compile_aspect_impl(target, ctx):
 
         # Add plugin runfiles if plugin has a tool
         if plugin.tool:
-            plugin_runfiles = ctx.resolve_tools(tools = [plugin.tool])[0].to_list()
+            plugin_runfiles, plugin_input_manifests = ctx.resolve_tools(tools = [plugin.tool])
+            plugin_runfiles = plugin_runfiles.to_list()
 
         # Add extra plugin data files
         plugin_runfiles += plugin.data
@@ -289,6 +293,7 @@ def proto_compile_aspect_impl(target, ctx):
             inputs = inputs,
             tools = tools,
             outputs = plugin_outputs,
+            input_manifests = plugin_input_manifests if plugin_input_manifests else [],
             progress_message = "Compiling protoc outputs for {} plugin".format(plugin.name),
         )
 
