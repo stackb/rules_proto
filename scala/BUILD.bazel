@@ -5,7 +5,7 @@ proto_plugin(
     # Use the proto basename and pipe the value to the scala_keyword function.
     # Ths function will append '_pb' if the basename is a scala keyword.
     out = "{name}.jar",
-    tool = ":compiler_plugin_deploy.jar",
+    tool = ":compiler_plugin",
     visibility = ["//visibility:public"],
 )
 
@@ -18,7 +18,7 @@ proto_plugin(
         "grpc",
         # "java_conversions", # causes weird import problems
     ],
-    tool = ":compiler_plugin_deploy.jar",
+    tool = ":compiler_plugin",
     visibility = ["//visibility:public"],
 )
 
