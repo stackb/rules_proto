@@ -2,7 +2,7 @@ load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "grpc.js",
-    outputs = [".grpc.js"],
+    outputs = ["{protopath}.grpc.js"],
     tool = "@com_github_stackb_grpc_js//protoc-gen-grpc-js",
     exclusions = [
         "google/protobuf",

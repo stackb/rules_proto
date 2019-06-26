@@ -7,7 +7,7 @@ proto_plugin(
         "mode=grpcweb",
     ],
     outputs = [
-        "_grpc_web_pb.js",
+        "{protopath}_grpc_web_pb.js",
     ],
     tool = "@com_github_grpc_grpc_web//javascript/net/grpc/web:protoc-gen-grpc-web",
     visibility = ["//visibility:public"],
@@ -20,7 +20,7 @@ proto_plugin(
         "mode=grpcweb",
     ],
     outputs = [
-        "_grpc_web_pb.js",
+        "{protopath}_grpc_web_pb.js",
     ],
     tool = "@com_github_grpc_grpc_web//javascript/net/grpc/web:protoc-gen-grpc-web",
     visibility = ["//visibility:public"],
@@ -33,8 +33,8 @@ proto_plugin(
         "mode=grpcweb",
     ],
     outputs = [
-        "_grpc_web_pb.js",
-        "_pb.d.ts",
+        "{protopath}_grpc_web_pb.js",
+        "{protopath}_pb.d.ts",
     ],
     tool = "@com_github_grpc_grpc_web//javascript/net/grpc/web:protoc-gen-grpc-web",
     visibility = ["//visibility:public"],
@@ -47,7 +47,7 @@ proto_plugin(
         "mode=grpcweb",
     ],
     outputs = [
-        "_pb.d.ts",
+        "{protopath}_pb.d.ts",
     ],
     tool = "@com_github_grpc_grpc_web//javascript/net/grpc/web:protoc-gen-grpc-web",
     visibility = ["//visibility:public"],
