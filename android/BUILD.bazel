@@ -9,7 +9,7 @@ proto_plugin(
 
 proto_plugin(
     name = "grpc_javalite",
-    out = "{name}.jar",
+    out = "{name}_grpc.jar",
     options = ["lite"],
     tool = "@io_grpc_grpc_java//compiler:grpc_java_plugin",
     visibility = ["//visibility:public"],
