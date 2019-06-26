@@ -20,3 +20,4 @@ build --incompatible_remove_native_maven_jar=false
 build --incompatible_allow_python_version_transitions=false
 build --incompatible_py3_is_default=false # grpc-python does not work with python3?
 build --incompatible_disallow_empty_glob=false
+build --incompatible_tls_enabled_removed=false
