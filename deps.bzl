@@ -54,8 +54,8 @@ def com_github_bazelbuild_buildtools(**kwargs):
 
 def com_google_protobuf(**kwargs):
     name = "com_google_protobuf"
-    ref = get_ref(name, "v3.8.0", kwargs)
-    sha256 = get_sha256(name, "03d2e5ef101aee4c2f6ddcf145d2a04926b9c19e7086944df3842b1b8502b783", kwargs)
+    ref = get_ref(name, "3f33753f0f45072fc68c5c50faa1c7a2fc16008d", kwargs) # Pre-cut of 3.9.0
+    sha256 = get_sha256(name, "9e1dbc5427befad70cb98d05344ea774f9994a12d1e9a551fef0126767e95ee8", kwargs)
     github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
     if "protobuf_clib" not in native.existing_rules():
