@@ -123,6 +123,10 @@ load(
                 Label("{{ . }}"),{{ end }}
             ],
         ),
+        _prefix = attr.string(
+            doc = "String used to disambiguate aspects when generating outputs",
+            default = "{{ .Rule.Name }}_aspect",
+        )
     ),
     toolchains = ["@build_stack_rules_proto//protobuf:toolchain_type"],
 )

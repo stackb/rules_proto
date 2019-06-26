@@ -22,6 +22,10 @@ python_proto_compile_aspect = aspect(
                 Label("//python:python"),
             ],
         ),
+        _prefix = attr.string(
+            doc = "String used to disambiguate aspects when generating outputs",
+            default = "python_proto_compile_aspect",
+        )
     ),
     toolchains = ["@build_stack_rules_proto//protobuf:toolchain_type"],
 )

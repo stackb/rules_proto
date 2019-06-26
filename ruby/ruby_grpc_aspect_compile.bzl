@@ -8,8 +8,7 @@ load(
     "proto_compile_impl",
 )
 
-# "Aspects should be top-level values in extension files that define them."
-
+# Create aspect for ruby_grpc_aspect_compile
 ruby_grpc_aspect_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
     provides = [ProtoLibraryAspectNodeInfo],
@@ -24,9 +23,15 @@ ruby_grpc_aspect_compile_aspect = aspect(
                 Label("//ruby:grpc_ruby"),
             ],
         ),
+        _prefix = attr.string(
+            doc = "String used to disambiguate aspects when generating outputs",
+            default = "ruby_grpc_aspect_compile_aspect",
+        )
     ),
+    toolchains = ["@build_stack_rules_proto//protobuf:toolchain_type"],
 )
 
+# Create compile rule to apply aspect
 _rule = rule(
     implementation = proto_compile_impl,
     attrs = dict(
@@ -39,9 +44,9 @@ _rule = rule(
     ),
 )
 
+# Create macro for converting attrs and passing to compile
 def ruby_grpc_aspect_compile(**kwargs):
     _rule(
         verbose_string = "%s" % kwargs.get("verbose", 0),
-        plugin_options_string = ";".join(kwargs.get("plugin_options", [])),
         **kwargs
     )
