@@ -457,6 +457,14 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/proto_source_root
+  test_workspace_python_dashes:
+    name: 'test workspace: python_dashes'
+    platform: ubuntu1604
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/python_dashes
   test_workspace_shared_proto:
     name: 'test workspace: shared_proto'
     platform: ubuntu1604

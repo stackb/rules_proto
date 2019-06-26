@@ -80,6 +80,13 @@ def rust_keyword(s):
     """
     return s + "_pb" if s in _rust_keywords else s
 
+def python_path(s):
+    """Convert a path string to a python import compatible path as is generated
+    by the python plugin. Python import paths cannot contain dashes, so these
+    are replaced by underscores.
+    See https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/compiler/python/python_generator.cc#L89-L95
+    """
+    return s.replace('-', '_')
 
 def get_int_attr(attr, name):
     value = getattr(attr, name)
@@ -305,6 +312,8 @@ def get_output_filename(src_file, pattern, proto_info):
         filename = pattern.replace("{basename}", filename)
     elif pattern.find("{basename|pascal}") != -1:
         filename = pattern.replace("{basename|pascal}", pascal_case(filename))
+    elif pattern.find("{basename|python}") != -1:
+        filename = pattern.replace("{basename|python}", python_path(filename))
     elif pattern.find("{basename|pascal|objc}") != -1:
         filename = pattern.replace("{basename|pascal|objc}", pascal_objc(filename))
     elif pattern.find("{basename|rust_keyword}") != -1:
