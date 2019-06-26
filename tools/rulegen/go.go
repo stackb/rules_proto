@@ -21,7 +21,7 @@ def {{ .Rule.Name }}(**kwargs):
         name_plugin = kwargs.get("name") + "_plugin"
         proto_plugin(
             name = name_plugin,
-            outputs = ["{package}/%s/{basename}.pb.go" % importpath],
+            outputs = ["%s/{basename}.pb.go" % importpath],
             tool = "{{ with (index .Lang.Plugins (index .Rule.Plugins 0)) }}{{ .Tool }}{{ end }}",
         )
         kwargs["plugins"] = [name_plugin]

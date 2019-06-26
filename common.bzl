@@ -268,30 +268,51 @@ def get_output_filename(src_file, pattern, proto_info):
       the replaced string
     """
 
-    # Slice off this prefix if it exists, we don't use it here.
-    if pattern.startswith("{package}/"):
-        pattern = pattern[len("{package}/"):]
+    # Get proto path and strip extension
+    protopath = descriptor_proto_path(src_file, proto_info)
+    if protopath.endswith(".proto"):
+        protopath = protopath[:-6]
+    elif protopath.endswith(".protodevel"):
+        protopath = protopath[:-11]
+    protopath_partitions = protopath.rpartition('/')
 
-    # Get output filename and strip extension
-    filename = descriptor_proto_path(src_file, proto_info)
-    if filename.endswith(".proto"):
-        filename = filename[:-6]
-    elif filename.endswith(".protodevel"):
-        filename = filename[:-11]
+    # Get output basename and strip extension
+    basename = src_file.basename
+    if basename.endswith(".proto"):
+        basename = basename[:-6]
+    elif basename.endswith(".protodevel"):
+        basename = basename[:-11]
 
     # Replace tokens
-    if pattern.find("{basename}") != -1:
-        filename = pattern.replace("{basename}", filename)
-    elif pattern.find("{basename|pascal}") != -1:
-        filename = pattern.replace("{basename|pascal}", pascal_case(filename))
-    elif pattern.find("{basename|python}") != -1:
-        filename = pattern.replace("{basename|python}", python_path(filename))
-    elif pattern.find("{basename|pascal|objc}") != -1:
-        filename = pattern.replace("{basename|pascal|objc}", pascal_objc(filename))
-    elif pattern.find("{basename|rust_keyword}") != -1:
-        filename = pattern.replace("{basename|rust_keyword}", rust_keyword(filename))
+    filename = ""
+    if "{basename}" in pattern:
+        filename = pattern.replace("{basename}", basename)
+    elif "{protopath}" in pattern:
+        filename = pattern.replace("{protopath}", protopath)
+    elif "{basename|pascal}" in pattern:
+        filename = pattern.replace("{basename|pascal}", pascal_case(basename))
+    elif "{protopath|pascal}" in pattern:
+        filename = pattern.replace("{protopath|pascal}", "/".join(
+            protopath_partitions[0],
+            pascal_case(protopath_partitions[1])
+        ))
+    elif "{basename|python}" in pattern:
+        filename = pattern.replace("{basename|python}", python_path(basename))
+    elif "{protopath|python}" in pattern:
+        filename = pattern.replace("{protopath|python}", python_path(protopath))
+    elif "{basename|pascal|objc}" in pattern:
+        filename = pattern.replace("{basename|pascal|objc}", pascal_objc(basename))
+    elif "{protopath|pascal|objc}" in pattern:
+        filename = pattern.replace("{protopath|pascal|objc}", "/".join(
+            protopath_partitions[0],
+            pascal_objc(protopath_partitions[1])
+        ))
+    elif "{basename|rust_keyword}" in pattern:
+        filename = pattern.replace("{basename|rust_keyword}", rust_keyword(basename))
+    elif "{protopath|rust_keyword}" in pattern:
+        filename = pattern.replace("{basename|rust_keyword}", rust_keyword(protopath))
     else:
-        filename += pattern
+        filename += basename + pattern
 
     return filename
 

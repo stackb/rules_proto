@@ -4,7 +4,7 @@ proto_plugin(
     name = "rust",
     # Use the proto basename and pipe the value to the rust_keyword function.
     # Ths function will append '_pb' if the basename is a rust keyword.
-    outputs = ["{package}/{basename|rust_keyword}.rs"],
+    outputs = ["{basename|rust_keyword}.rs"],
     tool = ":protoc_gen_rust",
     visibility = ["//visibility:public"],
 )
@@ -13,7 +13,7 @@ proto_plugin(
     name = "grpc_rust",
     # Use the proto basename and pipe the value to the rust_keyword function.
     # Ths function will append '_pb' if the basename is a rust keyword.
-    outputs = ["{package}/{basename|rust_keyword}_grpc.rs"],
+    outputs = ["{basename|rust_keyword}_grpc.rs"],
     tool = ":protoc_gen_rust_grpc",
     visibility = ["//visibility:public"],
 )
