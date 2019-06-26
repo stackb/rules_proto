@@ -80,13 +80,19 @@ def rust_keyword(s):
     """
     return s + "_pb" if s in _rust_keywords else s
 
+
 def python_path(s):
     """Convert a path string to a python import compatible path as is generated
     by the python plugin. Python import paths cannot contain dashes, so these
     are replaced by underscores.
     See https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/compiler/python/python_generator.cc#L89-L95
+    Args:
+        s (string): The input string to be converted.
+    Returns:
+        (string): The converted string.
     """
     return s.replace('-', '_')
+
 
 def get_int_attr(attr, name):
     value = getattr(attr, name)
@@ -186,12 +192,12 @@ def copy_jar_to_srcjar(ctx, jar):
     Returns:
       <Generated File> for the renamed file
     """
-    srcjar = ctx.actions.declare_file("%s/%s.srcjar" % (ctx.label.name, ctx.label.name))
+    srcjar = ctx.actions.declare_file("{}/{}.srcjar".format(ctx.label.name, ctx.label.name))
     ctx.actions.run_shell(
         mnemonic = "CopySrcjar",
         inputs = [jar],
         outputs = [srcjar],
-        command = "mv %s %s" % (jar.path, srcjar.path),
+        command = "mv '{}' '{}'".format(jar.path, srcjar.path),
     )
     return srcjar
 
@@ -255,24 +261,24 @@ def apply_plugin_transitivity_rules(ctx, targets, plugin):
         if rule == "exclude":
             for key, target in targets.items():
                 if ctx.attr.verbose > 2:
-                    print("Checking '%s' endswith '%s'" % (target.short_path, pattern))
+                    print("Checking '{}' endswith '{}'".format(target.short_path, pattern))
                 if target.dirname.endswith(pattern) or target.path.endswith(pattern):
                     targets.pop(key)
                     if ctx.attr.verbose > 2:
-                        print("Removing '%s' from the list of files to compile as plugin '%s' excluded it" % (target.short_path, plugin.name))
+                        print("Removing '{}' from the list of files to compile as plugin '{}' excluded it".format(target.short_path, plugin.name))
                 elif ctx.attr.verbose > 2:
-                    print("Keeping '%s' (not excluded)" % (target.short_path))
+                    print("Keeping '{}' (not excluded)".format(target.short_path))
         elif rule == "include":
             for key, target in targets.items():
                 if target.dirname.endswith(pattern) or target.path.endswith(pattern):
                     if ctx.attr.verbose > 2:
-                        print("Keeping '%s' (explicitly included)" % (target.short_path))
+                        print("Keeping '{}' (explicitly included)".format(target.short_path))
                 else:
                     targets.pop(key)
                     if ctx.attr.verbose > 2:
-                        print("Removing '%s' from the list of files to compile as plugin '%s' did not include it" % (target.short_path, plugin.name))
+                        print("Removing '{}' from the list of files to compile as plugin '{}' did not include it".format(target.short_path, plugin.name))
         else:
-            fail("Unknown transitivity rule '%s'" % rule)
+            fail("Unknown transitivity rule '{}'".format(rule))
     return targets
 
 
@@ -335,15 +341,29 @@ def copy_proto(ctx, descriptor, src):
     Returns:
       <Generated File> for the copied .proto
     """
-    proto = ctx.actions.declare_file(get_proto_filename(src), sibling = descriptor)
-    ctx.actions.run_shell(
-        mnemonic = "CopyProto",
-        inputs = [src],
-        outputs = [proto],
-        command = "cp %s %s" % (src.path, proto.path),
-    )
-    return proto
+    return copy_file(ctx, src, get_proto_filename(src), sibling=descriptor)
 
+
+def copy_file(ctx, src_file, dest_path, sibling=None):
+    """Copy a file to a new path destination
+
+    Args:
+      ctx: the <ctx> object
+      src_file: the source file <File>
+      dest_path: the destination path of the file
+      sibling: a file to use as a sibling to declare_file <File>
+
+    Returns:
+      <Generated File> for the copied file
+    """
+    dest_file = ctx.actions.declare_file(dest_path, sibling=sibling)
+    ctx.actions.run_shell(
+        mnemonic = "CopyFile",
+        inputs = [src_file],
+        outputs = [dest_file],
+        command = "cp '{}' '{}'".format(src_file.path, dest_file.path),
+    )
+    return dest_file
 
 # Adapted from https://github.com/bazelbuild/rules_go
 def descriptor_proto_path(proto, proto_info):

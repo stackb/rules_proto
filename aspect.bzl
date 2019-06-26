@@ -2,6 +2,7 @@ load("//:plugin.bzl", "ProtoPluginInfo")
 load(
     "//:common.bzl",
     "ProtoCompileInfo",
+    "copy_file",
     "get_int_attr",
     "get_output_filename",
     "get_plugin_options",
@@ -34,14 +35,10 @@ def proto_compile_impl(ctx):
                     path = path[1:]
 
                 # Copy file to output
-                out_file = ctx.actions.declare_file("{}/{}".format(ctx.label.name, path))
-                ctx.actions.run_shell(
-                    mnemonic = "CopyProto",
-                    command = "cp %s %s" % (file.path, out_file.path),
-                    inputs = [file],
-                    outputs = [out_file],
-                )
-                output_files.append(out_file)
+                output_files.append(copy_file(
+                    ctx, file,
+                    "{}/{}".format(ctx.label.name, path)
+                ))
 
     # Create default and proto compile providers
     return [
@@ -215,17 +212,11 @@ def proto_compile_aspect_impl(target, ctx):
                 outputs.append(out_file)
             else:
                 # Create .srcjar from .jar for global outputs
-                srcjar = ctx.actions.declare_file(
+                outputs.append(copy_file(
+                    ctx, out_file,
                     "{}.srcjar".format(out_file.basename.rpartition('.')[0]),
                     sibling=out_file
-                )
-                ctx.actions.run_shell(
-                    mnemonic = "CopySrcjar",
-                    command = "cp '{}' '{}'".format(out_file.path, srcjar.path),
-                    inputs = [out_file],
-                    outputs = [srcjar],
-                )
-                outputs.append(srcjar)
+                ))
 
         ###
         ### Part 2.5: build command
