@@ -2,17 +2,18 @@ load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "php",
-    # Even though this is php, aggregate into a jar so we don't have to predict
-    # the outputs
-    out = "{name}.jar",
+    outputs = [
+        "{protopath|php}.php",
+        "GPBMetadata/{protopath|php}.php",
+    ],
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
     name = "grpc_php",
-    # Even though this is php, aggregate into a jar so we don't have to predict
-    # the outputs
-    out = "{name}.jar",
+    outputs = [
+        "GPBMetadata/{protopath|php}.php", # Cannot predict output filename without knowing the service name
+    ],
     tool = "@com_github_grpc_grpc//:grpc_php_plugin",
     visibility = ["//visibility:public"],
 )
