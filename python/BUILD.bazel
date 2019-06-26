@@ -3,6 +3,9 @@ load("//:plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "python",
     outputs = ["_pb2.py"],
+    transitivity = {
+        "google/protobuf": "exclude",
+    },
     visibility = ["//visibility:public"],
 )
 
