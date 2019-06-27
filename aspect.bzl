@@ -46,7 +46,10 @@ def proto_compile_impl(ctx):
             outputs = output_files,
             files = output_files,
         ),
-        DefaultInfo(files = depset(output_files))
+        DefaultInfo(
+            files = depset(output_files),
+            data_runfiles = ctx.runfiles(files=output_files),
+        )
     ]
 
 
