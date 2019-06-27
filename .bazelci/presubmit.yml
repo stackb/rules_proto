@@ -443,6 +443,14 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/exclusions
+  test_workspace_generated_proto:
+    name: 'test workspace: generated_proto'
+    platform: ubuntu1604
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/generated_proto
   test_workspace_objc_capitalisation:
     name: 'test workspace: objc_capitalisation'
     platform: ubuntu1604

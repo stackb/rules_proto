@@ -3,6 +3,11 @@ test_workspace_exclusions:
 	bazel test --disk_cache=../bazel-disk-cache --test_output=errors //... ; \
 	bazel shutdown
 
+test_workspace_generated_proto:
+	cd test_workspaces/generated_proto; \
+	bazel test --disk_cache=../bazel-disk-cache --test_output=errors //... ; \
+	bazel shutdown
+
 test_workspace_objc_capitalisation:
 	cd test_workspaces/objc_capitalisation; \
 	bazel test --disk_cache=../bazel-disk-cache --test_output=errors //... ; \
@@ -33,4 +38,4 @@ test_workspace_strip_import_prefix:
 	bazel test --disk_cache=../bazel-disk-cache --test_output=errors //... ; \
 	bazel shutdown
 
-all_test_workspaces: test_workspace_exclusions test_workspace_objc_capitalisation test_workspace_proto_source_root test_workspace_python_dashes test_workspace_python_deps test_workspace_shared_proto test_workspace_strip_import_prefix
+all_test_workspaces: test_workspace_exclusions test_workspace_generated_proto test_workspace_objc_capitalisation test_workspace_proto_source_root test_workspace_python_dashes test_workspace_python_deps test_workspace_shared_proto test_workspace_strip_import_prefix
