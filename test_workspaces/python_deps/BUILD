@@ -19,4 +19,6 @@ py_test(
     srcs = ["main.py"],
     main = "main.py",
     deps = ["py_lib"],
+    legacy_create_init = False,
+    python_version = "PY2",
 )
