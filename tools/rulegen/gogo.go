@@ -4,23 +4,14 @@ import "fmt"
 
 var gogoLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Rule.Base }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("//go:utils.bzl", "get_importmappings")
-
-wkt_mappings = get_importmappings({
-    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
-    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
-    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
-    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
-    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
-})
 
 def {{ .Rule.Name }}(**kwargs):
     # Compile protos
     name_pb = kwargs.get("name") + "_pb"
-    kwargs["plugin_options"] = kwargs.get("plugin_options", []) + get_importmappings(kwargs.get("importmap", {})) + wkt_mappings
     {{ .Rule.Base }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k not in ("name", "importpath", "importmap", "go_deps")} # Forward args except name, importpath, importmap and go_deps
+        deps = deps, # Forward only deps
+        prefix_path = kwargs.get("importpath", ""),
     )
 `
 
@@ -105,7 +96,7 @@ func addGogoRules(language *Language, base string) {
 			WorkspaceExample: goWorkspaceTemplate,
 			BuildExample:     protoCompileExampleTemplate,
 			Doc:              fmt.Sprintf("Generates %s protobuf artifacts", base),
-			Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
+			Attrs:            aspectProtoCompileAttrs,
 		},
 		&Rule{
 			Name:             base + "_grpc_compile",
@@ -116,7 +107,7 @@ func addGogoRules(language *Language, base string) {
 			WorkspaceExample: goWorkspaceTemplate,
 			BuildExample:     grpcCompileExampleTemplate,
 			Doc:              fmt.Sprintf("Generates %s protobuf+gRPC artifacts", base),
-			Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
+			Attrs:            aspectProtoCompileAttrs,
 		},
 
 		&Rule{

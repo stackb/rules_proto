@@ -49,8 +49,6 @@ go_proto_compile(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
-| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
-| importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
 ---
 
@@ -94,8 +92,6 @@ go_grpc_compile(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
-| importpath   | `string` | `None`    | Importpath for the generated artifacts          |
-| importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
 ---
 
@@ -144,7 +140,6 @@ go_proto_library(
 | ---: | :--- | ------- | ----------- |
 | verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
-| importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |
 
 ---
 
@@ -193,4 +188,3 @@ go_grpc_library(
 | ---: | :--- | ------- | ----------- |
 | verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 | importpath   | `string` | `None`    | Importpath for the generated artifacts          |
-| importmap   | `string_dict` | `None`    | A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`          |

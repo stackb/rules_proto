@@ -16,6 +16,29 @@ ProtoLibraryAspectNodeInfo = provider(
 )
 
 
+proto_compile_attrs = {
+    "verbose": attr.int(
+        doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
+    ),
+    "verbose_string": attr.string(
+        doc = "String version of the verbose string, used for aspect",
+        default = "0",
+    ),
+    "prefix_path": attr.string(
+        doc = "Path to prefix to the generated files in the output directory",
+    ),
+}
+
+
+proto_compile_aspect_attrs = {
+    "verbose_string": attr.string(
+        doc = "String version of the verbose string, used for aspect",
+        values = ["", "None", "0", "1", "2", "3", "4"],
+        default = "0",
+    ),
+}
+
+
 def proto_compile_impl(ctx):
     # Aggregate output files created by the aspect as it has walked the deps
     outputs = [dep[ProtoLibraryAspectNodeInfo].outputs for dep in ctx.attr.deps]
@@ -23,6 +46,7 @@ def proto_compile_impl(ctx):
     # Build output tree by aggregating files created by aspect
     # TODO: remove this and update library rules to consume the existing outputs
     output_files = []
+    prefix_path = ctx.attr.prefix_path
     for output_dict in outputs:
         for root, files in output_dict.items():
             for file in files:
@@ -32,6 +56,10 @@ def proto_compile_impl(ctx):
                     path = path[len(root):]
                 if path.startswith("/"):
                     path = path[1:]
+
+                # Prepend prefix path if given
+                if prefix_path:
+                    path = prefix_path + '/' + path
 
                 # Copy file to output
                 output_files.append(copy_file(
@@ -51,26 +79,6 @@ def proto_compile_impl(ctx):
             data_runfiles = ctx.runfiles(files=output_files),
         )
     ]
-
-
-proto_compile_attrs = {
-    "verbose": attr.int(
-        doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
-    ),
-    "verbose_string": attr.string(
-        doc = "String version of the verbose string, used for aspect",
-        default = "0",
-    ),
-}
-
-
-proto_compile_aspect_attrs = {
-    "verbose_string": attr.string(
-        doc = "String version of the verbose string, used for aspect",
-        values = ["", "None", "0", "1", "2", "3", "4"],
-        default = "0",
-    ),
-}
 
 
 def proto_compile_aspect_impl(target, ctx):

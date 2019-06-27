@@ -1,14 +1,13 @@
 load("//go:go_grpc_compile.bzl", "go_grpc_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("//go:utils.bzl", "get_importmappings")
 
-def go_grpc_library(**kwargs):
+def go_grpc_library(deps, **kwargs):
     # Compile protos
     name_pb = kwargs.get("name") + "_pb"
-    kwargs["plugin_options"] = kwargs.get("plugin_options", []) + get_importmappings(kwargs.get("importmap", {}))
     go_grpc_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k not in ("name", "importpath", "importmap", "go_deps")} # Forward args except name, importpath, importmap and go_deps
+        deps = deps, # Forward only deps
+        prefix_path = kwargs.get("importpath", ""),
     )
 
     # Create go library

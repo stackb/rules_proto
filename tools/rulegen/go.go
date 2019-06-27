@@ -10,42 +10,17 @@ go_rules_dependencies()
 
 go_register_toolchains()`)
 
-var goCompileRuleTemplate = mustTemplate(`load("//:compile.bzl", "proto_compile")
-load("//:plugin.bzl", "proto_plugin")
-
-def {{ .Rule.Name }}(**kwargs):
-    # If importpath specified, declare a custom plugin that should correctly
-    # predict the output location.
-    importpath = kwargs.get("importpath")
-    if importpath and not kwargs.get("plugins"):
-        name_plugin = kwargs.get("name") + "_plugin"
-        proto_plugin(
-            name = name_plugin,
-            outputs = ["%s/{basename}.pb.go" % importpath],
-            tool = "{{ with (index .Lang.Plugins (index .Rule.Plugins 0)) }}{{ .Tool }}{{ end }}",
-        )
-        kwargs["plugins"] = [name_plugin]
-        kwargs.pop("importpath")
-
-    # Define the default plugin if still not defined
-    if not kwargs.get("plugins"):
-        kwargs["plugins"] = [Label("{{ index .Rule.Plugins 0 }}")]
-
-    proto_compile(
-        **kwargs
-    )`)
 
 var goLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("//go:utils.bzl", "get_importmappings")
 
-def {{ .Rule.Name }}(**kwargs):
+def {{ .Rule.Name }}(deps, **kwargs):
     # Compile protos
     name_pb = kwargs.get("name") + "_pb"
-    kwargs["plugin_options"] = kwargs.get("plugin_options", []) + get_importmappings(kwargs.get("importmap", {}))
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k not in ("name", "importpath", "importmap", "go_deps")} # Forward args except name, importpath, importmap and go_deps
+        deps = deps, # Forward only deps
+        prefix_path = kwargs.get("importpath", ""),
     )
 `
 
@@ -121,13 +96,6 @@ var goProtoAttrs = []*Attr{
 		Doc:       "Importpath for the generated artifacts",
 		Mandatory: false,
 	},
-	&Attr{
-		Name:      "importmap",
-		Type:      "string_dict",
-		Default:   "None",
-		Doc:       "A dictionary of the form `{ K: V}` that dictates the importpath `V` for a matching imported proto file `K`",
-		Mandatory: false,
-	},
 }
 
 func makeGo() *Language {
@@ -154,7 +122,7 @@ func makeGo() *Language {
 				WorkspaceExample: goWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
 				Doc:              "Generates *.go protobuf artifacts",
-				Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
+				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
 				Name:             "go_grpc_compile",
@@ -165,7 +133,7 @@ func makeGo() *Language {
 				WorkspaceExample: goWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
 				Doc:              "Generates *.go protobuf+gRPC artifacts",
-				Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
+				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
 				Name:             "go_proto_library",
