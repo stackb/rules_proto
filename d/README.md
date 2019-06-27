@@ -1,5 +1,7 @@
 # `d`
 
+These rulesuse the protoc-gen-d plugin, which only supports proto3 .proto files.
+
 | Rule | Description |
 | ---: | :--- |
 | [d_proto_compile](#d_proto_compile) | Generates d protobuf artifacts |

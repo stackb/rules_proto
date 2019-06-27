@@ -93,6 +93,7 @@ func makeD() *Language {
 				Tool: "@com_github_dcarp_protobuf_d//:protoc-gen-d",
 			},
 		},
+		Notes: mustTemplate(`These rules use the protoc-gen-d plugin, which only supports proto3 .proto files.`),
 		Rules: []*Rule{
 			&Rule{
 				Name:             "d_proto_compile",
