@@ -5,7 +5,7 @@ def nuget_protobuf_packages():
     nuget_package(
         name = "google.protobuf",
         package = "google.protobuf",
-        version = "3.6.1",
+        version = "3.8.0",
         core_lib = {
             "netstandard1.0": "lib/netstandard1.0/Google.Protobuf.dll",
         },
@@ -75,7 +75,7 @@ def nuget_grpc_packages():
     nuget_package(
         name = "grpc.core",
         package = "grpc.core",
-        version = "1.17.1",
+        version = "1.21.0",
         core_lib = {
             "netstandard1.5": "lib/netstandard1.5/Grpc.Core.dll",
         },
@@ -130,7 +130,7 @@ def nuget_grpc_packages():
     nuget_package(
         name = "grpc",
         package = "grpc",
-        version = "1.17.1",
+        version = "1.21.0",
         core_deps = {
             "netstandard1.5": [
                 "@grpc.core//:netstandard1.5_core",

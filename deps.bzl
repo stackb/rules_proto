@@ -54,7 +54,7 @@ def com_github_bazelbuild_buildtools(**kwargs):
 
 def com_google_protobuf(**kwargs):
     name = "com_google_protobuf"
-    ref = get_ref(name, "3f33753f0f45072fc68c5c50faa1c7a2fc16008d", kwargs) # Pre-cut of 3.9.0
+    ref = get_ref(name, "3f33753f0f45072fc68c5c50faa1c7a2fc16008d", kwargs) # 3.9.0 rc1
     sha256 = get_sha256(name, "9e1dbc5427befad70cb98d05344ea774f9994a12d1e9a551fef0126767e95ee8", kwargs)
     github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
@@ -78,8 +78,8 @@ def com_github_grpc_grpc(**kwargs):
 
 def io_bazel_rules_dotnet(**kwargs):
     name = "io_bazel_rules_dotnet"
-    ref = get_ref(name, "7e907e130943d4c9391df6ad3b569e3e9b2efa9d", kwargs)  # PR#122
-    sha256 = get_sha256(name, "17f6e070bb940441efadf516a0274db1db0e306130c279d09d400fc0b3c71899", kwargs)
+    ref = get_ref(name, "e9537b4a545528b11b270dfa124f3193bdb2d78e", kwargs)  # June 26, 2019
+    sha256 = get_sha256(name, "9ee5429417190f00b2c970ba628db833e7ce71323efb646b9ce6b3aaaf56f125", kwargs)
     github_archive(name, "bazelbuild", "rules_dotnet", ref, sha256)
 
 def io_bazel_rules_scala(**kwargs):

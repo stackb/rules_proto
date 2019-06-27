@@ -71,7 +71,7 @@ dotnet_register_toolchains(
 )
 
 core_register_sdk(
-    name = "core_sdk",
+    name = "core_sdk_{}".format(core_version),
     core_version = core_version,
 )
 
