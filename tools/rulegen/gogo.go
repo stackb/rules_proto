@@ -5,7 +5,7 @@ import "fmt"
 var gogoLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Rule.Base }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
-def {{ .Rule.Name }}(**kwargs):
+def {{ .Rule.Name }}(deps, **kwargs):
     # Compile protos
     name_pb = kwargs.get("name") + "_pb"
     {{ .Rule.Base }}_{{ .Rule.Kind }}_compile(

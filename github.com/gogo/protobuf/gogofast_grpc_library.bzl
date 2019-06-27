@@ -1,7 +1,7 @@
 load("//github.com/gogo/protobuf:gogofast_grpc_compile.bzl", "gogofast_grpc_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
-def gogofast_grpc_library(**kwargs):
+def gogofast_grpc_library(deps, **kwargs):
     # Compile protos
     name_pb = kwargs.get("name") + "_pb"
     gogofast_grpc_compile(

@@ -1,7 +1,7 @@
 load("//github.com/gogo/protobuf:gogo_proto_compile.bzl", "gogo_proto_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
-def gogo_proto_library(**kwargs):
+def gogo_proto_library(deps, **kwargs):
     # Compile protos
     name_pb = kwargs.get("name") + "_pb"
     gogo_proto_compile(
