@@ -3,8 +3,11 @@ load("//:plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "d",
     outputs = [
-        ".d",
+        "{protopath}.d",
     ],
     tool = "@com_github_dcarp_protobuf_d//:protoc-gen-d",
+    exclusions = [
+        "google/protobuf",
+    ],
     visibility = ["//visibility:public"],
 )
