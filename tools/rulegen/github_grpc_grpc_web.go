@@ -20,11 +20,12 @@ def {{ .Rule.Name }}(**kwargs):
     name_pb_grpc = kwargs.get("name") + "_pb_grpc"
     closure_proto_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
+
     closure_grpc_compile(
         name = name_pb_grpc,
-        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
 
     # Create closure library

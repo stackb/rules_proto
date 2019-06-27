@@ -48,7 +48,7 @@ def {{ .Rule.Name }}(**kwargs):
     name_pb = kwargs.get("name") + "_pb"
     {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
 
     # Create {{ .Lang.Name }} library
@@ -71,7 +71,7 @@ def {{ .Rule.Name }}(**kwargs):
     name_pb = kwargs.get("name") + "_pb"
     {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
 
     # Create {{ .Lang.Name }} library

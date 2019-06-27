@@ -14,5 +14,5 @@ def gateway_grpc_library(**kwargs):
     go_proto_library(
         proto = kwargs.get("deps")[0],
         deps = ["@go_googleapis//google/api:annotations_go_proto"],
-        **{k: v for (k, v) in kwargs.items() if k != "deps"} # Forward args except deps
+        **{k: v for (k, v) in kwargs.items() if k in ("verbose",)} # Forward args
     )

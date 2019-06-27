@@ -6,13 +6,13 @@ def ruby_grpc_library(**kwargs):
     name_pb = kwargs.get("name") + "_pb"
     ruby_grpc_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
 
     # Create ruby library
     ruby_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        includes = ["{package}/%s" % name_pb],
+        includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )

@@ -14,12 +14,12 @@ go_register_toolchains()`)
 var goLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Rule.Base}}_{{ .Rule.Kind }}_compile.bzl", "{{ .Rule.Base }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
-def {{ .Rule.Name }}(deps, **kwargs):
+def {{ .Rule.Name }}(**kwargs):
     # Compile protos
     name_pb = kwargs.get("name") + "_pb"
     {{ .Rule.Base}}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        deps = deps, # Forward only deps
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
         prefix_path = kwargs.get("importpath", ""),
     )
 `

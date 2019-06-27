@@ -26,7 +26,7 @@ def {{ .Rule.Name }}(**kwargs):
     name_lib = kwargs.get("name") + "_lib"
     {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
 `
 

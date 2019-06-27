@@ -8,7 +8,7 @@ def rust_grpc_library(**kwargs):
     name_lib = kwargs.get("name") + "_lib"
     rust_grpc_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
 
     # Create lib file

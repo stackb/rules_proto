@@ -1,12 +1,12 @@
 load("//github.com/gogo/protobuf:gogofaster_proto_compile.bzl", "gogofaster_proto_compile")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
-def gogofaster_proto_library(deps, **kwargs):
+def gogofaster_proto_library(**kwargs):
     # Compile protos
     name_pb = kwargs.get("name") + "_pb"
     gogofaster_proto_compile(
         name = name_pb,
-        deps = deps, # Forward only deps
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
         prefix_path = kwargs.get("importpath", ""),
     )
 

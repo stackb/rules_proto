@@ -59,7 +59,7 @@ def {{ .Rule.Name }}(**kwargs):
     name_index = kwargs.get("name") + "_index"
     {{ .Lang.Name }}_{{ .Rule.Kind }}_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k != "name"} # Forward args except name
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
 
     # Create index
