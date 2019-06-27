@@ -8,8 +8,8 @@ load(
     "proto_compile_impl",
 )
 
-# Create aspect for closure_grpc_compile
-closure_grpc_compile_aspect = aspect(
+# Create aspect for grpcjs_grpc_compile
+grpcjs_grpc_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
     provides = [ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
@@ -24,7 +24,7 @@ closure_grpc_compile_aspect = aspect(
         ),
         _prefix = attr.string(
             doc = "String used to disambiguate aspects when generating outputs",
-            default = "closure_grpc_compile_aspect",
+            default = "grpcjs_grpc_compile_aspect",
         )
     ),
     toolchains = ["@build_stack_rules_proto//protobuf:toolchain_type"],
@@ -38,13 +38,13 @@ _rule = rule(
         deps = attr.label_list(
             mandatory = True,
             providers = [ProtoInfo, ProtoLibraryAspectNodeInfo],
-            aspects = [closure_grpc_compile_aspect],
+            aspects = [grpcjs_grpc_compile_aspect],
         ),
     ),
 )
 
 # Create macro for converting attrs and passing to compile
-def closure_grpc_compile(**kwargs):
+def grpcjs_grpc_compile(**kwargs):
     _rule(
         verbose_string = "{}".format(kwargs.get("verbose", 0)),
         **kwargs

@@ -1,8 +1,8 @@
-load("//github.com/stackb/grpc.js:closure_grpc_compile.bzl", "closure_grpc_compile")
+load("//github.com/stackb/grpc.js:grpcjs_grpc_compile.bzl", "grpcjs_grpc_compile")
 load("//closure:closure_proto_compile.bzl", "closure_proto_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
-def closure_grpc_library(**kwargs):
+def grpcjs_grpc_library(**kwargs):
     # Compile protos
     name_pb = kwargs.get("name") + "_pb"
     name_pb_lib = kwargs.get("name") + "_pb_lib"
@@ -13,7 +13,7 @@ def closure_grpc_library(**kwargs):
         **{k: v for (k, v) in kwargs.items() if k not in ("name", "closure_deps")} # Forward args except name and closure_deps
     )
 
-    closure_grpc_compile(
+    grpcjs_grpc_compile(
         name = name_pb_grpc,
         **{k: v for (k, v) in kwargs.items() if k not in ("name", "closure_deps")} # Forward args except name and closure_deps
     )

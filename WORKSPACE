@@ -393,9 +393,9 @@ android_sdk_repository(name = "androidsdk")
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "closure_grpc_library")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "grpcjs_grpc_library")
 
-closure_grpc_library()
+grpcjs_grpc_library()
 
 # **************************************************************
 #
