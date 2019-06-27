@@ -6,8 +6,8 @@ def gogofaster_proto_library(**kwargs):
     name_pb = kwargs.get("name") + "_pb"
     gogofaster_proto_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
         prefix_path = kwargs.get("importpath", ""),
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
 
     # Create gogo library
