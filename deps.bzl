@@ -252,8 +252,8 @@ def io_bazel_rules_go(**kwargs):
     """Go Rules
     """
     name = "io_bazel_rules_go"
-    ref = get_ref(name, "4fec67d1fcefe7c80d6f4cc2ae0841c9d90e429a", kwargs)  # post-18.3
-    sha256 = get_sha256(name, "2ab9320c583b05b805a7f8f4005fd081606505a64308051008d32148d7f98e1f", kwargs)
+    ref = get_ref(name, "fabf03c1cd31bcf15fb945d932cef322b242be3a", kwargs)  # post-18.6
+    sha256 = get_sha256(name, "d40144fcb282e167a1836c4d1a9aabdd457051717a4648153a89aa34bd9f8e6a", kwargs)
     github_archive(name, "bazelbuild", "rules_go", ref, sha256)
 
 def io_bazel_rules_python(**kwargs):
