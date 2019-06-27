@@ -302,7 +302,7 @@ def get_output_filename(src_file, pattern, proto_info):
     elif "{basename|pascal}" in pattern:
         filename = pattern.replace("{basename|pascal}", pascal_case(basename))
     elif "{protopath|pascal}" in pattern:
-        filename = pattern.replace("{protopath|pascal}", "/".join([
+        filename = pattern.replace("{protopath|pascal}", "/".join([ # Pascal case only the file name
             protopath_partitions[0],
             pascal_case(protopath_partitions[2])
         ]))
@@ -317,7 +317,7 @@ def get_output_filename(src_file, pattern, proto_info):
     elif "{basename|pascal|objc}" in pattern:
         filename = pattern.replace("{basename|pascal|objc}", pascal_objc(basename))
     elif "{protopath|pascal|objc}" in pattern:
-        filename = pattern.replace("{protopath|pascal|objc}", "/".join([
+        filename = pattern.replace("{protopath|pascal|objc}", "/".join([ # Pascal case only the file name
             protopath_partitions[0],
             pascal_objc(protopath_partitions[2])
         ]))

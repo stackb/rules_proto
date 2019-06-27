@@ -3,6 +3,11 @@ test_workspace_exclusions:
 	bazel test --disk_cache=../bazel-disk-cache --test_output=errors //... ; \
 	bazel shutdown
 
+test_workspace_objc_capitalisation:
+	cd test_workspaces/objc_capitalisation; \
+	bazel test --disk_cache=../bazel-disk-cache --test_output=errors //... ; \
+	bazel shutdown
+
 test_workspace_proto_source_root:
 	cd test_workspaces/proto_source_root; \
 	bazel test --disk_cache=../bazel-disk-cache --test_output=errors //... ; \
