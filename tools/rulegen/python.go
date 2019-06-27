@@ -1,22 +1,5 @@
 package main
 
-var pythonProtoLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}()
-
-load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
-
-pip_repositories()
-
-pip_import(
-    name = "protobuf_py_deps",
-    requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
-)
-
-load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
-
-protobuf_pip_install()`)
-
 var pythonGrpcLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}()
@@ -30,15 +13,6 @@ load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
 pip_repositories()
 
 pip_import(
-    name = "protobuf_py_deps",
-    requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
-)
-
-load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
-
-protobuf_pip_install()
-
-pip_import(
     name = "grpc_py_deps",
     requirements = "@build_stack_rules_proto//python/requirements:grpc.txt",
 )
@@ -48,7 +22,6 @@ load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
 grpc_pip_install()`)
 
 var pythonProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
-load("@protobuf_py_deps//:requirements.bzl", protobuf_requirements = "all_requirements")
 
 def python_proto_library(**kwargs):
     # Compile protos
@@ -62,7 +35,9 @@ def python_proto_library(**kwargs):
     native.py_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = protobuf_requirements,
+        deps = [
+            "@com_google_protobuf//:protobuf_python",
+        ],
         imports = [name_pb],
         visibility = kwargs.get("visibility"),
     )
@@ -71,7 +46,6 @@ def python_proto_library(**kwargs):
 py_proto_library = python_proto_library`)
 
 var pythonGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
-load("@protobuf_py_deps//:requirements.bzl", protobuf_requirements = "all_requirements")
 load("@grpc_py_deps//:requirements.bzl", grpc_requirements = "all_requirements")
 
 def python_grpc_library(**kwargs):
@@ -86,7 +60,9 @@ def python_grpc_library(**kwargs):
     native.py_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = depset(protobuf_requirements + grpc_requirements).to_list(),
+        deps = [
+            "@com_google_protobuf//:protobuf_python",
+        ] + grpc_requirements,
         imports = [name_pb],
         visibility = kwargs.get("visibility"),
     )
@@ -124,7 +100,7 @@ func makePython() *Language {
 				Name:             "python_proto_library",
 				Kind:             "proto",
 				Implementation:   pythonProtoLibraryRuleTemplate,
-				WorkspaceExample: pythonProtoLibraryWorkspaceTemplate,
+				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates *.py protobuf library",
 				Attrs:            aspectProtoCompileAttrs,

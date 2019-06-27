@@ -1,1 +1,3 @@
+# THIS FILE IS NO LONGER USED, THE VERSION SPECIFIED HERE IS NOT USE BY RULES_PROTO
+# This file is kept for backwards compatibility with old users of the rules
 protobuf==3.8.0
