@@ -163,20 +163,20 @@ def six(**kwargs):
             build_file_content = """
 genrule(
   name = "copy_six",
-  srcs = ["six-1.12.0/six.py"],
-  outs = ["six.py"],
+  srcs = ["six.py"],
+  outs = ["__init__.py"],
   cmd = "cp $< $(@)",
 )
-
 py_library(
   name = "six",
-  srcs = ["six.py"],
+  srcs = ["__init__.py"],
   srcs_version = "PY2AND3",
   visibility = ["//visibility:public"],
 )
-        """,
+""",
             sha256 = "d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73",
             urls = ["https://pypi.python.org/packages/source/s/six/six-1.12.0.tar.gz"],
+            strip_prefix = "six-1.12.0",
         )
 
 def io_bazel_rules_dart(**kwargs):
