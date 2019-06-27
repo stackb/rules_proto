@@ -1,9 +1,18 @@
 load("//:plugin.bzl", "proto_plugin")
 
+wkt_mappings = {
+    "google/protobuf/any.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/duration.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/struct.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/timestamp.proto": "github.com/gogo/protobuf/types",
+    "google/protobuf/wrappers.proto": "github.com/gogo/protobuf/types",
+}
+
 [proto_plugin(
     name = name,
     outputs = ["{protopath}.pb.go"],
     tool = "@com_github_gogo_protobuf//protoc-gen-" + name,
+    options = ["M{}={}".format(k, v) for k, v in wkt_mappings.items()],
     exclusions = [
         "google/protobuf",
     ],
