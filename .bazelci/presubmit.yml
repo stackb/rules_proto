@@ -451,6 +451,14 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/generated_proto
+  test_workspace_go_importpath:
+    name: 'test workspace: go_importpath'
+    platform: ubuntu1604
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/go_importpath
   test_workspace_objc_capitalisation:
     name: 'test workspace: objc_capitalisation'
     platform: ubuntu1604
