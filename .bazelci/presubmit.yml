@@ -13,7 +13,6 @@ tasks:
     - "//android/..."
     - "//closure/..."
     - "//cpp/..."
-    - "//csharp/..."
     - "//d/..."
     - "//go/..."
     - "//java/..."
@@ -99,18 +98,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/csharp/csharp_grpc_compile
-  csharp_csharp_proto_library:
-    name: 'csharp: csharp_proto_library'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/csharp/csharp_proto_library
-  csharp_csharp_grpc_library:
-    name: 'csharp: csharp_grpc_library'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/csharp/csharp_grpc_library
   d_d_proto_compile:
     name: 'd: d_proto_compile'
     platform: ubuntu1604

@@ -117,6 +117,8 @@ swift_grpc_compile(
 
 ## `swift_proto_library`
 
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
+
 Generates swift protobuf library
 
 ### `WORKSPACE`
@@ -167,6 +169,8 @@ swift_proto_library(
 ---
 
 ## `swift_grpc_library`
+
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates swift protobuf+gRPC library
 

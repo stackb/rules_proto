@@ -147,6 +147,8 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				Doc:              "Generates csharp protobuf library",
 				Attrs:            aspectProtoCompileAttrs,
 				Flags:            csharpLibraryFlags,
+				BazelCIExclusionReason: "experimental",
+				Experimental:     true, // Due to failing dependencies
 			},
 			&Rule{
 				Name:             "csharp_grpc_library",
@@ -157,6 +159,8 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				Doc:              "Generates csharp protobuf+gRPC library",
 				Attrs:            aspectProtoCompileAttrs,
 				Flags:            csharpLibraryFlags,
+				BazelCIExclusionReason: "experimental",
+				Experimental:     true, // Due to failing dependencies
 			},
 		},
 	}

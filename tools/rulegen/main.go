@@ -396,7 +396,7 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 	out.w("    build_targets:")
 	for _, lang := range languages {
 		// Skip experimental
-		if lang.Name == "dart" || lang.Name == "php" || lang.Name == "swift" {
+		if lang.Name == "dart" || lang.Name == "php" || lang.Name == "swift" || lang.Name == "csharp" {
 			continue
 		}
 		out.w(`    - "//%s/..."`, lang.Dir)

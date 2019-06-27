@@ -111,6 +111,8 @@ csharp_grpc_compile(
 
 ## `csharp_proto_library`
 
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
+
 Generates csharp protobuf library
 
 ### `WORKSPACE`
@@ -185,6 +187,8 @@ csharp_proto_library(
 ---
 
 ## `csharp_grpc_library`
+
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates csharp protobuf+gRPC library
 

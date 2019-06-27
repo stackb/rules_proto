@@ -45,7 +45,6 @@ func makeSwift() *Language {
 		}),
 		Rules: []*Rule{
 			&Rule{
-				Experimental:     true,
 				Name:             "swift_proto_compile",
 				Kind:             "proto",
 				Implementation:   aspectRuleTemplate,
@@ -55,9 +54,9 @@ func makeSwift() *Language {
 				Doc:              "Generates swift protobuf artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 				BazelCIExclusionReason: "experimental",
+				Experimental:     true,
 			},
 			&Rule{
-				Experimental:     true,
 				Name:             "swift_grpc_compile",
 				Kind:             "grpc",
 				Implementation:   aspectRuleTemplate,
@@ -67,6 +66,7 @@ func makeSwift() *Language {
 				Doc:              "Generates swift protobuf+gRPC artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 				BazelCIExclusionReason: "experimental",
+				Experimental:     true,
 			},
 			&Rule{
 				Name:             "swift_proto_library",
@@ -77,6 +77,7 @@ func makeSwift() *Language {
 				Doc:              "Generates swift protobuf library",
 				Attrs:            aspectProtoCompileAttrs,
 				BazelCIExclusionReason: "experimental",
+				Experimental:     true,
 			},
 			&Rule{
 				Name:             "swift_grpc_library",
@@ -87,6 +88,7 @@ func makeSwift() *Language {
 				Doc:              "Generates swift protobuf+gRPC library",
 				Attrs:            aspectProtoCompileAttrs,
 				BazelCIExclusionReason: "experimental",
+				Experimental:     true,
 			},
 		},
 	}
