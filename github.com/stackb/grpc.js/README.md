@@ -2,29 +2,29 @@
 
 | Rule | Description |
 | ---: | :--- |
-| [closure_grpc_compile](#closure_grpc_compile) | Generates protobuf closure grpc *.js files |
-| [closure_grpc_library](#closure_grpc_library) | Generates protobuf closure library *.js files |
+| [grpcjs_grpc_compile](#grpcjs_grpc_compile) | Generates protobuf closure grpc *.js files |
+| [grpcjs_grpc_library](#grpcjs_grpc_library) | Generates protobuf closure library *.js files |
 
 ---
 
-## `closure_grpc_compile`
+## `grpcjs_grpc_compile`
 
 Generates protobuf closure grpc *.js files
 
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "closure_grpc_compile")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "grpcjs_grpc_compile")
 
-closure_grpc_compile()
+grpcjs_grpc_compile()
 ```
 
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:closure_grpc_compile.bzl", "closure_grpc_compile")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:grpcjs_grpc_compile.bzl", "grpcjs_grpc_compile")
 
-closure_grpc_compile(
+grpcjs_grpc_compile(
     name = "greeter_grpc.js_grpc",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )
@@ -44,16 +44,16 @@ closure_grpc_compile(
 
 ---
 
-## `closure_grpc_library`
+## `grpcjs_grpc_library`
 
 Generates protobuf closure library *.js files
 
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "closure_grpc_library")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "grpcjs_grpc_library")
 
-closure_grpc_library()
+grpcjs_grpc_library()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
@@ -63,9 +63,9 @@ closure_repositories()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:closure_grpc_library.bzl", "closure_grpc_library")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:grpcjs_grpc_library.bzl", "grpcjs_grpc_library")
 
-closure_grpc_library(
+grpcjs_grpc_library(
     name = "greeter_grpc.js_library",
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )

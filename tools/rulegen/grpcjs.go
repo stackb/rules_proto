@@ -12,7 +12,7 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
 closure_repositories()`)
 
-var grpcjsGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:closure_grpc_compile.bzl", "closure_grpc_compile")
+var grpcjsGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:grpcjs_grpc_compile.bzl", "grpcjs_grpc_compile")
 load("//closure:closure_proto_compile.bzl", "closure_proto_compile")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
@@ -27,7 +27,7 @@ def {{ .Rule.Name }}(**kwargs):
         **{k: v for (k, v) in kwargs.items() if k not in ("name", "closure_deps")} # Forward args except name and closure_deps
     )
 
-    closure_grpc_compile(
+    grpcjs_grpc_compile(
         name = name_pb_grpc,
         **{k: v for (k, v) in kwargs.items() if k not in ("name", "closure_deps")} # Forward args except name and closure_deps
     )
@@ -84,7 +84,7 @@ func makeGrpcJs() *Language {
 		Name: "grpc.js",
 		Rules: []*Rule{
 			&Rule{
-				Name:             "closure_grpc_compile",
+				Name:             "grpcjs_grpc_compile",
 				Kind:             "grpc",
 				Implementation:   aspectRuleTemplate,
 				Plugins:          []string{"//github.com/stackb/grpc.js:grpc.js"},
@@ -94,7 +94,7 @@ func makeGrpcJs() *Language {
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
-				Name:             "closure_grpc_library",
+				Name:             "grpcjs_grpc_library",
 				Kind:             "grpc",
 				Implementation:   grpcjsGrpcLibraryRuleTemplate,
 				WorkspaceExample: grpcjsLibraryWorkspaceTemplate,

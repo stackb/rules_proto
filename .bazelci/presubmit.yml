@@ -393,18 +393,18 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_library
-  grpc.js_closure_grpc_compile:
-    name: 'grpc.js: closure_grpc_compile'
+  grpc.js_grpcjs_grpc_compile:
+    name: 'grpc.js: grpcjs_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
-    working_directory: example/github.com/stackb/grpc.js/closure_grpc_compile
-  grpc.js_closure_grpc_library:
-    name: 'grpc.js: closure_grpc_library'
+    working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_compile
+  grpc.js_grpcjs_grpc_library:
+    name: 'grpc.js: grpcjs_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
-    working_directory: example/github.com/stackb/grpc.js/closure_grpc_library
+    working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_library
   grpc-web_closure_grpc_compile:
     name: 'grpc-web: closure_grpc_compile'
     platform: ubuntu1604

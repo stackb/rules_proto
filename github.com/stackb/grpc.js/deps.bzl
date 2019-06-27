@@ -12,11 +12,11 @@ load(
     "protobuf",
 )
 
-def closure_grpc_compile(**kwargs):
+def grpcjs_grpc_compile(**kwargs):
     protobuf(**kwargs)
     com_github_stackb_grpc_js(**kwargs)
 
-def closure_grpc_library(**kwargs):
+def grpcjs_grpc_library(**kwargs):
     closure_proto_compile(**kwargs)
-    closure_grpc_compile(**kwargs)
+    grpcjs_grpc_compile(**kwargs)
     io_bazel_rules_closure(**kwargs)
