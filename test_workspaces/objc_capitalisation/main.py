@@ -1,4 +1,5 @@
 # Check generated files are as expected
+import os
 import pathlib
 import sys
 
@@ -8,6 +9,9 @@ expected = {
     'objc_lib/folder/NestedDemo.pbobjc.m',
     'objc_lib/folder/NestedDemo.pbobjc.h',
 }
+
+if os.name == 'nt':
+    expected = set([p.replace('/', '\\') for p in expected])
 
 files = set([str(p) for p in pathlib.Path('objc_lib').glob('**/*') if p.is_file()])
 
