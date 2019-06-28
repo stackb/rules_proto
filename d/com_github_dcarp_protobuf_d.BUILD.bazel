@@ -45,6 +45,9 @@ d_library(
         "src/google/protobuf/type.d",
         "src/google/protobuf/wrappers.d",
     ],
+    imports = [
+        "$PWD/external/com_github_dcarp_protobuf_d/src",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -68,6 +71,9 @@ d_source_library(
         "src/google/protobuf/timestamp.d",
         "src/google/protobuf/type.d",
         "src/google/protobuf/wrappers.d",
+    ],
+    imports = [
+        "$PWD/external/com_github_dcarp_protobuf_d/src",
     ],
     visibility = ["//visibility:public"],
 )

@@ -1,0 +1,14 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+local_repository(
+    name = "build_stack_rules_proto",
+    path = "../../../",
+)
+
+load("@build_stack_rules_proto//d:deps.bzl", "d_proto_library")
+
+d_proto_library()
+
+load("@io_bazel_rules_d//d:d.bzl", "d_repositories")
+
+d_repositories()

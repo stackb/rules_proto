@@ -104,6 +104,12 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/d/d_proto_compile
+  d_d_proto_library:
+    name: 'd: d_proto_library'
+    platform: ubuntu1604
+    build_targets:
+      - "//..."
+    working_directory: example/d/d_proto_library
   go_go_proto_compile:
     name: 'go: go_proto_compile'
     platform: ubuntu1604

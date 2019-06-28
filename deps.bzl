@@ -191,8 +191,8 @@ def io_bazel_rules_d(**kwargs):
     """d Rules
     """
     name = "io_bazel_rules_d"
-    ref = get_ref(name, "99c22ceeac4b883f97b1a420f98d4540e47978ca", kwargs)
-    sha256 = get_sha256(name, "ba8eb23c5753de0ba6e743e27e40f0eef1c3b08b3eaabd1bf782f87bca1ada2c", kwargs)
+    ref = get_ref(name, "c4af62269c85dd5dcab0be119196baa5da4662b6", kwargs) # June 28, 2019 + PR 30
+    sha256 = get_sha256(name, "ef380076035d42bfc8b9a5547092779792de4b0cf718b9623a7c1923b0cd23e6", kwargs)
     github_archive(name, "bazelbuild", "rules_d", ref, sha256)
 
 def rules_jvm_external(**kwargs):

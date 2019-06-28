@@ -32,6 +32,7 @@ Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 | experimental | [csharp](/csharp) | [csharp_proto_library](/csharp#csharp_proto_library) | Generates csharp protobuf library ([example](/example/csharp/csharp_proto_library)) |
 | experimental | [csharp](/csharp) | [csharp_grpc_library](/csharp#csharp_grpc_library) | Generates csharp protobuf+gRPC library ([example](/example/csharp/csharp_grpc_library)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [d](/d) | [d_proto_compile](/d#d_proto_compile) | Generates d protobuf artifacts ([example](/example/d/d_proto_compile)) |
+| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [d](/d) | [d_proto_library](/d#d_proto_library) | Generates d protobuf library ([example](/example/d/d_proto_library)) |
 | experimental | [dart](/dart) | [dart_proto_compile](/dart#dart_proto_compile) | Generates dart protobuf artifacts ([example](/example/dart/dart_proto_compile)) |
 | experimental | [dart](/dart) | [dart_grpc_compile](/dart#dart_grpc_compile) | Generates dart protobuf+gRPC artifacts ([example](/example/dart/dart_grpc_compile)) |
 | experimental | [dart](/dart) | [dart_proto_library](/dart#dart_proto_library) | Generates dart protobuf library ([example](/example/dart/dart_proto_library)) |
