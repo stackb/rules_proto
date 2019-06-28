@@ -776,48 +776,12 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/objc/objc_grpc_compile
-  objc_objc_proto_library_ubuntu1604:
-    name: 'objc: objc_proto_library'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_proto_library
-  objc_objc_proto_library_ubuntu1804:
-    name: 'objc: objc_proto_library'
-    platform: ubuntu1804
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_proto_library
-  objc_objc_proto_library_windows:
-    name: 'objc: objc_proto_library'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_proto_library
   objc_objc_proto_library_macos:
     name: 'objc: objc_proto_library'
     platform: macos
     build_targets:
       - "//..."
     working_directory: example/objc/objc_proto_library
-  objc_objc_grpc_library_ubuntu1604:
-    name: 'objc: objc_grpc_library'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_grpc_library
-  objc_objc_grpc_library_ubuntu1804:
-    name: 'objc: objc_grpc_library'
-    platform: ubuntu1804
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_grpc_library
-  objc_objc_grpc_library_windows:
-    name: 'objc: objc_grpc_library'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_grpc_library
   objc_objc_grpc_library_macos:
     name: 'objc: objc_grpc_library'
     platform: macos

@@ -52,6 +52,7 @@ func makeObjc() *Language {
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates objc protobuf library",
 				Attrs:            aspectProtoCompileAttrs,
+				BazelCIExcludePlatforms: []string{"ubuntu1604", "ubuntu1804", "windows"},
 			},
 			&Rule{
 				Name:             "objc_grpc_library",
@@ -61,6 +62,7 @@ func makeObjc() *Language {
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates objc protobuf+gRPC library",
 				Attrs:            aspectProtoCompileAttrs,
+				BazelCIExcludePlatforms: []string{"ubuntu1604", "ubuntu1804", "windows"},
 			},
 		},
 	}

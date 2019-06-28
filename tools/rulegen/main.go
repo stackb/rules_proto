@@ -368,6 +368,10 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 			exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
 
 			for _, platform := range platforms {
+				if (stringInSlice(platform, rule.BazelCIExcludePlatforms)) {
+					continue
+				}
+
 				out.w("  %s_%s_%s:", lang.Name, rule.Name, platform)
 				out.w("    name: '%s: %s'", lang.Name, rule.Name)
 				out.w("    platform: %s", platform)

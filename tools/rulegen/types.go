@@ -77,6 +77,9 @@ type Rule struct {
 	// If not the empty string, one-word reason why excluded from bazelci
 	// configuration
 	BazelCIExclusionReason string
+
+	// Platforms for which to skip this rule
+	BazelCIExcludePlatforms []string
 }
 
 

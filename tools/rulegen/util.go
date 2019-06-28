@@ -95,3 +95,13 @@ func mustGetSha256(url string) string {
 
 	return sha256
 }
+
+
+func stringInSlice(search string, slice []string) bool {
+	for _, item := range slice {
+		if item == search {
+			return true
+		}
+	}
+	return false
+}
