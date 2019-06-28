@@ -1,6 +1,6 @@
 ---
 tasks:
-  main:
+  main_ubuntu1604:
     name: build & test all
     platform: ubuntu1604
     environment:
@@ -26,409 +26,1741 @@ tasks:
     - "//github.com/grpc-ecosystem/grpc-gateway/..."
     - "//github.com/stackb/grpc.js/..."
     - "//github.com/grpc/grpc-web/..."
-  android_android_proto_compile:
+  main_ubuntu1804:
+    name: build & test all
+    platform: ubuntu1804
+    environment:
+      CC: clang
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+    - "//example/routeguide/..."
+    build_targets:
+    - "//android/..."
+    - "//closure/..."
+    - "//cpp/..."
+    - "//d/..."
+    - "//go/..."
+    - "//java/..."
+    - "//node/..."
+    - "//objc/..."
+    - "//python/..."
+    - "//ruby/..."
+    - "//rust/..."
+    - "//scala/..."
+    - "//github.com/gogo/protobuf/..."
+    - "//github.com/grpc-ecosystem/grpc-gateway/..."
+    - "//github.com/stackb/grpc.js/..."
+    - "//github.com/grpc/grpc-web/..."
+  main_windows:
+    name: build & test all
+    platform: windows
+    environment:
+      CC: clang
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+    - "//example/routeguide/..."
+    build_targets:
+    - "//android/..."
+    - "//closure/..."
+    - "//cpp/..."
+    - "//d/..."
+    - "//go/..."
+    - "//java/..."
+    - "//node/..."
+    - "//objc/..."
+    - "//python/..."
+    - "//ruby/..."
+    - "//rust/..."
+    - "//scala/..."
+    - "//github.com/gogo/protobuf/..."
+    - "//github.com/grpc-ecosystem/grpc-gateway/..."
+    - "//github.com/stackb/grpc.js/..."
+    - "//github.com/grpc/grpc-web/..."
+  main_macos:
+    name: build & test all
+    platform: macos
+    environment:
+      CC: clang
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+    - "//example/routeguide/..."
+    build_targets:
+    - "//android/..."
+    - "//closure/..."
+    - "//cpp/..."
+    - "//d/..."
+    - "//go/..."
+    - "//java/..."
+    - "//node/..."
+    - "//objc/..."
+    - "//python/..."
+    - "//ruby/..."
+    - "//rust/..."
+    - "//scala/..."
+    - "//github.com/gogo/protobuf/..."
+    - "//github.com/grpc-ecosystem/grpc-gateway/..."
+    - "//github.com/stackb/grpc.js/..."
+    - "//github.com/grpc/grpc-web/..."
+  android_android_proto_compile_ubuntu1604:
     name: 'android: android_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/android/android_proto_compile
-  android_android_grpc_compile:
+  android_android_proto_compile_ubuntu1804:
+    name: 'android: android_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_proto_compile
+  android_android_proto_compile_windows:
+    name: 'android: android_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_proto_compile
+  android_android_proto_compile_macos:
+    name: 'android: android_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_proto_compile
+  android_android_grpc_compile_ubuntu1604:
     name: 'android: android_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/android/android_grpc_compile
-  android_android_proto_library:
+  android_android_grpc_compile_ubuntu1804:
+    name: 'android: android_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_grpc_compile
+  android_android_grpc_compile_windows:
+    name: 'android: android_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_grpc_compile
+  android_android_grpc_compile_macos:
+    name: 'android: android_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_grpc_compile
+  android_android_proto_library_ubuntu1604:
     name: 'android: android_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/android/android_proto_library
-  android_android_grpc_library:
+  android_android_proto_library_ubuntu1804:
+    name: 'android: android_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_proto_library
+  android_android_proto_library_windows:
+    name: 'android: android_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_proto_library
+  android_android_proto_library_macos:
+    name: 'android: android_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_proto_library
+  android_android_grpc_library_ubuntu1604:
     name: 'android: android_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/android/android_grpc_library
-  closure_closure_proto_compile:
+  android_android_grpc_library_ubuntu1804:
+    name: 'android: android_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_grpc_library
+  android_android_grpc_library_windows:
+    name: 'android: android_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_grpc_library
+  android_android_grpc_library_macos:
+    name: 'android: android_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/android/android_grpc_library
+  closure_closure_proto_compile_ubuntu1604:
     name: 'closure: closure_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/closure/closure_proto_compile
-  closure_closure_proto_library:
+  closure_closure_proto_compile_ubuntu1804:
+    name: 'closure: closure_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/closure/closure_proto_compile
+  closure_closure_proto_compile_windows:
+    name: 'closure: closure_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/closure/closure_proto_compile
+  closure_closure_proto_compile_macos:
+    name: 'closure: closure_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/closure/closure_proto_compile
+  closure_closure_proto_library_ubuntu1604:
     name: 'closure: closure_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/closure/closure_proto_library
-  cpp_cpp_proto_compile:
+  closure_closure_proto_library_ubuntu1804:
+    name: 'closure: closure_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/closure/closure_proto_library
+  closure_closure_proto_library_windows:
+    name: 'closure: closure_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/closure/closure_proto_library
+  closure_closure_proto_library_macos:
+    name: 'closure: closure_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/closure/closure_proto_library
+  cpp_cpp_proto_compile_ubuntu1604:
     name: 'cpp: cpp_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/cpp/cpp_proto_compile
-  cpp_cpp_grpc_compile:
+  cpp_cpp_proto_compile_ubuntu1804:
+    name: 'cpp: cpp_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_proto_compile
+  cpp_cpp_proto_compile_windows:
+    name: 'cpp: cpp_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_proto_compile
+  cpp_cpp_proto_compile_macos:
+    name: 'cpp: cpp_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_proto_compile
+  cpp_cpp_grpc_compile_ubuntu1604:
     name: 'cpp: cpp_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/cpp/cpp_grpc_compile
-  cpp_cpp_proto_library:
+  cpp_cpp_grpc_compile_ubuntu1804:
+    name: 'cpp: cpp_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_grpc_compile
+  cpp_cpp_grpc_compile_windows:
+    name: 'cpp: cpp_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_grpc_compile
+  cpp_cpp_grpc_compile_macos:
+    name: 'cpp: cpp_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_grpc_compile
+  cpp_cpp_proto_library_ubuntu1604:
     name: 'cpp: cpp_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/cpp/cpp_proto_library
-  cpp_cpp_grpc_library:
+  cpp_cpp_proto_library_ubuntu1804:
+    name: 'cpp: cpp_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_proto_library
+  cpp_cpp_proto_library_windows:
+    name: 'cpp: cpp_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_proto_library
+  cpp_cpp_proto_library_macos:
+    name: 'cpp: cpp_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_proto_library
+  cpp_cpp_grpc_library_ubuntu1604:
     name: 'cpp: cpp_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/cpp/cpp_grpc_library
-  csharp_csharp_proto_compile:
+  cpp_cpp_grpc_library_ubuntu1804:
+    name: 'cpp: cpp_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_grpc_library
+  cpp_cpp_grpc_library_windows:
+    name: 'cpp: cpp_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_grpc_library
+  cpp_cpp_grpc_library_macos:
+    name: 'cpp: cpp_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/cpp/cpp_grpc_library
+  csharp_csharp_proto_compile_ubuntu1604:
     name: 'csharp: csharp_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/csharp/csharp_proto_compile
-  csharp_csharp_grpc_compile:
+  csharp_csharp_proto_compile_ubuntu1804:
+    name: 'csharp: csharp_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/csharp/csharp_proto_compile
+  csharp_csharp_proto_compile_windows:
+    name: 'csharp: csharp_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/csharp/csharp_proto_compile
+  csharp_csharp_proto_compile_macos:
+    name: 'csharp: csharp_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/csharp/csharp_proto_compile
+  csharp_csharp_grpc_compile_ubuntu1604:
     name: 'csharp: csharp_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/csharp/csharp_grpc_compile
-  d_d_proto_compile:
+  csharp_csharp_grpc_compile_ubuntu1804:
+    name: 'csharp: csharp_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/csharp/csharp_grpc_compile
+  csharp_csharp_grpc_compile_windows:
+    name: 'csharp: csharp_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/csharp/csharp_grpc_compile
+  csharp_csharp_grpc_compile_macos:
+    name: 'csharp: csharp_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/csharp/csharp_grpc_compile
+  d_d_proto_compile_ubuntu1604:
     name: 'd: d_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/d/d_proto_compile
-  d_d_proto_library:
+  d_d_proto_compile_ubuntu1804:
+    name: 'd: d_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/d/d_proto_compile
+  d_d_proto_compile_windows:
+    name: 'd: d_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/d/d_proto_compile
+  d_d_proto_compile_macos:
+    name: 'd: d_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/d/d_proto_compile
+  d_d_proto_library_ubuntu1604:
     name: 'd: d_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/d/d_proto_library
-  go_go_proto_compile:
+  d_d_proto_library_ubuntu1804:
+    name: 'd: d_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/d/d_proto_library
+  d_d_proto_library_windows:
+    name: 'd: d_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/d/d_proto_library
+  d_d_proto_library_macos:
+    name: 'd: d_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/d/d_proto_library
+  go_go_proto_compile_ubuntu1604:
     name: 'go: go_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/go/go_proto_compile
-  go_go_grpc_compile:
+  go_go_proto_compile_ubuntu1804:
+    name: 'go: go_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_proto_compile
+  go_go_proto_compile_windows:
+    name: 'go: go_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_proto_compile
+  go_go_proto_compile_macos:
+    name: 'go: go_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_proto_compile
+  go_go_grpc_compile_ubuntu1604:
     name: 'go: go_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/go/go_grpc_compile
-  go_go_proto_library:
+  go_go_grpc_compile_ubuntu1804:
+    name: 'go: go_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_grpc_compile
+  go_go_grpc_compile_windows:
+    name: 'go: go_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_grpc_compile
+  go_go_grpc_compile_macos:
+    name: 'go: go_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_grpc_compile
+  go_go_proto_library_ubuntu1604:
     name: 'go: go_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/go/go_proto_library
-  go_go_grpc_library:
+  go_go_proto_library_ubuntu1804:
+    name: 'go: go_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_proto_library
+  go_go_proto_library_windows:
+    name: 'go: go_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_proto_library
+  go_go_proto_library_macos:
+    name: 'go: go_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_proto_library
+  go_go_grpc_library_ubuntu1604:
     name: 'go: go_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/go/go_grpc_library
-  java_java_proto_compile:
+  go_go_grpc_library_ubuntu1804:
+    name: 'go: go_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_grpc_library
+  go_go_grpc_library_windows:
+    name: 'go: go_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_grpc_library
+  go_go_grpc_library_macos:
+    name: 'go: go_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/go/go_grpc_library
+  java_java_proto_compile_ubuntu1604:
     name: 'java: java_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/java/java_proto_compile
-  java_java_grpc_compile:
+  java_java_proto_compile_ubuntu1804:
+    name: 'java: java_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_proto_compile
+  java_java_proto_compile_windows:
+    name: 'java: java_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_proto_compile
+  java_java_proto_compile_macos:
+    name: 'java: java_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_proto_compile
+  java_java_grpc_compile_ubuntu1604:
     name: 'java: java_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/java/java_grpc_compile
-  java_java_proto_library:
+  java_java_grpc_compile_ubuntu1804:
+    name: 'java: java_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_grpc_compile
+  java_java_grpc_compile_windows:
+    name: 'java: java_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_grpc_compile
+  java_java_grpc_compile_macos:
+    name: 'java: java_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_grpc_compile
+  java_java_proto_library_ubuntu1604:
     name: 'java: java_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/java/java_proto_library
-  java_java_grpc_library:
+  java_java_proto_library_ubuntu1804:
+    name: 'java: java_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_proto_library
+  java_java_proto_library_windows:
+    name: 'java: java_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_proto_library
+  java_java_proto_library_macos:
+    name: 'java: java_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_proto_library
+  java_java_grpc_library_ubuntu1604:
     name: 'java: java_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/java/java_grpc_library
-  node_node_proto_compile:
+  java_java_grpc_library_ubuntu1804:
+    name: 'java: java_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_grpc_library
+  java_java_grpc_library_windows:
+    name: 'java: java_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_grpc_library
+  java_java_grpc_library_macos:
+    name: 'java: java_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/java/java_grpc_library
+  node_node_proto_compile_ubuntu1604:
     name: 'node: node_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/node/node_proto_compile
-  node_node_grpc_compile:
+  node_node_proto_compile_ubuntu1804:
+    name: 'node: node_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_proto_compile
+  node_node_proto_compile_windows:
+    name: 'node: node_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_proto_compile
+  node_node_proto_compile_macos:
+    name: 'node: node_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_proto_compile
+  node_node_grpc_compile_ubuntu1604:
     name: 'node: node_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/node/node_grpc_compile
-  node_node_proto_library:
+  node_node_grpc_compile_ubuntu1804:
+    name: 'node: node_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_grpc_compile
+  node_node_grpc_compile_windows:
+    name: 'node: node_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_grpc_compile
+  node_node_grpc_compile_macos:
+    name: 'node: node_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_grpc_compile
+  node_node_proto_library_ubuntu1604:
     name: 'node: node_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/node/node_proto_library
-  node_node_grpc_library:
+  node_node_proto_library_ubuntu1804:
+    name: 'node: node_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_proto_library
+  node_node_proto_library_windows:
+    name: 'node: node_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_proto_library
+  node_node_proto_library_macos:
+    name: 'node: node_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_proto_library
+  node_node_grpc_library_ubuntu1604:
     name: 'node: node_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/node/node_grpc_library
-  objc_objc_proto_compile:
+  node_node_grpc_library_ubuntu1804:
+    name: 'node: node_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_grpc_library
+  node_node_grpc_library_windows:
+    name: 'node: node_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_grpc_library
+  node_node_grpc_library_macos:
+    name: 'node: node_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/node/node_grpc_library
+  objc_objc_proto_compile_ubuntu1604:
     name: 'objc: objc_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/objc/objc_proto_compile
-  objc_objc_grpc_compile:
+  objc_objc_proto_compile_ubuntu1804:
+    name: 'objc: objc_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_proto_compile
+  objc_objc_proto_compile_windows:
+    name: 'objc: objc_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_proto_compile
+  objc_objc_proto_compile_macos:
+    name: 'objc: objc_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_proto_compile
+  objc_objc_grpc_compile_ubuntu1604:
     name: 'objc: objc_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/objc/objc_grpc_compile
-  php_php_proto_compile:
+  objc_objc_grpc_compile_ubuntu1804:
+    name: 'objc: objc_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_grpc_compile
+  objc_objc_grpc_compile_windows:
+    name: 'objc: objc_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_grpc_compile
+  objc_objc_grpc_compile_macos:
+    name: 'objc: objc_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_grpc_compile
+  objc_objc_proto_library_ubuntu1604:
+    name: 'objc: objc_proto_library'
+    platform: ubuntu1604
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_proto_library
+  objc_objc_proto_library_ubuntu1804:
+    name: 'objc: objc_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_proto_library
+  objc_objc_proto_library_windows:
+    name: 'objc: objc_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_proto_library
+  objc_objc_proto_library_macos:
+    name: 'objc: objc_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_proto_library
+  objc_objc_grpc_library_ubuntu1604:
+    name: 'objc: objc_grpc_library'
+    platform: ubuntu1604
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_grpc_library
+  objc_objc_grpc_library_ubuntu1804:
+    name: 'objc: objc_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_grpc_library
+  objc_objc_grpc_library_windows:
+    name: 'objc: objc_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_grpc_library
+  objc_objc_grpc_library_macos:
+    name: 'objc: objc_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/objc/objc_grpc_library
+  php_php_proto_compile_ubuntu1604:
     name: 'php: php_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/php/php_proto_compile
-  python_python_proto_compile:
+  php_php_proto_compile_ubuntu1804:
+    name: 'php: php_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/php/php_proto_compile
+  php_php_proto_compile_windows:
+    name: 'php: php_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/php/php_proto_compile
+  php_php_proto_compile_macos:
+    name: 'php: php_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/php/php_proto_compile
+  python_python_proto_compile_ubuntu1604:
     name: 'python: python_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/python/python_proto_compile
-  python_python_grpc_compile:
+  python_python_proto_compile_ubuntu1804:
+    name: 'python: python_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_proto_compile
+  python_python_proto_compile_windows:
+    name: 'python: python_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_proto_compile
+  python_python_proto_compile_macos:
+    name: 'python: python_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_proto_compile
+  python_python_grpc_compile_ubuntu1604:
     name: 'python: python_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/python/python_grpc_compile
-  python_python_proto_library:
+  python_python_grpc_compile_ubuntu1804:
+    name: 'python: python_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_grpc_compile
+  python_python_grpc_compile_windows:
+    name: 'python: python_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_grpc_compile
+  python_python_grpc_compile_macos:
+    name: 'python: python_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_grpc_compile
+  python_python_proto_library_ubuntu1604:
     name: 'python: python_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/python/python_proto_library
-  python_python_grpc_library:
+  python_python_proto_library_ubuntu1804:
+    name: 'python: python_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_proto_library
+  python_python_proto_library_windows:
+    name: 'python: python_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_proto_library
+  python_python_proto_library_macos:
+    name: 'python: python_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_proto_library
+  python_python_grpc_library_ubuntu1604:
     name: 'python: python_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/python/python_grpc_library
-  ruby_ruby_proto_compile:
+  python_python_grpc_library_ubuntu1804:
+    name: 'python: python_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_grpc_library
+  python_python_grpc_library_windows:
+    name: 'python: python_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_grpc_library
+  python_python_grpc_library_macos:
+    name: 'python: python_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/python/python_grpc_library
+  ruby_ruby_proto_compile_ubuntu1604:
     name: 'ruby: ruby_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/ruby/ruby_proto_compile
-  ruby_ruby_grpc_compile:
+  ruby_ruby_proto_compile_ubuntu1804:
+    name: 'ruby: ruby_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_proto_compile
+  ruby_ruby_proto_compile_windows:
+    name: 'ruby: ruby_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_proto_compile
+  ruby_ruby_proto_compile_macos:
+    name: 'ruby: ruby_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_proto_compile
+  ruby_ruby_grpc_compile_ubuntu1604:
     name: 'ruby: ruby_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/ruby/ruby_grpc_compile
-  ruby_ruby_proto_library:
+  ruby_ruby_grpc_compile_ubuntu1804:
+    name: 'ruby: ruby_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_grpc_compile
+  ruby_ruby_grpc_compile_windows:
+    name: 'ruby: ruby_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_grpc_compile
+  ruby_ruby_grpc_compile_macos:
+    name: 'ruby: ruby_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_grpc_compile
+  ruby_ruby_proto_library_ubuntu1604:
     name: 'ruby: ruby_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/ruby/ruby_proto_library
-  ruby_ruby_grpc_library:
+  ruby_ruby_proto_library_ubuntu1804:
+    name: 'ruby: ruby_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_proto_library
+  ruby_ruby_proto_library_windows:
+    name: 'ruby: ruby_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_proto_library
+  ruby_ruby_proto_library_macos:
+    name: 'ruby: ruby_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_proto_library
+  ruby_ruby_grpc_library_ubuntu1604:
     name: 'ruby: ruby_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/ruby/ruby_grpc_library
-  rust_rust_proto_compile:
+  ruby_ruby_grpc_library_ubuntu1804:
+    name: 'ruby: ruby_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_grpc_library
+  ruby_ruby_grpc_library_windows:
+    name: 'ruby: ruby_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_grpc_library
+  ruby_ruby_grpc_library_macos:
+    name: 'ruby: ruby_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/ruby/ruby_grpc_library
+  rust_rust_proto_compile_ubuntu1604:
     name: 'rust: rust_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/rust/rust_proto_compile
-  rust_rust_grpc_compile:
+  rust_rust_proto_compile_ubuntu1804:
+    name: 'rust: rust_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_proto_compile
+  rust_rust_proto_compile_windows:
+    name: 'rust: rust_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_proto_compile
+  rust_rust_proto_compile_macos:
+    name: 'rust: rust_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_proto_compile
+  rust_rust_grpc_compile_ubuntu1604:
     name: 'rust: rust_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/rust/rust_grpc_compile
-  rust_rust_proto_library:
+  rust_rust_grpc_compile_ubuntu1804:
+    name: 'rust: rust_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_grpc_compile
+  rust_rust_grpc_compile_windows:
+    name: 'rust: rust_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_grpc_compile
+  rust_rust_grpc_compile_macos:
+    name: 'rust: rust_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_grpc_compile
+  rust_rust_proto_library_ubuntu1604:
     name: 'rust: rust_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/rust/rust_proto_library
-  rust_rust_grpc_library:
+  rust_rust_proto_library_ubuntu1804:
+    name: 'rust: rust_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_proto_library
+  rust_rust_proto_library_windows:
+    name: 'rust: rust_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_proto_library
+  rust_rust_proto_library_macos:
+    name: 'rust: rust_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_proto_library
+  rust_rust_grpc_library_ubuntu1604:
     name: 'rust: rust_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/rust/rust_grpc_library
-  scala_scala_proto_compile:
+  rust_rust_grpc_library_ubuntu1804:
+    name: 'rust: rust_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_grpc_library
+  rust_rust_grpc_library_windows:
+    name: 'rust: rust_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_grpc_library
+  rust_rust_grpc_library_macos:
+    name: 'rust: rust_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/rust/rust_grpc_library
+  scala_scala_proto_compile_ubuntu1604:
     name: 'scala: scala_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/scala/scala_proto_compile
-  scala_scala_grpc_compile:
+  scala_scala_proto_compile_ubuntu1804:
+    name: 'scala: scala_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_proto_compile
+  scala_scala_proto_compile_windows:
+    name: 'scala: scala_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_proto_compile
+  scala_scala_proto_compile_macos:
+    name: 'scala: scala_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_proto_compile
+  scala_scala_grpc_compile_ubuntu1604:
     name: 'scala: scala_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/scala/scala_grpc_compile
-  scala_scala_proto_library:
+  scala_scala_grpc_compile_ubuntu1804:
+    name: 'scala: scala_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_grpc_compile
+  scala_scala_grpc_compile_windows:
+    name: 'scala: scala_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_grpc_compile
+  scala_scala_grpc_compile_macos:
+    name: 'scala: scala_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_grpc_compile
+  scala_scala_proto_library_ubuntu1604:
     name: 'scala: scala_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/scala/scala_proto_library
-  scala_scala_grpc_library:
+  scala_scala_proto_library_ubuntu1804:
+    name: 'scala: scala_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_proto_library
+  scala_scala_proto_library_windows:
+    name: 'scala: scala_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_proto_library
+  scala_scala_proto_library_macos:
+    name: 'scala: scala_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_proto_library
+  scala_scala_grpc_library_ubuntu1604:
     name: 'scala: scala_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/scala/scala_grpc_library
-  gogo_gogo_proto_compile:
+  scala_scala_grpc_library_ubuntu1804:
+    name: 'scala: scala_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_grpc_library
+  scala_scala_grpc_library_windows:
+    name: 'scala: scala_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_grpc_library
+  scala_scala_grpc_library_macos:
+    name: 'scala: scala_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/scala/scala_grpc_library
+  gogo_gogo_proto_compile_ubuntu1604:
     name: 'gogo: gogo_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogo_proto_compile
-  gogo_gogo_grpc_compile:
+  gogo_gogo_proto_compile_ubuntu1804:
+    name: 'gogo: gogo_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_proto_compile
+  gogo_gogo_proto_compile_windows:
+    name: 'gogo: gogo_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_proto_compile
+  gogo_gogo_proto_compile_macos:
+    name: 'gogo: gogo_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_proto_compile
+  gogo_gogo_grpc_compile_ubuntu1604:
     name: 'gogo: gogo_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogo_grpc_compile
-  gogo_gogo_proto_library:
+  gogo_gogo_grpc_compile_ubuntu1804:
+    name: 'gogo: gogo_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_grpc_compile
+  gogo_gogo_grpc_compile_windows:
+    name: 'gogo: gogo_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_grpc_compile
+  gogo_gogo_grpc_compile_macos:
+    name: 'gogo: gogo_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_grpc_compile
+  gogo_gogo_proto_library_ubuntu1604:
     name: 'gogo: gogo_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogo_proto_library
-  gogo_gogo_grpc_library:
+  gogo_gogo_proto_library_ubuntu1804:
+    name: 'gogo: gogo_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_proto_library
+  gogo_gogo_proto_library_windows:
+    name: 'gogo: gogo_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_proto_library
+  gogo_gogo_proto_library_macos:
+    name: 'gogo: gogo_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_proto_library
+  gogo_gogo_grpc_library_ubuntu1604:
     name: 'gogo: gogo_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogo_grpc_library
-  gogo_gogofast_proto_compile:
+  gogo_gogo_grpc_library_ubuntu1804:
+    name: 'gogo: gogo_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_grpc_library
+  gogo_gogo_grpc_library_windows:
+    name: 'gogo: gogo_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_grpc_library
+  gogo_gogo_grpc_library_macos:
+    name: 'gogo: gogo_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogo_grpc_library
+  gogo_gogofast_proto_compile_ubuntu1604:
     name: 'gogo: gogofast_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogofast_proto_compile
-  gogo_gogofast_grpc_compile:
+  gogo_gogofast_proto_compile_ubuntu1804:
+    name: 'gogo: gogofast_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_proto_compile
+  gogo_gogofast_proto_compile_windows:
+    name: 'gogo: gogofast_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_proto_compile
+  gogo_gogofast_proto_compile_macos:
+    name: 'gogo: gogofast_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_proto_compile
+  gogo_gogofast_grpc_compile_ubuntu1604:
     name: 'gogo: gogofast_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogofast_grpc_compile
-  gogo_gogofast_proto_library:
+  gogo_gogofast_grpc_compile_ubuntu1804:
+    name: 'gogo: gogofast_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_grpc_compile
+  gogo_gogofast_grpc_compile_windows:
+    name: 'gogo: gogofast_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_grpc_compile
+  gogo_gogofast_grpc_compile_macos:
+    name: 'gogo: gogofast_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_grpc_compile
+  gogo_gogofast_proto_library_ubuntu1604:
     name: 'gogo: gogofast_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogofast_proto_library
-  gogo_gogofast_grpc_library:
+  gogo_gogofast_proto_library_ubuntu1804:
+    name: 'gogo: gogofast_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_proto_library
+  gogo_gogofast_proto_library_windows:
+    name: 'gogo: gogofast_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_proto_library
+  gogo_gogofast_proto_library_macos:
+    name: 'gogo: gogofast_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_proto_library
+  gogo_gogofast_grpc_library_ubuntu1604:
     name: 'gogo: gogofast_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogofast_grpc_library
-  gogo_gogofaster_proto_compile:
+  gogo_gogofast_grpc_library_ubuntu1804:
+    name: 'gogo: gogofast_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_grpc_library
+  gogo_gogofast_grpc_library_windows:
+    name: 'gogo: gogofast_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_grpc_library
+  gogo_gogofast_grpc_library_macos:
+    name: 'gogo: gogofast_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofast_grpc_library
+  gogo_gogofaster_proto_compile_ubuntu1604:
     name: 'gogo: gogofaster_proto_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogofaster_proto_compile
-  gogo_gogofaster_grpc_compile:
+  gogo_gogofaster_proto_compile_ubuntu1804:
+    name: 'gogo: gogofaster_proto_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_proto_compile
+  gogo_gogofaster_proto_compile_windows:
+    name: 'gogo: gogofaster_proto_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_proto_compile
+  gogo_gogofaster_proto_compile_macos:
+    name: 'gogo: gogofaster_proto_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_proto_compile
+  gogo_gogofaster_grpc_compile_ubuntu1604:
     name: 'gogo: gogofaster_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_compile
-  gogo_gogofaster_proto_library:
+  gogo_gogofaster_grpc_compile_ubuntu1804:
+    name: 'gogo: gogofaster_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_compile
+  gogo_gogofaster_grpc_compile_windows:
+    name: 'gogo: gogofaster_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_compile
+  gogo_gogofaster_grpc_compile_macos:
+    name: 'gogo: gogofaster_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_compile
+  gogo_gogofaster_proto_library_ubuntu1604:
     name: 'gogo: gogofaster_proto_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogofaster_proto_library
-  gogo_gogofaster_grpc_library:
+  gogo_gogofaster_proto_library_ubuntu1804:
+    name: 'gogo: gogofaster_proto_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_proto_library
+  gogo_gogofaster_proto_library_windows:
+    name: 'gogo: gogofaster_proto_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_proto_library
+  gogo_gogofaster_proto_library_macos:
+    name: 'gogo: gogofaster_proto_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_proto_library
+  gogo_gogofaster_grpc_library_ubuntu1604:
     name: 'gogo: gogofaster_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_library
-  grpc-gateway_gateway_grpc_compile:
+  gogo_gogofaster_grpc_library_ubuntu1804:
+    name: 'gogo: gogofaster_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_library
+  gogo_gogofaster_grpc_library_windows:
+    name: 'gogo: gogofaster_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_library
+  gogo_gogofaster_grpc_library_macos:
+    name: 'gogo: gogofaster_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_library
+  grpc-gateway_gateway_grpc_compile_ubuntu1604:
     name: 'grpc-gateway: gateway_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_compile
-  grpc-gateway_gateway_swagger_compile:
+  grpc-gateway_gateway_grpc_compile_ubuntu1804:
+    name: 'grpc-gateway: gateway_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_compile
+  grpc-gateway_gateway_grpc_compile_windows:
+    name: 'grpc-gateway: gateway_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_compile
+  grpc-gateway_gateway_grpc_compile_macos:
+    name: 'grpc-gateway: gateway_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_compile
+  grpc-gateway_gateway_swagger_compile_ubuntu1604:
     name: 'grpc-gateway: gateway_swagger_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_swagger_compile
-  grpc-gateway_gateway_grpc_library:
+  grpc-gateway_gateway_swagger_compile_ubuntu1804:
+    name: 'grpc-gateway: gateway_swagger_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_swagger_compile
+  grpc-gateway_gateway_swagger_compile_windows:
+    name: 'grpc-gateway: gateway_swagger_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_swagger_compile
+  grpc-gateway_gateway_swagger_compile_macos:
+    name: 'grpc-gateway: gateway_swagger_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_swagger_compile
+  grpc-gateway_gateway_grpc_library_ubuntu1604:
     name: 'grpc-gateway: gateway_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_library
-  grpc.js_grpcjs_grpc_compile:
+  grpc-gateway_gateway_grpc_library_ubuntu1804:
+    name: 'grpc-gateway: gateway_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_library
+  grpc-gateway_gateway_grpc_library_windows:
+    name: 'grpc-gateway: gateway_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_library
+  grpc-gateway_gateway_grpc_library_macos:
+    name: 'grpc-gateway: gateway_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_library
+  grpc.js_grpcjs_grpc_compile_ubuntu1604:
     name: 'grpc.js: grpcjs_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_compile
-  grpc.js_grpcjs_grpc_library:
+  grpc.js_grpcjs_grpc_compile_ubuntu1804:
+    name: 'grpc.js: grpcjs_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_compile
+  grpc.js_grpcjs_grpc_compile_windows:
+    name: 'grpc.js: grpcjs_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_compile
+  grpc.js_grpcjs_grpc_compile_macos:
+    name: 'grpc.js: grpcjs_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_compile
+  grpc.js_grpcjs_grpc_library_ubuntu1604:
     name: 'grpc.js: grpcjs_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_library
-  grpc-web_closure_grpc_compile:
+  grpc.js_grpcjs_grpc_library_ubuntu1804:
+    name: 'grpc.js: grpcjs_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_library
+  grpc.js_grpcjs_grpc_library_windows:
+    name: 'grpc.js: grpcjs_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_library
+  grpc.js_grpcjs_grpc_library_macos:
+    name: 'grpc.js: grpcjs_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_library
+  grpc-web_closure_grpc_compile_ubuntu1604:
     name: 'grpc-web: closure_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/grpc/grpc-web/closure_grpc_compile
-  grpc-web_commonjs_grpc_compile:
+  grpc-web_closure_grpc_compile_ubuntu1804:
+    name: 'grpc-web: closure_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/closure_grpc_compile
+  grpc-web_closure_grpc_compile_windows:
+    name: 'grpc-web: closure_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/closure_grpc_compile
+  grpc-web_closure_grpc_compile_macos:
+    name: 'grpc-web: closure_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/closure_grpc_compile
+  grpc-web_commonjs_grpc_compile_ubuntu1604:
     name: 'grpc-web: commonjs_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/grpc/grpc-web/commonjs_grpc_compile
-  grpc-web_commonjs_dts_grpc_compile:
+  grpc-web_commonjs_grpc_compile_ubuntu1804:
+    name: 'grpc-web: commonjs_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/commonjs_grpc_compile
+  grpc-web_commonjs_grpc_compile_windows:
+    name: 'grpc-web: commonjs_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/commonjs_grpc_compile
+  grpc-web_commonjs_grpc_compile_macos:
+    name: 'grpc-web: commonjs_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/commonjs_grpc_compile
+  grpc-web_commonjs_dts_grpc_compile_ubuntu1604:
     name: 'grpc-web: commonjs_dts_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/grpc/grpc-web/commonjs_dts_grpc_compile
-  grpc-web_ts_grpc_compile:
+  grpc-web_commonjs_dts_grpc_compile_ubuntu1804:
+    name: 'grpc-web: commonjs_dts_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/commonjs_dts_grpc_compile
+  grpc-web_commonjs_dts_grpc_compile_windows:
+    name: 'grpc-web: commonjs_dts_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/commonjs_dts_grpc_compile
+  grpc-web_commonjs_dts_grpc_compile_macos:
+    name: 'grpc-web: commonjs_dts_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/commonjs_dts_grpc_compile
+  grpc-web_ts_grpc_compile_ubuntu1604:
     name: 'grpc-web: ts_grpc_compile'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/grpc/grpc-web/ts_grpc_compile
-  grpc-web_closure_grpc_library:
+  grpc-web_ts_grpc_compile_ubuntu1804:
+    name: 'grpc-web: ts_grpc_compile'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/ts_grpc_compile
+  grpc-web_ts_grpc_compile_windows:
+    name: 'grpc-web: ts_grpc_compile'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/ts_grpc_compile
+  grpc-web_ts_grpc_compile_macos:
+    name: 'grpc-web: ts_grpc_compile'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/ts_grpc_compile
+  grpc-web_closure_grpc_library_ubuntu1604:
     name: 'grpc-web: closure_grpc_library'
     platform: ubuntu1604
     build_targets:
       - "//..."
     working_directory: example/github.com/grpc/grpc-web/closure_grpc_library
-  test_workspace_exclusions:
+  grpc-web_closure_grpc_library_ubuntu1804:
+    name: 'grpc-web: closure_grpc_library'
+    platform: ubuntu1804
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/closure_grpc_library
+  grpc-web_closure_grpc_library_windows:
+    name: 'grpc-web: closure_grpc_library'
+    platform: windows
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/closure_grpc_library
+  grpc-web_closure_grpc_library_macos:
+    name: 'grpc-web: closure_grpc_library'
+    platform: macos
+    build_targets:
+      - "//..."
+    working_directory: example/github.com/grpc/grpc-web/closure_grpc_library
+  test_workspace_exclusions_ubuntu1604:
     name: 'test workspace: exclusions'
     platform: ubuntu1604
     test_flags:
@@ -436,7 +1768,31 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/exclusions
-  test_workspace_generated_proto:
+  test_workspace_exclusions_ubuntu1804:
+    name: 'test workspace: exclusions'
+    platform: ubuntu1804
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/exclusions
+  test_workspace_exclusions_windows:
+    name: 'test workspace: exclusions'
+    platform: windows
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/exclusions
+  test_workspace_exclusions_macos:
+    name: 'test workspace: exclusions'
+    platform: macos
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/exclusions
+  test_workspace_generated_proto_ubuntu1604:
     name: 'test workspace: generated_proto'
     platform: ubuntu1604
     test_flags:
@@ -444,7 +1800,31 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/generated_proto
-  test_workspace_go_importpath:
+  test_workspace_generated_proto_ubuntu1804:
+    name: 'test workspace: generated_proto'
+    platform: ubuntu1804
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/generated_proto
+  test_workspace_generated_proto_windows:
+    name: 'test workspace: generated_proto'
+    platform: windows
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/generated_proto
+  test_workspace_generated_proto_macos:
+    name: 'test workspace: generated_proto'
+    platform: macos
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/generated_proto
+  test_workspace_go_importpath_ubuntu1604:
     name: 'test workspace: go_importpath'
     platform: ubuntu1604
     test_flags:
@@ -452,7 +1832,31 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/go_importpath
-  test_workspace_objc_capitalisation:
+  test_workspace_go_importpath_ubuntu1804:
+    name: 'test workspace: go_importpath'
+    platform: ubuntu1804
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/go_importpath
+  test_workspace_go_importpath_windows:
+    name: 'test workspace: go_importpath'
+    platform: windows
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/go_importpath
+  test_workspace_go_importpath_macos:
+    name: 'test workspace: go_importpath'
+    platform: macos
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/go_importpath
+  test_workspace_objc_capitalisation_ubuntu1604:
     name: 'test workspace: objc_capitalisation'
     platform: ubuntu1604
     test_flags:
@@ -460,7 +1864,31 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/objc_capitalisation
-  test_workspace_proto_source_root:
+  test_workspace_objc_capitalisation_ubuntu1804:
+    name: 'test workspace: objc_capitalisation'
+    platform: ubuntu1804
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/objc_capitalisation
+  test_workspace_objc_capitalisation_windows:
+    name: 'test workspace: objc_capitalisation'
+    platform: windows
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/objc_capitalisation
+  test_workspace_objc_capitalisation_macos:
+    name: 'test workspace: objc_capitalisation'
+    platform: macos
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/objc_capitalisation
+  test_workspace_proto_source_root_ubuntu1604:
     name: 'test workspace: proto_source_root'
     platform: ubuntu1604
     test_flags:
@@ -468,7 +1896,31 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/proto_source_root
-  test_workspace_python_dashes:
+  test_workspace_proto_source_root_ubuntu1804:
+    name: 'test workspace: proto_source_root'
+    platform: ubuntu1804
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/proto_source_root
+  test_workspace_proto_source_root_windows:
+    name: 'test workspace: proto_source_root'
+    platform: windows
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/proto_source_root
+  test_workspace_proto_source_root_macos:
+    name: 'test workspace: proto_source_root'
+    platform: macos
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/proto_source_root
+  test_workspace_python_dashes_ubuntu1604:
     name: 'test workspace: python_dashes'
     platform: ubuntu1604
     test_flags:
@@ -476,7 +1928,31 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/python_dashes
-  test_workspace_python_deps:
+  test_workspace_python_dashes_ubuntu1804:
+    name: 'test workspace: python_dashes'
+    platform: ubuntu1804
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/python_dashes
+  test_workspace_python_dashes_windows:
+    name: 'test workspace: python_dashes'
+    platform: windows
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/python_dashes
+  test_workspace_python_dashes_macos:
+    name: 'test workspace: python_dashes'
+    platform: macos
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/python_dashes
+  test_workspace_python_deps_ubuntu1604:
     name: 'test workspace: python_deps'
     platform: ubuntu1604
     test_flags:
@@ -484,7 +1960,31 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/python_deps
-  test_workspace_shared_proto:
+  test_workspace_python_deps_ubuntu1804:
+    name: 'test workspace: python_deps'
+    platform: ubuntu1804
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/python_deps
+  test_workspace_python_deps_windows:
+    name: 'test workspace: python_deps'
+    platform: windows
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/python_deps
+  test_workspace_python_deps_macos:
+    name: 'test workspace: python_deps'
+    platform: macos
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/python_deps
+  test_workspace_shared_proto_ubuntu1604:
     name: 'test workspace: shared_proto'
     platform: ubuntu1604
     test_flags:
@@ -492,9 +1992,57 @@ tasks:
     test_targets:
       - "//..."
     working_directory: test_workspaces/shared_proto
-  test_workspace_strip_import_prefix:
+  test_workspace_shared_proto_ubuntu1804:
+    name: 'test workspace: shared_proto'
+    platform: ubuntu1804
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/shared_proto
+  test_workspace_shared_proto_windows:
+    name: 'test workspace: shared_proto'
+    platform: windows
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/shared_proto
+  test_workspace_shared_proto_macos:
+    name: 'test workspace: shared_proto'
+    platform: macos
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/shared_proto
+  test_workspace_strip_import_prefix_ubuntu1604:
     name: 'test workspace: strip_import_prefix'
     platform: ubuntu1604
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/strip_import_prefix
+  test_workspace_strip_import_prefix_ubuntu1804:
+    name: 'test workspace: strip_import_prefix'
+    platform: ubuntu1804
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/strip_import_prefix
+  test_workspace_strip_import_prefix_windows:
+    name: 'test workspace: strip_import_prefix'
+    platform: windows
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+      - "//..."
+    working_directory: test_workspaces/strip_import_prefix
+  test_workspace_strip_import_prefix_macos:
+    name: 'test workspace: strip_import_prefix'
+    platform: macos
     test_flags:
     - "--test_output=errors"
     test_targets:

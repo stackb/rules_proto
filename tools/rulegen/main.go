@@ -376,30 +376,33 @@ func mustWriteTravisYml(dir, header, footer string, data interface{}, languages 
 
 func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Language, envVars []string) {
 	out := &LineWriter{}
+	platforms := []string{"ubuntu1604", "ubuntu1804", "windows", "macos"}
 
 	// Write header
 	out.w("---")
 	out.w("tasks:")
 
 	//
-	// Write task for main code
+	// Write tasks for main code
 	//
-	out.w("  main:")
-	out.w("    name: build & test all")
-	out.w("    platform: ubuntu1604")
-	out.w("    environment:")
-	out.w("      CC: clang")
-	out.w("    test_flags:")
-	out.w(`    - "--test_output=errors"`)
-	out.w("    test_targets:")
-	out.w(`    - "//example/routeguide/..."`)
-	out.w("    build_targets:")
-	for _, lang := range languages {
-		// Skip experimental
-		if lang.Name == "dart" || lang.Name == "php" || lang.Name == "swift" || lang.Name == "csharp" {
-			continue
+	for _, platform := range platforms {
+		out.w("  main_%s:", platform)
+		out.w("    name: build & test all")
+		out.w("    platform: %s", platform)
+		out.w("    environment:")
+		out.w("      CC: clang")
+		out.w("    test_flags:")
+		out.w(`    - "--test_output=errors"`)
+		out.w("    test_targets:")
+		out.w(`    - "//example/routeguide/..."`)
+		out.w("    build_targets:")
+		for _, lang := range languages {
+			// Skip experimental
+			if lang.Name == "dart" || lang.Name == "php" || lang.Name == "swift" || lang.Name == "csharp" {
+				continue
+			}
+			out.w(`    - "//%s/..."`, lang.Dir)
 		}
-		out.w(`    - "//%s/..."`, lang.Dir)
 	}
 
 	//
@@ -413,20 +416,22 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 
 			exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
 
-			out.w("  %s_%s:", lang.Name, rule.Name)
-			out.w("    name: '%s: %s'", lang.Name, rule.Name)
-			out.w("    platform: ubuntu1604")
-			out.w("    build_targets:")
-			out.w(`      - "//..."`)
-			out.w("    working_directory: %s", exampleDir)
+			for _, platform := range platforms {
+				out.w("  %s_%s_%s:", lang.Name, rule.Name, platform)
+				out.w("    name: '%s: %s'", lang.Name, rule.Name)
+				out.w("    platform: %s", platform)
+				out.w("    build_targets:")
+				out.w(`      - "//..."`)
+				out.w("    working_directory: %s", exampleDir)
 
-			if len(lang.PresubmitEnvVars) > 0 || len(rule.PresubmitEnvVars) > 0 {
-				out.w("    environment:")
-				for k, v := range lang.PresubmitEnvVars {
-					out.w("      %s: %s", k, v)
-				}
-				for k, v := range rule.PresubmitEnvVars {
-					out.w("      %s: %s", k, v)
+				if len(lang.PresubmitEnvVars) > 0 || len(rule.PresubmitEnvVars) > 0 {
+					out.w("    environment:")
+					for k, v := range lang.PresubmitEnvVars {
+						out.w("      %s: %s", k, v)
+					}
+					for k, v := range rule.PresubmitEnvVars {
+						out.w("      %s: %s", k, v)
+					}
 				}
 			}
 		}
@@ -434,14 +439,16 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 
 	// Add test workspaces
 	for _, testWorkspace := range findTestWorkspaceNames(dir) {
-		out.w("  test_workspace_%s:", testWorkspace)
-		out.w("    name: 'test workspace: %s'", testWorkspace)
-		out.w("    platform: ubuntu1604")
-		out.w("    test_flags:")
-		out.w(`    - "--test_output=errors"`)
-		out.w("    test_targets:")
-		out.w(`      - "//..."`)
-		out.w("    working_directory: %s", path.Join(dir, "test_workspaces", testWorkspace))
+		for _, platform := range platforms {
+			out.w("  test_workspace_%s_%s:", testWorkspace, platform)
+			out.w("    name: 'test workspace: %s'", testWorkspace)
+			out.w("    platform: %s", platform)
+			out.w("    test_flags:")
+			out.w(`    - "--test_output=errors"`)
+			out.w("    test_targets:")
+			out.w(`      - "//..."`)
+			out.w("    working_directory: %s", path.Join(dir, "test_workspaces", testWorkspace))
+		}
 	}
 
 	out.ln()
