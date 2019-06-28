@@ -363,8 +363,10 @@ def copy_file(ctx, src_file, dest_path, sibling=None):
         inputs = [src_file],
         outputs = [dest_file],
         command = "cp '{}' '{}'".format(src_file.path, dest_file.path),
+        progress_message = 'copying file {} to {}'.format(src_file.path, dest_file.path),
     )
     return dest_file
+
 
 # Adapted from https://github.com/bazelbuild/rules_go
 def descriptor_proto_path(proto, proto_info):

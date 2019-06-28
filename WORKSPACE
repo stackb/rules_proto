@@ -2,16 +2,6 @@ workspace(name = "build_stack_rules_proto")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 
-# local_repository(
-#     name = "org_pubref_rules_node",
-#     path = "/home/pcj/github/pubref/rules_node",
-# )
-
-# local_repository(
-#     name = "com_github_yugui_rules_ruby",
-#     path = "/home/pcj/github/yugui/rules_ruby",
-# )
-
 # **************************************************************
 #
 #
