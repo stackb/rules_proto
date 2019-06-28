@@ -35,16 +35,6 @@ func main() {
 			Value: "tools/rulegen/README.footer.md",
 		},
 		&cli.StringFlag{
-			Name:  "travis_header",
-			Usage: "Template for the travis header",
-			Value: "tools/rulegen/travis.header.yml",
-		},
-		&cli.StringFlag{
-			Name:  "travis_footer",
-			Usage: "Template for the travis footer",
-			Value: "tools/rulegen/travis.footer.yml",
-		},
-		&cli.StringFlag{
 			Name:  "ref",
 			Usage: "Version ref to use for main readme",
 			Value: "{GIT_COMMIT_ID}",
@@ -123,13 +113,6 @@ func action(c *cli.Context) error {
 		Ref:    ref,
 		Sha256: sha256,
 	}, languages)
-
-	// mustWriteTravisYml(dir, c.String("travis_header"), c.String("travis_footer"), struct {
-	// 	Ref, Sha256 string
-	// }{
-	// 	Ref:    ref,
-	// 	Sha256: sha256,
-	// }, languages, []string{})
 
 	mustWriteBazelciPresubmitYml(dir, struct {
 		Ref, Sha256 string
@@ -339,38 +322,6 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.tpl(footer, data)
 
 	out.MustWrite(path.Join(dir, "README.md"))
-}
-
-
-func mustWriteTravisYml(dir, header, footer string, data interface{}, languages []*Language, envVars []string) {
-	out := &LineWriter{}
-
-	out.tpl(header, data)
-
-	for _, lang := range languages {
-		if lang.TravisExclusionReason != "" {
-			continue
-		}
-		for _, rule := range lang.Rules {
-			if rule.TravisExclusionReason != "" {
-				continue
-			}
-			env := make([]string, 0)
-			for _, v := range envVars {
-				env = append(env, v)
-			}
-			env = append(env, "LANG="+lang.Dir)
-			env = append(env, "RULE="+rule.Name)
-
-			out.w("  - %s", strings.Join(env, " "))
-		}
-	}
-	out.ln()
-
-	out.tpl(footer, data)
-	out.ln()
-
-	out.MustWrite(path.Join(dir, ".travis.yml"))
 }
 
 

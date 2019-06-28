@@ -34,7 +34,6 @@ func makeSwift() *Language {
 	return &Language{
 		Dir:  "swift",
 		Name: "swift",
-		// TravisExclusionReason: "travis incompatible",
 		PresubmitEnvVars: map[string]string{
 			"CC": "clang",
 		},

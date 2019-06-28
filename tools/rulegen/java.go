@@ -37,8 +37,6 @@ func makeJava() *Language {
 	return &Language{
 		Dir:              "java",
 		Name:             "java",
-		RouteGuideClient: "//java/example/routeguide:client",
-		RouteGuideServer: "//java/example/routeguide:server",
 		Flags:            commonLangFlags,
 		Rules: []*Rule{
 			&Rule{

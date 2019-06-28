@@ -29,14 +29,7 @@ type Language struct {
 	// Bazel build flags required / suggested
 	Flags []*Flag
 
-	// Does the langaguage has a routeguide server?  If so, this is the bazel target to run it.
-	RouteGuideServer, RouteGuideClient string
-
-	// If not the empty string, one-word reason why excluded from TravisCI
-	// configuration
-	TravisExclusionReason string
-
-	// Additional travis-specific env vars in the form "K=V"
+	// Additional CI-specific env vars in the form "K=V"
 	PresubmitEnvVars map[string]string
 }
 
@@ -78,11 +71,7 @@ type Rule struct {
 	// Bazel build flags required / suggested
 	Flags []*Flag
 
-	// If not the empty string, one-word reason why excluded from TravisCI
-	// configuration
-	TravisExclusionReason string
-
-	// Additional travis-specific env vars in the form "K=V"
+	// Additional CI-specific env vars in the form "K=V"
 	PresubmitEnvVars map[string]string
 
 	// If not the empty string, one-word reason why excluded from bazelci
