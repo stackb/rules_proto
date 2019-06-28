@@ -39,9 +39,6 @@ def {{ .Rule.Name }}(**kwargs):
         deps = [
             "@io_bazel_rules_closure//closure/protobuf:jspb",
         ] + kwargs.get("closure_deps", []),
-        internal_descriptors = [
-            name_pb + "/descriptor.source.bin",
-        ],
         suppress = [
             "JSC_LATE_PROVIDE_ERROR",
             "JSC_UNDEFINED_VARIABLE",
@@ -65,10 +62,6 @@ def {{ .Rule.Name }}(**kwargs):
             "@com_github_stackb_grpc_js//js/grpc:api",
             "@com_github_stackb_grpc_js//js/grpc:options",
         ] + kwargs.get("closure_deps", []),
-        internal_descriptors = [
-            name_pb + "/descriptor.source.bin",
-            name_pb_grpc + "/descriptor.source.bin",
-        ],
         exports = [
             name_pb_lib,
         ],

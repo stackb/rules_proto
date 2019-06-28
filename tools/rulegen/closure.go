@@ -25,7 +25,6 @@ def {{ .Rule.Name }}(**kwargs):
         srcs = [name_pb],
         deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
         visibility = kwargs.get("visibility"),
-        internal_descriptors = [name_pb + "/descriptor.source.bin"],
         suppress = [
             "JSC_LATE_PROVIDE_ERROR",
             "JSC_UNDEFINED_VARIABLE",
