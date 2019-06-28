@@ -17,7 +17,7 @@ var objcProtoLibraryRuleTemplate = mustTemplate(objcLibraryRuleTemplateString + 
         srcs = [name_pb],
         deps = [
             "@com_google_protobuf//:protobuf_objc",
-        ]
+        ],
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )
@@ -31,7 +31,7 @@ var objcGrpcLibraryRuleTemplate = mustTemplate(objcLibraryRuleTemplateString + `
         deps = [
             "@com_google_protobuf//:protobuf_objc",
             "@com_github_grpc_grpc//:grpc++",
-        ]
+        ],
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )

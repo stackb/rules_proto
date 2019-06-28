@@ -26,7 +26,11 @@ proto_compile_attrs = {
         default = "0",
     ),
     "prefix_path": attr.string(
-        doc = "Path to prefix to the generated files in the output directory",
+        doc = "Path to prefix to the generated files in the output directory. Cannot be set when merge_directories == False",
+    ),
+    "merge_directories": attr.bool(
+        doc = "If true, all generated files are merged into a single directory with the name of current label and these new files returned as the outputs. If false, the original generated files are returned across multiple roots",
+        default = True,
     ),
 }
 
@@ -41,67 +45,87 @@ proto_compile_aspect_attrs = {
 
 
 def proto_compile_impl(ctx):
-    # Aggregate output files created by the aspect as it has walked the deps
+    # Aggregate output filesand dirs created by the aspect as it has walked the deps
     output_files = [dep[ProtoLibraryAspectNodeInfo].output_files for dep in ctx.attr.deps]
     output_dirs = [d for dirs in [dep[ProtoLibraryAspectNodeInfo].output_dirs for dep in ctx.attr.deps] for d in dirs]
 
-    # Build output tree by aggregating files created by aspect
-    # TODO: remove this and update library rules to consume the existing outputs
-    copied_output_files = []
-    prefix_path = ctx.attr.prefix_path
+    # Check merge_directories and prefix_path
+    if not ctx.attr.merge_directories and ctx.attr.prefix_path:
+        fail('Attribute prefix_path cannot be set when merge_directories is false')
 
-    for output_files_dict in output_files:
-        for root, files in output_files_dict.items():
-            for file in files:
-                # Strip root from file path
-                path = file.path
-                if path.startswith(root):
-                    path = path[len(root):]
-                if path.startswith("/"):
-                    path = path[1:]
+    # Build outputs
+    final_output_files = {}
+    final_output_dirs = []
 
-                # Prepend prefix path if given
-                if prefix_path:
-                    path = prefix_path + '/' + path
+    if not ctx.attr.merge_directories:
+        # Pass on outputs directly when not merging
+        for output_files_dict in output_files:
+            final_output_files.update(**output_files_dict)
+        final_output_dirs = output_dirs
 
-                # Copy file to output
-                copied_output_files.append(copy_file(
-                    ctx, file,
-                    "{}/{}".format(ctx.label.name, path)
-                ))
+    else:
+        # Build output tree by aggregating files created by aspect into one directory
+        output_root = ctx.bin_dir.path + '/'
+        if ctx.label.workspace_root:
+            output_root += ctx.label.workspace_root + '/'
+        if ctx.label.package:
+            output_root += ctx.label.package + '/'
+        output_root += ctx.label.name
+        final_output_files[output_root] = []
 
-    # Merge output directories created by aspect
-    copied_output_dirs = []
-    if output_dirs:
-        # Declare shared output directory
-        dir_name = ctx.label.name
-        if prefix_path:
-            dir_name = prefix_path + '/' + dir_name
-        new_dir = ctx.actions.declare_directory(dir_name)
-        copied_output_dirs.append(new_dir)
+        prefix_path = ctx.attr.prefix_path
+        for output_files_dict in output_files:
+            for root, files in output_files_dict.items():
+                for file in files:
+                    # Strip root from file path
+                    path = file.path
+                    if path.startswith(root):
+                        path = path[len(root):]
+                    if path.startswith("/"):
+                        path = path[1:]
 
-        # Copy directories to shared output directory in one action
-        ctx.actions.run_shell(
-            mnemonic = "CopyDirs",
-            inputs = output_dirs,
-            outputs = [new_dir],
-            command = "cp -r {} '{}'".format(
-                ' '.join(["'" + d.path + "'/*" for d in output_dirs]),
-                new_dir.path
-            ),
-            progress_message = 'copying directories to {}'.format(new_dir.path),
-        )
+                    # Prepend prefix path if given
+                    if prefix_path:
+                        path = prefix_path + '/' + path
+
+                    # Copy file to output
+                    final_output_files[output_root].append(copy_file(
+                        ctx, file,
+                        "{}/{}".format(ctx.label.name, path)
+                    ))
+
+        # Merge output directories created by aspect
+        if output_dirs:
+            # Declare shared output directory
+            dir_name = ctx.label.name
+            if prefix_path:
+                dir_name = prefix_path + '/' + dir_name
+            new_dir = ctx.actions.declare_directory(dir_name)
+            final_output_dirs.append(new_dir)
+
+            # Copy directories to shared output directory in one action
+            ctx.actions.run_shell(
+                mnemonic = "CopyDirs",
+                inputs = output_dirs,
+                outputs = [new_dir],
+                command = "cp -r {} '{}'".format(
+                    ' '.join(["'" + d.path + "'/*" for d in output_dirs]),
+                    new_dir.path
+                ),
+                progress_message = 'copying directories to {}'.format(new_dir.path),
+            )
 
     # Create default and proto compile providers
+    all_outputs = [f for files in final_output_files.values() for f in files] + final_output_dirs
     return [
         ProtoCompileInfo(
             label = ctx.label,
-            outputs = copied_output_files + copied_output_dirs,
-            files = copied_output_files + copied_output_dirs,
+            output_files = final_output_files,
+            output_dirs = final_output_dirs,
         ),
         DefaultInfo(
-            files = depset(copied_output_files + copied_output_dirs),
-            data_runfiles = ctx.runfiles(files=copied_output_files + copied_output_dirs),
+            files = depset(all_outputs),
+            data_runfiles = ctx.runfiles(files=all_outputs),
         )
     ]
 
@@ -368,11 +392,7 @@ def proto_compile_aspect_impl(target, ctx):
         output_files_dict[full_outdir] = output_files
 
     for transitive_info in transitive_infos:
-        for root, files in transitive_info.output_files.items():
-            if root not in output_files_dict:
-                output_files_dict[root] = []
-            output_files_dict[root].extend(files)
-
+        output_files_dict.update(**transitive_info.output_files)
         output_dirs += transitive_info.output_dirs
 
     return [

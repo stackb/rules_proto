@@ -13,7 +13,7 @@ def objc_proto_library(**kwargs):
         srcs = [name_pb],
         deps = [
             "@com_google_protobuf//:protobuf_objc",
-        ]
+        ],
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )

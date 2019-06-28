@@ -48,5 +48,6 @@ _rule = rule(
 def python_grpc_compile(**kwargs):
     _rule(
         verbose_string = "{}".format(kwargs.get("verbose", 0)),
-        **kwargs
+        merge_directories = True,
+        **{k: v for k, v in kwargs.items() if k != "merge_directories"}
     )

@@ -31,6 +31,9 @@ type Language struct {
 
 	// Additional CI-specific env vars in the form "K=V"
 	PresubmitEnvVars map[string]string
+
+	// Flag indicating if the merge_directories flag should be set to false for the generated rule
+	SkipDirectoriesMerge bool
 }
 
 
@@ -64,9 +67,6 @@ type Rule struct {
 
 	// Not expected to be functional
 	Experimental bool
-
-	// Not compatible with remote execution
-	RemoteIncompatible bool
 
 	// Bazel build flags required / suggested
 	Flags []*Flag

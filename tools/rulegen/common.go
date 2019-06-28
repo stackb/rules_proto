@@ -71,7 +71,8 @@ _rule = rule(
 def {{ .Rule.Name }}(**kwargs):
     _rule(
         verbose_string = "{}".format(kwargs.get("verbose", 0)),
-        **kwargs
+        merge_directories = {{ if .Lang.SkipDirectoriesMerge }}False{{else}}True{{end}},
+        **{k: v for k, v in kwargs.items() if k != "merge_directories"}
     )`)
 
 

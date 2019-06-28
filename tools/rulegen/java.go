@@ -38,6 +38,7 @@ func makeJava() *Language {
 		Dir:              "java",
 		Name:             "java",
 		Flags:            commonLangFlags,
+		SkipDirectoriesMerge: true,
 		Rules: []*Rule{
 			&Rule{
 				Name:             "java_proto_compile",
