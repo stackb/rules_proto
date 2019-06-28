@@ -275,7 +275,7 @@ def proto_compile_aspect_impl(target, ctx):
         # directory.
 
         if plugin.output_directory:
-            out_file = ctx.actions.declare_directory(rel_outdir)
+            out_file = ctx.actions.declare_directory(rel_outdir + '/' + plugin.name)
             plugin_outputs.append(out_file)
             output_dirs.append(out_file)
 
