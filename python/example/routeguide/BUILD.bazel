@@ -3,7 +3,6 @@ load("//python:python_proto_compile.bzl", "python_proto_compile")
 
 python_proto_compile(
     name = "person",
-    verbose = 0,
     deps = ["//example/proto:person_proto"],
 )
 
