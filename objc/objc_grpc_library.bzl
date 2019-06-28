@@ -11,6 +11,10 @@ def objc_grpc_library(**kwargs):
     native.objc_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
+        deps = [
+            "@com_google_protobuf//:protobuf_objc",
+            "@com_github_grpc_grpc//:grpc++",
+        ]
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )

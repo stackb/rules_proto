@@ -31,9 +31,8 @@ var cppGrpcLibraryRuleTemplate = mustTemplate(cppLibraryRuleTemplateString + `
         deps = [
             "@com_google_protobuf//:protoc_lib",
             "@com_github_grpc_grpc//:grpc++",
-            #"@com_github_grpc_grpc//:grpc++_reflection", # Disabled until fixed upstream
+            #"@com_github_grpc_grpc//:grpc++_reflection", # TODO: Disabled until fixed upstream
         ],
-        # This seems magical to me.
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )`)

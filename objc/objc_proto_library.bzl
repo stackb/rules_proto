@@ -11,6 +11,9 @@ def objc_proto_library(**kwargs):
     native.objc_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
+        deps = [
+            "@com_google_protobuf//:protobuf_objc",
+        ]
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )

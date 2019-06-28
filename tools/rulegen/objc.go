@@ -1,6 +1,6 @@
 package main
 
-var objcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
+var objcLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 def {{ .Rule.Name }}(**kwargs):
     # Compile protos
     name_pb = kwargs.get("name") + "_pb"
@@ -8,11 +8,30 @@ def {{ .Rule.Name }}(**kwargs):
         name = name_pb,
         **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
+`
 
+var objcProtoLibraryRuleTemplate = mustTemplate(objcLibraryRuleTemplateString + `
     # Create {{ .Lang.Name }} library
     native.objc_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
+        deps = [
+            "@com_google_protobuf//:protobuf_objc",
+        ]
+        includes = [name_pb],
+        visibility = kwargs.get("visibility"),
+    )
+`)
+
+var objcGrpcLibraryRuleTemplate = mustTemplate(objcLibraryRuleTemplateString + `
+    # Create {{ .Lang.Name }} library
+    native.objc_library(
+        name = kwargs.get("name"),
+        srcs = [name_pb],
+        deps = [
+            "@com_google_protobuf//:protobuf_objc",
+            "@com_github_grpc_grpc//:grpc++",
+        ]
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )
@@ -47,7 +66,7 @@ func makeObjc() *Language {
 			&Rule{
 				Name:             "objc_proto_library",
 				Kind:             "proto",
-				Implementation:   objcLibraryRuleTemplate,
+				Implementation:   objcProtoLibraryRuleTemplate,
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates objc protobuf library",
@@ -57,7 +76,7 @@ func makeObjc() *Language {
 			&Rule{
 				Name:             "objc_grpc_library",
 				Kind:             "grpc",
-				Implementation:   objcLibraryRuleTemplate,
+				Implementation:   objcGrpcLibraryRuleTemplate,
 				WorkspaceExample: grpcWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates objc protobuf+gRPC library",
