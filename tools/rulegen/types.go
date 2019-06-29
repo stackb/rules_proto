@@ -34,6 +34,9 @@ type Language struct {
 
 	// Flag indicating if the merge_directories flag should be set to false for the generated rule
 	SkipDirectoriesMerge bool
+
+	// Platforms for which to skip this lang
+	BazelCIExcludePlatforms []string
 }
 
 

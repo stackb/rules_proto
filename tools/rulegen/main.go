@@ -348,8 +348,8 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 		out.w(`    - "//example/routeguide/..."`)
 		out.w("    build_targets:")
 		for _, lang := range languages {
-			// Skip experimental
-			if lang.Name == "dart" || lang.Name == "php" || lang.Name == "swift" || lang.Name == "csharp" {
+			// Skip experimental or excluded
+			if lang.Name == "dart" || lang.Name == "php" || lang.Name == "swift" || lang.Name == "csharp" || stringInSlice(platform, lang.BazelCIExcludePlatforms) {
 				continue
 			}
 			out.w(`    - "//%s/..."`, lang.Dir)
@@ -368,7 +368,7 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 			exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
 
 			for _, platform := range platforms {
-				if (stringInSlice(platform, rule.BazelCIExcludePlatforms)) {
+				if stringInSlice(platform, rule.BazelCIExcludePlatforms) || stringInSlice(platform, lang.BazelCIExcludePlatforms) {
 					continue
 				}
 
