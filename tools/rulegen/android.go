@@ -51,6 +51,7 @@ func makeAndroid() *Language {
 		Dir:  "android",
 		Name: "android",
 		Flags: commonLangFlags,
+		SkipDirectoriesMerge: true,
 		Rules: []*Rule{
 			&Rule{
 				Name:             "android_proto_compile",
