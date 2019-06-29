@@ -173,8 +173,8 @@ def rules_jvm_external(**kwargs):
 def io_grpc_grpc_java(**kwargs):
     if "io_grpc_grpc_java" not in native.existing_rules():
         name = "io_grpc_grpc_java"
-        ref = get_ref(name, "3c24dc6fe1b8f3e5c89b919c38a4eefe216397d3", kwargs)  # v1.19.0 and changes up to PR #5456
-        sha256 = get_sha256(name, "1eeb136874a58a0a311a0701016aced96919f501ced0372013eb1708724ab046", kwargs)
+        ref = get_ref(name, "v1.21.0", kwargs)
+        sha256 = get_sha256(name, "9bc289e861c6118623fcb931044d843183c31d0e4d53fc43c4a32b56d6bb87fa", kwargs)
         github_archive(name, "grpc", "grpc-java", ref, sha256)
 
 
