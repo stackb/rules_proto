@@ -74,7 +74,6 @@ tasks:
     - "//ruby/..."
     - "//github.com/gogo/protobuf/..."
     - "//github.com/grpc-ecosystem/grpc-gateway/..."
-    - "//github.com/stackb/grpc.js/..."
     - "//github.com/grpc/grpc-web/..."
   main_macos:
     name: build & test all
@@ -1452,12 +1451,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_compile
-  grpc.js_grpcjs_grpc_compile_windows:
-    name: 'grpc.js: grpcjs_grpc_compile'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_compile
   grpc.js_grpcjs_grpc_compile_macos:
     name: 'grpc.js: grpcjs_grpc_compile'
     platform: macos
@@ -1473,12 +1466,6 @@ tasks:
   grpc.js_grpcjs_grpc_library_ubuntu1804:
     name: 'grpc.js: grpcjs_grpc_library'
     platform: ubuntu1804
-    build_targets:
-      - "//..."
-    working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_library
-  grpc.js_grpcjs_grpc_library_windows:
-    name: 'grpc.js: grpcjs_grpc_library'
-    platform: windows
     build_targets:
       - "//..."
     working_directory: example/github.com/stackb/grpc.js/grpcjs_grpc_library
