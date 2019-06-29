@@ -18,3 +18,16 @@ proto_plugin(
     tool = "@com_github_grpc_grpc//:grpc_objective_c_plugin",
     visibility = ["//visibility:public"],
 )
+
+objc_library(
+    name = "grpc_lib",
+    srcs = [
+        "@com_github_grpc_grpc//:src/objective-c/ProtoRPC/ProtoMethod.m",
+        "@com_github_grpc_grpc//:src/objective-c/ProtoRPC/ProtoMethod.h",
+        "@com_github_grpc_grpc//:src/objective-c/ProtoRPC/ProtoRPC.m",
+        "@com_github_grpc_grpc//:src/objective-c/ProtoRPC/ProtoRPC.h",
+        "@com_github_grpc_grpc//:src/objective-c/ProtoRPC/ProtoService.m",
+        "@com_github_grpc_grpc//:src/objective-c/ProtoRPC/ProtoService.h",
+    ],
+    includes = ["external/com_github_grpc_grpc/src/objective-c"],
+)

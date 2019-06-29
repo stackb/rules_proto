@@ -14,6 +14,7 @@ def objc_grpc_library(**kwargs):
         deps = [
             "@com_google_protobuf//:protobuf_objc",
             "@com_github_grpc_grpc//:grpc++",
+            "@build_stack_rules_proto//objc:grpc_lib",
         ],
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
