@@ -21,10 +21,11 @@ def _node_module_index_impl(ctx):
 
     # Find all files to require
     exports = {}
-    for output in compilation.outputs:
-        if output.path.endswith("_pb.js"):
-            name = _get_js_variable_name(output)
-            exports[name] = _get_js_output_file_name(ctx, output)
+    for root, files in compilation.output_files.items():
+        for output in files:
+            if output.path.endswith("_pb.js"):
+                name = _get_js_variable_name(output)
+                exports[name] = _get_js_output_file_name(ctx, output)
 
     # Build file content
     content = []
