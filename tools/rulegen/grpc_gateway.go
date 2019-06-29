@@ -79,6 +79,7 @@ func makeGrpcGateway() *Language {
 				BuildExample:     grpcGatewayCompileExampleTemplate,
 				Doc:              "Generates grpc-gateway swagger *.json files",
 				Attrs:            aspectProtoCompileAttrs,
+				BazelCIExcludePlatforms: []string{"windows"}, // gRPC go lib rules fail on windows due to bad path
 			},
 			&Rule{
 				Name:             "gateway_grpc_library",
@@ -88,6 +89,7 @@ func makeGrpcGateway() *Language {
 				BuildExample:     grpcGatewayLibraryExampleTemplate,
 				Doc:              "Generates grpc-gateway library files",
 				Attrs:            aspectProtoCompileAttrs,
+				BazelCIExcludePlatforms: []string{"windows"}, // gRPC go lib rules fail on windows due to bad path
 			},
 		},
 	}
