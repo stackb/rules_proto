@@ -756,12 +756,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/objc/objc_proto_library
-  objc_objc_grpc_library_macos:
-    name: 'objc: objc_grpc_library'
-    platform: macos
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_grpc_library
   php_php_proto_compile_ubuntu1604:
     name: 'php: php_proto_compile'
     platform: ubuntu1604

@@ -74,16 +74,16 @@ func makeObjc() *Language {
 				Attrs:            aspectProtoCompileAttrs,
 				BazelCIExcludePlatforms: []string{"ubuntu1604", "ubuntu1804", "windows"},
 			},
-			&Rule{
-				Name:             "objc_grpc_library",
-				Kind:             "grpc",
-				Implementation:   objcGrpcLibraryRuleTemplate,
-				WorkspaceExample: grpcWorkspaceTemplate,
-				BuildExample:     grpcLibraryExampleTemplate,
-				Doc:              "Generates objc protobuf+gRPC library",
-				Attrs:            aspectProtoCompileAttrs,
-				BazelCIExcludePlatforms: []string{"ubuntu1604", "ubuntu1804", "windows"},
-			},
+// 			&Rule{ // Disabled due to issues fetching gRPC dependencies
+// 				Name:             "objc_grpc_library",
+// 				Kind:             "grpc",
+// 				Implementation:   objcGrpcLibraryRuleTemplate,
+// 				WorkspaceExample: grpcWorkspaceTemplate,
+// 				BuildExample:     grpcLibraryExampleTemplate,
+// 				Doc:              "Generates objc protobuf+gRPC library",
+// 				Attrs:            aspectProtoCompileAttrs,
+// 				BazelCIExcludePlatforms: []string{"ubuntu1604", "ubuntu1804", "windows"},
+// 			},
 		},
 	}
 }
