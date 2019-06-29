@@ -28,9 +28,9 @@ load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
 
 bazel_version(name = "bazel_version")
 
-load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
+load("@io_bazel_rules_rust//proto:repositories.bzl", "rust_proto_repositories")
 
-raze_fetch_remote_crates()
+rust_proto_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -77,9 +77,9 @@ load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
 
 bazel_version(name = "bazel_version")
 
-load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
+load("@io_bazel_rules_rust//proto:repositories.bzl", "rust_proto_repositories")
 
-raze_fetch_remote_crates()
+rust_proto_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -126,9 +126,9 @@ load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
 
 bazel_version(name = "bazel_version")
 
-load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
+load("@io_bazel_rules_rust//proto:repositories.bzl", "rust_proto_repositories")
 
-raze_fetch_remote_crates()
+rust_proto_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -175,9 +175,9 @@ load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
 
 bazel_version(name = "bazel_version")
 
-load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
+load("@io_bazel_rules_rust//proto:repositories.bzl", "rust_proto_repositories")
 
-raze_fetch_remote_crates()
+rust_proto_repositories()
 ```
 
 ### `BUILD.bazel`
