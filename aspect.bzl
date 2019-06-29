@@ -140,7 +140,7 @@ def proto_compile_aspect_impl(target, ctx):
     verbose = get_int_attr(ctx.attr, "verbose_string")
 
     # <struct> The resolved protoc toolchain
-    protoc_toolchain_info = ctx.toolchains["@build_stack_rules_proto//protobuf:toolchain_type"]
+    protoc_toolchain_info = ctx.toolchains[str(Label("//protobuf:toolchain_type"))]
 
     # <Target> The resolved protoc compiler from the protoc toolchain
     protoc = protoc_toolchain_info.protoc_executable
