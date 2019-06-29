@@ -11,7 +11,6 @@ def _strip_extension(f):
 def _rust_proto_lib_impl(ctx):
     """Generate a lib.rs file for the crates."""
     compilation = ctx.attr.compilation[ProtoCompileInfo]
-    srcs = compilation.outputs
     lib_rs = ctx.actions.declare_file("%s/lib.rs" % compilation.label.name)
 
     # Add externs
@@ -21,14 +20,15 @@ def _rust_proto_lib_impl(ctx):
         content.append("extern crate tls_api;")
 
     # List each output
-    for f in compilation.outputs:
+    srcs = [f for files in compilation.output_files.values() for f in files]
+    for f in srcs:
         content.append("pub mod %s;" % _strip_extension(f))
         content.append("pub use %s::*;" % _strip_extension(f))
 
     # Write file
     ctx.actions.write(
         lib_rs,
-        "\n".join(content),
+        "\n".join(content) + "\n",
         False,
     )
 
