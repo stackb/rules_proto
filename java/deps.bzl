@@ -43,6 +43,7 @@ def com_google_errorprone_error_prone_annotations(**kwargs):
             artifact_sha256 = "357cd6cfb067c969226c442451502aee13800a24e950fdfde77bcdb4565a668d",
             licenses = ["notice"],  # Apache 2.0
         )
+
     if "error_prone_annotations" not in native.existing_rules():
         native.bind(
             name = "error_prone_annotations",

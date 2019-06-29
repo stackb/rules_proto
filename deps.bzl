@@ -261,3 +261,10 @@ def com_github_grpc_grpc_web(**kwargs):
         ref = get_ref(name, "ffe8e9c9036f4ec7d5b55da75b1758b1f57fbf8d", kwargs)
         sha256 = get_sha256(name, "936ca06fe7a9b55c1e334e4869e1d153fec68d92d750d2b550e41e1c5580b4dd", kwargs)
         github_archive(name, "grpc", "grpc-web", ref, sha256)
+
+def io_bazel_rules_closure(**kwargs):
+    if "io_bazel_rules_closure" not in native.existing_rules():
+        name = "io_bazel_rules_closure"
+        ref = get_ref(name, "03110588392d8c6c05b99c08a6f1c2121604ca27", kwargs)
+        sha256 = get_sha256(name, "12d17f241fc73f562825b0bba11a21040580d82da00be4689f5942c05508d8da", kwargs)
+        github_archive(name, "bazelbuild", "rules_closure", ref, sha256)
