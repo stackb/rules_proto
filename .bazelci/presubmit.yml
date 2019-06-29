@@ -404,18 +404,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/d/d_proto_compile
-  d_d_proto_compile_windows:
-    name: 'd: d_proto_compile'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/d/d_proto_compile
-  d_d_proto_compile_macos:
-    name: 'd: d_proto_compile'
-    platform: macos
-    build_targets:
-      - "//..."
-    working_directory: example/d/d_proto_compile
   d_d_proto_library_ubuntu1604:
     name: 'd: d_proto_library'
     platform: ubuntu1604
@@ -425,18 +413,6 @@ tasks:
   d_d_proto_library_ubuntu1804:
     name: 'd: d_proto_library'
     platform: ubuntu1804
-    build_targets:
-      - "//..."
-    working_directory: example/d/d_proto_library
-  d_d_proto_library_windows:
-    name: 'd: d_proto_library'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/d/d_proto_library
-  d_d_proto_library_macos:
-    name: 'd: d_proto_library'
-    platform: macos
     build_targets:
       - "//..."
     working_directory: example/d/d_proto_library
