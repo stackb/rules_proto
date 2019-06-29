@@ -27,7 +27,7 @@ commonjs_grpc_compile_aspect = aspect(
             default = "commonjs_grpc_compile_aspect",
         )
     ),
-    toolchains = ["@build_stack_rules_proto//protobuf:toolchain_type"],
+    toolchains = [str(Label("//protobuf:toolchain_type"))],
 )
 
 # Create compile rule to apply aspect

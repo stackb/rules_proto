@@ -51,7 +51,7 @@ load(
             default = "{{ .Rule.Name }}_aspect",
         )
     ),
-    toolchains = ["@build_stack_rules_proto//protobuf:toolchain_type"],
+    toolchains = [str(Label("//protobuf:toolchain_type"))],
 )
 
 # Create compile rule to apply aspect

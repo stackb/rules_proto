@@ -7,7 +7,7 @@ workspace(name = "build_stack_rules_proto")
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//cpp:deps.bzl", "cpp_grpc_library")
+load("//cpp:deps.bzl", "cpp_grpc_library")
 
 cpp_grpc_library()
 
@@ -22,7 +22,7 @@ grpc_deps()
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//closure:deps.bzl", "closure_proto_library")
+load("//closure:deps.bzl", "closure_proto_library")
 
 closure_proto_library()
 
@@ -37,7 +37,7 @@ closure_repositories()
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
+load("//csharp:deps.bzl", "csharp_grpc_library")
 
 csharp_grpc_library()
 
@@ -65,15 +65,15 @@ core_register_sdk(
 
 dotnet_repositories()
 
-load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
+load("//csharp/nuget:packages.bzl", nuget_packages = "packages")
 
 nuget_packages()
 
-load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
+load("//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
 
 nuget_protobuf_packages()
 
-load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
+load("//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
 
 nuget_grpc_packages()
 
@@ -84,7 +84,7 @@ nuget_grpc_packages()
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//go:deps.bzl", "go_grpc_library")
+load("//go:deps.bzl", "go_grpc_library")
 
 go_grpc_library()
 
@@ -101,7 +101,7 @@ go_register_toolchains()
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+load("//:deps.bzl", "io_grpc_grpc_java")
 
 io_grpc_grpc_java()
 
@@ -109,7 +109,7 @@ load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories(omit_com_google_protobuf = True)
 
-load("@build_stack_rules_proto//java:deps.bzl", "java_grpc_library")
+load("//java:deps.bzl", "java_grpc_library")
 
 java_grpc_library()
 
@@ -120,7 +120,7 @@ java_grpc_library()
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//node:deps.bzl", "node_grpc_library")
+load("//node:deps.bzl", "node_grpc_library")
 
 node_grpc_library()
 
@@ -154,7 +154,7 @@ yarn_modules(
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//python:deps.bzl", "python_grpc_library")
+load("//python:deps.bzl", "python_grpc_library")
 
 python_grpc_library()
 
@@ -168,7 +168,7 @@ pip_repositories()
 
 pip_import(
     name = "protobuf_py_deps",
-    requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
+    requirements = "//python/requirements:protobuf.txt",
 )
 
 load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
@@ -177,7 +177,7 @@ protobuf_pip_install()
 
 pip_import(
     name = "grpc_py_deps",
-    requirements = "@build_stack_rules_proto//python/requirements:grpc.txt",
+    requirements = "//python/requirements:grpc.txt",
 )
 
 load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
@@ -191,7 +191,7 @@ grpc_pip_install()
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_library")
+load("//scala:deps.bzl", "scala_grpc_library")
 
 scala_grpc_library()
 
@@ -214,7 +214,7 @@ scala_proto_repositories()
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//swift:deps.bzl", "swift_grpc_library")
+load("//swift:deps.bzl", "swift_grpc_library")
 
 swift_grpc_library()
 
@@ -346,7 +346,7 @@ raze_fetch_remote_crates()
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//:deps.bzl", "rules_jvm_external")
+load("//:deps.bzl", "rules_jvm_external")
 
 rules_jvm_external()
 
@@ -366,7 +366,7 @@ maven_install(
     ],
 )
 
-load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_library")
+load("//android:deps.bzl", "android_grpc_library")
 
 android_grpc_library()
 
@@ -381,7 +381,7 @@ android_sdk_repository(name = "androidsdk")
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "grpcjs_grpc_library")
+load("//github.com/stackb/grpc.js:deps.bzl", "grpcjs_grpc_library")
 
 grpcjs_grpc_library()
 
@@ -392,7 +392,7 @@ grpcjs_grpc_library()
 #
 # **************************************************************
 
-load("@build_stack_rules_proto//github.com/grpc/grpc-web:deps.bzl", grpcweb_closure_grpc_library = "closure_grpc_library")
+load("//github.com/grpc/grpc-web:deps.bzl", grpcweb_closure_grpc_library = "closure_grpc_library")
 
 grpcweb_closure_grpc_library()
 
