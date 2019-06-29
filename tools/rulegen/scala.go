@@ -52,6 +52,7 @@ func makeScala() *Language {
 		Notes: mustTemplate("Rules for `scala_grpc_{compile|library}` don't produce code that compiles!  Use `@//io_bazel_rules_scala//scala_proto:scala_proto.bzl` instead"),
 		Flags: commonLangFlags,
 		SkipDirectoriesMerge: true,
+		BazelCIExcludePlatforms: []string{"windows"},
 		Rules: []*Rule{
 			&Rule{
 				Name:             "scala_proto_compile",

@@ -72,7 +72,6 @@ tasks:
     - "//objc/..."
     - "//python/..."
     - "//ruby/..."
-    - "//scala/..."
     - "//github.com/gogo/protobuf/..."
     - "//github.com/grpc-ecosystem/grpc-gateway/..."
     - "//github.com/stackb/grpc.js/..."
@@ -1063,12 +1062,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/scala/scala_proto_compile
-  scala_scala_proto_compile_windows:
-    name: 'scala: scala_proto_compile'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/scala/scala_proto_compile
   scala_scala_proto_compile_macos:
     name: 'scala: scala_proto_compile'
     platform: macos
@@ -1084,12 +1077,6 @@ tasks:
   scala_scala_grpc_compile_ubuntu1804:
     name: 'scala: scala_grpc_compile'
     platform: ubuntu1804
-    build_targets:
-      - "//..."
-    working_directory: example/scala/scala_grpc_compile
-  scala_scala_grpc_compile_windows:
-    name: 'scala: scala_grpc_compile'
-    platform: windows
     build_targets:
       - "//..."
     working_directory: example/scala/scala_grpc_compile
@@ -1111,12 +1098,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/scala/scala_proto_library
-  scala_scala_proto_library_windows:
-    name: 'scala: scala_proto_library'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/scala/scala_proto_library
   scala_scala_proto_library_macos:
     name: 'scala: scala_proto_library'
     platform: macos
@@ -1132,12 +1113,6 @@ tasks:
   scala_scala_grpc_library_ubuntu1804:
     name: 'scala: scala_grpc_library'
     platform: ubuntu1804
-    build_targets:
-      - "//..."
-    working_directory: example/scala/scala_grpc_library
-  scala_scala_grpc_library_windows:
-    name: 'scala: scala_grpc_library'
-    platform: windows
     build_targets:
       - "//..."
     working_directory: example/scala/scala_grpc_library
