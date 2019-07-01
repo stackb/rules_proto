@@ -19,7 +19,7 @@ def com_github_bazelbuild_buildtools(**kwargs):
         github_archive(name, "bazelbuild", "buildtools", ref, sha256)
 
 def com_google_protobuf(**kwargs):
-    if "protobuf_clib" not in native.existing_rules():
+    if "com_google_protobuf" not in native.existing_rules():
         name = "com_google_protobuf"
         ref = get_ref(name, "2d0fdcb791dd59599cce812841149ff779b7c371", kwargs) # 3.9.0 rc1 + PR 6310
         sha256 = get_sha256(name, "a6d34f9f32421425f6e2971de121356cf61efa576100dd37762b83869f05b17a", kwargs)
