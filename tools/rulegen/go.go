@@ -50,7 +50,7 @@ var goGrpcLibraryRuleTemplate = mustTemplate(goLibraryRuleTemplateString + `
         visibility = kwargs.get("visibility"),
     )`)
 
-var goProtoCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+var goProtoCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:defs.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "person_{{ .Lang.Name }}_proto",
@@ -58,7 +58,7 @@ var goProtoCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )`)
 
-var goGrpcCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+var goGrpcCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:defs.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "greeter_{{ .Lang.Name }}_grpc",
@@ -66,7 +66,7 @@ var goGrpcCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto/
     deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
 )`)
 
-var goProtoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+var goProtoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:defs.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "person_{{ .Lang.Name }}_library",
@@ -77,7 +77,7 @@ var goProtoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto
     deps = ["@build_stack_rules_proto//example/proto:person_proto"],
 )`)
 
-var goGrpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+var goGrpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:defs.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "greeter_{{ .Lang.Name }}_library",

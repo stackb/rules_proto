@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//android:android_grpc_library.bzl", "android_grpc_library")
+load("@build_stack_rules_proto//android:defs.bzl", "android_grpc_library")
 
 android_grpc_library(
     name = "greeter_android_library",

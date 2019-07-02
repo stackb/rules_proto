@@ -22,7 +22,7 @@ php_proto_compile()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//php:php_proto_compile.bzl", "php_proto_compile")
+load("@build_stack_rules_proto//php:defs.bzl", "php_proto_compile")
 
 php_proto_compile(
     name = "person_php_proto",
@@ -63,7 +63,7 @@ grpc_deps()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//php:php_grpc_compile.bzl", "php_grpc_compile")
+load("@build_stack_rules_proto//php:defs.bzl", "php_grpc_compile")
 
 php_grpc_compile(
     name = "greeter_php_grpc",

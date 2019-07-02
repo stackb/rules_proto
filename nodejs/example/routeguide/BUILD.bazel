@@ -1,4 +1,4 @@
-load("//nodejs:nodejs_grpc_compile.bzl", "nodejs_grpc_compile")
+load("//nodejs:defs.bzl", "nodejs_grpc_compile")
 load("@build_bazel_rules_nodejs//:defs.bzl", "npm_package", "nodejs_binary")
 
 nodejs_grpc_compile(

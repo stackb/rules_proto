@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//d:d_proto_compile.bzl", "d_proto_compile")
+load("@build_stack_rules_proto//d:defs.bzl", "d_proto_compile")
 
 d_proto_compile(
     name = "person_d_proto",

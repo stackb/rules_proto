@@ -22,7 +22,7 @@ var swiftLibraryRuleTemplate = mustTemplate(`load("@build_bazel_rules_swift//swi
 
 {{ .Lang.Name }}_{{ .Rule.Kind }}_library = _{{ .Lang.Name }}_{{ .Rule.Kind }}_library`)
 
-var swiftGrpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+var swiftGrpcLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:defs.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "person_{{ .Lang.Name }}_library",

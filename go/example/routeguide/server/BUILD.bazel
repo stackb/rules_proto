@@ -1,5 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
-load("//go:go_grpc_library.bzl", "go_grpc_library")
+load("//go:defs.bzl", "go_grpc_library")
 
 go_grpc_library(
     name = "routeguide",

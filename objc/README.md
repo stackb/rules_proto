@@ -23,7 +23,7 @@ objc_proto_compile()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//objc:objc_proto_compile.bzl", "objc_proto_compile")
+load("@build_stack_rules_proto//objc:defs.bzl", "objc_proto_compile")
 
 objc_proto_compile(
     name = "person_objc_proto",
@@ -64,7 +64,7 @@ grpc_deps()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//objc:objc_grpc_compile.bzl", "objc_grpc_compile")
+load("@build_stack_rules_proto//objc:defs.bzl", "objc_grpc_compile")
 
 objc_grpc_compile(
     name = "greeter_objc_grpc",
@@ -101,7 +101,7 @@ objc_proto_library()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//objc:objc_proto_library.bzl", "objc_proto_library")
+load("@build_stack_rules_proto//objc:defs.bzl", "objc_proto_library")
 
 objc_proto_library(
     name = "person_objc_library",

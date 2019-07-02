@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:private"])
 
-load("@build_stack_rules_proto//objc:objc_proto_compile.bzl", "objc_proto_compile")
+load("@build_stack_rules_proto//objc:defs.bzl", "objc_proto_compile")
 
 # Test that Objective-C files are correctly capitalised
 

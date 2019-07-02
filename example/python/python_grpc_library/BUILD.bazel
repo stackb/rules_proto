@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//python:python_grpc_library.bzl", "python_grpc_library")
+load("@build_stack_rules_proto//python:defs.bzl", "python_grpc_library")
 
 python_grpc_library(
     name = "greeter_python_library",

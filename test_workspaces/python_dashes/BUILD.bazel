@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:private"])
 
-load("@build_stack_rules_proto//python:python_proto_library.bzl", "python_proto_library")
+load("@build_stack_rules_proto//python:defs.bzl", "python_proto_library")
 
 # Test that outputs are correctly predicted for python plugin when using proto
 # files in paths with dashes. These are converted to underscores by the python

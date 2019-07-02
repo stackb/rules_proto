@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//android:android_proto_compile.bzl", "android_proto_compile")
+load("@build_stack_rules_proto//android:defs.bzl", "android_proto_compile")
 
 android_proto_compile(
     name = "person_android_proto",

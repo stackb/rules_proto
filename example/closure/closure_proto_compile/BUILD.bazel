@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//closure:closure_proto_compile.bzl", "closure_proto_compile")
+load("@build_stack_rules_proto//closure:defs.bzl", "closure_proto_compile")
 
 closure_proto_compile(
     name = "person_closure_proto",

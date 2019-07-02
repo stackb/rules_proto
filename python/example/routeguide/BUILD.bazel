@@ -1,5 +1,4 @@
-load("//python:python_grpc_library.bzl", "python_grpc_library")
-load("//python:python_proto_compile.bzl", "python_proto_compile")
+load("//python:defs.bzl", "python_grpc_library", "python_proto_compile")
 
 python_proto_compile(
     name = "person",

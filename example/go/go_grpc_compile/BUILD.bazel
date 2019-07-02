@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//go:go_grpc_compile.bzl", "go_grpc_compile")
+load("@build_stack_rules_proto//go:defs.bzl", "go_grpc_compile")
 
 go_grpc_compile(
     name = "greeter_go_grpc",
