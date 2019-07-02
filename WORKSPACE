@@ -107,7 +107,7 @@ io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
-grpc_java_repositories(omit_com_google_protobuf = True)
+grpc_java_repositories(omit_com_google_protobuf = True, omit_net_zlib = True)
 
 load("//java:deps.bzl", "java_grpc_library")
 

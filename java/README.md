@@ -131,13 +131,16 @@ load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
 
 io_grpc_grpc_java()
 
-load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
-
-grpc_java_repositories(omit_com_google_protobuf = True)
-
 load("@build_stack_rules_proto//java:deps.bzl", "java_grpc_library")
 
 java_grpc_library()
+
+load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
+grpc_java_repositories(
+    omit_com_google_protobuf = True,
+    omit_net_zlib = True
+)
 ```
 
 ### `BUILD.bazel`

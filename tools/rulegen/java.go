@@ -4,13 +4,16 @@ var javaGrpcWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//:d
 
 io_grpc_grpc_java()
 
-load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
-
-grpc_java_repositories(omit_com_google_protobuf = True)
-
 load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
 
-{{ .Rule.Name }}()`)
+{{ .Rule.Name }}()
+
+load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
+grpc_java_repositories(
+    omit_com_google_protobuf = True,
+    omit_net_zlib = True
+)`)
 
 var javaLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 

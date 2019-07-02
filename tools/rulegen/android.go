@@ -4,15 +4,16 @@ var androidLibraryWorkspaceTemplateString = `load("@build_stack_rules_proto//:de
 
 io_grpc_grpc_java()
 
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+
+{{ .Rule.Name }}()
+
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories(
     omit_com_google_protobuf = True,
+    omit_net_zlib = True
 )
-
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}()
 
 load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
 
