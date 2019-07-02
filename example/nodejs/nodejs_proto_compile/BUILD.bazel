@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//nodejs:nodejs_proto_compile.bzl", "nodejs_proto_compile")
+
+nodejs_proto_compile(
+    name = "person_nodejs_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)

@@ -17,7 +17,7 @@ go_library(
         "grpcjs.go",
         "java.go",
         "main.go",
-        "node.go",
+        "nodejs.go",
         "objc.go",
         "php.go",
         "python.go",

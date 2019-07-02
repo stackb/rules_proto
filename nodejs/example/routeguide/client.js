@@ -23,7 +23,7 @@ const grpc = require('grpc');
 const messages = require('build_stack_rules_proto/node/example/routeguide/routeguide/example/proto/routeguide_pb.js')
 const services = require('build_stack_rules_proto/node/example/routeguide/routeguide/example/proto/routeguide_grpc_pb.js')
 
-// This is included as data in the client node_module, so we can load
+// This is included as data in the client, so we can load
 // this database as a constant.
 const featureList = require('build_stack_rules_proto/example/proto/routeguide_features.json');
 console.log(`Loaded ${featureList.length} from feature database`);

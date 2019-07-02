@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//nodejs:nodejs_grpc_compile.bzl", "nodejs_grpc_compile")
+
+nodejs_grpc_compile(
+    name = "greeter_nodejs_grpc",
+    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
+)

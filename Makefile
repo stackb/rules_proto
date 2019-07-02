@@ -36,7 +36,7 @@ pending_clients:
 		//android/example/routeguide:client \
 		//dart/example/routeguide:client \
 		//closure/example/routeguide/client \
-		//node/example/routeguide:client \
+		//nodejs/example/routeguide:client \
 		//ruby/example/routeguide:client \
 		//github.com/grpc/grpc-web/example/routeguide/closure:bundle \
 		//github.com/stackb/grpc.js/example/routeguide/client:bundle \
@@ -45,7 +45,7 @@ pending_clients:
 pending_servers:
 	bazel build \
 		//dart/example/routeguide:server \
-		//node/example/routeguide:server \
+		//nodejs/example/routeguide:server \
 		//ruby/example/routeguide:server \
 		//rust/example/routeguide:server
 

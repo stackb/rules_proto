@@ -8,8 +8,8 @@ load(
     "proto_compile_impl",
 )
 
-# Create aspect for node_proto_compile
-node_proto_compile_aspect = aspect(
+# Create aspect for nodejs_grpc_compile
+nodejs_grpc_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
     provides = [ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
@@ -19,12 +19,13 @@ node_proto_compile_aspect = aspect(
             doc = "List of protoc plugins to apply",
             providers = [ProtoPluginInfo],
             default = [
-                Label("//node:js"),
+                Label("//nodejs:js"),
+                Label("//nodejs:grpc_js"),
             ],
         ),
         _prefix = attr.string(
             doc = "String used to disambiguate aspects when generating outputs",
-            default = "node_proto_compile_aspect",
+            default = "nodejs_grpc_compile_aspect",
         )
     ),
     toolchains = [str(Label("//protobuf:toolchain_type"))],
@@ -38,13 +39,13 @@ _rule = rule(
         deps = attr.label_list(
             mandatory = True,
             providers = [ProtoInfo, ProtoLibraryAspectNodeInfo],
-            aspects = [node_proto_compile_aspect],
+            aspects = [nodejs_grpc_compile_aspect],
         ),
     ),
 )
 
 # Create macro for converting attrs and passing to compile
-def node_proto_compile(**kwargs):
+def nodejs_grpc_compile(**kwargs):
     _rule(
         verbose_string = "{}".format(kwargs.get("verbose", 0)),
         merge_directories = True,

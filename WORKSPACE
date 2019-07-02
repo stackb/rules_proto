@@ -120,16 +120,16 @@ java_grpc_library()
 #
 # **************************************************************
 
-load("//node:deps.bzl", "node_grpc_library")
+load("//nodejs:deps.bzl", "nodejs_grpc_library")
 
-node_grpc_library()
+nodejs_grpc_library()
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
 
 yarn_install(
     name = "node_modules",
-    package_json = "//node:requirements/package.json",
-    yarn_lock = "//node:requirements/yarn.lock",
+    package_json = "//nodejs:requirements/package.json",
+    yarn_lock = "//nodejs:requirements/yarn.lock",
 )
 
 # **************************************************************

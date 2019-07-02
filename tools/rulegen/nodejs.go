@@ -18,8 +18,8 @@ node_repositories()
 
 yarn_install(
     name = "node_modules",
-    package_json = "//node:requirements/package.json",
-    yarn_lock = "//node:requirements/yarn.lock",
+    package_json = "//nodejs:requirements/package.json",
+    yarn_lock = "//nodejs:requirements/yarn.lock",
 )`)
 
 var nodeGrpcLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
@@ -34,8 +34,8 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
 
 yarn_install(
     name = "node_modules",
-    package_json = "@build_stack_rules_proto//node:requirements/package.json",
-    yarn_lock = "@build_stack_rules_proto//node:requirements/yarn.lock",
+    package_json = "@build_stack_rules_proto//nodejs:requirements/package.json",
+    yarn_lock = "@build_stack_rules_proto//nodejs:requirements/yarn.lock",
 )`)
 
 var nodeLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
@@ -75,32 +75,32 @@ var nodeGrpcLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + `
 
 func makeNode() *Language {
 	return &Language{
-		Dir:   "node",
-		Name:  "node",
+		Dir:   "nodejs",
+		Name:  "nodejs",
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
-				Name:             "node_proto_compile",
+				Name:             "nodejs_proto_compile",
 				Kind:             "proto",
 				Implementation:   aspectRuleTemplate,
-				Plugins:          []string{"//node:js"},
+				Plugins:          []string{"//nodejs:js"},
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
 				Doc:              "Generates node *.js protobuf artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
-				Name:             "node_grpc_compile",
+				Name:             "nodejs_grpc_compile",
 				Kind:             "grpc",
 				Implementation:   aspectRuleTemplate,
-				Plugins:          []string{"//node:js", "//node:grpc_js"},
+				Plugins:          []string{"//nodejs:js", "//nodejs:grpc_js"},
 				WorkspaceExample: nodeGrpcCompileWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
 				Doc:              "Generates node *.js protobuf+gRPC artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 // 			&Rule{
-// 				Name:             "node_proto_library",
+// 				Name:             "nodejs_proto_library",
 // 				Kind:             "proto",
 // 				Implementation:   nodeProtoLibraryRuleTemplate,
 // 				WorkspaceExample: nodeProtoLibraryWorkspaceTemplate,
@@ -109,7 +109,7 @@ func makeNode() *Language {
 // 				Attrs:            aspectProtoCompileAttrs,
 // 			},
 // 			&Rule{
-// 				Name:             "node_grpc_library",
+// 				Name:             "nodejs_grpc_library",
 // 				Kind:             "grpc",
 // 				Implementation:   nodeGrpcLibraryRuleTemplate,
 // 				WorkspaceExample: nodeGrpcLibraryWorkspaceTemplate,
