@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//android:defs.bzl", "android_proto_library")
+load("@build_stack_rules_proto//android:android_proto_library.bzl", "android_proto_library")
 
 android_proto_library(
     name = "person_android_library",

@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//ruby:defs.bzl", "ruby_proto_compile")
+load("@build_stack_rules_proto//ruby:ruby_proto_compile.bzl", "ruby_proto_compile")
 
 ruby_proto_compile(
     name = "person_ruby_proto",

@@ -1,4 +1,4 @@
-load("//csharp:defs.bzl", "csharp_grpc_library")
+load("//csharp:csharp_grpc_library.bzl", "csharp_grpc_library")
 load("@io_bazel_rules_dotnet//dotnet:defs.bzl", "core_binary", "core_library")
 
 csharp_grpc_library(

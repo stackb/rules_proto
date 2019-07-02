@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//csharp:defs.bzl", "csharp_proto_library")
+load("@build_stack_rules_proto//csharp:csharp_proto_library.bzl", "csharp_proto_library")
 
 csharp_proto_library(
     name = "person_csharp_library",

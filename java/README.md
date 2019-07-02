@@ -24,7 +24,7 @@ java_proto_compile()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//java:defs.bzl", "java_proto_compile")
+load("@build_stack_rules_proto//java:java_proto_compile.bzl", "java_proto_compile")
 
 java_proto_compile(
     name = "person_java_proto",
@@ -61,7 +61,7 @@ java_grpc_compile()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//java:defs.bzl", "java_grpc_compile")
+load("@build_stack_rules_proto//java:java_grpc_compile.bzl", "java_grpc_compile")
 
 java_grpc_compile(
     name = "greeter_java_grpc",
@@ -98,7 +98,7 @@ java_proto_library()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//java:defs.bzl", "java_proto_library")
+load("@build_stack_rules_proto//java:java_proto_library.bzl", "java_proto_library")
 
 java_proto_library(
     name = "person_java_library",
@@ -146,7 +146,7 @@ grpc_java_repositories(
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//java:defs.bzl", "java_grpc_library")
+load("@build_stack_rules_proto//java:java_grpc_library.bzl", "java_grpc_library")
 
 java_grpc_library(
     name = "greeter_java_library",

@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogofaster_proto_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_proto_compile.bzl", "gogofaster_proto_compile")
 
 gogofaster_proto_compile(
     name = "person_gogo_proto",

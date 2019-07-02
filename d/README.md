@@ -28,7 +28,7 @@ d_repositories()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//d:defs.bzl", "d_proto_compile")
+load("@build_stack_rules_proto//d:d_proto_compile.bzl", "d_proto_compile")
 
 d_proto_compile(
     name = "person_d_proto",
@@ -69,7 +69,7 @@ d_repositories()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//d:defs.bzl", "d_proto_library")
+load("@build_stack_rules_proto//d:d_proto_library.bzl", "d_proto_library")
 
 d_proto_library(
     name = "person_d_library",

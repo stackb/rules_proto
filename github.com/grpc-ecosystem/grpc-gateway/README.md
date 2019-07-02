@@ -39,7 +39,7 @@ gazelle_dependencies()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:defs.bzl", "gateway_grpc_compile")
+load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:gateway_grpc_compile.bzl", "gateway_grpc_compile")
 
 gateway_grpc_compile(
     name = "api_gateway_grpc",
@@ -92,7 +92,7 @@ gazelle_dependencies()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:defs.bzl", "gateway_swagger_compile")
+load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:gateway_swagger_compile.bzl", "gateway_swagger_compile")
 
 gateway_swagger_compile(
     name = "api_gateway_grpc",
@@ -145,7 +145,7 @@ gazelle_dependencies()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:defs.bzl", "gateway_grpc_library")
+load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:gateway_grpc_library.bzl", "gateway_grpc_library")
 
 gateway_grpc_library(
     name = "api_gateway_library",

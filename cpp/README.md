@@ -24,7 +24,7 @@ cpp_proto_compile()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//cpp:defs.bzl", "cpp_proto_compile")
+load("@build_stack_rules_proto//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
 
 cpp_proto_compile(
     name = "person_cpp_proto",
@@ -65,7 +65,7 @@ grpc_deps()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//cpp:defs.bzl", "cpp_grpc_compile")
+load("@build_stack_rules_proto//cpp:cpp_grpc_compile.bzl", "cpp_grpc_compile")
 
 cpp_grpc_compile(
     name = "greeter_cpp_grpc",
@@ -102,7 +102,7 @@ cpp_proto_library()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//cpp:defs.bzl", "cpp_proto_library")
+load("@build_stack_rules_proto//cpp:cpp_proto_library.bzl", "cpp_proto_library")
 
 cpp_proto_library(
     name = "person_cpp_library",
@@ -143,7 +143,7 @@ grpc_deps()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//cpp:defs.bzl", "cpp_grpc_library")
+load("@build_stack_rules_proto//cpp:cpp_grpc_library.bzl", "cpp_grpc_library")
 
 cpp_grpc_library(
     name = "greeter_cpp_library",

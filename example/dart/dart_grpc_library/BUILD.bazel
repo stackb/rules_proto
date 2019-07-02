@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//dart:defs.bzl", "dart_grpc_library")
+load("@build_stack_rules_proto//dart:dart_grpc_library.bzl", "dart_grpc_library")
 
 dart_grpc_library(
     name = "greeter_dart_library",

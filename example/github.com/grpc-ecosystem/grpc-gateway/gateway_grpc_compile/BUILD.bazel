@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:defs.bzl", "gateway_grpc_compile")
+load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:gateway_grpc_compile.bzl", "gateway_grpc_compile")
 
 gateway_grpc_compile(
     name = "api_gateway_grpc",

@@ -40,7 +40,7 @@ apple_support_dependencies()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//swift:defs.bzl", "swift_proto_compile")
+load("@build_stack_rules_proto//swift:swift_proto_compile.bzl", "swift_proto_compile")
 
 swift_proto_compile(
     name = "person_swift_proto",
@@ -93,7 +93,7 @@ apple_support_dependencies()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//swift:defs.bzl", "swift_grpc_compile")
+load("@build_stack_rules_proto//swift:swift_grpc_compile.bzl", "swift_grpc_compile")
 
 swift_grpc_compile(
     name = "greeter_swift_grpc",
@@ -146,7 +146,7 @@ apple_support_dependencies()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//swift:defs.bzl", "swift_proto_library")
+load("@build_stack_rules_proto//swift:swift_proto_library.bzl", "swift_proto_library")
 
 swift_proto_library(
     name = "person_swift_library",
@@ -199,7 +199,7 @@ apple_support_dependencies()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//swift:defs.bzl", "swift_grpc_library")
+load("@build_stack_rules_proto//swift:swift_grpc_library.bzl", "swift_grpc_library")
 
 swift_grpc_library(
     name = "person_swift_library",

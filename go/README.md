@@ -30,7 +30,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//go:defs.bzl", "go_proto_compile")
+load("@build_stack_rules_proto//go:go_proto_compile.bzl", "go_proto_compile")
 
 go_proto_compile(
     name = "person_go_proto",
@@ -73,7 +73,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//go:defs.bzl", "go_grpc_compile")
+load("@build_stack_rules_proto//go:go_grpc_compile.bzl", "go_grpc_compile")
 
 go_grpc_compile(
     name = "greeter_go_grpc",
@@ -116,7 +116,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//go:defs.bzl", "go_proto_library")
+load("@build_stack_rules_proto//go:go_proto_library.bzl", "go_proto_library")
 
 go_proto_library(
     name = "person_go_library",
@@ -164,7 +164,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//go:defs.bzl", "go_grpc_library")
+load("@build_stack_rules_proto//go:go_grpc_library.bzl", "go_grpc_library")
 
 go_grpc_library(
     name = "greeter_go_library",

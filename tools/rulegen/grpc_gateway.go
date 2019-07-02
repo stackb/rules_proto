@@ -39,14 +39,14 @@ def {{ .Rule.Name }}(**kwargs):
         **{k: v for (k, v) in kwargs.items() if k != "deps"} # Forward args except deps
     )`)
 
-var grpcGatewayCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:defs.bzl", "{{ .Rule.Name }}")
+var grpcGatewayCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "api_gateway_grpc",
     deps = ["@build_stack_rules_proto//{{ .Lang.Dir }}/example/api:api_proto"],
 )`)
 
-var grpcGatewayLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:defs.bzl", "{{ .Rule.Name }}")
+var grpcGatewayLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "api_gateway_library",

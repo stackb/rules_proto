@@ -38,7 +38,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogo_proto_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogo_proto_compile.bzl", "gogo_proto_compile")
 
 gogo_proto_compile(
     name = "person_gogo_proto",
@@ -81,7 +81,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogo_grpc_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogo_grpc_compile.bzl", "gogo_grpc_compile")
 
 gogo_grpc_compile(
     name = "greeter_gogo_grpc",
@@ -124,7 +124,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogo_proto_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogo_proto_library.bzl", "gogo_proto_library")
 
 gogo_proto_library(
     name = "person_gogo_library",
@@ -173,7 +173,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogo_grpc_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogo_grpc_library.bzl", "gogo_grpc_library")
 
 gogo_grpc_library(
     name = "greeter_gogo_library",
@@ -221,7 +221,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogofast_proto_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofast_proto_compile.bzl", "gogofast_proto_compile")
 
 gogofast_proto_compile(
     name = "person_gogo_proto",
@@ -264,7 +264,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogofast_grpc_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofast_grpc_compile.bzl", "gogofast_grpc_compile")
 
 gogofast_grpc_compile(
     name = "greeter_gogo_grpc",
@@ -307,7 +307,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogofast_proto_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofast_proto_library.bzl", "gogofast_proto_library")
 
 gogofast_proto_library(
     name = "person_gogo_library",
@@ -356,7 +356,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogofast_grpc_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofast_grpc_library.bzl", "gogofast_grpc_library")
 
 gogofast_grpc_library(
     name = "greeter_gogo_library",
@@ -404,7 +404,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogofaster_proto_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_proto_compile.bzl", "gogofaster_proto_compile")
 
 gogofaster_proto_compile(
     name = "person_gogo_proto",
@@ -447,7 +447,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogofaster_grpc_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_grpc_compile.bzl", "gogofaster_grpc_compile")
 
 gogofaster_grpc_compile(
     name = "greeter_gogo_grpc",
@@ -490,7 +490,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogofaster_proto_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_proto_library.bzl", "gogofaster_proto_library")
 
 gogofaster_proto_library(
     name = "person_gogo_library",
@@ -539,7 +539,7 @@ go_register_toolchains()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogofaster_grpc_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_grpc_library.bzl", "gogofaster_grpc_library")
 
 gogofaster_grpc_library(
     name = "greeter_gogo_library",

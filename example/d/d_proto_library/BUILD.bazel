@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//d:defs.bzl", "d_proto_library")
+load("@build_stack_rules_proto//d:d_proto_library.bzl", "d_proto_library")
 
 d_proto_library(
     name = "person_d_library",

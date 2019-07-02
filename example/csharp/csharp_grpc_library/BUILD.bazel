@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//csharp:defs.bzl", "csharp_grpc_library")
+load("@build_stack_rules_proto//csharp:csharp_grpc_library.bzl", "csharp_grpc_library")
 
 csharp_grpc_library(
     name = "greeter_csharp_library",

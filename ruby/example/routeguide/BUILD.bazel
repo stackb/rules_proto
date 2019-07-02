@@ -1,4 +1,4 @@
-load("//ruby:defs.bzl", "ruby_grpc_library")
+load("//ruby:ruby_grpc_library.bzl", "ruby_grpc_library")
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_binary", "ruby_library")
 
 ruby_grpc_library(

@@ -22,7 +22,7 @@ grpcjs_grpc_compile()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:defs.bzl", "grpcjs_grpc_compile")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:grpcjs_grpc_compile.bzl", "grpcjs_grpc_compile")
 
 grpcjs_grpc_compile(
     name = "greeter_grpc.js_grpc",
@@ -63,7 +63,7 @@ closure_repositories()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:defs.bzl", "grpcjs_grpc_library")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:grpcjs_grpc_library.bzl", "grpcjs_grpc_library")
 
 grpcjs_grpc_library(
     name = "greeter_grpc.js_library",

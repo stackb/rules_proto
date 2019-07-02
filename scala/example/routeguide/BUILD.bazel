@@ -1,4 +1,4 @@
-load("//scala:defs.bzl", "scala_grpc_library")
+load("//scala:scala_grpc_library.bzl", "scala_grpc_library")
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_binary", "scala_library")
 load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scalapb_proto_library")
 

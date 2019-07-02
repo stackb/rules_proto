@@ -1,4 +1,7 @@
-load("//swift:defs.bzl", "swift_proto_library")
+#load("//swift:library.bzl", "swift_grpc_library")
+
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_proto_library")
+#load("//swift:swift_proto_library.bzl", "swift_proto_library")
 
 swift_proto_library(
     name = "routeguide",

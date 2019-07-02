@@ -36,7 +36,7 @@ rust_proto_repositories()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//rust:defs.bzl", "rust_proto_compile")
+load("@build_stack_rules_proto//rust:rust_proto_compile.bzl", "rust_proto_compile")
 
 rust_proto_compile(
     name = "person_rust_proto",
@@ -85,7 +85,7 @@ rust_proto_repositories()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//rust:defs.bzl", "rust_grpc_compile")
+load("@build_stack_rules_proto//rust:rust_grpc_compile.bzl", "rust_grpc_compile")
 
 rust_grpc_compile(
     name = "greeter_rust_grpc",
@@ -134,7 +134,7 @@ rust_proto_repositories()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//rust:defs.bzl", "rust_proto_library")
+load("@build_stack_rules_proto//rust:rust_proto_library.bzl", "rust_proto_library")
 
 rust_proto_library(
     name = "person_rust_library",
@@ -183,7 +183,7 @@ rust_proto_repositories()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//rust:defs.bzl", "rust_grpc_library")
+load("@build_stack_rules_proto//rust:rust_grpc_library.bzl", "rust_grpc_library")
 
 rust_grpc_library(
     name = "greeter_rust_library",

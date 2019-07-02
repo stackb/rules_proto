@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//github.com/gogo/protobuf:defs.bzl", "gogofaster_grpc_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:gogofaster_grpc_library.bzl", "gogofaster_grpc_library")
 
 gogofaster_grpc_library(
     name = "greeter_gogo_library",

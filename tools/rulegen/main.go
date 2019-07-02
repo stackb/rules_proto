@@ -103,7 +103,6 @@ func action(c *cli.Context) error {
 
 	for _, lang := range languages {
 		mustWriteLanguageReadme(dir, lang)
-		mustWriteLanguageDefs(dir, lang)
 		mustWriteLanguageRules(dir, lang)
 		mustWriteLanguageExamples(dir, lang)
 	}
@@ -203,17 +202,6 @@ func mustWriteLanguageExampleBazelrcFile(dir string, lang *Language, rule *Rule)
 	}
 	out.ln()
 	out.MustWrite(path.Join(dir, ".bazelrc"))
-}
-
-
-func mustWriteLanguageDefs(dir string, lang *Language) {
-	out := &LineWriter{}
-	out.w("# Aggregate all `%s` rules to one loadable file", lang.Name)
-	for _, rule := range lang.Rules {
-		out.w(`load(":%s.bzl", "%s")`, rule.Name, rule.Name)
-	}
-	out.ln()
-	out.MustWrite(path.Join(dir, lang.Dir, "defs.bzl"))
 }
 
 

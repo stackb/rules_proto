@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:private"])
 
-load("@build_stack_rules_proto//python:defs.bzl", "python_grpc_library")
+load("@build_stack_rules_proto//python:python_grpc_library.bzl", "python_grpc_library")
 
 # Test that python dependencies protobuf and grpc are available
 

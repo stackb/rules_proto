@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//github.com/grpc/grpc-web:defs.bzl", "commonjs_grpc_compile")
+load("@build_stack_rules_proto//github.com/grpc/grpc-web:commonjs_grpc_compile.bzl", "commonjs_grpc_compile")
 
 commonjs_grpc_compile(
     name = "greeter_grpc-web_grpc",

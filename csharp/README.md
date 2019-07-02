@@ -46,7 +46,7 @@ csharp_proto_compile()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//csharp:defs.bzl", "csharp_proto_compile")
+load("@build_stack_rules_proto//csharp:csharp_proto_compile.bzl", "csharp_proto_compile")
 
 csharp_proto_compile(
     name = "person_csharp_proto",
@@ -87,7 +87,7 @@ grpc_deps()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//csharp:defs.bzl", "csharp_grpc_compile")
+load("@build_stack_rules_proto//csharp:csharp_grpc_compile.bzl", "csharp_grpc_compile")
 
 csharp_grpc_compile(
     name = "greeter_csharp_grpc",
@@ -158,7 +158,7 @@ nuget_protobuf_packages()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//csharp:defs.bzl", "csharp_proto_library")
+load("@build_stack_rules_proto//csharp:csharp_proto_library.bzl", "csharp_proto_library")
 
 csharp_proto_library(
     name = "person_csharp_library",
@@ -239,7 +239,7 @@ nuget_grpc_packages()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//csharp:defs.bzl", "csharp_grpc_library")
+load("@build_stack_rules_proto//csharp:csharp_grpc_library.bzl", "csharp_grpc_library")
 
 csharp_grpc_library(
     name = "greeter_csharp_library",

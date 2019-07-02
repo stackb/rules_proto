@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//swift:defs.bzl", "swift_proto_compile")
+load("@build_stack_rules_proto//swift:swift_proto_compile.bzl", "swift_proto_compile")
 
 swift_proto_compile(
     name = "person_swift_proto",

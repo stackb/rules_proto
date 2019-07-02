@@ -167,7 +167,7 @@ of your choice).
 
 ```python
 # BUILD.bazel
-load("@build_stack_rules_proto//cpp:defs.bzl", "cpp_proto_compile")
+load("@build_stack_rules_proto//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
 
 cpp_proto_compile(
     name = "cpp_thing_proto",
@@ -215,7 +215,7 @@ cpp_proto_library()
 
 ```python
 # BUILD.bazel
-load("@build_stack_rules_proto//cpp:defs.bzl", "cpp_proto_library")
+load("@build_stack_rules_proto//cpp:cpp_proto_library.bzl", "cpp_proto_library")
 
 cpp_proto_library(
     name = "cpp_thing_proto",
