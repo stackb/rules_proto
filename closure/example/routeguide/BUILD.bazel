@@ -5,7 +5,7 @@ load(
     "closure_js_test",
     # "closure_proto_library",
 )
-load("//closure:closure_proto_library.bzl", "closure_proto_library")
+load("//closure:defs.bzl", "closure_proto_library")
 
 closure_proto_library(
     name = "routeguide",

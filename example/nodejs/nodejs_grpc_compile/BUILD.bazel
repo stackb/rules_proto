@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//nodejs:nodejs_grpc_compile.bzl", "nodejs_grpc_compile")
+load("@build_stack_rules_proto//nodejs:defs.bzl", "nodejs_grpc_compile")
 
 nodejs_grpc_compile(
     name = "greeter_nodejs_grpc",

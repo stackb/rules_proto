@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:grpcjs_grpc_compile.bzl", "grpcjs_grpc_compile")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:defs.bzl", "grpcjs_grpc_compile")
 
 grpcjs_grpc_compile(
     name = "greeter_grpc.js_grpc",

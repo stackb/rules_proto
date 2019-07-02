@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//nodejs:nodejs_proto_compile.bzl", "nodejs_proto_compile")
+load("@build_stack_rules_proto//nodejs:defs.bzl", "nodejs_proto_compile")
 
 nodejs_proto_compile(
     name = "person_nodejs_proto",

@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//swift:swift_grpc_library.bzl", "swift_grpc_library")
+load("@build_stack_rules_proto//swift:defs.bzl", "swift_grpc_library")
 
 swift_grpc_library(
     name = "person_swift_library",

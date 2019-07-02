@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//java:java_grpc_compile.bzl", "java_grpc_compile")
+load("@build_stack_rules_proto//java:defs.bzl", "java_grpc_compile")
 
 java_grpc_compile(
     name = "greeter_java_grpc",

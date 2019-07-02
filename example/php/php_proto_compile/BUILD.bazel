@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//php:php_proto_compile.bzl", "php_proto_compile")
+load("@build_stack_rules_proto//php:defs.bzl", "php_proto_compile")
 
 php_proto_compile(
     name = "person_php_proto",

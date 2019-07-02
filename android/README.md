@@ -24,7 +24,7 @@ android_proto_compile()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//android:android_proto_compile.bzl", "android_proto_compile")
+load("@build_stack_rules_proto//android:defs.bzl", "android_proto_compile")
 
 android_proto_compile(
     name = "person_android_proto",
@@ -72,7 +72,7 @@ grpc_java_repositories(
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//android:android_grpc_compile.bzl", "android_grpc_compile")
+load("@build_stack_rules_proto//android:defs.bzl", "android_grpc_compile")
 
 android_grpc_compile(
     name = "greeter_android_grpc",
@@ -126,7 +126,7 @@ android_sdk_repository(name = "androidsdk")
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//android:android_proto_library.bzl", "android_proto_library")
+load("@build_stack_rules_proto//android:defs.bzl", "android_proto_library")
 
 android_proto_library(
     name = "person_android_library",
@@ -178,7 +178,7 @@ android_sdk_repository(name = "androidsdk")
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//android:android_grpc_library.bzl", "android_grpc_library")
+load("@build_stack_rules_proto//android:defs.bzl", "android_grpc_library")
 
 android_grpc_library(
     name = "greeter_android_library",

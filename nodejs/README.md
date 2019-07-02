@@ -22,7 +22,7 @@ nodejs_proto_compile()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//nodejs:nodejs_proto_compile.bzl", "nodejs_proto_compile")
+load("@build_stack_rules_proto//nodejs:defs.bzl", "nodejs_proto_compile")
 
 nodejs_proto_compile(
     name = "person_nodejs_proto",
@@ -63,7 +63,7 @@ grpc_deps()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//nodejs:nodejs_grpc_compile.bzl", "nodejs_grpc_compile")
+load("@build_stack_rules_proto//nodejs:defs.bzl", "nodejs_grpc_compile")
 
 nodejs_grpc_compile(
     name = "greeter_nodejs_grpc",

@@ -41,7 +41,7 @@ dart_protoc_plugin_deps()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//dart:dart_proto_compile.bzl", "dart_proto_compile")
+load("@build_stack_rules_proto//dart:defs.bzl", "dart_proto_compile")
 
 dart_proto_compile(
     name = "person_dart_proto",
@@ -95,7 +95,7 @@ dart_protoc_plugin_deps()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//dart:dart_grpc_compile.bzl", "dart_grpc_compile")
+load("@build_stack_rules_proto//dart:defs.bzl", "dart_grpc_compile")
 
 dart_grpc_compile(
     name = "greeter_dart_grpc",
@@ -149,7 +149,7 @@ dart_protoc_plugin_deps()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//dart:dart_proto_library.bzl", "dart_proto_library")
+load("@build_stack_rules_proto//dart:defs.bzl", "dart_proto_library")
 
 dart_proto_library(
     name = "person_dart_library",
@@ -207,7 +207,7 @@ dart_grpc_deps()
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//dart:dart_grpc_library.bzl", "dart_grpc_library")
+load("@build_stack_rules_proto//dart:defs.bzl", "dart_grpc_library")
 
 dart_grpc_library(
     name = "greeter_dart_library",

@@ -4,7 +4,7 @@ load(
     "closure_js_library",
     "closure_js_test",
 )
-load("//github.com/grpc/grpc-web:closure_grpc_library.bzl", "closure_grpc_library")
+load("//github.com/grpc/grpc-web:defs.bzl", "closure_grpc_library")
 
 closure_grpc_library(
     name = "routeguide",

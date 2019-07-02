@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//java:java_proto_compile.bzl", "java_proto_compile")
+load("@build_stack_rules_proto//java:defs.bzl", "java_proto_compile")
 
 java_proto_compile(
     name = "person_java_proto",

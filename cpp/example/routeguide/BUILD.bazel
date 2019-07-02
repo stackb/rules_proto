@@ -1,4 +1,4 @@
-load("//cpp:cpp_grpc_library.bzl", "cpp_grpc_library")
+load("//cpp:defs.bzl", "cpp_grpc_library")
 
 cpp_grpc_library(
     name = "routeguide",

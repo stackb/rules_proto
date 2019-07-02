@@ -41,7 +41,7 @@ var gogoGrpcLibraryRuleTemplate = mustTemplate(gogoLibraryRuleTemplateString + `
         visibility = kwargs.get("visibility"),
     )`)
 
-var gogoProtoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+var gogoProtoLibraryExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:defs.bzl", "{{ .Rule.Name }}")
 
 {{ .Rule.Name }}(
     name = "person_{{ .Lang.Name }}_library",

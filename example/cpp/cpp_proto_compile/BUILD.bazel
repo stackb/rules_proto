@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
+load("@build_stack_rules_proto//cpp:defs.bzl", "cpp_proto_compile")
 
 cpp_proto_compile(
     name = "person_cpp_proto",

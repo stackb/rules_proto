@@ -31,7 +31,7 @@ closure_repositories(
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/grpc/grpc-web:closure_grpc_compile.bzl", "closure_grpc_compile")
+load("@build_stack_rules_proto//github.com/grpc/grpc-web:defs.bzl", "closure_grpc_compile")
 
 closure_grpc_compile(
     name = "greeter_grpc-web_grpc",
@@ -74,7 +74,7 @@ closure_repositories(
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/grpc/grpc-web:commonjs_grpc_compile.bzl", "commonjs_grpc_compile")
+load("@build_stack_rules_proto//github.com/grpc/grpc-web:defs.bzl", "commonjs_grpc_compile")
 
 commonjs_grpc_compile(
     name = "greeter_grpc-web_grpc",
@@ -117,7 +117,7 @@ closure_repositories(
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/grpc/grpc-web:commonjs_dts_grpc_compile.bzl", "commonjs_dts_grpc_compile")
+load("@build_stack_rules_proto//github.com/grpc/grpc-web:defs.bzl", "commonjs_dts_grpc_compile")
 
 commonjs_dts_grpc_compile(
     name = "greeter_grpc-web_grpc",
@@ -160,7 +160,7 @@ closure_repositories(
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/grpc/grpc-web:ts_grpc_compile.bzl", "ts_grpc_compile")
+load("@build_stack_rules_proto//github.com/grpc/grpc-web:defs.bzl", "ts_grpc_compile")
 
 ts_grpc_compile(
     name = "greeter_grpc-web_grpc",
@@ -203,7 +203,7 @@ closure_repositories(
 ### `BUILD.bazel`
 
 ```python
-load("@build_stack_rules_proto//github.com/grpc/grpc-web:closure_grpc_library.bzl", "closure_grpc_library")
+load("@build_stack_rules_proto//github.com/grpc/grpc-web:defs.bzl", "closure_grpc_library")
 
 closure_grpc_library(
     name = "greeter_grpc-web_library",

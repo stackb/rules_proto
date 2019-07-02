@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//cpp:cpp_grpc_library.bzl", "cpp_grpc_library")
+load("@build_stack_rules_proto//cpp:defs.bzl", "cpp_grpc_library")
 
 cpp_grpc_library(
     name = "greeter_cpp_library",

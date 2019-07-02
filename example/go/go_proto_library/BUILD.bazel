@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//go:go_proto_library.bzl", "go_proto_library")
+load("@build_stack_rules_proto//go:defs.bzl", "go_proto_library")
 
 go_proto_library(
     name = "person_go_library",
