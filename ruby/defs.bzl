@@ -1,10 +1,5 @@
 # Aggregate all `ruby` rules to one loadable file
-load(":ruby_proto_compile.bzl", _ruby_proto_compile="ruby_proto_compile")
-load(":ruby_grpc_compile.bzl", _ruby_grpc_compile="ruby_grpc_compile")
-load(":ruby_proto_library.bzl", _ruby_proto_library="ruby_proto_library")
-load(":ruby_grpc_library.bzl", _ruby_grpc_library="ruby_grpc_library")
-
-ruby_proto_compile = _ruby_proto_compile
-ruby_grpc_compile = _ruby_grpc_compile
-ruby_proto_library = _ruby_proto_library
-ruby_grpc_library = _ruby_grpc_library
+load(":ruby_proto_compile.bzl", "ruby_proto_compile")
+load(":ruby_grpc_compile.bzl", "ruby_grpc_compile")
+load(":ruby_proto_library.bzl", "ruby_proto_library")
+load(":ruby_grpc_library.bzl", "ruby_grpc_library")
