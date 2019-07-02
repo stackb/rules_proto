@@ -1,7 +1,7 @@
 load(
     "//:deps.bzl",
     "com_github_grpc_grpc",
-    "org_pubref_rules_node",
+    "build_bazel_rules_nodejs",
 )
 load(
     "//protobuf:deps.bzl",
@@ -17,7 +17,7 @@ def node_grpc_compile(**kwargs):
 
 def node_proto_library(**kwargs):
     node_proto_compile(**kwargs)
-    org_pubref_rules_node(**kwargs)
+    build_bazel_rules_nodejs(**kwargs)
 
 def node_grpc_library(**kwargs):
     node_grpc_compile(**kwargs)

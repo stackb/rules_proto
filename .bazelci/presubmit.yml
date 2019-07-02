@@ -647,54 +647,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/node/node_grpc_compile
-  node_node_proto_library_ubuntu1604:
-    name: 'node: node_proto_library'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/node/node_proto_library
-  node_node_proto_library_ubuntu1804:
-    name: 'node: node_proto_library'
-    platform: ubuntu1804
-    build_targets:
-      - "//..."
-    working_directory: example/node/node_proto_library
-  node_node_proto_library_windows:
-    name: 'node: node_proto_library'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/node/node_proto_library
-  node_node_proto_library_macos:
-    name: 'node: node_proto_library'
-    platform: macos
-    build_targets:
-      - "//..."
-    working_directory: example/node/node_proto_library
-  node_node_grpc_library_ubuntu1604:
-    name: 'node: node_grpc_library'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/node/node_grpc_library
-  node_node_grpc_library_ubuntu1804:
-    name: 'node: node_grpc_library'
-    platform: ubuntu1804
-    build_targets:
-      - "//..."
-    working_directory: example/node/node_grpc_library
-  node_node_grpc_library_windows:
-    name: 'node: node_grpc_library'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/node/node_grpc_library
-  node_node_grpc_library_macos:
-    name: 'node: node_grpc_library'
-    platform: macos
-    build_targets:
-      - "//..."
-    working_directory: example/node/node_grpc_library
   objc_objc_proto_compile_ubuntu1604:
     name: 'objc: objc_proto_compile'
     platform: ubuntu1604

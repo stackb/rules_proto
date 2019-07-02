@@ -79,13 +79,6 @@ def grpc_ecosystem_grpc_gateway(**kwargs):
         sha256 = get_sha256(name, "a8d283391d1e37b2bea798082f198187dd1edfed03da00f5be96edc6dadfde44", kwargs)
         github_archive(name, "grpc-ecosystem", "grpc-gateway", ref, sha256)
 
-def org_pubref_rules_node(**kwargs):
-    if "org_pubref_rules_node" not in native.existing_rules():
-        name = "org_pubref_rules_node"
-        ref = get_ref(name, "9ebfa90ca3283bb0f92ae5f337173a5a5a4d98aa", kwargs)
-        sha256 = get_sha256(name, "cb1bf3d64c0b323bc515748902df9fef9ecfcc37c7aa84253d7e99d876f1196a", kwargs)
-        github_archive(name, "pubref", "rules_node", ref, sha256)
-
 def build_bazel_rules_android(**kwargs):
     if "build_bazel_rules_android" not in native.existing_rules():
         name = "build_bazel_rules_android"
@@ -233,3 +226,10 @@ def io_bazel_rules_closure(**kwargs):
         ref = get_ref(name, "03110588392d8c6c05b99c08a6f1c2121604ca27", kwargs)
         sha256 = get_sha256(name, "12d17f241fc73f562825b0bba11a21040580d82da00be4689f5942c05508d8da", kwargs)
         github_archive(name, "bazelbuild", "rules_closure", ref, sha256)
+
+def build_bazel_rules_nodejs(**kwargs):
+    if "build_bazel_rules_nodejs" not in native.existing_rules():
+        name = "build_bazel_rules_nodejs"
+        ref = get_ref(name, "fb1133d1259992c196df31e2da6540fa6d54f191", kwargs) # 0.32.2
+        sha256 = get_sha256(name, "4e91b794f01cc8b1c690ae4d7ae8815ac6a4d4e9d2a5ac5988233ad0be564355", kwargs)
+        github_archive(name, "bazelbuild", "rules_nodejs", ref, sha256)

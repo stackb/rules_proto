@@ -16,14 +16,11 @@
  *
  */
 
-const featureDb = require('./example/proto/routeguide_features.json');
-const routeguide = require('node/example/routeguide/routeguide')
-// const routeguide = require('example/proto/routeguide/routeguide')
-const messages = routeguide.routeguide_pb;
-const services = routeguide.routeguide_grpc_pb;
+const featureDb = require('build_stack_rules_proto/example/proto/routeguide_features.json');
+const messages = require('build_stack_rules_proto/node/example/routeguide/routeguide/example/proto/routeguide_pb.js')
+const services = require('build_stack_rules_proto/node/example/routeguide/routeguide/example/proto/routeguide_grpc_pb.js')
 
 const fs = require('fs');
-const parseArgs = require('minimist');
 const path = require('path');
 const _ = require('lodash');
 const grpc = require('grpc');

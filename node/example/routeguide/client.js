@@ -20,43 +20,12 @@ const async = require('async');
 const _ = require('lodash');
 const grpc = require('grpc');
 
-// Import the protocol buffer node_module such that the importpath is
-// "{package}/{rule-name}".  In this case the {package} is
-// "node/example/routeguide" (because there is a
-// node/example/routeguide/BUILD.bazel file) and the {rule-name} is "routeguide"
-// (because the BUILD.bazel file has a node_grpc_library target with name =
-// "routeguide").
-const routeguide = require('node/example/routeguide/routeguide')
-
-// At this point V8 has just loaded an index.js file like this:
-//
-// module.exports = {'routeguide_pb':
-//  require('./node/example/routeguide/routeguide_pb/example/proto/routeguide_pb.js'),
-//  'routeguide_grpc_pb':
-//  require('./node/example/routeguide/routeguide_pb/example/proto/routeguide_grpc_pb.js'),
-//}
-//
-// Internally, this node_module has copied over the generated files as they
-// appeared in the bazel-genfiles directly such that these generated files can
-// satisfy their own require statements successfully.  The index.js exports and
-// object that makes them available by their basename(s).
-//
-
-// The protobuf 'messages' for the proto file 'routeguide.proto' are therefore
-// imported by:
-//
-const messages = routeguide.routeguide_pb;
-//console.log("routeguide messages", messages);
-
-// The protobuf 'services' for the proto file 'routeguide.proto' are therefore
-// imported by:
-//
-const services = routeguide.routeguide_grpc_pb;
-//console.log("routeguide services", services);
+const messages = require('build_stack_rules_proto/node/example/routeguide/routeguide/example/proto/routeguide_pb.js')
+const services = require('build_stack_rules_proto/node/example/routeguide/routeguide/example/proto/routeguide_grpc_pb.js')
 
 // This is included as data in the client node_module, so we can load
 // this database as a constant.
-const featureList = require('./example/proto/routeguide_features.json');
+const featureList = require('build_stack_rules_proto/example/proto/routeguide_features.json');
 console.log(`Loaded ${featureList.length} from feature database`);
 
 let port = '50051';

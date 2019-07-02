@@ -1,33 +1,33 @@
-load("//node:node_grpc_library.bzl", "node_grpc_library")
-load("@org_pubref_rules_node//node:rules.bzl", "node_binary", "node_module")
+load("//node:node_grpc_compile.bzl", "node_grpc_compile")
+load("@build_bazel_rules_nodejs//:defs.bzl", "npm_package", "nodejs_binary")
 
-node_grpc_library(
+node_grpc_compile(
     name = "routeguide",
     deps = ["//example/proto:routeguide_proto"],
 )
 
-node_module(
-    name = "clientlib",
-    data = ["//example/proto:routeguide_features"],
-    main = "client.js",
-    deps = [":routeguide"],
-)
-
-node_binary(
+nodejs_binary(
     name = "client",
-    entrypoint = ":clientlib",
+    entry_point = "client.js",
+    data = [
+        "client.js",
+        ":routeguide",
+        "//example/proto:routeguide_features",
+        "@node_modules//google-protobuf",
+        "@node_modules//grpc",
+    ],
     visibility = ["//example/routeguide:__pkg__"],
 )
 
-node_module(
-    name = "serverlib",
-    data = ["//example/proto:routeguide_features"],
-    main = "server.js",
-    deps = [":routeguide"],
-)
-
-node_binary(
+nodejs_binary(
     name = "server",
-    entrypoint = ":serverlib",
+    entry_point = "server.js",
+    data = [
+        "server.js",
+        ":routeguide",
+        "//example/proto:routeguide_features",
+        "@node_modules//google-protobuf",
+        "@node_modules//grpc",
+    ],
     visibility = ["//example/routeguide:__pkg__"],
 )

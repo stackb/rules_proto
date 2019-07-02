@@ -124,27 +124,12 @@ load("//node:deps.bzl", "node_grpc_library")
 
 node_grpc_library()
 
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
 
-grpc_deps()
-
-load("@org_pubref_rules_node//node:rules.bzl", "node_repositories", "yarn_modules")
-
-node_repositories()
-
-yarn_modules(
-    name = "proto_node_modules",
-    deps = {
-        "google-protobuf": "3.6.1",
-    },
-)
-
-yarn_modules(
-    name = "grpc_node_modules",
-    deps = {
-        "grpc": "1.15.1",
-        "async": "2.6.1",
-    },
+yarn_install(
+    name = "node_modules",
+    package_json = "//node:requirements/package.json",
+    yarn_lock = "//node:requirements/yarn.lock",
 )
 
 # **************************************************************
@@ -157,10 +142,6 @@ yarn_modules(
 load("//python:deps.bzl", "python_grpc_library")
 
 python_grpc_library()
-
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-
-grpc_deps()
 
 load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
 
