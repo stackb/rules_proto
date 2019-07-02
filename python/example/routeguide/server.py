@@ -122,7 +122,7 @@ def serve():
     if os.environ.get("SERVER_PORT"):
         port = os.environ.get("SERVER_PORT")
     server.add_insecure_port('[::]:' + port)
-    print("Python RouteGuide Server listing on :%s..." % port)
+    print("Python RouteGuide Server listening on :%s..." % port)
     server.start()
     try:
         while True:
