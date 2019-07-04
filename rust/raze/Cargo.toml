@@ -10,7 +10,6 @@ path = "fake_lib.rs"
 futures = "0.1.28"
 grpcio = { version = "0.4.4", features = ["openssl"] }
 grpcio-compiler = "0.4.3"
-#grpcio-sys = { version = "0.4.4", features = ["openssl"] }
 protobuf = { version = "=2.7.0", features = ["with-bytes"] }
 protobuf-codegen = "2.7.0"
 
