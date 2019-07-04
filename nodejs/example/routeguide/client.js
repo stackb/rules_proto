@@ -20,8 +20,8 @@ const async = require('async');
 const _ = require('lodash');
 const grpc = require('grpc');
 
-const messages = require('build_stack_rules_proto/node/example/routeguide/routeguide/example/proto/routeguide_pb.js')
-const services = require('build_stack_rules_proto/node/example/routeguide/routeguide/example/proto/routeguide_grpc_pb.js')
+const messages = require('build_stack_rules_proto/nodejs/example/routeguide/routeguide/example/proto/routeguide_pb.js')
+const services = require('build_stack_rules_proto/nodejs/example/routeguide/routeguide/example/proto/routeguide_grpc_pb.js')
 
 // This is included as data in the client, so we can load
 // this database as a constant.

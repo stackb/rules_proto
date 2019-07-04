@@ -13,6 +13,7 @@ nodejs_binary(
         "client.js",
         ":routeguide",
         "//example/proto:routeguide_features",
+        "@node_modules//async",
         "@node_modules//google-protobuf",
         "@node_modules//grpc",
     ],
