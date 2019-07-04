@@ -22,6 +22,7 @@ routeguide_test_matrix(
         "//scala/example/routeguide:client_deploy.jar",
         "//dart/example/routeguide:client",
         # "//ruby/example/routeguide:client",
+        "//rust/example/routeguide:client",
     ],
     servers = [
         "//cpp/example/routeguide:server",
@@ -32,6 +33,7 @@ routeguide_test_matrix(
         "//nodejs/example/routeguide:server",
         "//dart/example/routeguide:server",
         # "//ruby/example/routeguide:server",
+        "//rust/example/routeguide:server",
     ],
     tagmap = {
         # no sandbox any csharp test
