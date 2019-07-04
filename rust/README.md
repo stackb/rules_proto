@@ -109,6 +109,8 @@ rust_grpc_compile(
 
 ## `rust_proto_library`
 
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
+
 Generates rust protobuf library
 
 ### `WORKSPACE`
@@ -157,6 +159,8 @@ rust_proto_library(
 ---
 
 ## `rust_grpc_library`
+
+> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
 Generates rust protobuf+gRPC library
 

@@ -22,11 +22,13 @@ def rust_grpc_library(**kwargs):
     rust_library(
         name = kwargs.get("name"),
         srcs = [name_pb, name_lib],
-        deps = [
-            "@io_bazel_rules_rust//proto/raze:protobuf",
-            "@io_bazel_rules_rust//proto/raze:grpc",
-            "@io_bazel_rules_rust//proto/raze:tls_api",
-            "@io_bazel_rules_rust//proto/raze:tls_api_stub",
-        ],
+        deps = GRPC_DEPS,
         visibility = kwargs.get("visibility"),
     )
+
+GRPC_DEPS = [
+    Label("//rust/raze:futures"),
+    Label("//rust/raze:grpcio"),
+    #Label("//rust/raze:grpcio_sys"),
+    Label("//rust/raze:protobuf"),
+]

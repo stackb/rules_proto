@@ -16,8 +16,9 @@ def _rust_proto_lib_impl(ctx):
     # Add externs
     content = ["extern crate protobuf;"]
     if ctx.attr.grpc:
-        content.append("extern crate grpc;")
-        content.append("extern crate tls_api;")
+        content.append("extern crate grpcio;")
+        content.append("extern crate futures;")
+    content.append("") # Newline
 
     # List each output
     srcs = [f for files in compilation.output_files.values() for f in files]

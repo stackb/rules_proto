@@ -5,7 +5,7 @@ proto_plugin(
     # Use the proto basename and pipe the value to the rust_keyword function.
     # Ths function will append '_pb' if the basename is a rust keyword.
     outputs = ["{basename|rust_keyword}.rs"],
-    tool = ":protoc_gen_rust",
+    tool = "//rust/raze:cargo_bin_protoc_gen_rust",
     visibility = ["//visibility:public"],
 )
 
@@ -14,16 +14,6 @@ proto_plugin(
     # Use the proto basename and pipe the value to the rust_keyword function.
     # Ths function will append '_pb' if the basename is a rust keyword.
     outputs = ["{basename|rust_keyword}_grpc.rs"],
-    tool = ":protoc_gen_rust_grpc",
+    tool = "//rust/raze:cargo_bin_grpc_rust_plugin",
     visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "protoc_gen_rust",
-    actual = "@raze__protobuf_codegen__1_6_0//:cargo_bin_protoc_gen_rust",
-)
-
-alias(
-    name = "protoc_gen_rust_grpc",
-    actual = "@raze__grpc_compiler__0_4_0//:cargo_bin_protoc_gen_rust_grpc",
 )

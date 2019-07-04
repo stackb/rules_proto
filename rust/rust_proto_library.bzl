@@ -22,8 +22,10 @@ def rust_proto_library(**kwargs):
     rust_library(
         name = kwargs.get("name"),
         srcs = [name_pb, name_lib],
-        deps = [
-            "@io_bazel_rules_rust//proto/raze:protobuf",
-        ],
+        deps = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
     )
+
+PROTO_DEPS = [
+    Label("//rust/raze:protobuf"),
+]

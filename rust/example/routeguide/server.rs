@@ -1,242 +1,171 @@
-use crate::routeguide_grpc::RouteGuide;
-use crate::routeguide::Point;
-use crate::routeguide::Feature;
-use crate::routeguide::RouteNote;
-use crate::routeguide::RouteSummary;
-use crate::routeguide::Rectangle;
-use grpc::ServerHandlerContext;
-use grpc::ServerRequestSingle;
-use grpc::ServerResponseUnarySink;
-use grpc::ServerResponseSink;
-use grpc::ServerRequest;
-use std::collections::HashMap;
-use futures::stream;
-use futures::stream::Stream;
-use std::time::Instant;
-use futures::future::Future;
-use std::f64;
-use std::sync::Mutex;
-use futures::Async;
-use std::sync::Arc;
-use grpc::Metadata;
-use std::path::Path;
-use std::fs;
+// Copyright 2017 PingCAP, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#[macro_use]
+extern crate log;
+
+extern crate futures;
+extern crate grpcio;
+extern crate routeguide;
+extern crate serde_json;
+
+mod log_util;
+mod util;
+
 use std::io::Read;
-use json::JsonValue;
+use std::sync::Arc;
+use std::time::Instant;
+use std::{io, thread};
 
+use futures::sync::oneshot;
+use futures::*;
+use grpcio::*;
 
-// https://github.com/grpc/grpc-go/blob/master/examples/routeguide/server/server.go
-#[derive(Default)]
-pub struct RouteGuideImpl {
-    saved_features: Vec<Feature>,
-    route_notes: Arc<Mutex<HashMap<String, Vec<RouteNote>>>>,
+use crate::util::*;
+use routeguide::*;
+
+#[derive(Clone)]
+struct RouteGuideService {
+    data: Arc<Vec<Feature>>,
 }
 
-impl RouteGuideImpl {
-    pub fn new_and_load_db() -> RouteGuideImpl {
-        RouteGuideImpl {
-            saved_features: load_features(Path::new(routeguide_DB_PATH)),
-            route_notes: Default::default(),
-        }
-    }
-}
-
-impl RouteGuide for RouteGuideImpl {
-    fn get_feature(&self, _o: ServerHandlerContext, req: ServerRequestSingle<Point>, resp: ServerResponseUnarySink<Feature>) -> grpc::Result<()> {
-        for feature in &*self.saved_features {
-            if feature.get_location() == &req.message {
-                return resp.finish(feature.clone());
-            }
-        }
-
-        resp.finish(Feature {
-            location: Some(req.message).into(),
-            ..Default::default()
-        })
+impl RouteGuide for RouteGuideService {
+    fn get_feature(&mut self, ctx: RpcContext<'_>, point: Point, sink: UnarySink<Feature>) {
+        let data = self.data.clone();
+        let resp = data
+            .iter()
+            .find(|f| same_point(f.get_location(), &point))
+            .map_or_else(Feature::new, ToOwned::to_owned);
+        let f = sink
+            .success(resp)
+            .map_err(|e| error!("failed to handle getfeature request: {:?}", e));
+        ctx.spawn(f)
     }
 
-    fn list_features(&self, o: ServerHandlerContext, mut req: ServerRequestSingle<Rectangle>, resp: ServerResponseSink<Feature>) -> grpc::Result<()> {
-        let req = req.take_message();
-        // TODO: do not clone
-        let stream = stream::iter_ok(self.saved_features.clone())
-            .filter_map(move |feature| {
-                if in_range(feature.get_location(), &req) {
-                    return Some(feature);
+    fn list_features(
+        &mut self,
+        ctx: RpcContext<'_>,
+        rect: Rectangle,
+        resp: ServerStreamingSink<Feature>,
+    ) {
+        let data = self.data.clone();
+        let features: Vec<_> = data
+            .iter()
+            .filter_map(move |f| {
+                if fit_in(f.get_location(), &rect) {
+                    Some((f.to_owned(), WriteFlags::default()))
                 } else {
-                    return None;
+                    None
                 }
-            });
-        o.pump(stream, resp);
-        Ok(())
-    }
-
-    fn record_route(&self, o: ServerHandlerContext, req: ServerRequest<Point>, resp: ServerResponseUnarySink<RouteSummary>) -> grpc::Result<()> {
-        let start_time = Instant::now();
-
-        struct State {
-            point_count: u32,
-            feature_count: u32,
-            distance: u32,
-            last_point: Option<Point>,
-        }
-
-        let state = State {
-            point_count: 0,
-            feature_count: 0,
-            distance: 0,
-            last_point: None,
-        };
-
-        let saved_features = self.saved_features.clone();
-
-        let f = req.into_stream()
-            .fold(state, move |mut state, point| {
-                state.point_count += 1;
-                for feature in &saved_features {
-                    if feature.get_location() == &point {
-                        state.feature_count += 1;
-                    }
-                }
-                if let Some(last_point) = &state.last_point {
-                    state.distance += calc_distance(last_point, &point);
-                }
-                state.last_point = Some(point);
-                Ok::<_, grpc::Error>(state)
             })
-            .map(move |state| {
-                RouteSummary {
-                    point_count: state.point_count as i32,
-                    feature_count: state.feature_count as i32,
-                    distance: state.distance as i32,
-                    elapsed_time: start_time.elapsed().as_secs() as i32,
-                    ..Default::default()
-                }
-            });
-        o.pump_future(f, resp);
-        Ok(())
+            .collect();
+        let f = resp
+            .send_all(stream::iter_ok::<_, Error>(features))
+            .map(|_| {})
+            .map_err(|e| error!("failed to handle listfeatures request: {:?}", e));
+        ctx.spawn(f)
     }
 
-    fn route_chat(&self, o: ServerHandlerContext, req: ServerRequest<RouteNote>, mut resp: ServerResponseSink<RouteNote>) -> grpc::Result<()> {
-        let mut req = req.into_stream();
+    fn record_route(
+        &mut self,
+        ctx: RpcContext<'_>,
+        points: RequestStream<Point>,
+        resp: ClientStreamingSink<RouteSummary>,
+    ) {
+        let data = self.data.clone();
+        let timer = Instant::now();
+        let f = points
+            .fold(
+                (None, 0f64, RouteSummary::new()),
+                move |(last, mut dis, mut summary), point| {
+                    let total_count = summary.get_point_count();
+                    summary.set_point_count(total_count + 1);
+                    let valid_point = data
+                        .iter()
+                        .any(|f| !f.get_name().is_empty() && same_point(f.get_location(), &point));
+                    if valid_point {
+                        let feature_count = summary.get_feature_count();
+                        summary.set_feature_count(feature_count + 1);
+                    }
+                    if let Some(last_point) = last {
+                        dis += cal_distance(&last_point, &point);
+                    }
+                    Ok((Some(point), dis, summary)) as Result<_>
+                },
+            )
+            .and_then(move |(_, dis, mut s)| {
+                s.set_distance(dis as i32);
+                let dur = timer.elapsed();
+                s.set_elapsed_time(dur.as_secs() as i32);
+                resp.success(s)
+            })
+            .map_err(|e| error!("failed to record route: {:?}", e));
+        ctx.spawn(f)
+    }
 
-        let route_notes_map = self.route_notes.clone();
-
-        o.spawn_poll_fn(move || {
-            loop {
-                // Wait until resp is writable
-                if let Async::NotReady = resp.poll()? {
-                    return Ok(Async::NotReady);
-                }
-
-                match req.poll()? {
-                    Async::NotReady => return Ok(Async::NotReady),
-                    Async::Ready(Some(note)) => {
-                        let key = serialize(note.get_location());
-
-                        let mut route_notes_map = route_notes_map.lock().unwrap();
-
-                        let route_notes = route_notes_map.entry(key).or_insert(Vec::new());
-                        route_notes.push(note);
-
-                        for note in route_notes {
-                            resp.send_data(note.clone())?;
+    fn route_chat(
+        &mut self,
+        ctx: RpcContext<'_>,
+        notes: RequestStream<RouteNote>,
+        resp: DuplexSink<RouteNote>,
+    ) {
+        let mut buffer: Vec<RouteNote> = Vec::new();
+        let to_send = notes
+            .map(move |note| {
+                let to_prints: Vec<_> = buffer
+                    .iter()
+                    .filter_map(|n| {
+                        if same_point(n.get_location(), note.get_location()) {
+                            Some((n.to_owned(), WriteFlags::default()))
+                        } else {
+                            None
                         }
-                    }
-                    Async::Ready(None) => {
-                        resp.send_trailers(Metadata::new())?;
-                        return Ok(Async::Ready(()));
-                    }
-                }
-            }
-        });
-        Ok(())
+                    })
+                    .collect();
+                buffer.push(note);
+                stream::iter_ok::<_, Error>(to_prints)
+            })
+            .flatten();
+        let f = resp
+            .send_all(to_send)
+            .map(|_| {})
+            .map_err(|e| error!("failed to route chat: {:?}", e));
+        ctx.spawn(f)
     }
 }
 
-fn in_range(point: &Point, rect: &Rectangle) -> bool {
-    let left = f64::min(rect.get_lo().longitude as f64, rect.get_hi().longitude as f64);
-    let right = f64::max(rect.get_lo().longitude as f64, rect.get_hi().longitude as f64);
-    let top = f64::max(rect.get_lo().latitude as f64, rect.get_hi().latitude as f64);
-    let bottom = f64::min(rect.get_lo().latitude as f64, rect.get_hi().latitude as f64);
-
-    point.longitude as f64 >= left &&
-        point.longitude as f64 <= right &&
-        point.latitude as f64 >= bottom &&
-        point.latitude as f64 <= top
-}
-
-fn to_radians(num: f64) -> f64 {
-    num * f64::consts::PI / 180.
-}
-
-fn calc_distance(p1: &Point, p2: &Point) -> u32 {
-    let cord_factor: f64 = 1e7;
-    let r = 6371000.; // earth radius in metres
-    let lat1 = to_radians(p1.latitude as f64 / cord_factor);
-    let lat2 = to_radians(p2.latitude as f64 / cord_factor);
-    let lng1 = to_radians(p1.longitude as f64 / cord_factor);
-    let lng2 = to_radians(p2.longitude as f64 / cord_factor);
-    let dlat = lat2 - lat1;
-    let dlng = lng2 - lng1;
-
-    let a = f64::sin(dlat/2.) * f64::sin(dlat/2.) +
-        f64::cos(lat1) * f64::cos(lat2)*
-            f64::sin(dlng / 2.) * f64::sin(dlng / 2.);
-    let c = 2. * f64::atan2(f64::sqrt(a), f64::sqrt(1. - a));
-
-    let distance = r * c;
-    distance as u32
-}
-
-fn serialize(point: &Point) -> String {
-    format!("{} {}", point.latitude, point.longitude)
-}
-
-const routeguide_DB_PATH: &str = "testdata/routeguide_db.json";
-
-fn load_features(path: &Path) -> Vec<Feature> {
-    let mut file = fs::File::open(path).expect("open");
-    let mut s = String::new();
-    file.read_to_string(&mut s).expect("read");
-
-    // TODO: use protobuf mapper when new version is released
-
-    let json_value = json::parse(&s).expect("parse json");
-    let array = match json_value {
-        JsonValue::Array(array) => array,
-        _ => panic!(),
+fn main() {
+    let _guard = log_util::init_log(None);
+    let env = Arc::new(Environment::new(2));
+    let instance = RouteGuideService {
+        data: Arc::new(load_db()),
     };
-
-    array.into_iter().map(|item| {
-        let object = match item {
-            JsonValue::Object(object) => object,
-            _ => panic!(),
-        };
-
-        let location = match object.get("location").expect("location") {
-            JsonValue::Object(object) => object,
-            _ => panic!(),
-        };
-
-        Feature {
-            name: object.get("name").expect("name").as_str().expect("unwrap").to_owned(),
-            location: Some(Point {
-                latitude: location.get("latitude").expect("latitude").as_i32().unwrap(),
-                longitude: location.get("longitude").expect("longitude").as_i32().unwrap(),
-                ..Default::default()
-            }).into(),
-            ..Default::default()
-        }
-    }).collect()
-}
-
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn test_load_features() {
-        let features = load_features(Path::new(routeguide_DB_PATH));
-        assert!(features.len() > 0);
+    let service = routeguide::create_route_guide(instance);
+    let mut server = ServerBuilder::new(env)
+        .register_service(service)
+        .bind("127.0.0.1", 50_051)
+        .build()
+        .unwrap();
+    server.start();
+    for &(ref host, port) in server.bind_addrs() {
+        info!("listening on {}:{}", host, port);
     }
+    let (tx, rx) = oneshot::channel();
+    thread::spawn(move || {
+        info!("Press ENTER to exit...");
+        let _ = io::stdin().read(&mut [0]).unwrap();
+        tx.send(())
+    });
+    let _ = rx.wait();
+    let _ = server.shutdown().wait();
 }

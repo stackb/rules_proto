@@ -42,11 +42,13 @@ var rustProtoLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + 
     rust_library(
         name = kwargs.get("name"),
         srcs = [name_pb, name_lib],
-        deps = [
-            "@io_bazel_rules_rust//proto/raze:protobuf",
-        ],
+        deps = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+PROTO_DEPS = [
+    Label("//rust/raze:protobuf"),
+]`)
 
 var rustGrpcLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + `
     # Create lib file
@@ -60,14 +62,16 @@ var rustGrpcLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + `
     rust_library(
         name = kwargs.get("name"),
         srcs = [name_pb, name_lib],
-        deps = [
-            "@io_bazel_rules_rust//proto/raze:protobuf",
-            "@io_bazel_rules_rust//proto/raze:grpc",
-            "@io_bazel_rules_rust//proto/raze:tls_api",
-            "@io_bazel_rules_rust//proto/raze:tls_api_stub",
-        ],
+        deps = GRPC_DEPS,
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+GRPC_DEPS = [
+    Label("//rust/raze:futures"),
+    Label("//rust/raze:grpcio"),
+    #Label("//rust/raze:grpcio_sys"),
+    Label("//rust/raze:protobuf"),
+]`)
 
 func makeRust() *Language {
 	return &Language{
@@ -104,6 +108,7 @@ func makeRust() *Language {
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates rust protobuf library",
 				Attrs:            aspectProtoCompileAttrs,
+				Experimental:     true,
 			},
 			&Rule{
 				Name:             "rust_grpc_library",
@@ -113,6 +118,7 @@ func makeRust() *Language {
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates rust protobuf+gRPC library",
 				Attrs:            aspectProtoCompileAttrs,
+				Experimental:     true,
 			},
 		},
 	}

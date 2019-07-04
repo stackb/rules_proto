@@ -1,0 +1,68 @@
+[package]
+name = "compile_with_bazel"
+version = "0.0.0"
+
+# Mandatory (or Cargo tooling is unhappy)
+[lib]
+path = "fake_lib.rs"
+
+[dependencies]
+futures = "0.1.28"
+grpcio = { version = "0.4.4", features = ["openssl"] }
+grpcio-compiler = "0.4.3"
+#grpcio-sys = { version = "0.4.4", features = ["openssl"] }
+protobuf = { version = "=2.7.0", features = ["with-bytes"] }
+protobuf-codegen = "2.7.0"
+
+log = "*" # For routeguide example
+rand = "*" # For routeguide example
+serde_json = "*" # For routeguide example
+slog = "*" # For routeguide example
+slog-async = "*" # For routeguide example
+slog-scope = "*" # For routeguide example
+slog-stdlog = "*" # For routeguide example
+slog-term = "*" # For routeguide example
+
+[raze]
+genmode = "Remote"
+workspace_path = "//rust/raze"
+output_buildfile_suffix = "BUILD.bazel"
+
+[raze.crates.protobuf.'2.7.0']
+gen_buildrs = true
+buildrs_additional_environment_variables = [
+    "RUSTC=$$(which rustc)",
+    "CARGO_PKG_VERSION=2.7.0",
+]
+
+[raze.crates.protobuf-codegen.'2.7.0']
+gen_buildrs = true
+extra_aliased_targets = ["cargo_bin_protoc_gen_rust"]
+
+[raze.crates.grpcio.'0.4.4']
+gen_buildrs = true
+
+[raze.crates.grpcio-sys.'0.4.4']
+gen_buildrs = true
+buildrs_additional_environment_variables = [
+    "DEBUG=false",
+    "HOST=$$TARGET",
+    "OPT_LEVEL=3",
+    "PROFILE=release",
+    "GOCACHE=/tmp/grpcio-sys-gocache",
+]
+additional_flags = [
+    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir",
+    "-lstatic=grpc_wrap",
+    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build",
+    "-lstatic=address_sorting",
+    "-lstatic=grpc",
+    "-lstatic=gpr",
+    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build/third_party/zlib",
+    "-lstatic=z",
+    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build/third_party/cares/cares/lib",
+    "-lstatic=cares",
+]
+
+[raze.crates.grpcio-compiler.'0.4.3']
+extra_aliased_targets = ["cargo_bin_grpc_rust_plugin"]

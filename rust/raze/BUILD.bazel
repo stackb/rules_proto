@@ -1,0 +1,74 @@
+"""
+cargo-raze workspace build file.
+
+DO NOT EDIT! Replaced on runs of cargo-raze
+"""
+package(default_visibility = ["//visibility:public"])
+
+licenses([
+  "notice" # See individual crates for specific licenses
+])
+alias(
+    name = "futures",
+    actual = "@raze__futures__0_1_28//:futures",
+)
+alias(
+    name = "grpcio",
+    actual = "@raze__grpcio__0_4_4//:grpcio",
+)
+alias(
+    name = "grpcio_compiler",
+    actual = "@raze__grpcio_compiler__0_4_3//:grpcio_compiler",
+)
+alias(
+    # Extra aliased target, from raze configuration
+    # N.B.: The exact form of this is subject to change.
+    name = "cargo_bin_grpc_rust_plugin",
+    actual = "@raze__grpcio_compiler__0_4_3//:cargo_bin_grpc_rust_plugin",
+)
+alias(
+    name = "log",
+    actual = "@raze__log__0_4_6//:log",
+)
+alias(
+    name = "protobuf",
+    actual = "@raze__protobuf__2_7_0//:protobuf",
+)
+alias(
+    name = "protobuf_codegen",
+    actual = "@raze__protobuf_codegen__2_7_0//:protobuf_codegen",
+)
+alias(
+    # Extra aliased target, from raze configuration
+    # N.B.: The exact form of this is subject to change.
+    name = "cargo_bin_protoc_gen_rust",
+    actual = "@raze__protobuf_codegen__2_7_0//:cargo_bin_protoc_gen_rust",
+)
+alias(
+    name = "rand",
+    actual = "@raze__rand__0_6_5//:rand",
+)
+alias(
+    name = "serde_json",
+    actual = "@raze__serde_json__1_0_40//:serde_json",
+)
+alias(
+    name = "slog",
+    actual = "@raze__slog__2_4_1//:slog",
+)
+alias(
+    name = "slog_async",
+    actual = "@raze__slog_async__2_3_0//:slog_async",
+)
+alias(
+    name = "slog_scope",
+    actual = "@raze__slog_scope__4_1_1//:slog_scope",
+)
+alias(
+    name = "slog_stdlog",
+    actual = "@raze__slog_stdlog__3_0_2//:slog_stdlog",
+)
+alias(
+    name = "slog_term",
+    actual = "@raze__slog_term__2_4_0//:slog_term",
+)

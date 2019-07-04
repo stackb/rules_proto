@@ -61,8 +61,8 @@ def io_bazel_rules_scala(**kwargs):
 def io_bazel_rules_rust(**kwargs):
     if "io_bazel_rules_rust" not in native.existing_rules():
         name = "io_bazel_rules_rust"
-        ref = get_ref(name, "8417c8954efbd0cefc8dd84517b2afff5e907d5a", kwargs)  # 2019-06-19
-        sha256 = get_sha256(name, "29d9fc1cdbd737c51db5983d1ac8e64cdc684c4683bafbcc624d3d81de92a32f", kwargs)
+        ref = get_ref(name, "3fac9fe0001d2a829d8ddaf3033b5171c049abdb", kwargs)  # 2019-07-02
+        sha256 = get_sha256(name, "299108772020c103eefacb4de30873d45224e8e0e6c11df7b56ffd11d959e212", kwargs)
         github_archive(name, "bazelbuild", "rules_rust", ref, sha256)
 
 def com_github_yugui_rules_ruby(**kwargs):

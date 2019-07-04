@@ -1,4 +1,4 @@
-load("//rust:rust_grpc_library.bzl", "rust_grpc_library")
+load("//rust:rust_grpc_library.bzl", "rust_grpc_library", "GRPC_DEPS")
 load("@io_bazel_rules_rust//rust:rust.bzl", "rust_binary", "rust_library")
 
 rust_grpc_library(
@@ -8,39 +8,35 @@ rust_grpc_library(
 
 rust_binary(
     name = "client",
-    srcs = ["client.rs"],
-    visibility = ["//example/routeguide:__pkg__"],
-    deps = [
-        ":routeguide",
-        "@io_bazel_rules_rust//proto/raze:grpc",
-        "@io_bazel_rules_rust//proto/raze:protobuf",
-    ],
-)
-
-rust_binary(
-    name = "server",
-    srcs = ["server.rs"],
-    args = ["example/proto/routeguide_features.json"],
+    srcs = ["client.rs", "log_util.rs", "util.rs"],
     data = ["//example/proto:routeguide_features"],
     visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
-        "@io_bazel_rules_rust//proto/raze:grpc",
-        "@io_bazel_rules_rust//proto/raze:protobuf",
-        "@io_bazel_rules_rust//proto/raze:tls_api_stub",
-        "@raze__futures__0_1_25//:futures",
-        "@raze__futures_cpupool__0_1_8//:futures_cpupool",
-    ],
+        "@build_stack_rules_proto//rust/raze:log",
+        "@build_stack_rules_proto//rust/raze:rand",
+        "@build_stack_rules_proto//rust/raze:serde_json",
+        "@build_stack_rules_proto//rust/raze:slog",
+        "@build_stack_rules_proto//rust/raze:slog_async",
+        "@build_stack_rules_proto//rust/raze:slog_scope",
+        "@build_stack_rules_proto//rust/raze:slog_stdlog",
+        "@build_stack_rules_proto//rust/raze:slog_term",
+    ] + GRPC_DEPS,
 )
 
-rust_library(
-    name = "lib",
-    srcs = ["lib.rs"],
+rust_binary(
+    name = "server",
+    srcs = ["server.rs", "log_util.rs", "util.rs"],
+    data = ["//example/proto:routeguide_features"],
+    visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
-        "@io_bazel_rules_rust//proto/raze:grpc",
-        "@io_bazel_rules_rust//proto/raze:protobuf",
-        "@io_bazel_rules_rust//proto/raze:tls_api_stub",
-        "@raze__futures__0_1_25//:futures",
-    ],
+        "@build_stack_rules_proto//rust/raze:log",
+        "@build_stack_rules_proto//rust/raze:serde_json",
+        "@build_stack_rules_proto//rust/raze:slog",
+        "@build_stack_rules_proto//rust/raze:slog_async",
+        "@build_stack_rules_proto//rust/raze:slog_scope",
+        "@build_stack_rules_proto//rust/raze:slog_stdlog",
+        "@build_stack_rules_proto//rust/raze:slog_term",
+    ] + GRPC_DEPS,
 )

@@ -1,0 +1,55 @@
+"""
+cargo-raze crate build file.
+
+DO NOT EDIT! Replaced on runs of cargo-raze
+"""
+package(default_visibility = [
+  # Public for visibility by "@raze__crate__version//" targets.
+  #
+  # Prefer access through "//rust/raze", which limits external
+  # visibility to explicit Cargo.toml dependencies.
+  "//visibility:public",
+])
+
+licenses([
+  "notice", # "MIT,Apache-2.0"
+  "reciprocal", # "MPL-2.0"
+])
+
+load(
+    "@io_bazel_rules_rust//rust:rust.bzl",
+    "rust_library",
+    "rust_binary",
+    "rust_test",
+)
+
+
+# Unsupported target "compact" with type "example" omitted
+# Unsupported target "compact-color" with type "example" omitted
+# Unsupported target "full" with type "example" omitted
+# Unsupported target "full-color" with type "example" omitted
+# Unsupported target "full-color-oorder" with type "example" omitted
+
+rust_library(
+    name = "slog_term",
+    crate_root = "src/lib.rs",
+    crate_type = "lib",
+    edition = "2015",
+    srcs = glob(["**/*.rs"]),
+    deps = [
+        "@raze__chrono__0_4_7//:chrono",
+        "@raze__isatty__0_1_9//:isatty",
+        "@raze__slog__2_4_1//:slog",
+        "@raze__term__0_5_2//:term",
+        "@raze__thread_local__0_3_6//:thread_local",
+    ],
+    rustc_flags = [
+        "--cap-lints=allow",
+    ],
+    version = "2.4.0",
+    crate_features = [
+    ],
+)
+
+# Unsupported target "term" with type "test" omitted
+# Unsupported target "to-file" with type "example" omitted
