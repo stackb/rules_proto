@@ -142,13 +142,6 @@ py_library(
             strip_prefix = "six-1.12.0",
         )
 
-def io_bazel_rules_dart(**kwargs):
-    if "io_bazel_rules_dart" not in native.existing_rules():
-        name = "io_bazel_rules_dart"
-        ref = get_ref(name, "07aa5a42827f74d707ad3abcd3edbc14c7cad837", kwargs)  # Mar 11 (fork of dart-lang/rules_dart)
-        sha256 = get_sha256(name, "836aa1908fda2c5f25f5a8dc298399d60252006c2953d170b95a33bfc5b5de14", kwargs)
-        github_archive(name, "FKint", "rules_dart", ref, sha256)
-
 def io_bazel_rules_d(**kwargs):
     if "io_bazel_rules_d" not in native.existing_rules():
         name = "io_bazel_rules_d"

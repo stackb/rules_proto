@@ -235,29 +235,6 @@ bundle_install(
 # **************************************************************
 #
 #
-# dart
-#
-# **************************************************************
-
-load("//dart:deps.bzl", "dart_grpc_library")
-
-dart_grpc_library()
-
-load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
-
-dart_repositories()
-
-load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-
-dart_protoc_plugin_deps()
-
-load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
-
-dart_grpc_deps()
-
-# **************************************************************
-#
-#
 # d-lang
 #
 # **************************************************************
