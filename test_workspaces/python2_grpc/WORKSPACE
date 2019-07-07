@@ -22,7 +22,7 @@ load("@com_apt_itude_rules_pip//rules:repository.bzl", "pip_repository")
 
 pip_repository(
     name = "grpc_py2_deps",
-    python_interpreter = "python2",
+    python_interpreter = "python",
     requirements = "@build_stack_rules_proto//python/requirements:grpc.txt",
 )
 
