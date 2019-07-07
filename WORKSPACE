@@ -143,27 +143,23 @@ load("//python:deps.bzl", "python_grpc_library")
 
 python_grpc_library()
 
-load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
+load("@com_apt_itude_rules_pip//rules:dependencies.bzl", "pip_rules_dependencies")
 
-pip_repositories()
+pip_rules_dependencies()
 
-pip_import(
-    name = "protobuf_py_deps",
-    requirements = "//python/requirements:protobuf.txt",
-)
+load("@com_apt_itude_rules_pip//rules:repository.bzl", "pip_repository")
 
-load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
-
-protobuf_pip_install()
-
-pip_import(
-    name = "grpc_py_deps",
+pip_repository(
+    name = "grpc_py2_deps",
+    python_interpreter = "python2",
     requirements = "//python/requirements:grpc.txt",
 )
 
-load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
-
-grpc_pip_install()
+pip_repository(
+    name = "grpc_py3_deps",
+    python_interpreter = "python3",
+    requirements = "//python/requirements:grpc.txt",
+)
 
 # **************************************************************
 #

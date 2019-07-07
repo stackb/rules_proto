@@ -139,18 +139,23 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
 
-load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
+load("@com_apt_itude_rules_pip//rules:dependencies.bzl", "pip_rules_dependencies")
 
-pip_repositories()
+pip_rules_dependencies()
 
-pip_import(
-    name = "grpc_py_deps",
+load("@com_apt_itude_rules_pip//rules:repository.bzl", "pip_repository")
+
+pip_repository(
+    name = "grpc_py2_deps",
+    python_interpreter = "python2",
     requirements = "@build_stack_rules_proto//python/requirements:grpc.txt",
 )
 
-load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
-
-grpc_pip_install()
+pip_repository(
+    name = "grpc_py3_deps",
+    python_interpreter = "python3",
+    requirements = "@build_stack_rules_proto//python/requirements:grpc.txt",
+)
 ```
 
 ### `BUILD.bazel`
@@ -175,3 +180,4 @@ python_grpc_library(
 | Name | Type | Default | Description |
 | ---: | :--- | ------- | ----------- |
 | verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| python_version   | `string` | `PY3`    | Specify the Python version to use for the bundled dependencies. Valid values are "PY3" (the default) and "PY2"          |

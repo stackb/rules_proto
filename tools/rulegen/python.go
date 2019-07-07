@@ -8,18 +8,23 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
 
-load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
+load("@com_apt_itude_rules_pip//rules:dependencies.bzl", "pip_rules_dependencies")
 
-pip_repositories()
+pip_rules_dependencies()
 
-pip_import(
-    name = "grpc_py_deps",
+load("@com_apt_itude_rules_pip//rules:repository.bzl", "pip_repository")
+
+pip_repository(
+    name = "grpc_py2_deps",
+    python_interpreter = "python2",
     requirements = "@build_stack_rules_proto//python/requirements:grpc.txt",
 )
 
-load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
-
-grpc_pip_install()`)
+pip_repository(
+    name = "grpc_py3_deps",
+    python_interpreter = "python3",
+    requirements = "@build_stack_rules_proto//python/requirements:grpc.txt",
+)`)
 
 var pythonProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 
@@ -46,7 +51,6 @@ def python_proto_library(**kwargs):
 py_proto_library = python_proto_library`)
 
 var pythonGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
-load("@grpc_py_deps//:requirements.bzl", grpc_requirements = "all_requirements")
 
 def python_grpc_library(**kwargs):
     # Compile protos
@@ -56,13 +60,22 @@ def python_grpc_library(**kwargs):
         **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
 
+    # Pick deps based on python version
+    if "python_version" not in kwargs or kwargs["python_version"] == "PY3":
+        grpc_deps = ["@grpc_py3_deps//grpcio"]
+    elif kwargs["python_version"] == "PY2":
+        grpc_deps = ["@grpc_py2_deps//grpcio"]
+    else:
+        fail("The 'python_version' attribute to python_grpc_library must be one of ['PY2', 'PY3']")
+
+
     # Create {{ .Lang.Name }} library
     native.py_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
         deps = [
             "@com_google_protobuf//:protobuf_python",
-        ] + grpc_requirements,
+        ] + grpc_deps,
         imports = [name_pb],
         visibility = kwargs.get("visibility"),
     )
@@ -112,7 +125,15 @@ func makePython() *Language {
 				WorkspaceExample: pythonGrpcLibraryWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates *.py protobuf+gRPC library",
-				Attrs:            aspectProtoCompileAttrs,
+				Attrs:            append(aspectProtoCompileAttrs, []*Attr{
+					&Attr{
+						Name:      "python_version",
+						Type:      "string",
+						Default:   "PY3",
+						Doc:       "Specify the Python version to use for the bundled dependencies. Valid values are \"PY3\" (the default) and \"PY2\"",
+						Mandatory: false,
+					},
+				}...),
 			},
 		},
 	}

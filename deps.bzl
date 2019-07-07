@@ -111,12 +111,12 @@ def io_bazel_rules_go(**kwargs):
         sha256 = get_sha256(name, "d9f58122d7cece7c73ddd4408e90ba0ac48bf45b58de74550cc446319ad61617", kwargs)
         github_archive(name, "bazelbuild", "rules_go", ref, sha256)
 
-def io_bazel_rules_python(**kwargs):
-    if "io_bazel_rules_python" not in native.existing_rules():
-        name = "io_bazel_rules_python"
-        ref = get_ref(name, "fdbb17a4118a1728d19e638a5291b4c4266ea5b8", kwargs)  # 2019-06-19
-        sha256 = get_sha256(name, "9a3d71e348da504a9c4c5e8abd4cb822f7afb32c613dc6ee8b8535333a81a938", kwargs)
-        github_archive(name, "bazelbuild", "rules_python", ref, sha256)
+def com_apt_itude_rules_pip(**kwargs):
+    if "com_apt_itude_rules_pip" not in native.existing_rules():
+        name = "com_apt_itude_rules_pip"
+        ref = get_ref(name, "ce667087818553cdc4b1a2258fc53df917c4f87c", kwargs)  # 2019-07-07
+        sha256 = get_sha256(name, "5cabd6bfb9cef095d0d076faf5e7acd5698f7172e803059c21c4e700a07b131b", kwargs)
+        github_archive(name, "apt-itude", "rules_pip", ref, sha256)
 
 def six(**kwargs):
     name = "six"
