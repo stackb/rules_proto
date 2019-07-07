@@ -395,6 +395,9 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 	// Add test workspaces
 	for _, testWorkspace := range findTestWorkspaceNames(dir) {
 		for _, platform := range platforms {
+			if platform == "windows" && (testWorkspace == "python2_grpc" || testWorkspace == "python3_grpc" || testWorkspace == "python_deps") {
+				continue // Don't run python grpc test workspaces on windows
+			}
 			out.w("  test_workspace_%s_%s:", testWorkspace, platform)
 			out.w("    name: 'test workspace: %s'", testWorkspace)
 			out.w("    platform: %s", platform)
