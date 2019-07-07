@@ -13,9 +13,9 @@ nodejs_binary(
         "client.js",
         ":routeguide",
         "//example/proto:routeguide_features",
-        "@node_modules//async",
-        "@node_modules//google-protobuf",
-        "@node_modules//grpc",
+        "@nodejs_modules//async",
+        "@nodejs_modules//google-protobuf",
+        "@nodejs_modules//grpc",
     ],
     visibility = ["//example/routeguide:__pkg__"],
 )
@@ -27,8 +27,8 @@ nodejs_binary(
         "server.js",
         ":routeguide",
         "//example/proto:routeguide_features",
-        "@node_modules//google-protobuf",
-        "@node_modules//grpc",
+        "@nodejs_modules//google-protobuf",
+        "@nodejs_modules//grpc",
     ],
     visibility = ["//example/routeguide:__pkg__"],
 )

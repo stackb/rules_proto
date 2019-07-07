@@ -127,7 +127,7 @@ nodejs_grpc_library()
 load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
 
 yarn_install(
-    name = "node_modules",
+    name = "nodejs_modules",
     package_json = "//nodejs:requirements/package.json",
     yarn_lock = "//nodejs:requirements/yarn.lock",
 )

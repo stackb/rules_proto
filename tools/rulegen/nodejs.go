@@ -15,7 +15,7 @@ var nodeProtoLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_p
 load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
 
 yarn_install(
-    name = "node_modules",
+    name = "nodejs_modules",
     package_json = "@build_stack_rules_proto//nodejs:requirements/package.json",
     yarn_lock = "@build_stack_rules_proto//nodejs:requirements/yarn.lock",
 )`)
@@ -31,7 +31,7 @@ grpc_deps()
 load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
 
 yarn_install(
-    name = "node_modules",
+    name = "nodejs_modules",
     package_json = "@build_stack_rules_proto//nodejs:requirements/package.json",
     yarn_lock = "@build_stack_rules_proto//nodejs:requirements/yarn.lock",
 )`)
@@ -54,7 +54,7 @@ var nodeProtoLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + 
         name = kwargs.get("name"),
         deps = [name_pb],
         packages = [
-            "@node_modules//google-protobuf",
+            "@nodejs_modules//google-protobuf",
         ],
         visibility = kwargs.get("visibility"),
     )`)
@@ -65,8 +65,8 @@ var nodeGrpcLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + `
         name = kwargs.get("name"),
         deps = [name_pb],
         packages = [
-            "@node_modules//google-protobuf",
-            "@node_modules//grpc",
+            "@nodejs_modules//google-protobuf",
+            "@nodejs_modules//grpc",
         ],
         visibility = kwargs.get("visibility"),
     )`)
