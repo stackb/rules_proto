@@ -12,14 +12,12 @@ var nodeProtoLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_p
 
 {{ .Rule.Name }}()
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories", "yarn_install")
-
-node_repositories()
+load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
 
 yarn_install(
     name = "node_modules",
-    package_json = "//nodejs:requirements/package.json",
-    yarn_lock = "//nodejs:requirements/yarn.lock",
+    package_json = "@build_stack_rules_proto//nodejs:requirements/package.json",
+    yarn_lock = "@build_stack_rules_proto//nodejs:requirements/yarn.lock",
 )`)
 
 var nodeGrpcLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
@@ -30,7 +28,7 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
+load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
 
 yarn_install(
     name = "node_modules",
