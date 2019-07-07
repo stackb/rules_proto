@@ -134,6 +134,7 @@ func makePython() *Language {
 						Mandatory: false,
 					},
 				}...),
+				BazelCIExcludePlatforms: []string{"windows"},
 			},
 		},
 	}

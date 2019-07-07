@@ -108,7 +108,6 @@ func makeRust() *Language {
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates rust protobuf library",
 				Attrs:            aspectProtoCompileAttrs,
-				Experimental:     true,
 			},
 			&Rule{
 				Name:             "rust_grpc_library",
@@ -118,7 +117,6 @@ func makeRust() *Language {
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates rust protobuf+gRPC library",
 				Attrs:            aspectProtoCompileAttrs,
-				Experimental:     true,
 			},
 		},
 	}

@@ -809,12 +809,6 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/python/python_grpc_library
-  python_python_grpc_library_windows:
-    name: 'python: python_grpc_library'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/python/python_grpc_library
   python_python_grpc_library_macos:
     name: 'python: python_grpc_library'
     platform: macos
