@@ -107,17 +107,17 @@ filegroup(
 _hosted_prefix = "https://storage.googleapis.com/dart-archive/channels/dev/release"
 _linux_file = "dartsdk-linux-x64-release.zip"
 _mac_file = "dartsdk-macos-x64-release.zip"
+_windows_file = "dartsdk-windows-x64-release.zip"
 
 # From https://www.dartlang.org/tools/sdk/archive
 _version = "2.2.0"
 _linux_sha = "89777ceba8227d4dad6081c44bc70d301a259f3c2fdb4c1391961e376ec3af68"
 _mac_sha = "9438afb49b69ac655882036c214e343232fdcd5af24607e6058e2def33261197"
+_windows_sha = "f78fd7cccf5a6ec29199d8411db814116953595ac50634a6ee2231eee0e60529"
 
 def _sdk_repository_impl(repository_ctx):
     """Downloads the appropriate SDK for the current OS."""
     os_name = repository_ctx.os.name
-
-    file_name = False
 
     if "linux" in os_name:
         file_name = _linux_file
@@ -125,8 +125,10 @@ def _sdk_repository_impl(repository_ctx):
     elif "mac os" in os_name:
         file_name = _mac_file
         sha = _mac_sha
-
-    if not file_name:
+    elif "windows" in os_name:
+        file_name = _windows_file
+        sha = _windows_sha
+    else:
         fail("Cannot find SDK for OS: %s" % os_name)
 
     repository_ctx.download_and_extract(
