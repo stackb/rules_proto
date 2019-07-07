@@ -51,15 +51,19 @@ buildrs_additional_environment_variables = [
     "GOCACHE=/tmp/grpcio-sys-gocache",
 ]
 additional_flags = [
-    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir",
+    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir", # Linux
+    "-Lbazel-out/darwin-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir", # OSX
     "-lstatic=grpc_wrap",
-    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build",
+    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build", # Linux
+    "-Lbazel-out/darwin-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build", # OSX
     "-lstatic=address_sorting",
     "-lstatic=grpc",
     "-lstatic=gpr",
-    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build/third_party/zlib",
+    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build/third_party/zlib", # Linux
+    "-Lbazel-out/darwin-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build/third_party/zlib", # OSX
     "-lstatic=z",
-    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build/third_party/cares/cares/lib",
+    "-Lbazel-out/k8-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build/third_party/cares/cares/lib", # Linux
+    "-Lbazel-out/darwin-fastbuild/bin/external/raze__grpcio_sys__0_4_4/grpcio_sys.out_dir/build/third_party/cares/cares/lib", # OSX
     "-lstatic=cares",
 ]
 
