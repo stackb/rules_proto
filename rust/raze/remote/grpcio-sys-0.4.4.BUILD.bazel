@@ -37,7 +37,6 @@ rust_binary(
     ],
     crate_features = [
       "default",
-      "openssl",
       "secure",
     ],
     data = glob(["*"]),
@@ -60,7 +59,6 @@ genrule(
         + " export TARGET='x86_64-unknown-linux-gnu';"
         + " export RUST_BACKTRACE=1;"
         + " export CARGO_FEATURE_DEFAULT=1;"
-        + " export CARGO_FEATURE_OPENSSL=1;"
         + " export CARGO_FEATURE_SECURE=1;"
         + " export OUT_DIR=$$PWD/$$(dirname $@)/grpcio_sys_out_dir_outputs;"
         + " export BINARY_PATH=\"$$PWD/$(location :grpcio_sys_build_script)\";"
@@ -100,7 +98,6 @@ rust_library(
     version = "0.4.4",
     crate_features = [
         "default",
-        "openssl",
         "secure",
     ],
 )
