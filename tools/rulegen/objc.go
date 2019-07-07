@@ -43,6 +43,7 @@ func makeObjc() *Language {
 		Dir:   "objc",
 		Name:  "objc",
 		Flags: commonLangFlags,
+		BazelCIExcludePlatforms: []string{"ubuntu1604", "ubuntu1804", "windows"},
 		Rules: []*Rule{
 			&Rule{
 				Name:             "objc_proto_compile",
@@ -72,7 +73,6 @@ func makeObjc() *Language {
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates objc protobuf library",
 				Attrs:            aspectProtoCompileAttrs,
-				BazelCIExcludePlatforms: []string{"ubuntu1604", "ubuntu1804", "windows"},
 			},
 // 			&Rule{ // Disabled due to issues fetching gRPC dependencies
 // 				Name:             "objc_grpc_library",
@@ -82,7 +82,6 @@ func makeObjc() *Language {
 // 				BuildExample:     grpcLibraryExampleTemplate,
 // 				Doc:              "Generates objc protobuf+gRPC library",
 // 				Attrs:            aspectProtoCompileAttrs,
-// 				BazelCIExcludePlatforms: []string{"ubuntu1604", "ubuntu1804", "windows"},
 // 			},
 		},
 	}

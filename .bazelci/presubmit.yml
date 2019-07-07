@@ -15,7 +15,6 @@ tasks:
     - "//go/..."
     - "//java/..."
     - "//nodejs/..."
-    - "//objc/..."
     - "//python/..."
     - "//ruby/..."
     - "//rust/..."
@@ -43,7 +42,6 @@ tasks:
     - "//go/..."
     - "//java/..."
     - "//nodejs/..."
-    - "//objc/..."
     - "//python/..."
     - "//ruby/..."
     - "//rust/..."
@@ -71,7 +69,6 @@ tasks:
     - "//go/..."
     - "//java/..."
     - "//nodejs/..."
-    - "//objc/..."
     - "//python/..."
     - "//ruby/..."
     - "//github.com/gogo/protobuf/..."
@@ -655,48 +652,12 @@ tasks:
     build_targets:
       - "//..."
     working_directory: example/nodejs/nodejs_grpc_compile
-  objc_objc_proto_compile_ubuntu1604:
-    name: 'objc: objc_proto_compile'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_proto_compile
-  objc_objc_proto_compile_ubuntu1804:
-    name: 'objc: objc_proto_compile'
-    platform: ubuntu1804
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_proto_compile
-  objc_objc_proto_compile_windows:
-    name: 'objc: objc_proto_compile'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_proto_compile
   objc_objc_proto_compile_macos:
     name: 'objc: objc_proto_compile'
     platform: macos
     build_targets:
       - "//..."
     working_directory: example/objc/objc_proto_compile
-  objc_objc_grpc_compile_ubuntu1604:
-    name: 'objc: objc_grpc_compile'
-    platform: ubuntu1604
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_grpc_compile
-  objc_objc_grpc_compile_ubuntu1804:
-    name: 'objc: objc_grpc_compile'
-    platform: ubuntu1804
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_grpc_compile
-  objc_objc_grpc_compile_windows:
-    name: 'objc: objc_grpc_compile'
-    platform: windows
-    build_targets:
-      - "//..."
-    working_directory: example/objc/objc_grpc_compile
   objc_objc_grpc_compile_macos:
     name: 'objc: objc_grpc_compile'
     platform: macos
