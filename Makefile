@@ -4,6 +4,7 @@ rulegen:
 		bazel-bin/tools/rulegen/linux_amd64_stripped/rulegen \
 			--ref=`git rev-parse HEAD`
 
+
 # Run cargo raze on the rust dependencies
 rust_raze:
 	cd rust/raze; \
@@ -12,6 +13,13 @@ rust_raze:
 	cat BUILD.bazel.prefix BUILD.bazel.suffix > BUILD.bazel; \
 	rm BUILD.bazel.suffix; \
 	sed -i 's#":protobuf_build_script",#":protobuf_build_script","@build_stack_rules_proto//rust/raze:rustc",#' remote/protobuf-*.BUILD.bazel; \
+
+
+# Run yarn to upgrade the nodejs dependencies
+yarn_upgrade:
+	cd nodejs/requirements; \
+	yarn upgrade; \
+
 
 # A collection of targets that build routeguide clients
 clients:
@@ -58,7 +66,6 @@ pending_servers:
 		//nodejs/example/routeguide:server \
 		//ruby/example/routeguide:server \
 		//rust/example/routeguide:server
-
 
 
 # grpc-web closure test seems to crash phantomjs.  Todo move to headless-chrome
