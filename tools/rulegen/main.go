@@ -341,10 +341,8 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 		out.w("    platform: %s", platform)
 		out.w("    environment:")
 		out.w("      CC: clang")
-		out.w("    test_flags:")
-		out.w(`    - "--test_output=errors"`)
-		out.w("    test_targets:")
-		out.w(`    - "//example/routeguide/..."`)
+		out.w("    build_flags:")
+		out.w(`    - "--repository_cache=''"`)
 		out.w("    build_targets:")
 		for _, lang := range languages {
 			// Skip experimental or excluded
@@ -353,6 +351,10 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 			}
 			out.w(`    - "//%s/..."`, lang.Dir)
 		}
+		out.w("    test_flags:")
+		out.w(`    - "--test_output=errors"`)
+		out.w("    test_targets:")
+		out.w(`    - "//example/routeguide/..."`)
 	}
 
 	//

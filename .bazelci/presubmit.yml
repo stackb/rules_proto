@@ -5,10 +5,8 @@ tasks:
     platform: ubuntu1604
     environment:
       CC: clang
-    test_flags:
-    - "--test_output=errors"
-    test_targets:
-    - "//example/routeguide/..."
+    build_flags:
+    - "--repository_cache=''"
     build_targets:
     - "//android/..."
     - "//closure/..."
@@ -26,15 +24,17 @@ tasks:
     - "//github.com/grpc-ecosystem/grpc-gateway/..."
     - "//github.com/stackb/grpc.js/..."
     - "//github.com/grpc/grpc-web/..."
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+    - "//example/routeguide/..."
   main_ubuntu1804:
     name: build & test all
     platform: ubuntu1804
     environment:
       CC: clang
-    test_flags:
-    - "--test_output=errors"
-    test_targets:
-    - "//example/routeguide/..."
+    build_flags:
+    - "--repository_cache=''"
     build_targets:
     - "//android/..."
     - "//closure/..."
@@ -52,15 +52,17 @@ tasks:
     - "//github.com/grpc-ecosystem/grpc-gateway/..."
     - "//github.com/stackb/grpc.js/..."
     - "//github.com/grpc/grpc-web/..."
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+    - "//example/routeguide/..."
   main_windows:
     name: build & test all
     platform: windows
     environment:
       CC: clang
-    test_flags:
-    - "--test_output=errors"
-    test_targets:
-    - "//example/routeguide/..."
+    build_flags:
+    - "--repository_cache=''"
     build_targets:
     - "//android/..."
     - "//closure/..."
@@ -75,15 +77,17 @@ tasks:
     - "//github.com/gogo/protobuf/..."
     - "//github.com/grpc-ecosystem/grpc-gateway/..."
     - "//github.com/grpc/grpc-web/..."
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+    - "//example/routeguide/..."
   main_macos:
     name: build & test all
     platform: macos
     environment:
       CC: clang
-    test_flags:
-    - "--test_output=errors"
-    test_targets:
-    - "//example/routeguide/..."
+    build_flags:
+    - "--repository_cache=''"
     build_targets:
     - "//android/..."
     - "//closure/..."
@@ -101,6 +105,10 @@ tasks:
     - "//github.com/grpc-ecosystem/grpc-gateway/..."
     - "//github.com/stackb/grpc.js/..."
     - "//github.com/grpc/grpc-web/..."
+    test_flags:
+    - "--test_output=errors"
+    test_targets:
+    - "//example/routeguide/..."
   android_android_proto_compile_ubuntu1604:
     name: 'android: android_proto_compile'
     platform: ubuntu1604
