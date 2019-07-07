@@ -1,7 +1,17 @@
+# Run the rulegen system
 rulegen:
 	bazel build //tools/rulegen && \
 		bazel-bin/tools/rulegen/linux_amd64_stripped/rulegen \
 			--ref=`git rev-parse HEAD`
+
+# Run cargo raze on the rust dependencies
+rust_raze:
+	cd rust/raze; \
+	cargo raze; \
+	mv BUILD.bazel BUILD.bazel.suffix; \
+	cat BUILD.bazel.prefix BUILD.bazel.suffix > BUILD.bazel; \
+	rm BUILD.bazel.suffix; \
+	sed -i 's#":protobuf_build_script",#":protobuf_build_script","@build_stack_rules_proto//rust/raze:rustc",#' remote/protobuf-*.BUILD.bazel; \
 
 # A collection of targets that build routeguide clients
 clients:
@@ -69,8 +79,9 @@ rust:
 
 all: clients servers tests
 
-# Pull in examples makefile
+
+# Pull in auto-generated examples makefile
 include example/Makefile.mk
 
-# Pull in test workspaces makefile
+# Pull in auto-generated test workspaces makefile
 include test_workspaces/Makefile.mk

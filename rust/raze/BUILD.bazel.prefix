@@ -1,0 +1,7 @@
+# Provide resolved rustc locally, due to cargo raze not providing RUSTC env var
+# required by the protobuf crate.
+load(":rustc_resolve.bzl", "rustc_resolve")
+rustc_resolve(
+    name = "rustc"
+)
+

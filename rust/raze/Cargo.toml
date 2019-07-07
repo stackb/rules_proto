@@ -30,7 +30,7 @@ output_buildfile_suffix = "BUILD.bazel"
 [raze.crates.protobuf.'2.7.0']
 gen_buildrs = true
 buildrs_additional_environment_variables = [
-    "RUSTC=$$(which rustc)",
+    "RUSTC=$$PWD/$(location @build_stack_rules_proto//rust/raze:rustc)",
     "CARGO_PKG_VERSION=2.7.0",
 ]
 

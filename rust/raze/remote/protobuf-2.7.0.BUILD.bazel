@@ -46,7 +46,7 @@ genrule(
     srcs = glob(["*", "**/*.rs"]),
     outs = ["protobuf_out_dir_outputs.tar.gz"],
     tools = [
-      ":protobuf_build_script",
+      ":protobuf_build_script","@build_stack_rules_proto//rust/raze:rustc",
     ],
     tags = ["no-sandbox"],
     cmd = "mkdir -p $$(dirname $@)/protobuf_out_dir_outputs/;"
@@ -60,7 +60,7 @@ genrule(
         + " export OUT_DIR=$$PWD/$$(dirname $@)/protobuf_out_dir_outputs;"
         + " export BINARY_PATH=\"$$PWD/$(location :protobuf_build_script)\";"
         + " export OUT_TAR=$$PWD/$@;"
-        + " export RUSTC=$$(which rustc);"
+        + " export RUSTC=$$PWD/$(location @build_stack_rules_proto//rust/raze:rustc);"
         + " export CARGO_PKG_VERSION=2.7.0;"
         + " cd $$(dirname $(location :Cargo.toml)) && $$BINARY_PATH && tar -czf $$OUT_TAR -C $$OUT_DIR .)"
 )
