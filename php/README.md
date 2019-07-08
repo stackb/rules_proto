@@ -46,8 +46,6 @@ php_proto_compile(
 
 ## `php_grpc_compile`
 
-> NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
-
 Generates php protobuf+gRPC artifacts
 
 ### `WORKSPACE`

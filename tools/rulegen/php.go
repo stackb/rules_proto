@@ -25,8 +25,6 @@ func makePhp() *Language {
 				BuildExample:     grpcCompileExampleTemplate,
 				Doc:              "Generates php protobuf+gRPC artifacts",
 				Attrs:            aspectProtoCompileAttrs,
-				BazelCIExclusionReason: "experimental",
-				Experimental:     true,
 			},
 		},
 	}

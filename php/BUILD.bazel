@@ -2,18 +2,13 @@ load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "php",
-    outputs = [
-        "{protopath|php}.php",
-        "GPBMetadata/{protopath|php}.php",
-    ],
+    output_directory = True, # Plugin outputs cannot be predicted as they depend on service/package name
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
     name = "grpc_php",
-    outputs = [
-        "GPBMetadata/{protopath|php}.php", # Cannot predict output filename without knowing the service name
-    ],
+    output_directory = True, # Plugin outputs cannot be predicted as they depend on service/package name
     tool = "@com_github_grpc_grpc//:grpc_php_plugin",
     visibility = ["//visibility:public"],
 )
