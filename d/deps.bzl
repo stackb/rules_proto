@@ -6,11 +6,11 @@ load(
 )
 load(
     "//protobuf:deps.bzl",
-    "protobuf",
+    "protobuf_deps",
 )
 
 def d_deps(**kwargs):
-    protobuf(**kwargs)
+    protobuf_deps(**kwargs)
     com_github_dcarp_protobuf_d(**kwargs)
     io_bazel_rules_d(**kwargs)
 
