@@ -12,9 +12,13 @@ def java_proto_library(**kwargs):
     native.java_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [Label("//java:proto_deps")],
-        exports = [
-            Label("//java:proto_deps"),
-        ],
+        deps = PROTO_DEPS,
+        exports = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
     )
+
+PROTO_DEPS = [
+    "@com_google_guava_guava//jar",
+    "@com_google_protobuf//:protobuf_java",
+    "@javax_annotation_javax_annotation_api//jar",
+]

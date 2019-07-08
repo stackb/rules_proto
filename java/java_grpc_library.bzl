@@ -12,9 +12,16 @@ def java_grpc_library(**kwargs):
     native.java_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [Label("//java:grpc_deps")],
-        exports = [
-            Label("//java:grpc_deps"),
-        ],
+        deps = GRPC_DEPS,
+        exports = GRPC_DEPS,
         visibility = kwargs.get("visibility"),
     )
+
+GRPC_DEPS = [
+    "@com_google_guava_guava//jar",
+    "@com_google_protobuf//:protobuf_java",
+    "@javax_annotation_javax_annotation_api//jar",
+    "@io_grpc_grpc_java//core",
+    "@io_grpc_grpc_java//protobuf",
+    "@io_grpc_grpc_java//stub"
+]

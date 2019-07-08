@@ -69,7 +69,6 @@ var rustGrpcLibraryRuleTemplate = mustTemplate(rustLibraryRuleTemplateString + `
 GRPC_DEPS = [
     Label("//rust/raze:futures"),
     Label("//rust/raze:grpcio"),
-    #Label("//rust/raze:grpcio_sys"),
     Label("//rust/raze:protobuf"),
 ]`)
 

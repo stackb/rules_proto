@@ -6,39 +6,9 @@ proto_plugin(
     visibility = ["//visibility:public"],
 )
 
-# TODO: look into the "enable_deprecated" plugin option.
 proto_plugin(
     name = "grpc_java",
     out = "{name}_grpc.jar",
     tool = "@io_grpc_grpc_java//compiler:grpc_java_plugin",
     visibility = ["//visibility:public"],
-)
-
-java_library(
-    name = "proto_deps",
-    visibility = ["//visibility:public"],
-    exports = [
-        "@com_google_guava_guava//jar",
-        "@com_google_protobuf//:protobuf_java",
-        "@javax_annotation_javax_annotation_api//jar",
-    ],
-)
-
-java_library(
-    name = "grpc_deps",
-    visibility = ["//visibility:public"],
-    exports = [
-        ":proto_deps",
-        "@io_grpc_grpc_java//core",
-        "@io_grpc_grpc_java//protobuf",
-        "@io_grpc_grpc_java//stub",
-    ],
-)
-
-java_library(
-    name = "grpc_netty",
-    visibility = ["//visibility:public"],
-    exports = [
-        "@io_grpc_grpc_java//netty",
-    ],
 )

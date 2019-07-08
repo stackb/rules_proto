@@ -13,11 +13,13 @@ def android_proto_library(**kwargs):
     android_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [
-            Label("//android:proto_deps"),
-        ],
-        exports = [
-            Label("//android:proto_deps"),
-        ],
+        deps = PROTO_DEPS,
+        exports = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
     )
+
+PROTO_DEPS = [
+    "@com_google_guava_guava_android//jar",
+    "@com_google_protobuf//:protobuf_javalite",
+    "@javax_annotation_javax_annotation_api//jar"
+]

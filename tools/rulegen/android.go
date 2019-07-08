@@ -20,7 +20,7 @@ var androidGrpcLibraryWorkspaceTemplate = mustTemplate(androidLibraryWorkspaceTe
 
 var androidProtoLibraryWorkspaceTemplate = mustTemplate("# The set of dependencies loaded here is excessive for android proto alone\n# (but simplifies our setup)\n" + androidLibraryWorkspaceTemplateString)
 
-var androidLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
+var androidLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@build_bazel_rules_android//android:rules.bzl", "android_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -30,19 +30,42 @@ def {{ .Rule.Name }}(**kwargs):
         name = name_pb,
         **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
+`
 
+var androidProtoLibraryRuleTemplate = mustTemplate(androidLibraryRuleTemplateString + `
     # Create {{ .Lang.Name }} library
     android_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [
-            Label("//android:{{ .Rule.Kind }}_deps"),
-        ],
-        exports = [
-            Label("//android:{{ .Rule.Kind }}_deps"),
-        ],
+        deps = PROTO_DEPS,
+        exports = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+PROTO_DEPS = [
+    "@com_google_guava_guava_android//jar",
+    "@com_google_protobuf//:protobuf_javalite",
+    "@javax_annotation_javax_annotation_api//jar"
+]`)
+
+var androidGrpcLibraryRuleTemplate = mustTemplate(androidLibraryRuleTemplateString + `
+    # Create {{ .Lang.Name }} library
+    android_library(
+        name = kwargs.get("name"),
+        srcs = [name_pb],
+        deps = GRPC_DEPS,
+        exports = GRPC_DEPS,
+        visibility = kwargs.get("visibility"),
+    )
+
+GRPC_DEPS = [
+    "@com_google_guava_guava_android//jar",
+    "@com_google_protobuf//:protobuf_javalite",
+    "@javax_annotation_javax_annotation_api//jar",
+    "@io_grpc_grpc_java//core",
+    "@io_grpc_grpc_java//protobuf-lite",
+    "@io_grpc_grpc_java//stub",
+]`)
 
 func makeAndroid() *Language {
 	return &Language{
@@ -74,7 +97,7 @@ func makeAndroid() *Language {
 			&Rule{
 				Name:             "android_proto_library",
 				Kind:             "proto",
-				Implementation:   androidLibraryRuleTemplate,
+				Implementation:   androidProtoLibraryRuleTemplate,
 				WorkspaceExample: androidProtoLibraryWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates android protobuf library",
@@ -83,7 +106,7 @@ func makeAndroid() *Language {
 			&Rule{
 				Name:             "android_grpc_library",
 				Kind:             "grpc",
-				Implementation:   androidLibraryRuleTemplate,
+				Implementation:   androidGrpcLibraryRuleTemplate,
 				WorkspaceExample: androidGrpcLibraryWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates android protobuf+gRPC library",

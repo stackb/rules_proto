@@ -11,7 +11,7 @@ grpc_java_repositories(
     omit_net_zlib = True
 )`)
 
-var javaLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
+var javaLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 
 def {{ .Rule.Name }}(**kwargs):
     # Compile protos
@@ -20,17 +20,42 @@ def {{ .Rule.Name }}(**kwargs):
         name = name_pb,
         **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
+`
 
+var javaProtoLibraryRuleTemplate = mustTemplate(javaLibraryRuleTemplateString + `
     # Create {{ .Lang.Name }} library
     native.java_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [Label("//java:{{ .Rule.Kind }}_deps")],
-        exports = [
-            Label("//java:{{ .Rule.Kind }}_deps"),
-        ],
+        deps = PROTO_DEPS,
+        exports = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+PROTO_DEPS = [
+    "@com_google_guava_guava//jar",
+    "@com_google_protobuf//:protobuf_java",
+    "@javax_annotation_javax_annotation_api//jar",
+]`)
+
+var javaGrpcLibraryRuleTemplate = mustTemplate(javaLibraryRuleTemplateString + `
+    # Create {{ .Lang.Name }} library
+    native.java_library(
+        name = kwargs.get("name"),
+        srcs = [name_pb],
+        deps = GRPC_DEPS,
+        exports = GRPC_DEPS,
+        visibility = kwargs.get("visibility"),
+    )
+
+GRPC_DEPS = [
+    "@com_google_guava_guava//jar",
+    "@com_google_protobuf//:protobuf_java",
+    "@javax_annotation_javax_annotation_api//jar",
+    "@io_grpc_grpc_java//core",
+    "@io_grpc_grpc_java//protobuf",
+    "@io_grpc_grpc_java//stub"
+]`)
 
 func makeJava() *Language {
 	return &Language{
@@ -62,7 +87,7 @@ func makeJava() *Language {
 			&Rule{
 				Name:             "java_proto_library",
 				Kind:             "proto",
-				Implementation:   javaLibraryRuleTemplate,
+				Implementation:   javaProtoLibraryRuleTemplate,
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates a jar with compiled protobuf *.class files",
@@ -71,7 +96,7 @@ func makeJava() *Language {
 			&Rule{
 				Name:             "java_grpc_library",
 				Kind:             "grpc",
-				Implementation:   javaLibraryRuleTemplate,
+				Implementation:   javaGrpcLibraryRuleTemplate,
 				WorkspaceExample: javaGrpcWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates a jar with compiled protobuf+gRPC *.class files",
