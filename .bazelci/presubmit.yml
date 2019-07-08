@@ -5,8 +5,6 @@ tasks:
     platform: ubuntu1604
     environment:
       CC: clang
-    build_flags:
-    - "--noexperimental_repository_cache_hardlinks"
     build_targets:
     - "//android/..."
     - "//closure/..."
@@ -25,7 +23,6 @@ tasks:
     - "//github.com/grpc/grpc-web/..."
     test_flags:
     - "--test_output=errors"
-    - "--noexperimental_repository_cache_hardlinks"
     test_targets:
     - "//example/routeguide/..."
   main_ubuntu1804:
@@ -33,8 +30,6 @@ tasks:
     platform: ubuntu1804
     environment:
       CC: clang
-    build_flags:
-    - "--noexperimental_repository_cache_hardlinks"
     build_targets:
     - "//android/..."
     - "//closure/..."
@@ -53,7 +48,6 @@ tasks:
     - "//github.com/grpc/grpc-web/..."
     test_flags:
     - "--test_output=errors"
-    - "--noexperimental_repository_cache_hardlinks"
     test_targets:
     - "//example/routeguide/..."
   main_windows:
@@ -61,8 +55,6 @@ tasks:
     platform: windows
     environment:
       CC: clang
-    build_flags:
-    - "--noexperimental_repository_cache_hardlinks"
     build_targets:
     - "//android/..."
     - "//closure/..."
@@ -78,7 +70,6 @@ tasks:
     - "//github.com/grpc/grpc-web/..."
     test_flags:
     - "--test_output=errors"
-    - "--noexperimental_repository_cache_hardlinks"
     test_targets:
     - "//example/routeguide/..."
   main_macos:
@@ -86,8 +77,6 @@ tasks:
     platform: macos
     environment:
       CC: clang
-    build_flags:
-    - "--noexperimental_repository_cache_hardlinks"
     build_targets:
     - "//android/..."
     - "//closure/..."
@@ -107,7 +96,6 @@ tasks:
     - "//github.com/grpc/grpc-web/..."
     test_flags:
     - "--test_output=errors"
-    - "--noexperimental_repository_cache_hardlinks"
     test_targets:
     - "//example/routeguide/..."
   android_android_proto_compile_ubuntu1604:
