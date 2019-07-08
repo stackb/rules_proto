@@ -13,7 +13,8 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 closure_repositories()`)
 
 var grpcjsGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:grpcjs_grpc_compile.bzl", "grpcjs_grpc_compile")
-load("//closure:defs.bzl", "closure_proto_compile", "PROTO_DEPS")
+load("//closure:defs.bzl", "closure_proto_compile")
+load("//closure:closure_proto_library.bzl", "PROTO_DEPS")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def {{ .Rule.Name }}(**kwargs):
