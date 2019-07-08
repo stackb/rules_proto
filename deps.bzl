@@ -72,7 +72,7 @@ VERSIONS = {
         "org": "protocolbuffers",
         "repo": "protobuf",
         "ref": "fa08222434bc58d743e8c2cc716bc219c3d0f44e",
-        "sha256": "a6d34f9f32421425faf2971de121356cf61efa576100dd37762b83869f05b17a",
+        "sha256": "b04b08d31208be32aafdf5842d1b6073d527a67ff8d2cf4b17ee8f22a5273758",
     },
 
     # csharp
