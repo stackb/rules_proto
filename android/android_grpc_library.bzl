@@ -1,5 +1,5 @@
 load("//android:android_grpc_compile.bzl", "android_grpc_compile")
-load("@build_bazel_rules_android//android:android_library.bzl", "android_library")
+load("@build_bazel_rules_android//android:rules.bzl", "android_library")
 
 def android_grpc_library(**kwargs):
     # Compile protos
