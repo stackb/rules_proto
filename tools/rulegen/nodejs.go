@@ -1,16 +1,16 @@
 package main
 
-var nodeGrpcCompileWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var nodeGrpcCompileWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Lang.Name }}_deps")
 
-{{ .Rule.Name }}()
+{{ .Lang.Name }}_deps()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()`)
 
-var nodeProtoLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var nodeProtoLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Lang.Name }}_deps")
 
-{{ .Rule.Name }}()
+{{ .Lang.Name }}_deps()
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
 
@@ -20,9 +20,9 @@ yarn_install(
     yarn_lock = "@build_stack_rules_proto//nodejs:requirements/yarn.lock",
 )`)
 
-var nodeGrpcLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var nodeGrpcLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Lang.Name }}_deps")
 
-{{ .Rule.Name }}()
+{{ .Lang.Name }}_deps()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 

@@ -1,8 +1,8 @@
 package main
 
-var dWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var dWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Lang.Name }}_deps")
 
-{{ .Rule.Name }}()
+{{ .Lang.Name }}_deps()
 
 load("@io_bazel_rules_d//d:d.bzl", "d_repositories")
 

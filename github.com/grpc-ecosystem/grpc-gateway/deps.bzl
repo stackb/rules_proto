@@ -7,7 +7,7 @@ load(
 )
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
-def gateway_grpc_compile(**kwargs):
+def gateway_deps(**kwargs):
     io_bazel_rules_go(**kwargs)
     bazel_gazelle(**kwargs)
     com_github_bazelbuild_buildtools(**kwargs)
@@ -44,8 +44,11 @@ def gateway_grpc_compile(**kwargs):
         importpath = "gopkg.in/yaml.v2",
     )
 
-def gateway_grpc_library(**kwargs):
-    gateway_grpc_compile(**kwargs)
+def gateway_grpc_compile(**kwargs): # Kept for backwards compatibility
+    gateway_deps(**kwargs)
 
-def gateway_swagger_compile(**kwargs):
-    gateway_grpc_compile(**kwargs)
+def gateway_grpc_library(**kwargs): # Kept for backwards compatibility
+    gateway_deps(**kwargs)
+
+def gateway_swagger_compile(**kwargs): # Kept for backwards compatibility
+    gateway_deps(**kwargs)

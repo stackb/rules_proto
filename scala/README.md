@@ -18,9 +18,9 @@ Generates *.scala protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//scala:deps.bzl", "scala_proto_compile")
+load("@build_stack_rules_proto//scala:deps.bzl", "scala_deps")
 
-scala_proto_compile()
+scala_deps()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
@@ -76,9 +76,9 @@ Generates *.scala protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_compile")
+load("@build_stack_rules_proto//scala:deps.bzl", "scala_deps")
 
-scala_grpc_compile()
+scala_deps()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
@@ -132,9 +132,9 @@ Generates *.scala protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//scala:deps.bzl", "scala_proto_library")
+load("@build_stack_rules_proto//scala:deps.bzl", "scala_deps")
 
-scala_proto_library()
+scala_deps()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
@@ -190,9 +190,9 @@ Generates *.scala protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_library")
+load("@build_stack_rules_proto//scala:deps.bzl", "scala_deps")
 
-scala_grpc_library()
+scala_deps()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")

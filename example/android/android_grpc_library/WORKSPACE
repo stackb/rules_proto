@@ -5,13 +5,9 @@ local_repository(
     path = "../../../",
 )
 
-load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+load("@build_stack_rules_proto//android:deps.bzl", "android_deps")
 
-io_grpc_grpc_java()
-
-load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_library")
-
-android_grpc_library()
+android_deps()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 

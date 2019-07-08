@@ -14,9 +14,9 @@ Generates protobuf closure grpc *.js files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "grpcjs_grpc_compile")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "grpcjs_deps")
 
-grpcjs_grpc_compile()
+grpcjs_deps()
 ```
 
 ### `BUILD.bazel`
@@ -51,9 +51,9 @@ Generates protobuf closure library *.js files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "grpcjs_grpc_library")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "grpcjs_deps")
 
-grpcjs_grpc_library()
+grpcjs_deps()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 

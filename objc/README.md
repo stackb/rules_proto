@@ -15,9 +15,9 @@ Generates objc protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//objc:deps.bzl", "objc_proto_compile")
+load("@build_stack_rules_proto//objc:deps.bzl", "objc_deps")
 
-objc_proto_compile()
+objc_deps()
 ```
 
 ### `BUILD.bazel`
@@ -52,9 +52,9 @@ Generates objc protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//objc:deps.bzl", "objc_grpc_compile")
+load("@build_stack_rules_proto//objc:deps.bzl", "objc_deps")
 
-objc_grpc_compile()
+objc_deps()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
@@ -93,9 +93,9 @@ Generates objc protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//objc:deps.bzl", "objc_proto_library")
+load("@build_stack_rules_proto//objc:deps.bzl", "objc_deps")
 
-objc_proto_library()
+objc_deps()
 ```
 
 ### `BUILD.bazel`

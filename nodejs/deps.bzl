@@ -5,20 +5,22 @@ load(
 )
 load(
     "//protobuf:deps.bzl",
-    "protobuf",
+    "protobuf_deps",
 )
 
-def nodejs_proto_compile(**kwargs):
-    protobuf(**kwargs)
-
-def nodejs_grpc_compile(**kwargs):
-    nodejs_proto_compile(**kwargs)
+def nodejs_deps(**kwargs):
+    protobuf_deps(**kwargs)
     com_github_grpc_grpc(**kwargs)
-
-def nodejs_proto_library(**kwargs):
-    nodejs_proto_compile(**kwargs)
     build_bazel_rules_nodejs(**kwargs)
 
-def nodejs_grpc_library(**kwargs):
-    nodejs_grpc_compile(**kwargs)
-    nodejs_proto_library(**kwargs)
+def nodejs_proto_compile(**kwargs): # Kept for backwards compatibility
+    nodejs_deps(**kwargs)
+
+def nodejs_grpc_compile(**kwargs): # Kept for backwards compatibility
+    nodejs_deps(**kwargs)
+
+def nodejs_proto_library(**kwargs): # Kept for backwards compatibility
+    nodejs_deps(**kwargs)
+
+def nodejs_grpc_library(**kwargs): # Kept for backwards compatibility
+    nodejs_deps(**kwargs)

@@ -1,22 +1,18 @@
 load(
     "//:deps.bzl",
     "com_github_stackb_grpc_js",
-    "io_bazel_rules_closure",
 )
 load(
     "//closure:deps.bzl",
-    "closure_proto_compile",
-)
-load(
-    "//protobuf:deps.bzl",
-    "protobuf",
+    "closure_deps",
 )
 
-def grpcjs_grpc_compile(**kwargs):
-    protobuf(**kwargs)
+def grpcjs_deps(**kwargs):
+    closure_deps(**kwargs)
     com_github_stackb_grpc_js(**kwargs)
 
-def grpcjs_grpc_library(**kwargs):
-    closure_proto_compile(**kwargs)
-    grpcjs_grpc_compile(**kwargs)
-    io_bazel_rules_closure(**kwargs)
+def grpcjs_grpc_compile(**kwargs): # Kept for backwards compatibility
+    grpcjs_deps(**kwargs)
+
+def grpcjs_grpc_library(**kwargs): # Kept for backwards compatibility
+    grpcjs_deps(**kwargs)

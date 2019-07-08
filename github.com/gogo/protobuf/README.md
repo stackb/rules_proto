@@ -24,9 +24,9 @@ Generates gogo protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_proto_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogo_proto_compile()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -67,9 +67,9 @@ Generates gogo protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_grpc_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogo_grpc_compile()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -110,9 +110,9 @@ Generates gogo protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_proto_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogo_proto_library()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -159,9 +159,9 @@ Generates gogo protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_grpc_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogo_grpc_library()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -207,9 +207,9 @@ Generates gogofast protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_proto_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogofast_proto_compile()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -250,9 +250,9 @@ Generates gogofast protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_grpc_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogofast_grpc_compile()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -293,9 +293,9 @@ Generates gogofast protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_proto_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogofast_proto_library()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -342,9 +342,9 @@ Generates gogofast protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofast_grpc_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogofast_grpc_library()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -390,9 +390,9 @@ Generates gogofaster protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_proto_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogofaster_proto_compile()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -433,9 +433,9 @@ Generates gogofaster protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_grpc_compile")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogofaster_grpc_compile()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -476,9 +476,9 @@ Generates gogofaster protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_proto_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogofaster_proto_library()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -525,9 +525,9 @@ Generates gogofaster protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_grpc_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogofaster_grpc_library()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 

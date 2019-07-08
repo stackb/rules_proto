@@ -5,9 +5,9 @@ local_repository(
     path = "../../../../../",
 )
 
-load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogofaster_grpc_library")
+load("@build_stack_rules_proto//github.com/gogo/protobuf:deps.bzl", "gogo_deps")
 
-gogofaster_grpc_library()
+gogo_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 

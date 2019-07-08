@@ -5,9 +5,9 @@ local_repository(
     path = "../../../",
 )
 
-load("@build_stack_rules_proto//swift:deps.bzl", "swift_grpc_compile")
+load("@build_stack_rules_proto//swift:deps.bzl", "swift_deps")
 
-swift_grpc_compile()
+swift_deps()
 
 load(
     "@build_bazel_rules_swift//swift:repositories.bzl",

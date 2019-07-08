@@ -12,9 +12,9 @@ go_register_toolchains()
 
 bazel_gazelle()
 
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "gateway_deps")
 
-{{ .Rule.Name }}()
+gateway_deps()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 

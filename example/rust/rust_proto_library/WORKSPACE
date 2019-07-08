@@ -5,9 +5,9 @@ local_repository(
     path = "../../../",
 )
 
-load("@build_stack_rules_proto//rust:deps.bzl", "rust_proto_library")
+load("@build_stack_rules_proto//rust:deps.bzl", "rust_deps")
 
-rust_proto_library()
+rust_deps()
 
 load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 

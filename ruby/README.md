@@ -16,9 +16,9 @@ Generates *.ruby protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_proto_compile")
+load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_deps")
 
-ruby_proto_compile()
+ruby_deps()
 ```
 
 ### `BUILD.bazel`
@@ -53,9 +53,9 @@ Generates *.ruby protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_grpc_compile")
+load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_deps")
 
-ruby_grpc_compile()
+ruby_deps()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
@@ -94,9 +94,9 @@ Generates *.rb protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_proto_library")
+load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_deps")
 
-ruby_proto_library()
+ruby_deps()
 
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
 
@@ -143,9 +143,9 @@ Generates *.rb protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_grpc_library")
+load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_deps")
 
-ruby_grpc_library()
+ruby_deps()
 
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
 

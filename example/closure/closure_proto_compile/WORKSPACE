@@ -5,6 +5,6 @@ local_repository(
     path = "../../../",
 )
 
-load("@build_stack_rules_proto//closure:deps.bzl", "closure_proto_compile")
+load("@build_stack_rules_proto//closure:deps.bzl", "closure_deps")
 
-closure_proto_compile()
+closure_deps()

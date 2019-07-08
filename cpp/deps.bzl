@@ -4,19 +4,21 @@ load(
 )
 load(
     "//protobuf:deps.bzl",
-    "protobuf",
+    "protobuf_deps",
 )
 
-def cpp_proto_compile(**kwargs):
-    protobuf(**kwargs)
-
-def cpp_grpc_compile(**kwargs):
-    cpp_proto_compile(**kwargs)
+def cpp_deps(**kwargs):
+    protobuf_deps(**kwargs)
     com_github_grpc_grpc(**kwargs)
 
-def cpp_proto_library(**kwargs):
-    cpp_proto_compile(**kwargs)
+def cpp_proto_compile(**kwargs): # Kept for backwards compatibility
+    cpp_deps(**kwargs)
 
-def cpp_grpc_library(**kwargs):
-    cpp_grpc_compile(**kwargs)
-    cpp_proto_library(**kwargs)
+def cpp_grpc_compile(**kwargs): # Kept for backwards compatibility
+    cpp_deps(**kwargs)
+
+def cpp_proto_library(**kwargs): # Kept for backwards compatibility
+    cpp_deps(**kwargs)
+
+def cpp_grpc_library(**kwargs): # Kept for backwards compatibility
+    cpp_deps(**kwargs)

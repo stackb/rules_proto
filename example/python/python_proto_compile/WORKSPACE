@@ -5,6 +5,6 @@ local_repository(
     path = "../../../",
 )
 
-load("@build_stack_rules_proto//python:deps.bzl", "python_proto_compile")
+load("@build_stack_rules_proto//python:deps.bzl", "python_deps")
 
-python_proto_compile()
+python_deps()

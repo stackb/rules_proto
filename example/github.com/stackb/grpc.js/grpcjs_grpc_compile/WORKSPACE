@@ -5,6 +5,6 @@ local_repository(
     path = "../../../../../",
 )
 
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "grpcjs_grpc_compile")
+load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "grpcjs_deps")
 
-grpcjs_grpc_compile()
+grpcjs_deps()

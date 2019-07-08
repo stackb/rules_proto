@@ -5,9 +5,9 @@ local_repository(
     path = "../../../",
 )
 
-load("@build_stack_rules_proto//python:deps.bzl", "python_grpc_compile")
+load("@build_stack_rules_proto//python:deps.bzl", "python_deps")
 
-python_grpc_compile()
+python_deps()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 

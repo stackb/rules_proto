@@ -1,4 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 load("//:utils.bzl", "github_archive", "get_ref", "get_sha256")
 
 # Versions
@@ -60,6 +61,12 @@ VERSIONS = {
         "ref": "9ab1134546364c6de84fc6c80b4202fdbebbbb35", # 2019-06-19
         "sha256": "f329928c62ade05ceda72c4e145fd300722e6e592627d43580dd0a8211c14612",
     },
+    "com_google_guava_guava_android": {
+        "type": "jvm_maven_import_external",
+        "artifact": "com.google.guava:guava:27.0.1-android",
+        "server_urls": ["http://central.maven.org/maven2"],
+        "artifact_sha256": "caf0955aed29a1e6d149f85cfb625a89161b5cf88e0e246552b7ffa358204e28",
+    },
 
     # csharp
     "io_bazel_rules_dotnet": {
@@ -86,6 +93,13 @@ VERSIONS = {
         "repo": "rules_d",
         "ref": "c4af62269c85dd5dcab0be119196baa5da4662b6", # June 28, 2019 + PR 30
         "sha256": "ef380076035d42bfc8b9a5547092779792de4b0cf718b9623a7c1923b0cd23e6",
+    },
+    "com_github_dcarp_protobuf_d": {
+        "type": "http",
+        "urls": ["https://github.com/dcarp/protobuf-d/archive/v0.5.0.tar.gz"],
+        "sha256": "67a037dc29242f0d2f099746da67f40afff27c07f9ab48dda53d5847620db421",
+        "strip_prefix": "protobuf-d-0.5.0",
+        "build_file": Label("//d:com_github_dcarp_protobuf_d.BUILD.bazel"),
     },
 
     # Go
@@ -145,6 +159,33 @@ VERSIONS = {
         "repo": "grpc-java",
         "ref": "46ef51576f7128874feba8067e13fc7b7e131f6f", # v1.21.0 + plugin fix
         "sha256": "c86c32a06a3db8d88839c682dc18e5acee130e29e4c009d64826fb580729fd91",
+    },
+    "com_google_guava_guava": {
+        "type": "jvm_maven_import_external",
+        "artifact": "com.google.guava:guava:20.0",
+        "server_urls": ["http://central.maven.org/maven2"],
+        "artifact_sha256": "36a666e3b71ae7f0f0dca23654b67e086e6c93d192f60ba5dfd5519db6c288c8",
+        "licenses": ["reciprocal"], # CDDL License
+    },
+    "javax_annotation_javax_annotation_api": {
+        "type": "jvm_maven_import_external",
+        "artifact": "javax.annotation:javax.annotation-api:1.2",
+        "server_urls": ["http://central.maven.org/maven2"],
+        "artifact_sha256": "5909b396ca3a2be10d0eea32c74ef78d816e1b4ead21de1d78de1f890d033e04",
+        "licenses": ["reciprocal"], # CDDL License
+    },
+    "com_google_errorprone_error_prone_annotations": {
+        "type": "jvm_maven_import_external",
+        "artifact": "com.google.errorprone:error_prone_annotations:2.3.2",
+        "server_urls": ["http://central.maven.org/maven2"],
+        "artifact_sha256": "357cd6cfb067c969226c442451502aee13800a24e950fdfde77bcdb4565a668d",
+        "licenses": ["notice"], # Apache 2.0
+        "binds": [
+            {
+                "name": "error_prone_annotations",
+                "actual": "@com_google_errorprone_error_prone_annotations//jar",
+            },
+        ]
     },
 
     # NodeJS
@@ -258,11 +299,22 @@ def _generic_dependency(name, **kwargs):
             ref = get_ref(name, dep["ref"], kwargs)
             sha256 = get_sha256(name, dep["sha256"], kwargs)
             github_archive(name, dep["org"], dep["repo"], ref, sha256)
+        else:
+            print("Dependency '{}' has already been declared, skipping".format(name))
 
     elif dep["type"] == "http":
         if name not in native.existing_rules():
             args = {k: v for k, v in dep.items() if k in ["urls", "sha256", "strip_prefix", "build_file", "build_file_content"]}
             http_archive(name = name, **args)
+        else:
+            print("Dependency '{}' has already been declared, skipping".format(name))
+
+    elif dep["type"] == "jvm_maven_import_external":
+        if name not in native.existing_rules():
+            args = {k: v for k, v in dep.items() if k in ["artifact", "server_urls", "artifact_sha256"]}
+            jvm_maven_import_external(name = name, **args)
+        else:
+            print("Dependency '{}' has already been declared, skipping".format(name))
 
     else:
         fail("Unknown dependency type {}".format(dep))
@@ -305,6 +357,9 @@ def com_github_bazelbuild_buildtools(**kwargs):
 def build_bazel_rules_android(**kwargs):
     _generic_dependency("build_bazel_rules_android", **kwargs)
 
+def com_google_guava_guava_android(**kwargs):
+    _generic_dependency("com_google_guava_guava_android", **kwargs)
+
 
 #
 # Closure
@@ -325,6 +380,9 @@ def io_bazel_rules_dotnet(**kwargs):
 #
 def io_bazel_rules_d(**kwargs):
     _generic_dependency("io_bazel_rules_d", **kwargs)
+
+def com_github_dcarp_protobuf_d(**kwargs):
+    _generic_dependency("com_github_dcarp_protobuf_d", **kwargs)
 
 
 #
@@ -366,6 +424,17 @@ def rules_jvm_external(**kwargs):
 
 def io_grpc_grpc_java(**kwargs):
     _generic_dependency("io_grpc_grpc_java", **kwargs)
+
+def com_google_guava_guava(**kwargs):
+    _generic_dependency("com_google_guava_guava", **kwargs)
+
+def javax_annotation_javax_annotation_api(**kwargs):
+    # Use //stub:javax_annotation for neverlink=1 support.
+    _generic_dependency("javax_annotation_javax_annotation_api", **kwargs)
+
+def com_google_errorprone_error_prone_annotations(**kwargs):
+    # Use //stub:javax_annotation for neverlink=1 support.
+    _generic_dependency("javax_annotation_javax_annotation_api", **kwargs)
 
 
 #

@@ -4,19 +4,21 @@ load(
 )
 load(
     "//protobuf:deps.bzl",
-    "protobuf",
+    "protobuf_deps",
 )
 
-def go_proto_compile(**kwargs):
-    protobuf(**kwargs)
+def go_deps(**kwargs):
+    protobuf_deps(**kwargs)
     io_bazel_rules_go(**kwargs)
 
-def go_grpc_compile(**kwargs):
-    go_proto_compile(**kwargs)
+def go_proto_compile(**kwargs): # Kept for backwards compatibility
+    go_deps(**kwargs)
 
-def go_proto_library(**kwargs):
-    go_proto_compile(**kwargs)
+def go_grpc_compile(**kwargs): # Kept for backwards compatibility
+    go_deps(**kwargs)
 
-def go_grpc_library(**kwargs):
-    go_grpc_compile(**kwargs)
-    go_proto_library(**kwargs)
+def go_proto_library(**kwargs): # Kept for backwards compatibility
+    go_deps(**kwargs)
+
+def go_grpc_library(**kwargs): # Kept for backwards compatibility
+    go_deps(**kwargs)

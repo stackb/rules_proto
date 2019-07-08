@@ -5,20 +5,22 @@ load(
 )
 load(
     "//protobuf:deps.bzl",
-    "protobuf",
+    "protobuf_deps",
 )
 
-def csharp_proto_compile(**kwargs):
-    protobuf(**kwargs)
-
-def csharp_grpc_compile(**kwargs):
-    csharp_proto_compile(**kwargs)
+def csharp_deps(**kwargs):
+    protobuf_deps(**kwargs)
     com_github_grpc_grpc(**kwargs)
-
-def csharp_proto_library(**kwargs):
-    csharp_proto_compile(**kwargs)
     io_bazel_rules_dotnet(**kwargs)
 
-def csharp_grpc_library(**kwargs):
-    csharp_grpc_compile(**kwargs)
-    csharp_proto_library(**kwargs)
+def csharp_proto_compile(**kwargs): # Kept for backwards compatibility
+    csharp_deps(**kwargs)
+
+def csharp_grpc_compile(**kwargs): # Kept for backwards compatibility
+    csharp_deps(**kwargs)
+
+def csharp_proto_library(**kwargs): # Kept for backwards compatibility
+    csharp_deps(**kwargs)
+
+def csharp_grpc_library(**kwargs): # Kept for backwards compatibility
+    csharp_deps(**kwargs)

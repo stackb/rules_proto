@@ -16,9 +16,9 @@ Generates *.py protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//python:deps.bzl", "python_proto_compile")
+load("@build_stack_rules_proto//python:deps.bzl", "python_deps")
 
-python_proto_compile()
+python_deps()
 ```
 
 ### `BUILD.bazel`
@@ -53,9 +53,9 @@ Generates *.py protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//python:deps.bzl", "python_grpc_compile")
+load("@build_stack_rules_proto//python:deps.bzl", "python_deps")
 
-python_grpc_compile()
+python_deps()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
@@ -94,9 +94,9 @@ Generates *.py protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//python:deps.bzl", "python_proto_library")
+load("@build_stack_rules_proto//python:deps.bzl", "python_deps")
 
-python_proto_library()
+python_deps()
 ```
 
 ### `BUILD.bazel`
@@ -131,9 +131,9 @@ Generates *.py protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//python:deps.bzl", "python_grpc_library")
+load("@build_stack_rules_proto//python:deps.bzl", "python_deps")
 
-python_grpc_library()
+python_deps()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 

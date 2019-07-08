@@ -27,9 +27,9 @@ go_register_toolchains()
 
 bazel_gazelle()
 
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_grpc_compile")
+load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_deps")
 
-gateway_grpc_compile()
+gateway_deps()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
@@ -80,9 +80,9 @@ go_register_toolchains()
 
 bazel_gazelle()
 
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_swagger_compile")
+load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_deps")
 
-gateway_swagger_compile()
+gateway_deps()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
@@ -133,9 +133,9 @@ go_register_toolchains()
 
 bazel_gazelle()
 
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_grpc_library")
+load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_deps")
 
-gateway_grpc_library()
+gateway_deps()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 

@@ -14,9 +14,9 @@ Generates closure *.js protobuf+gRPC files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//closure:deps.bzl", "closure_proto_compile")
+load("@build_stack_rules_proto//closure:deps.bzl", "closure_deps")
 
-closure_proto_compile()
+closure_deps()
 ```
 
 ### `BUILD.bazel`
@@ -51,9 +51,9 @@ Generates a closure_library with compiled protobuf *.js files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//closure:deps.bzl", "closure_proto_library")
+load("@build_stack_rules_proto//closure:deps.bzl", "closure_deps")
 
-closure_proto_library()
+closure_deps()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 

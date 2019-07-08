@@ -5,9 +5,9 @@ local_repository(
     path = "../../../",
 )
 
-load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_compile")
+load("@build_stack_rules_proto//scala:deps.bzl", "scala_deps")
 
-scala_grpc_compile()
+scala_deps()
 
 # rules_go used here to compile a wrapper around the protoc-gen-scala plugin
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")

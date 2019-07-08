@@ -16,9 +16,9 @@ Generates rust protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//rust:deps.bzl", "rust_proto_compile")
+load("@build_stack_rules_proto//rust:deps.bzl", "rust_deps")
 
-rust_proto_compile()
+rust_deps()
 
 load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 
@@ -65,9 +65,9 @@ Generates rust protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//rust:deps.bzl", "rust_grpc_compile")
+load("@build_stack_rules_proto//rust:deps.bzl", "rust_deps")
 
-rust_grpc_compile()
+rust_deps()
 
 load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 
@@ -114,9 +114,9 @@ Generates rust protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//rust:deps.bzl", "rust_proto_library")
+load("@build_stack_rules_proto//rust:deps.bzl", "rust_deps")
 
-rust_proto_library()
+rust_deps()
 
 load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 
@@ -163,9 +163,9 @@ Generates rust protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//rust:deps.bzl", "rust_grpc_library")
+load("@build_stack_rules_proto//rust:deps.bzl", "rust_deps")
 
-rust_grpc_library()
+rust_deps()
 
 load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 

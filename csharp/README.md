@@ -38,9 +38,9 @@ Generates csharp protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_proto_compile")
+load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_deps")
 
-csharp_proto_compile()
+csharp_deps()
 ```
 
 ### `BUILD.bazel`
@@ -75,9 +75,9 @@ Generates csharp protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_compile")
+load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_deps")
 
-csharp_grpc_compile()
+csharp_deps()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
@@ -118,9 +118,9 @@ Generates csharp protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_proto_library")
+load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_deps")
 
-csharp_proto_library()
+csharp_deps()
 
 load(
     "@io_bazel_rules_dotnet//dotnet:defs.bzl",
@@ -195,9 +195,9 @@ Generates csharp protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
+load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_deps")
 
-csharp_grpc_library()
+csharp_deps()
 
 load(
     "@io_bazel_rules_dotnet//dotnet:defs.bzl",

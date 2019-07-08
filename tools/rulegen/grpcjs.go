@@ -1,12 +1,12 @@
 package main
 
-var grpcjsWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var grpcjsWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "grpcjs_deps")
 
-{{ .Rule.Name }}()`)
+grpcjs_deps()`)
 
-var grpcjsLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var grpcjsLibraryWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "grpcjs_deps")
 
-{{ .Rule.Name }}()
+grpcjs_deps()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 

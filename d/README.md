@@ -16,9 +16,9 @@ Generates d protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//d:deps.bzl", "d_proto_compile")
+load("@build_stack_rules_proto//d:deps.bzl", "d_deps")
 
-d_proto_compile()
+d_deps()
 
 load("@io_bazel_rules_d//d:d.bzl", "d_repositories")
 
@@ -57,9 +57,9 @@ Generates d protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//d:deps.bzl", "d_proto_library")
+load("@build_stack_rules_proto//d:deps.bzl", "d_deps")
 
-d_proto_library()
+d_deps()
 
 load("@io_bazel_rules_d//d:d.bzl", "d_repositories")
 

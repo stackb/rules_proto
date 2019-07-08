@@ -1,12 +1,8 @@
 package main
 
-var javaGrpcWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+var javaGrpcWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Lang.Name }}_deps")
 
-io_grpc_grpc_java()
-
-load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
-
-{{ .Rule.Name }}()
+{{ .Lang.Name }}_deps()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 

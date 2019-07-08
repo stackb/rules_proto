@@ -16,9 +16,9 @@ Generates a srcjar with protobuf *.java files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//java:deps.bzl", "java_proto_compile")
+load("@build_stack_rules_proto//java:deps.bzl", "java_deps")
 
-java_proto_compile()
+java_deps()
 ```
 
 ### `BUILD.bazel`
@@ -53,9 +53,9 @@ Generates a srcjar with protobuf+gRPC *.java files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//java:deps.bzl", "java_grpc_compile")
+load("@build_stack_rules_proto//java:deps.bzl", "java_deps")
 
-java_grpc_compile()
+java_deps()
 ```
 
 ### `BUILD.bazel`
@@ -90,9 +90,9 @@ Generates a jar with compiled protobuf *.class files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//java:deps.bzl", "java_proto_library")
+load("@build_stack_rules_proto//java:deps.bzl", "java_deps")
 
-java_proto_library()
+java_deps()
 ```
 
 ### `BUILD.bazel`
@@ -127,13 +127,9 @@ Generates a jar with compiled protobuf+gRPC *.class files
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+load("@build_stack_rules_proto//java:deps.bzl", "java_deps")
 
-io_grpc_grpc_java()
-
-load("@build_stack_rules_proto//java:deps.bzl", "java_grpc_library")
-
-java_grpc_library()
+java_deps()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 

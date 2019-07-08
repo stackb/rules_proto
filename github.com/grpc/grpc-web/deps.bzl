@@ -1,26 +1,27 @@
 load(
     "//:deps.bzl",
     "com_github_grpc_grpc_web",
-    "io_bazel_rules_closure",
 )
 load(
     "//closure:deps.bzl",
-    "closure_proto_compile",
+    "closure_deps",
 )
 
-def closure_grpc_compile(**kwargs):
-    closure_proto_compile(**kwargs)
-    io_bazel_rules_closure(**kwargs)
+def grpc_web_deps(**kwargs):
+    closure_deps(**kwargs)
     com_github_grpc_grpc_web(**kwargs)
 
-def commonjs_grpc_compile(**kwargs):
-    closure_grpc_compile(**kwargs)
+def closure_grpc_compile(**kwargs): # Kept for backwards compatibility
+    grpc_web_deps(**kwargs)
 
-def commonjs_dts_grpc_compile(**kwargs):
-    closure_grpc_compile(**kwargs)
+def commonjs_grpc_compile(**kwargs): # Kept for backwards compatibility
+    grpc_web_deps(**kwargs)
 
-def ts_grpc_compile(**kwargs):
-    closure_grpc_compile(**kwargs)
+def commonjs_dts_grpc_compile(**kwargs): # Kept for backwards compatibility
+    grpc_web_deps(**kwargs)
 
-def closure_grpc_library(**kwargs):
-    closure_grpc_compile(**kwargs)
+def ts_grpc_compile(**kwargs): # Kept for backwards compatibility
+    grpc_web_deps(**kwargs)
+
+def closure_grpc_library(**kwargs): # Kept for backwards compatibility
+    grpc_web_deps(**kwargs)

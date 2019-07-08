@@ -5,9 +5,9 @@ local_repository(
     path = "../../../",
 )
 
-load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_proto_library")
+load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_deps")
 
-ruby_proto_library()
+ruby_deps()
 
 load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
 

@@ -4,12 +4,15 @@ load(
 )
 load(
     "//protobuf:deps.bzl",
-    "protobuf",
+    "protobuf_deps",
 )
 
-def php_proto_compile(**kwargs):
-    protobuf(**kwargs)
-
-def php_grpc_compile(**kwargs):
-    php_proto_compile(**kwargs)
+def php_deps(**kwargs):
+    protobuf_deps(**kwargs)
     com_github_grpc_grpc(**kwargs)
+
+def php_proto_compile(**kwargs): # Kept for backwards compatibility
+    php_deps(**kwargs)
+
+def php_grpc_compile(**kwargs): # Kept for backwards compatibility
+    php_deps(**kwargs)

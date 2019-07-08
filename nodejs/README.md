@@ -14,9 +14,9 @@ Generates node *.js protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//nodejs:deps.bzl", "nodejs_proto_compile")
+load("@build_stack_rules_proto//nodejs:deps.bzl", "nodejs_deps")
 
-nodejs_proto_compile()
+nodejs_deps()
 ```
 
 ### `BUILD.bazel`
@@ -51,9 +51,9 @@ Generates node *.js protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//nodejs:deps.bzl", "nodejs_grpc_compile")
+load("@build_stack_rules_proto//nodejs:deps.bzl", "nodejs_deps")
 
-nodejs_grpc_compile()
+nodejs_deps()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 

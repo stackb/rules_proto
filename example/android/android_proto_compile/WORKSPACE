@@ -5,6 +5,6 @@ local_repository(
     path = "../../../",
 )
 
-load("@build_stack_rules_proto//android:deps.bzl", "android_proto_compile")
+load("@build_stack_rules_proto//android:deps.bzl", "android_deps")
 
-android_proto_compile()
+android_deps()

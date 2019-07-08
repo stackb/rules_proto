@@ -5,9 +5,9 @@ local_repository(
     path = "../../../../../",
 )
 
-load("@build_stack_rules_proto//github.com/grpc/grpc-web:deps.bzl", "closure_grpc_library")
+load("@build_stack_rules_proto//github.com/grpc/grpc-web:deps.bzl", "grpc_web_deps")
 
-closure_grpc_library()
+grpc_web_deps()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 

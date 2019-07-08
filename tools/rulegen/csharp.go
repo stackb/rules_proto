@@ -1,8 +1,8 @@
 package main
 
-var csharpLibraryWorkspaceTemplateString = `load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Rule.Name }}")
+var csharpLibraryWorkspaceTemplateString = `load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Lang.Name }}_deps")
 
-{{ .Rule.Name }}()
+{{ .Lang.Name }}_deps()
 
 load(
     "@io_bazel_rules_dotnet//dotnet:defs.bzl",

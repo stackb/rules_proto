@@ -16,9 +16,9 @@ Generates *.go protobuf artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//go:deps.bzl", "go_proto_compile")
+load("@build_stack_rules_proto//go:deps.bzl", "go_deps")
 
-go_proto_compile()
+go_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -59,9 +59,9 @@ Generates *.go protobuf+gRPC artifacts
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//go:deps.bzl", "go_grpc_compile")
+load("@build_stack_rules_proto//go:deps.bzl", "go_deps")
 
-go_grpc_compile()
+go_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -102,9 +102,9 @@ Generates *.go protobuf library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//go:deps.bzl", "go_proto_library")
+load("@build_stack_rules_proto//go:deps.bzl", "go_deps")
 
-go_proto_library()
+go_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
@@ -150,9 +150,9 @@ Generates *.go protobuf+gRPC library
 ### `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//go:deps.bzl", "go_grpc_library")
+load("@build_stack_rules_proto//go:deps.bzl", "go_deps")
 
-go_grpc_library()
+go_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
