@@ -160,9 +160,7 @@ func mustWriteLanguageExampleWorkspace(dir string, lang *Language, rule *Rule) {
 	// +2 as we are in the example/{rule} subdirectory
 	relpath := strings.Repeat("../", len(depth)+2)
 
-	out.w(`load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
-local_repository(
+	out.w(`local_repository(
     name = "build_stack_rules_proto",
     path = "%s",
 )`, relpath)
