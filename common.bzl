@@ -203,32 +203,31 @@ def copy_file(ctx, src_file, dest_path, sibling=None):
     return dest_file
 
 
-# Adapted from https://github.com/bazelbuild/rules_go
 def descriptor_proto_path(proto, proto_info):
     """
     Convert a proto File to the path within the descriptor file.
+
+    Adapted from https://github.com/bazelbuild/rules_go
     """
-    path = proto.path
-    root = proto.root.path
-    ws_root = proto.owner.workspace_root
-    proto_source_root = proto_info.proto_source_root
 
-    # Strip proto_source_root and slash
-    if path.startswith(proto_source_root):
-        path = path[len(proto_source_root):]
+    # Strip proto_source_root
+    path = strip_path_prefix(proto.path, proto_info.proto_source_root)
+
+    # Strip root
+    path = strip_path_prefix(path, proto.root.path)
+
+    # Strip workspace root
+    path = strip_path_prefix(path, proto.owner.workspace_root)
+
+    return path
+
+
+def strip_path_prefix(path, prefix):
+    """
+    Strip a prefix from a path if it exists and any remaining prefix slashes
+    """
+    if path.startswith(prefix):
+        path = path[len(prefix):]
     if path.startswith("/"):
         path = path[1:]
-
-    # Strip root and slash
-    if path.startswith(root):
-        path = path[len(root):]
-    if path.startswith("/"):
-        path = path[1:]
-
-    # Strip workspace root and slash
-    if path.startswith(ws_root):
-        path = path[len(ws_root):]
-    if path.startswith("/"):
-        path = path[1:]
-
     return path

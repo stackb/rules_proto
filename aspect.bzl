@@ -3,9 +3,10 @@ load(
     "//:common.bzl",
     "ProtoCompileInfo",
     "copy_file",
+    "descriptor_proto_path",
     "get_int_attr",
     "get_output_filename",
-    "descriptor_proto_path",
+    "strip_path_prefix",
 )
 
 
@@ -56,6 +57,7 @@ def proto_compile_impl(ctx):
     # Build outputs
     final_output_files = {}
     final_output_dirs = []
+    prefix_path = ctx.attr.prefix_path
 
     if not ctx.attr.merge_directories:
         # Pass on outputs directly when not merging
@@ -63,8 +65,55 @@ def proto_compile_impl(ctx):
             final_output_files.update(**output_files_dict)
         final_output_dirs = output_dirs
 
+    elif output_dirs:
+        # If we have any output dirs specified, we declare a single output
+        # directory and merge all files in one go. This is necessary to preven
+        # path prefix conflicts
+
+        # Declare single output directory
+        dir_name = ctx.label.name
+        if prefix_path:
+            dir_name = dir_name + '/' + prefix_path
+        new_dir = ctx.actions.declare_directory(dir_name)
+        final_output_dirs.append(new_dir)
+
+        # Build copy command for directory outputs
+        command_parts = ["cp -r {} '{}'".format(
+            ' '.join(["'" + d.path + "'/*" for d in output_dirs]),
+            new_dir.path
+        )]
+
+        # Extend copy command with file outputs
+        command_input_files = []
+        for output_files_dict in output_files:
+            for root, files in output_files_dict.items():
+                for file in files:
+                    # Strip root from file path
+                    path = strip_path_prefix(file.path, root)
+
+                    # Prefix path is contained in new_dir.path created above and
+                    # used below
+
+                    # Add command to copy file to output
+                    command_input_files.append(file)
+                    command_parts.append("cp '{}' '{}'".format(
+                        file.path,
+                        "{}/{}".format(new_dir.path, path)
+                    ))
+
+        # Copy directories and files to shared output directory in one action
+        ctx.actions.run_shell(
+            mnemonic = "CopyDirs",
+            inputs = output_dirs + command_input_files,
+            outputs = [new_dir],
+            command = " && ".join(command_parts),
+            progress_message = 'copying directories and files to {}'.format(new_dir.path),
+        )
+
     else:
-        # Build output tree by aggregating files created by aspect into one directory
+        # Otherwise, if we only have output files, build the output tree by
+        # aggregating files created by aspect into one directory
+
         output_root = ctx.bin_dir.path + '/'
         if ctx.label.workspace_root:
             output_root += ctx.label.workspace_root + '/'
@@ -73,16 +122,11 @@ def proto_compile_impl(ctx):
         output_root += ctx.label.name
         final_output_files[output_root] = []
 
-        prefix_path = ctx.attr.prefix_path
         for output_files_dict in output_files:
             for root, files in output_files_dict.items():
                 for file in files:
                     # Strip root from file path
-                    path = file.path
-                    if path.startswith(root):
-                        path = path[len(root):]
-                    if path.startswith("/"):
-                        path = path[1:]
+                    path = strip_path_prefix(file.path, root)
 
                     # Prepend prefix path if given
                     if prefix_path:
@@ -93,27 +137,6 @@ def proto_compile_impl(ctx):
                         ctx, file,
                         "{}/{}".format(ctx.label.name, path)
                     ))
-
-        # Merge output directories created by aspect
-        if output_dirs:
-            # Declare shared output directory
-            dir_name = ctx.label.name
-            if prefix_path:
-                dir_name = prefix_path + '/' + dir_name
-            new_dir = ctx.actions.declare_directory(dir_name)
-            final_output_dirs.append(new_dir)
-
-            # Copy directories to shared output directory in one action
-            ctx.actions.run_shell(
-                mnemonic = "CopyDirs",
-                inputs = output_dirs,
-                outputs = [new_dir],
-                command = "cp -r {} '{}'".format(
-                    ' '.join(["'" + d.path + "'/*" for d in output_dirs]),
-                    new_dir.path
-                ),
-                progress_message = 'copying directories to {}'.format(new_dir.path),
-            )
 
     # Create default and proto compile providers
     all_outputs = [f for files in final_output_files.values() for f in files] + final_output_dirs
@@ -299,7 +322,7 @@ def proto_compile_aspect_impl(target, ctx):
         # directory.
 
         if plugin.output_directory:
-            out_file = ctx.actions.declare_directory(rel_outdir + '/' + plugin.name)
+            out_file = ctx.actions.declare_directory(rel_outdir + '/' + '_plugin_' + plugin.name)
             plugin_outputs.append(out_file)
             output_dirs.append(out_file)
 
@@ -310,10 +333,6 @@ def proto_compile_aspect_impl(target, ctx):
 
         # <Args> argument list for protoc execution
         args = ctx.actions.args()
-
-        # Add proto paths
-        #for proto_path in proto_info.transitive_proto_path.to_list():
-        #    args.add("--proto_path={}".format(proto_path))
 
         # Add descriptors
         pathsep = ctx.configuration.host_path_separator
