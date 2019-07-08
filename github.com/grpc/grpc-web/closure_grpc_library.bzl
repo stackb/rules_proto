@@ -20,14 +20,7 @@ def closure_grpc_library(**kwargs):
     closure_js_library(
         name = kwargs.get("name"),
         srcs = [name_pb, name_pb_grpc],
-        deps = [
-            "@com_github_grpc_grpc_web//javascript/net/grpc/web:abstractclientbase",
-            "@com_github_grpc_grpc_web//javascript/net/grpc/web:clientreadablestream",
-            "@com_github_grpc_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
-            "@com_github_grpc_grpc_web//javascript/net/grpc/web:error",
-            "@io_bazel_rules_closure//closure/library",
-            "@io_bazel_rules_closure//closure/protobuf:jspb",
-        ],
+        deps = GRPC_DEPS,
         suppress = [
             "JSC_LATE_PROVIDE_ERROR",
             "JSC_UNDEFINED_VARIABLE",
@@ -41,3 +34,12 @@ def closure_grpc_library(**kwargs):
         ],
         visibility = kwargs.get("visibility"),
     )
+
+GRPC_DEPS = [
+    "@com_github_grpc_grpc_web//javascript/net/grpc/web:abstractclientbase",
+    "@com_github_grpc_grpc_web//javascript/net/grpc/web:clientreadablestream",
+    "@com_github_grpc_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
+    "@com_github_grpc_grpc_web//javascript/net/grpc/web:error",
+    "@io_bazel_rules_closure//closure/library",
+    "@io_bazel_rules_closure//closure/protobuf:jspb",
+]

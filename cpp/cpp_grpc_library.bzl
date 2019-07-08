@@ -12,11 +12,13 @@ def cpp_grpc_library(**kwargs):
     native.cc_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [
-            "@com_google_protobuf//:protoc_lib",
-            "@com_github_grpc_grpc//:grpc++",
-            #"@com_github_grpc_grpc//:grpc++_reflection", # TODO: Disabled until fixed upstream
-        ],
+        deps = GRPC_DEPS,
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )
+
+GRPC_DEPS = [
+    "@com_google_protobuf//:protoc_lib",
+    "@com_github_grpc_grpc//:grpc++",
+    #"@com_github_grpc_grpc//:grpc++_reflection", # TODO: Disabled until fixed upstream
+]

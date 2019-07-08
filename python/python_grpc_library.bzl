@@ -10,9 +10,9 @@ def python_grpc_library(**kwargs):
 
     # Pick deps based on python version
     if "python_version" not in kwargs or kwargs["python_version"] == "PY3":
-        grpc_deps = ["@grpc_py3_deps//grpcio"]
+        grpc_deps = GRPC_PYTHON3_DEPS
     elif kwargs["python_version"] == "PY2":
-        grpc_deps = ["@grpc_py2_deps//grpcio"]
+        grpc_deps = GRPC_PYTHON2_DEPS
     else:
         fail("The 'python_version' attribute to python_grpc_library must be one of ['PY2', 'PY3']")
 
@@ -27,6 +27,14 @@ def python_grpc_library(**kwargs):
         imports = [name_pb],
         visibility = kwargs.get("visibility"),
     )
+
+GRPC_PYTHON2_DEPS = [
+    "@grpc_py2_deps//grpcio"
+]
+
+GRPC_PYTHON3_DEPS = [
+    "@grpc_py3_deps//grpcio"
+]
 
 # Alias
 py_grpc_library = python_grpc_library

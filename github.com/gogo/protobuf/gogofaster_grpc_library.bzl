@@ -14,11 +14,13 @@ def gogofaster_grpc_library(**kwargs):
     go_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = kwargs.get("go_deps", []) + [
-            "@com_github_gogo_protobuf//proto:go_default_library",
-            "@org_golang_google_grpc//:go_default_library",
-            "@org_golang_x_net//context:go_default_library",
-        ],
+        deps = kwargs.get("go_deps", []) + GRPC_DEPS,
         importpath = kwargs.get("importpath"),
         visibility = kwargs.get("visibility"),
     )
+
+GRPC_DEPS = [
+    "@com_github_gogo_protobuf//proto:go_default_library",
+    "@org_golang_google_grpc//:go_default_library",
+    "@org_golang_x_net//context:go_default_library",
+]

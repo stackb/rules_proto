@@ -53,23 +53,27 @@ var nodeProtoLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + 
     npm_package(
         name = kwargs.get("name"),
         deps = [name_pb],
-        packages = [
-            "@nodejs_modules//google-protobuf",
-        ],
+        packages = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+PROTO_DEPS = [
+    "@nodejs_modules//google-protobuf",
+]`)
 
 var nodeGrpcLibraryRuleTemplate = mustTemplate(nodeLibraryRuleTemplateString + `
     # Create {{ .Lang.Name }} library
     npm_package(
         name = kwargs.get("name"),
         deps = [name_pb],
-        packages = [
-            "@nodejs_modules//google-protobuf",
-            "@nodejs_modules//grpc",
-        ],
+        packages = GRPC_DEPS,
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+GRPC_DEPS = [
+    "@nodejs_modules//google-protobuf",
+    "@nodejs_modules//grpc",
+]`)
 
 func makeNode() *Language {
 	return &Language{

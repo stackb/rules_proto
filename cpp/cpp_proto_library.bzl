@@ -12,9 +12,11 @@ def cpp_proto_library(**kwargs):
     native.cc_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [
-            "@com_google_protobuf//:protoc_lib",
-        ],
+        deps = PROTO_DEPS,
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )
+
+PROTO_DEPS = [
+    "@com_google_protobuf//:protoc_lib",
+]

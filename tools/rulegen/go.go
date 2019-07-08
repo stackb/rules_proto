@@ -29,26 +29,30 @@ var goProtoLibraryRuleTemplate = mustTemplate(goLibraryRuleTemplateString + `
     go_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = kwargs.get("go_deps", []) + [
-            "@com_github_golang_protobuf//proto:go_default_library",
-        ],
+        deps = kwargs.get("go_deps", []) + PROTO_DEPS,
         importpath = kwargs.get("importpath"),
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+PROTO_DEPS = [
+    "@com_github_golang_protobuf//proto:go_default_library",
+]`)
 
 var goGrpcLibraryRuleTemplate = mustTemplate(goLibraryRuleTemplateString + `
     # Create {{ .Lang.Name }} library
     go_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = kwargs.get("go_deps", []) + [
-            "@com_github_golang_protobuf//proto:go_default_library",
-            "@org_golang_google_grpc//:go_default_library",
-            "@org_golang_x_net//context:go_default_library",
-        ],
+        deps = kwargs.get("go_deps", []) + GRPC_DEPS,
         importpath = kwargs.get("importpath"),
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+GRPC_DEPS = [
+    "@com_github_golang_protobuf//proto:go_default_library",
+    "@org_golang_google_grpc//:go_default_library",
+    "@org_golang_x_net//context:go_default_library",
+]`)
 
 var goProtoCompileExampleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:defs.bzl", "{{ .Rule.Name }}")
 

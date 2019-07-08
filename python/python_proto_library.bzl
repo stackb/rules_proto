@@ -12,12 +12,14 @@ def python_proto_library(**kwargs):
     native.py_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [
-            "@com_google_protobuf//:protobuf_python",
-        ],
+        deps = PROTO_DEPS,
         imports = [name_pb],
         visibility = kwargs.get("visibility"),
     )
+
+PROTO_DEPS = [
+    "@com_google_protobuf//:protobuf_python",
+]
 
 # Alias
 py_proto_library = python_proto_library

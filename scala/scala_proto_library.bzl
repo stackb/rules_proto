@@ -13,9 +13,14 @@ def scala_proto_library(**kwargs):
     scala_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [Label("//scala:proto_deps")],
-        exports = [
-            Label("//scala:proto_deps"),
-        ],
+        deps = PROTO_DEPS,
+        exports = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
     )
+
+PROTO_DEPS = [
+    "//external:io_bazel_rules_scala/dependency/com_google_protobuf/protobuf_java",
+    "//external:io_bazel_rules_scala/dependency/proto/scalapb_fastparse",
+    "//external:io_bazel_rules_scala/dependency/proto/scalapb_lenses",
+    "//external:io_bazel_rules_scala/dependency/proto/scalapb_runtime",
+]

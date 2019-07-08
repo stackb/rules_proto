@@ -23,7 +23,7 @@ load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_reposito
 
 scala_proto_repositories()`)
 
-var scalaLibraryRuleTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
+var scalaLibraryRuleTemplateString = `load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -33,17 +33,61 @@ def {{ .Rule.Name }}(**kwargs):
         name = name_pb,
         **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )
+`
 
+var scalaProtoLibraryRuleTemplate = mustTemplate(scalaLibraryRuleTemplateString + `
     # Create {{ .Lang.Name }} library
     scala_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [Label("//scala:{{ .Rule.Kind }}_deps")],
-        exports = [
-            Label("//scala:{{ .Rule.Kind }}_deps"),
-        ],
+        deps = PROTO_DEPS,
+        exports = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+PROTO_DEPS = [
+    "//external:io_bazel_rules_scala/dependency/com_google_protobuf/protobuf_java",
+    "//external:io_bazel_rules_scala/dependency/proto/scalapb_fastparse",
+    "//external:io_bazel_rules_scala/dependency/proto/scalapb_lenses",
+    "//external:io_bazel_rules_scala/dependency/proto/scalapb_runtime",
+]`)
+
+var scalaGrpcLibraryRuleTemplate = mustTemplate(scalaLibraryRuleTemplateString + `
+    # Create {{ .Lang.Name }} library
+    scala_library(
+        name = kwargs.get("name"),
+        srcs = [name_pb],
+        deps = GRPC_DEPS,
+        exports = GRPC_DEPS,
+        visibility = kwargs.get("visibility"),
+    )
+
+GRPC_DEPS = [
+    "//external:io_bazel_rules_scala/dependency/com_google_protobuf/protobuf_java",
+    "//external:io_bazel_rules_scala/dependency/proto/scalapb_fastparse",
+    "//external:io_bazel_rules_scala/dependency/proto/scalapb_lenses",
+    "//external:io_bazel_rules_scala/dependency/proto/scalapb_runtime",
+    "//external:io_bazel_rules_scala/dependency/proto/google_instrumentation",
+    "//external:io_bazel_rules_scala/dependency/proto/grpc_context",
+    "//external:io_bazel_rules_scala/dependency/proto/grpc_core",
+    "//external:io_bazel_rules_scala/dependency/proto/grpc_netty",
+    "//external:io_bazel_rules_scala/dependency/proto/grpc_protobuf",
+    "//external:io_bazel_rules_scala/dependency/proto/grpc_stub",
+    "//external:io_bazel_rules_scala/dependency/proto/guava",
+    "//external:io_bazel_rules_scala/dependency/proto/netty_buffer",
+    "//external:io_bazel_rules_scala/dependency/proto/netty_codec",
+    "//external:io_bazel_rules_scala/dependency/proto/netty_codec_http",
+    "//external:io_bazel_rules_scala/dependency/proto/netty_codec_http2",
+    "//external:io_bazel_rules_scala/dependency/proto/netty_codec_socks",
+    "//external:io_bazel_rules_scala/dependency/proto/netty_common",
+    "//external:io_bazel_rules_scala/dependency/proto/netty_handler",
+    "//external:io_bazel_rules_scala/dependency/proto/netty_handler_proxy",
+    "//external:io_bazel_rules_scala/dependency/proto/netty_resolver",
+    "//external:io_bazel_rules_scala/dependency/proto/netty_transport",
+    "//external:io_bazel_rules_scala/dependency/proto/opencensus_api",
+    "//external:io_bazel_rules_scala/dependency/proto/opencensus_contrib_grpc_metrics",
+    "//external:io_bazel_rules_scala/dependency/proto/scalapb_runtime_grpc",
+]`)
 
 func makeScala() *Language {
 	return &Language{
@@ -78,7 +122,7 @@ func makeScala() *Language {
 			&Rule{
 				Name:             "scala_proto_library",
 				Kind:             "proto",
-				Implementation:   scalaLibraryRuleTemplate,
+				Implementation:   scalaProtoLibraryRuleTemplate,
 				WorkspaceExample: scalaWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates *.scala protobuf library",
@@ -87,7 +131,7 @@ func makeScala() *Language {
 			&Rule{
 				Name:             "scala_grpc_library",
 				Kind:             "grpc",
-				Implementation:   scalaLibraryRuleTemplate,
+				Implementation:   scalaGrpcLibraryRuleTemplate,
 				WorkspaceExample: scalaWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates *.scala protobuf+gRPC library",

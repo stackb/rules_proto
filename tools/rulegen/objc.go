@@ -15,28 +15,30 @@ var objcProtoLibraryRuleTemplate = mustTemplate(objcLibraryRuleTemplateString + 
     native.objc_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [
-            "@com_google_protobuf//:protobuf_objc",
-        ],
+        deps = PROTO_DEPS,
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )
-`)
+
+PROTO_DEPS = [
+    "@com_google_protobuf//:protobuf_objc",
+]`)
 
 var objcGrpcLibraryRuleTemplate = mustTemplate(objcLibraryRuleTemplateString + `
     # Create {{ .Lang.Name }} library
     native.objc_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [
-            "@com_google_protobuf//:protobuf_objc",
-            "@com_github_grpc_grpc//:grpc++",
-            "@build_stack_rules_proto//objc:grpc_lib",
-        ],
+        deps = GRPC_DEPS,
         includes = [name_pb],
         visibility = kwargs.get("visibility"),
     )
-`)
+
+GRPC_DEPS = [
+    "@com_google_protobuf//:protobuf_objc",
+    "@com_github_grpc_grpc//:grpc++",
+    "@build_stack_rules_proto//objc:grpc_lib",
+]`)
 
 func makeObjc() *Language {
 	return &Language{

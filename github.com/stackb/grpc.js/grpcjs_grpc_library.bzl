@@ -1,5 +1,5 @@
 load("//github.com/stackb/grpc.js:grpcjs_grpc_compile.bzl", "grpcjs_grpc_compile")
-load("//closure:closure_proto_compile.bzl", "closure_proto_compile")
+load("//closure:defs.bzl", "closure_proto_compile", "PROTO_DEPS")
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def grpcjs_grpc_library(**kwargs):
@@ -22,9 +22,7 @@ def grpcjs_grpc_library(**kwargs):
     closure_js_library(
         name = name_pb_lib,
         srcs = [name_pb],
-        deps = [
-            "@io_bazel_rules_closure//closure/protobuf:jspb",
-        ] + kwargs.get("closure_deps", []),
+        deps = PROTO_DEPS + kwargs.get("closure_deps", []),
         suppress = [
             "JSC_LATE_PROVIDE_ERROR",
             "JSC_UNDEFINED_VARIABLE",

@@ -13,7 +13,7 @@ def closure_proto_library(**kwargs):
     closure_js_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
+        deps = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
         suppress = [
             "JSC_LATE_PROVIDE_ERROR",
@@ -24,3 +24,7 @@ def closure_proto_library(**kwargs):
             "JSC_UNRECOGNIZED_TYPE_ERROR",
         ],
     )
+
+PROTO_DEPS = [
+    "@io_bazel_rules_closure//closure/protobuf:jspb"
+]

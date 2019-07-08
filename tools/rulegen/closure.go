@@ -23,7 +23,7 @@ def {{ .Rule.Name }}(**kwargs):
     closure_js_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
+        deps = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
         suppress = [
             "JSC_LATE_PROVIDE_ERROR",
@@ -33,7 +33,11 @@ def {{ .Rule.Name }}(**kwargs):
             "JSC_POSSIBLE_INEXISTENT_PROPERTY",
             "JSC_UNRECOGNIZED_TYPE_ERROR",
         ],
-    )`)
+    )
+
+PROTO_DEPS = [
+    "@io_bazel_rules_closure//closure/protobuf:jspb"
+]`)
 
 func makeClosure() *Language {
 	return &Language{

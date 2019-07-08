@@ -13,9 +13,11 @@ def csharp_proto_library(**kwargs):
     core_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [
-            "@google.protobuf//:netstandard1.0_core",
-            "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-        ],
+        deps = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
     )
+
+PROTO_DEPS = [
+    "@google.protobuf//:netstandard1.0_core",
+    "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
+]

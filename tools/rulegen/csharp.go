@@ -61,26 +61,30 @@ var csharpProtoLibraryRuleTemplate = mustTemplate(csharpLibraryRuleTemplateStrin
     core_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [
-            "@google.protobuf//:netstandard1.0_core",
-            "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-        ],
+        deps = PROTO_DEPS,
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+PROTO_DEPS = [
+    "@google.protobuf//:netstandard1.0_core",
+    "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
+]`)
 
 var csharpGrpcLibraryRuleTemplate = mustTemplate(csharpLibraryRuleTemplateString + `
     # Create {{ .Lang.Name }} library
     core_library(
         name = kwargs.get("name"),
         srcs = [name_pb],
-        deps = [
-            "@google.protobuf//:netstandard1.0_core",
-            "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
-            "@grpc.core//:netstandard1.5_core",
-            "@system.interactive.async//:netstandard2.0_core",
-        ],
+        deps = GRPC_DEPS,
         visibility = kwargs.get("visibility"),
-    )`)
+    )
+
+GRPC_DEPS = [
+    "@google.protobuf//:netstandard1.0_core",
+    "@io_bazel_rules_dotnet//dotnet/stdlib.core:system.io.dll",
+    "@grpc.core//:netstandard1.5_core",
+    "@system.interactive.async//:netstandard2.0_core",
+]`)
 
 var csharpLibraryFlags = []*Flag{
 	{
