@@ -209,7 +209,11 @@ func mustWriteLanguageDefs(dir string, lang *Language) {
 	out := &LineWriter{}
 	out.w("# Aggregate all `%s` rules to one loadable file", lang.Name)
 	for _, rule := range lang.Rules {
-		out.w(`load(":%s.bzl", "%s")`, rule.Name, rule.Name)
+		out.w(`load(":%s.bzl", _%s="%s")`, rule.Name, rule.Name, rule.Name)
+	}
+	out.ln()
+	for _, rule := range lang.Rules {
+		out.w(`%s = _%s`, rule.Name, rule.Name)
 	}
 	out.ln()
 	out.MustWrite(path.Join(dir, lang.Dir, "defs.bzl"))
