@@ -107,6 +107,7 @@ load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories(
     omit_com_google_protobuf = True,
+    omit_com_google_protobuf_javalite = True,
     omit_net_zlib = True
 )
 
@@ -155,6 +156,7 @@ load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories(
     omit_com_google_protobuf = True,
+    omit_com_google_protobuf_javalite = True,
     omit_net_zlib = True
 )
 
