@@ -44,6 +44,13 @@ VERSIONS = {
         "ref": "be3b1fc838386bdbea39d9750ea4411294870575", # Apr 13, 2019
         "sha256": "6128dd2af9830430e0ae404cb6fdce754fb80ed88942e1a0865a7f376bb68c4e",
     },
+    "com_github_bazelbuild_buildtools": {
+        "type": "github",
+        "org": "bazelbuild",
+        "repo": "buildtools",
+        "ref": "6415663945d3248207da955aafa1fa2af1a0f2ed",
+        "sha256": "d1e28237d1f4c2255c504246b4f3fd36f74d590f2974491b4399a84c58b495ed",
+    },
 
     # Android
     "build_bazel_rules_android": {
@@ -287,6 +294,9 @@ def com_github_grpc_grpc(**kwargs):
 #
 def bazel_skylib(**kwargs):
     _generic_dependency("bazel_skylib", **kwargs)
+
+def com_github_bazelbuild_buildtools(**kwargs):
+    _generic_dependency("com_github_bazelbuild_buildtools", **kwargs)
 
 
 #
