@@ -67,6 +67,13 @@ VERSIONS = {
         "server_urls": ["http://central.maven.org/maven2"],
         "artifact_sha256": "caf0955aed29a1e6d149f85cfb625a89161b5cf88e0e246552b7ffa358204e28",
     },
+    "com_google_protobuf_javalite": {
+        "type": "github",
+        "org": "protocolbuffers",
+        "repo": "protobuf",
+        "ref": "fa08222434bc58d743e8c2cc716bc219c3d0f44e",
+        "sha256": "a6d34f9f32421425faf2971de121356cf61efa576100dd37762b83869f05b17a",
+    },
 
     # csharp
     "io_bazel_rules_dotnet": {
@@ -362,6 +369,9 @@ def build_bazel_rules_android(**kwargs):
 
 def com_google_guava_guava_android(**kwargs):
     _generic_dependency("com_google_guava_guava_android", **kwargs)
+
+def com_google_protobuf_javalite(**kwargs):
+    _generic_dependency("com_google_protobuf_javalite", **kwargs)
 
 
 #

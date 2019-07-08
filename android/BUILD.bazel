@@ -31,6 +31,7 @@ java_library(
     exports = [
         ":proto_deps",
         "@io_grpc_grpc_java//core",
+        "@io_grpc_grpc_java//protobuf-lite",
         "@io_grpc_grpc_java//stub",
     ],
 )
