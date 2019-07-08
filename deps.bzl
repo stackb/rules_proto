@@ -300,21 +300,24 @@ def _generic_dependency(name, **kwargs):
             sha256 = get_sha256(name, dep["sha256"], kwargs)
             github_archive(name, dep["org"], dep["repo"], ref, sha256)
         else:
-            print("Dependency '{}' has already been declared, skipping".format(name))
+            pass
+            #print("Dependency '{}' has already been declared, skipping".format(name))
 
     elif dep["type"] == "http":
         if name not in native.existing_rules():
             args = {k: v for k, v in dep.items() if k in ["urls", "sha256", "strip_prefix", "build_file", "build_file_content"]}
             http_archive(name = name, **args)
         else:
-            print("Dependency '{}' has already been declared, skipping".format(name))
+            pass
+            #print("Dependency '{}' has already been declared, skipping".format(name))
 
     elif dep["type"] == "jvm_maven_import_external":
         if name not in native.existing_rules():
             args = {k: v for k, v in dep.items() if k in ["artifact", "server_urls", "artifact_sha256"]}
             jvm_maven_import_external(name = name, **args)
         else:
-            print("Dependency '{}' has already been declared, skipping".format(name))
+            pass
+            #print("Dependency '{}' has already been declared, skipping".format(name))
 
     else:
         fail("Unknown dependency type {}".format(dep))
