@@ -12,3 +12,11 @@ proto_plugin(
     tool = "@io_grpc_grpc_java//compiler:grpc_java_plugin",
     visibility = ["//visibility:public"],
 )
+
+java_library(
+    name = "grpc_netty",
+    visibility = ["//visibility:public"],
+    exports = [
+        "@io_grpc_grpc_java//netty",
+    ],
+)
