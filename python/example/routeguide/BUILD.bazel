@@ -32,7 +32,7 @@ py_binary(
         ":resources",
         ":routeguide",
     ],
-    python_version = "PY2",
+    python_version = "PY3",
 )
 
 py_binary(
@@ -47,5 +47,5 @@ py_binary(
         ":resources",
         ":routeguide",
     ],
-    python_version = "PY2",
+    python_version = "PY3",
 )
