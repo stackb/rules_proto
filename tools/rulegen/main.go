@@ -286,28 +286,14 @@ func mustWriteLanguageReadme(dir string, lang *Language) {
 			out.ln()
 		}
 
-		out.w("### Mandatory Attributes")
+		out.w("### Attributes")
 		out.ln()
-		out.w("| Name | Type | Default | Description |")
-		out.w("| ---: | :--- | ------- | ----------- |")
+		out.w("| Name | Type | Mandatory | Default | Description |")
+		out.w("| ---: | :--- | --------- | ------- | ----------- |")
 		for _, attr := range rule.Attrs {
-			if attr.Mandatory {
-				out.w("| %s   | `%s` | `%s`    | %s          |", attr.Name, attr.Type, attr.Default, attr.Doc)
-			}
+			out.w("| `%s` | `%s` | %t | `%s`    | %s          |", attr.Name, attr.Type, attr.Mandatory, attr.Default, attr.Doc)
 		}
 		out.ln()
-
-		out.w("### Optional Attributes")
-		out.ln()
-		out.w("| Name | Type | Default | Description |")
-		out.w("| ---: | :--- | ------- | ----------- |")
-		for _, attr := range rule.Attrs {
-			if !attr.Mandatory {
-				out.w("| %s   | `%s` | `%s`    | %s          |", attr.Name, attr.Type, attr.Default, attr.Doc)
-			}
-		}
-		out.ln()
-
 	}
 
 	out.MustWrite(path.Join(dir, lang.Dir, "README.md"))
@@ -325,7 +311,7 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.w("## Rules")
 	out.ln()
 
-	out.w("| Status | Lang | Rule | Description")
+	out.w("| Status | Language | Rule | Description")
 	out.w("| ---    | ---: | :--- | :--- |")
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {

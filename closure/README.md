@@ -30,17 +30,12 @@ closure_proto_compile(
 )
 ```
 
-### Mandatory Attributes
+### Attributes
 
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
-
-### Optional Attributes
-
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| Name | Type | Mandatory | Default | Description |
+| ---: | :--- | --------- | ------- | ----------- |
+| `deps` | `list<ProtoInfo>` | true | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
+| `verbose` | `int` | false | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 
 ---
 
@@ -71,14 +66,9 @@ closure_proto_library(
 )
 ```
 
-### Mandatory Attributes
+### Attributes
 
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
-
-### Optional Attributes
-
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| Name | Type | Mandatory | Default | Description |
+| ---: | :--- | --------- | ------- | ----------- |
+| `deps` | `list<ProtoInfo>` | true | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
+| `verbose` | `int` | false | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |

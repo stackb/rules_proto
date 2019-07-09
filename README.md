@@ -15,7 +15,7 @@ Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 
 ## Rules
 
-| Status | Lang | Rule | Description
+| Status | Language | Rule | Description
 | ---    | ---: | :--- | :--- |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [android](/android) | [android_proto_compile](/android#android_proto_compile) | Generates android protobuf artifacts ([example](/example/android/android_proto_compile)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [android](/android) | [android_grpc_compile](/android#android_grpc_compile) | Generates android protobuf+gRPC artifacts ([example](/example/android/android_grpc_compile)) |

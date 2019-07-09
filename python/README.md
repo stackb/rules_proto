@@ -32,17 +32,12 @@ python_proto_compile(
 )
 ```
 
-### Mandatory Attributes
+### Attributes
 
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
-
-### Optional Attributes
-
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| Name | Type | Mandatory | Default | Description |
+| ---: | :--- | --------- | ------- | ----------- |
+| `deps` | `list<ProtoInfo>` | true | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
+| `verbose` | `int` | false | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 
 ---
 
@@ -73,17 +68,12 @@ python_grpc_compile(
 )
 ```
 
-### Mandatory Attributes
+### Attributes
 
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
-
-### Optional Attributes
-
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| Name | Type | Mandatory | Default | Description |
+| ---: | :--- | --------- | ------- | ----------- |
+| `deps` | `list<ProtoInfo>` | true | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
+| `verbose` | `int` | false | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 
 ---
 
@@ -110,17 +100,12 @@ python_proto_library(
 )
 ```
 
-### Mandatory Attributes
+### Attributes
 
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
-
-### Optional Attributes
-
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| Name | Type | Mandatory | Default | Description |
+| ---: | :--- | --------- | ------- | ----------- |
+| `deps` | `list<ProtoInfo>` | true | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
+| `verbose` | `int` | false | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 
 ---
 
@@ -169,15 +154,10 @@ python_grpc_library(
 )
 ```
 
-### Mandatory Attributes
+### Attributes
 
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
-
-### Optional Attributes
-
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
-| python_version   | `string` | `PY3`    | Specify the Python version to use for the bundled dependencies. Valid values are "PY3" (the default) and "PY2"          |
+| Name | Type | Mandatory | Default | Description |
+| ---: | :--- | --------- | ------- | ----------- |
+| `deps` | `list<ProtoInfo>` | true | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
+| `verbose` | `int` | false | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| `python_version` | `string` | false | `PY3`    | Specify the Python version to use for the bundled dependencies. Valid values are "PY3" (the default) and "PY2"          |

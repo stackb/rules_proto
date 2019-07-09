@@ -54,17 +54,12 @@ csharp_proto_compile(
 )
 ```
 
-### Mandatory Attributes
+### Attributes
 
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
-
-### Optional Attributes
-
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| Name | Type | Mandatory | Default | Description |
+| ---: | :--- | --------- | ------- | ----------- |
+| `deps` | `list<ProtoInfo>` | true | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
+| `verbose` | `int` | false | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 
 ---
 
@@ -95,17 +90,12 @@ csharp_grpc_compile(
 )
 ```
 
-### Mandatory Attributes
+### Attributes
 
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
-
-### Optional Attributes
-
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| Name | Type | Mandatory | Default | Description |
+| ---: | :--- | --------- | ------- | ----------- |
+| `deps` | `list<ProtoInfo>` | true | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
+| `verbose` | `int` | false | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 
 ---
 
@@ -172,17 +162,12 @@ csharp_proto_library(
 | --- | --- | --- | --- |
 | build | strategy | CoreCompile=standalone | dotnet SDK desperately wants to find the HOME directory |
 
-### Mandatory Attributes
+### Attributes
 
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
-
-### Optional Attributes
-
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| Name | Type | Mandatory | Default | Description |
+| ---: | :--- | --------- | ------- | ----------- |
+| `deps` | `list<ProtoInfo>` | true | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
+| `verbose` | `int` | false | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
 
 ---
 
@@ -253,14 +238,9 @@ csharp_grpc_library(
 | --- | --- | --- | --- |
 | build | strategy | CoreCompile=standalone | dotnet SDK desperately wants to find the HOME directory |
 
-### Mandatory Attributes
+### Attributes
 
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| deps   | `list<ProtoInfo>` | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
-
-### Optional Attributes
-
-| Name | Type | Default | Description |
-| ---: | :--- | ------- | ----------- |
-| verbose   | `int` | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
+| Name | Type | Mandatory | Default | Description |
+| ---: | :--- | --------- | ------- | ----------- |
+| `deps` | `list<ProtoInfo>` | true | `[]`    | List of labels that provide a `ProtoInfo` (such as `native.proto_library`)          |
+| `verbose` | `int` | false | `0`    | The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*          |
