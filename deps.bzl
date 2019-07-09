@@ -75,7 +75,7 @@ VERSIONS = {
         "sha256": "b04b08d31208be32aafdf5842d1b6073d527a67ff8d2cf4b17ee8f22a5273758",
     },
 
-    # csharp
+    # C Sharp
     "io_bazel_rules_dotnet": {
         "type": "github",
         "org": "bazelbuild",
@@ -164,8 +164,8 @@ VERSIONS = {
         "type": "github",
         "org": "grpc",
         "repo": "grpc-java",
-        "ref": "46ef51576f7128874feba8067e13fc7b7e131f6f", # v1.21.0 + plugin fix
-        "sha256": "c86c32a06a3db8d88839c682dc18e5acee130e29e4c009d64826fb580729fd91",
+        "ref": "331303b685def37f5a6aae107c8a008ce4d7294e", # v1.21.0 + plugin fix + netty fix
+        "sha256": "ced3a7e522f7a33877f30e39fb8dde2adc66ed0f0917b7de8586e6273d486330",
     },
     "javax_annotation_javax_annotation_api": {
         "type": "jvm_maven_import_external",
@@ -375,7 +375,7 @@ def io_bazel_rules_closure(**kwargs):
 
 
 #
-# csharp
+# C Sharp
 #
 def io_bazel_rules_dotnet(**kwargs):
     _generic_dependency("io_bazel_rules_dotnet", **kwargs)

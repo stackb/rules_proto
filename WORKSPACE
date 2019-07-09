@@ -66,7 +66,7 @@ grpc_deps()
 
 
 #
-# csharp
+# C Sharp
 #
 load("//csharp:deps.bzl", "csharp_deps")
 csharp_deps()
