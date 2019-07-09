@@ -22,12 +22,9 @@ extern crate serde_json;
 mod log_util;
 mod util;
 
-use std::io::Read;
 use std::sync::Arc;
 use std::time::Instant;
-use std::{io, thread};
 
-use futures::sync::oneshot;
 use futures::*;
 use grpcio::*;
 
@@ -157,19 +154,13 @@ fn main() {
     };
     let mut server = ServerBuilder::new(env)
         .register_service(service)
-        .bind("127.0.0.1", port)
+        .bind("0.0.0.0", port)
         .build()
         .unwrap();
     server.start();
     for &(ref host, port) in server.bind_addrs() {
         info!("listening on {}:{}", host, port);
     }
-    let (tx, rx) = oneshot::channel();
-    thread::spawn(move || {
-        info!("Press ENTER to exit...");
-        let _ = io::stdin().read(&mut [0]).unwrap();
-        tx.send(())
-    });
-    let _ = rx.wait();
+    loop { std::thread::park(); }
     let _ = server.shutdown().wait();
 }
