@@ -61,6 +61,7 @@ var androidGrpcLibraryRuleTemplate = mustTemplate(androidLibraryRuleTemplateStri
 GRPC_DEPS = [
     "@com_google_guava_guava_android//jar",
     "@com_google_protobuf//:protobuf_javalite",
+    "@com_google_protobuf//:protobuf_java_util",
     "@javax_annotation_javax_annotation_api//jar",
     "@io_grpc_grpc_java//core",
     "@io_grpc_grpc_java//protobuf-lite",

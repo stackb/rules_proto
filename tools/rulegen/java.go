@@ -44,6 +44,7 @@ var javaGrpcLibraryRuleTemplate = mustTemplate(javaLibraryRuleTemplateString + `
         name = kwargs.get("name"),
         srcs = [name_pb],
         deps = GRPC_DEPS,
+        runtime_deps = ["@io_grpc_grpc_java//netty"],
         exports = GRPC_DEPS,
         visibility = kwargs.get("visibility"),
     )
@@ -51,10 +52,11 @@ var javaGrpcLibraryRuleTemplate = mustTemplate(javaLibraryRuleTemplateString + `
 GRPC_DEPS = [
     "@com_google_guava_guava//jar",
     "@com_google_protobuf//:protobuf_java",
+    "@com_google_protobuf//:protobuf_java_util",
     "@javax_annotation_javax_annotation_api//jar",
     "@io_grpc_grpc_java//core",
     "@io_grpc_grpc_java//protobuf",
-    "@io_grpc_grpc_java//stub"
+    "@io_grpc_grpc_java//stub",
 ]`)
 
 func makeJava() *Language {

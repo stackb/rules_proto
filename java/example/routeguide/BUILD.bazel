@@ -9,36 +9,27 @@ java_binary(
     name = "client",
     srcs = [
         "io/grpc/examples/routeguide/RouteGuideClient.java",
+        "io/grpc/examples/routeguide/RouteGuideServer.java",
+        "io/grpc/examples/routeguide/RouteGuideUtil.java",
     ],
     main_class = "io.grpc.examples.routeguide.RouteGuideClient",
     resources = ["route_guide_db.json"],
     visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
-        ":serverlib",
-        "//java:grpc_netty",
-    ],
-)
-
-java_library(
-    name = "serverlib",
-    srcs = [
-        "io/grpc/examples/routeguide/RouteGuideServer.java",
-        "io/grpc/examples/routeguide/RouteGuideUtil.java",
-    ],
-    deps = [
-        ":routeguide",
-        "@com_google_protobuf//:protobuf_java_util",
     ],
 )
 
 java_binary(
     name = "server",
+    srcs = [
+        "io/grpc/examples/routeguide/RouteGuideServer.java",
+        "io/grpc/examples/routeguide/RouteGuideUtil.java",
+    ],
     main_class = "io.grpc.examples.routeguide.RouteGuideServer",
     resources = ["route_guide_db.json"],
     visibility = ["//example/routeguide:__pkg__"],
-    runtime_deps = [
-        ":serverlib",
-        "//java:grpc_netty",
+    deps = [
+        ":routeguide",
     ],
 )
