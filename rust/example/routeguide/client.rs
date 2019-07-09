@@ -162,7 +162,11 @@ fn route_chat(client: &RouteGuideClient) {
 fn main() {
     let _guard = log_util::init_log(None);
     let env = Arc::new(Environment::new(2));
-    let channel = ChannelBuilder::new(env).connect("127.0.0.1:50051");
+    let port_str = match std::env::var("SERVER_PORT") {
+        Ok(val) => val,
+        Err(_e) => "50051".to_owned(),
+    };
+    let channel = ChannelBuilder::new(env).connect(&("127.0.0.1:".to_owned() + &port_str));
     let client = RouteGuideClient::new(channel);
 
     info!("-------------- GetFeature --------------");

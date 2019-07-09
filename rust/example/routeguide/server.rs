@@ -151,9 +151,13 @@ fn main() {
         data: Arc::new(load_db()),
     };
     let service = routeguide::create_route_guide(instance);
+    let port = match std::env::var("SERVER_PORT") {
+        Ok(val) => val.parse::<u16>().unwrap(),
+        Err(_e) => 50051,
+    };
     let mut server = ServerBuilder::new(env)
         .register_service(service)
-        .bind("127.0.0.1", 50_051)
+        .bind("127.0.0.1", port)
         .build()
         .unwrap();
     server.start();
