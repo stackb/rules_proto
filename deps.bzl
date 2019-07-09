@@ -167,13 +167,6 @@ VERSIONS = {
         "ref": "46ef51576f7128874feba8067e13fc7b7e131f6f", # v1.21.0 + plugin fix
         "sha256": "c86c32a06a3db8d88839c682dc18e5acee130e29e4c009d64826fb580729fd91",
     },
-    "com_google_guava_guava": {
-        "type": "jvm_maven_import_external",
-        "artifact": "com.google.guava:guava:20.0",
-        "server_urls": ["http://central.maven.org/maven2"],
-        "artifact_sha256": "36a666e3b71ae7f0f0dca23654b67e086e6c93d192f60ba5dfd5519db6c288c8",
-        "licenses": ["reciprocal"], # CDDL License
-    },
     "javax_annotation_javax_annotation_api": {
         "type": "jvm_maven_import_external",
         "artifact": "javax.annotation:javax.annotation-api:1.2",
@@ -437,9 +430,6 @@ def rules_jvm_external(**kwargs):
 
 def io_grpc_grpc_java(**kwargs):
     _generic_dependency("io_grpc_grpc_java", **kwargs)
-
-def com_google_guava_guava(**kwargs):
-    _generic_dependency("com_google_guava_guava", **kwargs)
 
 def javax_annotation_javax_annotation_api(**kwargs):
     # Use //stub:javax_annotation for neverlink=1 support.

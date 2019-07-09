@@ -3,7 +3,6 @@ load(
     "//:deps.bzl",
     "com_google_protobuf",
     "io_grpc_grpc_java",
-    "com_google_guava_guava",
     "javax_annotation_javax_annotation_api",
     "com_google_errorprone_error_prone_annotations",
 )
@@ -16,7 +15,6 @@ def java_deps(**kwargs):
     protobuf_deps(**kwargs)
     io_grpc_grpc_java(**kwargs)
     javax_annotation_javax_annotation_api(**kwargs)
-    com_google_guava_guava(**kwargs)
     com_google_errorprone_error_prone_annotations(**kwargs)
 
 def java_proto_compile(**kwargs): # Kept for backwards compatibility
