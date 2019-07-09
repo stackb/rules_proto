@@ -1,5 +1,13 @@
 package main
 
+var javaProtoWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Lang.Name }}_deps")
+
+{{ .Lang.Name }}_deps()
+
+load("@io_grpc_grpc_java//:repositories.bzl", "com_google_guava")
+
+com_google_guava()`)
+
 var javaGrpcWorkspaceTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lang.Dir }}:deps.bzl", "{{ .Lang.Name }}_deps")
 
 {{ .Lang.Name }}_deps()
@@ -90,7 +98,7 @@ func makeJava() *Language {
 				Name:             "java_proto_library",
 				Kind:             "proto",
 				Implementation:   javaProtoLibraryRuleTemplate,
-				WorkspaceExample: protoWorkspaceTemplate,
+				WorkspaceExample: javaProtoWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates a jar with compiled protobuf *.class files",
 				Attrs:            aspectProtoCompileAttrs,

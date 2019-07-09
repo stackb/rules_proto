@@ -93,6 +93,10 @@ Generates a jar with compiled protobuf *.class files
 load("@build_stack_rules_proto//java:deps.bzl", "java_deps")
 
 java_deps()
+
+load("@io_grpc_grpc_java//:repositories.bzl", "com_google_guava")
+
+com_google_guava()
 ```
 
 ### `BUILD.bazel`

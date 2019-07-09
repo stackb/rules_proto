@@ -39,8 +39,5 @@ routeguide_test_matrix(
         # launcher script being run outside the original package. Make them
         # manual only
         "ruby": ["manual"],
-
-        #"rust": ["local"],
-        #"rust": ["exclusive"],
     },
 )
