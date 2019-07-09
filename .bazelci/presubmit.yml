@@ -6,7 +6,6 @@ tasks:
     environment:
       CC: clang
     build_targets:
-    - "//android/..."
     - "//closure/..."
     - "//cpp/..."
     - "//d/..."
@@ -31,7 +30,6 @@ tasks:
     environment:
       CC: clang
     build_targets:
-    - "//android/..."
     - "//closure/..."
     - "//cpp/..."
     - "//d/..."
@@ -56,7 +54,6 @@ tasks:
     environment:
       CC: clang
     build_targets:
-    - "//android/..."
     - "//closure/..."
     - "//cpp/..."
     - "//d/..."
@@ -78,7 +75,6 @@ tasks:
     environment:
       CC: clang
     build_targets:
-    - "//android/..."
     - "//closure/..."
     - "//cpp/..."
     - "//d/..."

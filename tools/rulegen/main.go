@@ -358,7 +358,7 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 		out.w("    build_targets:")
 		for _, lang := range languages {
 			// Skip experimental or excluded
-			if lang.Name == "nodejs" || lang.Name == "swift" || lang.Name == "csharp" || stringInSlice(platform, lang.BazelCIExcludePlatforms) {
+			if lang.Name == "android" || lang.Name == "nodejs" || lang.Name == "swift" || lang.Name == "csharp" || stringInSlice(platform, lang.BazelCIExcludePlatforms) {
 				continue
 			}
 			out.w(`    - "//%s/..."`, lang.Dir)
