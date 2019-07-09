@@ -57,16 +57,12 @@ function runGetFeature(callback) {
       return;
     }
 
-    // console.log("Feature", feature.toObject());
-
     if (feature.getName() && feature.getName() != "undefined") {
       console.log('Found feature called "' + feature.getName() + '" at ' +
           feature.getLocation().getLatitude()/COORD_FACTOR + ', ' +
           feature.getLocation().getLongitude()/COORD_FACTOR);
     } else {
-      console.log('Found no feature at ' +
-          feature.getLocation().getLatitude()/COORD_FACTOR + ', ' +
-          feature.getLocation().getLongitude()/COORD_FACTOR);
+      console.log('Found no feature');
     }
     next();
   }
