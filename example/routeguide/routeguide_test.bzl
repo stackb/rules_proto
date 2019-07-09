@@ -24,13 +24,22 @@ def _routeguide_test_impl(ctx):
         client_entrypoint = "java -jar %s" % client.short_path
 
     ctx.actions.write(ctx.outputs.executable, """
-set -x
-find . | grep manifest_prep
+set -x # Print commands
+set -e # Fail on error
+
 export DATABASE_FILE={database_file}
 export SERVER_PORT={server_port}
+export RUST_BACKTRACE=1 # Print rust stack traces
+
+# Start server and wait
 {server} &
 sleep 2
+
+# Run client
 {client}
+
+# Print completion for log
+echo '---- DONE ----'
     """.format(
         client = client_entrypoint,
         server = server_entrypoint,
