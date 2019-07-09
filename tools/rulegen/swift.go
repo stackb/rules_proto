@@ -42,6 +42,7 @@ func makeSwift() *Language {
 			Name:     "strategy=SwiftCompile",
 			Value:    "standalone",
 		}),
+		SkipTestPlatforms: []string{"all"},
 		Rules: []*Rule{
 			&Rule{
 				Name:             "swift_proto_compile",
@@ -52,7 +53,6 @@ func makeSwift() *Language {
 				BuildExample:     protoCompileExampleTemplate,
 				Doc:              "Generates swift protobuf artifacts",
 				Attrs:            aspectProtoCompileAttrs,
-				BazelCIExclusionReason: "experimental",
 				Experimental:     true,
 			},
 			&Rule{
@@ -64,7 +64,6 @@ func makeSwift() *Language {
 				BuildExample:     grpcCompileExampleTemplate,
 				Doc:              "Generates swift protobuf+gRPC artifacts",
 				Attrs:            aspectProtoCompileAttrs,
-				BazelCIExclusionReason: "experimental",
 				Experimental:     true,
 			},
 			&Rule{
@@ -75,7 +74,6 @@ func makeSwift() *Language {
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates swift protobuf library",
 				Attrs:            aspectProtoCompileAttrs,
-				BazelCIExclusionReason: "experimental",
 				Experimental:     true,
 			},
 			&Rule{
@@ -86,7 +84,6 @@ func makeSwift() *Language {
 				BuildExample:     swiftGrpcLibraryExampleTemplate,
 				Doc:              "Generates swift protobuf+gRPC library",
 				Attrs:            aspectProtoCompileAttrs,
-				BazelCIExclusionReason: "experimental",
 				Experimental:     true,
 			},
 		},

@@ -35,8 +35,9 @@ type Language struct {
 	// Flag indicating if the merge_directories flag should be set to false for the generated rule
 	SkipDirectoriesMerge bool
 
-	// Platforms for which to skip this lang
-	BazelCIExcludePlatforms []string
+	// Platforms for which to skip testing this lang
+	// The special value 'all' will skip app platforms
+	SkipTestPlatforms []string
 }
 
 
@@ -77,12 +78,9 @@ type Rule struct {
 	// Additional CI-specific env vars in the form "K=V"
 	PresubmitEnvVars map[string]string
 
-	// If not the empty string, one-word reason why excluded from bazelci
-	// configuration
-	BazelCIExclusionReason string
-
-	// Platforms for which to skip this rule
-	BazelCIExcludePlatforms []string
+	// Platforms for which to skip testing this rule, overrides language level
+	// The special value 'all' will skip app platforms
+	SkipTestPlatforms []string
 }
 
 

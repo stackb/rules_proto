@@ -15,6 +15,15 @@ import (
 )
 
 
+var defaultPlatforms = []string{"linux", "windows", "macos"}
+var ciPlatforms = []string{"ubuntu1604", "ubuntu1804", "windows", "macos"}
+var ciPlatformsMap = map[string][]string{
+	"linux": []string{"ubuntu1604", "ubuntu1804"},
+	"windows": []string{"windows"},
+	"macos": []string{"macos"},
+}
+
+
 func main() {
 	app := cli.NewApp()
 	app.Name = "rulegen"
@@ -320,9 +329,11 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.w("| ---    | ---: | :--- | :--- |")
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {
-			ciLink := fmt.Sprintf("[![Build Status](%s)](https://buildkite.com/bazel/rules-proto)", badgeImageURL)
-			if rule.BazelCIExclusionReason != "" {
-				ciLink = rule.BazelCIExclusionReason
+			var ciLink string
+			if doTestOnAnyPlaform(lang, rule) {
+				ciLink = fmt.Sprintf("[![Build Status](%s)](https://buildkite.com/bazel/rules-proto)", badgeImageURL)
+			} else {
+				ciLink = "-"
 			}
 			dirLink := fmt.Sprintf("[%s](/%s)", lang.Name, lang.Dir)
 			ruleLink := fmt.Sprintf("[%s](/%s#%s)", rule.Name, lang.Dir, rule.Name)
@@ -340,7 +351,6 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 
 func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Language, envVars []string) {
 	out := &LineWriter{}
-	platforms := []string{"ubuntu1604", "ubuntu1804", "windows", "macos"}
 
 	// Write header
 	out.w("---")
@@ -349,19 +359,18 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 	//
 	// Write tasks for main code
 	//
-	for _, platform := range platforms {
-		out.w("  main_%s:", platform)
+	for _, ciPlatform := range ciPlatforms {
+		out.w("  main_%s:", ciPlatform)
 		out.w("    name: build & test all")
-		out.w("    platform: %s", platform)
+		out.w("    platform: %s", ciPlatform)
 		out.w("    environment:")
 		out.w("      CC: clang")
 		out.w("    build_targets:")
 		for _, lang := range languages {
 			// Skip experimental or excluded
-			if lang.Name == "android" || lang.Name == "nodejs" || lang.Name == "swift" || lang.Name == "csharp" || stringInSlice(platform, lang.BazelCIExcludePlatforms) {
-				continue
+			if doTestOnPlatform(lang, nil, ciPlatform) {
+				out.w(`    - "//%s/..."`, lang.Dir)
 			}
-			out.w(`    - "//%s/..."`, lang.Dir)
 		}
 		out.w("    test_flags:")
 		out.w(`    - "--test_output=errors"`)
@@ -374,20 +383,16 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 	//
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {
-			if rule.BazelCIExclusionReason != "" {
-				continue
-			}
-
 			exampleDir := path.Join(dir, "example", lang.Dir, rule.Name)
 
-			for _, platform := range platforms {
-				if stringInSlice(platform, rule.BazelCIExcludePlatforms) || stringInSlice(platform, lang.BazelCIExcludePlatforms) {
+			for _, ciPlatform := range ciPlatforms {
+				if !doTestOnPlatform(lang, rule, ciPlatform) {
 					continue
 				}
 
-				out.w("  %s_%s_%s:", lang.Name, rule.Name, platform)
+				out.w("  %s_%s_%s:", lang.Name, rule.Name, ciPlatform)
 				out.w("    name: '%s: %s'", lang.Name, rule.Name)
-				out.w("    platform: %s", platform)
+				out.w("    platform: %s", ciPlatform)
 				out.w("    build_targets:")
 				out.w(`      - "//..."`)
 				out.w("    working_directory: %s", exampleDir)
@@ -407,13 +412,13 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 
 	// Add test workspaces
 	for _, testWorkspace := range findTestWorkspaceNames(dir) {
-		for _, platform := range platforms {
-			if platform == "windows" && (testWorkspace == "python2_grpc" || testWorkspace == "python3_grpc" || testWorkspace == "python_deps") {
+		for _, ciPlatform := range ciPlatforms {
+			if ciPlatform == "windows" && (testWorkspace == "python2_grpc" || testWorkspace == "python3_grpc" || testWorkspace == "python_deps") {
 				continue // Don't run python grpc test workspaces on windows
 			}
-			out.w("  test_workspace_%s_%s:", testWorkspace, platform)
+			out.w("  test_workspace_%s_%s:", testWorkspace, ciPlatform)
 			out.w("    name: 'test workspace: %s'", testWorkspace)
-			out.w("    platform: %s", platform)
+			out.w("    platform: %s", ciPlatform)
 			out.w("    test_flags:")
 			out.w(`    - "--test_output=errors"`)
 			out.w("    test_targets:")

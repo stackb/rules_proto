@@ -100,6 +100,7 @@ func makeCsharp() *Language {
 		Dir:   "csharp",
 		Name:  "csharp",
 		Flags: commonLangFlags,
+		SkipTestPlatforms: []string{"all"},
 		Notes: mustTemplate(`**NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
 
 ~~~python
@@ -131,6 +132,7 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				BuildExample:     protoCompileExampleTemplate,
 				Doc:              "Generates csharp protobuf artifacts",
 				Attrs:            aspectProtoCompileAttrs,
+				SkipTestPlatforms: []string{"none"},
 			},
 			&Rule{
 				Name:             "csharp_grpc_compile",
@@ -141,6 +143,7 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				BuildExample:     grpcCompileExampleTemplate,
 				Doc:              "Generates csharp protobuf+gRPC artifacts",
 				Attrs:            aspectProtoCompileAttrs,
+				SkipTestPlatforms: []string{"none"},
 			},
 			&Rule{
 				Name:             "csharp_proto_library",
@@ -151,7 +154,6 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				Doc:              "Generates csharp protobuf library",
 				Attrs:            aspectProtoCompileAttrs,
 				Flags:            csharpLibraryFlags,
-				BazelCIExclusionReason: "experimental",
 				Experimental:     true, // Due to failing dependencies
 			},
 			&Rule{
@@ -163,7 +165,6 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				Doc:              "Generates csharp protobuf+gRPC library",
 				Attrs:            aspectProtoCompileAttrs,
 				Flags:            csharpLibraryFlags,
-				BazelCIExclusionReason: "experimental",
 				Experimental:     true, // Due to failing dependencies
 			},
 		},

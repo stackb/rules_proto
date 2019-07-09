@@ -95,7 +95,7 @@ func makeScala() *Language {
 		Name:  "scala",
 		Flags: commonLangFlags,
 		SkipDirectoriesMerge: true,
-		BazelCIExcludePlatforms: []string{"windows"},
+		SkipTestPlatforms: []string{"windows"},
 		Rules: []*Rule{
 			&Rule{
 				Name:             "scala_proto_compile",

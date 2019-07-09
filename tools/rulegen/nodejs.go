@@ -80,6 +80,7 @@ func makeNode() *Language {
 		Dir:   "nodejs",
 		Name:  "nodejs",
 		Flags: commonLangFlags,
+		SkipTestPlatforms: []string{"all"},
 		Rules: []*Rule{
 			&Rule{
 				Name:             "nodejs_proto_compile",
@@ -90,6 +91,7 @@ func makeNode() *Language {
 				BuildExample:     protoCompileExampleTemplate,
 				Doc:              "Generates node *.js protobuf artifacts",
 				Attrs:            aspectProtoCompileAttrs,
+				SkipTestPlatforms: []string{"none"},
 			},
 			&Rule{
 				Name:             "nodejs_grpc_compile",
@@ -100,6 +102,7 @@ func makeNode() *Language {
 				BuildExample:     grpcCompileExampleTemplate,
 				Doc:              "Generates node *.js protobuf+gRPC artifacts",
 				Attrs:            aspectProtoCompileAttrs,
+				SkipTestPlatforms: []string{"none"},
 			},
 // 			&Rule{
 // 				Name:             "nodejs_proto_library",
@@ -109,6 +112,7 @@ func makeNode() *Language {
 // 				BuildExample:     protoLibraryExampleTemplate,
 // 				Doc:              "Generates node *.js protobuf library",
 // 				Attrs:            aspectProtoCompileAttrs,
+// 				SkipTestPlatforms: []string{},
 // 			},
 // 			&Rule{
 // 				Name:             "nodejs_grpc_library",
@@ -118,6 +122,7 @@ func makeNode() *Language {
 // 				BuildExample:     grpcLibraryExampleTemplate,
 // 				Doc:              "Generates node *.js protobuf+gRPC library",
 // 				Attrs:            aspectProtoCompileAttrs,
+// 				SkipTestPlatforms: []string{},
 // 			},
 		},
 	}

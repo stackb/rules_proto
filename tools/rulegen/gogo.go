@@ -133,7 +133,7 @@ func addGogoRules(language *Language, base string) {
 			BuildExample:     goGrpcLibraryExampleTemplate,
 			Doc:              fmt.Sprintf("Generates %s protobuf+gRPC library", base),
 			Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
-			BazelCIExcludePlatforms: []string{"windows"}, // gRPC go lib rules fail on windows due to bad path
+			SkipTestPlatforms: []string{"windows"}, // gRPC go lib rules fail on windows due to bad path
 		},
 	)
 }

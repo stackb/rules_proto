@@ -105,3 +105,50 @@ func stringInSlice(search string, slice []string) bool {
 	}
 	return false
 }
+
+
+func doTestOnPlatform(lang *Language, rule *Rule, ciPlatform string) bool {
+	// Load platforms to skip
+	var skipTestPlatforms []string
+	if rule != nil && len(rule.SkipTestPlatforms) > 0 {
+		skipTestPlatforms = rule.SkipTestPlatforms
+	} else {
+		skipTestPlatforms = lang.SkipTestPlatforms
+	}
+
+	// Check for special none token
+	if stringInSlice("none", skipTestPlatforms) {
+		return true
+	}
+
+	// Check for special all token
+	if stringInSlice("all", skipTestPlatforms) {
+		return false
+	}
+
+	// Convert to CI platforms
+	for platform, checkCiPlatforms := range ciPlatformsMap {
+		if stringInSlice(platform, skipTestPlatforms) {
+			for _, checkCiPlatform := range checkCiPlatforms {
+				skipTestPlatforms = append(skipTestPlatforms, checkCiPlatform)
+			}
+		}
+	}
+
+	// Check for platform
+	if stringInSlice(ciPlatform, skipTestPlatforms) {
+		return false
+	}
+
+	return true
+}
+
+
+func doTestOnAnyPlaform(lang *Language, rule *Rule) bool {
+	for _, ciPlatform := range ciPlatforms {
+		if doTestOnPlatform(lang, rule, ciPlatform) {
+			return true
+		}
+	}
+	return false
+}

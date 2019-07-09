@@ -45,7 +45,7 @@ func makeObjc() *Language {
 		Dir:   "objc",
 		Name:  "objc",
 		Flags: commonLangFlags,
-		BazelCIExcludePlatforms: []string{"ubuntu1604", "ubuntu1804", "windows"},
+		SkipTestPlatforms: []string{"linux", "windows"},
 		Rules: []*Rule{
 			&Rule{
 				Name:             "objc_proto_compile",

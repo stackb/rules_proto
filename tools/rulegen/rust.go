@@ -77,7 +77,7 @@ func makeRust() *Language {
 		Dir:  "rust",
 		Name: "rust",
 		Flags: commonLangFlags,
-		BazelCIExcludePlatforms: []string{"windows"}, // CI has no rust toolchain for windows
+		SkipTestPlatforms: []string{"windows"}, // CI has no rust toolchain for windows
 		Rules: []*Rule{
 			&Rule{
 				Name:             "rust_proto_compile",

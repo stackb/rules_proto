@@ -62,7 +62,7 @@ func makeD() *Language {
 				BuildExample:     dProtoCompileExampleTemplate,
 				Doc:              "Generates d protobuf artifacts",
 				Attrs:            aspectProtoCompileAttrs,
-				BazelCIExcludePlatforms: []string{"windows", "macos"},
+				SkipTestPlatforms: []string{"windows", "macos"},
 			},
 // 			&Rule{
 // 				Name:             "d_grpc_compile",
@@ -73,7 +73,7 @@ func makeD() *Language {
 // 				BuildExample:     grpcCompileExampleTemplate,
 // 				Doc:              "Generates d protobuf+gRPC artifacts",
 // 				Attrs:            aspectProtoCompileAttrs,
-// 				BazelCIExcludePlatforms: []string{"windows", "macos"},
+// 				SkipTestPlatforms: []string{"windows", "macos"},
 // 			},
 			&Rule{
 				Name:             "d_proto_library",
@@ -83,7 +83,7 @@ func makeD() *Language {
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates d protobuf library",
 				Attrs:            aspectProtoCompileAttrs,
-				BazelCIExcludePlatforms: []string{"windows", "macos"},
+				SkipTestPlatforms: []string{"windows", "macos"},
 			},
 // 			&Rule{
 // 				Name:             "d_grpc_library",
@@ -93,7 +93,7 @@ func makeD() *Language {
 // 				BuildExample:     grpcLibraryExampleTemplate,
 // 				Doc:              "Generates d protobuf+gRPC library",
 // 				Attrs:            aspectProtoCompileAttrs,
-// 				BazelCIExcludePlatforms: []string{"windows", "macos"},
+// 				SkipTestPlatforms: []string{"windows", "macos"},
 // 			},
 		},
 	}

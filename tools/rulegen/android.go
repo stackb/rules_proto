@@ -74,6 +74,7 @@ func makeAndroid() *Language {
 		Name: "android",
 		Flags: commonLangFlags,
 		SkipDirectoriesMerge: true,
+		SkipTestPlatforms: []string{"all"},
 		Rules: []*Rule{
 			&Rule{
 				Name:             "android_proto_compile",
@@ -84,6 +85,7 @@ func makeAndroid() *Language {
 				BuildExample:     protoCompileExampleTemplate,
 				Doc:              "Generates android protobuf artifacts",
 				Attrs:            aspectProtoCompileAttrs,
+				SkipTestPlatforms: []string{"none"},
 			},
 			&Rule{
 				Name:             "android_grpc_compile",
@@ -94,6 +96,7 @@ func makeAndroid() *Language {
 				BuildExample:     grpcCompileExampleTemplate,
 				Doc:              "Generates android protobuf+gRPC artifacts",
 				Attrs:            aspectProtoCompileAttrs,
+				SkipTestPlatforms: []string{"none"},
 			},
 			&Rule{
 				Name:             "android_proto_library",
@@ -103,6 +106,7 @@ func makeAndroid() *Language {
 				BuildExample:     protoLibraryExampleTemplate,
 				Doc:              "Generates android protobuf library",
 				Attrs:            aspectProtoCompileAttrs,
+				SkipTestPlatforms: []string{"none"},
 			},
 			&Rule{
 				Name:             "android_grpc_library",
@@ -112,6 +116,7 @@ func makeAndroid() *Language {
 				BuildExample:     grpcLibraryExampleTemplate,
 				Doc:              "Generates android protobuf+gRPC library",
 				Attrs:            aspectProtoCompileAttrs,
+				SkipTestPlatforms: []string{"none"},
 			},
 		},
 	}
