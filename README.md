@@ -8,6 +8,25 @@ Bazel rules for building Protocol Buffers +/- gRPC :rocket:
 - [Overview](#overview)
 - [Installation](#installation)
 - [Rules](#rules)
+    - [Android](/android/README.md)
+    - [Closure](/closure/README.md)
+    - [C++](/cpp/README.md)
+    - [C Sharp](/csharp/README.md)
+    - [D](/d/README.md)
+    - [Go](/go/README.md)
+    - [GoGo](/gogo/README.md)
+    - [gRPC Gateway](/github.com/grpc-ecosystem/grpc-gateway/README.md)
+    - [gRPC Web](/github.com/grpc/grpc-web/README.md)
+    - [gRPC.js](/github.com/stackb/grpc.js/README.md)
+    - [Java](/java/README.md)
+    - [NodeJs](/nodejs/README.md)
+    - [Objective-C](/objc/README.md)
+    - [PHP](/php/README.md)
+    - [Python](/python/README.md)
+    - [Ruby](/ruby/README.md)
+    - [Rust](/rust/README.md)
+    - [Scala](/scala/README.md)
+    - [Swift](/swift/README.md)
 - [Example Usage](#example-usage)
 - [Developers](#developers)
     - [Code Layout](#code-layout)
@@ -115,8 +134,8 @@ additional workspace dependencies that may be required.
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [java](/java) | [java_grpc_compile](/java#java_grpc_compile) | Generates a srcjar with protobuf+gRPC *.java files ([example](/example/java/java_grpc_compile)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [java](/java) | [java_proto_library](/java#java_proto_library) | Generates a jar with compiled protobuf *.class files ([example](/example/java/java_proto_library)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [java](/java) | [java_grpc_library](/java#java_grpc_library) | Generates a jar with compiled protobuf+gRPC *.class files ([example](/example/java/java_grpc_library)) |
-| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [nodejs](/nodejs) | [nodejs_proto_compile](/nodejs#nodejs_proto_compile) | Generates node *.js protobuf artifacts ([example](/example/nodejs/nodejs_proto_compile)) |
-| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [nodejs](/nodejs) | [nodejs_grpc_compile](/nodejs#nodejs_grpc_compile) | Generates node *.js protobuf+gRPC artifacts ([example](/example/nodejs/nodejs_grpc_compile)) |
+| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [nodejs](/nodejs) | [nodejs_proto_compile](/nodejs#nodejs_proto_compile) | Generates NodeJS *.js protobuf artifacts ([example](/example/nodejs/nodejs_proto_compile)) |
+| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [nodejs](/nodejs) | [nodejs_grpc_compile](/nodejs#nodejs_grpc_compile) | Generates NodeJS *.js protobuf+gRPC artifacts ([example](/example/nodejs/nodejs_grpc_compile)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [objc](/objc) | [objc_proto_compile](/objc#objc_proto_compile) | Generates objc protobuf artifacts ([example](/example/objc/objc_proto_compile)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [objc](/objc) | [objc_grpc_compile](/objc#objc_grpc_compile) | Generates objc protobuf+gRPC artifacts ([example](/example/objc/objc_grpc_compile)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [objc](/objc) | [objc_proto_library](/objc#objc_proto_library) | Generates objc protobuf library ([example](/example/objc/objc_proto_library)) |

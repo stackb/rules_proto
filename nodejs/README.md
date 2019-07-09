@@ -2,14 +2,14 @@
 
 | Rule | Description |
 | ---: | :--- |
-| [nodejs_proto_compile](#nodejs_proto_compile) | Generates node *.js protobuf artifacts |
-| [nodejs_grpc_compile](#nodejs_grpc_compile) | Generates node *.js protobuf+gRPC artifacts |
+| [nodejs_proto_compile](#nodejs_proto_compile) | Generates NodeJS *.js protobuf artifacts |
+| [nodejs_grpc_compile](#nodejs_grpc_compile) | Generates NodeJS *.js protobuf+gRPC artifacts |
 
 ---
 
 ## `nodejs_proto_compile`
 
-Generates node *.js protobuf artifacts
+Generates NodeJS *.js protobuf artifacts
 
 ### `WORKSPACE`
 
@@ -41,7 +41,7 @@ nodejs_proto_compile(
 
 ## `nodejs_grpc_compile`
 
-Generates node *.js protobuf+gRPC artifacts
+Generates NodeJS *.js protobuf+gRPC artifacts
 
 ### `WORKSPACE`
 
