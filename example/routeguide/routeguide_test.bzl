@@ -94,16 +94,10 @@ routeguide_test = rule(
 def get_parent_dirname(label):
     if label.startswith("//"):
         label = label[2:]
-    segments = label.split("/", 2)
-    return segments[0]
+    return label.partition("/")[0]
 
-def routeguide_test_matrix(
-        clients = [],
-        servers = [],
-        database = "//example/proto:routeguide_features",
-        tagmap = {}):
+def routeguide_test_matrix(clients = [], servers = [], database = "//example/proto:routeguide_features", tagmap = {}):
     port = 50051
-
     for server in servers:
         sname = get_parent_dirname(server)
         for client in clients:
@@ -112,11 +106,11 @@ def routeguide_test_matrix(
 
             tags = []
             if tagmap.get(cname):
-                tags.append(tagmap.get(cname))
+                tags.extend(tagmap.get(cname))
             if tagmap.get(sname):
-                tags.append(tagmap.get(sname))
+                tags.extend(tagmap.get(sname))
             if tagmap.get(name):
-                tags.append(tagmap.get(name))
+                tags.extend(tagmap.get(name))
 
             routeguide_test(
                 name = name,
