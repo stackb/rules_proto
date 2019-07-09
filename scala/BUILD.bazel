@@ -1,4 +1,5 @@
 load("//:plugin.bzl", "proto_plugin")
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_binary", "scala_library", "scala_test")
 
 proto_plugin(
     name = "scala",
@@ -21,8 +22,6 @@ proto_plugin(
     tool = ":compiler_plugin",
     visibility = ["//visibility:public"],
 )
-
-load("@io_bazel_rules_scala//scala:scala.bzl", "scala_binary", "scala_library", "scala_test")
 
 scala_binary(
     name = "compiler_plugin",

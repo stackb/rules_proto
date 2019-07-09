@@ -23,7 +23,7 @@ load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_reposito
 
 scala_proto_repositories()`)
 
-var scalaLibraryRuleTemplateString = `load("@build_stack_rules_proto//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
+var scalaLibraryRuleTemplateString = `load("//{{ .Lang.Dir }}:{{ .Lang.Name }}_{{ .Rule.Kind }}_compile.bzl", "{{ .Lang.Name }}_{{ .Rule.Kind }}_compile")
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library")
 
 def {{ .Rule.Name }}(**kwargs):
@@ -93,7 +93,6 @@ func makeScala() *Language {
 	return &Language{
 		Dir:   "scala",
 		Name:  "scala",
-		Notes: mustTemplate("Rules for `scala_grpc_{compile|library}` don't produce code that compiles!  Use `@//io_bazel_rules_scala//scala_proto:scala_proto.bzl` instead"),
 		Flags: commonLangFlags,
 		SkipDirectoriesMerge: true,
 		BazelCIExcludePlatforms: []string{"windows"},

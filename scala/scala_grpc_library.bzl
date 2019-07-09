@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//scala:scala_grpc_compile.bzl", "scala_grpc_compile")
+load("//scala:scala_grpc_compile.bzl", "scala_grpc_compile")
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library")
 
 def scala_grpc_library(**kwargs):
