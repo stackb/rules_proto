@@ -82,6 +82,7 @@ public class RouteGuideClient {
       if (testHelper != null) {
         testHelper.onRpcError(e);
       }
+      System.exit(1);
       return;
     }
     if (RouteGuideUtil.exists(feature)) {
@@ -123,6 +124,7 @@ public class RouteGuideClient {
       if (testHelper != null) {
         testHelper.onRpcError(e);
       }
+      System.exit(1);
     }
   }
 
@@ -151,6 +153,7 @@ public class RouteGuideClient {
         if (testHelper != null) {
           testHelper.onRpcError(t);
         }
+        System.exit(1);
         finishLatch.countDown();
       }
 
@@ -216,6 +219,7 @@ public class RouteGuideClient {
             if (testHelper != null) {
               testHelper.onRpcError(t);
             }
+            System.exit(1);
             finishLatch.countDown();
           }
 

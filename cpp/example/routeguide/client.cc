@@ -108,6 +108,7 @@ class RouteGuideClient {
       std::cout << "ListFeatures rpc succeeded." << std::endl;
     } else {
       std::cout << "ListFeatures rpc failed." << std::endl;
+      std::exit(EXIT_FAILURE);
     }
   }
 
@@ -148,6 +149,7 @@ class RouteGuideClient {
                 << std::endl;
     } else {
       std::cout << "RecordRoute rpc failed." << std::endl;
+      std::exit(EXIT_FAILURE);
     }
   }
 
@@ -182,6 +184,7 @@ class RouteGuideClient {
     Status status = stream->Finish();
     if (!status.ok()) {
       std::cout << "RouteChat rpc failed." << std::endl;
+      std::exit(EXIT_FAILURE);
     }
   }
 
@@ -192,6 +195,7 @@ class RouteGuideClient {
     Status status = stub_->GetFeature(&context, point, feature);
     if (!status.ok()) {
       std::cout << "GetFeature rpc failed." << std::endl;
+      std::exit(EXIT_FAILURE);
       return false;
     }
     if (!feature->has_location()) {

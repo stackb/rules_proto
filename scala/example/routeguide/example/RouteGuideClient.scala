@@ -51,6 +51,7 @@ class RouteGuideClient(host: String, port: Int) {
     } catch {
       case e: StatusRuntimeException =>
         logger.warning(s"RPC failed:${e.getStatus}")
+        sys.exit(1)
     }
   }
 
@@ -74,6 +75,7 @@ class RouteGuideClient(host: String, port: Int) {
     } catch {
       case e: StatusRuntimeException =>
         logger.warning(s"RPC failed: ${e.getStatus}")
+        sys.exit(1)
     }
   }
 
@@ -94,6 +96,7 @@ class RouteGuideClient(host: String, port: Int) {
       override def onError(t: Throwable): Unit = {
         logger.warning(s"RecordRoute Failed: ${Status.fromThrowable(t)}")
         finishLatch.countDown()
+        sys.exit(1)
       }
 
       override def onCompleted(): Unit = {
@@ -140,6 +143,7 @@ class RouteGuideClient(host: String, port: Int) {
       override def onError(t: Throwable): Unit = {
         logger.warning(s"RouteChat Failed: ${Status.fromThrowable(t)}")
         finishLatch.countDown()
+        sys.exit(1)
       }
 
       override def onCompleted(): Unit = {

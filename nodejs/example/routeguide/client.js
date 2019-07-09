@@ -32,7 +32,7 @@ let port = '50051';
 if (process.env.SERVER_PORT) {
   port = process.env.SERVER_PORT;
 }
-const addr = 'localhost:'+port;
+const addr = 'localhost:' + port;
 
 const client = new services.RouteGuideClient(
   addr,
@@ -231,7 +231,10 @@ function main() {
       runListFeatures,
       runRecordRoute,
       runRouteChat
-    ]);
+    ]).catch((e) => {
+      console.log(e)
+      process.exit(1);
+    });
   });
 }
 
