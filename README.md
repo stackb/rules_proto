@@ -2,6 +2,8 @@
 
 Bazel rules for building Protocol Buffers +/- gRPC :rocket:
 
+[![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto)
+
 
 ## Contents:
 
