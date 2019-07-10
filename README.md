@@ -16,7 +16,7 @@ Bazel rules for building Protocol Buffers +/- gRPC :rocket:
     - [C#](/csharp/README.md)
     - [D](/d/README.md)
     - [Go](/go/README.md)
-    - [Go (gogoprotobuf)](/gogo/README.md)
+    - [Go (gogoprotobuf)](/github.com/gogo/protobuf/README.md)
     - [grpc-gateway](/github.com/grpc-ecosystem/grpc-gateway/README.md)
     - [gRPC-Web](/github.com/grpc/grpc-web/README.md)
     - [grpc.js](/github.com/stackb/grpc.js/README.md)
@@ -98,9 +98,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_stack_rules_proto",
-    urls = ["https://github.com/stackb/rules_proto/archive/5fad9ab4d1207ed8b58a870338e81f2ba68600ab.tar.gz"],
-    sha256 = "ebceb7ddeed05815389ae6905e0921b37da4a6dd0a5a48441a6d33f401be890b",
-    strip_prefix = "rules_proto-5fad9ab4d1207ed8b58a870338e81f2ba68600ab",
+    urls = ["https://github.com/stackb/rules_proto/archive/9b3fc0bbf2432432ec2c24a2c87c8ffdf52290a2.tar.gz"],
+    sha256 = "7a5061ba44a58f09b85c07e9dcdfb9471c256fa33402d93b63f173fa2bc0aa35",
+    strip_prefix = "rules_proto-9b3fc0bbf2432432ec2c24a2c87c8ffdf52290a2",
 )
 ```
 
