@@ -16,7 +16,6 @@ extern crate log;
 
 extern crate futures;
 extern crate grpcio;
-extern crate rand;
 extern crate routeguide;
 extern crate serde_json;
 
@@ -30,7 +29,6 @@ use std::time::Duration;
 use futures::{future, Future, Sink, Stream};
 use grpcio::*;
 use routeguide::*;
-use rand::Rng;
 
 fn new_point(lat: i32, lon: i32) -> Point {
     let mut point = Point::new();
@@ -100,17 +98,16 @@ fn list_features(client: &RouteGuideClient) {
 
 fn record_route(client: &RouteGuideClient) {
     let features = util::load_db();
-    let mut rng = rand::thread_rng();
     let (mut sink, receiver) = client.record_route().unwrap();
-    for _ in 0..10 {
-        let f = rng.choose(&features).unwrap();
+    for i in 0..10 {
+        let f = &features[i];
         let point = f.get_location();
         info!("Visiting {}", util::format_point(point));
         sink = sink
             .send((point.to_owned(), WriteFlags::default()))
             .wait()
             .unwrap();
-        thread::sleep(Duration::from_millis(rng.gen_range(500, 1500)));
+        thread::sleep(Duration::from_millis(i as u64 * 100));
     }
     // flush
     future::poll_fn(|| sink.close()).wait().unwrap();
@@ -160,7 +157,7 @@ fn route_chat(client: &RouteGuideClient) {
 }
 
 fn main() {
-    let _guard = log_util::init_log(None);
+    let _guard = log_util::init_log();
     let env = Arc::new(Environment::new(2));
     let port_str = match std::env::var("SERVER_PORT") {
         Ok(val) => val,

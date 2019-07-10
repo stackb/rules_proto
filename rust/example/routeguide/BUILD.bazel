@@ -14,13 +14,7 @@ rust_binary(
     deps = [
         ":routeguide",
         "@build_stack_rules_proto//rust/raze:log",
-        "@build_stack_rules_proto//rust/raze:rand",
         "@build_stack_rules_proto//rust/raze:serde_json",
-        "@build_stack_rules_proto//rust/raze:slog",
-        "@build_stack_rules_proto//rust/raze:slog_async",
-        "@build_stack_rules_proto//rust/raze:slog_scope",
-        "@build_stack_rules_proto//rust/raze:slog_stdlog",
-        "@build_stack_rules_proto//rust/raze:slog_term",
     ] + GRPC_DEPS,
 )
 
@@ -33,10 +27,5 @@ rust_binary(
         ":routeguide",
         "@build_stack_rules_proto//rust/raze:log",
         "@build_stack_rules_proto//rust/raze:serde_json",
-        "@build_stack_rules_proto//rust/raze:slog",
-        "@build_stack_rules_proto//rust/raze:slog_async",
-        "@build_stack_rules_proto//rust/raze:slog_scope",
-        "@build_stack_rules_proto//rust/raze:slog_stdlog",
-        "@build_stack_rules_proto//rust/raze:slog_term",
     ] + GRPC_DEPS,
 )

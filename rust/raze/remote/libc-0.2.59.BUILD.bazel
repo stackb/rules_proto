@@ -12,7 +12,7 @@ package(default_visibility = [
 ])
 
 licenses([
-  "notice", # "MIT,Apache-2.0"
+  "restricted", # "MIT OR Apache-2.0"
 ])
 
 load(
@@ -23,22 +23,23 @@ load(
 )
 
 
+# Unsupported target "build-script-build" with type "custom-build" omitted
 
 rust_library(
-    name = "num_cpus",
+    name = "libc",
     crate_root = "src/lib.rs",
     crate_type = "lib",
     edition = "2015",
     srcs = glob(["**/*.rs"]),
     deps = [
-        "@raze__libc__0_2_58//:libc",
     ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
-    version = "1.10.1",
+    version = "0.2.59",
     crate_features = [
+        "default",
+        "std",
     ],
 )
 
-# Unsupported target "values" with type "example" omitted

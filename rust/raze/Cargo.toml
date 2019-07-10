@@ -14,13 +14,7 @@ protobuf = { version = "=2.7.0", features = ["with-bytes"] }
 protobuf-codegen = "2.7.0"
 
 log = "*" # For routeguide example
-rand = "*" # For routeguide example
 serde_json = "*" # For routeguide example
-slog = "*" # For routeguide example
-slog-async = "*" # For routeguide example
-slog-scope = "*" # For routeguide example
-slog-stdlog = "*" # For routeguide example
-slog-term = "*" # For routeguide example
 
 [raze]
 genmode = "Remote"

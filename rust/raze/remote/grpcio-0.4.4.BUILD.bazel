@@ -35,7 +35,7 @@ rust_library(
     deps = [
         "@raze__futures__0_1_28//:futures",
         "@raze__grpcio_sys__0_4_4//:grpcio_sys",
-        "@raze__libc__0_2_58//:libc",
+        "@raze__libc__0_2_59//:libc",
         "@raze__log__0_4_6//:log",
         "@raze__protobuf__2_7_0//:protobuf",
     ],

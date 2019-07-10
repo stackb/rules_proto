@@ -52,30 +52,6 @@ alias(
     actual = "@raze__protobuf_codegen__2_7_0//:cargo_bin_protoc_gen_rust",
 )
 alias(
-    name = "rand",
-    actual = "@raze__rand__0_6_5//:rand",
-)
-alias(
     name = "serde_json",
     actual = "@raze__serde_json__1_0_40//:serde_json",
-)
-alias(
-    name = "slog",
-    actual = "@raze__slog__2_4_1//:slog",
-)
-alias(
-    name = "slog_async",
-    actual = "@raze__slog_async__2_3_0//:slog_async",
-)
-alias(
-    name = "slog_scope",
-    actual = "@raze__slog_scope__4_1_1//:slog_scope",
-)
-alias(
-    name = "slog_stdlog",
-    actual = "@raze__slog_stdlog__3_0_2//:slog_stdlog",
-)
-alias(
-    name = "slog_term",
-    actual = "@raze__slog_term__2_4_0//:slog_term",
 )

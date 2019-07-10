@@ -39,7 +39,6 @@ rust_library(
     ],
     version = "0.4.6",
     crate_features = [
-        "std",
     ],
 )
 

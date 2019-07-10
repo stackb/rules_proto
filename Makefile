@@ -8,6 +8,8 @@ rulegen:
 # Run cargo raze on the rust dependencies
 rust_raze:
 	cd rust/raze; \
+	rm Cargo.lock; \
+	rm -r remote; \
 	cargo raze; \
 	mv BUILD.bazel BUILD.bazel.suffix; \
 	cat BUILD.bazel.prefix BUILD.bazel.suffix > BUILD.bazel; \
