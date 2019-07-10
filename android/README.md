@@ -1,4 +1,4 @@
-# `android`
+# Android rules
 
 | Rule | Description |
 | ---: | :--- |

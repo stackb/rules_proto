@@ -1,4 +1,4 @@
-# `python`
+# Python rules
 
 | Rule | Description |
 | ---: | :--- |

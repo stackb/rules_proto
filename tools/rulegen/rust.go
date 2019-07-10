@@ -76,6 +76,7 @@ func makeRust() *Language {
 	return &Language{
 		Dir:  "rust",
 		Name: "rust",
+		DisplayName: "Rust",
 		Flags: commonLangFlags,
 		SkipTestPlatforms: []string{"windows"}, // CI has no rust toolchain for windows
 		Rules: []*Rule{

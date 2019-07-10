@@ -1,4 +1,4 @@
-# `grpc.js`
+# grpc.js rules
 
 | Rule | Description |
 | ---: | :--- |

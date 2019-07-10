@@ -1,4 +1,4 @@
-# `grpc-web`
+# gRPC-Web rules
 
 | Rule | Description |
 | ---: | :--- |

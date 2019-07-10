@@ -44,6 +44,7 @@ func makeObjc() *Language {
 	return &Language{
 		Dir:   "objc",
 		Name:  "objc",
+		DisplayName: "Objective-C",
 		Flags: commonLangFlags,
 		SkipTestPlatforms: []string{"linux", "windows"},
 		Rules: []*Rule{

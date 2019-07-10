@@ -45,6 +45,7 @@ func makeCpp() *Language {
 	return &Language{
 		Dir:   "cpp",
 		Name:  "cpp",
+		DisplayName: "C++",
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{

@@ -74,6 +74,7 @@ func makeGrpcJs() *Language {
 	return &Language{
 		Dir:  "github.com/stackb/grpc.js",
 		Name: "grpc.js",
+		DisplayName: "grpc.js",
 		SkipTestPlatforms: []string{"windows"}, // grpc.js protoc plugin uses features not supported on Windows cpp compiler
 		Rules: []*Rule{
 			&Rule{

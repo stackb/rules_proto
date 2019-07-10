@@ -71,6 +71,7 @@ func makeJava() *Language {
 	return &Language{
 		Dir:              "java",
 		Name:             "java",
+		DisplayName:      "Java",
 		Flags:            commonLangFlags,
 		SkipDirectoriesMerge: true,
 		Rules: []*Rule{

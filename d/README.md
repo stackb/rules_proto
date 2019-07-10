@@ -1,4 +1,4 @@
-# `d`
+# D rules
 
 These rules use the protoc-gen-d plugin, which only supports proto3 .proto files.
 

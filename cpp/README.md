@@ -1,4 +1,4 @@
-# `cpp`
+# C++ rules
 
 | Rule | Description |
 | ---: | :--- |

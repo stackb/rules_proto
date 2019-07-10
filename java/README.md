@@ -1,4 +1,4 @@
-# `java`
+# Java rules
 
 | Rule | Description |
 | ---: | :--- |

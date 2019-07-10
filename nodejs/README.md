@@ -1,15 +1,15 @@
-# `nodejs`
+# Node.js rules
 
 | Rule | Description |
 | ---: | :--- |
-| [nodejs_proto_compile](#nodejs_proto_compile) | Generates NodeJS *.js protobuf artifacts |
-| [nodejs_grpc_compile](#nodejs_grpc_compile) | Generates NodeJS *.js protobuf+gRPC artifacts |
+| [nodejs_proto_compile](#nodejs_proto_compile) | Generates Node.js *.js protobuf artifacts |
+| [nodejs_grpc_compile](#nodejs_grpc_compile) | Generates Node.js *.js protobuf+gRPC artifacts |
 
 ---
 
 ## `nodejs_proto_compile`
 
-Generates NodeJS *.js protobuf artifacts
+Generates Node.js *.js protobuf artifacts
 
 ### `WORKSPACE`
 
@@ -41,7 +41,7 @@ nodejs_proto_compile(
 
 ## `nodejs_grpc_compile`
 
-Generates NodeJS *.js protobuf+gRPC artifacts
+Generates Node.js *.js protobuf+gRPC artifacts
 
 ### `WORKSPACE`
 

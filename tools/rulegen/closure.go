@@ -43,6 +43,7 @@ func makeClosure() *Language {
 	return &Language{
 		Dir:   "closure",
 		Name:  "closure",
+		DisplayName: "Closure",
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{

@@ -14,6 +14,9 @@ type Language struct {
 	// Name of the language
 	Name string
 
+	// The display name of the language
+	DisplayName string
+
 	// Workspace usage
 	WorkspaceExample string
 

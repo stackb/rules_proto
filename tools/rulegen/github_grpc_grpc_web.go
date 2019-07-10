@@ -60,6 +60,7 @@ func makeGithubComGrpcGrpcWeb() *Language {
 	return &Language{
 		Dir:  "github.com/grpc/grpc-web",
 		Name: "grpc-web",
+		DisplayName: "gRPC-Web",
 		Rules: []*Rule{
 			&Rule{
 				Name:             "closure_grpc_compile",

@@ -45,6 +45,7 @@ func makeD() *Language {
 	return &Language{
 		Dir:   "d",
 		Name:  "d",
+		DisplayName: "D",
 		Flags: commonLangFlags,
 		Plugins: map[string]*Plugin{
 			"//d:d": &Plugin{

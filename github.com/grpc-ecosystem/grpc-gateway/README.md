@@ -1,4 +1,4 @@
-# `grpc-gateway`
+# grpc-gateway rules
 
 | Rule | Description |
 | ---: | :--- |

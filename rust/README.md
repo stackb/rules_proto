@@ -1,4 +1,4 @@
-# `rust`
+# Rust rules
 
 | Rule | Description |
 | ---: | :--- |

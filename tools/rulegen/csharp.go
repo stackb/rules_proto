@@ -99,6 +99,7 @@ func makeCsharp() *Language {
 	return &Language{
 		Dir:   "csharp",
 		Name:  "csharp",
+		DisplayName: "C#",
 		Flags: commonLangFlags,
 		SkipTestPlatforms: []string{"all"},
 		Notes: mustTemplate(`**NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:

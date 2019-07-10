@@ -1,4 +1,4 @@
-# `objc`
+# Objective-C rules
 
 | Rule | Description |
 | ---: | :--- |

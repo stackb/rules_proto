@@ -1,4 +1,4 @@
-# `gogo`
+# Go (gogoprotobuf) rules
 
 | Rule | Description |
 | ---: | :--- |

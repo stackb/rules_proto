@@ -1,4 +1,4 @@
-# `csharp`
+# C# rules
 
 **NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
 

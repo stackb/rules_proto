@@ -106,6 +106,7 @@ func makeGo() *Language {
 	return &Language{
 		Dir:  "go",
 		Name: "go",
+		DisplayName: "Go",
 		Flags: commonLangFlags,
 		Plugins: map[string]*Plugin{
 			"//go:go": &Plugin{

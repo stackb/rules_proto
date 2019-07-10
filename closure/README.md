@@ -1,4 +1,4 @@
-# `closure`
+# Closure rules
 
 | Rule | Description |
 | ---: | :--- |

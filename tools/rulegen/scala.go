@@ -93,6 +93,7 @@ func makeScala() *Language {
 	return &Language{
 		Dir:   "scala",
 		Name:  "scala",
+		DisplayName: "Scala",
 		Flags: commonLangFlags,
 		SkipDirectoriesMerge: true,
 		SkipTestPlatforms: []string{"windows"},

@@ -59,6 +59,7 @@ func makeRuby() *Language {
 	return &Language{
 		Dir:   "ruby",
 		Name:  "ruby",
+		DisplayName: "Ruby",
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{

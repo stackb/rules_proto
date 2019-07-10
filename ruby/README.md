@@ -1,4 +1,4 @@
-# `ruby`
+# Ruby rules
 
 | Rule | Description |
 | ---: | :--- |

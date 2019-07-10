@@ -58,6 +58,7 @@ func makeGrpcGateway() *Language {
 	return &Language{
 		Dir:  "github.com/grpc-ecosystem/grpc-gateway",
 		Name: "grpc-gateway",
+		DisplayName: "grpc-gateway",
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{

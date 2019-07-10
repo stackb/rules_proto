@@ -4,6 +4,7 @@ func makePhp() *Language {
 	return &Language{
 		Dir:   "php",
 		Name:  "php",
+		DisplayName: "PHP",
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{

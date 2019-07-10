@@ -1,4 +1,4 @@
-# `swift`
+# Swift rules
 
 | Rule | Description |
 | ---: | :--- |

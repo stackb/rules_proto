@@ -97,6 +97,7 @@ func makePython() *Language {
 	return &Language{
 		Dir:   "python",
 		Name:  "python",
+		DisplayName: "Python",
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{

@@ -34,6 +34,7 @@ func makeSwift() *Language {
 	return &Language{
 		Dir:  "swift",
 		Name: "swift",
+		DisplayName: "Swift",
 		PresubmitEnvVars: map[string]string{
 			"CC": "clang",
 		},

@@ -72,6 +72,7 @@ func makeAndroid() *Language {
 	return &Language{
 		Dir:  "android",
 		Name: "android",
+		DisplayName: "Android",
 		Flags: commonLangFlags,
 		SkipDirectoriesMerge: true,
 		SkipTestPlatforms: []string{"all"},

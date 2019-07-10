@@ -61,6 +61,7 @@ func makeGogo() *Language {
 	lang := &Language{
 		Dir:     "github.com/gogo/protobuf",
 		Name:    "gogo",
+		DisplayName: "Go (gogoprotobuf)",
 		Plugins: make(map[string]*Plugin),
 		Flags: commonLangFlags,
 	}

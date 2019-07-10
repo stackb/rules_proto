@@ -1,4 +1,4 @@
-# `go`
+# Go rules
 
 | Rule | Description |
 | ---: | :--- |

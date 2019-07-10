@@ -1,4 +1,4 @@
-# `scala`
+# Scala rules
 
 | Rule | Description |
 | ---: | :--- |
