@@ -58,6 +58,11 @@ func main() {
 			Usage: "URL for github download",
 			Value: "https://github.com/stackb/rules_proto/archive/{ref}.tar.gz",
 		},
+		&cli.StringFlag{
+			Name:  "available_tests",
+			Usage: "File containing the list of available routeguide tests",
+			Value: "available_tests.txt",
+		},
 	}
 	app.Action = func(c *cli.Context) error {
 		err := action(c)
@@ -128,7 +133,7 @@ func action(c *cli.Context) error {
 	}{
 		Ref:    ref,
 		Sha256: sha256,
-	}, languages, []string{})
+	}, languages, []string{}, c.String("available_tests"))
 
 	mustWriteExamplesMakefile(dir, languages)
 	mustWriteTestWorkspacesMakefile(dir)
@@ -335,10 +340,16 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 }
 
 
-func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Language, envVars []string) {
-	out := &LineWriter{}
+func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Language, envVars []string, availableTestsPath string) {
+	// Read available tests
+	content, err := ioutil.ReadFile(availableTestsPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	availableTestLabels := strings.Split(string(content), "\n")
 
 	// Write header
+	out := &LineWriter{}
 	out.w("---")
 	out.w("tasks:")
 
@@ -366,7 +377,13 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 		}
 		out.w(`    - "--test_output=errors"`)
 		out.w("    test_targets:")
-		out.w(`    - "//example/routeguide/..."`)
+		for _, clientLang := range languages {
+			for _, serverLang := range languages {
+				if doTestOnPlatform(clientLang, nil, ciPlatform) && doTestOnPlatform(serverLang, nil, ciPlatform) && stringInSlice(fmt.Sprintf("//example/routeguide:%s_%s", clientLang.Name, serverLang.Name), availableTestLabels) {
+					out.w(`    - "//example/routeguide:%s_%s"`, clientLang.Name, serverLang.Name)
+				}
+			}
+		}
 	}
 
 	//

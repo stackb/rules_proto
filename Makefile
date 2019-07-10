@@ -1,8 +1,8 @@
 # Run the rulegen system
 rulegen:
-	bazel build //tools/rulegen && \
-		bazel-bin/tools/rulegen/linux_amd64_stripped/rulegen \
-			--ref=`git rev-parse HEAD`
+	bazel query '//example/routeguide/...' > available_tests.txt; \
+	bazel run --run_under="cd $$PWD && " //tools/rulegen -- --ref=`git rev-parse HEAD`; \
+	rm available_tests.txt; \
 
 
 # Run cargo raze on the rust dependencies
