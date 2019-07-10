@@ -77,7 +77,7 @@ func makeRust() *Language {
 		Dir:  "rust",
 		Name: "rust",
 		DisplayName: "Rust",
-		Notes: mustTemplate("Rules for generating Rust protobuf and gRPC `.rs` files and libraries using [rust-protobuf](https://github.com/stepancheg/rust-protobuf) and [grpc-rs](https://github.com/pingcap/grpc-rs). Libraries are created with `rust_library` from [rules_rust](https://github.com/bazelbuild/rules_rust)"),
+		Notes: mustTemplate("Rules for generating Rust protobuf and gRPC `.rs` files and libraries using [rust-protobuf](https://github.com/stepancheg/rust-protobuf) and [grpc-rs](https://github.com/pingcap/grpc-rs). Libraries are created with `rust_library` from [rules_rust](https://github.com/bazelbuild/rules_rust). Due to upstream requirements, these rules require that the system has a valid GOPATH set."),
 		Flags: commonLangFlags,
 		SkipTestPlatforms: []string{"windows"}, // CI has no rust toolchain for windows
 		Rules: []*Rule{
