@@ -1,0 +1,11 @@
+java_import(
+    name = "compilerplugin",
+    jars = ["com.thesamet.scalapb.compilerplugin-0.8.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "scala-library",
+    jars = ["org.scala-lang.scala-library-2.11.12.jar"],
+    visibility = ["//visibility:public"],
+)

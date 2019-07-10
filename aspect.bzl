@@ -1,6 +1,6 @@
 load("//:plugin.bzl", "ProtoPluginInfo")
 load(
-    "//:common.bzl",
+    "//internal:common.bzl",
     "ProtoCompileInfo",
     "copy_file",
     "descriptor_proto_path",
