@@ -5,7 +5,7 @@ load("//:utils.bzl", "github_archive", "get_ref", "get_sha256")
 # Versions
 VERSIONS = {
     # Core
-    "com_google_protobuf": {
+    "com_google_protobuf": { # When updating, also update Node.js requirements, Ruby requirements
         "type": "github",
         "org": "protocolbuffers",
         "repo": "protobuf",
@@ -22,12 +22,12 @@ VERSIONS = {
             },
         ],
     },
-    "com_github_grpc_grpc": {
+    "com_github_grpc_grpc": { # When updating, also update Python requirements, Node.js requirements, Ruby requirements
         "type": "github",
         "org": "grpc",
         "repo": "grpc",
-        "ref": "v1.21.0", # 3.9.0 rc1 + PR 6310
-        "sha256": "8da7f32cc8978010d2060d740362748441b81a34e5425e108596d3fcd63a97f2",
+        "ref": "v1.22.0",
+        "sha256": "11ac793c562143d52fd440f6549588712badc79211cdc8c509b183cb69bddad8",
     },
     "zlib": {
         "type": "http",

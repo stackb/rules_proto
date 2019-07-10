@@ -18,7 +18,17 @@ rust_raze:
 # Run yarn to upgrade the nodejs dependencies
 yarn_upgrade:
 	cd nodejs/requirements; \
-	yarn upgrade; \
+	yarn install; \
+
+
+# Run bundle to upgrade the Ruby dependencies
+ruby_bundle_upgrade:
+	cd ruby; \
+	bundle; \
+
+
+# Run all language specific updates
+all_updates: rust_raze yarn_upgrade ruby_bundle_upgrade
 
 
 # A collection of targets that build routeguide clients
