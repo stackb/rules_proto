@@ -1,17 +1,19 @@
 # Python rules
 
+Rules for generating Python protobuf and gRPC `.py` files and libraries using standard Protocol Buffers and gRPC. Libraries are created with the Bazel native `py_library`
+
 | Rule | Description |
 | ---: | :--- |
-| [python_proto_compile](#python_proto_compile) | Generates *.py protobuf artifacts |
-| [python_grpc_compile](#python_grpc_compile) | Generates *.py protobuf+gRPC artifacts |
-| [python_proto_library](#python_proto_library) | Generates *.py protobuf library |
-| [python_grpc_library](#python_grpc_library) | Generates *.py protobuf+gRPC library |
+| [python_proto_compile](#python_proto_compile) | Generates Python protobuf `.py` artifacts |
+| [python_grpc_compile](#python_grpc_compile) | Generates Python protobuf+gRPC `.py` artifacts |
+| [python_proto_library](#python_proto_library) | Generates a Python protobuf library using `py_library` |
+| [python_grpc_library](#python_grpc_library) | Generates a Python protobuf+gRPC library using `py_library` |
 
 ---
 
 ## `python_proto_compile`
 
-Generates *.py protobuf artifacts
+Generates Python protobuf `.py` artifacts
 
 ### `WORKSPACE`
 
@@ -43,7 +45,7 @@ python_proto_compile(
 
 ## `python_grpc_compile`
 
-Generates *.py protobuf+gRPC artifacts
+Generates Python protobuf+gRPC `.py` artifacts
 
 ### `WORKSPACE`
 
@@ -79,7 +81,7 @@ python_grpc_compile(
 
 ## `python_proto_library`
 
-Generates *.py protobuf library
+Generates a Python protobuf library using `py_library`
 
 ### `WORKSPACE`
 
@@ -111,7 +113,7 @@ python_proto_library(
 
 ## `python_grpc_library`
 
-Generates *.py protobuf+gRPC library
+Generates a Python protobuf+gRPC library using `py_library`
 
 ### `WORKSPACE`
 

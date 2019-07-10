@@ -1,16 +1,18 @@
 # Objective-C rules
 
+Rules for generating Objective-C protobuf and gRPC `.m` & `.h` files and libraries using standard Protocol Buffers and gRPC. Libraries are created with the Bazel native `objc_library`
+
 | Rule | Description |
 | ---: | :--- |
-| [objc_proto_compile](#objc_proto_compile) | Generates objc protobuf artifacts |
-| [objc_grpc_compile](#objc_grpc_compile) | Generates objc protobuf+gRPC artifacts |
-| [objc_proto_library](#objc_proto_library) | Generates objc protobuf library |
+| [objc_proto_compile](#objc_proto_compile) | Generates Objective-C protobuf `.m` & `.h` artifacts |
+| [objc_grpc_compile](#objc_grpc_compile) | Generates Objective-C protobuf+gRPC `.m` & `.h` artifacts |
+| [objc_proto_library](#objc_proto_library) | Generates an Objective-C protobuf library using `objc_library` |
 
 ---
 
 ## `objc_proto_compile`
 
-Generates objc protobuf artifacts
+Generates Objective-C protobuf `.m` & `.h` artifacts
 
 ### `WORKSPACE`
 
@@ -42,7 +44,7 @@ objc_proto_compile(
 
 ## `objc_grpc_compile`
 
-Generates objc protobuf+gRPC artifacts
+Generates Objective-C protobuf+gRPC `.m` & `.h` artifacts
 
 ### `WORKSPACE`
 
@@ -78,7 +80,7 @@ objc_grpc_compile(
 
 ## `objc_proto_library`
 
-Generates objc protobuf library
+Generates an Objective-C protobuf library using `objc_library`
 
 ### `WORKSPACE`
 

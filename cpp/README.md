@@ -1,17 +1,19 @@
 # C++ rules
 
+Rules for generating C++ protobuf and gRPC `.cc` & `.h` files and libraries using standard Protocol Buffers and gRPC. Libraries are created with the Bazel native `cc_library`
+
 | Rule | Description |
 | ---: | :--- |
-| [cpp_proto_compile](#cpp_proto_compile) | Generates *.h,*.cc protobuf artifacts |
-| [cpp_grpc_compile](#cpp_grpc_compile) | Generates *.h,*.cc protobuf+gRPC artifacts |
-| [cpp_proto_library](#cpp_proto_library) | Generates *.h,*.cc protobuf library |
-| [cpp_grpc_library](#cpp_grpc_library) | Generates *.h,*.cc protobuf+gRPC library |
+| [cpp_proto_compile](#cpp_proto_compile) | Generates C++ protobuf `.h` & `.cc` artifacts |
+| [cpp_grpc_compile](#cpp_grpc_compile) | Generates C++ protobuf+gRPC `.h` & `.cc` artifacts |
+| [cpp_proto_library](#cpp_proto_library) | Generates a C++ protobuf library using `cc_library`, with dependencies linked |
+| [cpp_grpc_library](#cpp_grpc_library) | Generates a C++ protobuf+gRPC library using `cc_library`, with dependencies linked |
 
 ---
 
 ## `cpp_proto_compile`
 
-Generates *.h,*.cc protobuf artifacts
+Generates C++ protobuf `.h` & `.cc` artifacts
 
 ### `WORKSPACE`
 
@@ -43,7 +45,7 @@ cpp_proto_compile(
 
 ## `cpp_grpc_compile`
 
-Generates *.h,*.cc protobuf+gRPC artifacts
+Generates C++ protobuf+gRPC `.h` & `.cc` artifacts
 
 ### `WORKSPACE`
 
@@ -79,7 +81,7 @@ cpp_grpc_compile(
 
 ## `cpp_proto_library`
 
-Generates *.h,*.cc protobuf library
+Generates a C++ protobuf library using `cc_library`, with dependencies linked
 
 ### `WORKSPACE`
 
@@ -111,7 +113,7 @@ cpp_proto_library(
 
 ## `cpp_grpc_library`
 
-Generates *.h,*.cc protobuf+gRPC library
+Generates a C++ protobuf+gRPC library using `cc_library`, with dependencies linked
 
 ### `WORKSPACE`
 

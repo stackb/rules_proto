@@ -2,14 +2,14 @@
 
 | Rule | Description |
 | ---: | :--- |
-| [grpcjs_grpc_compile](#grpcjs_grpc_compile) | Generates protobuf closure grpc *.js files |
-| [grpcjs_grpc_library](#grpcjs_grpc_library) | Generates protobuf closure library *.js files |
+| [grpcjs_grpc_compile](#grpcjs_grpc_compile) | Generates protobuf closure grpc `.js` files |
+| [grpcjs_grpc_library](#grpcjs_grpc_library) | Generates protobuf closure library `.js` files |
 
 ---
 
 ## `grpcjs_grpc_compile`
 
-Generates protobuf closure grpc *.js files
+Generates protobuf closure grpc `.js` files
 
 ### `WORKSPACE`
 
@@ -41,7 +41,7 @@ grpcjs_grpc_compile(
 
 ## `grpcjs_grpc_library`
 
-Generates protobuf closure library *.js files
+Generates protobuf closure library `.js` files
 
 ### `WORKSPACE`
 

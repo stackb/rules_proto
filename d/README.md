@@ -1,17 +1,19 @@
 # D rules
 
-These rules use the protoc-gen-d plugin, which only supports proto3 .proto files.
+Rules for generating D protobuf `.d` files and libraries using [protobuf-d](https://github.com/dcarp/protobuf-d). Libraries are created with `d_library` from [rules_d](https://github.com/bazelbuild/rules_d)
+
+**NOTE**: These rules use the protoc-gen-d plugin, which only supports proto3 .proto files.
 
 | Rule | Description |
 | ---: | :--- |
-| [d_proto_compile](#d_proto_compile) | Generates d protobuf artifacts |
-| [d_proto_library](#d_proto_library) | Generates d protobuf library |
+| [d_proto_compile](#d_proto_compile) | Generates D protobuf `.d` artifacts |
+| [d_proto_library](#d_proto_library) | Generates a D protobuf library using `d_library` from `rules_d` |
 
 ---
 
 ## `d_proto_compile`
 
-Generates d protobuf artifacts
+Generates D protobuf `.d` artifacts
 
 ### `WORKSPACE`
 
@@ -47,7 +49,7 @@ d_proto_compile(
 
 ## `d_proto_library`
 
-Generates d protobuf library
+Generates a D protobuf library using `d_library` from `rules_d`
 
 ### `WORKSPACE`
 

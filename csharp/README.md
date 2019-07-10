@@ -1,5 +1,7 @@
 # C# rules
 
+Rules for generating C# protobuf and gRPC `.cs` files and libraries using standard Protocol Buffers and gRPC. Libraries are created with `core_library` from [rules_dotnet](https://github.com/bazelbuild/rules_dotnet)
+
 **NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
 
 ~~~python
@@ -24,16 +26,16 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 
 | Rule | Description |
 | ---: | :--- |
-| [csharp_proto_compile](#csharp_proto_compile) | Generates csharp protobuf artifacts |
-| [csharp_grpc_compile](#csharp_grpc_compile) | Generates csharp protobuf+gRPC artifacts |
-| [csharp_proto_library](#csharp_proto_library) | Generates csharp protobuf library |
-| [csharp_grpc_library](#csharp_grpc_library) | Generates csharp protobuf+gRPC library |
+| [csharp_proto_compile](#csharp_proto_compile) | Generates C# protobuf `.cs` artifacts |
+| [csharp_grpc_compile](#csharp_grpc_compile) | Generates C# protobuf+gRPC `.cs` artifacts |
+| [csharp_proto_library](#csharp_proto_library) | Generates a C# protobuf library using `core_library` from `rules_dotnet` |
+| [csharp_grpc_library](#csharp_grpc_library) | Generates a C# protobuf+gRPC library using `core_library` from `rules_dotnet` |
 
 ---
 
 ## `csharp_proto_compile`
 
-Generates csharp protobuf artifacts
+Generates C# protobuf `.cs` artifacts
 
 ### `WORKSPACE`
 
@@ -65,7 +67,7 @@ csharp_proto_compile(
 
 ## `csharp_grpc_compile`
 
-Generates csharp protobuf+gRPC artifacts
+Generates C# protobuf+gRPC `.cs` artifacts
 
 ### `WORKSPACE`
 
@@ -103,7 +105,7 @@ csharp_grpc_compile(
 
 > NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
-Generates csharp protobuf library
+Generates a C# protobuf library using `core_library` from `rules_dotnet`
 
 ### `WORKSPACE`
 
@@ -175,7 +177,7 @@ csharp_proto_library(
 
 > NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
-Generates csharp protobuf+gRPC library
+Generates a C# protobuf+gRPC library using `core_library` from `rules_dotnet`
 
 ### `WORKSPACE`
 

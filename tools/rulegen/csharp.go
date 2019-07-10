@@ -102,7 +102,9 @@ func makeCsharp() *Language {
 		DisplayName: "C#",
 		Flags: commonLangFlags,
 		SkipTestPlatforms: []string{"all"},
-		Notes: mustTemplate(`**NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
+		Notes: mustTemplate(`Rules for generating C# protobuf and gRPC ` + "`.cs`" + ` files and libraries using standard Protocol Buffers and gRPC. Libraries are created with ` + "`core_library`" + ` from [rules_dotnet](https://github.com/bazelbuild/rules_dotnet)
+
+**NOTE 1**: the csharp_* rules currently don't play nicely with sandboxing.  You may see errors like:
 
 ~~~python
 The user's home directory could not be determined. Set the 'DOTNET_CLI_HOME' environment variable to specify the directory to use.
@@ -131,7 +133,7 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				Plugins:          []string{"//csharp:csharp"},
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
-				Doc:              "Generates csharp protobuf artifacts",
+				Doc:              "Generates C# protobuf `.cs` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 				SkipTestPlatforms: []string{"none"},
 			},
@@ -142,7 +144,7 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				Plugins:          []string{"//csharp:csharp", "//csharp:grpc_csharp"},
 				WorkspaceExample: grpcWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates csharp protobuf+gRPC artifacts",
+				Doc:              "Generates C# protobuf+gRPC `.cs` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 				SkipTestPlatforms: []string{"none"},
 			},
@@ -152,7 +154,7 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				Implementation:   csharpProtoLibraryRuleTemplate,
 				WorkspaceExample: csharpProtoLibraryWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
-				Doc:              "Generates csharp protobuf library",
+				Doc:              "Generates a C# protobuf library using `core_library` from `rules_dotnet`",
 				Attrs:            aspectProtoCompileAttrs,
 				Flags:            csharpLibraryFlags,
 				Experimental:     true, // Due to failing dependencies
@@ -163,7 +165,7 @@ To remedy this, use --strategy=CoreCompile=standalone for the csharp rules (put 
 				Implementation:   csharpGrpcLibraryRuleTemplate,
 				WorkspaceExample: csharpGrpcLibraryWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
-				Doc:              "Generates csharp protobuf+gRPC library",
+				Doc:              "Generates a C# protobuf+gRPC library using `core_library` from `rules_dotnet`",
 				Attrs:            aspectProtoCompileAttrs,
 				Flags:            csharpLibraryFlags,
 				Experimental:     true, // Due to failing dependencies

@@ -2,15 +2,15 @@
 
 | Rule | Description |
 | ---: | :--- |
-| [gateway_grpc_compile](#gateway_grpc_compile) | Generates grpc-gateway *.go files |
-| [gateway_swagger_compile](#gateway_swagger_compile) | Generates grpc-gateway swagger *.json files |
+| [gateway_grpc_compile](#gateway_grpc_compile) | Generates grpc-gateway `.go` files |
+| [gateway_swagger_compile](#gateway_swagger_compile) | Generates grpc-gateway swagger `.json` files |
 | [gateway_grpc_library](#gateway_grpc_library) | Generates grpc-gateway library files |
 
 ---
 
 ## `gateway_grpc_compile`
 
-Generates grpc-gateway *.go files
+Generates grpc-gateway `.go` files
 
 ### `WORKSPACE`
 
@@ -58,7 +58,7 @@ gateway_grpc_compile(
 
 ## `gateway_swagger_compile`
 
-Generates grpc-gateway swagger *.json files
+Generates grpc-gateway swagger `.json` files
 
 ### `WORKSPACE`
 

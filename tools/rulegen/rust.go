@@ -77,6 +77,7 @@ func makeRust() *Language {
 		Dir:  "rust",
 		Name: "rust",
 		DisplayName: "Rust",
+		Notes: mustTemplate("Rules for generating Rust protobuf and gRPC `.rs` files and libraries using [rust-protobuf](https://github.com/stepancheg/rust-protobuf) and [grpc-rs](https://github.com/pingcap/grpc-rs). Libraries are created with `rust_library` from [rules_rust](https://github.com/bazelbuild/rules_rust)"),
 		Flags: commonLangFlags,
 		SkipTestPlatforms: []string{"windows"}, // CI has no rust toolchain for windows
 		Rules: []*Rule{
@@ -87,7 +88,7 @@ func makeRust() *Language {
 				Plugins:          []string{"//rust:rust"},
 				WorkspaceExample: rustWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
-				Doc:              "Generates rust protobuf artifacts",
+				Doc:              "Generates Rust protobuf `.rs` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -97,7 +98,7 @@ func makeRust() *Language {
 				Plugins:          []string{"//rust:rust", "//rust:grpc_rust"},
 				WorkspaceExample: rustWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates rust protobuf+gRPC artifacts",
+				Doc:              "Generates Rust protobuf+gRPC `.rs` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -106,7 +107,7 @@ func makeRust() *Language {
 				Implementation:   rustProtoLibraryRuleTemplate,
 				WorkspaceExample: rustWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
-				Doc:              "Generates rust protobuf library",
+				Doc:              "Generates a Rust protobuf library using `rust_library` from `rules_rust`",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -115,7 +116,7 @@ func makeRust() *Language {
 				Implementation:   rustGrpcLibraryRuleTemplate,
 				WorkspaceExample: rustWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
-				Doc:              "Generates rust protobuf+gRPC library",
+				Doc:              "Generates a Rust protobuf+gRPC library using `rust_library` from `rules_rust`",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 		},

@@ -1,15 +1,17 @@
 # Closure rules
 
+Rules for generating Closure protobuf `.js` files and libraries using standard Protocol Buffers. Libraries are created with `closure_js_library` from [rules_closure](https://github.com/bazelbuild/rules_closure)
+
 | Rule | Description |
 | ---: | :--- |
-| [closure_proto_compile](#closure_proto_compile) | Generates closure *.js protobuf+gRPC files |
-| [closure_proto_library](#closure_proto_library) | Generates a closure_library with compiled protobuf *.js files |
+| [closure_proto_compile](#closure_proto_compile) | Generates Closure protobuf `.js` files |
+| [closure_proto_library](#closure_proto_library) | Generates a Closure library with compiled protobuf `.js` files using `closure_js_library` from `rules_closure` |
 
 ---
 
 ## `closure_proto_compile`
 
-Generates closure *.js protobuf+gRPC files
+Generates Closure protobuf `.js` files
 
 ### `WORKSPACE`
 
@@ -41,7 +43,7 @@ closure_proto_compile(
 
 ## `closure_proto_library`
 
-Generates a closure_library with compiled protobuf *.js files
+Generates a Closure library with compiled protobuf `.js` files using `closure_js_library` from `rules_closure`
 
 ### `WORKSPACE`
 

@@ -46,6 +46,7 @@ func makeCpp() *Language {
 		Dir:   "cpp",
 		Name:  "cpp",
 		DisplayName: "C++",
+		Notes: mustTemplate("Rules for generating C++ protobuf and gRPC `.cc` & `.h` files and libraries using standard Protocol Buffers and gRPC. Libraries are created with the Bazel native `cc_library`"),
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
@@ -55,7 +56,7 @@ func makeCpp() *Language {
 				Plugins:          []string{"//cpp:cpp"},
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
-				Doc:              "Generates *.h,*.cc protobuf artifacts",
+				Doc:              "Generates C++ protobuf `.h` & `.cc` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -65,7 +66,7 @@ func makeCpp() *Language {
 				Plugins:          []string{"//cpp:cpp", "//cpp:grpc_cpp"},
 				WorkspaceExample: grpcWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates *.h,*.cc protobuf+gRPC artifacts",
+				Doc:              "Generates C++ protobuf+gRPC `.h` & `.cc` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -74,7 +75,7 @@ func makeCpp() *Language {
 				Implementation:   cppProtoLibraryRuleTemplate,
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
-				Doc:              "Generates *.h,*.cc protobuf library",
+				Doc:              "Generates a C++ protobuf library using `cc_library`, with dependencies linked",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -83,7 +84,7 @@ func makeCpp() *Language {
 				Implementation:   cppGrpcLibraryRuleTemplate,
 				WorkspaceExample: grpcWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
-				Doc:              "Generates *.h,*.cc protobuf+gRPC library",
+				Doc:              "Generates a C++ protobuf+gRPC library using `cc_library`, with dependencies linked",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 		},

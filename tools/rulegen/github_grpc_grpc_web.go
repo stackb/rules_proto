@@ -69,7 +69,7 @@ func makeGithubComGrpcGrpcWeb() *Language {
 				Plugins:          []string{"//github.com/grpc/grpc-web:closure"},
 				WorkspaceExample: grpcWebWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates a closure *.js protobuf+gRPC files",
+				Doc:              "Generates Closure *.js protobuf+gRPC files",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -79,7 +79,7 @@ func makeGithubComGrpcGrpcWeb() *Language {
 				Plugins:          []string{"//github.com/grpc/grpc-web:commonjs"},
 				WorkspaceExample: grpcWebWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates a commonjs *.js protobuf+gRPC files",
+				Doc:              "Generates CommonJS *.js protobuf+gRPC files",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -89,7 +89,7 @@ func makeGithubComGrpcGrpcWeb() *Language {
 				Plugins:          []string{"//github.com/grpc/grpc-web:commonjs_dts"},
 				WorkspaceExample: grpcWebWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates a commonjs_dts *.js protobuf+gRPC files",
+				Doc:              "Generates commonjs_dts *.js protobuf+gRPC files",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -99,7 +99,7 @@ func makeGithubComGrpcGrpcWeb() *Language {
 				Plugins:          []string{"//github.com/grpc/grpc-web:ts"},
 				WorkspaceExample: grpcWebWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates a commonjs *.ts protobuf+gRPC files",
+				Doc:              "Generates CommonJS *.ts protobuf+gRPC files",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{

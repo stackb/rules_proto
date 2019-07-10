@@ -107,6 +107,7 @@ func makeGo() *Language {
 		Dir:  "go",
 		Name: "go",
 		DisplayName: "Go",
+		Notes: mustTemplate("Rules for generating Go protobuf and gRPC `.go` files and libraries using [golang/protobuf](https://github.com/golang/protobuf). Libraries are created with `go_library` from [rules_go](https://github.com/bazelbuild/rules_go)"),
 		Flags: commonLangFlags,
 		Plugins: map[string]*Plugin{
 			"//go:go": &Plugin{
@@ -126,7 +127,7 @@ func makeGo() *Language {
 				Plugins:          []string{"//go:go"},
 				WorkspaceExample: goWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
-				Doc:              "Generates *.go protobuf artifacts",
+				Doc:              "Generates Go protobuf `.go` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -137,7 +138,7 @@ func makeGo() *Language {
 				Plugins:          []string{"//go:grpc_go"},
 				WorkspaceExample: goWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates *.go protobuf+gRPC artifacts",
+				Doc:              "Generates Go protobuf+gRPC `.go` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -147,7 +148,7 @@ func makeGo() *Language {
 				Implementation:   goProtoLibraryRuleTemplate,
 				WorkspaceExample: goWorkspaceTemplate,
 				BuildExample:     goProtoLibraryExampleTemplate,
-				Doc:              "Generates *.go protobuf library",
+				Doc:              "Generates a Go protobuf library using `go_library` from `rules_go`",
 				Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
 			},
 			&Rule{
@@ -157,7 +158,7 @@ func makeGo() *Language {
 				Implementation:   goGrpcLibraryRuleTemplate,
 				WorkspaceExample: goWorkspaceTemplate,
 				BuildExample:     goGrpcLibraryExampleTemplate,
-				Doc:              "Generates *.go protobuf+gRPC library",
+				Doc:              "Generates a Go protobuf+gRPC library using `go_library` from `rules_go`",
 				Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
 				SkipTestPlatforms: []string{"windows"}, // gRPC go lib rules fail on windows due to bad path
 			},

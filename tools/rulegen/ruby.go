@@ -60,6 +60,7 @@ func makeRuby() *Language {
 		Dir:   "ruby",
 		Name:  "ruby",
 		DisplayName: "Ruby",
+		Notes: mustTemplate("Rules for generating Ruby protobuf and gRPC `.rb` files and libraries using standard Protocol Buffers and gRPC. Libraries are created with `ruby_library` from [rules_ruby](https://github.com/yugui/rules_ruby)"),
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
@@ -69,7 +70,7 @@ func makeRuby() *Language {
 				Plugins:          []string{"//ruby:ruby"},
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
-				Doc:              "Generates *.ruby protobuf artifacts",
+				Doc:              "Generates Ruby protobuf `.rb` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -79,7 +80,7 @@ func makeRuby() *Language {
 				Plugins:          []string{"//ruby:ruby", "//ruby:grpc_ruby"},
 				WorkspaceExample: grpcWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates *.ruby protobuf+gRPC artifacts",
+				Doc:              "Generates Ruby protobuf+gRPC `.rb` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -88,7 +89,7 @@ func makeRuby() *Language {
 				Implementation:   rubyLibraryRuleTemplate,
 				WorkspaceExample: rubyProtoLibraryWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
-				Doc:              "Generates *.rb protobuf library",
+				Doc:              "Generates a Ruby protobuf library using `ruby_library` from `rules_ruby`",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -97,7 +98,7 @@ func makeRuby() *Language {
 				Implementation:   rubyLibraryRuleTemplate,
 				WorkspaceExample: rubyGrpcLibraryWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
-				Doc:              "Generates *.rb protobuf+gRPC library",
+				Doc:              "Generates a Ruby protobuf+gRPC library using `ruby_library` from `rules_ruby`",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 		},

@@ -1,17 +1,19 @@
 # Go rules
 
+Rules for generating Go protobuf and gRPC `.go` files and libraries using [golang/protobuf](https://github.com/golang/protobuf). Libraries are created with `go_library` from [rules_go](https://github.com/bazelbuild/rules_go)
+
 | Rule | Description |
 | ---: | :--- |
-| [go_proto_compile](#go_proto_compile) | Generates *.go protobuf artifacts |
-| [go_grpc_compile](#go_grpc_compile) | Generates *.go protobuf+gRPC artifacts |
-| [go_proto_library](#go_proto_library) | Generates *.go protobuf library |
-| [go_grpc_library](#go_grpc_library) | Generates *.go protobuf+gRPC library |
+| [go_proto_compile](#go_proto_compile) | Generates Go protobuf `.go` artifacts |
+| [go_grpc_compile](#go_grpc_compile) | Generates Go protobuf+gRPC `.go` artifacts |
+| [go_proto_library](#go_proto_library) | Generates a Go protobuf library using `go_library` from `rules_go` |
+| [go_grpc_library](#go_grpc_library) | Generates a Go protobuf+gRPC library using `go_library` from `rules_go` |
 
 ---
 
 ## `go_proto_compile`
 
-Generates *.go protobuf artifacts
+Generates Go protobuf `.go` artifacts
 
 ### `WORKSPACE`
 
@@ -49,7 +51,7 @@ go_proto_compile(
 
 ## `go_grpc_compile`
 
-Generates *.go protobuf+gRPC artifacts
+Generates Go protobuf+gRPC `.go` artifacts
 
 ### `WORKSPACE`
 
@@ -87,7 +89,7 @@ go_grpc_compile(
 
 ## `go_proto_library`
 
-Generates *.go protobuf library
+Generates a Go protobuf library using `go_library` from `rules_go`
 
 ### `WORKSPACE`
 
@@ -130,7 +132,7 @@ go_proto_library(
 
 ## `go_grpc_library`
 
-Generates *.go protobuf+gRPC library
+Generates a Go protobuf+gRPC library using `go_library` from `rules_go`
 
 ### `WORKSPACE`
 

@@ -1,17 +1,19 @@
 # Scala rules
 
+Rules for generating Scala protobuf and gRPC `.jar` files and libraries using [ScalaPB](https://github.com/scalapb/ScalaPB). Libraries are created with `scala_library` from [rules_scala](https://github.com/bazelbuild/rules_scala)
+
 | Rule | Description |
 | ---: | :--- |
-| [scala_proto_compile](#scala_proto_compile) | Generates *.scala protobuf artifacts |
-| [scala_grpc_compile](#scala_grpc_compile) | Generates *.scala protobuf+gRPC artifacts |
-| [scala_proto_library](#scala_proto_library) | Generates *.scala protobuf library |
-| [scala_grpc_library](#scala_grpc_library) | Generates *.scala protobuf+gRPC library |
+| [scala_proto_compile](#scala_proto_compile) | Generates a Scala protobuf `.jar` artifact |
+| [scala_grpc_compile](#scala_grpc_compile) | Generates Scala protobuf+gRPC `.jar` artifacts |
+| [scala_proto_library](#scala_proto_library) | Generates a Scala protobuf library using `scala_library` from `rules_scala` |
+| [scala_grpc_library](#scala_grpc_library) | Generates a Scala protobuf+gRPC library using `scala_library` from `rules_scala` |
 
 ---
 
 ## `scala_proto_compile`
 
-Generates *.scala protobuf artifacts
+Generates a Scala protobuf `.jar` artifact
 
 ### `WORKSPACE`
 
@@ -64,7 +66,7 @@ scala_proto_compile(
 
 > NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
-Generates *.scala protobuf+gRPC artifacts
+Generates Scala protobuf+gRPC `.jar` artifacts
 
 ### `WORKSPACE`
 
@@ -115,7 +117,7 @@ scala_grpc_compile(
 
 ## `scala_proto_library`
 
-Generates *.scala protobuf library
+Generates a Scala protobuf library using `scala_library` from `rules_scala`
 
 ### `WORKSPACE`
 
@@ -168,7 +170,7 @@ scala_proto_library(
 
 > NOTE: this rule is EXPERIMENTAL.  It may not work correctly or even compile!
 
-Generates *.scala protobuf+gRPC library
+Generates a Scala protobuf+gRPC library using `scala_library` from `rules_scala`
 
 ### `WORKSPACE`
 

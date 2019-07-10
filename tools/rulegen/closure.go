@@ -44,6 +44,7 @@ func makeClosure() *Language {
 		Dir:   "closure",
 		Name:  "closure",
 		DisplayName: "Closure",
+		Notes: mustTemplate("Rules for generating Closure protobuf `.js` files and libraries using standard Protocol Buffers. Libraries are created with `closure_js_library` from [rules_closure](https://github.com/bazelbuild/rules_closure)"),
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
@@ -53,7 +54,7 @@ func makeClosure() *Language {
 				Plugins:          []string{"//closure:js"},
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
-				Doc:              "Generates closure *.js protobuf+gRPC files",
+				Doc:              "Generates Closure protobuf `.js` files",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -62,7 +63,7 @@ func makeClosure() *Language {
 				Implementation:   closureProtoLibraryRuleTemplate,
 				WorkspaceExample: closureLibraryWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
-				Doc:              "Generates a closure_library with compiled protobuf *.js files",
+				Doc:              "Generates a Closure library with compiled protobuf `.js` files using `closure_js_library` from `rules_closure`",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 		},

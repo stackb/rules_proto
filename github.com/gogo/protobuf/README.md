@@ -1,25 +1,27 @@
 # Go (gogoprotobuf) rules
 
+Rules for generating Go protobuf and gRPC `.go` files and libraries using [gogo/protobuf](https://github.com/gogo/protobuf). Libraries are created with `go_library` from [rules_go](https://github.com/bazelbuild/rules_go)
+
 | Rule | Description |
 | ---: | :--- |
-| [gogo_proto_compile](#gogo_proto_compile) | Generates gogo protobuf artifacts |
-| [gogo_grpc_compile](#gogo_grpc_compile) | Generates gogo protobuf+gRPC artifacts |
-| [gogo_proto_library](#gogo_proto_library) | Generates gogo protobuf library |
-| [gogo_grpc_library](#gogo_grpc_library) | Generates gogo protobuf+gRPC library |
-| [gogofast_proto_compile](#gogofast_proto_compile) | Generates gogofast protobuf artifacts |
-| [gogofast_grpc_compile](#gogofast_grpc_compile) | Generates gogofast protobuf+gRPC artifacts |
-| [gogofast_proto_library](#gogofast_proto_library) | Generates gogofast protobuf library |
-| [gogofast_grpc_library](#gogofast_grpc_library) | Generates gogofast protobuf+gRPC library |
-| [gogofaster_proto_compile](#gogofaster_proto_compile) | Generates gogofaster protobuf artifacts |
-| [gogofaster_grpc_compile](#gogofaster_grpc_compile) | Generates gogofaster protobuf+gRPC artifacts |
-| [gogofaster_proto_library](#gogofaster_proto_library) | Generates gogofaster protobuf library |
-| [gogofaster_grpc_library](#gogofaster_grpc_library) | Generates gogofaster protobuf+gRPC library |
+| [gogo_proto_compile](#gogo_proto_compile) | Generates gogo protobuf `.go` artifacts |
+| [gogo_grpc_compile](#gogo_grpc_compile) | Generates gogo protobuf+gRPC `.go` artifacts |
+| [gogo_proto_library](#gogo_proto_library) | Generates a Go gogo protobuf library using `go_library` from `rules_go` |
+| [gogo_grpc_library](#gogo_grpc_library) | Generates a Go gogo protobuf+gRPC library using `go_library` from `rules_go` |
+| [gogofast_proto_compile](#gogofast_proto_compile) | Generates gogofast protobuf `.go` artifacts |
+| [gogofast_grpc_compile](#gogofast_grpc_compile) | Generates gogofast protobuf+gRPC `.go` artifacts |
+| [gogofast_proto_library](#gogofast_proto_library) | Generates a Go gogofast protobuf library using `go_library` from `rules_go` |
+| [gogofast_grpc_library](#gogofast_grpc_library) | Generates a Go gogofast protobuf+gRPC library using `go_library` from `rules_go` |
+| [gogofaster_proto_compile](#gogofaster_proto_compile) | Generates gogofaster protobuf `.go` artifacts |
+| [gogofaster_grpc_compile](#gogofaster_grpc_compile) | Generates gogofaster protobuf+gRPC `.go` artifacts |
+| [gogofaster_proto_library](#gogofaster_proto_library) | Generates a Go gogofaster protobuf library using `go_library` from `rules_go` |
+| [gogofaster_grpc_library](#gogofaster_grpc_library) | Generates a Go gogofaster protobuf+gRPC library using `go_library` from `rules_go` |
 
 ---
 
 ## `gogo_proto_compile`
 
-Generates gogo protobuf artifacts
+Generates gogo protobuf `.go` artifacts
 
 ### `WORKSPACE`
 
@@ -57,7 +59,7 @@ gogo_proto_compile(
 
 ## `gogo_grpc_compile`
 
-Generates gogo protobuf+gRPC artifacts
+Generates gogo protobuf+gRPC `.go` artifacts
 
 ### `WORKSPACE`
 
@@ -95,7 +97,7 @@ gogo_grpc_compile(
 
 ## `gogo_proto_library`
 
-Generates gogo protobuf library
+Generates a Go gogo protobuf library using `go_library` from `rules_go`
 
 ### `WORKSPACE`
 
@@ -139,7 +141,7 @@ gogo_proto_library(
 
 ## `gogo_grpc_library`
 
-Generates gogo protobuf+gRPC library
+Generates a Go gogo protobuf+gRPC library using `go_library` from `rules_go`
 
 ### `WORKSPACE`
 
@@ -182,7 +184,7 @@ gogo_grpc_library(
 
 ## `gogofast_proto_compile`
 
-Generates gogofast protobuf artifacts
+Generates gogofast protobuf `.go` artifacts
 
 ### `WORKSPACE`
 
@@ -220,7 +222,7 @@ gogofast_proto_compile(
 
 ## `gogofast_grpc_compile`
 
-Generates gogofast protobuf+gRPC artifacts
+Generates gogofast protobuf+gRPC `.go` artifacts
 
 ### `WORKSPACE`
 
@@ -258,7 +260,7 @@ gogofast_grpc_compile(
 
 ## `gogofast_proto_library`
 
-Generates gogofast protobuf library
+Generates a Go gogofast protobuf library using `go_library` from `rules_go`
 
 ### `WORKSPACE`
 
@@ -302,7 +304,7 @@ gogofast_proto_library(
 
 ## `gogofast_grpc_library`
 
-Generates gogofast protobuf+gRPC library
+Generates a Go gogofast protobuf+gRPC library using `go_library` from `rules_go`
 
 ### `WORKSPACE`
 
@@ -345,7 +347,7 @@ gogofast_grpc_library(
 
 ## `gogofaster_proto_compile`
 
-Generates gogofaster protobuf artifacts
+Generates gogofaster protobuf `.go` artifacts
 
 ### `WORKSPACE`
 
@@ -383,7 +385,7 @@ gogofaster_proto_compile(
 
 ## `gogofaster_grpc_compile`
 
-Generates gogofaster protobuf+gRPC artifacts
+Generates gogofaster protobuf+gRPC `.go` artifacts
 
 ### `WORKSPACE`
 
@@ -421,7 +423,7 @@ gogofaster_grpc_compile(
 
 ## `gogofaster_proto_library`
 
-Generates gogofaster protobuf library
+Generates a Go gogofaster protobuf library using `go_library` from `rules_go`
 
 ### `WORKSPACE`
 
@@ -465,7 +467,7 @@ gogofaster_proto_library(
 
 ## `gogofaster_grpc_library`
 
-Generates gogofaster protobuf+gRPC library
+Generates a Go gogofaster protobuf+gRPC library using `go_library` from `rules_go`
 
 ### `WORKSPACE`
 

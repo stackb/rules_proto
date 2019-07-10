@@ -98,6 +98,7 @@ func makePython() *Language {
 		Dir:   "python",
 		Name:  "python",
 		DisplayName: "Python",
+		Notes: mustTemplate("Rules for generating Python protobuf and gRPC `.py` files and libraries using standard Protocol Buffers and gRPC. Libraries are created with the Bazel native `py_library`"),
 		Flags: commonLangFlags,
 		Rules: []*Rule{
 			&Rule{
@@ -107,7 +108,7 @@ func makePython() *Language {
 				Plugins:          []string{"//python:python"},
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
-				Doc:              "Generates *.py protobuf artifacts",
+				Doc:              "Generates Python protobuf `.py` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -117,7 +118,7 @@ func makePython() *Language {
 				Plugins:          []string{"//python:python", "//python:grpc_python"},
 				WorkspaceExample: grpcWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates *.py protobuf+gRPC artifacts",
+				Doc:              "Generates Python protobuf+gRPC `.py` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -126,7 +127,7 @@ func makePython() *Language {
 				Implementation:   pythonProtoLibraryRuleTemplate,
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
-				Doc:              "Generates *.py protobuf library",
+				Doc:              "Generates a Python protobuf library using `py_library`",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -135,7 +136,7 @@ func makePython() *Language {
 				Implementation:   pythonGrpcLibraryRuleTemplate,
 				WorkspaceExample: pythonGrpcLibraryWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
-				Doc:              "Generates *.py protobuf+gRPC library",
+				Doc:              "Generates a Python protobuf+gRPC library using `py_library`",
 				Attrs:            append(aspectProtoCompileAttrs, []*Attr{
 					&Attr{
 						Name:      "python_version",

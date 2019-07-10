@@ -1,15 +1,17 @@
 # PHP rules
 
+Rules for generating PHP protobuf and gRPC `.php` files and libraries using standard Protocol Buffers and gRPC
+
 | Rule | Description |
 | ---: | :--- |
-| [php_proto_compile](#php_proto_compile) | Generates php protobuf artifacts |
-| [php_grpc_compile](#php_grpc_compile) | Generates php protobuf+gRPC artifacts |
+| [php_proto_compile](#php_proto_compile) | Generates PHP protobuf `.php` artifacts |
+| [php_grpc_compile](#php_grpc_compile) | Generates PHP protobuf+gRPC `.php` artifacts |
 
 ---
 
 ## `php_proto_compile`
 
-Generates php protobuf artifacts
+Generates PHP protobuf `.php` artifacts
 
 ### `WORKSPACE`
 
@@ -41,7 +43,7 @@ php_proto_compile(
 
 ## `php_grpc_compile`
 
-Generates php protobuf+gRPC artifacts
+Generates PHP protobuf+gRPC `.php` artifacts
 
 ### `WORKSPACE`
 

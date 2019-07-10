@@ -2,17 +2,17 @@
 
 | Rule | Description |
 | ---: | :--- |
-| [closure_grpc_compile](#closure_grpc_compile) | Generates a closure *.js protobuf+gRPC files |
-| [commonjs_grpc_compile](#commonjs_grpc_compile) | Generates a commonjs *.js protobuf+gRPC files |
-| [commonjs_dts_grpc_compile](#commonjs_dts_grpc_compile) | Generates a commonjs_dts *.js protobuf+gRPC files |
-| [ts_grpc_compile](#ts_grpc_compile) | Generates a commonjs *.ts protobuf+gRPC files |
+| [closure_grpc_compile](#closure_grpc_compile) | Generates Closure *.js protobuf+gRPC files |
+| [commonjs_grpc_compile](#commonjs_grpc_compile) | Generates CommonJS *.js protobuf+gRPC files |
+| [commonjs_dts_grpc_compile](#commonjs_dts_grpc_compile) | Generates commonjs_dts *.js protobuf+gRPC files |
+| [ts_grpc_compile](#ts_grpc_compile) | Generates CommonJS *.ts protobuf+gRPC files |
 | [closure_grpc_library](#closure_grpc_library) | Generates protobuf closure library *.js files |
 
 ---
 
 ## `closure_grpc_compile`
 
-Generates a closure *.js protobuf+gRPC files
+Generates Closure *.js protobuf+gRPC files
 
 ### `WORKSPACE`
 
@@ -50,7 +50,7 @@ closure_grpc_compile(
 
 ## `commonjs_grpc_compile`
 
-Generates a commonjs *.js protobuf+gRPC files
+Generates CommonJS *.js protobuf+gRPC files
 
 ### `WORKSPACE`
 
@@ -88,7 +88,7 @@ commonjs_grpc_compile(
 
 ## `commonjs_dts_grpc_compile`
 
-Generates a commonjs_dts *.js protobuf+gRPC files
+Generates commonjs_dts *.js protobuf+gRPC files
 
 ### `WORKSPACE`
 
@@ -126,7 +126,7 @@ commonjs_dts_grpc_compile(
 
 ## `ts_grpc_compile`
 
-Generates a commonjs *.ts protobuf+gRPC files
+Generates CommonJS *.ts protobuf+gRPC files
 
 ### `WORKSPACE`
 

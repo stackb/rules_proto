@@ -46,13 +46,15 @@ func makeD() *Language {
 		Dir:   "d",
 		Name:  "d",
 		DisplayName: "D",
+		Notes: mustTemplate(`Rules for generating D protobuf ` + "`.d`" + ` files and libraries using [protobuf-d](https://github.com/dcarp/protobuf-d). Libraries are created with ` + "`d_library`" + ` from [rules_d](https://github.com/bazelbuild/rules_d)
+
+**NOTE**: These rules use the protoc-gen-d plugin, which only supports proto3 .proto files.`),
 		Flags: commonLangFlags,
 		Plugins: map[string]*Plugin{
 			"//d:d": &Plugin{
 				Tool: "@com_github_dcarp_protobuf_d//:protoc-gen-d",
 			},
 		},
-		Notes: mustTemplate(`These rules use the protoc-gen-d plugin, which only supports proto3 .proto files.`),
 		Rules: []*Rule{
 			&Rule{
 				Name:             "d_proto_compile",
@@ -61,7 +63,7 @@ func makeD() *Language {
 				Plugins:          []string{"//d:d"},
 				WorkspaceExample: dWorkspaceTemplate,
 				BuildExample:     dProtoCompileExampleTemplate,
-				Doc:              "Generates d protobuf artifacts",
+				Doc:              "Generates D protobuf `.d` artifacts",
 				Attrs:            aspectProtoCompileAttrs,
 				SkipTestPlatforms: []string{"windows", "macos"},
 			},
@@ -72,7 +74,7 @@ func makeD() *Language {
 // 				Plugins:          []string{"//d:grpc_d"}, # TODO: Try https://github.com/huntlabs/grpc-dlang
 // 				WorkspaceExample: dWorkspaceTemplate,
 // 				BuildExample:     grpcCompileExampleTemplate,
-// 				Doc:              "Generates d protobuf+gRPC artifacts",
+// 				Doc:              "Generates D protobuf+gRPC `.d` artifacts",
 // 				Attrs:            aspectProtoCompileAttrs,
 // 				SkipTestPlatforms: []string{"windows", "macos"},
 // 			},
@@ -82,7 +84,7 @@ func makeD() *Language {
 				Implementation:   dProtoLibraryRuleTemplate,
 				WorkspaceExample: dWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
-				Doc:              "Generates d protobuf library",
+				Doc:              "Generates a D protobuf library using `d_library` from `rules_d`",
 				Attrs:            aspectProtoCompileAttrs,
 				SkipTestPlatforms: []string{"windows", "macos"},
 			},
@@ -92,7 +94,7 @@ func makeD() *Language {
 // 				Implementation:   dGrpcLibraryRuleTemplate,
 // 				WorkspaceExample: dWorkspaceTemplate,
 // 				BuildExample:     grpcLibraryExampleTemplate,
-// 				Doc:              "Generates d protobuf+gRPC library",
+// 				Doc:              "Generates a D protobuf+gRPC library using `d_library` from `rules_d`",
 // 				Attrs:            aspectProtoCompileAttrs,
 // 				SkipTestPlatforms: []string{"windows", "macos"},
 // 			},

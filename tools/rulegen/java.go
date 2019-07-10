@@ -72,6 +72,7 @@ func makeJava() *Language {
 		Dir:              "java",
 		Name:             "java",
 		DisplayName:      "Java",
+		Notes: mustTemplate("Rules for generating Java protobuf and gRPC `.jar` files and libraries using standard Protocol Buffers and [gRPC-Java](https://github.com/grpc/grpc-java). Libraries are created with the Bazel native `java_library`"),
 		Flags:            commonLangFlags,
 		SkipDirectoriesMerge: true,
 		Rules: []*Rule{
@@ -82,7 +83,7 @@ func makeJava() *Language {
 				Plugins:          []string{"//java:java"},
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     protoCompileExampleTemplate,
-				Doc:              "Generates a srcjar with protobuf *.java files",
+				Doc:              "Generates a Java protobuf srcjar artifact",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -92,7 +93,7 @@ func makeJava() *Language {
 				Plugins:          []string{"//java:java", "//java:grpc_java"},
 				WorkspaceExample: protoWorkspaceTemplate,
 				BuildExample:     grpcCompileExampleTemplate,
-				Doc:              "Generates a srcjar with protobuf+gRPC *.java files",
+				Doc:              "Generates a Java protobuf+gRPC srcjar artifact",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -101,7 +102,7 @@ func makeJava() *Language {
 				Implementation:   javaProtoLibraryRuleTemplate,
 				WorkspaceExample: javaProtoWorkspaceTemplate,
 				BuildExample:     protoLibraryExampleTemplate,
-				Doc:              "Generates a jar with compiled protobuf *.class files",
+				Doc:              "Generates a Java protobuf library using `java_library`",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 			&Rule{
@@ -110,7 +111,7 @@ func makeJava() *Language {
 				Implementation:   javaGrpcLibraryRuleTemplate,
 				WorkspaceExample: javaGrpcWorkspaceTemplate,
 				BuildExample:     grpcLibraryExampleTemplate,
-				Doc:              "Generates a jar with compiled protobuf+gRPC *.class files",
+				Doc:              "Generates a Java protobuf+gRPC library using `java_library`",
 				Attrs:            aspectProtoCompileAttrs,
 			},
 		},

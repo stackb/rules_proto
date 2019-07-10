@@ -62,6 +62,7 @@ func makeGogo() *Language {
 		Dir:     "github.com/gogo/protobuf",
 		Name:    "gogo",
 		DisplayName: "Go (gogoprotobuf)",
+		Notes: mustTemplate("Rules for generating Go protobuf and gRPC `.go` files and libraries using [gogo/protobuf](https://github.com/gogo/protobuf). Libraries are created with `go_library` from [rules_go](https://github.com/bazelbuild/rules_go)"),
 		Plugins: make(map[string]*Plugin),
 		Flags: commonLangFlags,
 	}
@@ -100,7 +101,7 @@ func addGogoRules(language *Language, base string) {
 			Plugins:          []string{protoPlugin},
 			WorkspaceExample: goWorkspaceTemplate,
 			BuildExample:     protoCompileExampleTemplate,
-			Doc:              fmt.Sprintf("Generates %s protobuf artifacts", base),
+			Doc:              fmt.Sprintf("Generates %s protobuf `.go` artifacts", base),
 			Attrs:            aspectProtoCompileAttrs,
 		},
 		&Rule{
@@ -111,7 +112,7 @@ func addGogoRules(language *Language, base string) {
 			Plugins:          []string{grpcPlugin},
 			WorkspaceExample: goWorkspaceTemplate,
 			BuildExample:     grpcCompileExampleTemplate,
-			Doc:              fmt.Sprintf("Generates %s protobuf+gRPC artifacts", base),
+			Doc:              fmt.Sprintf("Generates %s protobuf+gRPC `.go` artifacts", base),
 			Attrs:            aspectProtoCompileAttrs,
 		},
 
@@ -122,7 +123,7 @@ func addGogoRules(language *Language, base string) {
 			Implementation:   gogoProtoLibraryRuleTemplate,
 			WorkspaceExample: goWorkspaceTemplate,
 			BuildExample:     gogoProtoLibraryExampleTemplate,
-			Doc:              fmt.Sprintf("Generates %s protobuf library", base),
+			Doc:              fmt.Sprintf("Generates a Go %s protobuf library using `go_library` from `rules_go`", base),
 			Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
 		},
 		&Rule{
@@ -132,7 +133,7 @@ func addGogoRules(language *Language, base string) {
 			Implementation:   gogoGrpcLibraryRuleTemplate,
 			WorkspaceExample: goWorkspaceTemplate,
 			BuildExample:     goGrpcLibraryExampleTemplate,
-			Doc:              fmt.Sprintf("Generates %s protobuf+gRPC library", base),
+			Doc:              fmt.Sprintf("Generates a Go %s protobuf+gRPC library using `go_library` from `rules_go`", base),
 			Attrs:            append(aspectProtoCompileAttrs, goProtoAttrs...),
 			SkipTestPlatforms: []string{"windows"}, // gRPC go lib rules fail on windows due to bad path
 		},

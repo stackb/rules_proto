@@ -1,17 +1,19 @@
 # Java rules
 
+Rules for generating Java protobuf and gRPC `.jar` files and libraries using standard Protocol Buffers and [gRPC-Java](https://github.com/grpc/grpc-java). Libraries are created with the Bazel native `java_library`
+
 | Rule | Description |
 | ---: | :--- |
-| [java_proto_compile](#java_proto_compile) | Generates a srcjar with protobuf *.java files |
-| [java_grpc_compile](#java_grpc_compile) | Generates a srcjar with protobuf+gRPC *.java files |
-| [java_proto_library](#java_proto_library) | Generates a jar with compiled protobuf *.class files |
-| [java_grpc_library](#java_grpc_library) | Generates a jar with compiled protobuf+gRPC *.class files |
+| [java_proto_compile](#java_proto_compile) | Generates a Java protobuf srcjar artifact |
+| [java_grpc_compile](#java_grpc_compile) | Generates a Java protobuf+gRPC srcjar artifact |
+| [java_proto_library](#java_proto_library) | Generates a Java protobuf library using `java_library` |
+| [java_grpc_library](#java_grpc_library) | Generates a Java protobuf+gRPC library using `java_library` |
 
 ---
 
 ## `java_proto_compile`
 
-Generates a srcjar with protobuf *.java files
+Generates a Java protobuf srcjar artifact
 
 ### `WORKSPACE`
 
@@ -43,7 +45,7 @@ java_proto_compile(
 
 ## `java_grpc_compile`
 
-Generates a srcjar with protobuf+gRPC *.java files
+Generates a Java protobuf+gRPC srcjar artifact
 
 ### `WORKSPACE`
 
@@ -75,7 +77,7 @@ java_grpc_compile(
 
 ## `java_proto_library`
 
-Generates a jar with compiled protobuf *.class files
+Generates a Java protobuf library using `java_library`
 
 ### `WORKSPACE`
 
@@ -111,7 +113,7 @@ java_proto_library(
 
 ## `java_grpc_library`
 
-Generates a jar with compiled protobuf+gRPC *.class files
+Generates a Java protobuf+gRPC library using `java_library`
 
 ### `WORKSPACE`
 

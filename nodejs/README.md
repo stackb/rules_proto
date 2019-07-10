@@ -1,15 +1,17 @@
 # Node.js rules
 
+Rules for generating Node.js protobuf and gRPC `.js` files using standard Protocol Buffers and gRPC.
+
 | Rule | Description |
 | ---: | :--- |
-| [nodejs_proto_compile](#nodejs_proto_compile) | Generates Node.js *.js protobuf artifacts |
-| [nodejs_grpc_compile](#nodejs_grpc_compile) | Generates Node.js *.js protobuf+gRPC artifacts |
+| [nodejs_proto_compile](#nodejs_proto_compile) | Generates Node.js protobuf `.js` artifacts |
+| [nodejs_grpc_compile](#nodejs_grpc_compile) | Generates Node.js protobuf+gRPC `.js` artifacts |
 
 ---
 
 ## `nodejs_proto_compile`
 
-Generates Node.js *.js protobuf artifacts
+Generates Node.js protobuf `.js` artifacts
 
 ### `WORKSPACE`
 
@@ -41,7 +43,7 @@ nodejs_proto_compile(
 
 ## `nodejs_grpc_compile`
 
-Generates Node.js *.js protobuf+gRPC artifacts
+Generates Node.js protobuf+gRPC `.js` artifacts
 
 ### `WORKSPACE`
 
