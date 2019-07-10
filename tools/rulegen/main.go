@@ -349,6 +349,10 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 		out.w("  main_%s:", ciPlatform)
 		out.w("    name: build & test all")
 		out.w("    platform: %s", ciPlatform)
+		if ciPlatform == "macos" {
+			out.w("    build_flags:")
+			out.w(`    - "--copt=-DGRPC_BAZEL_BUILD"`) // https://github.com/bazelbuild/bazel/issues/4341 required for macos
+		}
 		out.w("    build_targets:")
 		for _, lang := range languages {
 			// Skip experimental or excluded
@@ -357,6 +361,9 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 			}
 		}
 		out.w("    test_flags:")
+		if ciPlatform == "macos" {
+			out.w(`    - "--copt=-DGRPC_BAZEL_BUILD"`) // https://github.com/bazelbuild/bazel/issues/4341 required for macos
+		}
 		out.w(`    - "--test_output=errors"`)
 		out.w("    test_targets:")
 		out.w(`    - "//example/routeguide/..."`)

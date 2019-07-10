@@ -66,6 +66,8 @@ tasks:
   main_macos:
     name: build & test all
     platform: macos
+    build_flags:
+    - "--copt=-DGRPC_BAZEL_BUILD"
     build_targets:
     - "//closure/..."
     - "//cpp/..."
@@ -83,6 +85,7 @@ tasks:
     - "//github.com/stackb/grpc.js/..."
     - "//github.com/grpc/grpc-web/..."
     test_flags:
+    - "--copt=-DGRPC_BAZEL_BUILD"
     - "--test_output=errors"
     test_targets:
     - "//example/routeguide/..."
