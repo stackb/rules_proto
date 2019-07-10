@@ -17,7 +17,6 @@
  */
 
 const async = require('async');
-const _ = require('lodash');
 const grpc = require('grpc');
 
 const messages = require('build_stack_rules_proto/nodejs/example/routeguide/routeguide/example/proto/routeguide_pb.js')
@@ -46,7 +45,7 @@ const COORD_FACTOR = 1e7;
  * @param {function} callback Called when this demo is complete
  */
 function runGetFeature(callback) {
-  const next = _.after(2, callback);
+  let responseCount = 0;
   function featureCallback(error, feature) {
     if (error) {
       console.warn("ERROR occured while attempting to get feature", error);
@@ -64,7 +63,8 @@ function runGetFeature(callback) {
     } else {
       console.log('Found no feature');
     }
-    next();
+    responseCount++
+    if (responseCount == 2) callback()
   }
   const point1 = newPoint(409146138, -746188906);
   const point2 = newPoint(1, 1);
@@ -166,14 +166,14 @@ function runRecordRoute(callback) {
       console.log('Visiting point ' + lat/COORD_FACTOR + ', ' +
           lng/COORD_FACTOR);
       call.write(newPoint(lat, lng));
-      _.delay(callback, _.random(100, 500));
+      setTimeout(callback, 100 + ~~(Math.random() * 400))
     };
   }
 
   const pointSenders = [];
 
   for (let i = 0; i < num_points; i++) {
-    const randIndex = _.random(0, featureList.length - 1)
+    const randIndex = ~~(Math.random() * (featureList.length - 1))
     console.log("randomIndex", randIndex);
     const randomPointJson = featureList[randIndex];
     const randomPoint = newPoint(randomPointJson.location.latitude, randomPointJson.location.longitude)

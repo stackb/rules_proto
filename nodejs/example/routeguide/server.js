@@ -22,7 +22,6 @@ const services = require('build_stack_rules_proto/nodejs/example/routeguide/rout
 
 const fs = require('fs');
 const path = require('path');
-const _ = require('lodash');
 const grpc = require('grpc');
 const COORD_FACTOR = 1e7;
 
@@ -80,12 +79,12 @@ function getFeature(call, callback) {
 function listFeatures(call) {
   const lo = call.request.getLo();
   const hi = call.request.getHi();
-  const left = _.min([lo.getLongitude(), hi.getLongitude()]);
-  const right = _.max([lo.getLongitude(), hi.getLongitude()]);
-  const top = _.max([lo.getLatitude(), hi.getLatitude()]);
-  const bottom = _.min([lo.getLatitude(), hi.getLatitude()]);
+  const left = Math.min([lo.getLongitude(), hi.getLongitude()]);
+  const right = Math.max([lo.getLongitude(), hi.getLongitude()]);
+  const top = Math.max([lo.getLatitude(), hi.getLatitude()]);
+  const bottom = Math.min([lo.getLatitude(), hi.getLatitude()]);
   // For each feature, check if it is in the given bounding box
-  _.each(feature_list, function(feature) {
+  feature_list.forEach(function(feature) {
     if (feature.getName() === '') {
       return;
     }
@@ -186,7 +185,7 @@ function routeChat(call) {
     /* For each note sent, respond with all previous notes that correspond to
      * the same point */
     if (route_notes.hasOwnProperty(key)) {
-      _.each(route_notes[key], function(note) {
+      route_notes[key].forEach(function(note) {
         call.write(note);
       });
     } else {
@@ -227,7 +226,7 @@ if (require.main === module) {
   routeServer.bind(addr, grpc.ServerCredentials.createInsecure());
 
   // Transform the loaded features to Feature objects
-  feature_list = _.map(featureDb, function(value) {
+  feature_list = featureDb.map(function(value) {
     const feature = new messages.Feature();
     feature.setName(value.name);
     const location = new messages.Point();
