@@ -38,7 +38,7 @@ var cppGrpcLibraryRuleTemplate = mustTemplate(cppLibraryRuleTemplateString + `
 GRPC_DEPS = [
     "@com_google_protobuf//:protoc_lib",
     "@com_github_grpc_grpc//:grpc++",
-    #"@com_github_grpc_grpc//:grpc++_reflection", # TODO: Disabled until fixed upstream
+    "@com_github_grpc_grpc//:grpc++_reflection",
 ]`)
 
 func makeCpp() *Language {
