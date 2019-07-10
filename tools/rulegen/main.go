@@ -349,8 +349,6 @@ func mustWriteBazelciPresubmitYml(dir string, data interface{}, languages []*Lan
 		out.w("  main_%s:", ciPlatform)
 		out.w("    name: build & test all")
 		out.w("    platform: %s", ciPlatform)
-		out.w("    environment:")
-		out.w("      CC: clang")
 		out.w("    build_targets:")
 		for _, lang := range languages {
 			// Skip experimental or excluded
