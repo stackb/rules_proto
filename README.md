@@ -98,9 +98,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_stack_rules_proto",
-    urls = ["https://github.com/stackb/rules_proto/archive/89cb1da964299d7c8901657b341b7a9ff7d83e39.tar.gz"],
-    sha256 = "395408a3dc9c3db2b5c200b8722a13a60898c861633b99e6e250186adffd1370",
-    strip_prefix = "rules_proto-89cb1da964299d7c8901657b341b7a9ff7d83e39",
+    urls = ["https://github.com/stackb/rules_proto/archive/5fad9ab4d1207ed8b58a870338e81f2ba68600ab.tar.gz"],
+    sha256 = "ebceb7ddeed05815389ae6905e0921b37da4a6dd0a5a48441a6d33f401be890b",
+    strip_prefix = "rules_proto-5fad9ab4d1207ed8b58a870338e81f2ba68600ab",
 )
 ```
 
