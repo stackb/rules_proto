@@ -9,6 +9,8 @@ def gateway_grpc_library(**kwargs):
     proto = kwargs.get("proto")
     visibility = kwargs.get("visibility")
 
+    if deps is None:
+        deps = []
     compilers = kwargs.get("compilers")
     if not compilers:
         compilers = [
