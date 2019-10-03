@@ -6,6 +6,7 @@ def gateway_grpc_library(**kwargs):
     name = kwargs.get("name")
     importpath = kwargs.get("importpath")
     deps = kwargs.get("deps")
+    proto = kwargs.get("proto")
     visibility = kwargs.get("visibility")
 
     compilers = kwargs.get("compilers")
@@ -19,7 +20,7 @@ def gateway_grpc_library(**kwargs):
         name = name,
         compilers = compilers,
         importpath = importpath,
-        proto = deps[0],
-        deps = ["@go_googleapis//google/api:annotations_go_proto"],
+        proto = proto,
+        deps = ["@go_googleapis//google/api:annotations_go_proto"] + deps,
         visibility = visibility,
     )
