@@ -9,9 +9,10 @@ load(
 )
 
 def protobuf(**kwargs):
-    com_github_madler_zlib(**kwargs)
-    bazel_skylib(**kwargs)
-    com_google_protobuf(**kwargs)
-    external_protobuf_clib(**kwargs)
-    external_protobuf_headers(**kwargs)
-    external_zlib(**kwargs)
+    pass
+#    com_github_madler_zlib(**kwargs)
+#    bazel_skylib(**kwargs)
+#    com_google_protobuf(**kwargs)
+#    external_protobuf_clib(**kwargs)
+#    external_protobuf_headers(**kwargs)
+#    external_zlib(**kwargs)

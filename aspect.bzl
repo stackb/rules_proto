@@ -554,7 +554,7 @@ def _get_output_filename(src, plugin, pattern):
         filename = pattern.replace("{basename|rust_keyword}", _rust_keyword(basename))
     else:
         filename = basename + pattern
-    
+
     return filename
 
 def _get_proto_filename(src):

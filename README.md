@@ -114,7 +114,9 @@ languages, gRPC, unsupported (native) language support, or custom proto plugins.
 
 ## Installation
 
-Add rules_proto your `WORKSPACE`:
+1. Install [rules_proto](https://github.com/bazelbuild/rules_proto) so you can load `proto_library`.
+
+2. Add rules_proto your `WORKSPACE`:
 
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")

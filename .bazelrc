@@ -2,22 +2,32 @@ build --strategy=CoreCompile=standalone
 build --strategy=SwiftCompile=standalone
 
 build --all_incompatible_changes 
-#build --incompatible_no_rule_outputs_param=false
-
+build --incompatible_allow_python_version_transitions=false
 build --incompatible_depset_is_not_iterable=false 
 build --incompatible_depset_union=false
 build --incompatible_disable_deprecated_attr_params=false
 build --incompatible_disable_legacy_proto_provider=false 
+build --incompatible_disable_native_android_rules=false 
+build --incompatible_disable_target_provider_fields=false 
+build --incompatible_disallow_empty_glob=false
 build --incompatible_disallow_legacy_javainfo=false
 build --incompatible_disallow_struct_provider_syntax=false 
 build --incompatible_enable_cc_toolchain_resolution=false 
+build --incompatible_load_cc_rules_from_bzl=false 
+build --incompatible_load_java_rules_from_bzl=false 
+build --incompatible_load_proto_rules_from_bzl=false 
+build --incompatible_load_python_rules_from_bzl=false 
 build --incompatible_new_actions_api=false
+build --incompatible_no_rule_outputs_param=false 
 build --incompatible_no_transitive_loads=false
-build --incompatible_require_ctx_in_configure_features=false 
-build --incompatible_use_jdk11_as_host_javabase=false 
-build --incompatible_use_toolchain_resolution_for_java_rules=false 
-build --incompatible_remove_native_maven_jar=false
-build --incompatible_allow_python_version_transitions=false
 build --incompatible_py3_is_default=false # grpc-python does not work with python3?
-build --incompatible_disallow_empty_glob=false
+build --incompatible_remove_native_maven_jar=false
+build --incompatible_require_ctx_in_configure_features=false 
+build --incompatible_restrict_string_escapes=false 
 build --incompatible_tls_enabled_removed=false
+build --incompatible_use_jdk11_as_host_javabase=false 
+build --incompatible_use_platforms_repo_for_constraints=false 
+build --incompatible_use_toolchain_resolution_for_java_rules=false
+build --experimental_google_legacy_api 
+
+build --host_javabase @bazel_tools//tools/jdk:remote_jdk11

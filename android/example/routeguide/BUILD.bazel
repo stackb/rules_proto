@@ -1,3 +1,4 @@
+load("@build_bazel_rules_android//android:android_binary.bzl", "android_binary")
 load("//android:android_grpc_library.bzl", "android_grpc_library")
 
 android_grpc_library(

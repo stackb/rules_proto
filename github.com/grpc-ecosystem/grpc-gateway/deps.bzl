@@ -15,7 +15,7 @@ def gateway_grpc_compile(**kwargs):
 
     go_repository(
         name = "org_golang_google_genproto",
-        commit = "383e8b2c3b9e36c4076b235b32537292176bae20",
+        commit = "548a555dbc03994223efbaba0090152849259498",
         importpath = "google.golang.org/genproto",
     )
 

@@ -15,6 +15,27 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file"
 # **************************************************************
 #
 #
+# proto
+#
+# **************************************************************
+
+load("@build_stack_rules_proto//:deps.bzl", "rules_proto")
+
+rules_proto()
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
+
+load("@build_stack_rules_proto//protobuf:deps.bzl", "protobuf")
+
+protobuf()
+
+# **************************************************************
+#
+#
 # cpp
 #
 # **************************************************************
@@ -26,6 +47,10 @@ cpp_grpc_library()
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
+
+load("@upb//bazel:workspace_deps.bzl", "upb_deps")
+
+upb_deps()
 
 # **************************************************************
 #
@@ -382,7 +407,7 @@ load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_library")
 
 android_grpc_library()
 
-load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
+load("@build_bazel_rules_android//android:android_sdk_repository.bzl", "android_sdk_repository")
 
 android_sdk_repository(name = "androidsdk")
 

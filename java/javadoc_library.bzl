@@ -50,12 +50,14 @@ def _javadoc_library(ctx):
 
     javadoc_command = [
         java_home + "/bin/javadoc",
-        '-sourcepath .',
+        "-sourcepath .",
         " ".join(ctx.attr.root_packages),
         "-use",
-        "-subpackages", ":".join(ctx.attr.root_packages),
+        "-subpackages",
+        ":".join(ctx.attr.root_packages),
         "-encoding UTF8",
-        "-classpath", ":".join([jar.path for jar in classpath]),
+        "-classpath",
+        ":".join([jar.path for jar in classpath]),
         "-notimestamp",
         "-d tmp",
         "-Xdoclint:-missing",

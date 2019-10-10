@@ -152,8 +152,8 @@ def com_github_bazelbuild_bazel_gazelle(**kwargs):
 
 def com_github_bazelbuild_buildtools(**kwargs):
     name = "com_github_bazelbuild_buildtools"
-    ref = get_ref(name, "6415663945d3248207da955aafa1fa2af1a0f2ed", kwargs)
-    sha256 = get_sha256(name, "d1e28237d1f4c2255c504246b4f3fd36f74d590f2974491b4399a84c58b495ed", kwargs)
+    ref = get_ref(name, "0.29.0", kwargs)
+    sha256 = get_sha256(name, "f3ef44916e6be705ae862c0520bac6834dd2ff1d4ac7e5abc61fe9f12ce7a865", kwargs)
     github_archive(name, "bazelbuild", "buildtools", ref, sha256)
 
 def boringssl(**kwargs):
@@ -162,44 +162,42 @@ def boringssl(**kwargs):
             name = "boringssl",
             # on the chromium-stable-with-bazel branch
             url = "https://boringssl.googlesource.com/boringssl/+archive/dcd3e6e6ecddf059adb48fca45bc7346a108bdd9.tar.gz",
+	    sha256 = "e051159ca173513a44588eb82a3af476f2819b225494fad26d2b825f1f6a668b",
         )
 
 def com_github_nanopb_nanopb(**kwargs):
     name = "com_github_nanopb_nanopb"
-    ref = get_ref(name, "ae9901f2a31500e8fdc93fa9804d24851c58bb1e", kwargs)
-
-    # should be 8bbbb1e78d4ddb0a1919276924ab10d11b631df48b657d960e0c795a25515735?
-    sha256 = get_sha256(name, "7aa0ab179eff56241b6cded9cd07324af2395ad56d5478e2f7dabdb42b65d3fb", kwargs)
+    ref = get_ref(name, "5e5280de13b89c4a71ba2e270980a6435bfd17f1", kwargs)
+    sha256 = get_sha256(name, "1eb1aafea696ba3744dde2238e6237a18a104d07eb38bc1db93392de210f5422", kwargs)
     github_archive(name, "nanopb", "nanopb", ref, sha256)
 
 def com_google_protobuf(**kwargs):
     name = "com_google_protobuf"
-    ref = get_ref(name, "v3.7.1", kwargs)
-    sha256 = get_sha256(name, "f1748989842b46fa208b2a6e4e2785133cfcc3e4d43c17fecb023733f0f5443f", kwargs)
-
-    github_archive(name, "google", "protobuf", ref, sha256)
+    ref = get_ref(name, "v3.10.0", kwargs)
+    sha256 = get_sha256(name, "758249b537abba2f21ebc2d02555bf080917f0f2f88f4cbe2903e0e28c4187ed", kwargs)
+    github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
 def com_github_grpc_grpc(**kwargs):
     name = "com_github_grpc_grpc"
-    ref = get_ref(name, "v1.20.1", kwargs)
-    sha256 = get_sha256(name, "ba8b08a697b66e14af35da07753583cf32ff3d14dcd768f91b1bbe2e6c07c349", kwargs)
+    ref = get_ref(name, "v1.24.1", kwargs)
+    sha256 = get_sha256(name, "ffadb8c6bcd725b60c370484062363c4c476335fbd5f377dcc66ac9c91aeae03", kwargs)
     github_archive(name, "grpc", "grpc", ref, sha256)
 
 def io_bazel_rules_dotnet(**kwargs):
     name = "io_bazel_rules_dotnet"
-    ref = get_ref(name, "7e907e130943d4c9391df6ad3b569e3e9b2efa9d", kwargs)  # PR#122
-    sha256 = get_sha256(name, "17f6e070bb940441efadf516a0274db1db0e306130c279d09d400fc0b3c71899", kwargs)
+    ref = get_ref(name, "9a99d60543807196026000fb590f462331a91d19", kwargs)
+    sha256 = get_sha256(name, "623932c09b8f90483fc3aa3cdef0f86c9c1270cdcebcd317841e903e0fa3d95a", kwargs)
     github_archive(name, "bazelbuild", "rules_dotnet", ref, sha256)
 
 def io_bazel_rules_scala(**kwargs):
     name = "io_bazel_rules_scala"
-    ref = get_ref(name, "14d9742496859faaf860b1adfc8126f3ed077921", kwargs)  # May 3, 2019
-    sha256 = get_sha256(name, "72fc4357b29ec93951d472ee22a4cc3f30e170234a4ec73ff678f43f7e276bd4", kwargs)
+    ref = get_ref(name, "f985e5e0d6364970be8d6f15d262c8b0e0973d1b", kwargs)
+    sha256 = get_sha256(name, "4276b2ab877d6e1271825933eea00869248d32948d42770bfe4fedd491b2824c", kwargs)
     github_archive(name, "bazelbuild", "rules_scala", ref, sha256)
 
 def io_bazel_rules_rust(**kwargs):
     name = "io_bazel_rules_rust"
-    ref = get_ref(name, "d28b121396974a628b9cdb29b6ed7f4e370edb4e", kwargs)  # May 8, 2019
+    ref = get_ref(name, "d28b121396974a628b9cdb29b6ed7f4e370edb4e", kwargs)
     sha256 = get_sha256(name, "58b8786e00b3489ce127e001670fd991547bb7db315e8a214915a2fa0b83743f", kwargs)
     github_archive(name, "bazelbuild", "rules_rust", ref, sha256)
 
@@ -225,25 +223,25 @@ def build_bazel_rules_android(**kwargs):
     """Android Rules
     """
     name = "build_bazel_rules_android"
-    ref = get_ref(name, "ac9d2df31b2b9c77c1c43d4a3cfce789758320c5", kwargs)  # Apr 2019
-    sha256 = get_sha256(name, "5bbead25993489d50290d8361f16fd08958c6b7b78e260091a0fd4f691518fb9", kwargs)
+    ref = get_ref(name, "b60d84e5635233d2d8fc905041576bd44cefbb94", kwargs)
+    sha256 = get_sha256(name, "446e633c679260f971da74555369bf45f0165475354ad59a23416448e2571f5f", kwargs)
     github_archive(name, "bazelbuild", "rules_android", ref, sha256)
 
 def build_bazel_rules_swift(**kwargs):
     """swift Rules
     """
     name = "build_bazel_rules_swift"
-    ref = get_ref(name, "004597eeb9b3e0a2bda6c9f6232f8687a01e73b0", kwargs)  # Apr 12, 2019
-    sha256 = get_sha256(name, "1fa65113903c03d0c7ae0fd79cfcf5cda1695d96411afa58a8022569db53e3c2", kwargs)
+    ref = get_ref(name, "0.13.0", kwargs)
+    sha256 = get_sha256(name, "617e568aa8263c454f63362f5ab837038da710d646510b8f4a6760ff6361f714", kwargs)
     github_archive(name, "bazelbuild", "rules_swift", ref, sha256)
 
 def com_github_apple_swift_swift_protobuf(**kwargs):
     if "com_github_apple_swift_swift_protobuf" not in native.existing_rules():
-        version = "1.4.0"
+        version = "1.7.0"
         http_archive(
             name = "com_github_apple_swift_swift_protobuf",
             url = "https://github.com/apple/swift-protobuf/archive/%s.tar.gz" % version,
-            sha256 = "efa256d572d19fc23756a30089129af523173ad29a84ee87800fa88f056efaac",
+            sha256 = "3654f75d1de8806678ea7c942903a6fcdaba477e0fc0a53439cdc381a5f3e4c0",
             strip_prefix = "swift-protobuf-" + version,
             build_file = "@build_bazel_rules_swift//third_party:com_github_apple_swift_swift_protobuf/BUILD.overlay",
         )
@@ -252,17 +250,23 @@ def io_bazel_rules_go(**kwargs):
     """Go Rules
     """
     name = "io_bazel_rules_go"
-    ref = get_ref(name, "fabf03c1cd31bcf15fb945d932cef322b242be3a", kwargs)  # post-18.6
-    sha256 = get_sha256(name, "d40144fcb282e167a1836c4d1a9aabdd457051717a4648153a89aa34bd9f8e6a", kwargs)
+    ref = get_ref(name, "v0.19.5", kwargs)
+    sha256 = get_sha256(name, "b2493537eab9f65715d9236223a38f40553e11d7ec27499f294792d1f10dcfc3", kwargs)
     github_archive(name, "bazelbuild", "rules_go", ref, sha256)
 
 def io_bazel_rules_python(**kwargs):
     """python Rules
     """
     name = "io_bazel_rules_python"
-    ref = get_ref(name, "965d4b4a63e6462204ae671d7c3f02b25da37941", kwargs)  # 2019-03-07
-    sha256 = get_sha256(name, "3e55ec4f7e151b048e950965f956c1e0633fc76449905f40dba671574eac574c", kwargs)
+    ref = get_ref(name, "5aa465d5d91f1d9d90cac10624e3d2faf2057bd5", kwargs)
+    sha256 = get_sha256(name, "e220053c4454664c09628ffbb33f245e65f5fe92eb285fbd0bc3a26f173f99d0", kwargs)
     github_archive(name, "bazelbuild", "rules_python", ref, sha256)
+
+def rules_proto(**kwargs):
+    name = "rules_proto"
+    ref = get_ref(name, "97d8af4dc474595af3900dd85cb3a29ad28cc313", kwargs)
+    sha256 = get_sha256(name, "602e7161d9195e50246177e7c55b2f39950a9cf7366f74ed5f22fd45750cd208", kwargs)
+    github_archive(name, "bazelbuild", "rules_proto", ref, sha256)
 
 def six(**kwargs):
     name = "six"
@@ -300,34 +304,25 @@ def io_bazel_rules_d(**kwargs):
     """d Rules
     """
     name = "io_bazel_rules_d"
-    ref = get_ref(name, "99c22ceeac4b883f97b1a420f98d4540e47978ca", kwargs)
-    sha256 = get_sha256(name, "ba8eb23c5753de0ba6e743e27e40f0eef1c3b08b3eaabd1bf782f87bca1ada2c", kwargs)
+    ref = get_ref(name, "0579d30b7667a04b252489ab130b449882a7bdba", kwargs)
+    sha256 = get_sha256(name, "bf8d7e7d76f4abef5a732614ac06c0ccffbe5aa5fdc983ea4fa3a81ec68e1f8c", kwargs)
     github_archive(name, "bazelbuild", "rules_d", ref, sha256)
-
-def com_google_protobuf_lite(**kwargs):
-    """A different branch of google/protobuf that contains the protobuf_lite plugin
-    """
-    name = "com_google_protobuf_lite"
-    ref = get_ref(name, "3cf3be9959928bf8a7133d323eaf6a5a8d5afdd7", kwargs)  # latest as of Apr 9, 2019
-    sha256 = get_sha256(name, "9f28fd96ccd1f87e0b2d23c622db2a87c87ff91dc30dd13a6dd3bff11738e608", kwargs)
-    github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
 def rules_jvm_external(**kwargs):
     """Fetch maven artifacts
     """
     name = "rules_jvm_external"
-    ref = get_ref(name, "e359007344bc53133e1e54c891670d08453d4827", kwargs)  # May 7 2019
-    sha256 = get_sha256(name, "150c8cd5a3abe8b2da09235ebe5aedd0a379440d9f6a15d1c99c2b1e560a09f9", kwargs)
+    ref = get_ref(name, "05ba43aa5b671269cf0dfe2f91ec8f26dcea998e", kwargs)
+    sha256 = get_sha256(name, "02e33287aa6fa129be0a3569ddba0c84ef8eb8b1e5f6f5348373bee559447642", kwargs)
     github_archive(name, "bazelbuild", "rules_jvm_external", ref, sha256)
 
 def io_grpc_grpc_java(**kwargs):
     """grpc java plugin and jars
     """
     name = "io_grpc_grpc_java"
-    ref = get_ref(name, "3c24dc6fe1b8f3e5c89b919c38a4eefe216397d3", kwargs)  # v1.19.0 and changes up to PR #5456
-    sha256 = get_sha256(name, "1eeb136874a58a0a311a0701016aced96919f501ced0372013eb1708724ab046", kwargs)
+    ref = get_ref(name, "v1.24.0", kwargs)
+    sha256 = get_sha256(name, "8b495f58aaf75138b24775600a062bbdaa754d85f7ab2a47b2c9ecb432836dd1", kwargs)
     github_archive(name, "grpc", "grpc-java", ref, sha256)
-
 
 def com_github_scalapb_scalapb(**kwargs):
     """scala compiler plugin
@@ -372,8 +367,8 @@ def bazel_skylib(**kwargs):
     """ bazel utils
     """
     name = "bazel_skylib"
-    ref = get_ref(name, "be3b1fc838386bdbea39d9750ea4411294870575", kwargs)  # Apr 13, 2019
-    sha256 = get_sha256(name, "6128dd2af9830430e0ae404cb6fdce754fb80ed88942e1a0865a7f376bb68c4e", kwargs)
+    ref = get_ref(name, "1.0.2", kwargs)
+    sha256 = get_sha256(name, "e5d90f0ec952883d56747b7604e2a15ee36e288bb556c3d0ed33e818a4d971f2", kwargs)
     github_archive(name, "bazelbuild", "bazel-skylib", ref, sha256)
 
 def com_github_grpc_grpc_web(**kwargs):

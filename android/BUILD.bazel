@@ -1,10 +1,11 @@
+load("@rules_java//java:defs.bzl", "java_library")
 load("//:plugin.bzl", "proto_plugin")
 
 proto_plugin(
-    name = "javalite",
+    name = "java",
     out = "{name}.jar",
     options = ["lite"],
-    tool = "@com_google_protobuf_lite//:protoc_gen_javalite",
+    tool = "@com_google_protobuf//:protoc",
     visibility = ["//visibility:public"],
 )
 
