@@ -5,14 +5,20 @@ load(
     "com_google_protobuf",
     "external_protobuf_clib",
     "external_protobuf_headers",
-    "external_zlib",
+    "rules_cc",
+    "rules_java",
+    "rules_proto",
+    "rules_python",
 )
 
 def protobuf(**kwargs):
-    pass
-#    com_github_madler_zlib(**kwargs)
-#    bazel_skylib(**kwargs)
-#    com_google_protobuf(**kwargs)
-#    external_protobuf_clib(**kwargs)
-#    external_protobuf_headers(**kwargs)
-#    external_zlib(**kwargs)
+    com_github_madler_zlib(**kwargs)
+    bazel_skylib(**kwargs)
+    com_google_protobuf(**kwargs)
+    external_protobuf_clib(**kwargs)
+    external_protobuf_headers(**kwargs)
+    # https://github.com/bazelbuild/rules_proto/blob/master/proto/private/dependencies.bzl
+    rules_cc(**kwargs);
+    rules_java(**kwargs);
+    rules_proto(**kwargs);
+    rules_python(**kwargs);

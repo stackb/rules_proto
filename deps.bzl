@@ -1,45 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# https://raw.githubusercontent.com/grpc/grpc/master/third_party/zlib.BUILD
-ZLIB_BUILD = """
-cc_library(
-    name = "z",
-    srcs = [
-        "adler32.c",
-        "compress.c",
-        "crc32.c",
-        "deflate.c",
-        "infback.c",
-        "inffast.c",
-        "inflate.c",
-        "inftrees.c",
-        "trees.c",
-        "uncompr.c",
-        "zutil.c",
-    ],
-    hdrs = [
-        "crc32.h",
-        "deflate.h",
-        "gzguts.h",
-        "inffast.h",
-        "inffixed.h",
-        "inflate.h",
-        "inftrees.h",
-        "trees.h",
-        "zconf.h",
-        "zlib.h",
-        "zutil.h",
-    ],
-    includes = [
-        ".",
-    ],
-    linkstatic = 1,
-    visibility = [
-        "//visibility:public",
-    ],
-)
-"""
-
 def github_archive(name, org, repo, ref, sha256):
     """Declare an http_archive from github
     """
@@ -119,22 +79,14 @@ def external_libssl(**kwargs):
         )
 
 def com_github_madler_zlib(**kwargs):
-    if "com_github_madler_zlib" not in native.existing_rules():
-        http_archive(
-            name = "com_github_madler_zlib",
-            build_file_content = ZLIB_BUILD,
-            strip_prefix = "zlib-cacf7f1d4e3d44d871b605da3b647f07d718623f",
-            url = "https://github.com/madler/zlib/archive/cacf7f1d4e3d44d871b605da3b647f07d718623f.tar.gz",
-            sha256 = "6d4d6640ca3121620995ee255945161821218752b551a1a180f4215f7d124d45",
-        )
-
-def external_zlib(**kwargs):
-    com_github_madler_zlib(**kwargs)
     name = "zlib"
     if name not in native.existing_rules():
-        native.bind(
+        http_archive(
             name = name,
-            actual = "@com_github_madler_zlib//:z",
+            build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
+            sha256 = "629380c90a77b964d896ed37163f5c3a34f6e6d897311f1df2a7016355c45eff",
+            strip_prefix = "zlib-1.2.11",
+            urls = ["https://github.com/madler/zlib/archive/v1.2.11.tar.gz"],
         )
 
 def com_github_bazelbuild_bazel_gazelle(**kwargs):
@@ -254,19 +206,31 @@ def io_bazel_rules_go(**kwargs):
     sha256 = get_sha256(name, "b2493537eab9f65715d9236223a38f40553e11d7ec27499f294792d1f10dcfc3", kwargs)
     github_archive(name, "bazelbuild", "rules_go", ref, sha256)
 
-def io_bazel_rules_python(**kwargs):
-    """python Rules
-    """
-    name = "io_bazel_rules_python"
-    ref = get_ref(name, "5aa465d5d91f1d9d90cac10624e3d2faf2057bd5", kwargs)
-    sha256 = get_sha256(name, "e220053c4454664c09628ffbb33f245e65f5fe92eb285fbd0bc3a26f173f99d0", kwargs)
-    github_archive(name, "bazelbuild", "rules_python", ref, sha256)
+def rules_cc(**kwargs):
+    name = "rules_cc"
+    ref = get_ref(name, "a508235df92e71d537fcbae0c7c952ea6957a912", kwargs)
+    sha256 = get_sha256(name, "", kwargs)
+    github_archive(name, "bazelbuild", "rules_cc", ref, sha256)
+
+def rules_java(**kwargs):
+    name = "rules_java"
+    ref = get_ref(name, "db9b3c7f7e7e2f4f66589259f0e2d332b00ae631", kwargs)
+    sha256 = get_sha256(name, "", kwargs)
+    github_archive(name, "bazelbuild", "rules_java", ref, sha256)
 
 def rules_proto(**kwargs):
     name = "rules_proto"
     ref = get_ref(name, "97d8af4dc474595af3900dd85cb3a29ad28cc313", kwargs)
     sha256 = get_sha256(name, "602e7161d9195e50246177e7c55b2f39950a9cf7366f74ed5f22fd45750cd208", kwargs)
     github_archive(name, "bazelbuild", "rules_proto", ref, sha256)
+
+def rules_python(**kwargs):
+    """python Rules
+    """
+    name = "rules_python"
+    ref = get_ref(name, "5aa465d5d91f1d9d90cac10624e3d2faf2057bd5", kwargs)
+    sha256 = get_sha256(name, "e220053c4454664c09628ffbb33f245e65f5fe92eb285fbd0bc3a26f173f99d0", kwargs)
+    github_archive(name, "bazelbuild", "rules_python", ref, sha256)
 
 def six(**kwargs):
     name = "six"
