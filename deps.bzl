@@ -181,8 +181,8 @@ def com_google_protobuf(**kwargs):
 
 def com_github_grpc_grpc(**kwargs):
     name = "com_github_grpc_grpc"
-    ref = get_ref(name, "v1.20.1", kwargs)
-    sha256 = get_sha256(name, "ba8b08a697b66e14af35da07753583cf32ff3d14dcd768f91b1bbe2e6c07c349", kwargs)
+    ref = get_ref(name, "3990d9ce9e796abed897517994b3c93598b9525a", kwargs)
+    sha256 = get_sha256(name, "950348037825ce013606f5b5b4291fc1d32f79e3c0437747af41813743aa5db8", kwargs)
     github_archive(name, "grpc", "grpc", ref, sha256)
 
 def io_bazel_rules_dotnet(**kwargs):
