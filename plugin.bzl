@@ -27,7 +27,7 @@ proto_plugin = rule(
     implementation = _proto_plugin_impl,
     attrs = {
         "options": attr.string_list(
-            doc = "An list of options to pass to the compiler.",
+            doc = "A list of options to pass to the compiler.",
         ),
         "outputs": attr.string_list(
             doc = "Output filenames generated on a per-proto basis.  Example: '{basename}_pb2.py'",
