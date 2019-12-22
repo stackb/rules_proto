@@ -14,6 +14,8 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
+    verbose = kwargs.pop("verbose", 0)
+    closure_deps = kwargs.pop("closure_deps", [])
     visibility = kwargs.get("visibility")
 
     name_pb = name + "_pb"
@@ -21,6 +23,7 @@ def {{ .Rule.Name }}(**kwargs):
     closure_proto_compile(
         name = name_pb,
         deps = deps,
+        verbose = verbose,
         visibility = visibility,
         transitive = kwargs.pop("transitive", True),
         transitivity = kwargs.pop("transitivity", {}),
@@ -29,7 +32,7 @@ def {{ .Rule.Name }}(**kwargs):
     closure_js_library(
         name = name,
         srcs = [name_pb],
-        deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
+        deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"] + closure_deps,
         visibility = visibility,
         internal_descriptors = [name_pb + "/descriptor.source.bin"],
         suppress = [
@@ -40,10 +43,7 @@ def {{ .Rule.Name }}(**kwargs):
             "JSC_POSSIBLE_INEXISTENT_PROPERTY",
             "JSC_UNRECOGNIZED_TYPE_ERROR",
         ],
-    )
-    name = kwargs.get("name")
-    deps = kwargs.get("deps")
-    visibility = kwargs.get("visibility")`)
+    )`)
 
 func makeClosure() *Language {
 	return &Language{
