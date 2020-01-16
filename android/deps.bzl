@@ -17,7 +17,7 @@ def com_google_guava_guava_android(**kwargs):
         jvm_maven_import_external(
             name = "com_google_guava_guava_android",
             artifact = "com.google.guava:guava:27.0.1-android",
-            server_urls = ["http://central.maven.org/maven2"],
+            server_urls = ["https://central.maven.org/maven2"],
             artifact_sha256 = "caf0955aed29a1e6d149f85cfb625a89161b5cf88e0e246552b7ffa358204e28",
         )
 
