@@ -13,6 +13,6 @@ proto_plugin(
 proto_plugin(
     name = "grpc_js",
     outputs = ["_grpc_pb.js"],
-    tool = "@com_github_grpc_grpc//src/compiler:grpc_node_plugin",
+    tool = "@com_github_grpc_grpc//:grpc_node_plugin",
     visibility = ["//visibility:public"],
 )
