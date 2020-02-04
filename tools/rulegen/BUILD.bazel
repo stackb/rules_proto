@@ -44,7 +44,16 @@ go_library(
 
 # Utility program to generate documentation and examples
 go_binary(
-    name = "rulegen",
+    name = "rulegen_bin",
     embed = [":go_default_library"],
+)
+
+# Normalize the output rulegen binary name regardless of platform
+genrule(
+    name = "rulegen_app",
+    srcs = [":rulegen_bin"],
+    outs = ["rulegen"],
+    cmd = "cat $(SRCS) > $@",
+    executable = True,
     visibility = ["//visibility:public"],
 )
