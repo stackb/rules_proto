@@ -1,5 +1,8 @@
 ---
+bazel: 2.0.0
 tasks:
+  build_flags:
+  - "--incompatible_no_rule_outputs_param=false"
   ubuntu1604:
     environment:
       CC: clang
