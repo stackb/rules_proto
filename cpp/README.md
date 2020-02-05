@@ -180,7 +180,6 @@ cpp_grpc_library(
 | Category | Flag | Value | Description |
 | --- | --- | --- | --- |
 | build | incompatible_disable_legacy_proto_provider | false | grpc/gprc has not migrated to ProtoInfo provider |
-| build | incompatible_depset_is_not_iterable | false | com_github_grpc_grpc/bazel/generate_cc.bzl line 10, in generate_cc_impl |
 | build | incompatible_disallow_struct_provider_syntax | false | com_github_grpc_grpc/bazel/generate_cc.bzl: 81 |
 
 ### Mandatory Attributes

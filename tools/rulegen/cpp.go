@@ -113,12 +113,6 @@ func makeCpp() *Language {
 					},
 					{
 						Category:    "build",
-						Name:        "incompatible_depset_is_not_iterable",
-						Value:       "false",
-						Description: "com_github_grpc_grpc/bazel/generate_cc.bzl line 10, in generate_cc_impl",
-					},
-					{
-						Category:    "build",
 						Name:        "incompatible_disallow_struct_provider_syntax",
 						Value:       "false",
 						Description: "com_github_grpc_grpc/bazel/generate_cc.bzl: 81",
