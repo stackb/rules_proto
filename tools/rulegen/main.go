@@ -603,7 +603,7 @@ func mustWriteReadme(dir, header, footer string, data interface{}, languages []*
 	out.w("| ---    | ---: | :--- | :--- |")
 	for _, lang := range languages {
 		for _, rule := range lang.Rules {
-			ciLink := fmt.Sprintf("[![Build Status](%s)](https://buildkite.com/bazel/rules-proto)", badgeImageURL)
+			ciLink := fmt.Sprintf("[![Build Status](%s)](https://buildkite.com/bazel/stackb-rules-proto)", badgeImageURL)
 			if rule.BazelCIExclusionReason != "" {
 				ciLink = rule.BazelCIExclusionReason
 			}

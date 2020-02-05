@@ -16,7 +16,10 @@ ruby_binary(
     visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
-        "@routeguide_gems_bundle//:libs",
+        # "@routeguide_gems_bundle//:gems",
+        # "@routeguide_gems_bundle//:google-protobuf",
+        "@routeguide_gems_bundle//:grpc",
+        "@routeguide_gems_bundle//:multi_json",
     ],
 )
 
@@ -28,6 +31,6 @@ ruby_binary(
     visibility = ["//example/routeguide:__pkg__"],
     deps = [
         ":routeguide",
-        "@routeguide_gems_bundle//:libs",
+        "@routeguide_gems_bundle//:gems",
     ],
 )
