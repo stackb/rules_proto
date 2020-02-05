@@ -2,13 +2,48 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # https://raw.githubusercontent.com/grpc/grpc/master/third_party/zlib.BUILD
 ZLIB_BUILD = """
+package(default_visibility = ["//visibility:public"])
+
+licenses(["notice"])  # BSD/MIT-like license (for zlib)
+
+_ZLIB_HEADERS = [
+    "crc32.h",
+    "deflate.h",
+    "gzguts.h",
+    "inffast.h",
+    "inffixed.h",
+    "inflate.h",
+    "inftrees.h",
+    "trees.h",
+    "zconf.h",
+    "zlib.h",
+    "zutil.h",
+]
+
+_ZLIB_PREFIXED_HEADERS = ["zlib/include/" + hdr for hdr in _ZLIB_HEADERS]
+
+# In order to limit the damage from the `includes` propagation
+# via `:zlib`, copy the public headers to a subdirectory and
+# expose those.
+genrule(
+    name = "copy_public_headers",
+    srcs = _ZLIB_HEADERS,
+    outs = _ZLIB_PREFIXED_HEADERS,
+    cmd = "cp $(SRCS) $(@D)/zlib/include/",
+    visibility = ["//visibility:private"],
+)
+
 cc_library(
-    name = "z",
+    name = "zlib",
     srcs = [
         "adler32.c",
         "compress.c",
         "crc32.c",
         "deflate.c",
+        "gzclose.c",
+        "gzlib.c",
+        "gzread.c",
+        "gzwrite.c",
         "infback.c",
         "inffast.c",
         "inflate.c",
@@ -16,27 +51,19 @@ cc_library(
         "trees.c",
         "uncompr.c",
         "zutil.c",
-    ],
-    hdrs = [
-        "crc32.h",
-        "deflate.h",
-        "gzguts.h",
-        "inffast.h",
-        "inffixed.h",
-        "inflate.h",
-        "inftrees.h",
-        "trees.h",
-        "zconf.h",
-        "zlib.h",
-        "zutil.h",
-    ],
-    includes = [
-        ".",
-    ],
-    linkstatic = 1,
-    visibility = [
-        "//visibility:public",
-    ],
+        # Include the un-prefixed headers in srcs to work
+        # around the fact that zlib isn't consistent in its
+        # choice of <> or "" delimiter when including itself.
+    ] + _ZLIB_HEADERS,
+    hdrs = _ZLIB_PREFIXED_HEADERS,
+    copts = select({
+        "@bazel_tools//src/conditions:windows": [],
+        "//conditions:default": [
+            "-Wno-unused-variable",
+            "-Wno-implicit-function-declaration",
+        ],
+    }),
+    includes = ["zlib/include/"],
 )
 """
 
@@ -118,23 +145,33 @@ def external_libssl(**kwargs):
             actual = "@boringssl//:ssl",
         )
 
-def com_github_madler_zlib(**kwargs):
-    if "com_github_madler_zlib" not in native.existing_rules():
+def zlib(**kwargs):
+    if "zlib" not in native.existing_rules():
         http_archive(
-            name = "com_github_madler_zlib",
+            name = "zlib",
             build_file_content = ZLIB_BUILD,
-            strip_prefix = "zlib-cacf7f1d4e3d44d871b605da3b647f07d718623f",
-            url = "https://github.com/madler/zlib/archive/cacf7f1d4e3d44d871b605da3b647f07d718623f.tar.gz",
-            sha256 = "6d4d6640ca3121620995ee255945161821218752b551a1a180f4215f7d124d45",
+            strip_prefix = "zlib-1.2.11",
+            url = "https://github.com/madler/zlib/archive/1.2.11.tar.gz",
+            sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
         )
 
 def external_zlib(**kwargs):
-    com_github_madler_zlib(**kwargs)
+    zlib(**kwargs)
     name = "zlib"
     if name not in native.existing_rules():
         native.bind(
             name = name,
-            actual = "@com_github_madler_zlib//:z",
+            actual = "@zlib//:z",
+        )
+
+# grpc also wants it named "//external:madler_zlib"
+def external_madler_zlib(**kwargs):
+    zlib(**kwargs)
+    name = "madler_zlib"
+    if name not in native.existing_rules():
+        native.bind(
+            name = name,
+            actual = "@zlib//:z",
         )
 
 def com_github_bazelbuild_bazel_gazelle(**kwargs):
@@ -181,20 +218,20 @@ def com_google_protobuf(**kwargs):
 
 def com_github_grpc_grpc(**kwargs):
     name = "com_github_grpc_grpc"
-    ref = get_ref(name, "v1.20.1", kwargs)
-    sha256 = get_sha256(name, "ba8b08a697b66e14af35da07753583cf32ff3d14dcd768f91b1bbe2e6c07c349", kwargs)
+    ref = get_ref(name, "acd79569bff44550c87e09768e2184e91c7eb610", kwargs)
+    sha256 = get_sha256(name, "f5bb5ee99fb877ecb915773ac7f5a6e62cee9ce89731cccc779b0b5eb2cacfbf", kwargs)
     github_archive(name, "grpc", "grpc", ref, sha256)
 
 def io_bazel_rules_dotnet(**kwargs):
     name = "io_bazel_rules_dotnet"
-    ref = get_ref(name, "7e907e130943d4c9391df6ad3b569e3e9b2efa9d", kwargs)  # PR#122
-    sha256 = get_sha256(name, "17f6e070bb940441efadf516a0274db1db0e306130c279d09d400fc0b3c71899", kwargs)
+    ref = get_ref(name, "0.0.4", kwargs) 
+    sha256 = get_sha256(name, "8bd425654e142739b0da9ff182dbf735b7560ebd50b000627a02dba5fb2a759f", kwargs)
     github_archive(name, "bazelbuild", "rules_dotnet", ref, sha256)
 
 def io_bazel_rules_scala(**kwargs):
     name = "io_bazel_rules_scala"
-    ref = get_ref(name, "14d9742496859faaf860b1adfc8126f3ed077921", kwargs)  # May 3, 2019
-    sha256 = get_sha256(name, "72fc4357b29ec93951d472ee22a4cc3f30e170234a4ec73ff678f43f7e276bd4", kwargs)
+    ref = get_ref(name, "30b80b03a410994a8abb93d5a3f81b0d1f5cb96f", kwargs)  # Feb 3, 2020
+    sha256 = get_sha256(name, "342ec47a670ecf5167857c83ac3281be9590c27ce8d4b04ce46fa63e16de7a58", kwargs)
     github_archive(name, "bazelbuild", "rules_scala", ref, sha256)
 
 def io_bazel_rules_rust(**kwargs):
@@ -324,8 +361,8 @@ def io_grpc_grpc_java(**kwargs):
     """grpc java plugin and jars
     """
     name = "io_grpc_grpc_java"
-    ref = get_ref(name, "3c24dc6fe1b8f3e5c89b919c38a4eefe216397d3", kwargs)  # v1.19.0 and changes up to PR #5456
-    sha256 = get_sha256(name, "1eeb136874a58a0a311a0701016aced96919f501ced0372013eb1708724ab046", kwargs)
+    ref = get_ref(name, "v1.27.0", kwargs)  
+    sha256 = get_sha256(name, "a23970d15ee790c2bf36544976977eb45d3498c3efecc304717d6fbd8ba0fcc8", kwargs)
     github_archive(name, "grpc", "grpc-java", ref, sha256)
 
 
@@ -383,3 +420,20 @@ def com_github_grpc_grpc_web(**kwargs):
     ref = get_ref(name, "ffe8e9c9036f4ec7d5b55da75b1758b1f57fbf8d", kwargs)
     sha256 = get_sha256(name, "936ca06fe7a9b55c1e334e4869e1d153fec68d92d750d2b550e41e1c5580b4dd", kwargs)
     github_archive(name, "grpc", "grpc-web", ref, sha256)
+
+def bazel_version():
+    """Rule for setting the bazel version repository
+    """
+    bazel_version_repository(
+        name = "upb_bazel_version",
+    )
+
+# Write version data. Required for both upb and rules_rust
+def _store_bazel_version(repository_ctx):
+    repository_ctx.file("BUILD", "exports_files(['def.bzl'])")
+    repository_ctx.file("bazel_version.bzl", "bazel_version = \"{}\"".format(native.bazel_version))
+    repository_ctx.file("def.bzl", "BAZEL_VERSION='{}'".format(native.bazel_version))
+
+bazel_version_repository = repository_rule(
+    implementation = _store_bazel_version,
+)

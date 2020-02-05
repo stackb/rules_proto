@@ -1,7 +1,7 @@
 load(
     "//:deps.bzl",
     "bazel_skylib",
-    "com_github_madler_zlib",
+    "zlib",
     "com_google_protobuf",
     "external_protobuf_clib",
     "external_protobuf_headers",
@@ -9,7 +9,7 @@ load(
 )
 
 def protobuf(**kwargs):
-    com_github_madler_zlib(**kwargs)
+    zlib(**kwargs)
     bazel_skylib(**kwargs)
     com_google_protobuf(**kwargs)
     external_protobuf_clib(**kwargs)

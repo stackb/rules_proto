@@ -68,7 +68,7 @@ routeguide_test = rule(
         "database": attr.label(
             doc = "Path to the feature database json file",
             mandatory = True,
-            single_file = True,
+            allow_single_file = True,
         ),
         "data": attr.label_list(
             doc = "Additional data files",

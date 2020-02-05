@@ -19,6 +19,6 @@ proto_plugin(
         "{basename}.grpc.pb.cc",
         "{basename}_mock.grpc.pb.h",
     ],
-    tool = "@com_github_grpc_grpc//:grpc_cpp_plugin",
+    tool = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
     visibility = ["//visibility:public"],
 )

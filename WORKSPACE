@@ -12,6 +12,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file"
 #     path = "/home/pcj/github/yugui/rules_ruby",
 # )
 
+
 # **************************************************************
 #
 #
@@ -26,6 +27,8 @@ cpp_grpc_library()
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
+
+#register_toolchains("@com_google_protobuf//protobuf:protoc_toolchain")
 
 # **************************************************************
 #
@@ -119,7 +122,7 @@ io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
-grpc_java_repositories(omit_com_google_protobuf = True)
+grpc_java_repositories()
 
 load("@build_stack_rules_proto//java:deps.bzl", "java_grpc_library")
 
