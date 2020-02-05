@@ -27,6 +27,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/android/android_proto_compile
@@ -35,6 +36,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/android/android_grpc_compile
@@ -43,6 +45,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/android/android_proto_library
@@ -51,6 +54,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/android/android_grpc_library
@@ -59,6 +63,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/closure/closure_proto_compile
@@ -67,6 +72,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/closure/closure_proto_library
@@ -75,6 +81,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/cpp/cpp_proto_compile
@@ -83,6 +90,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/cpp/cpp_grpc_compile
@@ -91,6 +99,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/cpp/cpp_proto_library
@@ -99,6 +108,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/cpp/cpp_grpc_library
@@ -107,6 +117,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/d/d_proto_compile
@@ -115,6 +126,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/go/go_proto_compile
@@ -123,6 +135,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/go/go_grpc_compile
@@ -131,6 +144,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/go/go_proto_library
@@ -139,6 +153,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/go/go_grpc_library
@@ -147,6 +162,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/java/java_proto_compile
@@ -155,6 +171,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/java/java_grpc_compile
@@ -163,6 +180,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/java/java_proto_library
@@ -171,6 +189,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/java/java_grpc_library
@@ -179,6 +198,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/node/node_proto_compile
@@ -187,6 +207,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/node/node_grpc_compile
@@ -195,6 +216,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/node/node_proto_library
@@ -203,6 +225,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/node/node_grpc_library
@@ -211,6 +234,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/objc/objc_proto_compile
@@ -219,6 +243,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/objc/objc_grpc_compile
@@ -227,6 +252,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/php/php_proto_compile
@@ -235,6 +261,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/php/php_grpc_compile
@@ -243,6 +270,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/python/python_proto_compile
@@ -251,6 +279,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/python/python_grpc_compile
@@ -259,6 +288,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/python/python_proto_library
@@ -267,6 +297,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/python/python_grpc_library
@@ -275,6 +306,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/ruby/ruby_proto_compile
@@ -283,6 +315,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/ruby/ruby_grpc_compile
@@ -291,6 +324,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/ruby/ruby_proto_library
@@ -299,6 +333,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/ruby/ruby_grpc_library
@@ -307,6 +342,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/rust/rust_proto_compile
@@ -315,6 +351,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/rust/rust_proto_library
@@ -323,6 +360,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/scala/scala_proto_compile
@@ -331,6 +369,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/scala/scala_grpc_compile
@@ -339,6 +378,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/scala/scala_proto_library
@@ -347,6 +387,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/scala/scala_grpc_library
@@ -355,6 +396,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogo_proto_compile
@@ -363,6 +405,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogo_grpc_compile
@@ -371,6 +414,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogo_proto_library
@@ -379,6 +423,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogo_grpc_library
@@ -387,6 +432,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogofast_proto_compile
@@ -395,6 +441,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogofast_grpc_compile
@@ -403,6 +450,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogofast_proto_library
@@ -411,6 +459,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogofast_grpc_library
@@ -419,6 +468,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogofaster_proto_compile
@@ -427,6 +477,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_compile
@@ -435,6 +486,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogofaster_proto_library
@@ -443,6 +495,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/gogo/protobuf/gogofaster_grpc_library
@@ -451,6 +504,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_compile
@@ -459,6 +513,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_swagger_compile
@@ -467,6 +522,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/grpc-ecosystem/grpc-gateway/gateway_grpc_library
@@ -475,6 +531,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/stackb/grpc.js/closure_grpc_compile
@@ -483,6 +540,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/stackb/grpc.js/closure_grpc_library
@@ -491,6 +549,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/grpc/grpc-web/closure_grpc_compile
@@ -499,6 +558,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/grpc/grpc-web/commonjs_grpc_compile
@@ -507,6 +567,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/grpc/grpc-web/commonjs_dts_grpc_compile
@@ -515,6 +576,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/grpc/grpc-web/ts_grpc_compile
@@ -523,6 +585,7 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "--incompatible_load_cc_rules_from_bzl=false"
+    - "--incompatible_load_python_rules_from_bzl=false"
     build_targets:
     - "..."
     working_directory: example/github.com/grpc/grpc-web/closure_grpc_library
