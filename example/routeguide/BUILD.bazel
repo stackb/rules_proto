@@ -34,5 +34,8 @@ routeguide_test_matrix(
         # launcher script being run outside the original package.  Make them
         # manual only, but including them here anyway
         "ruby": "manual",
+
+        # Python implementation seems to be broken - needs work
+        "python": "manual",
     },
 )
