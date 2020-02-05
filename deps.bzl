@@ -240,11 +240,11 @@ def io_bazel_rules_rust(**kwargs):
     sha256 = get_sha256(name, "58b8786e00b3489ce127e001670fd991547bb7db315e8a214915a2fa0b83743f", kwargs)
     github_archive(name, "bazelbuild", "rules_rust", ref, sha256)
 
-def com_github_yugui_rules_ruby(**kwargs):
-    name = "com_github_yugui_rules_ruby"
-    ref = get_ref(name, "73479cdc6a34a8d940cc3c904badf7a2ae6bdc6d", kwargs)  # PR#8,
-    sha256 = get_sha256(name, "bd88b1aa144f70bb3f069ff3ddc5ddba032311ce27fb40b7276db694dcb63490", kwargs)
-    github_archive(name, "yugui", "rules_ruby", ref, sha256)
+def bazelruby_ruby_rules(**kwargs):
+    name = "bazelruby_ruby_rules"
+    ref = get_ref(name, "fafab7ebb658857e150b80c39155b75b7f67fde2", kwargs)
+    sha256 = get_sha256(name, "94e8e20854afd8658cc909a97e775a86db082e963f935c6473b2c5dfa64642ad", kwargs)
+    github_archive(name, "bazelruby", "rules_ruby", ref, sha256)
 
 def grpc_ecosystem_grpc_gateway(**kwargs):
     name = "grpc_ecosystem_grpc_gateway"

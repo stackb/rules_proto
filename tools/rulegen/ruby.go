@@ -4,11 +4,11 @@ var rubyProtoLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto
 
 {{ .Rule.Name }}()
 
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
+load("@bazelruby_ruby_rules//ruby:defs.bzl", "ruby_register_toolchains")
 
 ruby_register_toolchains()
 
-load("@com_github_yugui_rules_ruby//ruby/private:bundle.bzl", "bundle_install")
+load("@bazelruby_ruby_rules//ruby/private:bundle.bzl", "bundle_install")
 
 bundle_install(
     name = "routeguide_gems_bundle",
@@ -20,7 +20,7 @@ var rubyGrpcLibraryUsageTemplate = mustTemplate(`load("@build_stack_rules_proto/
 
 {{ .Rule.Name }}()
 
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
+load("@bazelruby_ruby_rules//ruby:defs.bzl", "ruby_register_toolchains")
 
 ruby_register_toolchains()
 
@@ -28,7 +28,7 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
 
-load("@com_github_yugui_rules_ruby//ruby/private:bundle.bzl", "bundle_install")
+load("@bazelruby_ruby_rules//ruby/private:bundle.bzl", "bundle_install")
 
 bundle_install(
     name = "routeguide_gems_bundle",
@@ -37,7 +37,7 @@ bundle_install(
 )`)
 
 var rubyProtoLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:ruby_proto_compile.bzl", "ruby_proto_compile")
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
+load("@bazelruby_ruby_rules//ruby:defs.bzl", "ruby_library")
 
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")
@@ -63,7 +63,7 @@ def {{ .Rule.Name }}(**kwargs):
     )`)
 
 var rubyGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:ruby_grpc_compile.bzl", "ruby_grpc_compile")
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
+load("@bazelruby_ruby_rules//ruby:defs.bzl", "ruby_library")
 
 def {{ .Rule.Name }}(**kwargs):
     name = kwargs.get("name")

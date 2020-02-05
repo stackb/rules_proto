@@ -8,7 +8,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file"
 # )
 
 # local_repository(
-#     name = "com_github_yugui_rules_ruby",
+#     name = "bazelruby_ruby_rules",
 #     path = "/home/pcj/github/yugui/rules_ruby",
 # )
 
@@ -254,21 +254,31 @@ apple_support_dependencies()
 #
 # **************************************************************
 
-# load("//ruby:deps.bzl", "ruby_grpc_library")
+load("//ruby:deps.bzl", "ruby_grpc_library")
 
-# ruby_grpc_library()
+ruby_grpc_library()
 
-# load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
+load(
+    "@bazelruby_ruby_rules//ruby:deps.bzl",
+    "ruby_register_toolchains",
+    "ruby_rules_dependencies",
+)
 
-# ruby_register_toolchains()
+ruby_rules_dependencies()
 
-# load("@com_github_yugui_rules_ruby//ruby/private:bundle.bzl", "bundle_install")
+ruby_register_toolchains()
 
-# bundle_install(
-#     name = "routeguide_gems_bundle",
-#     gemfile = "//ruby:Gemfile",
-#     gemfile_lock = "//ruby:Gemfile.lock",
-# )
+load(
+    "@bazelruby_ruby_rules//ruby:defs.bzl",
+    "ruby_bundle",
+)
+
+ruby_bundle(
+    name = "routeguide_gems_bundle",
+    gemfile = "//ruby:Gemfile",
+    gemfile_lock = "//ruby:Gemfile.lock",
+    bundler_version = "2.1.2",
+)
 
 
 # **************************************************************

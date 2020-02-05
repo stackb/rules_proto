@@ -1,5 +1,5 @@
 load("//ruby:ruby_grpc_compile.bzl", "ruby_grpc_compile")
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_library")
+load("@bazelruby_ruby_rules//ruby:defs.bzl", "ruby_library")
 
 def ruby_grpc_library(**kwargs):
     name = kwargs.get("name")

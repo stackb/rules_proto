@@ -9,11 +9,11 @@ load("@build_stack_rules_proto//ruby:deps.bzl", "ruby_proto_library")
 
 ruby_proto_library()
 
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
+load("@bazelruby_ruby_rules//ruby:defs.bzl", "ruby_register_toolchains")
 
 ruby_register_toolchains()
 
-load("@com_github_yugui_rules_ruby//ruby/private:bundle.bzl", "bundle_install")
+load("@bazelruby_ruby_rules//ruby/private:bundle.bzl", "bundle_install")
 
 bundle_install(
     name = "routeguide_gems_bundle",
