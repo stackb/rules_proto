@@ -154,15 +154,6 @@ def zlib(**kwargs):
             sha256 = "6d4d6640ca3121620995ee255945161821218752b551a1a180f4215f7d124d45",
         )
 
-def external_zlib(**kwargs):
-    zlib(**kwargs)
-    name = "zlib"
-    if name not in native.existing_rules():
-        native.bind(
-            name = name,
-            actual = "@zlib//:zlib",
-        )
-
 # grpc also wants it named "//external:madler_zlib"
 def external_madler_zlib(**kwargs):
     zlib(**kwargs)

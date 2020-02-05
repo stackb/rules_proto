@@ -5,7 +5,7 @@ load(
     "com_google_protobuf",
     "external_protobuf_clib",
     "external_protobuf_headers",
-    "external_zlib",
+    # "external_zlib",
 )
 
 def protobuf(**kwargs):
@@ -14,4 +14,4 @@ def protobuf(**kwargs):
     com_google_protobuf(**kwargs)
     external_protobuf_clib(**kwargs)
     external_protobuf_headers(**kwargs)
-    external_zlib(**kwargs)
+    # external_zlib(**kwargs)
