@@ -8,7 +8,6 @@ go_library(
         "cpp.go",
         "csharp.go",
         "d.go",
-        "dart.go",
         "github_grpc_grpc_web.go",
         "go.go",
         "gogo.go",

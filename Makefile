@@ -34,7 +34,6 @@ tests:
 pending_clients:
 	bazel build \
 		//android/example/routeguide:client \
-		//dart/example/routeguide:client \
 		//closure/example/routeguide/client \
 		//node/example/routeguide:client \
 		//ruby/example/routeguide:client \
@@ -44,7 +43,6 @@ pending_clients:
 
 pending_servers:
 	bazel build \
-		//dart/example/routeguide:server \
 		//node/example/routeguide:server \
 		//ruby/example/routeguide:server \
 		//rust/example/routeguide:server  

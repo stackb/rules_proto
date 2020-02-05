@@ -33,10 +33,6 @@ Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [csharp](/csharp) | [csharp_proto_library](/csharp#csharp_proto_library) | Generates csharp protobuf library ([example](/example/csharp/csharp_proto_library)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [csharp](/csharp) | [csharp_grpc_library](/csharp#csharp_grpc_library) | Generates csharp protobuf+gRPC library ([example](/example/csharp/csharp_grpc_library)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [d](/d) | [d_proto_compile](/d#d_proto_compile) | Generates d protobuf artifacts ([example](/example/d/d_proto_compile)) |
-| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [dart](/dart) | [dart_proto_compile](/dart#dart_proto_compile) | Generates dart protobuf artifacts ([example](/example/dart/dart_proto_compile)) |
-| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [dart](/dart) | [dart_grpc_compile](/dart#dart_grpc_compile) | Generates dart protobuf+gRPC artifacts ([example](/example/dart/dart_grpc_compile)) |
-| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [dart](/dart) | [dart_proto_library](/dart#dart_proto_library) | Generates dart protobuf library ([example](/example/dart/dart_proto_library)) |
-| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [dart](/dart) | [dart_grpc_library](/dart#dart_grpc_library) | Generates dart protobuf+gRPC library ([example](/example/dart/dart_grpc_library)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [go](/go) | [go_proto_compile](/go#go_proto_compile) | Generates *.go protobuf artifacts ([example](/example/go/go_proto_compile)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [go](/go) | [go_grpc_compile](/go#go_grpc_compile) | Generates *.go protobuf+gRPC artifacts ([example](/example/go/go_grpc_compile)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [go](/go) | [go_proto_library](/go#go_proto_library) | Generates *.go protobuf library ([example](/example/go/go_proto_library)) |
@@ -121,9 +117,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_stack_rules_proto",
-    urls = ["https://github.com/stackb/rules_proto/archive/734b8d41d39a903c70132828616f26cb2c7f908c.tar.gz"],
-    sha256 = "c89348b73f4bc59c0add4074cc0c620a5a2a08338eb4ef207d57eaa8453b82e8",
-    strip_prefix = "rules_proto-734b8d41d39a903c70132828616f26cb2c7f908c",
+    urls = ["https://github.com/stackb/rules_proto/archive/ef1e9ea7f6d3635ae80a15233a965bce37357ce4.tar.gz"],
+    sha256 = "395408a3dc9c3db2b5c200b8722a13a60898c861633b99e6e250186adffd1370",
+    strip_prefix = "rules_proto-ef1e9ea7f6d3635ae80a15233a965bce37357ce4",
 )
 ```
 
