@@ -1,5 +1,5 @@
 ---
-bazel: 2.0.0
+bazel: 1.2.1
 tasks:
   ubuntu1604:
     test_targets:
