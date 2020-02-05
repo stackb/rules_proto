@@ -5,8 +5,8 @@ tasks:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
     - "build --copt=-DGRPC_BAZEL_BUILD"
-    environment:
-      CC: clang
+    # environment:
+    #   CC: clang
     # test_targets:
     # - "//example/routeguide/..."
     build_targets:
