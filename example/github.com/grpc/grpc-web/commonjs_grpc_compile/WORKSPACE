@@ -11,6 +11,4 @@ commonjs_grpc_compile()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
-closure_repositories(
-    omit_com_google_protobuf = True,
-)
+closure_repositories()

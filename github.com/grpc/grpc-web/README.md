@@ -23,9 +23,7 @@ closure_grpc_compile()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
-closure_repositories(
-    omit_com_google_protobuf = True,
-)
+closure_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -74,9 +72,7 @@ commonjs_grpc_compile()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
-closure_repositories(
-    omit_com_google_protobuf = True,
-)
+closure_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -125,9 +121,7 @@ commonjs_dts_grpc_compile()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
-closure_repositories(
-    omit_com_google_protobuf = True,
-)
+closure_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -176,9 +170,7 @@ ts_grpc_compile()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
-closure_repositories(
-    omit_com_google_protobuf = True,
-)
+closure_repositories()
 ```
 
 ### `BUILD.bazel`
@@ -227,9 +219,7 @@ closure_grpc_library()
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
-closure_repositories(
-    omit_com_google_protobuf = True,
-)
+closure_repositories()
 ```
 
 ### `BUILD.bazel`

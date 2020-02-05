@@ -6,9 +6,7 @@ var grpcWebUsageTemplate = mustTemplate(`load("@build_stack_rules_proto//{{ .Lan
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
-closure_repositories(
-    omit_com_google_protobuf = True,
-)`)
+closure_repositories()`)
 
 var grpcWebGrpcLibraryRuleTemplate = mustTemplate(`load("//{{ .Lang.Dir }}:closure_grpc_compile.bzl", "closure_grpc_compile")
 load("//closure:closure_proto_compile.bzl", "closure_proto_compile")

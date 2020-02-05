@@ -67,7 +67,7 @@ io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
-grpc_java_repositories(omit_com_google_protobuf = True)
+grpc_java_repositories()
 
 load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_compile")
 
@@ -122,9 +122,7 @@ io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
-grpc_java_repositories(
-    omit_com_google_protobuf = True,
-)
+grpc_java_repositories()
 
 load("@build_stack_rules_proto//android:deps.bzl", "android_proto_library")
 
@@ -188,9 +186,7 @@ io_grpc_grpc_java()
 
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
-grpc_java_repositories(
-    omit_com_google_protobuf = True,
-)
+grpc_java_repositories()
 
 load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_library")
 
