@@ -1,6 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# https://raw.githubusercontent.com/grpc/grpc/master/third_party/zlib.BUILD
 ZLIB_BUILD = """
 package(default_visibility = ["//visibility:public"])
 
@@ -150,9 +149,9 @@ def zlib(**kwargs):
         http_archive(
             name = "zlib",
             build_file_content = ZLIB_BUILD,
-            strip_prefix = "zlib-1.2.11",
-            url = "https://github.com/madler/zlib/archive/1.2.11.tar.gz",
-            sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
+            strip_prefix = "zlib-cacf7f1d4e3d44d871b605da3b647f07d718623f", # v1.2.11
+            url = "https://github.com/madler/zlib/archive/cacf7f1d4e3d44d871b605da3b647f07d718623f.tar.gz",
+            sha256 = "6d4d6640ca3121620995ee255945161821218752b551a1a180f4215f7d124d45",
         )
 
 def external_zlib(**kwargs):
