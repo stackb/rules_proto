@@ -160,7 +160,7 @@ def external_zlib(**kwargs):
     if name not in native.existing_rules():
         native.bind(
             name = name,
-            actual = "@zlib//:z",
+            actual = "@zlib//:zlib",
         )
 
 # grpc also wants it named "//external:madler_zlib"
@@ -170,7 +170,7 @@ def external_madler_zlib(**kwargs):
     if name not in native.existing_rules():
         native.bind(
             name = name,
-            actual = "@zlib//:z",
+            actual = "@zlib//:zlib",
         )
 
 def com_github_bazelbuild_bazel_gazelle(**kwargs):
