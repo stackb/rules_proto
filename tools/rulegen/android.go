@@ -144,11 +144,6 @@ func makeAndroid() *Language {
 				Flags: []*Flag{
 					{
 						Category: "build",
-						Name:     "incompatible_remove_native_maven_jar",
-						Value:    "false",
-					},
-					{
-						Category: "build",
 						Name:     "incompatible_disallow_struct_provider_syntax",
 						Value:    "false",
 					},
@@ -169,11 +164,6 @@ func makeAndroid() *Language {
 				Doc:            "Generates android protobuf+gRPC library",
 				Attrs:          append(protoCompileAttrs, []*Attr{}...),
 				Flags: []*Flag{
-					{
-						Category: "build",
-						Name:     "incompatible_remove_native_maven_jar",
-						Value:    "false",
-					},
 					{
 						Category: "build",
 						Name:     "incompatible_disallow_struct_provider_syntax",
