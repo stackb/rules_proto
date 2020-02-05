@@ -691,6 +691,7 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 			out.w(`    - "--incompatible_load_cc_rules_from_bzl=false"`)
 			out.w(`    - "--incompatible_load_python_rules_from_bzl=false"`)
 			out.w(`    - "--incompatible_load_proto_rules_from_bzl=false"`)
+			out.w(`    - "--incompatible_load_java_rules_from_bzl=false"`)
 			out.w("    build_targets:")
 			out.w(`    - "..."`)
 			out.w("    working_directory: %s", exampleDir)
