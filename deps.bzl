@@ -3,8 +3,6 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 ZLIB_BUILD = """
 package(default_visibility = ["//visibility:public"])
 
-licenses(["notice"])  # BSD/MIT-like license (for zlib)
-
 _ZLIB_HEADERS = [
     "crc32.h",
     "deflate.h",
