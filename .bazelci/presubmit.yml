@@ -4,7 +4,7 @@ tasks:
   ubuntu1604:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
-    - "build --copt=-DGRPC_BAZEL_BUILD"
+    # - "--copt=-DGRPC_BAZEL_BUILD"
     # environment:
     #   CC: clang
     # test_targets:
