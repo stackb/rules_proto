@@ -7,20 +7,20 @@ tasks:
     # environment:
     #   CC: clang
     # test_targets:
-    - "//example/routeguide/cpp_cpp"
+    - "//example/routeguide:cpp_cpp"
     # - "//example/routeguide/..."
     build_targets:
     # - "//android/..."
-    # - "//closure/..."
+    - "//closure/..."
     - "//cpp/..."
-    # - "//d/..."
+    - "//d/..."
     - "//go/..."
     - "//java/..."
-    # - "//node/..."
-    # - "//objc/..."
-    # - "//php/..."
-    # - "//python/..."
-    # - "//scala/..."
+    - "//node/..."
+    - "//objc/..."
+    - "//php/..."
+    - "//python/..."
+    - "//scala/..."
     # - "//github.com/gogo/protobuf/..."
     # - "//github.com/grpc-ecosystem/grpc-gateway/..."
     # - "//github.com/stackb/grpc.js/..."
