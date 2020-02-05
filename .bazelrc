@@ -1,6 +1,8 @@
 build --strategy=CoreCompile=standalone
 build --strategy=SwiftCompile=standalone
 
+build --incompatible_no_rule_outputs_param=false
+
 # Mac users may need this
 # See "grpc Mac bazel build fails because of thread-local, but make passes"
 # See https://github.com/bazelbuild/bazel/issues/4341
