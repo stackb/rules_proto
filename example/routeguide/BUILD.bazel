@@ -18,32 +18,21 @@ routeguide_test_matrix(
         "//java/example/routeguide:client",
         "//python/example/routeguide:client",
         "//node/example/routeguide:client",
-        "//csharp/example/routeguide:client",
         "//scala/example/routeguide:client_deploy.jar",
         # "//ruby/example/routeguide:client",
     ],
     servers = [
         "//cpp/example/routeguide:server",
         "//go/example/routeguide/server",
-        "//csharp/example/routeguide:server",
         "//java/example/routeguide:server",
         "//python/example/routeguide:server",
         "//node/example/routeguide:server",
         # "//ruby/example/routeguide:server",
     ],
     tagmap = {
-        # no sandbox any csharp test
-        "csharp": "no-sandbox",
         # ruby clients and servers don't run due to a problem with their
         # launcher script being run outside the original package.  Make them
         # manual only, but including them here anyway
         "ruby": "manual",
-
-        # these are failing from with error message 'File  does not exist'
-        # (https://github.com/bazelbuild/rules_dotnet/blob/bfa872b010e7d0a236314682ebd397ce956ceebb/dotnet/tools/common/manifest.c#L76),
-        # possibly due to a bug in that code.  Unclear why only the combination
-        # of python and csharp. Make them manual tests for now.
-        "python_csharp": "manual",
-        "csharp_python": "manual",
     },
 )

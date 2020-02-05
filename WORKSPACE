@@ -45,52 +45,6 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
 closure_repositories()
 
-# **************************************************************
-#
-#
-# csharp
-#
-# **************************************************************
-
-load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
-
-csharp_grpc_library()
-
-load(
-    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
-    "core_register_sdk",
-    "dotnet_register_toolchains",
-    "dotnet_repositories",
-)
-
-core_version = "v2.1.503"
-
-dotnet_register_toolchains(
-    core_version = core_version,
-)
-
-dotnet_register_toolchains(
-    core_version = core_version,
-)
-
-core_register_sdk(
-    name = "core_sdk",
-    core_version = core_version,
-)
-
-dotnet_repositories()
-
-load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
-
-nuget_packages()
-
-load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
-
-nuget_protobuf_packages()
-
-load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
-
-nuget_grpc_packages()
 
 # **************************************************************
 #

@@ -224,8 +224,8 @@ def com_github_grpc_grpc(**kwargs):
 
 def io_bazel_rules_dotnet(**kwargs):
     name = "io_bazel_rules_dotnet"
-    ref = get_ref(name, "0.0.4", kwargs) 
-    sha256 = get_sha256(name, "8bd425654e142739b0da9ff182dbf735b7560ebd50b000627a02dba5fb2a759f", kwargs)
+    ref = get_ref(name, "a8f5820a326180e7c9ec9f333bb9081efc843033", kwargs) 
+    sha256 = get_sha256(name, "3a983031f7d04c151ec979e1218df906e6197347052fa516d2a5e048e585194c", kwargs)
     github_archive(name, "bazelbuild", "rules_dotnet", ref, sha256)
 
 def io_bazel_rules_scala(**kwargs):

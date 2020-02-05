@@ -212,7 +212,6 @@ func action(c *cli.Context) error {
 		makeAndroid(),
 		makeClosure(),
 		makeCpp(),
-		makeCsharp(),
 		makeD(),
 		makeGo(),
 		makeJava(),

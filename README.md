@@ -28,10 +28,6 @@ Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [cpp](/cpp) | [cpp_grpc_compile](/cpp#cpp_grpc_compile) | Generates *.h,*.cc protobuf+gRPC artifacts ([example](/example/cpp/cpp_grpc_compile)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [cpp](/cpp) | [cpp_proto_library](/cpp#cpp_proto_library) | Generates *.h,*.cc protobuf library ([example](/example/cpp/cpp_proto_library)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [cpp](/cpp) | [cpp_grpc_library](/cpp#cpp_grpc_library) | Generates *.h,*.cc protobuf+gRPC library ([example](/example/cpp/cpp_grpc_library)) |
-| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [csharp](/csharp) | [csharp_proto_compile](/csharp#csharp_proto_compile) | Generates csharp protobuf artifacts ([example](/example/csharp/csharp_proto_compile)) |
-| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [csharp](/csharp) | [csharp_grpc_compile](/csharp#csharp_grpc_compile) | Generates csharp protobuf+gRPC artifacts ([example](/example/csharp/csharp_grpc_compile)) |
-| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [csharp](/csharp) | [csharp_proto_library](/csharp#csharp_proto_library) | Generates csharp protobuf library ([example](/example/csharp/csharp_proto_library)) |
-| [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [csharp](/csharp) | [csharp_grpc_library](/csharp#csharp_grpc_library) | Generates csharp protobuf+gRPC library ([example](/example/csharp/csharp_grpc_library)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [d](/d) | [d_proto_compile](/d#d_proto_compile) | Generates d protobuf artifacts ([example](/example/d/d_proto_compile)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [go](/go) | [go_proto_compile](/go#go_proto_compile) | Generates *.go protobuf artifacts ([example](/example/go/go_proto_compile)) |
 | [![Build Status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/rules-proto) | [go](/go) | [go_grpc_compile](/go#go_grpc_compile) | Generates *.go protobuf+gRPC artifacts ([example](/example/go/go_grpc_compile)) |
@@ -117,9 +113,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_stack_rules_proto",
-    urls = ["https://github.com/stackb/rules_proto/archive/ef1e9ea7f6d3635ae80a15233a965bce37357ce4.tar.gz"],
+    urls = ["https://github.com/stackb/rules_proto/archive/a24c5cdbd97005b1714bc5f533ac0f74bb178ae8.tar.gz"],
     sha256 = "395408a3dc9c3db2b5c200b8722a13a60898c861633b99e6e250186adffd1370",
-    strip_prefix = "rules_proto-ef1e9ea7f6d3635ae80a15233a965bce37357ce4",
+    strip_prefix = "rules_proto-a24c5cdbd97005b1714bc5f533ac0f74bb178ae8",
 )
 ```
 

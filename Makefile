@@ -1,4 +1,4 @@
-rulegen:
+rules:
 	bazel build //tools/rulegen && \
 		bazel-bin/tools/rulegen/rulegen \
 			--ref=`git rev-parse HEAD`
@@ -54,15 +54,5 @@ pending_servers:
 closure_test:
 	bazel test \
 		//github.com/grpc/grpc-web/example/routeguide/...
-
-csharp:
-	bazel build \
-		//csharp/example/routeguide:server \
-		//csharp/example/routeguide:client 
-
-rust:
-	bazel build \
-		//csharp/example/routeguide:server \
-		//csharp/example/routeguide:client 
 
 all: clients servers tests
