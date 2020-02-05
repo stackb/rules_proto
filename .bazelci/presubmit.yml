@@ -6,11 +6,10 @@ tasks:
     - "--incompatible_no_rule_outputs_param=false"
     # environment:
     #   CC: clang
-    # test_targets:
-    - "//example/routeguide:cpp_cpp"
-    # - "//example/routeguide/..."
+    test_targets:
+    - "//example/routeguide:*"
     build_targets:
-    # - "//android/..."
+    - "//android/..."
     - "//closure/..."
     - "//cpp/..."
     - "//d/..."
@@ -21,10 +20,10 @@ tasks:
     - "//php/..."
     - "//python/..."
     - "//scala/..."
-    # - "//github.com/gogo/protobuf/..."
-    # - "//github.com/grpc-ecosystem/grpc-gateway/..."
-    # - "//github.com/stackb/grpc.js/..."
-    # - "//github.com/grpc/grpc-web/..."
+    - "//github.com/gogo/protobuf/..."
+    - "//github.com/grpc-ecosystem/grpc-gateway/..."
+    - "//github.com/stackb/grpc.js/..."
+    - "//github.com/grpc/grpc-web/..."
   # android_proto_compile:
   #   platform: ubuntu1604
   #   build_targets:
