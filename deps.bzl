@@ -275,38 +275,13 @@ def io_bazel_rules_go(**kwargs):
     sha256 = get_sha256(name, "d40144fcb282e167a1836c4d1a9aabdd457051717a4648153a89aa34bd9f8e6a", kwargs)
     github_archive(name, "bazelbuild", "rules_go", ref, sha256)
 
-def io_bazel_rules_python(**kwargs):
-    """python Rules
-    """
-    name = "io_bazel_rules_python"
-    ref = get_ref(name, "38f86fb55b698c51e8510c807489c9f4e047480e", kwargs)  # 2019-12-05
-    sha256 = get_sha256(name, "c911dc70f62f507f3a361cbc21d6e0d502b91254382255309bc60b7a0f48de28", kwargs)
-    github_archive(name, "bazelbuild", "rules_python", ref, sha256)
-
-def six(**kwargs):
-    name = "six"
-    if name not in native.existing_rules():
-        http_archive(
-            name = "six",
-            sha256 = "d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73",
-            urls = ["https://files.pythonhosted.org/packages/dd/bf/4138e7bfb757de47d1f4b6994648ec67a51efe58fa907c1e11e350cddfca/six-1.12.0.tar.gz"],
-            build_file_content = """
-genrule(
-    name = "copy_six",
-    srcs = ["six-1.13.0/six.py"],
-    outs = ["__init__.py"],
-    cmd = "cp $< $(@)",
-)
-
-py_library(
-    name = "six",
-    srcs = ["__init__.py"],
-    srcs_version = "PY2AND3",
-    visibility = ["//visibility:public"],
-)
-        """,
-        )
-
+# def rules_python(**kwargs):
+#     """python Rules
+#     """
+#     name = "rules_python"
+#     ref = get_ref(name, "38f86fb55b698c51e8510c807489c9f4e047480e", kwargs)  # 2019-12-05
+#     sha256 = get_sha256(name, "c911dc70f62f507f3a361cbc21d6e0d502b91254382255309bc60b7a0f48de28", kwargs)
+#     github_archive(name, "bazelbuild", "rules_python", ref, sha256)
 
 def io_bazel_rules_d(**kwargs):
     """d Rules

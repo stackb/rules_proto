@@ -47,5 +47,20 @@ py_binary(
     deps = [
         ":resources",
         ":routeguide",
+        "@enum34//:enum34",
     ],
+    # ] + select({
+    #     "//conditions:default": ["@enum34//:enum34"],
+    #     ":python3": [],
+    # }),
+)
+
+config_setting(
+    name="python2",
+    flag_values = {"@rules_python//python:python_version": "PY2"}
+)
+
+config_setting(
+    name="python3",
+    flag_values = {"@rules_python//python:python_version": "PY3"}
 )
