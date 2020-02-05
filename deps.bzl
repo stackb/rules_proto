@@ -298,25 +298,26 @@ def six(**kwargs):
     name = "six"
     if name not in native.existing_rules():
         http_archive(
-            name = name,
+            name = "six",
+            sha256 = "d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73",
+            urls = ["https://files.pythonhosted.org/packages/dd/bf/4138e7bfb757de47d1f4b6994648ec67a51efe58fa907c1e11e350cddfca/six-1.12.0.tar.gz"],
             build_file_content = """
 genrule(
-  name = "copy_six",
-  srcs = ["six-1.12.0/six.py"],
-  outs = ["six.py"],
-  cmd = "cp $< $(@)",
+    name = "copy_six",
+    srcs = ["six-1.13.0/six.py"],
+    outs = ["__init__.py"],
+    cmd = "cp $< $(@)",
 )
 
 py_library(
-  name = "six",
-  srcs = ["six.py"],
-  srcs_version = "PY2AND3",
-  visibility = ["//visibility:public"],
+    name = "six",
+    srcs = ["__init__.py"],
+    srcs_version = "PY2AND3",
+    visibility = ["//visibility:public"],
 )
         """,
-            sha256 = "d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73",
-            urls = ["https://pypi.python.org/packages/source/s/six/six-1.12.0.tar.gz"],
         )
+
 
 def io_bazel_rules_d(**kwargs):
     """d Rules
@@ -330,8 +331,8 @@ def com_google_protobuf_lite(**kwargs):
     """A different branch of google/protobuf that contains the protobuf_lite plugin
     """
     name = "com_google_protobuf_lite"
-    ref = get_ref(name, "3cf3be9959928bf8a7133d323eaf6a5a8d5afdd7", kwargs)  # latest as of Apr 9, 2019
-    sha256 = get_sha256(name, "9f28fd96ccd1f87e0b2d23c622db2a87c87ff91dc30dd13a6dd3bff11738e608", kwargs)
+    ref = get_ref(name, "fa08222434bc58d743e8c2cc716bc219c3d0f44e", kwargs)  # latest as of Apr 9, 2019
+    sha256 = get_sha256(name, "b04b08d31208be32aafdf5842d1b6073d527a67ff8d2cf4b17ee8f22a5273758", kwargs)
     github_archive(name, "protocolbuffers", "protobuf", ref, sha256)
 
 def rules_jvm_external(**kwargs):
