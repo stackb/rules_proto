@@ -14,6 +14,12 @@ Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 
 Confused about different bazel proto rules?
 
-- [pubref/rules_proto](): The predecessor to these rules.  It was moved to a
-  different organization but retains the same primary author (@pcj)
-- [https://github.com/rules-proto-grpc/rules_proto_grpc](https://https://github.com/rules-proto-grpc/rules_proto_grpc): A fork of these rules, 
+- [github.com/bazelbuild/rules_proto](https://github.com/bazelbuild/rules_proto):
+  The effort to move the native `proto_library` rule to a starlark based one.
+  This repo does not define any language-specific rules.
+- [github.com/pubref/rules_proto](https://github.com/pubref/rules_proto): The
+  predecessor to these rules (1.0).  Re-written to a different organization but
+  retains the same primary author @pcj.
+- [https://github.com/rules-proto-grpc/rules_proto_grpc](https://https://github.com/rules-proto-grpc/rules_proto_grpc):
+  A fork of these rules by @alidell that converts most of the rules to aspects.
+

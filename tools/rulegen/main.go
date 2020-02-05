@@ -661,10 +661,10 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 	// First time around for main code
 	//
 	out.w("  ubuntu1604:")
-	out.w("    environment:")
-	out.w("      CC: clang")
 	out.w("    test_targets:")
 	out.w(`    - "//example/routeguide/..."`)
+	out.w("    build_flags:")
+	out.w(`    - "--incompatible_no_rule_outputs_param=false"`)
 	out.w("    build_targets:")
 	for _, lang := range languages {
 		if lang.Name == "rust" || lang.Name == "ruby" || lang.Name == "swift" {
@@ -686,8 +686,10 @@ func mustWriteBazelciPresubmitYml(dir, header, footer string, data interface{}, 
 
 			out.w("  %s:", rule.Name)
 			out.w("    platform: ubuntu1604")
+			out.w("    build_flags:")
+			out.w(`    - "--incompatible_no_rule_outputs_param=false"`)
 			out.w("    build_targets:")
-			out.w(`      - "..."`)
+			out.w(`    - "..."`)
 			out.w("    working_directory: %s", exampleDir)
 
 			if len(lang.PresubmitEnvVars) > 0 || len(rule.PresubmitEnvVars) > 0 {

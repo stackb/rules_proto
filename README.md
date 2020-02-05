@@ -12,6 +12,17 @@ Bazel skylark rules for building protocol buffers +/- gRPC :sparkles:.
 <td>gRPC</td>
 </tr></table>
 
+Confused about different bazel proto rules?
+
+- [github.com/bazelbuild/rules_proto](https://github.com/bazelbuild/rules_proto):
+  The effort to move the native `proto_library` rule to a starlark based one.
+  This repo does not define any language-specific rules.
+- [github.com/pubref/rules_proto](https://github.com/pubref/rules_proto): The
+  predecessor to these rules (1.0).  Re-written to a different organization but
+  retains the same primary author @pcj.
+- [https://github.com/rules-proto-grpc/rules_proto_grpc](https://https://github.com/rules-proto-grpc/rules_proto_grpc):
+  A fork of these rules by @alidell that converts most of the rules to aspects.
+
 
 
 ## Rules
@@ -113,9 +124,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_stack_rules_proto",
-    urls = ["https://github.com/stackb/rules_proto/archive/1ea21da73b9a1b9c20bc3a002c299f7410c065a9.tar.gz"],
-    sha256 = "67626e595e540c9fd489392c9381b38a5698c22df11335ec816e7392e2e4e6af",
-    strip_prefix = "rules_proto-1ea21da73b9a1b9c20bc3a002c299f7410c065a9",
+    urls = ["https://github.com/stackb/rules_proto/archive/04ed8c701d9a123b42f7e102c232d29834c4be7c.tar.gz"],
+    sha256 = "8db5345520a8952c46bc87250801667e7b675bb484782ae82fa3e6bfb18fa3d6",
+    strip_prefix = "rules_proto-04ed8c701d9a123b42f7e102c232d29834c4be7c",
 )
 ```
 
