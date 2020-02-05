@@ -4,18 +4,18 @@ tasks:
   ubuntu1604:
     build_flags:
     - "--incompatible_no_rule_outputs_param=false"
-    # - "--copt=-DGRPC_BAZEL_BUILD"
     # environment:
     #   CC: clang
     # test_targets:
+    - "//example/routeguide/cpp_cpp"
     # - "//example/routeguide/..."
     build_targets:
     # - "//android/..."
     # - "//closure/..."
     - "//cpp/..."
     # - "//d/..."
-    # - "//go/..."
-    # - "//java/..."
+    - "//go/..."
+    - "//java/..."
     # - "//node/..."
     # - "//objc/..."
     # - "//php/..."
