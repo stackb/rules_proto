@@ -1,0 +1,34 @@
+load("@build_stack_rules_proto//rules:proto_library.bzl", "proto_library")
+
+proto_library(
+    name = "routeguide_proto",
+    srcs = ["routeguide.proto"],
+)
+
+load("@build_stack_rules_proto//rules:cc_proto_library.bzl", "cc_proto_library")
+
+cc_proto_library(
+    name = "routeguide_cc_proto_library",
+    deps = [":routeguide_proto"],
+)
+
+load("@build_stack_rules_proto//rules:cc_grpc_library.bzl", "cc_grpc_library")
+
+cc_grpc_library(
+    name = "routeguide_cc_grpc_library",
+    # NOTE: it is quite counter-intuitive that the 'srcs' attribute take a
+    # proto_library. That seems to only be true if the 'grpc_only' attribute it
+    # True.
+    srcs = ["routeguide_proto"],
+    deps = [":routeguide_cc_proto_library"],
+    grpc_only = True,
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "routeguide_features",
+    srcs = [
+        "routeguide_features.json",
+    ],
+    visibility = ["//visibility:public"],
+)

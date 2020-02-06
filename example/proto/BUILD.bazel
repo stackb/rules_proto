@@ -72,3 +72,9 @@ proto_library(
         "//visibility:public",
     ],
 )
+
+filegroup(
+    name = "person",
+    srcs = ["person.proto"],
+    visibility = ["//visibility:public"],
+)

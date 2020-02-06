@@ -1,0 +1,40 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_binary")
+
+
+# cc_test(
+#     name = "feature_test",
+#     size = "small",
+#     srcs = ["feature_test.cc"],
+#     copts = ["-Iexternal/gtest/include"],
+#     deps = [
+#         ":helper",
+#         "//external:gtest",
+#     ],
+# )
+
+cc_library(
+    name = "helper",
+    srcs = ["helper.cc"],
+    hdrs = ["helper.h"],
+    deps = ["//proto:routeguide_cc_grpc_library"],
+)
+
+cc_binary(
+    name = "client",
+    srcs = ["client.cc"],
+    data = ["//proto:routeguide_features"],
+    deps = [
+        ":helper",
+        "@com_github_grpc_grpc//:grpc++",
+    ],
+)
+
+cc_binary(
+    name = "server",
+    srcs = ["server.cc"],
+    data = ["//proto:routeguide_features"],
+    deps = [
+        ":helper",
+        "@com_github_grpc_grpc//:grpc++",
+    ],
+)

@@ -1,0 +1,31 @@
+load("@build_stack_rules_proto//rules:proto_library.bzl", "proto_library")
+
+proto_library(
+    name = "routeguide_proto",
+    srcs = ["routeguide.proto"],
+)
+
+load("@build_stack_rules_proto//rules:java_proto_library.bzl", "java_proto_library")
+
+java_proto_library(
+    name = "routeguide_java_proto_library",
+    deps = [":routeguide_proto"],
+    visibility = ["//visibility:public"],
+)
+
+load("@build_stack_rules_proto//rules:java_grpc_library.bzl", "java_grpc_library")
+
+java_grpc_library(
+    name = "routeguide_java_grpc_library",
+    srcs = ["routeguide_proto"],
+    deps = [":routeguide_java_proto_library"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "routeguide_features",
+    srcs = [
+        "routeguide_features.json",
+    ],
+    visibility = ["//visibility:public"],
+)
