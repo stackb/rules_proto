@@ -1,0 +1,56 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+#
+# Declare dependency on build_stack_rules_proto
+#
+local_repository(
+    name = "build_stack_rules_proto",
+    path = "../..",
+)
+
+#
+# Establish the @rules_proto external workspace 
+#
+load("@build_stack_rules_proto//third_party/rules_proto:repository.bzl", "rules_proto")
+
+rules_proto()
+
+#
+# Execute @rules_proto dependencies - this brings in
+# com_google_protobuf//:protoc 
+#
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
+
+
+#
+# Establish the @com_github_grpc_grpc external workspace 
+#
+load("@build_stack_rules_proto//third_party/com_github_grpc_grpc:repository.bzl", "com_github_grpc_grpc")
+
+com_github_grpc_grpc()
+
+#
+# com_github_grpc_grpc needs the bazel_version stored in an external repository.
+# Here's where it should be, but isn't:
+# load("@com_github_grpc_grpc//bazel:repository_defs.bzl", "bazel_version_repository")
+#
+load("@build_stack_rules_proto//rules:bazel_version_repository.bzl", "bazel_version_repository")
+
+bazel_version_repository(
+    name = "upb_bazel_version",
+)
+
+#
+# Execute @com_github_grpc_grpc dependencies
+#
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
+
+load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+
+grpc_extra_deps()

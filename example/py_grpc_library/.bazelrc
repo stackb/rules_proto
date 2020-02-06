@@ -1,0 +1,4 @@
+# Mac users may need this
+# See "grpc Mac bazel build fails because of thread-local, but make passes"
+# See https://github.com/bazelbuild/bazel/issues/4341
+build --copt=-DGRPC_BAZEL_BUILD

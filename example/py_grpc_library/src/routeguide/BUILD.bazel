@@ -1,0 +1,44 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_binary")
+
+py_library(
+    name = "resources",
+    srcs = [
+        "resources.py",
+    ],
+    data = ["//proto:routeguide_features"],
+    deps = [
+        "//proto:routeguide_py_proto_library",
+    ],
+)
+
+py_binary(
+    name = "client",
+    srcs = ["client.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":resources",
+        "//proto:routeguide_py_proto_library",
+        "//proto:routeguide_py_grpc_library",
+    ],
+)
+
+py_binary(
+    name = "server",
+    srcs = ["server.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":resources",
+        "//proto:routeguide_py_proto_library",
+        "//proto:routeguide_py_grpc_library",
+    ],
+)
+
+# config_setting(
+#     name="python2",
+#     flag_values = {"@rules_python//python:python_version": "PY2"}
+# )
+
+# config_setting(
+#     name="python3",
+#     flag_values = {"@rules_python//python:python_version": "PY3"}
+# )

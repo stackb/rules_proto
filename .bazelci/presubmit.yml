@@ -24,3 +24,8 @@ tasks:
     build_targets:
     - "..."
     working_directory: example/go_grpc_library
+  py_grpc_library:
+    platform: ubuntu1604
+    build_targets:
+    - "..."
+    working_directory: example/py_grpc_library
