@@ -1,13 +1,7 @@
 load("@build_stack_rules_proto//rules:proto_library.bzl", "proto_library")
-load("@build_stack_rules_proto//rules:cc_proto_library.bzl", "cc_proto_library")
 
 proto_library(
     name = "thing_proto",
     srcs = ["thing.proto"],
     deps = ["@com_google_protobuf//:any_proto"],
-)
-
-cc_proto_library(
-    name = "thing_cc_proto",
-    srcs = [":thing_proto"],
 )
