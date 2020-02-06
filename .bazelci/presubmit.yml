@@ -4,7 +4,7 @@ tasks:
   ubuntu1604:
     build_targets:
     - ":*"
-  proto_library:
+  g_library:
     platform: ubuntu1604
     build_targets:
     - "..."
@@ -34,3 +34,8 @@ tasks:
     build_targets:
     - "..."
     working_directory: example/closure_proto_library
+  nodejs_grpc_library:
+    platform: ubuntu1604
+    build_targets:
+    - "..."
+    working_directory: example/nodejs_grpc_library

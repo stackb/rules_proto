@@ -1,0 +1,36 @@
+load("@build_stack_rules_proto//rules:nodejs_grpc_compile.bzl", "nodejs_grpc_compile")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+
+nodejs_grpc_compile(
+    name = "routeguide",
+    deps = ["//proto:routeguide_proto"],
+)
+
+nodejs_binary(
+    name = "client",
+    entry_point = "client.js",
+    data = [
+        "client.js",
+        ":routeguide",
+        "routeguide_features.json",
+        "@nodejs_modules//async",
+        "@nodejs_modules//google-protobuf",
+        "@nodejs_modules//grpc",
+        "@nodejs_modules//lodash",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+nodejs_binary(
+    name = "server",
+    entry_point = "server.js",
+    data = [
+        "server.js",
+        ":routeguide",
+        "routeguide_features.json",
+        "@nodejs_modules//google-protobuf",
+        "@nodejs_modules//grpc",
+        "@nodejs_modules//lodash",
+    ],
+    visibility = ["//visibility:public"],
+)

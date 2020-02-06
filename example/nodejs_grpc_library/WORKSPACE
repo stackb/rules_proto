@@ -1,0 +1,117 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+#
+# Declare dependency on build_stack_rules_proto
+#
+local_repository(
+    name = "build_stack_rules_proto",
+    path = "../..",
+)
+
+#
+# Establish the @rules_proto external workspace 
+#
+load("@build_stack_rules_proto//third_party/rules_proto:repository.bzl", "rules_proto")
+
+rules_proto()
+
+#
+# Execute @rules_proto dependencies - this brings in
+# com_google_protobuf//:protoc 
+#
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
+
+
+#
+# Establish the @com_github_grpc_grpc external workspace 
+#
+load("@build_stack_rules_proto//third_party/com_github_grpc_grpc:repository.bzl", "com_github_grpc_grpc")
+
+com_github_grpc_grpc()
+
+
+#
+# com_github_grpc_grpc needs the bazel_version stored in an external repository.
+# Here's where it should be, but isn't:
+# load("@com_github_grpc_grpc//bazel:repository_defs.bzl", "bazel_version_repository")
+#
+load("@build_stack_rules_proto//rules:bazel_version_repository.bzl", "bazel_version_repository")
+
+bazel_version_repository(
+    name = "upb_bazel_version",
+)
+
+#
+# Execute @com_github_grpc_grpc dependencies
+#
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
+
+load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+
+grpc_extra_deps()
+
+
+#
+# Establish the @build_bazel_rules_nodejs external workspace 
+#
+load("@build_stack_rules_proto//third_party/build_bazel_rules_nodejs:repository.bzl", "build_bazel_rules_nodejs")
+
+build_bazel_rules_nodejs()
+
+
+#
+# Yarn dependencies
+#
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+
+# to update the yarn.lock, run "yarn install" at the workspace root.
+yarn_install(
+    name = "nodejs_modules",
+    package_json = "//:package.json",
+    yarn_lock = "//:yarn.lock",
+)
+
+#
+# Establish the @npm_bazel_typescript external workspace 
+#
+load("@build_stack_rules_proto//third_party/npm_bazel_typescript:repository.bzl", "npm_bazel_typescript")
+
+npm_bazel_typescript()
+
+
+#
+# Establish the @build_bazel_rules_typescript external workspace 
+#
+load("@build_stack_rules_proto//third_party/build_bazel_rules_typescript:repository.bzl", "build_bazel_rules_typescript")
+
+build_bazel_rules_typescript()
+
+
+#
+# Establish the @rules_codeowners external workspace (why?)
+#
+load("@build_stack_rules_proto//third_party/rules_codeowners:repository.bzl", "rules_codeowners")
+
+rules_codeowners()
+
+
+#
+# Establish the @rules_proto_grpc external workspace 
+#
+load("@build_stack_rules_proto//third_party/rules_proto_grpc:repository.bzl", "rules_proto_grpc")
+
+rules_proto_grpc()
+
+
+#
+# Register the rules_proto_grpc toolchain
+#
+load("@rules_proto_grpc//:repositories.bzl", "rules_proto_grpc_toolchains")
+
+rules_proto_grpc_toolchains()
