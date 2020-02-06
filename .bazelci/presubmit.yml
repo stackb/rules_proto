@@ -2,6 +2,8 @@
 bazel: 2.0.0
 tasks:
   ubuntu1604:
+    build_targets:
+    - ":*"
   proto_library:
     platform: ubuntu1604
     build_targets:
