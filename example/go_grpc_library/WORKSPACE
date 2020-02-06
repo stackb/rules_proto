@@ -1,0 +1,68 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+#
+# Declare dependency on build_stack_rules_proto
+#
+local_repository(
+    name = "build_stack_rules_proto",
+    path = "../..",
+)
+
+#
+# Establish the @rules_proto external workspace 
+#
+load("@build_stack_rules_proto//third_party/rules_proto:repository.bzl", "rules_proto")
+
+rules_proto()
+
+#
+# Load @rules_proto dependencies - this brings in
+# com_google_protobuf//:protoc 
+#
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
+
+
+#
+# Establish the @io_bazel_rules_go external workspace 
+#
+load("@build_stack_rules_proto//third_party/io_bazel_rules_go:repository.bzl", "io_bazel_rules_go")
+
+io_bazel_rules_go()
+
+#
+# Load @io_bazel_rules_go dependencies
+#
+load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_toolchains")
+
+go_rules_dependencies()
+
+go_register_toolchains()
+
+#
+# Establish the @bazel_gazelle external workspace 
+#
+load("@build_stack_rules_proto//third_party/bazel_gazelle:repository.bzl", "bazel_gazelle")
+
+bazel_gazelle()
+
+#
+# Load @bazel_gazelle dependencies
+#
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+
+gazelle_dependencies()
+
+#
+# Establish grpc dependencies 
+#
+load("@build_stack_rules_proto//third_party/org_golang_google_grpc:repository.bzl", "org_golang_google_grpc")
+load("@build_stack_rules_proto//third_party/org_golang_x_text:repository.bzl", "org_golang_x_text")
+load("@build_stack_rules_proto//third_party/org_golang_x_net:repository.bzl", "org_golang_x_net")
+
+org_golang_google_grpc()
+org_golang_x_text()
+org_golang_x_net()

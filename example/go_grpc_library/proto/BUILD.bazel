@@ -1,0 +1,30 @@
+load("@build_stack_rules_proto//rules:proto_library.bzl", "proto_library")
+
+proto_library(
+    name = "routeguide_proto",
+    srcs = ["routeguide.proto"],
+)
+
+# load("@build_stack_rules_proto//rules:go_proto_library.bzl", "go_proto_library")
+
+# go_proto_library(
+#     name = "routeguide_go_proto_library",
+#     deps = [":routeguide_proto"],
+# )
+
+load("@build_stack_rules_proto//rules:go_grpc_library.bzl", "go_grpc_library")
+
+go_grpc_library(
+    name = "routeguide_go_grpc_library",
+    importpath = "google.golang.org/grpc/examples/route_guide",
+    proto = ":routeguide_proto",
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "routeguide_features",
+    srcs = [
+        "routeguide_features.json",
+    ],
+    visibility = ["//visibility:public"],
+)
