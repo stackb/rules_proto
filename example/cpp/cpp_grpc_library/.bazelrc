@@ -1,8 +1,0 @@
-# Start with --all_incompatible_changes by default
-build --all_incompatible_changes
-# 
-build --incompatible_enable_cc_toolchain_resolution=false
-# grpc/gprc has not migrated to ProtoInfo provider
-build --incompatible_disable_legacy_proto_provider=false
-# com_github_grpc_grpc/bazel/generate_cc.bzl: 81
-build --incompatible_disallow_struct_provider_syntax=false
