@@ -1,5 +1,10 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+MAVEN_SERVER_URLS = [
+     "https://maven.google.com",
+     "https://repo1.maven.org/maven2",
+ ]
+
 # https://raw.githubusercontent.com/grpc/grpc/master/third_party/zlib.BUILD
 ZLIB_BUILD = """
 cc_library(
