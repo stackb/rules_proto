@@ -4,6 +4,7 @@ load(
     "//:deps.bzl",
     "com_google_protobuf",
     "io_grpc_grpc_java",
+    "MAVEN_SERVER_URLS",
 )
 
 load(
@@ -16,7 +17,7 @@ def com_google_guava_guava(**kwargs):
         jvm_maven_import_external(
             name = "com_google_guava_guava",
             artifact = "com.google.guava:guava:20.0",
-            server_urls = ["https://central.maven.org/maven2"],
+            server_urls = MAVEN_SERVER_URLS,
             artifact_sha256 = "36a666e3b71ae7f0f0dca23654b67e086e6c93d192f60ba5dfd5519db6c288c8",
             licenses = ["reciprocal"],  # CDDL License
         )
@@ -29,7 +30,7 @@ def javax_annotation_javax_annotation_api(**kwargs):
         jvm_maven_import_external(
             name = "javax_annotation_javax_annotation_api",
             artifact = "javax.annotation:javax.annotation-api:1.2",
-            server_urls = ["https://central.maven.org/maven2"],
+            server_urls = MAVEN_SERVER_URLS,
             artifact_sha256 = "5909b396ca3a2be10d0eea32c74ef78d816e1b4ead21de1d78de1f890d033e04",
             licenses = ["reciprocal"],  # CDDL License
         )
@@ -41,7 +42,7 @@ def com_google_errorprone_error_prone_annotations(**kwargs):
         jvm_maven_import_external(
             name = "com_google_errorprone_error_prone_annotations",
             artifact = "com.google.errorprone:error_prone_annotations:2.3.2",
-            server_urls = ["https://central.maven.org/maven2"],
+            server_urls = MAVEN_SERVER_URLS,
             artifact_sha256 = "357cd6cfb067c969226c442451502aee13800a24e950fdfde77bcdb4565a668d",
             licenses = ["notice"],  # Apache 2.0
         )

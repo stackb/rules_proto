@@ -364,6 +364,8 @@ rules_jvm_external()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
+load("//:deps.bzl", "MAVEN_SERVER_URLS")
+
 maven_install(
     name = "maven_android",
     artifacts = [
@@ -372,10 +374,7 @@ maven_install(
     # Fail if a checksum file for the artifact is missing in the repository.
     # Falls through "SHA-1" and "MD5". Defaults to True.
     fail_on_missing_checksum = False,
-    repositories = [
-        "https://maven.google.com",
-        "https://repo1.maven.org/maven2",
-    ],
+    repositories = MAVEN_SERVER_URLS,
 )
 
 load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_library")
