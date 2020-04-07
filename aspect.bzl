@@ -23,11 +23,11 @@ def proto_compile_impl(ctx):
     ), DefaultInfo(files = depset(files))]
 
 proto_compile_attrs = {
-    # "plugins": attr.label_list(
-    #     doc = "List of protoc plugins to apply",
-    #     providers = [ProtoPluginInfo],
-    #     mandatory = True,
-    # ),
+    "plugins": attr.label_list(
+        doc = "List of protoc plugins to apply",
+        providers = [ProtoPluginInfo],
+        mandatory = True,
+    ),
     "plugin_options": attr.string_list(
         doc = "List of additional 'global' options to add (applies to all plugins)",
     ),
