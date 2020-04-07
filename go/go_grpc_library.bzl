@@ -5,6 +5,7 @@ load("//go:utils.bzl", "get_importmappings")
 def go_grpc_library(**kwargs):
     name = kwargs.get("name")
     deps = kwargs.get("deps")
+    plugins = kwargs.get("plugins", [])
     importpath = kwargs.get("importpath")
     visibility = kwargs.get("visibility")
     go_deps = kwargs.get("go_deps", [])
@@ -14,6 +15,7 @@ def go_grpc_library(**kwargs):
     go_grpc_compile(
         name = name_pb,
         deps = deps,
+        plugins = plugins,
         plugin_options = get_importmappings(kwargs.pop("importmap", {})),
         visibility = visibility,
         verbose = kwargs.pop("verbose", 0),
