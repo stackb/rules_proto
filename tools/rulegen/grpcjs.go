@@ -63,6 +63,9 @@ def {{ .Rule.Name }}(**kwargs):
             "JSC_STRICT_INEXISTENT_PROPERTY",
             "JSC_POSSIBLE_INEXISTENT_PROPERTY",
             "JSC_UNRECOGNIZED_TYPE_ERROR",
+            "stricterMissingRequireType",
+            "analyzerChecks",
+            "analyzerChecksInternal",
         ],
         visibility = visibility,
     )
@@ -73,7 +76,6 @@ def {{ .Rule.Name }}(**kwargs):
         deps = [
             name_pb_lib,
             "@io_bazel_rules_closure//closure/library/promise",
-            "@com_github_stackb_grpc_js//js/grpc/stream:observer",
             "@com_github_stackb_grpc_js//js/grpc/stream/observer:call",
             "@com_github_stackb_grpc_js//js/grpc",
             "@com_github_stackb_grpc_js//js/grpc:api",
@@ -88,6 +90,9 @@ def {{ .Rule.Name }}(**kwargs):
         ],
         suppress = [
             "JSC_IMPLICITLY_NULLABLE_JSDOC",
+            "stricterMissingRequireType",
+            "analyzerChecks",
+            "analyzerChecksInternal",
         ],
         visibility = visibility,
     )`)

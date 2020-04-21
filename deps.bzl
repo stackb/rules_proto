@@ -360,9 +360,18 @@ java_import(
 def com_github_stackb_grpc_js(**kwargs):
     """Grpc-web implementation (closure)
     """
+    # Branch: master
+    # Commit: c11b409432a9c2be1afddd67b0885737aab6ee81
+    # Date: 2020-04-21 02:54:11 +0000 UTC
+    # URL: https://github.com/stackb/grpc.js/commit/c11b409432a9c2be1afddd67b0885737aab6ee81
+    #
+    # Merge pull request #1 from stackb/goog_module
+    #
+    # Refactor modules and check with newer closure compiler
+    # Size: 27965 (28 kB)
     name = "com_github_stackb_grpc_js"
-    ref = get_ref(name, "d075960a9e62846ce92ae1029a777c141809f489", kwargs)
-    sha256 = get_sha256(name, "c0f422823486986ea965fd36a0f5d3380151516421a6de8b69b72778cf3798a4", kwargs)
+    ref = get_ref(name, "c11b409432a9c2be1afddd67b0885737aab6ee81", kwargs)
+    sha256 = get_sha256(name, "03a7b566d80ea24932a7d44ec519c63e676eabee39151c58c2cfa1c7af7f0936", kwargs)
     github_archive(name, "stackb", "grpc.js", ref, sha256)
 
 def bazel_gazelle(**kwargs):
