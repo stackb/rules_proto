@@ -349,12 +349,16 @@ java_import(
     jars = ["com.thesamet.scalapb.compilerplugin-0.8.0.jar"],
     visibility = ["//visibility:public"],
 )
-java_import(
-    name = "scala-library",
-    jars = ["org.scala-lang.scala-library-2.11.12.jar"],
-    visibility = ["//visibility:public"],
-)
             """,
+        )
+
+def external_scalapb(**kwargs):
+    com_github_scalapb_scalapb(**kwargs)
+    compilerplugin_name = "com_github_scalapb_scalapb_compilerplugin"
+    if compilerplugin_name not in native.existing_rules():
+        native.bind(
+            name = compilerplugin_name,
+            actual = "@com_github_scalapb_scalapb//:compilerplugin"
         )
 
 def com_github_stackb_grpc_js(**kwargs):

@@ -2,7 +2,7 @@ load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 
 load(
     "//:deps.bzl",
-    "com_github_scalapb_scalapb",
+    "external_scalapb",
     "io_bazel_rules_go",
     "io_bazel_rules_scala",
     "MAVEN_SERVER_URLS",
@@ -53,7 +53,7 @@ def scala_proto_compile(**kwargs):
     protobuf(**kwargs)
     io_bazel_rules_go(**kwargs)
     io_bazel_rules_scala(**kwargs)
-    com_github_scalapb_scalapb(**kwargs)
+    external_scalapb(**kwargs)
 
 def scala_grpc_compile(**kwargs):
     scala_proto_compile(**kwargs)

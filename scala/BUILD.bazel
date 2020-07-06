@@ -68,11 +68,8 @@ scala_binary(
     srcs = ["CompilerPlugin.scala"],
     main_class = "CompilerPlugin",
     visibility = ["//visibility:public"],
-    runtime_deps = [
-        "@com_github_scalapb_scalapb//:scala-library",
-    ],
     deps = [
-        "@com_github_scalapb_scalapb//:compilerplugin",
+        "//external:com_github_scalapb_scalapb_compilerplugin",
         "@com_google_protobuf//:protobuf_java",
     ],
 )
