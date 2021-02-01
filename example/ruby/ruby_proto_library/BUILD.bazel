@@ -1,6 +1,0 @@
-load("@build_stack_rules_proto//ruby:ruby_proto_library.bzl", "ruby_proto_library")
-
-ruby_proto_library(
-    name = "person_ruby_library",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
-)
