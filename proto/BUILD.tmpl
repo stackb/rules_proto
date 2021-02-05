@@ -1,0 +1,6 @@
+load("@build_stack_rules_proto//{{ .Rule.Package }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+
+{{ .Rule.Name }}(
+    name = "{{ .Rule.Name }}_person_proto",
+    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
+)

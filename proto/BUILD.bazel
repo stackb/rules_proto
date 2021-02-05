@@ -1,0 +1,7 @@
+
+exports_files([
+    "aspect.bzl.tmpl",
+    "WORKSPACE.tmpl",
+    "BUILD.tmpl",
+    "test.go.tmpl",
+])

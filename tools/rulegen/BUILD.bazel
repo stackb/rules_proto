@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+exports_files(["rulegen.bash.in"])
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "generator.go",
+        "main.go",
+        "types.go",
+        "linewriter.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/tools/rulegen",
+    deps = [
+        "@com_github_urfave_cli//:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "rulegen",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
