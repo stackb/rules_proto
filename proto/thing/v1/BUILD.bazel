@@ -1,5 +1,5 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@//:proto_info_provider_test.bzl", "proto_info_provider_test")
+load("@build_stack_rules_proto//:proto_info_provider_test.bzl", "proto_info_provider_test")
 
 proto_library(
     name = "thing_proto",
@@ -10,6 +10,6 @@ proto_library(
 
 proto_info_provider_test(
     name = "thing_proto_info_test",
+    srcs = ["thing_proto_info_test.golden.1.prototext"],
     deps = ["thing_proto"],
-    srcs = ["thing_proto_info_test.generated.1.prototext"],
 )
