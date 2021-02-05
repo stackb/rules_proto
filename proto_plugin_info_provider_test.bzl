@@ -1,5 +1,10 @@
 load("@build_stack_rules_proto//:plugin.bzl", "ProtoPluginInfo")
-load("@build_stack_rules_proto//:provider_test.bzl", "provider_test_implementation", "provider_test_rule", "provider_test_macro")
+load(
+    "@build_stack_rules_proto//:provider_test.bzl",
+    "provider_test_implementation",
+    "provider_test_macro",
+    "provider_test_rule",
+)
 
 def proto_plugin_info_to_struct(info):
     return struct(

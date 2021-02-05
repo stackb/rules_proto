@@ -1,42 +1,10 @@
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
-load("//tools/gencopy:gencopy.bzl", "gencopy_action", "gencopy_attrs", "gencopy_config")
-
-def _proto_info_provider_test_impl(ctx):
-    outputs = []
-
-    config = gencopy_config(ctx)
-
-    n = 0
-    for info in [dep[ProtoInfo] for dep in ctx.attr.deps]:
-        n += 1
-        info_proto = ctx.actions.declare_file("%s.%d.prototext" % (ctx.label.name, n))
-        outputs.append(info_proto)
-        ctx.actions.write(
-            output = info_proto,
-            content = proto_info_to_struct(info).to_proto(),
-        )
-
-    script, runfiles = gencopy_action(ctx, config, outputs)
-
-    return [
-        DefaultInfo(
-            files = depset(outputs),
-            runfiles = runfiles,
-            executable = script,
-        ),
-    ]
-
-_proto_info_provider_test = rule(
-    implementation = _proto_info_provider_test_impl,
-    attrs = dict(
-        gencopy_attrs,
-        deps = attr.label_list(
-            doc = "The proto_library rule",
-            providers = [ProtoInfo],
-        ),
-    ),
-    executable = True,
-    test = True,
+load(
+    "@build_stack_rules_proto//:provider_test.bzl",
+    "provider_test_implementation",
+    "provider_test_macro",
+    "provider_test_rule",
+    "redact_host_configuration",
 )
 
 def proto_info_to_struct(info):
@@ -50,35 +18,10 @@ def proto_info_to_struct(info):
         transitive_sources = [f.short_path for f in info.transitive_sources.to_list()],
     )
 
-# transform:
-# from "bazel-out/darwin-fastbuild/bin/external/com_google_protobuf/_virtual_imports/any_proto"
-# to "bazel-out/{HOST_CONFIGURATION}/bin/external/com_google_protobuf/_virtual_imports/any_proto}
-def redact_host_configuration(filename):
-    if not filename.startswith("bazel-out/"):
-        return filename
-    parts = filename.split('/')
-    parts[1] = "{HOST_CONFIGURATION}"
-    return "/".join(parts)
+def _proto_info_provider_test_impl(ctx):
+    return provider_test_implementation(ctx, ProtoInfo, proto_info_to_struct)
+
+_proto_info_provider_test = provider_test_rule(_proto_info_provider_test_impl, ProtoInfo)
 
 def proto_info_provider_test(**kwargs):
-    srcs = kwargs.pop("srcs", [])
-    deps = kwargs.pop("deps", [])
-    name = kwargs.pop("name")
-
-    update_target_label_name = 'golden'
-    update_name = "%s.%s" % (name, update_target_label_name)
-
-    _proto_info_provider_test(
-        name = name,
-        deps = deps,
-        srcs = srcs,
-        mode = "check",
-        update_target_label_name = update_target_label_name,
-    )
-
-    _proto_info_provider_test(
-        name = update_name,
-        deps = deps,
-        mode = "update",
-        update_target_label_name = update_target_label_name,
-    )
+    provider_test_macro(_proto_info_provider_test, **kwargs)
