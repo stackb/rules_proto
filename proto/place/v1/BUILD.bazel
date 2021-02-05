@@ -1,0 +1,8 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+proto_library(
+    name = "place_proto",
+    srcs = ["place.proto"],
+    visibility = ["//visibility:public"],
+    deps = ["//proto/thing/v1:thing_proto"],
+)
