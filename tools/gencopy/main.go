@@ -24,7 +24,7 @@ const (
 
 var (
 	config       = flag.String("config", "", "The JSON configuration file")
-	workspaceDir = flag.String("build_workspace_directory", "", "The absolute path to the workspace source root")
+	workspaceDir = flag.String("workspace_root_directory", "", "The absolute path to the workspace source root")
 )
 
 type (
@@ -33,9 +33,11 @@ type (
 	Config struct {
 		// The root of the monorepo.  This comes from the environment variable
 		// BUILD_WORKSPACE_DIRECTORY during a `bazel run`
-		BuildWorkspaceDirectory string
+		WorkspaceRootDirectory string
 		// The label triggering this run
 		TargetLabel string
+		// The label name used for the 'update' mode
+		UpdateTargetLabelName string
 		// The directory name where the files were generated
 		TargetPackage string
 		// The list of files that were generated in the bazel output tree.  These
@@ -99,7 +101,24 @@ func readFileAsString(filename string) (string, error) {
 	return string(bytes), nil
 }
 
+func usageHint(cfg *Config) string {
+	return fmt.Sprintf(`You may need to regenerate the files (bazel run) using the '.[2]s' target,
+update the 'srcs = [...]' attribute to include the generated files, and then re-run the test (bazel test):
+
+$ bazel run %[1]s.%[2]s
+$ bazel test %[1]s
+
+`, cfg.TargetLabel, cfg.UpdateTargetLabelName)
+}
+
 func check(cfg *Config, pairs []*srcDst) error {
+	lenGen := len(pairs)
+	lenSrc := len(cfg.SourceFiles)
+	if lenSrc != lenGen {
+		return fmt.Errorf(
+			"check failed.  The number of source files (%d) does not match the number of generated files (%d)\n\n%s",
+			lenSrc, lenGen, usageHint(cfg))
+	}
 	for i, pair := range pairs {
 		expected, err := readFileAsString(pair.dst)
 		if err != nil {
@@ -109,17 +128,16 @@ func check(cfg *Config, pairs []*srcDst) error {
 		if err != nil {
 			return fmt.Errorf("check failed: %v", err)
 		}
-		log.Printf("source file: \n%v\n", actual)
 		if diff := cmp.Diff(expected, actual); diff != "" {
 			return fmt.Errorf("gencopy mismatch (-want +got):\n%s", diff)
 		}
 	}
 
 	log.Printf("Target %s: generated files are up-to-date:", cfg.TargetLabel)
-	for _, pair := range pairs {
-		log.Printf("  %s", pair.dst[len(cfg.BuildWorkspaceDirectory)+1:])
+	for _, filename := range cfg.SourceFiles {
+		log.Printf("  %s", filename)
 	}
-	log.Fatal("reaallyyyy?")
+
 	return nil
 }
 
@@ -135,7 +153,7 @@ func update(cfg *Config, pairs []*srcDst) error {
 
 	log.Printf("Target %s: outputs files copied to source tree:", cfg.TargetLabel)
 	for _, pair := range pairs {
-		log.Printf("  %s", pair.dst[len(cfg.BuildWorkspaceDirectory)+1:])
+		log.Printf("  %s", pair.dst[len(cfg.WorkspaceRootDirectory)+1:])
 	}
 
 	return nil
@@ -149,7 +167,7 @@ func run(cfg *Config) error {
 			return fmt.Errorf("could not prepare (file not found): %q", src)
 		}
 		base := filepath.Base(src)
-		dst := filepath.Join(cfg.BuildWorkspaceDirectory, cfg.TargetPackage, base)
+		dst := filepath.Join(cfg.WorkspaceRootDirectory, cfg.TargetPackage, base)
 		pairs = append(pairs, &srcDst{src, dst})
 	}
 
@@ -163,15 +181,18 @@ func run(cfg *Config) error {
 	}
 }
 
-func readConfig(buildWorkspaceDirectory string) (*Config, error) {
+func readConfig(workspaceRootDirectory string) (*Config, error) {
+	// if workspaceRootDirectory == "" {
+	// 	return nil, fmt.Errorf("--workspace_root_directory is required.")
+	// }
 	data, err := ioutil.ReadFile(*config)
 	if err != nil {
 		return nil, fmt.Errorf("could not read config file %s: %w", *config, err)
 	}
 
 	cfg := &Config{
-		Mode:                    "update",
-		BuildWorkspaceDirectory: buildWorkspaceDirectory,
+		Mode:                   "update",
+		WorkspaceRootDirectory: workspaceRootDirectory,
 	}
 
 	if err := json.Unmarshal(data, cfg); err != nil {

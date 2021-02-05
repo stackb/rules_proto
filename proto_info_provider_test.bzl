@@ -65,17 +65,20 @@ def proto_info_provider_test(**kwargs):
     deps = kwargs.pop("deps", [])
     name = kwargs.pop("name")
 
-    update_name = name + ".checkin"
+    update_target_label_name = 'golden'
+    update_name = "%s.%s" % (name, update_target_label_name)
 
     _proto_info_provider_test(
         name = name,
         deps = deps,
         srcs = srcs,
         mode = "check",
+        update_target_label_name = update_target_label_name,
     )
 
     _proto_info_provider_test(
         name = update_name,
         deps = deps,
         mode = "update",
+        update_target_label_name = update_target_label_name,
     )

@@ -39,8 +39,6 @@ elif [ $# -ne 0 ]; then
   ARGS=("$@")
 fi
 
-# Invoke Generator
-
 # Note that we don't change directories first; if we did, Generator wouldn't be
 # able to find runfiles, and some extensions rely on that. Generator can use
 # BUILD_WORKSPACE_DIRECTORY to interpret relative paths on the command line.
@@ -56,12 +54,7 @@ if [ -z "$CONFIG_short_path" ]; then
   exit 1
 fi
 
-# if [ -z "${BUILD_WORKSPACE_DIRECTORY-}" ]; then
-#   echo "error: BUILD_WORKSPACE_DIRECTORY not set" >&2
-#   exit 1
-# fi
-
 "$GENCOPY_short_path" \
   -config="$CONFIG_short_path" \
-  -build_workspace_directory="${BUILD_WORKSPACE_DIRECTORY:-""}" \
+  -workspace_root_directory="${BUILD_WORKSPACE_DIRECTORY:-""}" \
   "${ARGS[@]}"

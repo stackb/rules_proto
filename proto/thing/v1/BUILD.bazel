@@ -11,5 +11,5 @@ proto_library(
 proto_info_provider_test(
     name = "thing_proto_info_test",
     deps = ["thing_proto"],
-    srcs = ["thing_proto_info_test.1.prototext"],
+    srcs = ["thing_proto_info_test.generated.1.prototext"],
 )

@@ -10,6 +10,10 @@ gencopy_attrs = {
         values = ["update", "check"],
         default = "check",
     ),
+    "update_target_label_name": attr.string(
+        doc = "The label.name used to regenerate targets",
+        mandatory = True,
+    ),
     "_gencopy_script": attr.label(
         doc = "The gencopy script template",
         default = str(Label("//tools/gencopy:gencopy.bash.in")),
@@ -27,6 +31,7 @@ gencopy_attrs = {
 def gencopy_config(ctx):
     return struct(
         mode = ctx.attr.mode,
+        updateTargetLabelName = ctx.attr.update_target_label_name,
         targetLabel = str(ctx.label),
         targetPackage = ctx.label.package,
         generatedFiles = [],
@@ -66,4 +71,4 @@ def gencopy_action(ctx, config, outputs):
         is_executable = True,
     )
 
-    return script, ctx.runfiles(files = [ctx.executable._gencopy, config_json] + outputs)
+    return script, ctx.runfiles(files = [ctx.executable._gencopy, config_json] + outputs + ctx.files.srcs)
