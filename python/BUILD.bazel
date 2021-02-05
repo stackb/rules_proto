@@ -1,6 +1,7 @@
 # load("@io_bazel_rules_go//go:def.bzl", "go_test")
 load("//:plugin.bzl", "proto_plugin")
 load("//:proto_rule.bzl", "proto_rule")
+load("//:proto_plugin_info_provider_test.bzl", "proto_plugin_info_provider_test")
 
 proto_rule(
     name = "py_proto_compile",
@@ -25,6 +26,11 @@ proto_plugin(
     outputs = ["{protopath|python}_pb2.py"],
     protoc_plugin_name = "python",
     visibility = ["//visibility:public"],
+)
+
+proto_plugin_info_provider_test(
+    name = "python_plugin_provider_test",
+    deps = [":python_plugin"],
 )
 
 proto_plugin(
