@@ -1,0 +1,5 @@
+theme: jekyll-theme-minimal
+title: Rules Proto gRPC
+logo: /internal/resources/logo-200.png
+description: Protobuf and gRPC rules for Bazel
+show_downloads: true

@@ -1,1 +1,15 @@
 package {{ .Rule.Name }}
+
+import (
+	"testing"
+
+	"github.com/stackb/rules_proto/tools/testtools"
+)
+
+func Test_{{ .Rule.Name }}(t *testing.T) {
+	suite := testtools.RuleTestSuite{
+		Name: "{{ .Rule.Name }}",
+		Plugins: []string{""},
+	}
+	suite.Run(t)
+}

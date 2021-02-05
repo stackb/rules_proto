@@ -1,0 +1,42 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_test")
+
+load("//:plugin.bzl", "proto_plugin")
+load("//:proto_rule.bzl", "proto_rule")
+
+proto_rule(
+    name = "py_proto_compile",
+    plugins = [":python_plugin"],
+)
+
+go_test(
+    name = "py_proto_compile_test",
+    embed = ["//tools/testtools:go_default_library"],
+    data = [":py_proto_compile"],
+)
+
+proto_plugin(
+    name = "python_plugin",
+    protoc_plugin_name = "python",
+    outputs = ["{protopath|python}_pb2.py"],
+    exclusions = [
+        "google/protobuf",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "grpc_python_plugin",
+    outputs = ["{protopath|python}_pb2_grpc.py"],
+    tool = "@com_github_grpc_grpc//src/compiler:grpc_python_plugin",
+    exclusions = [
+        "google/protobuf",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "grpclib_python_plugin",
+    outputs = ["{protopath}_grpc.py"],
+    tool = "//python/grpclib:plugin",
+    visibility = ["//visibility:public"],
+)

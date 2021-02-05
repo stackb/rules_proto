@@ -22,17 +22,17 @@ func generate(rule *Rule) error {
 		return err
 	}
 
-	workspaceDir, ok := os.LookupEnv("BUILD_WORKSPACE_DIRECTORY")
-	if !ok {
-		return fmt.Errorf("BUILD_WORKSPACE_DIRECTORY not set")
-	}
-	if err := os.Chdir(workspaceDir); err != nil {
-		return err
-	}
+	// workspaceDir, ok := os.LookupEnv("BUILD_WORKSPACE_DIRECTORY")
+	// if !ok {
+	// 	return fmt.Errorf("BUILD_WORKSPACE_DIRECTORY not set")
+	// }
+	// if err := os.Chdir(workspaceDir); err != nil {
+	// 	return err
+	// }
 
-	if err := copyToWorkspace(rule, workspaceDir, rule.ImplementationFilename); err != nil {
-		return err
-	}
+	// if err := copyToWorkspace(rule, workspaceDir, rule.ImplementationFilename); err != nil {
+	// 	return err
+	// }
 
 	return nil
 }

@@ -1,0 +1,8 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["rule_test_suite.go"],
+    importpath = "github.com/stackb/rules_proto/tools/testtools",
+    visibility = ["//visibility:public"]
+)
