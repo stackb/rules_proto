@@ -151,7 +151,7 @@ func update(cfg *Config, pairs []*srcDst) error {
 		}
 	}
 
-	log.Printf("Target %s: outputs files copied to source tree:", cfg.TargetLabel)
+	log.Printf("Target %s: output files copied to source tree:", cfg.TargetLabel)
 	for _, pair := range pairs {
 		log.Printf("  %s", pair.dst[len(cfg.WorkspaceRootDirectory)+1:])
 	}

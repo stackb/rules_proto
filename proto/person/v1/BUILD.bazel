@@ -1,8 +1,15 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//:proto_info_provider_test.bzl", "proto_info_provider_test")
 
 proto_library(
     name = "person_proto",
     srcs = ["person.proto"],
     visibility = ["//visibility:public"],
     deps = ["//proto/place/v1:place_proto"],
+)
+
+proto_info_provider_test(
+    name = "person_proto_info_test",
+    srcs = ["person_proto_info_test.golden.1.prototext"],
+    deps = ["person_proto"],
 )
