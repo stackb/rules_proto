@@ -30,4 +30,3 @@ gazelle_binary(
     languages = [":lazelang"],
     visibility = ["//visibility:public"],
 )
-

@@ -8,8 +8,8 @@ load(
     "proto_compile_impl",
 )
 
-# Create aspect for python_proto_compile
-python_proto_compile_aspect = aspect(
+# Create aspect for py_proto_compile
+py_proto_compile_aspect = aspect(
     implementation = proto_compile_aspect_impl,
     provides = [ProtoLibraryAspectNodeInfo],
     attr_aspects = ["deps"],
@@ -24,7 +24,7 @@ python_proto_compile_aspect = aspect(
         ),
         _prefix = attr.string(
             doc = "String used to disambiguate aspects when generating outputs",
-            default = "python_proto_compile_aspect",
+            default = "py_proto_compile_aspect",
         )
     ),
     toolchains = [str(Label("//protobuf:toolchain_type"))],
@@ -38,7 +38,7 @@ _rule = rule(
         deps = attr.label_list(
             mandatory = True,
             providers = [ProtoInfo, ProtoLibraryAspectNodeInfo],
-            aspects = [python_proto_compile_aspect],
+            aspects = [py_proto_compile_aspect],
         ),
     ),
 )

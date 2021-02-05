@@ -1,7 +1,12 @@
-.PHONY: update_rulegen_deps
-update_rulegen_deps:
-	(cd tools/rulegen && go mod tidy)
-	bazel run @bazel_gazelle//:gazelle -- update-repos -from_file=tools/rulegen/go.mod -to_macro='tools/rulegen/deps.bzl%rulegen_deps'
+.PHONY: update_protorule_deps
+update_protorule_deps:
+	(cd tools/protorule && go mod tidy)
+	bazel run @bazel_gazelle//:gazelle -- update-repos -from_file=tools/protorule/go.mod -to_macro='tools/protorule/deps.bzl%protorule_deps'
+
+.PHONY: update_gencopy_deps
+update_gencopy_deps:
+	(cd tools/gencopy && go mod tidy)
+	bazel run @bazel_gazelle//:gazelle -- update-repos -from_file=tools/gencopy/go.mod -to_macro='tools/gencopy/deps.bzl%gencopy_deps'
 
 .PHONY: update_laze_deps
 update_laze_deps:

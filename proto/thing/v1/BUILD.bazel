@@ -1,8 +1,15 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@//:proto_info_provider_test.bzl", "proto_info_provider_test")
 
 proto_library(
     name = "thing_proto",
     srcs = ["thing.proto"],
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:any_proto"],
+)
+
+proto_info_provider_test(
+    name = "thing_proto_info_test",
+    deps = ["thing_proto"],
+    srcs = ["thing_proto_info_test.1.prototext"],
 )

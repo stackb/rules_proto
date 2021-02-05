@@ -6,7 +6,16 @@ workspace(name = "build_stack_rules_proto")
 # Foundational
 # ==================================================
 #
-load("//:deps.bzl", "bazel_gazelle", "io_bazel_rules_go", "bazel_skylib")
+load(
+    "//:deps.bzl",
+    "bazel_gazelle",
+    "bazel_skylib",
+    "com_google_protobuf",
+    "io_bazel_rules_go",
+    "rules_proto",
+    "rules_python",
+    "zlib",
+)
 
 io_bazel_rules_go()
 
@@ -32,21 +41,40 @@ gazelle_dependencies()
 # Internal Tools
 # ==================================================
 #
-load("//tools/rulegen:deps.bzl", "rulegen_deps")
+load("//tools/protorule:deps.bzl", "protorule_deps")
 
-# gazelle:repository_macro tools/rulegen/deps.bzl%rulegen_deps
-rulegen_deps()
+# gazelle:repository_macro tools/protorule/deps.bzl%protorule_deps
+protorule_deps()
 
-load("//tools/laze:deps.bzl", "laze_deps")
+load("//tools/gencopy:deps.bzl", "gencopy_deps")
 
-# gazelle:repository_macro tools/laze/deps.bzl%laze_deps
-laze_deps()
+# gazelle:repository_macro tools/gencopy/deps.bzl%gencopy_deps
+gencopy_deps()
+
+# ==================================================
+# Protobuf Core
+# ==================================================
+#
+rules_proto()
+
+rules_python()
+
+com_google_protobuf()
+
+zlib()
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
 
 #
 # Toolchains
 #
-# load("//:repositories.bzl", "rules_proto_grpc_toolchains")
-# rules_proto_grpc_toolchains()
+load("//:toolchains.bzl", "protoc_toolchains")
+
+protoc_toolchains()
 
 # #
 # # Core

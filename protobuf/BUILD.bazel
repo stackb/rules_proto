@@ -1,4 +1,4 @@
-load(":toolchains.bzl", "protoc_toolchain")
+load("//protobuf:toolchains.bzl", "protoc_toolchain")
 
 # Define toolchain type for protoc compiler
 toolchain_type(
@@ -17,3 +17,10 @@ toolchain(
     toolchain = ":protoc",
     toolchain_type = ":toolchain_type",
 )
+
+exports_files([
+    "aspect.bzl.tmpl",
+    "WORKSPACE.tmpl",
+    "BUILD.tmpl",
+    "test.go.tmpl",
+])

@@ -1,4 +1,4 @@
 exports_files(
     glob(["BUILD.bazel.*"]),
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )

@@ -123,7 +123,7 @@ proto_rule = rule(
         "data": attr.label_list(allow_files = True),
         "_rulegen": attr.label(
             doc = "The rulegen generator tool",
-            default = "//tools/rulegen",
+            default = "//tools/protorule/cmd/rulegen",
             allow_single_file = True,
             executable = True,
             cfg = "host",
