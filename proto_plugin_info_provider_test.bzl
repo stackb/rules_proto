@@ -9,6 +9,16 @@ load(
 def proto_plugin_info_to_struct(info):
     return struct(
         name = info.name,
+        options = info.options,
+        outputs = info.outputs,
+        output_directory = info.output_directory,
+        tool = info.tool if info.tool else "",
+        tool_executable = info.tool_executable.short_path if info.tool_executable else "",
+        use_built_in_shell_environment = info.use_built_in_shell_environment,
+        protoc_plugin_name = info.protoc_plugin_name,
+        exclusions = info.exclusions,
+        data = [f.short_path for f in info.data],
+        separate_options_flag = info.separate_options_flag,
     )
 
 def _proto_plugin_provider_test_impl(ctx):

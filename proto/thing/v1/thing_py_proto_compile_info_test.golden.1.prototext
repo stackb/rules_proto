@@ -1,0 +1,4 @@
+label: "//proto/thing/v1:thing_py_proto"
+output_files {
+  bazel-out/darwin-fastbuild/bin/proto/thing/v1/thing_py_proto: "proto/thing/v1/thing_py_proto/proto/thing/v1/thing_pb2.py"
+}

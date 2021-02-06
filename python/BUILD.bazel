@@ -30,6 +30,7 @@ proto_plugin(
 
 proto_plugin_info_provider_test(
     name = "python_plugin_provider_test",
+    srcs = ["python_plugin_provider_test.golden.1.prototext"],
     deps = [":python_plugin"],
 )
 

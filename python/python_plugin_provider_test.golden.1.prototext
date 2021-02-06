@@ -1,0 +1,9 @@
+exclusions: "google/protobuf"
+name: "python_plugin"
+output_directory: false
+outputs: "{protopath|python}_pb2.py"
+protoc_plugin_name: "python"
+separate_options_flag: false
+tool: ""
+tool_executable: ""
+use_built_in_shell_environment: false
