@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "testtools",
+    testonly = True,
+    srcs = ["proto_rule_test_suite.go"],
+    importpath = "github.com/stackb/rules_proto/tools/protorule/testtools",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tools/protorule",
+        "@bazel_gazelle//testtools:go_default_library",
+        "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+        "@io_bazel_rules_go//go/tools/bazel_testing:go_default_library",
+    ],
+)
