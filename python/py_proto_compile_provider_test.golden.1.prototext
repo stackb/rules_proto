@@ -1,0 +1,19 @@
+build_file: "python/py_proto_compile.BUILD"
+bzl_file: "python/py_proto_compile.bzl"
+name: "py_proto_compile"
+rule {
+  buildExampleFilename: "bazel-out/darwin-fastbuild/bin/python/py_proto_compile.BUILD"
+  buildExampleTmpl: "protobuf/BUILD.tmpl"
+  implementationFilename: "bazel-out/darwin-fastbuild/bin/python/py_proto_compile.bzl"
+  implementationTmpl: "protobuf/aspect.bzl.tmpl"
+  kind: ""
+  name: "py_proto_compile"
+  package: "python"
+  plugins: "//python:python_plugin"
+  skipDirectoriesMerge: false
+  testFilename: "bazel-out/darwin-fastbuild/bin/python/py_proto_compile_test.go"
+  testTmpl: "protobuf/test.go.tmpl"
+  workspaceExampleFilename: "bazel-out/darwin-fastbuild/bin/python/py_proto_compile.WORKSPACE"
+  workspaceExampleTmpl: "protobuf/WORKSPACE.tmpl"
+}
+workspace_file: "python/py_proto_compile.WORKSPACE"

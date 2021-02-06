@@ -1,7 +1,3 @@
-load(
-    "@bazel_skylib//lib:shell.bzl",
-    "shell",
-)
 load("//:plugin.bzl", "ProtoPluginInfo")
 
 ProtoRuleInfo = provider("Provider for a proto rule", fields = {
@@ -14,7 +10,6 @@ ProtoRuleInfo = provider("Provider for a proto rule", fields = {
 })
 
 def _proto_rule_impl(ctx):
-
     rule_json = ctx.outputs.json
     output_bzl = ctx.outputs.bzl
     output_workspace = ctx.outputs.workspace
@@ -27,12 +22,10 @@ def _proto_rule_impl(ctx):
         package = ctx.label.package,
         skipDirectoriesMerge = ctx.attr.skip_directories_merge,
         plugins = [str(p.label) for p in ctx.attr.plugins],
-
         implementationFilename = output_bzl.path,
         workspaceExampleFilename = output_workspace.path,
         buildExampleFilename = output_build.path,
         testFilename = output_test.path,
-
         implementationTmpl = ctx.file.implementation_tmpl.path,
         workspaceExampleTmpl = ctx.file.workspace_example_tmpl.path,
         buildExampleTmpl = ctx.file.build_example_tmpl.path,
@@ -71,7 +64,7 @@ def _proto_rule_impl(ctx):
         inputs = inputs,
         outputs = outputs,
     )
-    
+
     return [
         ProtoRuleInfo(
             name = ctx.attr.name,
@@ -95,22 +88,22 @@ proto_rule = rule(
         ),
         "implementation_tmpl": attr.label(
             doc = "The rule implementation template",
-            default = str(Label("//proto:aspect.bzl.tmpl")),
+            default = str(Label("//protobuf:aspect.bzl.tmpl")),
             allow_single_file = True,
         ),
         "workspace_example_tmpl": attr.label(
             doc = "The rule workspace example template",
-            default = str(Label("//proto:WORKSPACE.tmpl")),
+            default = str(Label("//protobuf:WORKSPACE.tmpl")),
             allow_single_file = True,
         ),
         "build_example_tmpl": attr.label(
             doc = "The rule build example template",
-            default = str(Label("//proto:BUILD.tmpl")),
+            default = str(Label("//protobuf:BUILD.tmpl")),
             allow_single_file = True,
         ),
         "test_tmpl": attr.label(
             doc = "The rule build test example template",
-            default = str(Label("//proto:test.go.tmpl")),
+            default = str(Label("//protobuf:test.go.tmpl")),
             allow_single_file = True,
         ),
         "plugins": attr.label_list(

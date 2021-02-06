@@ -1,38 +1,61 @@
+load("@build_stack_rules_proto//:proto_rule.bzl", "ProtoRuleInfo")
 load(
-    "@bazel_skylib//lib:shell.bzl",
-    "shell",
+    "@build_stack_rules_proto//tools/gencopy:gencopy.bzl",
+    "gencopy_action",
+    "gencopy_attrs",
+    "gencopy_config",
 )
-load("//:proto_rule.bzl", "ProtoRuleInfo")
 
 def _proto_rule_test_impl(ctx):
-    go = go_context(ctx)
+    outputs = []
+
+    config = gencopy_config(ctx)
+
+    for info in [dep[ProtoRuleInfo] for dep in ctx.attr.deps]:
+        outputs.append(info.bzl_file)
+
+    script, runfiles = gencopy_action(ctx, config, outputs)
 
     return [
-        ProtoRuleInfo(
-            name = ctx.attr.name,
-            rule = rule,
-            bzl_file = rule_bzl,
-            build_file = rule_build,
-            workspace_file = rule_workspace,
-            test_file = rule_test,
-        ),
         DefaultInfo(
             files = depset(outputs),
+            runfiles = runfiles,
+            executable = script,
         ),
     ]
 
-proto_rule_test = rule(
+_proto_rule_test = rule(
     implementation = _proto_rule_test_impl,
-    attrs = {
-        "data": attr.label_list(allow_files = True),
-        "deps": attr.label_list(
+    attrs = dict(
+        gencopy_attrs,
+        deps = attr.label_list(
+            doc = "The ProtoRuleInfo provider rules",
             providers = [ProtoRuleInfo],
-            allow_files = True,
         ),
-        "_go_context_data": attr.label(
-            default = "@io_bazel_rules_go//:go_context_data",
-        ),
-    },
-    toolchains = ["@io_bazel_rules_go//go:toolchain"],
-    test_only = True,
+    ),
+    executable = True,
+    test = True,
 )
+
+def proto_rule_test(**kwargs):
+    deps = kwargs.pop("deps", [])
+    srcs = kwargs.pop("srcs", [])
+    name = kwargs.pop("name")
+
+    update_target_label_name = "golden"
+    update_name = "%s.%s" % (name, update_target_label_name)
+
+    _proto_rule_test(
+        name = name,
+        deps = deps,
+        srcs = srcs,
+        mode = "check",
+        update_target_label_name = update_target_label_name,
+    )
+
+    _proto_rule_test(
+        name = update_name,
+        deps = deps,
+        mode = "update",
+        update_target_label_name = update_target_label_name,
+    )

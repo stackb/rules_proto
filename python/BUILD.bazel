@@ -2,10 +2,24 @@
 load("//:plugin.bzl", "proto_plugin")
 load("//:proto_rule.bzl", "proto_rule")
 load("//:proto_plugin_info_provider_test.bzl", "proto_plugin_info_provider_test")
+load("//:proto_rule_info_provider_test.bzl", "proto_rule_info_provider_test")
+load("//:proto_rule_test.bzl", "proto_rule_test")
 
 proto_rule(
     name = "py_proto_compile",
     plugins = [":python_plugin"],
+)
+
+proto_rule_info_provider_test(
+    name = "py_proto_compile_provider_test",
+    srcs = ["py_proto_compile_provider_test.golden.1.prototext"],
+    deps = [":py_proto_compile"],
+)
+
+proto_rule_test(
+    name = "py_proto_compile_rule_test",
+    srcs = ["py_proto_compile.bzl"],
+    deps = [":py_proto_compile"],
 )
 
 # go_test(
