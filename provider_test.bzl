@@ -25,7 +25,13 @@ def provider_test_implementation(ctx, provider, provider_to_struct):
         ),
     ]
 
-def provider_test_rule(implementation, provider):
+def provider_test_rule_pair(implementation, provider):
+    return [
+        provider_test_rule(implementation, provider, True),
+        provider_test_rule(implementation, provider, False),
+    ]
+
+def provider_test_rule(implementation, provider, is_test):
     return rule(
         implementation = implementation,
         attrs = dict(
@@ -36,7 +42,7 @@ def provider_test_rule(implementation, provider):
             ),
         ),
         executable = True,
-        test = True,
+        test = is_test,
     )
 
 # transform:
@@ -45,17 +51,16 @@ def provider_test_rule(implementation, provider):
 def redact_host_configuration(filename):
     if not filename.startswith("bazel-out/"):
         return filename
-    parts = filename.split('/')
+    parts = filename.split("/")
     parts[1] = "{HOST_CONFIGURATION}"
     return "/".join(parts)
 
-
-def provider_test_macro(provider_test_rule, **kwargs):
+def provider_test_macro(provider_test_rule, provider_run_rule, **kwargs):
     srcs = kwargs.pop("srcs", [])
     deps = kwargs.pop("deps", [])
     name = kwargs.pop("name")
 
-    update_target_label_name = 'golden'
+    update_target_label_name = "golden"
     update_name = "%s.%s" % (name, update_target_label_name)
 
     provider_test_rule(
@@ -66,7 +71,7 @@ def provider_test_macro(provider_test_rule, **kwargs):
         update_target_label_name = update_target_label_name,
     )
 
-    provider_test_rule(
+    provider_run_rule(
         name = update_name,
         deps = deps,
         mode = "update",

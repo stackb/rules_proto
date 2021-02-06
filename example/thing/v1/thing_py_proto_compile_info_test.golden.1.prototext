@@ -1,4 +1,4 @@
-label: "//proto/thing/v1:thing_py_proto"
+label: "//example/thing/v1:thing_py_proto"
 output_files {
-  bazel-out/darwin-fastbuild/bin/proto/thing/v1/thing_py_proto: "proto/thing/v1/thing_py_proto/proto/thing/v1/thing_pb2.py"
+  bazel-out/darwin-fastbuild/bin/example/thing/v1/thing_py_proto: "example/thing/v1/thing_py_proto/example/thing/v1/thing_pb2.py"
 }

@@ -13,8 +13,5 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/stackb/rules_proto/tools/protorule/cmd/rulegen",
     visibility = ["//visibility:private"],
-    deps = [
-        "//tools/protorule",
-        "@com_github_urfave_cli//:cli",
-    ],
+    deps = ["//tools/protorule"],
 )

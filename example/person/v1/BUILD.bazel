@@ -5,7 +5,7 @@ proto_library(
     name = "person_proto",
     srcs = ["person.proto"],
     visibility = ["//visibility:public"],
-    deps = ["//proto/place/v1:place_proto"],
+    deps = ["//example/place/v1:place_proto"],
 )
 
 proto_info_provider_test(

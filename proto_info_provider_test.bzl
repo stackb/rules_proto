@@ -3,7 +3,7 @@ load(
     "@build_stack_rules_proto//:provider_test.bzl",
     "provider_test_implementation",
     "provider_test_macro",
-    "provider_test_rule",
+    "provider_test_rule_pair",
     "redact_host_configuration",
 )
 
@@ -21,7 +21,14 @@ def proto_info_to_struct(info):
 def _proto_info_provider_test_impl(ctx):
     return provider_test_implementation(ctx, ProtoInfo, proto_info_to_struct)
 
-_proto_info_provider_test = provider_test_rule(_proto_info_provider_test_impl, ProtoInfo)
+_proto_info_provider_test, _proto_info_provider_run = provider_test_rule_pair(
+    _proto_info_provider_test_impl,
+    ProtoInfo,
+)
 
 def proto_info_provider_test(**kwargs):
-    provider_test_macro(_proto_info_provider_test, **kwargs)
+    provider_test_macro(
+        _proto_info_provider_test,
+        _proto_info_provider_run,
+        **kwargs
+    )

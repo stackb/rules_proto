@@ -19,7 +19,7 @@ func Generate(rule *ProtoRule) error {
 	if err := generateFile(rule, rule.BuildExample, rule.BuildExampleFilename); err != nil {
 		return err
 	}
-	if err := generateFile(rule, rule.Test, rule.TestFilename); err != nil {
+	if err := generateFile(rule, rule.Markdown, rule.MarkdownFilename); err != nil {
 		return err
 	}
 	return nil
@@ -46,10 +46,14 @@ func FromJSONFile(filename string) (*ProtoRule, error) {
 		return nil, fmt.Errorf("could not make rule %w", err)
 	}
 
+	if err := parseRuleTemplates(&rule); err != nil {
+		return nil, fmt.Errorf("could not make rule %w", err)
+	}
+
 	return &rule, nil
 }
 
-func ParseRuleTemplates(rule *ProtoRule) error {
+func parseRuleTemplates(rule *ProtoRule) error {
 	tpl, err := template.ParseFiles(rule.ImplementationTmpl)
 	if err != nil {
 		return fmt.Errorf("could not prepare rule %w", err)
@@ -68,11 +72,11 @@ func ParseRuleTemplates(rule *ProtoRule) error {
 	}
 	rule.BuildExample = tpl
 
-	tpl, err = template.ParseFiles(rule.TestTmpl)
+	tpl, err = template.ParseFiles(rule.MarkdownTmpl)
 	if err != nil {
 		return fmt.Errorf("could not prepare rule %w", err)
 	}
-	rule.Test = tpl
+	rule.Markdown = tpl
 
 	return nil
 }

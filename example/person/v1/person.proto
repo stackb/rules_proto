@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package proto.person.v1;
 
-import "proto/place/v1/place.proto";
+import "example/place/v1/place.proto";
 
 message Person {
     string name = 1;

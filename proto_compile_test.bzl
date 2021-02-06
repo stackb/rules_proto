@@ -26,18 +26,22 @@ def _proto_compile_test_impl(ctx):
         ),
     ]
 
-_proto_compile_test = rule(
-    implementation = _proto_compile_test_impl,
-    attrs = dict(
-        gencopy_attrs,
-        deps = attr.label_list(
-            doc = "The ProtoCompileInfo provider rules",
-            providers = [ProtoCompileInfo],
+def _proto_compile_rule(is_test):
+    return rule(
+        implementation = _proto_compile_test_impl,
+        attrs = dict(
+            gencopy_attrs,
+            deps = attr.label_list(
+                doc = "The ProtoCompileInfo provider rules",
+                providers = [ProtoCompileInfo],
+            ),
         ),
-    ),
-    executable = True,
-    test = True,
-)
+        executable = True,
+        test = is_test,
+    )
+
+_proto_compile_test = _proto_compile_rule(True)
+_proto_compile_run = _proto_compile_rule(False)
 
 def proto_compile_test(**kwargs):
     proto_compile_rule = kwargs.pop("rule")
@@ -58,7 +62,7 @@ def proto_compile_test(**kwargs):
         update_target_label_name = update_target_label_name,
     )
 
-    _proto_compile_test(
+    _proto_compile_run(
         name = update_name,
         deps = [out_name],
         mode = "update",

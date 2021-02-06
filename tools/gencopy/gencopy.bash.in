@@ -8,7 +8,6 @@ RUNNER_LABEL=@@RUNNER_LABEL@@
 GENCOPY_LABEL=@@GENCOPY_LABEL@@
 GENCOPY_SHORT_PATH=@@GENCOPY_SHORT_PATH@@
 CONFIG_SHORT_PATH=@@CONFIG_SHORT_PATH@@
-ARGS=@@ARGS@@
 
 # env
 # set -x
@@ -44,17 +43,16 @@ fi
 # BUILD_WORKSPACE_DIRECTORY to interpret relative paths on the command line.
 GENCOPY_short_path=$(find_runfile "$GENCOPY_SHORT_PATH")
 if [ -z "$GENCOPY_short_path" ]; then
-  echo "error: could not locate protocopier binary" >&2
+  echo "error: could not locate gencopy binary" >&2
   exit 1
 fi
 
 CONFIG_short_path=$(find_runfile "$CONFIG_SHORT_PATH")
 if [ -z "$CONFIG_short_path" ]; then
-  echo "error: could not locate protocopier configuration file" >&2
+  echo "error: could not locate gencopy configuration file" >&2
   exit 1
 fi
 
 "$GENCOPY_short_path" \
   -config="$CONFIG_short_path" \
-  -workspace_root_directory="${BUILD_WORKSPACE_DIRECTORY:-""}" \
-  "${ARGS[@]}"
+  -workspace_root_directory="${BUILD_WORKSPACE_DIRECTORY:-""}"

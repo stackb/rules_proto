@@ -44,14 +44,14 @@ type ProtoRule struct {
 	// Temmplate for build example
 	BuildExample *template.Template
 
-	// TestFilename of the rule (full path)
-	TestFilename string
+	// MarkdownFilename of the rule (full path)
+	MarkdownFilename string
 
-	// Filename of the Test template
-	TestTmpl string
+	// Filename of the Markdown template
+	MarkdownTmpl string
 
-	// Temmplate for Test
-	Test *template.Template
+	// Temmplate for Markdown
+	Markdown *template.Template
 
 	// List of attributes
 	Attrs []*Attr

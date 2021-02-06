@@ -281,8 +281,8 @@ We're now ready to build the rule:
 ```sh
 $ bazel build //example/proto:cpp_thing_proto
 Target //example/proto:cpp_thing_proto up-to-date:
-  bazel-genfiles/example/proto/cpp_thing_proto/example/proto/thing.pb.h
-  bazel-genfiles/example/proto/cpp_thing_proto/example/proto/thing.pb.cc
+  bazel-genfiles/example/proto/cpp_thing_proto/example/example/thing.pb.h
+  bazel-genfiles/example/proto/cpp_thing_proto/example/example/thing.pb.cc
 ```
 
 If we were only interested in the generated file artifacts, the
@@ -304,8 +304,8 @@ cpp_proto_library(
 $ bazel build //example/proto:cpp_thing_proto
 Target //example/proto:cpp_thing_proto up-to-date:
   bazel-bin/example/proto/libcpp_thing_proto.a
-  bazel-bin/example/proto/libcpp_thing_proto.so  bazel-genfiles/example/proto/cpp_thing_proto/example/proto/thing.pb.h
-  bazel-genfiles/example/proto/cpp_thing_proto/example/proto/thing.pb.cc
+  bazel-bin/example/proto/libcpp_thing_proto.so  bazel-genfiles/example/proto/cpp_thing_proto/example/example/thing.pb.h
+  bazel-genfiles/example/proto/cpp_thing_proto/example/example/thing.pb.cc
 ```
 
 This way, we can use `//example/proto:cpp_thing_proto` as a dependency of any

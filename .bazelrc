@@ -1,3 +1,5 @@
+common:quiet --noshow_progress --ui_event_filters=-INFO
+
 # build --strategy=CoreCompile=standalone
 # build --strategy=SwiftCompile=standalone
 

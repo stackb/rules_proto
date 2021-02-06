@@ -52,7 +52,6 @@ def gencopy_action(ctx, config, outputs):
         config.sourceFiles.append(f.short_path)
 
     substitutions = {
-        "@@ARGS@@": shell.array_literal([]),
         "@@GENCOPY_LABEL@@": shell.quote(str(ctx.attr._gencopy.label)),
         "@@GENCOPY_SHORT_PATH@@": shell.quote(ctx.executable._gencopy.short_path),
         "@@CONFIG_SHORT_PATH@@": shell.quote(config_json.short_path),
