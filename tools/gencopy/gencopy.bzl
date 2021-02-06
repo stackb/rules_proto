@@ -10,6 +10,10 @@ gencopy_attrs = {
         values = ["update", "check"],
         default = "check",
     ),
+    # "target_label_name": attr.string(
+    #     doc = "If defined, this string overrides the label.name of the target directory to generate files into",
+    #     mandatory = True,
+    # ),
     "update_target_label_name": attr.string(
         doc = "The label.name used to regenerate targets",
         mandatory = True,
