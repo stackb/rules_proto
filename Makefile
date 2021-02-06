@@ -15,7 +15,7 @@ update_laze_deps:
 
 .PHONY: test
 test:
-	bazel test //example/...
+	bazel test //example/... //python:*
 
 .PHONY: goldens
 goldens:

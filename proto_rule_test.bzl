@@ -24,18 +24,22 @@ def _proto_rule_test_impl(ctx):
         ),
     ]
 
-_proto_rule_test = rule(
-    implementation = _proto_rule_test_impl,
-    attrs = dict(
-        gencopy_attrs,
-        deps = attr.label_list(
-            doc = "The ProtoRuleInfo provider rules",
-            providers = [ProtoRuleInfo],
+def _proto_rule_rule(is_test):
+    return rule(
+        implementation = _proto_rule_test_impl,
+        attrs = dict(
+            gencopy_attrs,
+            deps = attr.label_list(
+                doc = "The ProtoRuleInfo provider rules",
+                providers = [ProtoRuleInfo],
+            ),
         ),
-    ),
-    executable = True,
-    test = True,
-)
+        executable = True,
+        test = is_test,
+    )
+
+_proto_rule_test = _proto_rule_rule(True)
+_proto_rule_run = _proto_rule_rule(False)
 
 def proto_rule_test(**kwargs):
     deps = kwargs.pop("deps", [])
@@ -53,7 +57,7 @@ def proto_rule_test(**kwargs):
         update_target_label_name = update_target_label_name,
     )
 
-    _proto_rule_test(
+    _proto_rule_run(
         name = update_name,
         deps = deps,
         mode = "update",

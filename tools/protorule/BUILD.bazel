@@ -1,5 +1,12 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
+exports_files([
+    "aspect.bzl.tmpl",
+    "WORKSPACE.tmpl",
+    "BUILD.tmpl",
+    "README.md.tmpl",
+])
+
 go_library(
     name = "protorule",
     srcs = [
