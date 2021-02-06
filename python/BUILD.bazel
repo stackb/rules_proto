@@ -16,6 +16,9 @@ proto_plugin(
     outputs = ["{protopath|python}_pb2.py"],
     protoc_plugin_name = "python",
     visibility = ["//visibility:public"],
+    deps = [
+        "//protobuf:com_google_protobuf",
+    ],
 )
 
 proto_plugin_info_provider_test(
@@ -31,6 +34,7 @@ proto_plugin_info_provider_test(
 proto_rule(
     name = "py_proto_compile",
     plugins = [":python_plugin"],
+    visibility = ["//visibility:public"],
 )
 
 proto_rule_info_provider_test(
@@ -41,7 +45,10 @@ proto_rule_info_provider_test(
 
 proto_rule_test(
     name = "py_proto_compile_rule_test",
-    srcs = ["py_proto_compile.bzl"],
+    srcs = [
+        "py_proto_compile.bzl",
+        "py_proto_compile_deps.bzl",
+    ],
     deps = [":py_proto_compile"],
 )
 

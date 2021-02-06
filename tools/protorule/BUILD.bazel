@@ -5,6 +5,7 @@ exports_files([
     "WORKSPACE.tmpl",
     "BUILD.tmpl",
     "README.md.tmpl",
+    "deps.bzl.tmpl",
 ])
 
 go_library(

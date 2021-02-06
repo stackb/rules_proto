@@ -6,14 +6,13 @@ load(
     "gencopy_config",
 )
 
-def _proto_rule_test_impl(ctx):
+def _proto_site_test_impl(ctx):
     outputs = []
 
     config = gencopy_config(ctx)
 
     for info in [dep[ProtoRuleInfo] for dep in ctx.attr.deps]:
-        outputs.append(info.bzl_file)
-        outputs.append(info.deps_file)
+        outputs.append(info.markdown_file)
 
     script, runfiles = gencopy_action(ctx, config, outputs)
 
@@ -25,9 +24,9 @@ def _proto_rule_test_impl(ctx):
         ),
     ]
 
-def _proto_rule_rule(is_test):
+def _proto_site_rule(is_test):
     return rule(
-        implementation = _proto_rule_test_impl,
+        implementation = _proto_site_test_impl,
         attrs = dict(
             gencopy_attrs,
             deps = attr.label_list(
@@ -39,10 +38,10 @@ def _proto_rule_rule(is_test):
         test = is_test,
     )
 
-_proto_rule_test = _proto_rule_rule(True)
-_proto_rule_run = _proto_rule_rule(False)
+_proto_site_test = _proto_site_rule(True)
+_proto_site_run = _proto_site_rule(False)
 
-def proto_rule_test(**kwargs):
+def proto_site_test(**kwargs):
     deps = kwargs.pop("deps", [])
     srcs = kwargs.pop("srcs", [])
     name = kwargs.pop("name")
@@ -50,7 +49,7 @@ def proto_rule_test(**kwargs):
     update_target_label_name = "golden"
     update_name = "%s.%s" % (name, update_target_label_name)
 
-    _proto_rule_test(
+    _proto_site_test(
         name = name,
         deps = deps,
         srcs = srcs,
@@ -58,7 +57,7 @@ def proto_rule_test(**kwargs):
         update_target_label_name = update_target_label_name,
     )
 
-    _proto_rule_run(
+    _proto_site_run(
         name = update_name,
         deps = deps,
         mode = "update",

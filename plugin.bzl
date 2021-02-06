@@ -1,5 +1,12 @@
+load(
+    "@build_stack_rules_proto//:proto_dependency.bzl",
+    "ProtoDependencyInfo",
+    "proto_dependency_info_to_struct",
+)
+
 ProtoPluginInfo = provider(fields = {
     "name": "The proto plugin name",
+    "label": "The proto plugin label",
     "options": "A list of options to pass to the compiler for this plugin",
     "outputs": "Output filenames generated on a per-proto basis. Example: '{basename}_pb2.py",
     "out": "Output filename generated on a per-plugin basis; to be used in the value for --NAME-out=OUT",
@@ -10,14 +17,34 @@ ProtoPluginInfo = provider(fields = {
     "protoc_plugin_name": "The name used for the plugin binary on the protoc command line. Useful for targeting built-in plugins. Uses plugin name when not set",
     "exclusions": "Exclusion filters to apply when generating outputs with this plugin. Used to prevent generating files that are included in the protobuf library, for example. Can exclude either by proto name prefix or by proto folder prefix",
     "data": "Additional files required for running the plugin",
-    "separate_options_flag": "Flag to indicate if plugin options should be sent via the --{lang}_opts flag"
+    "separate_options_flag": "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",
+    "deps": "The set of proto dependencies for this plugin",
 })
 
+def proto_plugin_info_to_struct(info):
+    return struct(
+        name = info.name,
+        label = str(info.label),
+        options = info.options,
+        outputs = info.outputs,
+        output_directory = info.output_directory,
+        tool = info.tool if info.tool else "",
+        tool_executable = info.tool_executable.short_path if info.tool_executable else "",
+        use_built_in_shell_environment = info.use_built_in_shell_environment,
+        protoc_plugin_name = info.protoc_plugin_name,
+        exclusions = info.exclusions,
+        data = [f.short_path for f in info.data],
+        separate_options_flag = info.separate_options_flag,
+        dependencies = [proto_dependency_info_to_struct(d) for d in info.deps],
+    )
 
 def _proto_plugin_impl(ctx):
+    deps = [d[ProtoDependencyInfo] for d in ctx.attr.deps]
+
     return [
         ProtoPluginInfo(
             name = ctx.attr.name,
+            label = ctx.label,
             options = ctx.attr.options,
             outputs = ctx.attr.outputs,
             out = ctx.attr.out,
@@ -29,9 +56,9 @@ def _proto_plugin_impl(ctx):
             exclusions = ctx.attr.exclusions,
             data = ctx.files.data,
             separate_options_flag = ctx.attr.separate_options_flag,
-        )
+            deps = deps,
+        ),
     ]
-
 
 proto_plugin = rule(
     implementation = _proto_plugin_impl,
@@ -72,6 +99,10 @@ proto_plugin = rule(
         "separate_options_flag": attr.bool(
             doc = "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",
             default = False,
+        ),
+        "deps": attr.label_list(
+            doc = "Proto dependencies",
+            providers = [ProtoDependencyInfo],
         ),
     },
 )

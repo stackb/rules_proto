@@ -19,7 +19,7 @@ load(
             doc = "List of protoc plugins to apply",
             providers = [ProtoPluginInfo],
             default = [{{ range .Rule.Plugins }}
-                Label("{{ . }}"),{{ end }}
+                str(Label("{{ .Label }}")),{{ end }}
             ],
         ),
         _prefix = attr.string(

@@ -3,10 +3,10 @@ package protorule
 import (
 	"bytes"
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"strings"
-	"text/template"
 )
 
 type LineWriter struct {

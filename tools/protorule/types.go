@@ -1,9 +1,10 @@
 package protorule
 
 import (
-	"text/template"
+	"html/template"
 )
 
+// ProtoPlugin loosely represents the starlark ProtoRuleInfo provider.
 type ProtoRule struct {
 	// Name of the rule
 	Name string
@@ -17,17 +18,14 @@ type ProtoRule struct {
 	// Description
 	Doc string
 
+	// All templates parsed together
+	Templates *template.Template
+
 	// ImplementationFilename of the rule (full path)
 	ImplementationFilename string
 
 	// Filename of the implementation template
 	ImplementationTmpl string
-
-	// Temmplate for implementation
-	Implementation *template.Template
-
-	// Temmplate for workspace
-	WorkspaceExample *template.Template
 
 	// Filename of the workspace template
 	WorkspaceExampleTmpl string
@@ -41,23 +39,23 @@ type ProtoRule struct {
 	// Filename of the BuildExample template
 	BuildExampleTmpl string
 
-	// Temmplate for build example
-	BuildExample *template.Template
-
 	// MarkdownFilename of the rule (full path)
 	MarkdownFilename string
 
 	// Filename of the Markdown template
 	MarkdownTmpl string
 
-	// Temmplate for Markdown
-	Markdown *template.Template
+	// DepsFilename of the rule (full path)
+	DepsFilename string
+
+	// Filename of the Deps template
+	DepsTmpl string
 
 	// List of attributes
 	Attrs []*Attr
 
 	// List of plugins
-	Plugins []string
+	Plugins []*ProtoPlugin
 
 	// Not expected to be functional
 	Experimental bool
@@ -75,6 +73,31 @@ type ProtoRule struct {
 	// Flag indicating if the merge_directories flag should be set to false for
 	// the generated rule
 	SkipDirectoriesMerge bool
+}
+
+// ProtoPlugin represents the starlark ProtoPluginInfo provider.
+type ProtoPlugin struct {
+	Name                       string
+	Label                      string
+	Options                    []string
+	Outputs                    []string
+	OutputDirectory            string
+	Tool                       string
+	ToolExecutable             string
+	UseBuiltInShellEnvironment bool
+	ProtocPluginName           string
+	Exclusions                 []string
+	SeparateOptionsFlag        bool
+	Deps                       []*ProtoDependency
+}
+
+// ProtoDependency represents the starlark ProtoDependencyInfo provider.
+type ProtoDependency struct {
+	Name           string
+	RepositoryRule string
+	Urls           []string
+	Sha256         []string
+	StripPrefix    string
 }
 
 // Flag captures information about a bazel build flag.

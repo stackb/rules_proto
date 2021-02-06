@@ -1,1 +1,24 @@
 # {{ .Rule.Name }}
+
+## `WORKSPACE`
+
+```python
+{{ template "WORKSPACE.tmpl" . }}
+```
+
+## `BUILD.bazel`
+
+```python
+{{ template "BUILD.tmpl" . }}
+```
+
+## Plugins
+
+| Label | Tool | Outputs |
+| ---- | ---- | ------- |{{ range .Rule.Plugins }}
+| `{{ .Label }}` | {{ .Tool }} | {{ range .Outputs }} `{{ . }}`{{ end }} |
+{{ end }}
+
+## Dependencies
+
+{{ template "WORKSPACE.tmpl" . }}
