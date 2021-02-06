@@ -12,6 +12,7 @@ ProtoRuleInfo = provider("Provider for a proto rule", fields = {
 def _proto_rule_impl(ctx):
     rule_json = ctx.outputs.json
     output_bzl = ctx.outputs.bzl
+    output_md = ctx.outputs.md
     output_workspace = ctx.outputs.workspace
     output_build = ctx.outputs.build
     output_test = ctx.outputs.test
@@ -22,13 +23,20 @@ def _proto_rule_impl(ctx):
         package = ctx.label.package,
         skipDirectoriesMerge = ctx.attr.skip_directories_merge,
         plugins = [str(p.label) for p in ctx.attr.plugins],
+
         implementationFilename = output_bzl.path,
-        workspaceExampleFilename = output_workspace.path,
-        buildExampleFilename = output_build.path,
-        testFilename = output_test.path,
         implementationTmpl = ctx.file.implementation_tmpl.path,
+
+        markdownFilename = output_md.path,
+        markdownTmpl = ctx.file.markdown_tmpl.path,
+
+        workspaceExampleFilename = output_workspace.path,
         workspaceExampleTmpl = ctx.file.workspace_example_tmpl.path,
+
+        buildExampleFilename = output_build.path,
         buildExampleTmpl = ctx.file.build_example_tmpl.path,
+
+        testFilename = output_test.path,
         testTmpl = ctx.file.test_tmpl.path,
     )
 
@@ -88,22 +96,27 @@ proto_rule = rule(
         ),
         "implementation_tmpl": attr.label(
             doc = "The rule implementation template",
-            default = str(Label("//protobuf:aspect.bzl.tmpl")),
+            default = str(Label("//tools/protorule:aspect.bzl.tmpl")),
+            allow_single_file = True,
+        ),
+        "markdown_tmpl": attr.label(
+            doc = "The rule markdown template",
+            default = str(Label("//tools/protorule:markdown.tmpl")),
             allow_single_file = True,
         ),
         "workspace_example_tmpl": attr.label(
             doc = "The rule workspace example template",
-            default = str(Label("//protobuf:WORKSPACE.tmpl")),
+            default = str(Label("//tools/protorule:WORKSPACE.tmpl")),
             allow_single_file = True,
         ),
         "build_example_tmpl": attr.label(
             doc = "The rule build example template",
-            default = str(Label("//protobuf:BUILD.tmpl")),
+            default = str(Label("//tools/protorule:BUILD.tmpl")),
             allow_single_file = True,
         ),
         "test_tmpl": attr.label(
             doc = "The rule build test example template",
-            default = str(Label("//protobuf:test.go.tmpl")),
+            default = str(Label("//tools/protorule:test.go.tmpl")),
             allow_single_file = True,
         ),
         "plugins": attr.label_list(
@@ -124,6 +137,7 @@ proto_rule = rule(
     },
     outputs = {
         "bzl": "%{name}.bzl",
+        "md": "%{name}.md",
         "json": "%{name}.json",
         "workspace": "%{name}.WORKSPACE",
         "build": "%{name}.BUILD",
