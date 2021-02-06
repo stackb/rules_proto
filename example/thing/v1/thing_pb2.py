@@ -16,11 +16,11 @@ from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='example/thing/v1/thing.proto',
-  package='proto.thing.v1',
+  package='thing.v1',
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1c\x65xample/thing/v1/thing.proto\x12\x0eproto.thing.v1\x1a\x19google/protobuf/any.proto\"K\n\x05Thing\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12.\n\x07payload\x18\x02 \x01(\x0b\x32\x14.google.protobuf.AnyR\x07payloadb\x06proto3'
+  serialized_pb=b'\n\x1c\x65xample/thing/v1/thing.proto\x12\x08thing.v1\x1a\x19google/protobuf/any.proto\"K\n\x05Thing\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12.\n\x07payload\x18\x02 \x01(\x0b\x32\x14.google.protobuf.AnyR\x07payloadb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
 
@@ -29,21 +29,21 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _THING = _descriptor.Descriptor(
   name='Thing',
-  full_name='proto.thing.v1.Thing',
+  full_name='thing.v1.Thing',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='proto.thing.v1.Thing.name', index=0,
+      name='name', full_name='thing.v1.Thing.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, json_name='name', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='payload', full_name='proto.thing.v1.Thing.payload', index=1,
+      name='payload', full_name='thing.v1.Thing.payload', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -61,8 +61,8 @@ _THING = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=75,
-  serialized_end=150,
+  serialized_start=69,
+  serialized_end=144,
 )
 
 _THING.fields_by_name['payload'].message_type = google_dot_protobuf_dot_any__pb2._ANY
@@ -72,7 +72,7 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 Thing = _reflection.GeneratedProtocolMessageType('Thing', (_message.Message,), {
   'DESCRIPTOR' : _THING,
   '__module__' : 'example.thing.v1.thing_pb2'
-  # @@protoc_insertion_point(class_scope:proto.thing.v1.Thing)
+  # @@protoc_insertion_point(class_scope:thing.v1.Thing)
   })
 _sym_db.RegisterMessage(Thing)
 

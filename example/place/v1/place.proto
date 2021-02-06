@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package proto.place.v1;
+package place.v1;
 
 import "example/thing/v1/thing.proto";
 
 message Place {
     string name = 1;
-    proto.thing.v1.Thing thing = 2;
+    thing.v1.Thing thing = 2;
 }
