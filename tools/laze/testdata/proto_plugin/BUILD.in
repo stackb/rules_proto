@@ -1,0 +1,5 @@
+# Some comment to be preserved
+
+proto_plugin(
+    name = "python_plugin",
+)

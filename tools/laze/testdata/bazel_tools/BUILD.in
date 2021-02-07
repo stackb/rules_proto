@@ -1,6 +1,0 @@
-# Some comment to be preserved
-
-filegroup(
-    name = "allfiles",
-    srcs = glob(["**"]),
-)

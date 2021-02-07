@@ -24,7 +24,7 @@ go_test(
     name = "laze_test",
     srcs = ["gazelle_test.go"],
     data = [
-        ":gazelle-protorule",
+        ":gazelle-laze",
     ] + glob([
         "testdata/**",
     ]),
@@ -36,7 +36,7 @@ go_test(
 )
 
 # This gazelle binary is used exclusively for testing the gazelle language
-# extension and thus only has the protorule language installed.
+# extension and thus only has the laze language installed.
 gazelle_binary(
     name = "gazelle-laze",
     languages = [":laze"],

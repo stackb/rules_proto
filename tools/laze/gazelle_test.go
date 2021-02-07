@@ -1,4 +1,4 @@
-package bzl
+package laze
 
 /* Copyright 2020 The Bazel Authors. All rights reserved.
 
@@ -29,7 +29,7 @@ import (
 
 var gazellePath = findGazelle()
 
-const testDataPath = "gazelle/bzl/testdata/"
+const testDataPath = "tools/laze/testdata/"
 
 // TestGazelleBinary runs a gazelle binary with starlib installed on each
 // directory in `testdata/*`. Please see `testdata/README.md` for more
@@ -122,6 +122,7 @@ func testPath(t *testing.T, name string, files []bazel.RunfileEntry) {
 		}
 
 		testtools.CheckFiles(t, dir, goldens)
+
 		if t.Failed() {
 			filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 				if err != nil {
@@ -131,11 +132,17 @@ func testPath(t *testing.T, name string, files []bazel.RunfileEntry) {
 				return nil
 			})
 		}
+
+		// logout, err := ioutil.ReadFile("/tmp/gazelle-laze.log")
+		// if err != nil {
+		// 	t.Fatal("could not read log: %v", err)
+		// }
+		// t.Fatalf("WIP: logout: %q", string(logout))
 	})
 }
 
 func findGazelle() string {
-	gazellePath, ok := bazel.FindBinary("gazelle/bzl", "gazelle-skylib")
+	gazellePath, ok := bazel.FindBinary("tools/laze", "gazelle-laze")
 	if !ok {
 		panic("could not find gazelle binary")
 	}

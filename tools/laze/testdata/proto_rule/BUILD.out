@@ -1,0 +1,23 @@
+load("@build_stack_rules_proto//:proto_rule_info_provider_test.bzl", "proto_rule_info_provider_test")
+load("@build_stack_rules_proto//:proto_rule_test.bzl", "proto_rule_test")
+
+# Some comment to be preserved
+
+proto_rule(
+    name = "py_proto_compile",
+)
+
+proto_rule_info_provider_test(
+    name = "py_proto_compile_info_provider_test",
+    srcs = ["py_proto_compile_info_provider_test.golden.1.prototext"],
+    deps = [":py_proto_compile"],
+)
+
+proto_rule_test(
+    name = "py_proto_compile_test",
+    srcs = [
+        "py_proto_compile.bzl",
+        "py_proto_compile_deps.bzl",
+    ],
+    deps = [":py_proto_compile"],
+)
