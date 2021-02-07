@@ -1,3 +1,3 @@
-load("@build_stack_rules_proto//{{ .Rule.Package }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+load("@build_stack_rules_proto//{{ .Rule.Package }}:{{ .Rule.Name }}_deps.bzl", "{{ .Rule.Name }}_deps")
 
-{{ .Rule.Name }}()
+{{ .Rule.Name }}_deps()

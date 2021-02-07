@@ -35,12 +35,10 @@ def proto_plugin_info_to_struct(info):
         exclusions = info.exclusions,
         data = [f.short_path for f in info.data],
         separate_options_flag = info.separate_options_flag,
-        dependencies = [proto_dependency_info_to_struct(d) for d in info.deps],
+        deps = [proto_dependency_info_to_struct(d) for d in info.deps.to_list()],
     )
 
 def _proto_plugin_impl(ctx):
-    deps = [d[ProtoDependencyInfo] for d in ctx.attr.deps]
-
     return [
         ProtoPluginInfo(
             name = ctx.attr.name,
@@ -56,7 +54,7 @@ def _proto_plugin_impl(ctx):
             exclusions = ctx.attr.exclusions,
             data = ctx.files.data,
             separate_options_flag = ctx.attr.separate_options_flag,
-            deps = deps,
+            deps = depset(direct = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps], transitive = [dep[ProtoDependencyInfo].deps for dep in ctx.attr.deps]),
         ),
     ]
 

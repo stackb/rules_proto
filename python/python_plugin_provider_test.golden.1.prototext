@@ -1,8 +1,9 @@
-dependencies {
+deps {
+  label: "//protobuf:com_google_protobuf"
   name: "com_google_protobuf"
-  repository_rule: "http_archive"
+  repositoryRule: "http_archive"
   sha256: "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113"
-  strip_prefix: "protobuf-3.14.0"
+  stripPrefix: "protobuf-3.14.0"
   urls: "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz"
 }
 exclusions: "google/protobuf"

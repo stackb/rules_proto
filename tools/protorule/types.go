@@ -96,7 +96,7 @@ type ProtoDependency struct {
 	Name           string
 	RepositoryRule string
 	Urls           []string
-	Sha256         []string
+	Sha256         string
 	StripPrefix    string
 }
 

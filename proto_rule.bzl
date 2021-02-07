@@ -3,6 +3,10 @@ load(
     "ProtoPluginInfo",
     "proto_plugin_info_to_struct",
 )
+load(
+    "@build_stack_rules_proto//:provider_test.bzl",
+    "redact_host_configuration",
+)
 
 ProtoRuleInfo = provider("Provider for a proto rule", fields = {
     "name": "The prefix name of the rule (e.g 'py')",
@@ -17,16 +21,33 @@ ProtoRuleInfo = provider("Provider for a proto rule", fields = {
 def proto_rule_info_to_struct(info):
     return struct(
         name = info.name,
-        rule = info.rule,
-        bzl_file = info.bzl_file.short_path,
-        build_file = info.build_file.short_path,
-        workspace_file = info.workspace_file.short_path,
-        deps_file = info.deps_file.short_path,
+        rule = rule_to_struct(info.rule),
+        bzl_file = redact_host_configuration(info.bzl_file.short_path),
+        build_file = redact_host_configuration(info.build_file.short_path),
+        workspace_file = redact_host_configuration(info.workspace_file.short_path),
+        deps_file = redact_host_configuration(info.deps_file.short_path),
+    )
+
+def rule_to_struct(info):
+    return struct(
+        name = info.name,
+        kind = info.kind,
+        package = info.package,
+        skipDirectoriesMerge = info.skipDirectoriesMerge,
+        implementationFilename = redact_host_configuration(info.implementationFilename),
+        implementationTmpl = redact_host_configuration(info.implementationTmpl),
+        workspaceExampleFilename = redact_host_configuration(info.workspaceExampleFilename),
+        workspaceExampleTmpl = redact_host_configuration(info.workspaceExampleTmpl),
+        buildExampleFilename = redact_host_configuration(info.buildExampleFilename),
+        buildExampleTmpl = redact_host_configuration(info.buildExampleTmpl),
+        markdownFilename = redact_host_configuration(info.markdownFilename),
+        markdownTmpl = redact_host_configuration(info.markdownTmpl),
+        depsFilename = redact_host_configuration(info.depsFilename),
+        depsTmpl = redact_host_configuration(info.depsTmpl),
+        plugins = info.plugins,
     )
 
 def _proto_rule_impl(ctx):
-    plugins = [p[ProtoPluginInfo] for p in ctx.attr.plugins]
-
     rule_json = ctx.outputs.json
     output_bzl = ctx.outputs.bzl
     output_workspace = ctx.outputs.workspace
@@ -49,7 +70,7 @@ def _proto_rule_impl(ctx):
         markdownTmpl = ctx.file.markdown_tmpl.path,
         depsFilename = output_deps.path,
         depsTmpl = ctx.file.deps_tmpl.path,
-        plugins = [proto_plugin_info_to_struct(p) for p in plugins],
+        plugins = [proto_plugin_info_to_struct(p[ProtoPluginInfo]) for p in ctx.attr.plugins],
     )
 
     ctx.actions.write(

@@ -3,23 +3,24 @@ bzl_file: "python/py_proto_compile.bzl"
 deps_file: "python/py_proto_compile_deps.bzl"
 name: "py_proto_compile"
 rule {
-  buildExampleFilename: "bazel-out/darwin-fastbuild/bin/python/py_proto_compile.BUILD"
+  buildExampleFilename: "bazel-out/{HOST_CONFIGURATION}/bin/python/py_proto_compile.BUILD"
   buildExampleTmpl: "tools/protorule/BUILD.tmpl"
-  depsFilename: "bazel-out/darwin-fastbuild/bin/python/py_proto_compile_deps.bzl"
+  depsFilename: "bazel-out/{HOST_CONFIGURATION}/bin/python/py_proto_compile_deps.bzl"
   depsTmpl: "tools/protorule/deps.bzl.tmpl"
-  implementationFilename: "bazel-out/darwin-fastbuild/bin/python/py_proto_compile.bzl"
+  implementationFilename: "bazel-out/{HOST_CONFIGURATION}/bin/python/py_proto_compile.bzl"
   implementationTmpl: "tools/protorule/aspect.bzl.tmpl"
   kind: ""
-  markdownFilename: "bazel-out/darwin-fastbuild/bin/python/py_proto_compile.md"
+  markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/python/py_proto_compile.md"
   markdownTmpl: "tools/protorule/README.md.tmpl"
   name: "py_proto_compile"
   package: "python"
   plugins {
-    dependencies {
+    deps {
+      label: "//protobuf:com_google_protobuf"
       name: "com_google_protobuf"
-      repository_rule: "http_archive"
+      repositoryRule: "http_archive"
       sha256: "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113"
-      strip_prefix: "protobuf-3.14.0"
+      stripPrefix: "protobuf-3.14.0"
       urls: "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz"
     }
     exclusions: "google/protobuf"
@@ -34,7 +35,7 @@ rule {
     use_built_in_shell_environment: false
   }
   skipDirectoriesMerge: false
-  workspaceExampleFilename: "bazel-out/darwin-fastbuild/bin/python/py_proto_compile.WORKSPACE"
+  workspaceExampleFilename: "bazel-out/{HOST_CONFIGURATION}/bin/python/py_proto_compile.WORKSPACE"
   workspaceExampleTmpl: "tools/protorule/WORKSPACE.tmpl"
 }
 workspace_file: "python/py_proto_compile.WORKSPACE"

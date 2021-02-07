@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 )
+
+const debug = false
 
 // Generate takes the given rule definition and writes the result files to the
 // filesystem.
@@ -55,6 +58,15 @@ func FromJSONFile(filename string) (*ProtoRule, error) {
 	var rule ProtoRule
 	if err := json.Unmarshal(data, &rule); err != nil {
 		return nil, fmt.Errorf("could not make rule %w", err)
+	}
+
+	if debug {
+		for _, plugin := range rule.Plugins {
+			for _, dep := range plugin.Deps {
+				log.Printf("%s: %+v", plugin.Name, dep)
+			}
+		}
+		log.Fatalf("DIE")
 	}
 
 	rule.Templates = template.Must(template.ParseFiles(
