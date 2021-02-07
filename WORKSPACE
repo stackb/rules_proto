@@ -51,6 +51,11 @@ load("//tools/gencopy:deps.bzl", "gencopy_deps")
 # gazelle:repository_macro tools/gencopy/deps.bzl%gencopy_deps
 gencopy_deps()
 
+load("//tools/laze:deps.bzl", "laze_deps")
+
+# gazelle:repository_macro tools/laze/deps.bzl%laze_deps
+laze_deps()
+
 # ==================================================
 # Protobuf Core
 # ==================================================
