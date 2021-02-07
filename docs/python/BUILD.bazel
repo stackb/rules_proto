@@ -2,5 +2,7 @@ load("//:proto_site_test.bzl", "proto_site_test")
 
 proto_site_test(
     name = "site_test",
-    deps = ["//python:py_proto_compile"],
+    deps = [
+        "//python:py_proto_compile",
+    ],
 )

@@ -1,0 +1,43 @@
+load("@build_stack_rules_proto//:proto_rule_info_provider_test.bzl", "proto_rule_info_provider_test")
+load("@build_stack_rules_proto//:proto_rule_test.bzl", "proto_rule_test")
+load("//:plugin.bzl", "proto_plugin")
+load("//:proto_rule.bzl", "proto_rule")
+load("@build_stack_rules_proto//:proto_plugin_info_provider_test.bzl", "proto_plugin_info_provider_test")
+
+proto_plugin(
+    name = "cc_plugin",
+    exclusions = ["google/protobuf"],
+    outputs = [
+        "{protopath}.pb.h",
+        "{protopath}.pb.cc",
+    ],
+    protoc_plugin_name = "cpp",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin_info_provider_test(
+    name = "cc_plugin_info_provider_test",
+    srcs = ["cc_plugin_info_provider_test.golden.1.prototext"],
+    deps = [":cc_plugin"],
+)
+
+proto_rule(
+    name = "cc_proto_compile",
+    plugins = [":cc_plugin"],
+    visibility = ["//visibility:public"],
+)
+
+proto_rule_info_provider_test(
+    name = "cc_proto_compile_info_provider_test",
+    srcs = ["cc_proto_compile_info_provider_test.golden.1.prototext"],
+    deps = [":cc_proto_compile"],
+)
+
+proto_rule_test(
+    name = "cc_proto_compile_rule_test",
+    srcs = [
+        "cc_proto_compile.bzl",
+        "cc_proto_compile_deps.bzl",
+    ],
+    deps = [":cc_proto_compile"],
+)

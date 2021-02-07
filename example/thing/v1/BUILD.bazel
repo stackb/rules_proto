@@ -3,6 +3,7 @@ load("@build_stack_rules_proto//:proto_info_provider_test.bzl", "proto_info_prov
 load("@build_stack_rules_proto//:proto_compile_info_provider_test.bzl", "proto_compile_info_provider_test")
 load("@build_stack_rules_proto//:proto_compile_test.bzl", "proto_compile_test")
 load("@build_stack_rules_proto//python:py_proto_compile.bzl", "py_proto_compile")
+load("@build_stack_rules_proto//cc:cc_proto_compile.bzl", "cc_proto_compile")
 
 proto_library(
     name = "thing_proto",
@@ -33,4 +34,9 @@ proto_compile_test(
     srcs = ["thing_pb2.py"],
     rule = py_proto_compile,
     deps = ["thing_proto"],
+)
+
+cc_proto_compile(
+    name = "thing_cc_proto",
+    deps = [":thing_proto"],
 )

@@ -1,3 +1,8 @@
+---
+layout: default
+title: py_proto_compile
+---
+
 # py_proto_compile
 
 ## `WORKSPACE`

@@ -19,12 +19,16 @@ laze:
 
 .PHONY: test
 test:
-	bazel test //example/... //tools/... //python:* 
+	bazel test //example/... //tools/laze/... //python:* //cc:* //docs/...
 
 .PHONY: goldens
 goldens:
 	find . -name '*.prototext' | xargs rm 
 	./tools/regenerate_golden_files.sh
+
+.PHONY: site
+site:
+	./tools/regenerate_site.sh
 
 # # Run the rulegen system
 # .PHONY: rulegen
