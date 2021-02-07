@@ -10,7 +10,7 @@ exports_files([
 ])
 
 go_library(
-    name = "protorule",
+    name = "protogen",
     srcs = [
         "generator.go",
         "language.go",
@@ -18,6 +18,6 @@ go_library(
         "rule.go",
         "types.go",
     ],
-    importpath = "github.com/stackb/rules_proto/tools/protorule",
+    importpath = "github.com/stackb/rules_proto/tools/protogen",
     visibility = ["//visibility:public"],
 )

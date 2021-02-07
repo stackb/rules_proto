@@ -1,4 +1,4 @@
-package protorule
+package protogen
 
 import (
 	"html/template"

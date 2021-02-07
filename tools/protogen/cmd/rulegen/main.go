@@ -4,7 +4,7 @@ import (
 	"flag"
 	"log"
 
-	"github.com/stackb/rules_proto/tools/protorule"
+	"github.com/stackb/rules_proto/tools/protogen"
 )
 
 var (
@@ -14,7 +14,7 @@ var (
 func main() {
 	flag.Parse()
 
-	rule, err := protorule.NewProtoRuleFromJSONFile(*config)
+	rule, err := protogen.NewProtoRuleFromJSONFile(*config)
 	if err != nil {
 		log.Fatalf("rulegen: %v", err)
 	}

@@ -1,7 +1,7 @@
-.PHONY: update_protorule_deps
-update_protorule_deps:
-	(cd tools/protorule && go mod tidy)
-	bazel run @bazel_gazelle//:gazelle -- update-repos -from_file=tools/protorule/go.mod -to_macro='tools/protorule/deps.bzl%protorule_deps'
+.PHONY: update_protogen_deps
+update_protogen_deps:
+	(cd tools/protogen && go mod tidy)
+	bazel run @bazel_gazelle//:gazelle -- update-repos -from_file=tools/protogen/go.mod -to_macro='tools/protogen/deps.bzl%protogen_deps'
 
 .PHONY: update_gencopy_deps
 update_gencopy_deps:

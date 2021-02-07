@@ -41,10 +41,10 @@ gazelle_dependencies()
 # Internal Tools
 # ==================================================
 #
-load("//tools/protorule:deps.bzl", "protorule_deps")
+load("//tools/protogen:deps.bzl", "protogen_deps")
 
-# gazelle:repository_macro tools/protorule/deps.bzl%protorule_deps
-protorule_deps()
+# gazelle:repository_macro tools/protogen/deps.bzl%protogen_deps
+protogen_deps()
 
 load("//tools/gencopy:deps.bzl", "gencopy_deps")
 

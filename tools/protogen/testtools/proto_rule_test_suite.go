@@ -14,12 +14,12 @@ import (
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 	"github.com/bazelbuild/rules_go/go/tools/bazel_testing"
 
-	"github.com/stackb/rules_proto/tools/protorule"
+	"github.com/stackb/rules_proto/tools/protogen"
 )
 
 type ProtoRuleTestSuite struct {
 	t                    *testing.T
-	Rule                 *protorule.ProtoRule
+	Rule                 *protogen.ProtoRule
 	BzlFile              string
 	WorkspaceExampleFile string
 	BuildExampleFile     string
@@ -28,7 +28,7 @@ type ProtoRuleTestSuite struct {
 // LoadProtoRuleTestSuite creates new test suite based on the filename
 // conventions of the output files of the proto_rule starlark rule.
 func LoadProtoRuleTestSuite(t *testing.T, name string) *ProtoRuleTestSuite {
-	rule, err := protorule.FromJSONFile(name + ".json")
+	rule, err := protogen.FromJSONFile(name + ".json")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -138,27 +138,27 @@ proto_rule = rule(
         ),
         "implementation_tmpl": attr.label(
             doc = "The rule implementation template",
-            default = str(Label("//tools/protorule:aspect.bzl.tmpl")),
+            default = str(Label("//tools/protogen:aspect.bzl.tmpl")),
             allow_single_file = True,
         ),
         "workspace_example_tmpl": attr.label(
             doc = "The rule workspace example template",
-            default = str(Label("//tools/protorule:WORKSPACE.tmpl")),
+            default = str(Label("//tools/protogen:WORKSPACE.tmpl")),
             allow_single_file = True,
         ),
         "build_example_tmpl": attr.label(
             doc = "The rule build example template",
-            default = str(Label("//tools/protorule:BUILD.tmpl")),
+            default = str(Label("//tools/protogen:BUILD.tmpl")),
             allow_single_file = True,
         ),
         "markdown_tmpl": attr.label(
             doc = "The rule build markdown example template",
-            default = str(Label("//tools/protorule:proto_rule.md.tmpl")),
+            default = str(Label("//tools/protogen:proto_rule.md.tmpl")),
             allow_single_file = True,
         ),
         "deps_tmpl": attr.label(
             doc = "The workspace deps example template",
-            default = str(Label("//tools/protorule:deps.bzl.tmpl")),
+            default = str(Label("//tools/protogen:deps.bzl.tmpl")),
             allow_single_file = True,
         ),
         "plugins": attr.label_list(
@@ -176,7 +176,7 @@ proto_rule = rule(
         "data": attr.label_list(allow_files = True),
         "_rulegen": attr.label(
             doc = "The rulegen generator tool",
-            default = "//tools/protorule/cmd/rulegen",
+            default = "//tools/protogen/cmd/rulegen",
             allow_single_file = True,
             executable = True,
             cfg = "host",
