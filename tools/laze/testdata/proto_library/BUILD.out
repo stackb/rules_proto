@@ -1,0 +1,13 @@
+load("@build_stack_rules_proto//:proto_info_provider_test.bzl", "proto_info_provider_test")
+
+# Some comment to be preserved
+
+proto_library(
+    name = "foo_proto",
+)
+
+proto_info_provider_test(
+    name = "foo_proto_info_test",
+    srcs = ["foo_proto_info_test.golden.1.prototext"],
+    deps = [":foo_proto"],
+)

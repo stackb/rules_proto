@@ -21,8 +21,6 @@ laze:
 test:
 	bazel test //example/... //tools/... //python:* 
 
-
-
 .PHONY: goldens
 goldens:
 	find . -name '*.prototext' | xargs rm 
