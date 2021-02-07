@@ -1,7 +1,7 @@
+load("@build_stack_rules_proto//:proto_rule_info_provider_test.bzl", "proto_rule_info_provider_test")
 load("//:plugin.bzl", "proto_plugin")
 load("//:proto_rule.bzl", "proto_rule")
 load("//:proto_plugin_info_provider_test.bzl", "proto_plugin_info_provider_test")
-load("//:proto_rule_info_provider_test.bzl", "proto_rule_info_provider_test")
 load("//:proto_rule_test.bzl", "proto_rule_test")
 
 # ===================================================================
@@ -22,8 +22,8 @@ proto_plugin(
 )
 
 proto_plugin_info_provider_test(
-    name = "python_plugin_provider_test",
-    srcs = ["python_plugin_provider_test.golden.1.prototext"],
+    name = "python_plugin_info_provider_test",
+    srcs = ["python_plugin_info_provider_test.golden.1.prototext"],
     deps = [":python_plugin"],
 )
 
@@ -38,8 +38,8 @@ proto_rule(
 )
 
 proto_rule_info_provider_test(
-    name = "py_proto_compile_provider_test",
-    srcs = ["py_proto_compile_provider_test.golden.1.prototext"],
+    name = "py_proto_compile_info_provider_test",
+    srcs = ["py_proto_compile_info_provider_test.golden.1.prototext"],
     deps = [":py_proto_compile"],
 )
 

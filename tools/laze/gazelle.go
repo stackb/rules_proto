@@ -155,6 +155,10 @@ var kinds = map[string]rule.KindInfo{
 // Any non-fatal errors this function encounters should be logged using
 // log.Print.
 func (*protoRuleLang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
+	if args.File == nil || len(args.File.Rules) == 0 {
+		return language.GenerateResult{}
+	}
+
 	var rules []*rule.Rule
 	var imports []interface{}
 
@@ -176,7 +180,7 @@ func (*protoRuleLang) GenerateRules(args language.GenerateArgs) language.Generat
 			rules = append(rules, r)
 			imports = append(imports, []string{"proto_rule_info_provider_test"})
 
-			ruleTestName := existingRule.Name() + "_test"
+			ruleTestName := existingRule.Name() + "_rule_test"
 			r = rule.NewRule("proto_rule_test", ruleTestName)
 			r.SetAttr("srcs", []string{existingRule.Name() + ".bzl", existingRule.Name() + "_deps.bzl"})
 			r.SetAttr("deps", []string{":" + existingRule.Name()})
