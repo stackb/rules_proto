@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//:proto_language_info_provider_test.bzl", "proto_language_info_provider_test")
 load("@build_stack_rules_proto//:proto_rule_info_provider_test.bzl", "proto_rule_info_provider_test")
 load("@build_stack_rules_proto//:proto_rule_test.bzl", "proto_rule_test")
 load("//:plugin.bzl", "proto_plugin")
@@ -53,4 +54,10 @@ proto_rule_test(
         "cc_proto_compile_deps.bzl",
     ],
     deps = [":cc_proto_compile"],
+)
+
+proto_language_info_provider_test(
+    name = "cc_info_provider_test",
+    srcs = ["cc_info_provider_test.golden.1.prototext"],
+    deps = [":cc"],
 )

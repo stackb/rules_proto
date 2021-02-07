@@ -102,7 +102,7 @@ func readFileAsString(filename string) (string, error) {
 }
 
 func usageHint(cfg *Config) string {
-	return fmt.Sprintf(`You may need to regenerate the files (bazel run) using the '.[2]s' target,
+	return fmt.Sprintf(`You may need to regenerate the files (bazel run) using the '.%[2]s' target,
 update the 'srcs = [...]' attribute to include the generated files, and then re-run the test (bazel test):
 
 $ bazel run %[1]s.%[2]s

@@ -115,6 +115,12 @@ type ProtoLanguage struct {
 	// Filename of the Markdown template
 	MarkdownTmpl string
 
+	// RulesFilename (full path)
+	RulesFilename string
+
+	// Filename of the Rules template
+	RulesTmpl string
+	
 	// Templates is populated by the NewProtoLanguageFromJSON constructor.
 	Templates *template.Template
 }

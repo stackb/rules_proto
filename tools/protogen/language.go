@@ -15,6 +15,9 @@ func (lang *ProtoLanguage) Generate() error {
 	if err := generateFile(lang.Templates, lang.MarkdownTmpl, lang.MarkdownFilename, data); err != nil {
 		return err
 	}
+	if err := generateFile(lang.Templates, lang.RulesTmpl, lang.RulesFilename, data); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -34,6 +37,7 @@ func NewProtoLanguageFromJSONFile(filename string) (*ProtoLanguage, error) {
 
 	lang.Templates = template.Must(template.ParseFiles(
 		lang.MarkdownTmpl,
+		lang.RulesTmpl,
 	))
 
 	return &lang, nil

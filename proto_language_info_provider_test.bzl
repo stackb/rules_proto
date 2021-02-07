@@ -6,14 +6,14 @@ load(
 load(
     "@build_stack_rules_proto//:provider_test.bzl",
     "provider_test_implementation",
-    "provider_test_language_pair",
     "provider_test_macro",
+    "provider_test_rule_pair",
 )
 
 def _proto_language_info_provider_test_impl(ctx):
     return provider_test_implementation(ctx, ProtoLanguageInfo, proto_language_info_to_struct)
 
-_proto_language_info_provider_test, _proto_language_info_provider_run = provider_test_language_pair(
+_proto_language_info_provider_test, _proto_language_info_provider_run = provider_test_rule_pair(
     _proto_language_info_provider_test_impl,
     ProtoLanguageInfo,
 )

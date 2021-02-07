@@ -1,4 +1,9 @@
-load("@build_stack_rules_proto//tools/gencopy:gencopy.bzl", "gencopy_action", "gencopy_attrs", "gencopy_config")
+load(
+    "@build_stack_rules_proto//tools/gencopy:gencopy.bzl",
+    "gencopy_action",
+    "gencopy_attrs",
+    "gencopy_config",
+)
 
 def provider_test_implementation(ctx, provider, provider_to_struct):
     outputs = []

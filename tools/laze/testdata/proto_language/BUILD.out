@@ -15,3 +15,12 @@ proto_language_info_provider_test(
     srcs = ["python_info_provider_test.golden.1.prototext"],
     deps = [":python"],
 )
+
+proto_language_test(
+    name = "python_language_test",
+    srcs = [
+        "python.bzl",
+        "rules.bzl",
+    ],
+    deps = [":python"],
+)
