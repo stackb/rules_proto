@@ -13,19 +13,20 @@ update_laze_deps:
 	(cd tools/laze && go mod tidy)
 	bazel run @bazel_gazelle//:gazelle -- update-repos -from_file=tools/laze/go.mod -to_macro='tools/laze/deps.bzl%laze_deps'
 
+.PHONY: laze
+laze:
+	bazel run //tools/laze:gazelle
+
 .PHONY: test
 test:
-	bazel test //example/... //python:*
+	bazel test //example/... //tools/... //python:* 
+
+
 
 .PHONY: goldens
 goldens:
 	find . -name '*.prototext' | xargs rm 
 	./tools/regenerate_golden_files.sh
-
-# # Run the rulegen system
-# .PHONY: rulegen
-rulegen:
-	bazel run --run_under="cd $$PWD && " //tools/rulegen -- --help
 
 # # Run the rulegen system
 # .PHONY: rulegen
