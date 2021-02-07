@@ -1,4 +1,5 @@
 load("@build_stack_rules_proto//:proto_rule.bzl", "ProtoRuleInfo")
+load("@build_stack_rules_proto//:proto_language.bzl", "ProtoLanguageInfo")
 load(
     "@build_stack_rules_proto//tools/gencopy:gencopy.bzl",
     "gencopy_action",
@@ -11,7 +12,9 @@ def _proto_site_test_impl(ctx):
 
     config = gencopy_config(ctx)
 
-    for info in [dep[ProtoRuleInfo] for dep in ctx.attr.deps]:
+    for info in [dep[ProtoRuleInfo] for dep in ctx.attr.rules]:
+        outputs.append(info.markdown_file)
+    for info in [dep[ProtoLanguageInfo] for dep in ctx.attr.languages]:
         outputs.append(info.markdown_file)
 
     script, runfiles = gencopy_action(ctx, config, outputs)
@@ -29,7 +32,11 @@ def _proto_site_rule(is_test):
         implementation = _proto_site_test_impl,
         attrs = dict(
             gencopy_attrs,
-            deps = attr.label_list(
+            languages = attr.label_list(
+                doc = "The ProtoLanguageInfo provider rules",
+                providers = [ProtoLanguageInfo],
+            ),
+            rules = attr.label_list(
                 doc = "The ProtoRuleInfo provider rules",
                 providers = [ProtoRuleInfo],
             ),
@@ -42,7 +49,8 @@ _proto_site_test = _proto_site_rule(True)
 _proto_site_run = _proto_site_rule(False)
 
 def proto_site_test(**kwargs):
-    deps = kwargs.pop("deps", [])
+    rules = kwargs.pop("rules", [])
+    languages = kwargs.pop("languages", [])
     srcs = kwargs.pop("srcs", [])
     name = kwargs.pop("name")
 
@@ -51,7 +59,8 @@ def proto_site_test(**kwargs):
 
     _proto_site_test(
         name = name,
-        deps = deps,
+        rules = rules,
+        languages = languages,
         srcs = srcs,
         mode = "check",
         update_target_label_name = update_target_label_name,
@@ -59,7 +68,8 @@ def proto_site_test(**kwargs):
 
     _proto_site_run(
         name = update_name,
-        deps = deps,
+        rules = rules,
+        languages = languages,
         mode = "update",
         update_target_label_name = update_target_label_name,
     )

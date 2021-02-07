@@ -13,7 +13,9 @@ go_library(
     name = "protorule",
     srcs = [
         "generator.go",
+        "language.go",
         "linewriter.go",
+        "rule.go",
         "types.go",
     ],
     importpath = "github.com/stackb/rules_proto/tools/protorule",

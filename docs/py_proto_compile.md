@@ -1,9 +1,13 @@
 ---
 layout: default
 title: py_proto_compile
+permalink: python/py_proto_compile
+parent: python
 ---
 
 # py_proto_compile
+
+Generates protocol buffer source code for the **python**.
 
 ## `WORKSPACE`
 

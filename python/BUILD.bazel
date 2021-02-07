@@ -15,9 +15,8 @@ proto_language(
         "py_proto_compile",
         "py_proto_library",
     ],
-    deps = [
-        "//protobuf:com_google_protobuf",
-    ],
+    visibility = ["//visibility:public"],
+    deps = ["//protobuf:com_google_protobuf"],
 )
 
 # ===================================================================
@@ -49,6 +48,7 @@ proto_plugin_info_provider_test(
 
 proto_rule(
     name = "py_proto_compile",
+    language = ":python",
     plugins = [":python_plugin"],
     visibility = ["//visibility:public"],
 )

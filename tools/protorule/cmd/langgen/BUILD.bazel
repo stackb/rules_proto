@@ -1,15 +1,15 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_binary(
-    name = "rulegen",
-    embed = [":rulegen_lib"],
+    name = "langgen",
+    embed = [":langgen_lib"],
     visibility = ["//visibility:public"],
 )
 
 go_library(
-    name = "rulegen_lib",
+    name = "langgen_lib",
     srcs = ["main.go"],
-    importpath = "github.com/stackb/rules_proto/tools/protorule/cmd/rulegen",
+    importpath = "github.com/stackb/rules_proto/tools/protorule/cmd/langgen",
     visibility = ["//visibility:private"],
     deps = ["//tools/protorule"],
 )

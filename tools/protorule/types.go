@@ -73,6 +73,9 @@ type ProtoRule struct {
 	// Flag indicating if the merge_directories flag should be set to false for
 	// the generated rule
 	SkipDirectoriesMerge bool
+
+	// The language this rule belongs to
+	Language *ProtoLanguage
 }
 
 // ProtoPlugin represents the starlark ProtoPluginInfo provider.
@@ -100,6 +103,22 @@ type ProtoDependency struct {
 	StripPrefix    string
 }
 
+// ProtoLanguage represents the starlark ProtoLanguageInfo provider.
+type ProtoLanguage struct {
+	Name  string
+	Rules []string
+	Deps  []*ProtoDependency
+
+	// MarkdownFilename of the rule (full path)
+	MarkdownFilename string
+
+	// Filename of the Markdown template
+	MarkdownTmpl string
+
+	// Templates is populated by the NewProtoLanguageFromJSON constructor.
+	Templates *template.Template
+}
+
 // Flag captures information about a bazel build flag.
 type Flag struct {
 	Category    string
@@ -114,9 +133,4 @@ type Attr struct {
 	Default   string
 	Doc       string
 	Mandatory bool
-}
-
-// templateData is the type used by templates
-type templateData struct {
-	Rule *ProtoRule
 }

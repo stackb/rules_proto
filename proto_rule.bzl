@@ -4,6 +4,11 @@ load(
     "proto_plugin_info_to_struct",
 )
 load(
+    "//:proto_language.bzl",
+    "ProtoLanguageInfo",
+    "proto_language_info_to_struct",
+)
+load(
     "@build_stack_rules_proto//:provider_test.bzl",
     "redact_host_configuration",
 )
@@ -28,23 +33,23 @@ def proto_rule_info_to_struct(info):
         deps_file = redact_host_configuration(info.deps_file.short_path),
     )
 
-def rule_to_struct(info):
+def rule_to_struct(rule):
     return struct(
-        name = info.name,
-        kind = info.kind,
-        package = info.package,
-        skipDirectoriesMerge = info.skipDirectoriesMerge,
-        implementationFilename = redact_host_configuration(info.implementationFilename),
-        implementationTmpl = redact_host_configuration(info.implementationTmpl),
-        workspaceExampleFilename = redact_host_configuration(info.workspaceExampleFilename),
-        workspaceExampleTmpl = redact_host_configuration(info.workspaceExampleTmpl),
-        buildExampleFilename = redact_host_configuration(info.buildExampleFilename),
-        buildExampleTmpl = redact_host_configuration(info.buildExampleTmpl),
-        markdownFilename = redact_host_configuration(info.markdownFilename),
-        markdownTmpl = redact_host_configuration(info.markdownTmpl),
-        depsFilename = redact_host_configuration(info.depsFilename),
-        depsTmpl = redact_host_configuration(info.depsTmpl),
-        plugins = info.plugins,
+        name = rule.name,
+        kind = rule.kind,
+        package = rule.package,
+        skipDirectoriesMerge = rule.skipDirectoriesMerge,
+        implementationFilename = redact_host_configuration(rule.implementationFilename),
+        implementationTmpl = redact_host_configuration(rule.implementationTmpl),
+        workspaceExampleFilename = redact_host_configuration(rule.workspaceExampleFilename),
+        workspaceExampleTmpl = redact_host_configuration(rule.workspaceExampleTmpl),
+        buildExampleFilename = redact_host_configuration(rule.buildExampleFilename),
+        buildExampleTmpl = redact_host_configuration(rule.buildExampleTmpl),
+        markdownFilename = redact_host_configuration(rule.markdownFilename),
+        markdownTmpl = redact_host_configuration(rule.markdownTmpl),
+        depsFilename = redact_host_configuration(rule.depsFilename),
+        depsTmpl = redact_host_configuration(rule.depsTmpl),
+        plugins = rule.plugins,
     )
 
 def _proto_rule_impl(ctx):
@@ -71,6 +76,7 @@ def _proto_rule_impl(ctx):
         depsFilename = output_deps.path,
         depsTmpl = ctx.file.deps_tmpl.path,
         plugins = [proto_plugin_info_to_struct(p[ProtoPluginInfo]) for p in ctx.attr.plugins],
+        language = proto_language_info_to_struct(ctx.attr.language[ProtoLanguageInfo]),
     )
 
     ctx.actions.write(
@@ -158,6 +164,11 @@ proto_rule = rule(
         "plugins": attr.label_list(
             doc = "List of default plugins to include in the generated rule",
             providers = [ProtoPluginInfo],
+        ),
+        "language": attr.label(
+            doc = "The language this rule belongs to",
+            providers = [ProtoLanguageInfo],
+            mandatory = True,
         ),
         "skip_directories_merge": attr.bool(
             doc = "If the generated rule shoul skip merging directories",

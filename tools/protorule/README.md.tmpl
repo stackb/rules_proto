@@ -1,9 +1,13 @@
 ---
 layout: default
 title: {{ .Rule.Name }}
+permalink: {{ .Rule.Language.Name }}/{{ .Rule.Name }}
+parent: {{ .Rule.Language.Name }}
 ---
 
 # {{ .Rule.Name }}
+
+Generates protocol buffer source code for the **{{ .Rule.Language.Name }}**.
 
 ## `WORKSPACE`
 

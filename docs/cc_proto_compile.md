@@ -1,9 +1,13 @@
 ---
 layout: default
 title: cc_proto_compile
+permalink: cc/cc_proto_compile
+parent: cc
 ---
 
 # cc_proto_compile
+
+Generates protocol buffer source code for the **cc**.
 
 ## `WORKSPACE`
 

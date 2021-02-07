@@ -1,8 +1,0 @@
-load("//:proto_site_test.bzl", "proto_site_test")
-
-proto_site_test(
-    name = "site_test",
-    deps = [
-        "//cc:cc_proto_compile",
-    ],
-)

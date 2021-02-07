@@ -3,6 +3,18 @@ load("@build_stack_rules_proto//:proto_rule_test.bzl", "proto_rule_test")
 load("//:plugin.bzl", "proto_plugin")
 load("//:proto_rule.bzl", "proto_rule")
 load("@build_stack_rules_proto//:proto_plugin_info_provider_test.bzl", "proto_plugin_info_provider_test")
+load("//:proto_language.bzl", "proto_language")
+
+# ===================================================================
+# language: python_language
+# ===================================================================
+
+proto_language(
+    name = "cc",
+    rules = ["cc_proto_compile"],
+    visibility = ["//visibility:public"],
+    deps = ["//protobuf:com_google_protobuf"],
+)
 
 proto_plugin(
     name = "cc_plugin",
@@ -23,6 +35,7 @@ proto_plugin_info_provider_test(
 
 proto_rule(
     name = "cc_proto_compile",
+    language = ":cc",
     plugins = [":cc_plugin"],
     visibility = ["//visibility:public"],
 )

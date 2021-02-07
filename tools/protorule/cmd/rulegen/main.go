@@ -14,12 +14,12 @@ var (
 func main() {
 	flag.Parse()
 
-	rule, err := protorule.FromJSONFile(*config)
+	rule, err := protorule.NewProtoRuleFromJSONFile(*config)
 	if err != nil {
-		log.Fatalf("protorule: %v", err)
+		log.Fatalf("rulegen: %v", err)
 	}
 
-	if err := protorule.Generate(rule); err != nil {
-		log.Fatalf("protorule: %v", err)
+	if err := rule.Generate(); err != nil {
+		log.Fatalf("rulegen: %v", err)
 	}
 }
