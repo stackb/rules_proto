@@ -1,0 +1,9 @@
+# Some comment to be preserved
+
+proto_language(
+    name = "python",
+    rules = [
+        "py_proto_compile",
+        "py_proto_library",
+    ],
+)

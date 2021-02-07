@@ -1,0 +1,26 @@
+load(
+    "@build_stack_rules_proto//:proto_language.bzl",
+    "ProtoLanguageInfo",
+    "proto_language_info_to_struct",
+)
+load(
+    "@build_stack_rules_proto//:provider_test.bzl",
+    "provider_test_implementation",
+    "provider_test_language_pair",
+    "provider_test_macro",
+)
+
+def _proto_language_info_provider_test_impl(ctx):
+    return provider_test_implementation(ctx, ProtoLanguageInfo, proto_language_info_to_struct)
+
+_proto_language_info_provider_test, _proto_language_info_provider_run = provider_test_language_pair(
+    _proto_language_info_provider_test_impl,
+    ProtoLanguageInfo,
+)
+
+def proto_language_info_provider_test(**kwargs):
+    provider_test_macro(
+        _proto_language_info_provider_test,
+        _proto_language_info_provider_run,
+        **kwargs
+    )

@@ -6,6 +6,7 @@ exports_files([
     "BUILD.tmpl",
     "README.md.tmpl",
     "deps.bzl.tmpl",
+    "language.md.tmpl",
 ])
 
 go_library(

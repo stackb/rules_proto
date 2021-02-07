@@ -1,0 +1,17 @@
+load("@build_stack_rules_proto//:proto_language_info_provider_test.bzl", "proto_language_info_provider_test")
+
+# Some comment to be preserved
+
+proto_language(
+    name = "python",
+    rules = [
+        "py_proto_compile",
+        "py_proto_library",
+    ],
+)
+
+proto_language_info_provider_test(
+    name = "python_info_provider_test",
+    srcs = ["python_info_provider_test.golden.1.prototext"],
+    deps = [":python"],
+)

@@ -70,6 +70,10 @@ func (*protoRuleLang) Kinds() map[string]rule.KindInfo {
 func (*protoRuleLang) Loads() []rule.LoadInfo {
 	return []rule.LoadInfo{
 		{
+			Name:    "@build_stack_rules_proto//:proto_language_info_provider_test.bzl",
+			Symbols: []string{"proto_language_info_provider_test"},
+		},
+		{
 			Name:    "@build_stack_rules_proto//:proto_info_provider_test.bzl",
 			Symbols: []string{"proto_info_provider_test"},
 		},
@@ -136,6 +140,10 @@ var kinds = map[string]rule.KindInfo{
 		NonEmptyAttrs:  map[string]bool{"srcs": true, "deps": true},
 		MergeableAttrs: map[string]bool{"srcs": true},
 	},
+	"proto_language_info_provider_test": {
+		NonEmptyAttrs:  map[string]bool{"srcs": true, "deps": true},
+		MergeableAttrs: map[string]bool{"srcs": true},
+	},
 	"proto_plugin_info_provider_test": {
 		NonEmptyAttrs:  map[string]bool{"srcs": true, "deps": true},
 		MergeableAttrs: map[string]bool{"srcs": true},
@@ -180,6 +188,13 @@ func (*protoRuleLang) GenerateRules(args language.GenerateArgs) language.Generat
 			r.SetAttr("deps", []string{":" + existingRule.Name()})
 			rules = append(rules, r)
 			imports = append(imports, []string{"proto_info_provider_test"})
+		case "proto_language":
+			providerTestName := existingRule.Name() + "_info_provider_test"
+			r := rule.NewRule("proto_language_info_provider_test", providerTestName)
+			r.SetAttr("srcs", []string{providerTestName + ".golden.1.prototext"})
+			r.SetAttr("deps", []string{":" + existingRule.Name()})
+			rules = append(rules, r)
+			imports = append(imports, []string{"proto_language_info_provider_test"})
 		case "proto_plugin":
 			providerTestName := existingRule.Name() + "_info_provider_test"
 			r := rule.NewRule("proto_plugin_info_provider_test", providerTestName)
