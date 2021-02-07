@@ -1,7 +1,14 @@
+load("@build_stack_rules_proto//:proto_info_provider_test.bzl", "proto_info_provider_test")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "routeguide_proto",
     srcs = ["routeguide.proto"],
     visibility = ["//visibility:public"],
+)
+
+proto_info_provider_test(
+    name = "routeguide_proto_info_test",
+    srcs = ["routeguide_proto_info_test.golden.1.prototext"],
+    deps = [":routeguide_proto"],
 )
