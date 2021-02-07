@@ -92,7 +92,7 @@ proto_language = rule(
         ),
         "markdown_tmpl": attr.label(
             doc = "The rule build markdown example template",
-            default = str(Label("//tools/protorule:language.md.tmpl")),
+            default = str(Label("//tools/protorule:proto_language.md.tmpl")),
             allow_single_file = True,
         ),
         "deps": attr.label_list(

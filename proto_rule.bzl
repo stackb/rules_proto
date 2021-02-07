@@ -153,7 +153,7 @@ proto_rule = rule(
         ),
         "markdown_tmpl": attr.label(
             doc = "The rule build markdown example template",
-            default = str(Label("//tools/protorule:README.md.tmpl")),
+            default = str(Label("//tools/protorule:proto_rule.md.tmpl")),
             allow_single_file = True,
         ),
         "deps_tmpl": attr.label(

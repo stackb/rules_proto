@@ -11,7 +11,7 @@ rule {
   implementationTmpl: "tools/protorule/aspect.bzl.tmpl"
   kind: ""
   markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/python/py_proto_compile.md"
-  markdownTmpl: "tools/protorule/README.md.tmpl"
+  markdownTmpl: "tools/protorule/proto_rule.md.tmpl"
   name: "py_proto_compile"
   package: "python"
   plugins {

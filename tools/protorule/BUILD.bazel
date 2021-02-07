@@ -4,9 +4,9 @@ exports_files([
     "aspect.bzl.tmpl",
     "WORKSPACE.tmpl",
     "BUILD.tmpl",
-    "README.md.tmpl",
+    "proto_rule.md.tmpl",
     "deps.bzl.tmpl",
-    "language.md.tmpl",
+    "proto_language.md.tmpl",
 ])
 
 go_library(
