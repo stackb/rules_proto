@@ -1,4 +1,4 @@
 {{ range .Lang.Rules }}
-load("@build_stack_rules_proto//LANG:{{ . }}.bzl", _{{ . }}="{{ . }}")
+load("@build_stack_rules_proto//LANG:{{ . }}.bzl", _{{ . }} = "{{ . }}")
 
-{{ . }}=_{{ . }}{{ end }}
+{{ . }} = _{{ . }}{{ end }}

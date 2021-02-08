@@ -18,9 +18,6 @@ proto_language_info_provider_test(
 
 proto_language_test(
     name = "python_language_test",
-    srcs = [
-        "python.bzl",
-        "rules.bzl",
-    ],
+    srcs = ["python.bzl"],
     deps = [":python"],
 )

@@ -7,6 +7,7 @@ exports_files([
     "proto_rule.md.tmpl",
     "deps.bzl.tmpl",
     "proto_language.md.tmpl",
+    "rules.bzl.tmpl",
 ])
 
 go_library(

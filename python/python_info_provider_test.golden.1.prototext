@@ -12,6 +12,9 @@ lang {
   name: "python"
   rules: "py_proto_compile"
   rules: "py_proto_library"
+  rulesFilename: "bazel-out/{HOST_CONFIGURATION}/bin/python/python.bzl"
+  rulesTmpl: "tools/protogen/rules.bzl.tmpl"
 }
 markdown_file: "python/python.md"
 name: "python"
+rules_file: "python/python.bzl"

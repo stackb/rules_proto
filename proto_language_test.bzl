@@ -1,6 +1,6 @@
-load("@build_stack_languages_proto//:proto_language.bzl", "ProtoLanguageInfo")
+load("@build_stack_rules_proto//:proto_language.bzl", "ProtoLanguageInfo")
 load(
-    "@build_stack_languages_proto//tools/gencopy:gencopy.bzl",
+    "@build_stack_rules_proto//tools/gencopy:gencopy.bzl",
     "gencopy_action",
     "gencopy_attrs",
     "gencopy_config",
@@ -12,7 +12,7 @@ def _proto_language_test_impl(ctx):
     config = gencopy_config(ctx)
 
     for info in [dep[ProtoLanguageInfo] for dep in ctx.attr.deps]:
-        outputs.append(info.markdown_file)
+        outputs.append(info.rules_file)
 
     script, runfiles = gencopy_action(ctx, config, outputs)
 
@@ -30,7 +30,7 @@ def _proto_language_rule(is_test):
         attrs = dict(
             gencopy_attrs,
             deps = attr.label_list(
-                doc = "The ProtoLanguageInfo provider languages",
+                doc = "The ProtoLanguageInfo provider rules",
                 providers = [ProtoLanguageInfo],
             ),
         ),

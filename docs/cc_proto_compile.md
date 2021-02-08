@@ -7,7 +7,7 @@ parent: cc
 
 # cc_proto_compile
 
-Generates protocol buffer source code for the **cc**.
+Generates protocol buffer source code for the [cc](/cc) language.
 
 ## `WORKSPACE`
 

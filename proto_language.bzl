@@ -102,7 +102,7 @@ proto_language = rule(
         ),
         "rules_tmpl": attr.label(
             doc = "The language rules example template",
-            default = str(Label("//tools/protogen:rules.md.tmpl")),
+            default = str(Label("//tools/protogen:rules.bzl.tmpl")),
             allow_single_file = True,
         ),
         "markdown_tmpl": attr.label(
@@ -124,7 +124,7 @@ proto_language = rule(
     },
     outputs = {
         "markdown": "%{name}.md",
-        "rules": "rules.bzl",
+        "rules": "%{name}.bzl",
         "json": "%{name}.json",
     },
 )

@@ -1,10 +1,11 @@
 load("@build_stack_rules_proto//:proto_language_info_provider_test.bzl", "proto_language_info_provider_test")
+load("@build_stack_rules_proto//:proto_plugin_info_provider_test.bzl", "proto_plugin_info_provider_test")
 load("@build_stack_rules_proto//:proto_rule_info_provider_test.bzl", "proto_rule_info_provider_test")
-load("//:plugin.bzl", "proto_plugin")
-load("//:proto_rule.bzl", "proto_rule")
-load("//:proto_language.bzl", "proto_language")
-load("//:proto_plugin_info_provider_test.bzl", "proto_plugin_info_provider_test")
-load("//:proto_rule_test.bzl", "proto_rule_test")
+load("@build_stack_rules_proto//:proto_rule_test.bzl", "proto_rule_test")
+load("@build_stack_rules_proto//:plugin.bzl", "proto_plugin")
+load("@build_stack_rules_proto//:proto_language_test.bzl", "proto_language_test")
+load("@build_stack_rules_proto//:proto_language.bzl", "proto_language")
+load("@build_stack_rules_proto//:proto_rule.bzl", "proto_rule")
 
 # ===================================================================
 # language: python_language
@@ -89,5 +90,13 @@ proto_rule_test(
 proto_language_info_provider_test(
     name = "python_info_provider_test",
     srcs = ["python_info_provider_test.golden.1.prototext"],
+    deps = [":python"],
+)
+
+proto_language_test(
+    name = "python_language_test",
+    srcs = [
+        "python.bzl",
+    ],
     deps = [":python"],
 )

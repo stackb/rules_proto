@@ -198,7 +198,7 @@ func (*protoRuleLang) GenerateRules(args language.GenerateArgs) language.Generat
 
 			languageTestName := existingRule.Name() + "_language_test"
 			r = rule.NewRule("proto_language_test", languageTestName)
-			r.SetAttr("srcs", []string{existingRule.Name() + ".bzl", "rules.bzl"})
+			r.SetAttr("srcs", []string{existingRule.Name() + ".bzl"})
 			r.SetAttr("deps", []string{":" + existingRule.Name()})
 			rules = append(rules, r)
 			imports = append(imports, []string{"proto_language_test"})

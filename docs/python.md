@@ -1,7 +1,7 @@
 ---
 layout: default
 title: python
-permalink: python
+permalink: /python
 has_children: true
 ---
 

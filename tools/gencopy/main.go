@@ -13,6 +13,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -114,11 +115,21 @@ $ bazel test %[1]s
 func check(cfg *Config, pairs []*srcDst) error {
 	lenGen := len(pairs)
 	lenSrc := len(cfg.SourceFiles)
+
 	if lenSrc != lenGen {
 		return fmt.Errorf(
 			"check failed.  The number of source files (%d) does not match the number of generated files (%d)\n\n%s",
 			lenSrc, lenGen, usageHint(cfg))
 	}
+
+	// Sort all filenames by basename
+	sort.Slice(pairs, func(i, j int) bool {
+		return filepath.Base(pairs[i].dst) < filepath.Base(pairs[j].dst)
+	})
+	sort.Slice(cfg.SourceFiles, func(i, j int) bool {
+		return filepath.Base(cfg.SourceFiles[i]) < filepath.Base(cfg.SourceFiles[j])
+	})
+
 	for i, pair := range pairs {
 		expected, err := readFileAsString(pair.dst)
 		if err != nil {
@@ -129,7 +140,7 @@ func check(cfg *Config, pairs []*srcDst) error {
 			return fmt.Errorf("check failed: %v", err)
 		}
 		if diff := cmp.Diff(expected, actual); diff != "" {
-			return fmt.Errorf("gencopy mismatch (-want +got):\n%s", diff)
+			return fmt.Errorf("gencopy mismatch %q vs. %q (-want +got):\n%s", pair.dst, cfg.SourceFiles[i], diff)
 		}
 	}
 
