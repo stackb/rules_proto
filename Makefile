@@ -19,7 +19,7 @@ laze:
 
 .PHONY: test
 test:
-	bazel test //example/... //tools/laze/... //python:* //cc:* //docs/...
+	bazel test //example/... //language/... //tools/laze/... //docs/...
 
 .PHONY: goldens
 goldens:

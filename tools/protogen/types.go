@@ -9,11 +9,9 @@ type ProtoRule struct {
 	// Name of the rule
 	Name string
 
-	// Package of the rule (label package)
+	// Package of the rule.  This determines the package name where the rule
+	// will be imported as well as the directory where the file will be copied.
 	Package string
-
-	// Kind of the rule (proto|grpc)
-	Kind string
 
 	// Description
 	Doc string

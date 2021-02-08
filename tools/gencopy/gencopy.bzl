@@ -10,10 +10,9 @@ gencopy_attrs = {
         values = ["update", "check"],
         default = "check",
     ),
-    # "target_label_name": attr.string(
-    #     doc = "If defined, this string overrides the label.name of the target directory to generate files into",
-    #     mandatory = True,
-    # ),
+    "target_package": attr.string(
+        doc = "The target package for the rule. If empty, default to ctx.label.package",
+    ),
     "update_target_label_name": attr.string(
         doc = "The label.name used to regenerate targets",
         mandatory = True,
@@ -37,7 +36,7 @@ def gencopy_config(ctx):
         mode = ctx.attr.mode,
         updateTargetLabelName = ctx.attr.update_target_label_name,
         targetLabel = str(ctx.label),
-        targetPackage = ctx.label.package,
+        targetPackage = ctx.attr.target_package or ctx.label.package,
         generatedFiles = [],
         sourceFiles = [],
     )

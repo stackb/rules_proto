@@ -40,7 +40,6 @@ def proto_rule_info_to_struct(info):
 def rule_to_struct(rule):
     return struct(
         name = rule.name,
-        kind = rule.kind,
         package = rule.package,
         skipDirectoriesMerge = rule.skipDirectoriesMerge,
         implementationFilename = redact_host_configuration(rule.implementationFilename),
@@ -69,8 +68,7 @@ def _proto_rule_impl(ctx):
 
     rule = struct(
         name = ctx.attr.name,
-        kind = ctx.attr.kind,
-        package = ctx.label.package,
+        package = ctx.attr.package or ctx.label.package,
         skipDirectoriesMerge = ctx.attr.skip_directories_merge,
         implementationFilename = output_bzl.path,
         implementationTmpl = ctx.file.implementation_tmpl.path,
@@ -145,9 +143,8 @@ def _proto_rule_impl(ctx):
 proto_rule = rule(
     implementation = _proto_rule_impl,
     attrs = {
-        "kind": attr.string(
-            doc = "The kind of rule",
-            values = ["proto", "grpc"],
+        "package": attr.string(
+            doc = "The target package for the rule. If empty, default to ctx.label.package",
         ),
         "implementation_tmpl": attr.label(
             doc = "The rule implementation template",
