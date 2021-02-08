@@ -7,7 +7,7 @@ parent: python
 
 # py_proto_compile
 
-Generates protocol buffer source code for the [python](/python) language.
+Generates protocol buffer sources for the [python](/python) language.
 
 ## `WORKSPACE`
 

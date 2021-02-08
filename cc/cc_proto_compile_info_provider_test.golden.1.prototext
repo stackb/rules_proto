@@ -1,8 +1,12 @@
+bazel_test_file: "cc/cc_proto_compile_bazel_test.go"
 build_file: "cc/cc_proto_compile.BUILD"
 bzl_file: "cc/cc_proto_compile.bzl"
 deps_file: "cc/cc_proto_compile_deps.bzl"
+json_file: "cc/cc_proto_compile.json"
 name: "cc_proto_compile"
 rule {
+  bazelTestFilename: "bazel-out/{HOST_CONFIGURATION}/bin/cc/cc_proto_compile_bazel_test.go"
+  bazelTestTmpl: "tools/protogen/bazel_test.go.tmpl"
   buildExampleFilename: "bazel-out/{HOST_CONFIGURATION}/bin/cc/cc_proto_compile.BUILD"
   buildExampleTmpl: "tools/protogen/BUILD.tmpl"
   depsFilename: "bazel-out/{HOST_CONFIGURATION}/bin/cc/cc_proto_compile_deps.bzl"

@@ -1,8 +1,12 @@
+bazel_test_file: "python/py_proto_compile_bazel_test.go"
 build_file: "python/py_proto_compile.BUILD"
 bzl_file: "python/py_proto_compile.bzl"
 deps_file: "python/py_proto_compile_deps.bzl"
+json_file: "python/py_proto_compile.json"
 name: "py_proto_compile"
 rule {
+  bazelTestFilename: "bazel-out/{HOST_CONFIGURATION}/bin/python/py_proto_compile_bazel_test.go"
+  bazelTestTmpl: "tools/protogen/bazel_test.go.tmpl"
   buildExampleFilename: "bazel-out/{HOST_CONFIGURATION}/bin/python/py_proto_compile.BUILD"
   buildExampleTmpl: "tools/protogen/BUILD.tmpl"
   depsFilename: "bazel-out/{HOST_CONFIGURATION}/bin/python/py_proto_compile_deps.bzl"
