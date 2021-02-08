@@ -51,6 +51,12 @@ type ProtoRule struct {
 	// Filename of the Deps template
 	DepsTmpl string
 
+	// BazelTestFilename of the rule (full path)
+	BazelTestFilename string
+
+	// Filename of the BazelTest template
+	BazelTestTmpl string
+
 	// List of attributes
 	Attrs []*Attr
 
@@ -120,7 +126,7 @@ type ProtoLanguage struct {
 
 	// Filename of the Rules template
 	RulesTmpl string
-	
+
 	// Templates is populated by the NewProtoLanguageFromJSON constructor.
 	Templates *template.Template
 }

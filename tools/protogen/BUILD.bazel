@@ -8,6 +8,7 @@ exports_files([
     "deps.bzl.tmpl",
     "proto_language.md.tmpl",
     "rules.bzl.tmpl",
+    "bazel_test.go.tmpl",
 ])
 
 go_library(

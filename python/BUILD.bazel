@@ -2,6 +2,7 @@ load("@build_stack_rules_proto//:proto_language_info_provider_test.bzl", "proto_
 load("@build_stack_rules_proto//:proto_plugin_info_provider_test.bzl", "proto_plugin_info_provider_test")
 load("@build_stack_rules_proto//:proto_rule_info_provider_test.bzl", "proto_rule_info_provider_test")
 load("@build_stack_rules_proto//:proto_rule_test.bzl", "proto_rule_test")
+load("@build_stack_rules_proto//:proto_rule_bazel_test.bzl", "proto_rule_bazel_test")
 load("@build_stack_rules_proto//:plugin.bzl", "proto_plugin")
 load("@build_stack_rules_proto//:proto_language_test.bzl", "proto_language_test")
 load("@build_stack_rules_proto//:proto_language.bzl", "proto_language")
@@ -70,6 +71,26 @@ proto_rule_test(
     deps = [":py_proto_compile"],
 )
 
+proto_rule_bazel_test(
+    name = "py_proto_compile_rule_bazel_test",
+    tags = ["exclusive"],
+    deps = ["py_proto_compile"],
+)
+
+proto_language_info_provider_test(
+    name = "python_info_provider_test",
+    srcs = ["python_info_provider_test.golden.1.prototext"],
+    deps = [":python"],
+)
+
+proto_language_test(
+    name = "python_language_test",
+    srcs = [
+        "python.bzl",
+    ],
+    deps = [":python"],
+)
+
 # proto_plugin(
 #     name = "grpc_python_plugin",
 #     exclusions = [
@@ -86,17 +107,3 @@ proto_rule_test(
 #     tool = "//python/grpclib:plugin",
 #     visibility = ["//visibility:public"],
 # )
-
-proto_language_info_provider_test(
-    name = "python_info_provider_test",
-    srcs = ["python_info_provider_test.golden.1.prototext"],
-    deps = [":python"],
-)
-
-proto_language_test(
-    name = "python_language_test",
-    srcs = [
-        "python.bzl",
-    ],
-    deps = [":python"],
-)
