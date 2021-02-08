@@ -107,3 +107,10 @@ proto_language_test(
 #     tool = "//python/grpclib:plugin",
 #     visibility = ["//visibility:public"],
 # )
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)

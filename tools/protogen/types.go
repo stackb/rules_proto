@@ -102,11 +102,12 @@ type ProtoPlugin struct {
 
 // ProtoDependency represents the starlark ProtoDependencyInfo provider.
 type ProtoDependency struct {
+	BuildFile      string
 	Name           string
 	RepositoryRule string
-	Urls           []string
 	Sha256         string
 	StripPrefix    string
+	Urls           []string
 }
 
 // ProtoLanguage represents the starlark ProtoLanguageInfo provider.

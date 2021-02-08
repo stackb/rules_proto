@@ -1,6 +1,6 @@
-load("//:plugin.bzl", "ProtoPluginInfo")
+load("@build_stack_rules_proto//:plugin.bzl", "ProtoPluginInfo")
 load(
-    "//:aspect.bzl",
+    "@build_stack_rules_proto//:aspect.bzl",
     "ProtoLibraryAspectNodeInfo",
     "proto_compile_aspect_attrs",
     "proto_compile_aspect_impl",

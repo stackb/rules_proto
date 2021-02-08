@@ -40,3 +40,10 @@ cc_proto_compile(
     name = "thing_cc_proto",
     deps = [":thing_proto"],
 )
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)

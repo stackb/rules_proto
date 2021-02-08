@@ -1,39 +1,49 @@
 ProtoDependencyInfo = provider(fields = {
-    "name": "The proto dependency name (should correspond to the workspace name",
+    "build_file": "The build_file of this dependency",
+    "deps": "The deps of this dependency",
     "label": "The proto dependency label",
+    "name": "The proto dependency name (should correspond to the workspace name",
     "repositoryRule": "The name of the repository rule that instantiates this dependency",
-    "urls": "The urls string list",
     "sha256": "The sha256 attribute for http_archive",
     "stripPrefix": "The strip_prefix attribute for http_archive",
-    "deps": "The deps of this dependency",
+    "urls": "The urls string list",
 })
 
 def proto_dependency_info_to_struct(info):
     return struct(
-        name = info.name,
+        buildFile = info.build_file,
         label = str(info.label),
+        name = info.name,
         repositoryRule = info.repositoryRule,
-        urls = info.urls,
         sha256 = info.sha256,
         stripPrefix = info.stripPrefix,
+        urls = info.urls,
     )
 
 def _proto_dependency_impl(ctx):
     return [
         ProtoDependencyInfo(
-            name = ctx.attr.name,
+            build_file = ctx.attr.build_file,
+            deps = depset(direct = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps], transitive = [dep[ProtoDependencyInfo].deps for dep in ctx.attr.deps]),
             label = ctx.label,
+            name = ctx.attr.name,
             repositoryRule = ctx.attr.repository_rule,
-            urls = ctx.attr.urls,
             sha256 = ctx.attr.sha256,
             stripPrefix = ctx.attr.strip_prefix,
-            deps = depset(direct = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps], transitive = [dep[ProtoDependencyInfo].deps for dep in ctx.attr.deps]),
+            urls = ctx.attr.urls,
         ),
     ]
 
 proto_dependency = rule(
     implementation = _proto_dependency_impl,
     attrs = {
+        "build_file": attr.string(
+            doc = "The build_file attribute for http_archive",
+        ),
+        "deps": attr.label_list(
+            doc = "Additional transitive dependencies",
+            providers = [ProtoDependencyInfo],
+        ),
         "repository_rule": attr.string(
             doc = "The repository rule that instantiates this dependency",
             values = ["http_archive", "http_file", "bind", "go_repository"],
@@ -46,10 +56,6 @@ proto_dependency = rule(
         ),
         "urls": attr.string_list(
             doc = "The strip_prefix attribute for http_archive",
-        ),
-        "deps": attr.label_list(
-            doc = "Additional transitive dependencies",
-            providers = [ProtoDependencyInfo],
         ),
     },
 )

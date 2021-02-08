@@ -1,36 +1,42 @@
+// package main implements a bazel integration test for the {{ .Rule.Name }} rule.
+//
+// See https://github.com/bazelbuild/rules_go/commit/fabf03c1cd31bcf15fb945d932cef322b242be3a
 package main
 
 import (
-	"io/ioutil"
-	"os"
 	"testing"
 
 	"github.com/bazelbuild/rules_go/go/tools/bazel_testing"
-	// "github.com/stackb/rules_proto/tools/protogen/bazel_testing"
 )
 
 func TestMain(m *testing.M) {
-	// suite := bazel_testing.ProtoRuleTestSuite{
-	// 	RuleName:         "{{ .Rule.Name }}",
-	// 	WorkspaceContent: workspaceContent,
-	// 	BuildContent:     buildContent,
-	// }
-	// suite.Setup()
-	// defer suite.Teardown()
-
 	bazel_testing.TestMain(m, bazel_testing.Args{
-		Main: "main.txtar",
-		SetUp: func() error {
-			return ioutil.WriteFile("main.txtar", []byte(txtar), os.ModePerm)
-		},
+		Main: txtar,
 	})
+}
 
-	// os.Exit()
+func TestBuild(t *testing.T) {
+	if err := bazel_testing.RunBazel("build", ":all"); err != nil {
+		t.Fatal(err)
+	}
 }
 
 var txtar = `
 -- WORKSPACE --
+local_repository(
+    name = "build_stack_rules_proto",
+    path = "../build_stack_rules_proto",
+)
+
 {{ template "WORKSPACE.tmpl" . }}
 -- BUILD.bazel --
 {{ template "BUILD.tmpl" . }}
+-- foo.proto --
+syntax = "proto3";
+
+package thing.v1;
+
+message Thing {
+    string name = 1;
+}
 `

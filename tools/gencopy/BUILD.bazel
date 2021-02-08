@@ -24,3 +24,10 @@ go_test(
 )
 
 exports_files(["gencopy.bash.in"])
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)

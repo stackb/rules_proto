@@ -7,6 +7,7 @@ def proto_rule_bazel_test(**kwargs):
     go_bazel_test(
         name = name,
         srcs = [dep_name + "_bazel_test.go" for dep_name in deps],
+        rule_files = ["//:all_files"],
         # deps = [
         #     "@build_stack_rules_proto//tools/protogen/bazel_testing",
         #     "@io_bazel_rules_go//go/tools/bazel_testing:go_default_library",

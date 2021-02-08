@@ -7,3 +7,21 @@ gazelle(
     name = "laze",
     gazelle = "//tools/laze",
 )
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = [
+        "BUILD.bazel",
+        "WORKSPACE",
+        "//protobuf:all_files",
+        "//python:all_files",
+        "//internal:all_files",
+        "//example/person/v1:all_files",
+        "//example/place/v1:all_files",
+        "//example/thing/v1:all_files",
+        "//tools/gencopy:all_files",
+        "//third_party:all_files",
+    ] + glob(["*.bzl"]),
+    visibility = ["//visibility:public"],
+)
