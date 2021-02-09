@@ -2,6 +2,7 @@ load("@build_stack_rules_proto//language/rules:proto_compile_test.bzl", "proto_c
 load("@build_stack_rules_proto//language/rules:proto_info_provider_test.bzl", "proto_info_provider_test")
 load("@build_stack_rules_proto//rules:cc.bzl", "cc_grpc_compile", "cc_grpc_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules:python.bzl", "py_grpc_compile", "py_grpc_library")
 
 proto_library(
     name = "routeguide_proto",
@@ -15,12 +16,6 @@ proto_info_provider_test(
     deps = [":routeguide_proto"],
 )
 
-cc_grpc_library(
-    name = "routeguide_cc_grpc",
-    visibility = ["//visibility:public"],
-    deps = ["routeguide_proto"],
-)
-
 proto_compile_test(
     name = "routeguide_cc_grpc_compile_test",
     srcs = [
@@ -31,6 +26,28 @@ proto_compile_test(
         "routeguide_mock.grpc.pb.h",
     ],
     rule = cc_grpc_compile,
+    deps = ["routeguide_proto"],
+)
+
+cc_grpc_library(
+    name = "routeguide_cc_grpc",
+    visibility = ["//visibility:public"],
+    deps = ["routeguide_proto"],
+)
+
+proto_compile_test(
+    name = "routeguide_py_grpc_compile_test",
+    srcs = [
+        "routeguide_pb2.py",
+        "routeguide_pb2_grpc.py",
+    ],
+    rule = py_grpc_compile,
+    deps = ["routeguide_proto"],
+)
+
+py_grpc_library(
+    name = "routeguide_py_grpc",
+    visibility = ["//visibility:public"],
     deps = ["routeguide_proto"],
 )
 

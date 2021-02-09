@@ -1,6 +1,6 @@
 load(
-    "@build_stack_rules_proto//rules:py_proto_compile.bzl",
-    "py_proto_compile",
+    "@build_stack_rules_proto//rules:py_grpc_compile.bzl",
+    "py_grpc_compile",
 )
 load("@rules_python//python:defs.bzl", "py_library")
 
@@ -12,7 +12,7 @@ GRPC_DEPS = [
 def py_grpc_library(**kwargs):
     name_pb = kwargs.get("name") + "_pb"
 
-    py_proto_compile(
+    py_grpc_compile(
         name = name_pb,
         **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )

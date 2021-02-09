@@ -19,10 +19,8 @@ import random
 import os
 import grpc
 
-# Recommend to the directory structure of client.runfiles to figure out the
-# correct import here.
-from example.proto import routeguide_pb2
-from example.proto import routeguide_pb2_grpc
+from example.routeguide import routeguide_pb2
+from example.routeguide import routeguide_pb2_grpc
 
 import resources
 

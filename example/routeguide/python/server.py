@@ -20,8 +20,8 @@ import os
 import grpc
 import logging
 
-from example.proto import routeguide_pb2
-from example.proto import routeguide_pb2_grpc
+from example.routeguide import routeguide_pb2
+from example.routeguide import routeguide_pb2_grpc
 
 import resources
 
