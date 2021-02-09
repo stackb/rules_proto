@@ -1,5 +1,5 @@
 load(
-    "//:proto_dependency.bzl",
+    "@build_stack_rules_proto//rules:proto_dependency.bzl",
     "ProtoDependencyInfo",
     "proto_dependency_info_to_struct",
 )

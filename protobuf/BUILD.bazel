@@ -1,6 +1,6 @@
 load("//protobuf:toolchains.bzl", "protoc_toolchain")
 load(
-    "@build_stack_rules_proto//:proto_dependency.bzl",
+    "@build_stack_rules_proto//rules:proto_dependency.bzl",
     "proto_dependency",
 )
 
