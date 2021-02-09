@@ -61,7 +61,6 @@ def cc_proto_compile_deps():
     zlib()
     com_google_protobuf()
 
-
 def bazel_skylib():
     _maybe(
         http_archive,
