@@ -1,0 +1,79 @@
+load(
+    "@build_stack_rules_proto//:proto_language_info_provider_test.bzl",
+    "proto_language_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//:proto_plugin_info_provider_test.bzl",
+    "proto_plugin_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//:proto_rule_info_provider_test.bzl",
+    "proto_rule_info_provider_test",
+)
+load("@build_stack_rules_proto//:proto_rule_test.bzl", "proto_rule_test")
+load("@build_stack_rules_proto//:proto_rule_bazel_test.bzl", "proto_rule_bazel_test")
+load("@build_stack_rules_proto//:proto_language_test.bzl", "proto_language_test")
+load("@build_stack_rules_proto//:proto_language.bzl", "proto_language")
+load("@build_stack_rules_proto//:proto_rule.bzl", "proto_rule")
+
+proto_language(
+    name = "cc",
+    rules = [
+        "cc_proto_compile",
+        "cc_proto_library",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["//protobuf:com_google_protobuf"],
+)
+
+proto_language_info_provider_test(
+    name = "cc_info_provider_test",
+    srcs = ["cc_info_provider_test.golden.1.prototext"],
+    deps = [":cc"],
+)
+
+proto_language_test(
+    name = "cc_language_test",
+    srcs = [
+        "cc.bzl",
+    ],
+    deps = [":cc"],
+)
+
+proto_rule(
+    name = "cc_proto_compile",
+    language = ":cc",
+    package = "cc",
+    plugins = ["//cc:cc_plugin"],
+    visibility = ["//visibility:public"],
+)
+
+proto_rule_info_provider_test(
+    name = "cc_proto_compile_info_provider_test",
+    srcs = ["cc_proto_compile_info_provider_test.golden.1.prototext"],
+    deps = [":cc_proto_compile"],
+)
+
+proto_rule_test(
+    name = "cc_proto_compile_rule_test",
+    srcs = [
+        "//cc:generated_rules",
+    ],
+    target_package = "cc",
+    deps = [":cc_proto_compile"],
+)
+
+proto_rule_bazel_test(
+    name = "cc_proto_compile_rule_bazel_test",
+    tags = [
+        "exclusive",
+        "manual",
+    ],
+    deps = ["cc_proto_compile"],
+)
+
+proto_plugin_info_provider_test(
+    name = "cc_plugin_info_provider_test",
+    srcs = ["cc_plugin_info_provider_test.golden.1.prototext"],
+    deps = ["//cc:cc_plugin"],
+)

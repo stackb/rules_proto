@@ -8,9 +8,23 @@ proto_plugin(
     outputs = ["{protopath|python}_pb2.py"],
     protoc_plugin_name = "python",
     visibility = ["//visibility:public"],
-    deps = [
-        "//protobuf:com_google_protobuf",
+    deps = ["//protobuf:com_google_protobuf"],
+)
+
+filegroup(
+    name = "generated_rules",
+    srcs = [
+        "py_proto_compile.bzl",
+        "py_proto_compile_deps.bzl",
     ],
+    visibility = ["//language/python:__pkg__"],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
 )
 
 # proto_plugin(
@@ -29,19 +43,3 @@ proto_plugin(
 #     tool = "//python/grpclib:plugin",
 #     visibility = ["//visibility:public"],
 # )
-
-filegroup(
-    name = "generated_rules",
-    srcs = [
-        "py_proto_compile.bzl",
-        "py_proto_compile_deps.bzl",
-    ],
-    visibility = ["//language/python:__pkg__"],
-)
-
-filegroup(
-    name = "all_files",
-    testonly = True,
-    srcs = glob(["**"]),
-    visibility = ["//visibility:public"],
-)

@@ -15,6 +15,7 @@ filegroup(
         "BUILD.bazel",
         "WORKSPACE",
         "//protobuf:all_files",
+        "//cc:all_files",
         "//python:all_files",
         "//internal:all_files",
         "//example/person/v1:all_files",

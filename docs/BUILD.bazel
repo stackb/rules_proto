@@ -3,17 +3,17 @@ load("//:proto_site_test.bzl", "proto_site_test")
 proto_site_test(
     name = "site_test",
     srcs = [
-        # "cc.md",
-        # "cc_proto_compile.md",
+        "cc.md",
+        "cc_proto_compile.md",
         "py_proto_compile.md",
         "python.md",
     ],
     languages = [
-        # "//cc",
+        "//language/cc",
         "//language/python",
     ],
     rules = [
-        # "//language/cc:cc_proto_compile",
+        "//language/cc:cc_proto_compile",
         "//language/python:py_proto_compile",
     ],
 )

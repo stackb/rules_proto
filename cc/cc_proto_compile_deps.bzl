@@ -1,54 +1,3 @@
----
-layout: default
-title: cc_proto_compile
-permalink: cc/cc_proto_compile
-parent: cc
----
-
-# cc_proto_compile
-
-Generates protocol buffer sources for the [cc](/cc) language.
-
-## `WORKSPACE`
-
-```python
-load("@build_stack_rules_proto//:toolchains.bzl", "protoc_toolchains")
-
-protoc_toolchains()
-
-load("@build_stack_rules_proto//cc:cc_proto_compile_deps.bzl", "cc_proto_compile_deps")
-
-cc_proto_compile_deps()
-```
-
-## `BUILD.bazel`
-
-```python
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//cc:cc_proto_compile.bzl", "cc_proto_compile")
-
-proto_library(
-    name = "foo_proto",
-    srcs = ["foo.proto"],
-    deps = ["@com_google_protobuf//:any_proto"],
-)
-
-cc_proto_compile(
-    name = "cc_proto_compile_foo_proto",
-    deps = [":foo_proto"],
-)
-```
-
-## Plugins
-
-| Label | Tool | Outputs |
-| ---- | ---- | ------- |
-| `//cc:cc_plugin` |  |  `{protopath}.pb.h` `{protopath}.pb.cc` |
-
-
-## Dependencies
-
-```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def _maybe(repo_rule, name, **kwargs):
@@ -107,5 +56,3 @@ def com_google_protobuf():
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
         ],
     )
-
-```
