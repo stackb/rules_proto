@@ -19,6 +19,7 @@ protoc_toolchain()
 load("@build_stack_rules_proto//rules:cc_proto_compile_deps.bzl", "cc_proto_compile_deps")
 
 cc_proto_compile_deps()
+
 ```
 
 ## `BUILD.bazel`

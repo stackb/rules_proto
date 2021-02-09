@@ -3,7 +3,7 @@ package protogen
 import (
 	"bytes"
 	"fmt"
-	"html/template"
+	"text/template"
 	"io/ioutil"
 	"log"
 	"strings"

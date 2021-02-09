@@ -22,7 +22,7 @@ proto_rule(
     kind = "proto",
     language = "//language/python",
     package = "rules",
-    plugins = ["//python:python_plugin"],
+    plugins = ["//plugins/python/proto"],
     visibility = ["//visibility:public"],
     deps = [
         "//core:com_google_protobuf",

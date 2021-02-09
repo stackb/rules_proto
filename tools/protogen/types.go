@@ -1,7 +1,7 @@
 package protogen
 
 import (
-	"html/template"
+	"text/template"
 )
 
 // ProtoPlugin loosely represents the starlark ProtoRuleInfo provider.
@@ -111,6 +111,7 @@ type ProtoDependency struct {
 	Sha256         string
 	StripPrefix    string
 	Urls           []string
+	WorkspaceSnippet string
 }
 
 // ProtoLanguage represents the starlark ProtoLanguageInfo provider.

@@ -1,0 +1,19 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "grpc",
+    exclusions = [
+        "google/protobuf",
+    ],
+    outputs = ["{protopath|python}_pb2_grpc.py"],
+    tool = "@com_github_grpc_grpc//src/compiler:grpc_python_plugin",
+    visibility = ["//visibility:public"],
+    deps = ["//core/grpc:com_github_grpc_grpc"],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)

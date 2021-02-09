@@ -6,6 +6,5 @@ outputs: "{protopath}.pb.h"
 outputs: "{protopath}.pb.cc"
 protoc_plugin_name: "cpp"
 separate_options_flag: false
-tool: ""
 tool_executable: ""
 use_built_in_shell_environment: false

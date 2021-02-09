@@ -6,7 +6,7 @@ load(
 )
 
 _default_plugins = [
-    str(Label("//python:python_plugin")),
+    str(Label("//plugins/python/proto:proto")),
 ]
 
 _py_proto_compile_aspect = proto_compile_aspect(_default_plugins, "py_proto_compile_aspect")

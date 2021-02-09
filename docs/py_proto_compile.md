@@ -19,6 +19,7 @@ protoc_toolchain()
 load("@build_stack_rules_proto//rules:py_proto_compile_deps.bzl", "py_proto_compile_deps")
 
 py_proto_compile_deps()
+
 ```
 
 ## `BUILD.bazel`
@@ -42,7 +43,7 @@ py_proto_compile(
 
 | Label | Tool | Outputs |
 | ---- | ---- | ------- |
-| `//python:python_plugin` |  |  `{protopath|python}_pb2.py` |
+| `//plugins/python/proto:proto` |  |  `{protopath|python}_pb2.py` |
 
 
 ## Dependencies
@@ -55,21 +56,10 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def py_proto_compile_deps():
-    bazel_skylib()
     rules_python()
     zlib()
     com_google_protobuf()
-
-def bazel_skylib():
-    _maybe(
-        http_archive,
-        name = "bazel_skylib",
-        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
-        urls = [
-            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
-        ],
-    )
+    bazel_skylib()
 
 def rules_python():
     _maybe(
@@ -103,6 +93,17 @@ def com_google_protobuf():
         strip_prefix = "protobuf-3.14.0",
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+        ],
+    )
+
+def bazel_skylib():
+    _maybe(
+        http_archive,
+        name = "bazel_skylib",
+        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
+        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
+        urls = [
+            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
         ],
     )
 

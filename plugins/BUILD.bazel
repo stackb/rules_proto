@@ -1,0 +1,8 @@
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = [
+        "//plugins/python:all_files",
+    ],
+    visibility = ["//visibility:public"],
+)

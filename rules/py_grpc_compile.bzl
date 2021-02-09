@@ -6,8 +6,8 @@ load(
 )
 
 _default_plugins = [
-    str(Label("//python:python_plugin")),
-    str(Label("//python:grpc_python_plugin")),
+    str(Label("//plugins/python/proto:proto")),
+    str(Label("//plugins/python/grpc:grpc")),
 ]
 
 _py_grpc_compile_aspect = proto_compile_aspect(_default_plugins, "py_grpc_compile_aspect")

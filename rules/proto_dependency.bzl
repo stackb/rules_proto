@@ -7,6 +7,7 @@ ProtoDependencyInfo = provider(fields = {
     "sha256": "The sha256 attribute for http_archive",
     "stripPrefix": "The strip_prefix attribute for http_archive",
     "urls": "The urls string list",
+    "workspaceSnippet": "The workspaceSnippet string list",
 })
 
 def proto_dependency_info_to_struct(info):
@@ -18,6 +19,7 @@ def proto_dependency_info_to_struct(info):
         sha256 = info.sha256,
         stripPrefix = info.stripPrefix,
         urls = info.urls,
+        workspaceSnippet = info.workspaceSnippet,
     )
 
 def _proto_dependency_impl(ctx):
@@ -31,6 +33,7 @@ def _proto_dependency_impl(ctx):
             sha256 = ctx.attr.sha256,
             stripPrefix = ctx.attr.strip_prefix,
             urls = ctx.attr.urls,
+            workspaceSnippet = ctx.attr.workspace_snippet,
         ),
     ]
 
@@ -39,6 +42,9 @@ proto_dependency = rule(
     attrs = {
         "build_file": attr.string(
             doc = "The build_file attribute for http_archive",
+        ),
+        "workspace_snippet": attr.string(
+            doc = "The starlark code snippet for the WORKSPACE needed when using this dependency",
         ),
         "deps": attr.label_list(
             doc = "Additional transitive dependencies",

@@ -28,7 +28,7 @@ def proto_plugin_info_to_struct(info):
         options = info.options,
         outputs = info.outputs,
         output_directory = info.output_directory,
-        tool = info.tool if info.tool else "",
+        # tool = info.tool.short_path if info.tool else "", TODO(pcj): serialize this to document the type.
         tool_executable = info.tool_executable.short_path if info.tool_executable else "",
         use_built_in_shell_environment = info.use_built_in_shell_environment,
         protoc_plugin_name = info.protoc_plugin_name,

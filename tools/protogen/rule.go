@@ -3,8 +3,8 @@ package protogen
 import (
 	"encoding/json"
 	"fmt"
-	"html/template"
 	"io/ioutil"
+	"text/template"
 )
 
 // NewProtoRuleFromJSONFile constructs a ProtoRule struct from the given

@@ -113,3 +113,28 @@ def zlib():
         strip_prefix = "zlib-1.2.11",
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
+
+def build_bazel_rules_swift():
+    # Release: 0.18.0
+    # Commit: master
+    # Date: 2021-01-04 23:36:38 +0000 UTC
+    # URL: https://github.com/bazelbuild/rules_swift/releases/tag/0.18.0
+    # Branch: master
+    # Commit: dadd12190182530cf6f91ca7f9e70391644ce502
+    # Date: 2021-02-08 21:24:10 +0000 UTC
+    # URL: https://github.com/bazelbuild/rules_swift/commit/dadd12190182530cf6f91ca7f9e70391644ce502
+    #
+    # Don't re-export the modules imported by a Swift generated header.
+    #
+    # This was an unintentional change in behavior from https://github.com/bazelbuild/rules_swift/commit/5f51ca9c5149122f41cada6122c61788d880fee9; this puts us back to the original behavior, but leaves an API in place for finer-grained control over re-exporting modules in the future. (But the BUILD rules today don't really have the flexibility to support it yet.)
+    #
+    # PiperOrigin-RevId: 356338982
+    # (cherry picked from commit f45eea8c02a87c3077e5209f471fe4a193b5b0ba)
+    # Size: 157518 (158 kB)
+    maybe(
+        http_archive,
+        name = "build_bazel_rules_swift",
+        sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
+        strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
+        urls = ["https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"],
+    )

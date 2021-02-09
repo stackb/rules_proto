@@ -10,6 +10,7 @@ load(
     "//:deps.bzl",
     "bazel_gazelle",
     "bazel_skylib",
+    "build_bazel_rules_swift",
     "com_google_protobuf",
     "io_bazel_rules_go",
     "rules_proto",
@@ -87,6 +88,12 @@ py_grpc_compile_deps()
 
 # gazelle:repository_macro tools/laze/deps.bzl%laze_deps
 laze_deps()
+
+build_bazel_rules_swift()
+
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
 
 # #
 # # Core

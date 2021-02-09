@@ -21,8 +21,8 @@ proto_rule(
     language = "//language/python",
     package = "rules",
     plugins = [
-        "//python:python_plugin",
-        "//python:grpc_python_plugin",
+        "//plugins/python/proto",
+        "//plugins/python/grpc",
     ],
     visibility = ["//visibility:public"],
 )

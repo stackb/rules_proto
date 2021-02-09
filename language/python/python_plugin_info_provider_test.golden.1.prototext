@@ -1,10 +1,9 @@
 exclusions: "google/protobuf"
-label: "//python:python_plugin"
-name: "python_plugin"
+label: "//plugins/python/proto:proto"
+name: "proto"
 output_directory: false
 outputs: "{protopath|python}_pb2.py"
 protoc_plugin_name: "python"
 separate_options_flag: false
-tool: ""
 tool_executable: ""
 use_built_in_shell_environment: false

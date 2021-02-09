@@ -2,7 +2,7 @@ package protogen
 
 import (
 	"fmt"
-	"html/template"
+	"text/template"
 	"os"
 	"path/filepath"
 )

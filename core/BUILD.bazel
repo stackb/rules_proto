@@ -51,7 +51,7 @@ proto_dependency(
 filegroup(
     name = "all_files",
     testonly = True,
-    srcs = glob(["**"]),
+    srcs = ["//core/grpc:all_files"] + glob(["**"]),
     visibility = ["//visibility:public"],
 )
 
