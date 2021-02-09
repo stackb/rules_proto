@@ -12,9 +12,9 @@ Generates protocol buffer sources for the [python](/python) language.
 ## `WORKSPACE`
 
 ```python
-load("@build_stack_rules_proto//:toolchains.bzl", "protoc_toolchains")
+load("@build_stack_rules_proto//toolchains:protoc.bzl", "protoc_toolchain")
 
-protoc_toolchains()
+protoc_toolchain()
 
 load("@build_stack_rules_proto//rules:py_proto_compile_deps.bzl", "py_proto_compile_deps")
 

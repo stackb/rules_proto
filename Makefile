@@ -30,6 +30,10 @@ goldens:
 site:
 	./tools/regenerate_site.sh
 
+.PHONY: site
+make fix: laze goldens test
+	echo "All fixed up!"
+
 # # Run the rulegen system
 # .PHONY: rulegen
 # rulegen:

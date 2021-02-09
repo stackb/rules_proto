@@ -77,9 +77,9 @@ rules_proto_toolchains()
 #
 # Toolchains
 #
-load("//:toolchains.bzl", "protoc_toolchains")
+load("//toolchains:protoc.bzl", "protoc_toolchain")
 
-protoc_toolchains()
+protoc_toolchain()
 
 # #
 # # Core

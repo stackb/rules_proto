@@ -27,7 +27,7 @@ py_proto_compile_aspect = aspect(
             default = "py_proto_compile_aspect",
         )
     ),
-    toolchains = [str(Label("//protobuf:toolchain_type"))],
+    toolchains = [str(Label("@build_stack_rules_proto//toolchains:protoc_toolchain_type"))],
 )
 
 # Create compile rule to apply aspect
