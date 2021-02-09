@@ -1,6 +1,6 @@
 exclusions: "google/protobuf"
-label: "//cc:cc_plugin"
-name: "cc_plugin"
+label: "//plugins/cc/proto:proto"
+name: "proto"
 output_directory: false
 outputs: "{protopath}.pb.h"
 outputs: "{protopath}.pb.cc"

@@ -6,7 +6,7 @@ load(
 )
 
 _default_plugins = [
-    str(Label("//cc:cc_plugin")),
+    str(Label("//plugins/cc/proto:proto")),
 ]
 
 _cc_proto_compile_aspect = proto_compile_aspect(_default_plugins, "cc_proto_compile_aspect")

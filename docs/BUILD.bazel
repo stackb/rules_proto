@@ -4,6 +4,7 @@ proto_site_test(
     name = "site_test",
     srcs = [
         "cc.md",
+        "cc_grpc_compile.md",
         "cc_proto_compile.md",
         "cc_proto_library.md",
         "py_grpc_compile.md",
@@ -16,6 +17,7 @@ proto_site_test(
         "//language/python",
     ],
     rules = [
+        "//language/cc/cc_grpc_compile",
         "//language/cc/cc_proto_compile",
         "//language/cc/cc_proto_library",
         "//language/python/py_grpc_compile",

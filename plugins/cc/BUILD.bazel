@@ -2,8 +2,8 @@ filegroup(
     name = "all_files",
     testonly = True,
     srcs = [
-        "//plugins/cc:all_files",
-        "//plugins/python:all_files",
+        "//plugins/cc/grpc:all_files",
+        "//plugins/cc/proto:all_files",
     ],
     visibility = ["//visibility:public"],
 )

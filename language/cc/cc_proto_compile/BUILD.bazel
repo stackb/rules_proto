@@ -24,7 +24,7 @@ proto_rule(
     kind = "proto",
     language = "//language/cc",
     package = "rules",
-    plugins = ["//cc:cc_plugin"],
+    plugins = ["//plugins/cc/proto"],
     visibility = ["//visibility:public"],
 )
 
@@ -53,5 +53,5 @@ proto_rule_bazel_test(
 proto_plugin_info_provider_test(
     name = "cc_plugin_info_provider_test",
     srcs = ["cc_plugin_info_provider_test.golden.1.prototext"],
-    deps = ["//cc:cc_plugin"],
+    deps = ["//plugins/cc/proto"],
 )

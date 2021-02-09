@@ -14,7 +14,6 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "WORKSPACE",
-        "//cc:all_files",
         "//core:all_files",
         "//example/person/v1:all_files",
         "//example/place/v1:all_files",

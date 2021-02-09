@@ -1,7 +1,7 @@
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 
 proto_plugin(
-    name = "cc_plugin",
+    name = "proto",
     exclusions = ["google/protobuf"],
     outputs = [
         "{protopath}.pb.h",
@@ -12,23 +12,8 @@ proto_plugin(
 )
 
 filegroup(
-    name = "generated_rules",
-    srcs = [
-        "cc_proto_compile.bzl",
-        "cc_proto_compile_deps.bzl",
-    ],
-    visibility = ["//language/cc:__pkg__"],
-)
-
-filegroup(
     name = "all_files",
     testonly = True,
     srcs = glob(["**"]),
     visibility = ["//visibility:public"],
 )
-
-exports_files([
-    "cc.bzl",
-    "cc_proto_compile.bzl",
-    "cc_proto_compile_deps.bzl",
-])

@@ -1,0 +1,24 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "grpc",
+    exclusions = [
+        "google/protobuf",
+    ],
+    options = ["generate_mock_code=true"],
+    outputs = [
+        "{protopath}.grpc.pb.h",
+        "{protopath}.grpc.pb.cc",
+        "{protopath}_mock.grpc.pb.h",
+    ],
+    tool = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
+    visibility = ["//visibility:public"],
+    deps = ["//core/grpc:com_github_grpc_grpc"],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)
