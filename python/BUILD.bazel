@@ -26,15 +26,16 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-# proto_plugin(
-#     name = "grpc_python_plugin",
-#     exclusions = [
-#         "google/protobuf",
-#     ],
-#     outputs = ["{protopath|python}_pb2_grpc.py"],
-#     tool = "@com_github_grpc_grpc//src/compiler:grpc_python_plugin",
-#     visibility = ["//visibility:public"],
-# )
+proto_plugin(
+    name = "grpc_python_plugin",
+    exclusions = [
+        "google/protobuf",
+    ],
+    outputs = ["{protopath|python}_pb2_grpc.py"],
+    tool = "@com_github_grpc_grpc//src/compiler:grpc_python_plugin",
+    visibility = ["//visibility:public"],
+    deps = ["//core/grpc:com_github_grpc_grpc"],
+)
 
 # proto_plugin(
 #     name = "grpclib_python_plugin",

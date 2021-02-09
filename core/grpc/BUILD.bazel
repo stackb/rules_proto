@@ -1,0 +1,37 @@
+load(
+    "@build_stack_rules_proto//rules:proto_dependency.bzl",
+    "proto_dependency",
+)
+
+# Release: v1.35.0
+# Commit: v1.35.x
+# Date: 2021-01-19 18:07:57 +0000 UTC
+# URL: https://github.com/grpc/grpc/releases/tag/v1.35.0
+# Branch: master
+# Commit: 5f759fcd1f602b38004b948b071f8b5726a9a4b1
+# Date: 2021-02-09 05:46:27 +0000 UTC
+# URL: https://github.com/grpc/grpc/commit/5f759fcd1f602b38004b948b071f8b5726a9a4b1
+#
+# Merge pull request #25384 from gnossen/fix_interop_typo
+#
+# Fix Interop Client Typo
+# Size: 7899154 (7.9 MB)
+proto_dependency(
+    name = "com_github_grpc_grpc",
+    repository_rule = "http_archive",
+    sha256 = "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b",
+    strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
+    urls = ["https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz"],
+    visibility = ["//visibility:public"],
+    deps = [
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)
+
+exports_files(glob(["*.tmpl"]))

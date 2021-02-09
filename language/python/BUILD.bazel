@@ -24,6 +24,7 @@ proto_language(
     package = "rules",
     prefix = "py",
     rules = [
+        "py_grpc_compile",
         "py_proto_compile",
         "py_proto_library",
     ],

@@ -1,64 +1,37 @@
----
-layout: default
-title: cc_proto_compile
-permalink: cc/cc_proto_compile
-parent: cc
----
-
-# cc_proto_compile
-
-Generates protocol buffer sources for the [cc](/cc) language.
-
-## `WORKSPACE`
-
-```python
-load("@build_stack_rules_proto//toolchains:protoc.bzl", "protoc_toolchain")
-
-protoc_toolchain()
-
-load("@build_stack_rules_proto//rules:cc_proto_compile_deps.bzl", "cc_proto_compile_deps")
-
-cc_proto_compile_deps()
-```
-
-## `BUILD.bazel`
-
-```python
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules:cc_proto_compile.bzl", "cc_proto_compile")
-
-proto_library(
-    name = "foo_proto",
-    srcs = ["foo.proto"],
-)
-
-cc_proto_compile(
-    name = "cc_proto_compile_foo_proto",
-    deps = [":foo_proto"],
-)
-```
-
-## Plugins
-
-| Label | Tool | Outputs |
-| ---- | ---- | ------- |
-| `//cc:cc_plugin` |  |  `{protopath}.pb.h` `{protopath}.pb.cc` |
-
-
-## Dependencies
-
-```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 
 def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def cc_proto_compile_deps():
+def py_grpc_compile_deps():
+    com_google_protobuf()
+    com_github_grpc_grpc()
     bazel_skylib()
     rules_python()
     zlib()
-    com_google_protobuf()
+
+def com_google_protobuf():
+    _maybe(
+        http_archive,
+        name = "com_google_protobuf",
+        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
+        strip_prefix = "protobuf-3.14.0",
+        urls = [
+            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+        ],
+    )
+
+def com_github_grpc_grpc():
+    _maybe(
+        http_archive,
+        name = "com_github_grpc_grpc",
+        sha256 = "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b",
+        strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
+        urls = [
+            "https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz",
+        ],
+    )
 
 def bazel_skylib():
     _maybe(
@@ -94,16 +67,3 @@ def zlib():
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
-
-def com_google_protobuf():
-    _maybe(
-        http_archive,
-        name = "com_google_protobuf",
-        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
-        strip_prefix = "protobuf-3.14.0",
-        urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
-        ],
-    )
-
-```

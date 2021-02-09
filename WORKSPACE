@@ -81,6 +81,13 @@ load("//toolchains:protoc.bzl", "protoc_toolchain")
 
 protoc_toolchain()
 
+load("//rules:py_grpc_compile_deps.bzl", "py_grpc_compile_deps")
+
+py_grpc_compile_deps()
+
+# gazelle:repository_macro tools/laze/deps.bzl%laze_deps
+laze_deps()
+
 # #
 # # Core
 # #

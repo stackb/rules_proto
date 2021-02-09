@@ -1,0 +1,12 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//{{ .Rule.Package }}:{{ .Rule.Name }}.bzl", "{{ .Rule.Name }}")
+
+proto_library(
+    name = "greeter_proto",
+    srcs = ["corp/greeter/v1/greeter.proto"],
+)
+
+{{ .Rule.Name }}(
+    name = "{{ .Rule.Name }}_foo_{{ .Rule.Kind }}",
+    deps = [":greeter_proto"],
+)

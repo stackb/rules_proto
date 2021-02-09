@@ -1,0 +1,50 @@
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_info_provider_test.bzl",
+    "proto_rule_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_test.bzl",
+    "proto_rule_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_bazel_test.bzl",
+    "proto_rule_bazel_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule.bzl",
+    "proto_rule",
+)
+
+proto_rule(
+    name = "py_grpc_compile",
+    kind = "grpc",
+    language = "//language/python",
+    package = "rules",
+    plugins = [
+        "//python:python_plugin",
+        "//python:grpc_python_plugin",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_rule_info_provider_test(
+    name = "py_grpc_compile_info_provider_test",
+    srcs = ["py_grpc_compile_info_provider_test.golden.1.prototext"],
+    deps = [":py_grpc_compile"],
+)
+
+proto_rule_test(
+    name = "py_grpc_compile_rule_test",
+    srcs = [
+        "//rules:py_grpc_compile.bzl",
+        "//rules:py_grpc_compile_deps.bzl",
+    ],
+    package = "rules",
+    deps = [":py_grpc_compile"],
+)
+
+proto_rule_bazel_test(
+    name = "py_grpc_compile_rule_bazel_test",
+    tags = ["exclusive"],
+    deps = ["py_grpc_compile"],
+)

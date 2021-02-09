@@ -4,6 +4,7 @@ lang {
   name: "python"
   package: "rules"
   prefix: "py"
+  rules: "py_grpc_compile"
   rules: "py_proto_compile"
   rules: "py_proto_library"
   rulesFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/python/python.bzl"
