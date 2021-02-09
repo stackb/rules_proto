@@ -178,58 +178,70 @@ func (*protoRuleLang) GenerateRules(args language.GenerateArgs) language.Generat
 	var rules []*rule.Rule
 	var imports []interface{}
 
-	// Search the existing build file for proto_plugin rules
+	// add provider tests for selected rules
 	for _, existingRule := range args.File.Rules {
 		switch existingRule.Kind() {
+		case "proto_language", "proto_rule":
+			newRule, newImports := makeProviderTestRule(existingRule, existingRule.Kind())
+			rules = append(rules, newRule)
+			imports = append(imports, newImports)
 		case "proto_library":
-			providerTestName := existingRule.Name() + "_info_test"
-			r := rule.NewRule("proto_info_provider_test", providerTestName)
-			r.SetAttr("srcs", []string{providerTestName + ".golden.1.prototext"})
-			r.SetAttr("deps", []string{":" + existingRule.Name()})
-			rules = append(rules, r)
-			imports = append(imports, []string{"proto_info_provider_test"})
-		case "proto_language":
-			providerTestName := existingRule.Name() + "_info_provider_test"
-			r := rule.NewRule("proto_language_info_provider_test", providerTestName)
-			r.SetAttr("srcs", []string{providerTestName + ".golden.1.prototext"})
-			r.SetAttr("deps", []string{":" + existingRule.Name()})
-			rules = append(rules, r)
-			imports = append(imports, []string{"proto_language_info_provider_test"})
-
-			languageTestName := existingRule.Name() + "_language_test"
-			r = rule.NewRule("proto_language_test", languageTestName)
-			r.SetAttr("srcs", []string{existingRule.Name() + ".bzl"})
-			r.SetAttr("deps", []string{":" + existingRule.Name()})
-			rules = append(rules, r)
-			imports = append(imports, []string{"proto_language_test"})
-
-		case "proto_plugin":
-			providerTestName := existingRule.Name() + "_info_provider_test"
-			r := rule.NewRule("proto_plugin_info_provider_test", providerTestName)
-			r.SetAttr("srcs", []string{providerTestName + ".golden.1.prototext"})
-			r.SetAttr("deps", []string{":" + existingRule.Name()})
-			rules = append(rules, r)
-			imports = append(imports, []string{"proto_plugin_info_provider_test"})
-		case "proto_rule":
-			providerTestName := existingRule.Name() + "_info_provider_test"
-			r := rule.NewRule("proto_rule_info_provider_test", providerTestName)
-			r.SetAttr("srcs", []string{providerTestName + ".golden.1.prototext"})
-			r.SetAttr("deps", []string{":" + existingRule.Name()})
-			rules = append(rules, r)
-			imports = append(imports, []string{"proto_rule_info_provider_test"})
-
-			ruleTestName := existingRule.Name() + "_rule_test"
-			r = rule.NewRule("proto_rule_test", ruleTestName)
-			r.SetAttr("srcs", []string{existingRule.Name() + ".bzl", existingRule.Name() + "_deps.bzl"})
-			r.SetAttr("deps", []string{":" + existingRule.Name()})
-			rules = append(rules, r)
-			imports = append(imports, []string{"proto_rule_test"})
+			newRule, newImports := makeProviderTestRule(existingRule, "proto")
+			rules = append(rules, newRule)
+			imports = append(imports, newImports)
 		}
+	}
 
+	// add additional tests for selected rules
+	for _, existingRule := range args.File.Rules {
+		switch existingRule.Kind() {
+		case "proto_language":
+			newRule, newImports := makeProtoLanguageTestRule(existingRule)
+			rules = append(rules, newRule)
+			imports = append(imports, newImports)
+		case "proto_rule":
+			newRule, newImports := makeProtoRuleTestRule(existingRule)
+			rules = append(rules, newRule)
+			imports = append(imports, newImports)
+		}
 	}
 
 	return language.GenerateResult{
 		Gen:     rules,
 		Imports: imports,
 	}
+}
+
+func makeProviderTestRule(existingRule *rule.Rule, providerName string) (newRule *rule.Rule, imports []string) {
+	testName := existingRule.Name() + "_info_provider_test"
+	newRule = rule.NewRule(providerName+"_info_provider_test", testName)
+	newRule.SetAttr("srcs", []string{testName + ".golden.1.prototext"})
+	newRule.SetAttr("deps", []string{":" + existingRule.Name()})
+	imports = []string{providerName + "_info_provider_test"}
+	return
+}
+
+func makeProtoLanguageTestRule(existingRule *rule.Rule) (newRule *rule.Rule, imports []string) {
+	targetPackage := existingRule.Name()
+	testName := existingRule.Name() + "_language_test"
+	newRule = rule.NewRule("proto_language_test", testName)
+	newRule.SetAttr("srcs", []string{fmt.Sprintf("//%s:%s.bzl", targetPackage, existingRule.Name())})
+	newRule.SetAttr("deps", []string{":" + existingRule.Name()})
+	newRule.SetAttr("target_package", targetPackage)
+	imports = []string{"proto_language_test"}
+	return
+}
+
+func makeProtoRuleTestRule(existingRule *rule.Rule) (newRule *rule.Rule, imports []string) {
+	targetPackage := existingRule.AttrString("package")
+	testName := existingRule.Name() + "_rule_test"
+	newRule = rule.NewRule("proto_rule_test", testName)
+	newRule.SetAttr("srcs", []string{
+		fmt.Sprintf("//%s:%s.bzl", targetPackage, existingRule.Name()),
+		fmt.Sprintf("//%s:%s_deps.bzl", targetPackage, existingRule.Name()),
+	})
+	newRule.SetAttr("deps", []string{":" + existingRule.Name()})
+	newRule.SetAttr("target_package", targetPackage)
+	imports = []string{"proto_rule_test"}
+	return
 }

@@ -5,6 +5,7 @@ load("@build_stack_rules_proto//:proto_rule_test.bzl", "proto_rule_test")
 
 proto_rule(
     name = "py_proto_compile",
+    package = "python",
 )
 
 proto_rule_info_provider_test(
@@ -16,8 +17,9 @@ proto_rule_info_provider_test(
 proto_rule_test(
     name = "py_proto_compile_rule_test",
     srcs = [
-        "py_proto_compile.bzl",
-        "py_proto_compile_deps.bzl",
+        "//python:py_proto_compile.bzl",
+        "//python:py_proto_compile_deps.bzl",
     ],
+    target_package = "python",
     deps = [":py_proto_compile"],
 )

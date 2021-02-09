@@ -18,6 +18,7 @@ proto_language_info_provider_test(
 
 proto_language_test(
     name = "python_language_test",
-    srcs = ["python.bzl"],
+    srcs = ["//python:python.bzl"],
+    target_package = "python",
     deps = [":python"],
 )

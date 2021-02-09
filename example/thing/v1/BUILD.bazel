@@ -13,9 +13,9 @@ proto_library(
 )
 
 proto_info_provider_test(
-    name = "thing_proto_info_test",
-    srcs = ["thing_proto_info_test.golden.1.prototext"],
-    deps = ["thing_proto"],
+    name = "thing_proto_info_provider_test",
+    srcs = ["thing_proto_info_provider_test.golden.1.prototext"],
+    deps = [":thing_proto"],
 )
 
 py_proto_compile(

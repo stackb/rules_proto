@@ -34,9 +34,8 @@ proto_language_info_provider_test(
 
 proto_language_test(
     name = "cc_language_test",
-    srcs = [
-        "cc.bzl",
-    ],
+    srcs = ["//cc:cc.bzl"],
+    target_package = "cc",
     deps = [":cc"],
 )
 
@@ -57,7 +56,8 @@ proto_rule_info_provider_test(
 proto_rule_test(
     name = "cc_proto_compile_rule_test",
     srcs = [
-        "//cc:generated_rules",
+        "//cc:cc_proto_compile.bzl",
+        "//cc:cc_proto_compile_deps.bzl",
     ],
     target_package = "cc",
     deps = [":cc_proto_compile"],

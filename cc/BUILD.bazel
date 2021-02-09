@@ -27,3 +27,9 @@ filegroup(
     srcs = glob(["**"]),
     visibility = ["//visibility:public"],
 )
+
+exports_files([
+    "cc.bzl",
+    "cc_proto_compile.bzl",
+    "cc_proto_compile_deps.bzl",
+])

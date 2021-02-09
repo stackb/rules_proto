@@ -7,7 +7,7 @@ proto_library(
 )
 
 proto_info_provider_test(
-    name = "foo_proto_info_test",
-    srcs = ["foo_proto_info_test.golden.1.prototext"],
+    name = "foo_proto_info_provider_test",
+    srcs = ["foo_proto_info_provider_test.golden.1.prototext"],
     deps = [":foo_proto"],
 )

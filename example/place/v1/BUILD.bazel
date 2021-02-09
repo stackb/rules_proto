@@ -9,9 +9,9 @@ proto_library(
 )
 
 proto_info_provider_test(
-    name = "place_proto_info_test",
-    srcs = ["place_proto_info_test.golden.1.prototext"],
-    deps = ["place_proto"],
+    name = "place_proto_info_provider_test",
+    srcs = ["place_proto_info_provider_test.golden.1.prototext"],
+    deps = [":place_proto"],
 )
 
 filegroup(

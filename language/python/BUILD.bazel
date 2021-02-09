@@ -34,9 +34,8 @@ proto_language_info_provider_test(
 
 proto_language_test(
     name = "python_language_test",
-    srcs = [
-        "python.bzl",
-    ],
+    srcs = ["//python:python.bzl"],
+    target_package = "python",
     deps = [":python"],
 )
 
@@ -57,7 +56,8 @@ proto_rule_info_provider_test(
 proto_rule_test(
     name = "py_proto_compile_rule_test",
     srcs = [
-        "//python:generated_rules",
+        "//python:py_proto_compile.bzl",
+        "//python:py_proto_compile_deps.bzl",
     ],
     target_package = "python",
     deps = [":py_proto_compile"],

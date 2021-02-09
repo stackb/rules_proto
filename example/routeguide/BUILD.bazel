@@ -12,3 +12,9 @@ proto_info_provider_test(
     srcs = ["routeguide_proto_info_test.golden.1.prototext"],
     deps = [":routeguide_proto"],
 )
+
+proto_info_provider_test(
+    name = "routeguide_proto_info_provider_test",
+    srcs = ["routeguide_proto_info_provider_test.golden.1.prototext"],
+    deps = [":routeguide_proto"],
+)
