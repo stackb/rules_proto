@@ -68,7 +68,7 @@ proto_rule_bazel_test(
     name = "cc_proto_compile_rule_bazel_test",
     tags = [
         "exclusive",
-        "manual",
+        # "manual",
     ],
     deps = ["cc_proto_compile"],
 )

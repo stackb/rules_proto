@@ -1,6 +1,7 @@
+load("@rules_proto//proto:defs.bzl", "ProtoInfo")
 load("@build_stack_rules_proto//:plugin.bzl", "ProtoPluginInfo")
 load(
-    "@build_stack_rules_proto//:aspect.bzl",
+    "@build_stack_rules_proto//rules:proto_aspect.bzl",
     "ProtoLibraryAspectNodeInfo",
     "proto_compile_aspect_attrs",
     "proto_compile_aspect_impl",
@@ -25,7 +26,7 @@ py_proto_compile_aspect = aspect(
         _prefix = attr.string(
             doc = "String used to disambiguate aspects when generating outputs",
             default = "py_proto_compile_aspect",
-        )
+        ),
     ),
     toolchains = [str(Label("//protobuf:toolchain_type"))],
 )

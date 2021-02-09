@@ -68,7 +68,7 @@ proto_rule_bazel_test(
     name = "py_proto_compile_rule_bazel_test",
     tags = [
         "exclusive",
-        "manual",
+        # "manual",
     ],
     deps = ["py_proto_compile"],
 )

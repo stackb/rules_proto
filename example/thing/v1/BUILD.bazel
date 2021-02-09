@@ -2,8 +2,8 @@ load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//:proto_info_provider_test.bzl", "proto_info_provider_test")
 load("@build_stack_rules_proto//:proto_compile_info_provider_test.bzl", "proto_compile_info_provider_test")
 load("@build_stack_rules_proto//:proto_compile_test.bzl", "proto_compile_test")
-load("@build_stack_rules_proto//python:py_proto_compile.bzl", "py_proto_compile")
-load("@build_stack_rules_proto//cc:cc_proto_compile.bzl", "cc_proto_compile")
+load("@build_stack_rules_proto//rules:py_proto_compile.bzl", "py_proto_compile")
+load("@build_stack_rules_proto//rules:cc_proto_compile.bzl", "cc_proto_compile")
 
 proto_library(
     name = "thing_proto",
