@@ -5,6 +5,7 @@ proto_site_test(
     srcs = [
         "cc.md",
         "cc_proto_compile.md",
+        "cc_proto_library.md",
         "py_proto_compile.md",
         "py_proto_library.md",
         "python.md",
@@ -15,6 +16,7 @@ proto_site_test(
     ],
     rules = [
         "//language/cc/cc_proto_compile",
+        "//language/cc/cc_proto_library",
         "//language/python/py_proto_compile",
         "//language/python/py_proto_library",
     ],
