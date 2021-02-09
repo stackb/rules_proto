@@ -4,6 +4,8 @@ lang {
   name: "cc"
   package: "rules"
   prefix: "cc"
+  rules: "cc_grpc_compile"
+  rules: "cc_grpc_library"
   rules: "cc_proto_compile"
   rules: "cc_proto_library"
   rulesFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/cc/cc.bzl"

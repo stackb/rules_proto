@@ -16,6 +16,8 @@ proto_language(
     package = "rules",
     prefix = "cc",
     rules = [
+        "cc_grpc_compile",
+        "cc_grpc_library",
         "cc_proto_compile",
         "cc_proto_library",
     ],

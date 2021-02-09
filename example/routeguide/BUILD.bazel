@@ -1,4 +1,6 @@
+load("@build_stack_rules_proto//language/rules:proto_compile_test.bzl", "proto_compile_test")
 load("@build_stack_rules_proto//language/rules:proto_info_provider_test.bzl", "proto_info_provider_test")
+load("@build_stack_rules_proto//rules:cc.bzl", "cc_grpc_compile", "cc_grpc_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
@@ -8,13 +10,34 @@ proto_library(
 )
 
 proto_info_provider_test(
-    name = "routeguide_proto_info_test",
-    srcs = ["routeguide_proto_info_test.golden.1.prototext"],
-    deps = [":routeguide_proto"],
-)
-
-proto_info_provider_test(
     name = "routeguide_proto_info_provider_test",
     srcs = ["routeguide_proto_info_provider_test.golden.1.prototext"],
     deps = [":routeguide_proto"],
+)
+
+cc_grpc_library(
+    name = "routeguide_cc_grpc",
+    visibility = ["//visibility:public"],
+    deps = ["routeguide_proto"],
+)
+
+proto_compile_test(
+    name = "routeguide_cc_grpc_compile_test",
+    srcs = [
+        "routeguide.grpc.pb.cc",
+        "routeguide.grpc.pb.h",
+        "routeguide.pb.cc",
+        "routeguide.pb.h",
+        "routeguide_mock.grpc.pb.h",
+    ],
+    rule = cc_grpc_compile,
+    deps = ["routeguide_proto"],
+)
+
+filegroup(
+    name = "routeguide_features",
+    srcs = [
+        "routeguide_features.json",
+    ],
+    visibility = ["//visibility:public"],
 )

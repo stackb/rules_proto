@@ -1,6 +1,6 @@
 load(
-    "@build_stack_rules_proto//rules:cc_proto_compile.bzl",
-    "cc_proto_compile",
+    "@build_stack_rules_proto//rules:cc_grpc_compile.bzl",
+    "cc_grpc_compile",
 )
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
@@ -13,7 +13,7 @@ GRPC_DEPS = [
 def cc_grpc_library(**kwargs):
     name_pb = kwargs.get("name") + "_pb"
 
-    cc_proto_compile(
+    cc_grpc_compile(
         name = name_pb,
         **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
     )

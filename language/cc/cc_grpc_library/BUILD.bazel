@@ -18,7 +18,7 @@ load(
 proto_rule(
     name = "cc_grpc_library",
     implementation_tmpl = "cc_grpc_library.bzl.tmpl",
-    kind = "proto",
+    kind = "grpc",
     language = "//language/cc",
     package = "rules",
     plugins = [
