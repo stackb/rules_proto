@@ -1,52 +1,17 @@
-load("@build_stack_rules_proto//rules:proto_plugin.bzl", "ProtoPluginInfo")
 load(
     "@build_stack_rules_proto//rules:proto_aspect.bzl",
-    "ProtoLibraryAspectNodeInfo",
-    "proto_compile_aspect_attrs",
-    "proto_compile_aspect_impl",
-    "proto_compile_attrs",
-    "proto_compile_impl",
+    "proto_compile_aspect",
+    "proto_compile_rule_macro",
+    "proto_compile_rule",
 )
 
-# Create aspect for py_proto_compile
-py_proto_compile_aspect = aspect(
-    implementation = proto_compile_aspect_impl,
-    provides = [ProtoLibraryAspectNodeInfo],
-    attr_aspects = ["deps"],
-    attrs = dict(
-        proto_compile_aspect_attrs,
-        _plugins = attr.label_list(
-            doc = "List of protoc plugins to apply",
-            providers = [ProtoPluginInfo],
-            default = [
-                str(Label("//python:python_plugin")),
-            ],
-        ),
-        _prefix = attr.string(
-            doc = "String used to disambiguate aspects when generating outputs",
-            default = "py_proto_compile_aspect",
-        )
-    ),
-    toolchains = [str(Label("@build_stack_rules_proto//toolchains:protoc_toolchain_type"))],
-)
+_default_plugins = [
+    str(Label("//python:python_plugin")),
+]
 
-# Create compile rule to apply aspect
-_rule = rule(
-    implementation = proto_compile_impl,
-    attrs = dict(
-        proto_compile_attrs,
-        deps = attr.label_list(
-            mandatory = True,
-            providers = [ProtoInfo, ProtoLibraryAspectNodeInfo],
-            aspects = [py_proto_compile_aspect],
-        ),
-    ),
-)
+_py_proto_compile_aspect = proto_compile_aspect(_default_plugins, "py_proto_compile_aspect")
 
-# Create macro for converting attrs and passing to compile
+_py_proto_compile_rule = proto_compile_rule(_py_proto_compile_aspect)
+
 def py_proto_compile(**kwargs):
-    _rule(
-        verbose_string = "{}".format(kwargs.get("verbose", 0)),
-        merge_directories = True,
-        **{k: v for k, v in kwargs.items() if k != "merge_directories"}
-    )
+    proto_compile_rule_macro(_py_proto_compile_rule, **kwargs)

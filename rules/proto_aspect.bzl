@@ -43,7 +43,7 @@ proto_compile_aspect_attrs = {
     ),
 }
 
-def proto_compile_impl(ctx):
+def _proto_compile_impl(ctx):
     # Aggregate output files and dirs created by the aspect as it has walked the deps
     output_files_dicts = [dep[ProtoLibraryAspectNodeInfo].output_files for dep in ctx.attr.deps]
     output_dirs = depset(transitive = [
@@ -178,7 +178,7 @@ def proto_compile_impl(ctx):
         ),
     ]
 
-def proto_compile_aspect_impl(target, ctx):
+def _proto_compile_aspect_impl(target, ctx):
     ###
     ### Part 1: setup variables used in scope
     ###
@@ -459,3 +459,43 @@ def proto_compile_aspect_impl(target, ctx):
             plugins = plugins,
         ),
     ]
+
+def proto_compile_aspect(default_plugins, default_prefix):
+    return aspect(
+        implementation = _proto_compile_aspect_impl,
+        provides = [ProtoLibraryAspectNodeInfo],
+        attr_aspects = ["deps"],
+        attrs = dict(
+            proto_compile_aspect_attrs,
+            _plugins = attr.label_list(
+                doc = "List of protoc plugins to apply",
+                providers = [ProtoPluginInfo],
+                default = default_plugins,
+            ),
+            _prefix = attr.string(
+                doc = "String used to disambiguate aspects when generating outputs",
+                default = default_prefix,
+            )
+        ),
+        toolchains = [str(Label("@build_stack_rules_proto//toolchains:protoc_toolchain_type"))],
+    )
+
+def proto_compile_rule(aspect):
+    return rule(
+        implementation = _proto_compile_impl,
+        attrs = dict(
+            proto_compile_attrs,
+            deps = attr.label_list(
+                mandatory = True,
+                providers = [ProtoInfo, ProtoLibraryAspectNodeInfo],
+                aspects = [aspect],
+            ),
+        ),
+    )
+
+def proto_compile_rule_macro(rule, **kwargs):
+    rule(
+        verbose_string = "{}".format(kwargs.get("verbose", 0)),
+        merge_directories = True,
+        **{k: v for k, v in kwargs.items() if k != "merge_directories"}
+    )
