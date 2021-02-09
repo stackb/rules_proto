@@ -222,12 +222,12 @@ func makeProviderTestRule(existingRule *rule.Rule, providerName string) (newRule
 }
 
 func makeProtoLanguageTestRule(existingRule *rule.Rule) (newRule *rule.Rule, imports []string) {
-	targetPackage := existingRule.Name()
+	targetPackage := existingRule.AttrString("package")
 	testName := existingRule.Name() + "_language_test"
 	newRule = rule.NewRule("proto_language_test", testName)
 	newRule.SetAttr("srcs", []string{fmt.Sprintf("//%s:%s.bzl", targetPackage, existingRule.Name())})
 	newRule.SetAttr("deps", []string{":" + existingRule.Name()})
-	newRule.SetAttr("target_package", targetPackage)
+	newRule.SetAttr("package", targetPackage)
 	imports = []string{"proto_language_test"}
 	return
 }
@@ -241,7 +241,7 @@ func makeProtoRuleTestRule(existingRule *rule.Rule) (newRule *rule.Rule, imports
 		fmt.Sprintf("//%s:%s_deps.bzl", targetPackage, existingRule.Name()),
 	})
 	newRule.SetAttr("deps", []string{":" + existingRule.Name()})
-	newRule.SetAttr("target_package", targetPackage)
+	newRule.SetAttr("package", targetPackage)
 	imports = []string{"proto_rule_test"}
 	return
 }

@@ -27,12 +27,6 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-exports_files([
-    "python.bzl",
-    "py_proto_compile.bzl",
-    "py_proto_compile_deps.bzl",
-])
-
 # proto_plugin(
 #     name = "grpc_python_plugin",
 #     exclusions = [

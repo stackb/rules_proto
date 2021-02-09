@@ -114,6 +114,10 @@ type ProtoLanguage struct {
 	Rules []string
 	Deps  []*ProtoDependency
 
+	// Package of the language.  This determines the package name where the rule
+	// will be imported as well as the directory where the file will be copied.
+	Package string
+
 	// MarkdownFilename of the rule (full path)
 	MarkdownFilename string
 

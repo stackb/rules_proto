@@ -55,7 +55,7 @@ def proto_rule_test(**kwargs):
         deps = deps,
         srcs = srcs,
         mode = "check",
-        target_package = kwargs.get("target_package", None),
+        package = kwargs.get("target_package", None),
         update_target_label_name = update_target_label_name,
     )
 
@@ -63,6 +63,6 @@ def proto_rule_test(**kwargs):
         name = update_name,
         deps = deps,
         mode = "update",
-        target_package = kwargs.get("target_package", None),
+        package = kwargs.get("package", None),
         update_target_label_name = update_target_label_name,
     )

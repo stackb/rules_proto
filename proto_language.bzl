@@ -28,6 +28,7 @@ def proto_language_info_to_struct(info):
 def lang_to_struct(lang):
     return struct(
         name = lang.name,
+        package = lang.package,
         rules = lang.rules,
         markdownFilename = redact_host_configuration(lang.markdownFilename),
         markdownTmpl = redact_host_configuration(lang.markdownTmpl),
@@ -42,6 +43,7 @@ def _proto_language_impl(ctx):
 
     lang = struct(
         name = ctx.attr.name,
+        package = ctx.attr.package or ctx.label.package,
         rules = ctx.attr.rules,
         markdownFilename = output_markdown.path,
         markdownTmpl = ctx.file.markdown_tmpl.path,
@@ -97,6 +99,9 @@ def _proto_language_impl(ctx):
 proto_language = rule(
     implementation = _proto_language_impl,
     attrs = {
+        "package": attr.string(
+            doc = "The target package for the language generated outputs. If empty, default to ctx.label.package",
+        ),
         "rules": attr.string_list(
             doc = "The list of rules that belong to this language",
         ),

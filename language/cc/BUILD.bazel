@@ -18,6 +18,7 @@ load("@build_stack_rules_proto//:proto_rule.bzl", "proto_rule")
 
 proto_language(
     name = "cc",
+    package = "rules",
     rules = [
         "cc_proto_compile",
         "cc_proto_library",
@@ -34,15 +35,15 @@ proto_language_info_provider_test(
 
 proto_language_test(
     name = "cc_language_test",
-    srcs = ["//cc:cc.bzl"],
-    target_package = "cc",
+    srcs = ["//rules:cc.bzl"],
+    package = "rules",
     deps = [":cc"],
 )
 
 proto_rule(
     name = "cc_proto_compile",
     language = ":cc",
-    package = "cc",
+    package = "rules",
     plugins = ["//cc:cc_plugin"],
     visibility = ["//visibility:public"],
 )
@@ -56,10 +57,10 @@ proto_rule_info_provider_test(
 proto_rule_test(
     name = "cc_proto_compile_rule_test",
     srcs = [
-        "//cc:cc_proto_compile.bzl",
-        "//cc:cc_proto_compile_deps.bzl",
+        "//rules:cc_proto_compile.bzl",
+        "//rules:cc_proto_compile_deps.bzl",
     ],
-    target_package = "cc",
+    package = "rules",
     deps = [":cc_proto_compile"],
 )
 

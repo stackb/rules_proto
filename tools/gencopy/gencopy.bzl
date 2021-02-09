@@ -10,7 +10,7 @@ gencopy_attrs = {
         values = ["update", "check"],
         default = "check",
     ),
-    "target_package": attr.string(
+    "package": attr.string(
         doc = "The target package for the rule. If empty, default to ctx.label.package",
     ),
     "update_target_label_name": attr.string(
@@ -36,7 +36,7 @@ def gencopy_config(ctx):
         mode = ctx.attr.mode,
         updateTargetLabelName = ctx.attr.update_target_label_name,
         targetLabel = str(ctx.label),
-        targetPackage = ctx.attr.target_package or ctx.label.package,
+        targetPackage = ctx.attr.package or ctx.label.package,
         generatedFiles = [],
         sourceFiles = [],
     )

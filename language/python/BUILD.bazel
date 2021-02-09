@@ -18,6 +18,7 @@ load("@build_stack_rules_proto//:proto_rule.bzl", "proto_rule")
 
 proto_language(
     name = "python",
+    package = "rules",
     rules = [
         "py_proto_compile",
         "py_proto_library",
@@ -34,15 +35,15 @@ proto_language_info_provider_test(
 
 proto_language_test(
     name = "python_language_test",
-    srcs = ["//python:python.bzl"],
-    target_package = "python",
+    srcs = ["//rules:python.bzl"],
+    package = "rules",
     deps = [":python"],
 )
 
 proto_rule(
     name = "py_proto_compile",
     language = ":python",
-    package = "python",
+    package = "rules",
     plugins = ["//python:python_plugin"],
     visibility = ["//visibility:public"],
 )
@@ -56,10 +57,10 @@ proto_rule_info_provider_test(
 proto_rule_test(
     name = "py_proto_compile_rule_test",
     srcs = [
-        "//python:py_proto_compile.bzl",
-        "//python:py_proto_compile_deps.bzl",
+        "//rules:py_proto_compile.bzl",
+        "//rules:py_proto_compile_deps.bzl",
     ],
-    target_package = "python",
+    package = "rules",
     deps = [":py_proto_compile"],
 )
 

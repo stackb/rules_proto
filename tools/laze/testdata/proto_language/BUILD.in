@@ -2,6 +2,7 @@
 
 proto_language(
     name = "python",
+    package = "rules",
     rules = [
         "py_proto_compile",
         "py_proto_library",

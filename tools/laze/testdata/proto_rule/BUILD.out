@@ -20,6 +20,6 @@ proto_rule_test(
         "//python:py_proto_compile.bzl",
         "//python:py_proto_compile_deps.bzl",
     ],
-    target_package = "python",
+    package = "python",
     deps = [":py_proto_compile"],
 )

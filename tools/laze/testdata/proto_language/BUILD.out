@@ -4,6 +4,7 @@ load("@build_stack_rules_proto//:proto_language_info_provider_test.bzl", "proto_
 
 proto_language(
     name = "python",
+    package = "rules",
     rules = [
         "py_proto_compile",
         "py_proto_library",
@@ -18,7 +19,7 @@ proto_language_info_provider_test(
 
 proto_language_test(
     name = "python_language_test",
-    srcs = ["//python:python.bzl"],
-    target_package = "python",
+    srcs = ["//rules:python.bzl"],
+    package = "rules",
     deps = [":python"],
 )

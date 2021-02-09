@@ -16,7 +16,7 @@ rule {
   markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/python/py_proto_compile.md"
   markdownTmpl: "tools/protogen/proto_rule.md.tmpl"
   name: "py_proto_compile"
-  package: "python"
+  package: "rules"
   plugins {
     deps {
       buildFile: ""

@@ -16,7 +16,7 @@ load("@build_stack_rules_proto//:toolchains.bzl", "protoc_toolchains")
 
 protoc_toolchains()
 
-load("@build_stack_rules_proto//python:py_proto_compile_deps.bzl", "py_proto_compile_deps")
+load("@build_stack_rules_proto//rules:py_proto_compile_deps.bzl", "py_proto_compile_deps")
 
 py_proto_compile_deps()
 ```
@@ -25,7 +25,7 @@ py_proto_compile_deps()
 
 ```python
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//python:py_proto_compile.bzl", "py_proto_compile")
+load("@build_stack_rules_proto//rules:py_proto_compile.bzl", "py_proto_compile")
 
 proto_library(
     name = "foo_proto",

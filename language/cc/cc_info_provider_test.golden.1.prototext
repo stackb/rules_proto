@@ -39,6 +39,7 @@ lang {
   markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/cc/cc.md"
   markdownTmpl: "tools/protogen/proto_language.md.tmpl"
   name: "cc"
+  package: "rules"
   rules: "cc_proto_compile"
   rules: "cc_proto_library"
   rulesFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/cc/cc.bzl"
