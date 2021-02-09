@@ -1,0 +1,31 @@
+load(
+    "@io_bazel_rules_closure//closure:defs.bzl",
+    "closure_js_binary",
+    "closure_js_library",
+)
+
+closure_js_library(
+    name = "main",
+    srcs = ["main.js"],
+    deps = [
+        "//example/routeguide:routeguide_closure_proto",
+        "@io_bazel_rules_closure//closure/library",
+        "@io_bazel_rules_closure//closure/protobuf:jspb",
+    ],
+)
+
+closure_js_binary(
+    name = "bundle",
+    compilation_level = "ADVANCED",
+    debug = False,
+    entry_points = ["goog:example.routeguide.closure"],
+    output_wrapper = "(function(){%output%}).call(this);",
+    visibility = ["//example/benchmark:__pkg__"],
+    deps = [":main"],
+)
+
+sh_test(
+    name = "routeguide_test",
+    srcs = ["routeguide_test.sh"],
+    data = [":bundle"],
+)

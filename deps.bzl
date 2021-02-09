@@ -138,3 +138,24 @@ def build_bazel_rules_swift():
         strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
         urls = ["https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"],
     )
+
+def io_bazel_rules_closure():
+    # Branch: master
+    # Commit: 4c99be33856ce1b7b80f55a0e9a8345f559b6ef3
+    # Date: 2021-01-29 00:11:54 +0000 UTC
+    # URL: https://github.com/bazelbuild/rules_closure/commit/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3
+    #
+    # CheckStrictDeps: resolve module paths against js module roots (#510)
+    #
+    # Added "es6_relative_imports_gen_srcs_bin" test case
+    #
+    # Tested against existing cases and compiling an external
+    # codebase with the change applied
+    # Size: 468337 (468 kB)
+    maybe(
+        http_archive,
+        name = "io_bazel_rules_closure",
+        sha256 = "4c98a6b8d2d81210f3e291b1c7c5034ab2e22e7870ab3e9603599c79833f7da3",
+        strip_prefix = "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3",
+        urls = ["https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz"],
+    )

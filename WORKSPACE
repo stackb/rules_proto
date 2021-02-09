@@ -15,6 +15,7 @@ load(
     "io_bazel_rules_go",
     "rules_proto",
     "rules_python",
+    "io_bazel_rules_closure",
     "zlib",
 )
 
@@ -94,6 +95,18 @@ build_bazel_rules_swift()
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
+
+io_bazel_rules_closure()
+
+load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
+
+rules_closure_dependencies(
+    omit_bazel_skylib = True,
+    omit_com_google_protobuf = True,
+    omit_zlib = True,
+)
+
+rules_closure_toolchains()
 
 # #
 # # Core
