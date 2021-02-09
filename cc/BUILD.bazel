@@ -9,7 +9,6 @@ proto_plugin(
     ],
     protoc_plugin_name = "cpp",
     visibility = ["//visibility:public"],
-    deps = ["//protobuf:com_google_protobuf"],
 )
 
 filegroup(

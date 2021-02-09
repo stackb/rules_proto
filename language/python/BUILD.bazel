@@ -7,24 +7,27 @@ load(
     "proto_plugin_info_provider_test",
 )
 load(
-    "@build_stack_rules_proto//language/rules:proto_rule_info_provider_test.bzl",
-    "proto_rule_info_provider_test",
+    "@build_stack_rules_proto//language/rules:proto_language_test.bzl",
+    "proto_language_test",
 )
-load("@build_stack_rules_proto//language/rules:proto_rule_test.bzl", "proto_rule_test")
-load("@build_stack_rules_proto//language/rules:proto_rule_bazel_test.bzl", "proto_rule_bazel_test")
-load("@build_stack_rules_proto//language/rules:proto_language_test.bzl", "proto_language_test")
-load("@build_stack_rules_proto//language/rules:proto_language.bzl", "proto_language")
-load("@build_stack_rules_proto//language/rules:proto_rule.bzl", "proto_rule")
+load(
+    "@build_stack_rules_proto//language/rules:proto_language.bzl",
+    "proto_language",
+)
+load(
+    "@build_stack_rules_proto//rules:proto_dependency.bzl",
+    "proto_dependency",
+)
 
 proto_language(
     name = "python",
     package = "rules",
+    prefix = "py",
     rules = [
         "py_proto_compile",
         "py_proto_library",
     ],
     visibility = ["//visibility:public"],
-    deps = ["//protobuf:com_google_protobuf"],
 )
 
 proto_language_info_provider_test(
@@ -40,41 +43,18 @@ proto_language_test(
     deps = [":python"],
 )
 
-proto_rule(
-    name = "py_proto_compile",
-    language = ":python",
-    package = "rules",
-    plugins = ["//python:python_plugin"],
-    visibility = ["//visibility:public"],
-)
-
-proto_rule_info_provider_test(
-    name = "py_proto_compile_info_provider_test",
-    srcs = ["py_proto_compile_info_provider_test.golden.1.prototext"],
-    deps = [":py_proto_compile"],
-)
-
-proto_rule_test(
-    name = "py_proto_compile_rule_test",
-    srcs = [
-        "//rules:py_proto_compile.bzl",
-        "//rules:py_proto_compile_deps.bzl",
-    ],
-    package = "rules",
-    deps = [":py_proto_compile"],
-)
-
-proto_rule_bazel_test(
-    name = "py_proto_compile_rule_bazel_test",
-    tags = [
-        "exclusive",
-        # "manual",
-    ],
-    deps = ["py_proto_compile"],
-)
-
 proto_plugin_info_provider_test(
     name = "python_plugin_info_provider_test",
     srcs = ["python_plugin_info_provider_test.golden.1.prototext"],
     deps = ["//python:python_plugin"],
+)
+
+proto_dependency(
+    name = "six",
+    build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.six",
+    repository_rule = "http_archive",
+    sha256 = "30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66",
+    strip_prefix = "six-1.13.0",
+    urls = ["https://pypi.python.org/packages/source/s/six/six-1.13.0.tar.gz"],
+    visibility = ["//visibility:public"],
 )

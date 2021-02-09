@@ -1,6 +1,9 @@
+bazel_test_file: "language/cc/cc_proto_compile/cc_proto_compile_bazel_test.go"
+build_file: "language/cc/cc_proto_compile/cc_proto_compile.BUILD"
+bzl_file: "language/cc/cc_proto_compile/cc_proto_compile.bzl"
 deps {
   buildFile: ""
-  label: "//protobuf:bazel_skylib"
+  label: "//core:bazel_skylib"
   name: "bazel_skylib"
   repositoryRule: "http_archive"
   sha256: "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6"
@@ -9,7 +12,7 @@ deps {
 }
 deps {
   buildFile: ""
-  label: "//protobuf:rules_python"
+  label: "//core:rules_python"
   name: "rules_python"
   repositoryRule: "http_archive"
   sha256: "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5"
@@ -18,7 +21,7 @@ deps {
 }
 deps {
   buildFile: "@build_stack_rules_proto//third_party:BUILD.bazel.zlib"
-  label: "//protobuf:zlib"
+  label: "//core:zlib"
   name: "zlib"
   repositoryRule: "http_archive"
   sha256: "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1"
@@ -28,21 +31,14 @@ deps {
 }
 deps {
   buildFile: ""
-  label: "//protobuf:com_google_protobuf"
+  label: "//core:com_google_protobuf"
   name: "com_google_protobuf"
   repositoryRule: "http_archive"
   sha256: "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113"
   stripPrefix: "protobuf-3.14.0"
   urls: "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz"
 }
-exclusions: "google/protobuf"
-label: "//cc:cc_plugin"
-name: "cc_plugin"
-output_directory: false
-outputs: "{protopath}.pb.h"
-outputs: "{protopath}.pb.cc"
-protoc_plugin_name: "cpp"
-separate_options_flag: false
-tool: ""
-tool_executable: ""
-use_built_in_shell_environment: false
+deps_file: "language/cc/cc_proto_compile/cc_proto_compile_deps.bzl"
+json_file: "language/cc/cc_proto_compile/cc_proto_compile.json"
+name: "cc_proto_compile"
+workspace_file: "language/cc/cc_proto_compile/cc_proto_compile.WORKSPACE"

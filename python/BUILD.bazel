@@ -8,7 +8,6 @@ proto_plugin(
     outputs = ["{protopath|python}_pb2.py"],
     protoc_plugin_name = "python",
     visibility = ["//visibility:public"],
-    deps = ["//protobuf:com_google_protobuf"],
 )
 
 filegroup(

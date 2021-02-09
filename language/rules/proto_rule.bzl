@@ -1,4 +1,9 @@
 load(
+    "@build_stack_rules_proto//rules:proto_dependency.bzl",
+    "ProtoDependencyInfo",
+    "proto_dependency_info_to_struct",
+)
+load(
     "@build_stack_rules_proto//rules:proto_plugin.bzl",
     "ProtoPluginInfo",
     "proto_plugin_info_to_struct",
@@ -23,12 +28,14 @@ ProtoRuleInfo = provider("Provider for a proto rule", fields = {
     "deps_file": "The generated deps file",
     "bazel_test_file": "The generated bazel_test file",
     "json_file": "The generated json file",
+    "deps": "List of ProtoDependencyInfo",
 })
 
 def proto_rule_info_to_struct(info):
     return struct(
+        deps = [proto_dependency_info_to_struct(dep) for dep in info.deps.to_list()],
         name = info.name,
-        rule = rule_to_struct(info.rule),
+        # rule = rule_to_struct(info.rule),
         bzl_file = redact_host_configuration(info.bzl_file.short_path),
         build_file = redact_host_configuration(info.build_file.short_path),
         workspace_file = redact_host_configuration(info.workspace_file.short_path),
@@ -40,6 +47,7 @@ def proto_rule_info_to_struct(info):
 def rule_to_struct(rule):
     return struct(
         name = rule.name,
+        kind = rule.kind,
         package = rule.package,
         skipDirectoriesMerge = rule.skipDirectoriesMerge,
         implementationFilename = redact_host_configuration(rule.implementationFilename),
@@ -66,8 +74,14 @@ def _proto_rule_impl(ctx):
     output_deps = ctx.outputs.deps
     output_bazel_test = ctx.outputs.bazel_test
 
+    deps = depset(
+        direct = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
+        transitive = [dep[ProtoDependencyInfo].deps for dep in ctx.attr.deps],
+    )
+
     rule = struct(
         name = ctx.attr.name,
+        kind = ctx.attr.kind,
         package = ctx.attr.package or ctx.label.package,
         skipDirectoriesMerge = ctx.attr.skip_directories_merge,
         implementationFilename = output_bzl.path,
@@ -84,6 +98,7 @@ def _proto_rule_impl(ctx):
         bazelTestTmpl = ctx.file.bazel_test_tmpl.path,
         plugins = [proto_plugin_info_to_struct(p[ProtoPluginInfo]) for p in ctx.attr.plugins],
         language = proto_language_info_to_struct(ctx.attr.language[ProtoLanguageInfo]),
+        deps = [proto_dependency_info_to_struct(dep) for dep in deps.to_list()],
     )
 
     ctx.actions.write(
@@ -134,6 +149,7 @@ def _proto_rule_impl(ctx):
             deps_file = output_deps,
             bazel_test_file = output_bazel_test,
             json_file = rule_json,
+            deps = deps,
         ),
         DefaultInfo(
             files = depset(outputs + [rule_json]),
@@ -146,34 +162,39 @@ proto_rule = rule(
         "package": attr.string(
             doc = "The target package for the rule. If empty, default to ctx.label.package",
         ),
+        "kind": attr.string(
+            doc = "The kind of this rule.",
+            values = ["proto", "grpc"],
+            mandatory = True,
+        ),
         "implementation_tmpl": attr.label(
             doc = "The rule implementation template",
-            default = str(Label("//tools/protogen:aspect.bzl.tmpl")),
+            default = str(Label("//core:proto_compile.bzl.tmpl")),
             allow_single_file = True,
         ),
         "workspace_example_tmpl": attr.label(
             doc = "The rule workspace example template",
-            default = str(Label("//tools/protogen:WORKSPACE.tmpl")),
+            default = str(Label("//core:WORKSPACE.tmpl")),
             allow_single_file = True,
         ),
         "build_example_tmpl": attr.label(
             doc = "The rule build example template",
-            default = str(Label("//tools/protogen:BUILD.tmpl")),
+            default = str(Label("//core:BUILD.tmpl")),
             allow_single_file = True,
         ),
         "markdown_tmpl": attr.label(
             doc = "The rule build markdown example template",
-            default = str(Label("//tools/protogen:proto_rule.md.tmpl")),
+            default = str(Label("//core:proto_rule.md.tmpl")),
             allow_single_file = True,
         ),
         "deps_tmpl": attr.label(
             doc = "The workspace deps example template",
-            default = str(Label("//tools/protogen:deps.bzl.tmpl")),
+            default = str(Label("//core:deps.bzl.tmpl")),
             allow_single_file = True,
         ),
         "bazel_test_tmpl": attr.label(
             doc = "The workspace bazel_test example template",
-            default = str(Label("//tools/protogen:bazel_test.go.tmpl")),
+            default = str(Label("//core:bazel_test.go.tmpl")),
             allow_single_file = True,
         ),
         "plugins": attr.label_list(
@@ -190,6 +211,11 @@ proto_rule = rule(
         ),
         "data": attr.label_list(
             allow_files = True,
+        ),
+        "deps": attr.label_list(
+            doc = "List of deps that apply to all rules belonging to this language",
+            providers = [ProtoDependencyInfo],
+            default = [str(Label("//core:com_google_protobuf"))],
         ),
         "_rulegen": attr.label(
             doc = "The rulegen generator tool",

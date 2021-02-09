@@ -1,4 +1,4 @@
-
+# rules for python
 load("@build_stack_rules_proto//rules:py_proto_compile.bzl", _py_proto_compile = "py_proto_compile")
 load("@build_stack_rules_proto//rules:py_proto_library.bzl", _py_proto_library = "py_proto_library")
 

@@ -6,6 +6,7 @@ proto_site_test(
         "cc.md",
         "cc_proto_compile.md",
         "py_proto_compile.md",
+        "py_proto_library.md",
         "python.md",
     ],
     languages = [
@@ -13,7 +14,8 @@ proto_site_test(
         "//language/python",
     ],
     rules = [
-        "//language/cc:cc_proto_compile",
-        "//language/python:py_proto_compile",
+        "//language/cc/cc_proto_compile",
+        "//language/python/py_proto_compile",
+        "//language/python/py_proto_library",
     ],
 )

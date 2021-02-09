@@ -4,7 +4,6 @@ load("@build_stack_rules_proto//{{ .Rule.Package }}:{{ .Rule.Name }}.bzl", "{{ .
 proto_library(
     name = "foo_proto",
     srcs = ["foo.proto"],
-    deps = ["@com_google_protobuf//:any_proto"],
 )
 
 {{ .Rule.Name }}(

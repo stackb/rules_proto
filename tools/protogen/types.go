@@ -13,6 +13,9 @@ type ProtoRule struct {
 	// will be imported as well as the directory where the file will be copied.
 	Package string
 
+	// Rules come in 2 kinds - proto and grpc.
+	Kind string
+
 	// Description
 	Doc string
 
@@ -80,6 +83,8 @@ type ProtoRule struct {
 
 	// The language this rule belongs to
 	Language *ProtoLanguage
+
+	Deps   []*ProtoDependency
 }
 
 // ProtoPlugin represents the starlark ProtoPluginInfo provider.
@@ -110,9 +115,9 @@ type ProtoDependency struct {
 
 // ProtoLanguage represents the starlark ProtoLanguageInfo provider.
 type ProtoLanguage struct {
-	Name  string
-	Rules []string
-	Deps  []*ProtoDependency
+	Name   string   // e.g. "python"
+	Prefix string   // e.g. "py"
+	Rules  []string // e.g. ["py_proto_compile", "py_proto_library"]
 
 	// Package of the language.  This determines the package name where the rule
 	// will be imported as well as the directory where the file will be copied.

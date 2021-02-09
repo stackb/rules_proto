@@ -51,8 +51,8 @@ proto_dependency(
 filegroup(
     name = "all_files",
     testonly = True,
-    srcs = [
-        "BUILD.bazel",
-    ] + glob(["*.bzl"]),
+    srcs = glob(["**"]),
     visibility = ["//visibility:public"],
 )
+
+exports_files(glob(["*.tmpl"]))

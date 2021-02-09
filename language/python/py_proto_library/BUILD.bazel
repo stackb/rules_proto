@@ -1,0 +1,53 @@
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_info_provider_test.bzl",
+    "proto_rule_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_test.bzl",
+    "proto_rule_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_bazel_test.bzl",
+    "proto_rule_bazel_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule.bzl",
+    "proto_rule",
+)
+
+proto_rule(
+    name = "py_proto_library",
+    # build_example_tmpl = ":BUILD.tmpl",
+    implementation_tmpl = "py_proto_library.bzl.tmpl",
+    kind = "proto",
+    language = "//language/python",
+    package = "rules",
+    plugins = ["//python:python_plugin"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//core:com_google_protobuf",
+        "//language/python:six",
+    ],
+)
+
+proto_rule_info_provider_test(
+    name = "py_proto_library_info_provider_test",
+    srcs = ["py_proto_library_info_provider_test.golden.1.prototext"],
+    deps = [":py_proto_library"],
+)
+
+proto_rule_test(
+    name = "py_proto_library_rule_test",
+    srcs = [
+        "//rules:py_proto_library.bzl",
+        "//rules:py_proto_library_deps.bzl",
+    ],
+    package = "rules",
+    deps = [":py_proto_library"],
+)
+
+proto_rule_bazel_test(
+    name = "py_proto_library_rule_bazel_test",
+    tags = ["exclusive"],
+    deps = ["py_proto_library"],
+)

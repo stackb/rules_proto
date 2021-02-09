@@ -1,9 +1,10 @@
 exclusions: "google/protobuf"
-label: "//python:python_plugin"
-name: "python_plugin"
+label: "//cc:cc_plugin"
+name: "cc_plugin"
 output_directory: false
-outputs: "{protopath|python}_pb2.py"
-protoc_plugin_name: "python"
+outputs: "{protopath}.pb.h"
+outputs: "{protopath}.pb.cc"
+protoc_plugin_name: "cpp"
 separate_options_flag: false
 tool: ""
 tool_executable: ""

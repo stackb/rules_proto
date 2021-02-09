@@ -3,28 +3,23 @@ load(
     "proto_language_info_provider_test",
 )
 load(
-    "@build_stack_rules_proto//language/rules:proto_plugin_info_provider_test.bzl",
-    "proto_plugin_info_provider_test",
+    "@build_stack_rules_proto//language/rules:proto_language_test.bzl",
+    "proto_language_test",
 )
 load(
-    "@build_stack_rules_proto//language/rules:proto_rule_info_provider_test.bzl",
-    "proto_rule_info_provider_test",
+    "@build_stack_rules_proto//language/rules:proto_language.bzl",
+    "proto_language",
 )
-load("@build_stack_rules_proto//language/rules:proto_rule_test.bzl", "proto_rule_test")
-load("@build_stack_rules_proto//language/rules:proto_rule_bazel_test.bzl", "proto_rule_bazel_test")
-load("@build_stack_rules_proto//language/rules:proto_language_test.bzl", "proto_language_test")
-load("@build_stack_rules_proto//language/rules:proto_language.bzl", "proto_language")
-load("@build_stack_rules_proto//language/rules:proto_rule.bzl", "proto_rule")
 
 proto_language(
     name = "cc",
     package = "rules",
+    prefix = "cc",
     rules = [
         "cc_proto_compile",
         "cc_proto_library",
     ],
     visibility = ["//visibility:public"],
-    deps = ["//protobuf:com_google_protobuf"],
 )
 
 proto_language_info_provider_test(
@@ -38,43 +33,4 @@ proto_language_test(
     srcs = ["//rules:cc.bzl"],
     package = "rules",
     deps = [":cc"],
-)
-
-proto_rule(
-    name = "cc_proto_compile",
-    language = ":cc",
-    package = "rules",
-    plugins = ["//cc:cc_plugin"],
-    visibility = ["//visibility:public"],
-)
-
-proto_rule_info_provider_test(
-    name = "cc_proto_compile_info_provider_test",
-    srcs = ["cc_proto_compile_info_provider_test.golden.1.prototext"],
-    deps = [":cc_proto_compile"],
-)
-
-proto_rule_test(
-    name = "cc_proto_compile_rule_test",
-    srcs = [
-        "//rules:cc_proto_compile.bzl",
-        "//rules:cc_proto_compile_deps.bzl",
-    ],
-    package = "rules",
-    deps = [":cc_proto_compile"],
-)
-
-proto_rule_bazel_test(
-    name = "cc_proto_compile_rule_bazel_test",
-    tags = [
-        "exclusive",
-        # "manual",
-    ],
-    deps = ["cc_proto_compile"],
-)
-
-proto_plugin_info_provider_test(
-    name = "cc_plugin_info_provider_test",
-    srcs = ["cc_plugin_info_provider_test.golden.1.prototext"],
-    deps = ["//cc:cc_plugin"],
 )

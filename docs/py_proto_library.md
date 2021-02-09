@@ -1,11 +1,11 @@
 ---
 layout: default
-title: py_proto_compile
-permalink: python/py_proto_compile
+title: py_proto_library
+permalink: python/py_proto_library
 parent: python
 ---
 
-# py_proto_compile
+# py_proto_library
 
 Generates protocol buffer sources for the [python](/python) language.
 
@@ -16,24 +16,24 @@ load("@build_stack_rules_proto//toolchains:protoc.bzl", "protoc_toolchain")
 
 protoc_toolchain()
 
-load("@build_stack_rules_proto//rules:py_proto_compile_deps.bzl", "py_proto_compile_deps")
+load("@build_stack_rules_proto//rules:py_proto_library_deps.bzl", "py_proto_library_deps")
 
-py_proto_compile_deps()
+py_proto_library_deps()
 ```
 
 ## `BUILD.bazel`
 
 ```python
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules:py_proto_compile.bzl", "py_proto_compile")
+load("@build_stack_rules_proto//rules:py_proto_library.bzl", "py_proto_library")
 
 proto_library(
     name = "foo_proto",
     srcs = ["foo.proto"],
 )
 
-py_proto_compile(
-    name = "py_proto_compile_foo_proto",
+py_proto_library(
+    name = "py_proto_library_foo_proto",
     deps = [":foo_proto"],
 )
 ```
@@ -54,11 +54,12 @@ def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def py_proto_compile_deps():
+def py_proto_library_deps():
     bazel_skylib()
     rules_python()
     zlib()
     com_google_protobuf()
+    six()
 
 def bazel_skylib():
     _maybe(
@@ -104,6 +105,18 @@ def com_google_protobuf():
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
         ],
+    )
+
+def six():
+    _maybe(
+        http_archive,
+        name = "six",
+        sha256 = "30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66",
+        strip_prefix = "six-1.13.0",
+        urls = [
+            "https://pypi.python.org/packages/source/s/six/six-1.13.0.tar.gz",
+        ],
+        build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.six",
     )
 
 ```
