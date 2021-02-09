@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//:proto_rule.bzl", "ProtoRuleInfo")
+load("@build_stack_rules_proto//language/rules:proto_language.bzl", "ProtoLanguageInfo")
 load(
     "@build_stack_rules_proto//tools/gencopy:gencopy.bzl",
     "gencopy_action",
@@ -6,14 +6,13 @@ load(
     "gencopy_config",
 )
 
-def _proto_rule_test_impl(ctx):
+def _proto_language_test_impl(ctx):
     outputs = []
 
     config = gencopy_config(ctx)
 
-    for info in [dep[ProtoRuleInfo] for dep in ctx.attr.deps]:
-        outputs.append(info.bzl_file)
-        outputs.append(info.deps_file)
+    for info in [dep[ProtoLanguageInfo] for dep in ctx.attr.deps]:
+        outputs.append(info.rules_file)
 
     script, runfiles = gencopy_action(ctx, config, outputs)
 
@@ -25,24 +24,24 @@ def _proto_rule_test_impl(ctx):
         ),
     ]
 
-def _proto_rule_rule(is_test):
+def _proto_language_rule(is_test):
     return rule(
-        implementation = _proto_rule_test_impl,
+        implementation = _proto_language_test_impl,
         attrs = dict(
             gencopy_attrs,
             deps = attr.label_list(
-                doc = "The ProtoRuleInfo provider rules",
-                providers = [ProtoRuleInfo],
+                doc = "The ProtoLanguageInfo provider rules",
+                providers = [ProtoLanguageInfo],
             ),
         ),
         executable = True,
         test = is_test,
     )
 
-_proto_rule_test = _proto_rule_rule(True)
-_proto_rule_run = _proto_rule_rule(False)
+_proto_language_test = _proto_language_rule(True)
+_proto_language_run = _proto_language_rule(False)
 
-def proto_rule_test(**kwargs):
+def proto_language_test(**kwargs):
     deps = kwargs.pop("deps", [])
     srcs = kwargs.pop("srcs", [])
     name = kwargs.pop("name")
@@ -50,16 +49,16 @@ def proto_rule_test(**kwargs):
     update_target_label_name = "golden"
     update_name = "%s.%s" % (name, update_target_label_name)
 
-    _proto_rule_test(
+    _proto_language_test(
         name = name,
         deps = deps,
         srcs = srcs,
         mode = "check",
-        package = kwargs.get("target_package", None),
+        package = kwargs.get("package", None),
         update_target_label_name = update_target_label_name,
     )
 
-    _proto_rule_run(
+    _proto_language_run(
         name = update_name,
         deps = deps,
         mode = "update",

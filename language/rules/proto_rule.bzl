@@ -4,7 +4,7 @@ load(
     "proto_plugin_info_to_struct",
 )
 load(
-    "//:proto_language.bzl",
+    "//language/rules:proto_language.bzl",
     "ProtoLanguageInfo",
     "proto_language_info_to_struct",
 )

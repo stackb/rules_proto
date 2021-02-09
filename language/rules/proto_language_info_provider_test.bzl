@@ -1,5 +1,5 @@
 load(
-    "@build_stack_rules_proto//:proto_language.bzl",
+    "@build_stack_rules_proto//language/rules:proto_language.bzl",
     "ProtoLanguageInfo",
     "proto_language_info_to_struct",
 )

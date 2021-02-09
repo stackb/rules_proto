@@ -1,5 +1,5 @@
 load(
-    "@build_stack_rules_proto//:proto_rule.bzl",
+    "@build_stack_rules_proto//language/rules:proto_rule.bzl",
     "ProtoRuleInfo",
     "proto_rule_info_to_struct",
 )
