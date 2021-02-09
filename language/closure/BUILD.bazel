@@ -1,0 +1,81 @@
+load(
+    "@build_stack_rules_proto//language/rules:proto_language_info_provider_test.bzl",
+    "proto_language_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_plugin_info_provider_test.bzl",
+    "proto_plugin_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_language_test.bzl",
+    "proto_language_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_language.bzl",
+    "proto_language",
+)
+load(
+    "@build_stack_rules_proto//rules:proto_dependency.bzl",
+    "proto_dependency",
+)
+
+proto_language(
+    name = "closure",
+    package = "rules",
+    prefix = "closure",
+    rules = [
+        "closure_proto_compile",
+        "closure_proto_library",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_language_info_provider_test(
+    name = "closure_info_provider_test",
+    srcs = ["closure_info_provider_test.golden.1.prototext"],
+    deps = [":closure"],
+)
+
+proto_language_test(
+    name = "closure_language_test",
+    srcs = ["//rules:closure.bzl"],
+    package = "rules",
+    deps = [":closure"],
+)
+
+proto_plugin_info_provider_test(
+    name = "closure_plugin_info_provider_test",
+    srcs = ["closure_plugin_info_provider_test.golden.1.prototext"],
+    deps = ["//plugins/closure/proto"],
+)
+
+# Branch: master
+# Commit: 4c99be33856ce1b7b80f55a0e9a8345f559b6ef3
+# Date: 2021-01-29 00:11:54 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_closure/commit/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3
+#
+# CheckStrictDeps: resolve module paths against js module roots (#510)
+#
+# Added "es6_relative_imports_gen_srcs_bin" test case
+#
+# Tested against existing cases and compiling an external
+# codebase with the change applied
+# Size: 468337 (468 kB)
+proto_dependency(
+    name = "io_bazel_rules_closure",
+    repository_rule = "http_archive",
+    sha256 = "4c98a6b8d2d81210f3e291b1c7c5034ab2e22e7870ab3e9603599c79833f7da3",
+    strip_prefix = "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3",
+    urls = ["https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz"],
+    visibility = ["//visibility:public"],
+    workspace_snippet = """
+load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
+
+rules_closure_dependencies(
+    omit_bazel_skylib = True,
+    omit_com_google_protobuf = True,
+    omit_zlib = True,
+)
+
+rules_closure_toolchains()""",
+)

@@ -1,0 +1,12 @@
+label: "//plugins/closure/proto:proto"
+name: "proto"
+options: "import_style=closure"
+options: "error_on_name_conflict"
+options: "add_require_for_enums"
+options: "one_output_file_per_input_file"
+output_directory: false
+outputs: "{protopath}.js"
+protoc_plugin_name: "js"
+separate_options_flag: false
+tool_executable: ""
+use_built_in_shell_environment: false

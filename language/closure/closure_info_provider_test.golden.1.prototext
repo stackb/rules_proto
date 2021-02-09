@@ -1,0 +1,15 @@
+lang {
+  markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/closure/closure.md"
+  markdownTmpl: "tools/protogen/proto_language.md.tmpl"
+  name: "closure"
+  package: "rules"
+  prefix: "closure"
+  rules: "closure_proto_compile"
+  rules: "closure_proto_library"
+  rulesFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/closure/closure.bzl"
+  rulesTmpl: "tools/protogen/rules.bzl.tmpl"
+}
+markdown_file: "language/closure/closure.md"
+name: "closure"
+prefix: "closure"
+rules_file: "language/closure/closure.bzl"

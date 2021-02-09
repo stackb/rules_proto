@@ -1,0 +1,21 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "proto",
+    options = [
+        "import_style=closure",
+        "error_on_name_conflict",
+        "add_require_for_enums",
+        "one_output_file_per_input_file",
+    ],
+    outputs = ["{protopath}.js"],
+    protoc_plugin_name = "js",
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)
