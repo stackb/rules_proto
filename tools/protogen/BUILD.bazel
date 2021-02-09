@@ -1,15 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
-exports_files([
-    "aspect.bzl.tmpl",
-    "BUILD.tmpl",
-    "proto_rule.md.tmpl",
-    "deps.bzl.tmpl",
-    "proto_language.md.tmpl",
-    "rules.bzl.tmpl",
-    "bazel_test.go.tmpl",
-])
-
 go_library(
     name = "protogen",
     srcs = [

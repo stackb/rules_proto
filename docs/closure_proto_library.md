@@ -65,22 +65,11 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def closure_proto_library_deps():
-    io_bazel_rules_closure()
     bazel_skylib()
+    com_google_protobuf()
+    io_bazel_rules_closure()
     rules_python()
     zlib()
-    com_google_protobuf()
-
-def io_bazel_rules_closure():
-    _maybe(
-        http_archive,
-        name = "io_bazel_rules_closure",
-        sha256 = "4c98a6b8d2d81210f3e291b1c7c5034ab2e22e7870ab3e9603599c79833f7da3",
-        strip_prefix = "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3",
-        urls = [
-            "https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz",
-        ],
-    )
 
 def bazel_skylib():
     _maybe(
@@ -90,6 +79,28 @@ def bazel_skylib():
         strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
         urls = [
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+        ],
+    )
+
+def com_google_protobuf():
+    _maybe(
+        http_archive,
+        name = "com_google_protobuf",
+        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
+        strip_prefix = "protobuf-3.14.0",
+        urls = [
+            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+        ],
+    )
+
+def io_bazel_rules_closure():
+    _maybe(
+        http_archive,
+        name = "io_bazel_rules_closure",
+        sha256 = "4c98a6b8d2d81210f3e291b1c7c5034ab2e22e7870ab3e9603599c79833f7da3",
+        strip_prefix = "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3",
+        urls = [
+            "https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz",
         ],
     )
 
@@ -115,17 +126,6 @@ def zlib():
             "https://zlib.net/zlib-1.2.11.tar.gz",
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
-    )
-
-def com_google_protobuf():
-    _maybe(
-        http_archive,
-        name = "com_google_protobuf",
-        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
-        strip_prefix = "protobuf-3.14.0",
-        urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
-        ],
     )
 
 ```

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"sort"
 	"text/template"
 )
 
@@ -76,6 +77,11 @@ func collectDeps(rule *ProtoRule) (allDeps []*ProtoDependency) {
 	for _, dep := range all {
 		allDeps = append(allDeps, dep)
 	}
+
+	// These need to be deterministic
+	sort.Slice(allDeps, func(i, j int) bool {
+		return allDeps[i].Name < allDeps[j].Name
+	})
 
 	return
 }

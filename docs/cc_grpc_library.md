@@ -61,12 +61,34 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def cc_grpc_library_deps():
-    com_github_grpc_grpc()
     bazel_skylib()
+    build_bazel_rules_swift()
+    com_github_grpc_grpc()
+    com_google_protobuf()
     rules_python()
     zlib()
-    com_google_protobuf()
-    build_bazel_rules_swift()
+
+def bazel_skylib():
+    _maybe(
+        http_archive,
+        name = "bazel_skylib",
+        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
+        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
+        urls = [
+            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+        ],
+    )
+
+def build_bazel_rules_swift():
+    _maybe(
+        http_archive,
+        name = "build_bazel_rules_swift",
+        sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
+        strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
+        urls = [
+            "https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz",
+        ],
+    )
 
 def com_github_grpc_grpc():
     _maybe(
@@ -79,14 +101,14 @@ def com_github_grpc_grpc():
         ],
     )
 
-def bazel_skylib():
+def com_google_protobuf():
     _maybe(
         http_archive,
-        name = "bazel_skylib",
-        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
+        name = "com_google_protobuf",
+        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
+        strip_prefix = "protobuf-3.14.0",
         urls = [
-            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
         ],
     )
 
@@ -112,28 +134,6 @@ def zlib():
             "https://zlib.net/zlib-1.2.11.tar.gz",
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
-    )
-
-def com_google_protobuf():
-    _maybe(
-        http_archive,
-        name = "com_google_protobuf",
-        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
-        strip_prefix = "protobuf-3.14.0",
-        urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
-        ],
-    )
-
-def build_bazel_rules_swift():
-    _maybe(
-        http_archive,
-        name = "build_bazel_rules_swift",
-        sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
-        strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
-        urls = [
-            "https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz",
-        ],
     )
 
 ```

@@ -1,6 +1,6 @@
 lang {
   markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/cc/cc.md"
-  markdownTmpl: "tools/protogen/proto_language.md.tmpl"
+  markdownTmpl: "language/proto_language.md.tmpl"
   name: "cc"
   package: "rules"
   prefix: "cc"
@@ -9,7 +9,7 @@ lang {
   rules: "cc_proto_compile"
   rules: "cc_proto_library"
   rulesFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/cc/cc.bzl"
-  rulesTmpl: "tools/protogen/rules.bzl.tmpl"
+  rulesTmpl: "language/rules.bzl.tmpl"
 }
 markdown_file: "language/cc/cc.md"
 name: "cc"

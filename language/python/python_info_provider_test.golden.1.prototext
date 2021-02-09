@@ -1,6 +1,6 @@
 lang {
   markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/python/python.md"
-  markdownTmpl: "tools/protogen/proto_language.md.tmpl"
+  markdownTmpl: "language/proto_language.md.tmpl"
   name: "python"
   package: "rules"
   prefix: "py"
@@ -9,7 +9,7 @@ lang {
   rules: "py_proto_compile"
   rules: "py_proto_library"
   rulesFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/python/python.bzl"
-  rulesTmpl: "tools/protogen/rules.bzl.tmpl"
+  rulesTmpl: "language/rules.bzl.tmpl"
 }
 markdown_file: "language/python/python.md"
 name: "python"

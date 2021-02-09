@@ -105,12 +105,12 @@ proto_language = rule(
         ),
         "rules_tmpl": attr.label(
             doc = "The language rules example template",
-            default = str(Label("//tools/protogen:rules.bzl.tmpl")),
+            default = str(Label("//language:rules.bzl.tmpl")),
             allow_single_file = True,
         ),
         "markdown_tmpl": attr.label(
             doc = "The rule build markdown example template",
-            default = str(Label("//tools/protogen:proto_language.md.tmpl")),
+            default = str(Label("//language:proto_language.md.tmpl")),
             allow_single_file = True,
         ),
         "_langgen": attr.label(

@@ -1,0 +1,4 @@
+exports_files([
+    "proto_language.md.tmpl",
+    "rules.bzl.tmpl",
+])
