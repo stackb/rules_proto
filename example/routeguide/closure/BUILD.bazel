@@ -20,7 +20,6 @@ closure_js_binary(
     debug = False,
     entry_points = ["goog:example.routeguide.closure"],
     output_wrapper = "(function(){%output%}).call(this);",
-    visibility = ["//example/benchmark:__pkg__"],
     deps = [":main"],
 )
 

@@ -1,0 +1,17 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "grpc",
+    exclusions = ["google/protobuf"],  # TODO(pcj): is this needed?
+    outputs = ["{protopath}.grpc.js"],
+    protoc_plugin_name = "grpc_js",
+    tool = "@com_github_stackb_grpc_js//protoc-gen-grpc-js",
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)

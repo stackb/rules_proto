@@ -11,6 +11,9 @@ proto_site_test(
         "closure.md",
         "closure_proto_compile.md",
         "closure_proto_library.md",
+        "grpc_js.md",
+        "grpc_js_grpc_compile.md",
+        "grpc_js_grpc_library.md",
         "py_grpc_compile.md",
         "py_grpc_library.md",
         "py_proto_compile.md",
@@ -20,6 +23,7 @@ proto_site_test(
     languages = [
         "//language/cc",
         "//language/closure",
+        "//language/grpc_js",
         "//language/python",
     ],
     rules = [
@@ -29,6 +33,8 @@ proto_site_test(
         "//language/cc/cc_proto_library",
         "//language/closure/closure_proto_compile",
         "//language/closure/closure_proto_library",
+        "//language/grpc_js/grpc_js_grpc_compile",
+        "//language/grpc_js/grpc_js_grpc_library",
         "//language/python/py_grpc_compile",
         "//language/python/py_grpc_library",
         "//language/python/py_proto_compile",

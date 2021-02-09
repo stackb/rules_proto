@@ -1,0 +1,15 @@
+lang {
+  markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/grpc_js/grpc_js.md"
+  markdownTmpl: "tools/protogen/proto_language.md.tmpl"
+  name: "grpc_js"
+  package: "rules"
+  prefix: "grpc_js"
+  rules: "grpc_js_grpc_compile"
+  rules: "grpc_js_grpc_library"
+  rulesFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/grpc_js/grpc_js.bzl"
+  rulesTmpl: "tools/protogen/rules.bzl.tmpl"
+}
+markdown_file: "language/grpc_js/grpc_js.md"
+name: "grpc_js"
+prefix: "grpc_js"
+rules_file: "language/grpc_js/grpc_js.bzl"

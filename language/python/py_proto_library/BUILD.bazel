@@ -17,7 +17,6 @@ load(
 
 proto_rule(
     name = "py_proto_library",
-    # build_example_tmpl = ":BUILD.tmpl",
     implementation_tmpl = "py_proto_library.bzl.tmpl",
     kind = "proto",
     language = "//language/python",

@@ -159,3 +159,21 @@ def io_bazel_rules_closure():
         strip_prefix = "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3",
         urls = ["https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz"],
     )
+
+def com_github_stackb_grpc_js():
+    # Branch: master
+    # Commit: beb6ac3b43247816c1a1ebf741ebf0c98203414a
+    # Date: 2021-02-09 22:02:48 +0000 UTC
+    # URL: https://github.com/stackb/grpc.js/commit/beb6ac3b43247816c1a1ebf741ebf0c98203414a
+    #
+    # Fix dangling build link (#7)
+    #
+    # * Fix dangling build ref
+    # Size: 30483 (30 kB)
+    maybe(
+        http_archive,
+        name = "com_github_stackb_grpc_js",
+        sha256 = "f9cb4d932badc71d90a89263eabc93551923bb5c621e0940c7cfeaa79ef02596",
+        strip_prefix = "grpc.js-beb6ac3b43247816c1a1ebf741ebf0c98203414a",
+        urls = ["https://github.com/stackb/grpc.js/archive/beb6ac3b43247816c1a1ebf741ebf0c98203414a.tar.gz"],
+    )

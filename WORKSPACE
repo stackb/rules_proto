@@ -11,11 +11,12 @@ load(
     "bazel_gazelle",
     "bazel_skylib",
     "build_bazel_rules_swift",
+    "com_github_stackb_grpc_js",
     "com_google_protobuf",
+    "io_bazel_rules_closure",
     "io_bazel_rules_go",
     "rules_proto",
     "rules_python",
-    "io_bazel_rules_closure",
     "zlib",
 )
 
@@ -107,6 +108,8 @@ rules_closure_dependencies(
 )
 
 rules_closure_toolchains()
+
+com_github_stackb_grpc_js()
 
 # #
 # # Core

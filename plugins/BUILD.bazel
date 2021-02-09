@@ -4,6 +4,7 @@ filegroup(
     srcs = [
         "//plugins/cc:all_files",
         "//plugins/closure:all_files",
+        "//plugins/grpc_js:all_files",
         "//plugins/python:all_files",
     ],
     visibility = ["//visibility:public"],
