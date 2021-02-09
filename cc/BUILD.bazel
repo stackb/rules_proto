@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//:plugin.bzl", "proto_plugin")
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "cc_plugin",

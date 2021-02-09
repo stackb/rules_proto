@@ -1,5 +1,5 @@
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
-load("//:plugin.bzl", "ProtoPluginInfo")
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "ProtoPluginInfo")
 load(
     "//internal:common.bzl",
     "ProtoCompileInfo",
@@ -46,8 +46,9 @@ proto_compile_aspect_attrs = {
 def proto_compile_impl(ctx):
     # Aggregate output files and dirs created by the aspect as it has walked the deps
     output_files_dicts = [dep[ProtoLibraryAspectNodeInfo].output_files for dep in ctx.attr.deps]
-    output_dirs = depset(transitive=[
-        dep[ProtoLibraryAspectNodeInfo].output_dirs for dep in ctx.attr.deps
+    output_dirs = depset(transitive = [
+        dep[ProtoLibraryAspectNodeInfo].output_dirs
+        for dep in ctx.attr.deps
     ])
 
     # Check merge_directories and prefix_path
@@ -77,7 +78,7 @@ def proto_compile_impl(ctx):
         if prefix_path:
             dir_name = dir_name + "/" + prefix_path
         new_dir = ctx.actions.declare_directory(dir_name)
-        final_output_dirs = depset(direct=[new_dir])
+        final_output_dirs = depset(direct = [new_dir])
 
         # Build copy command for directory outputs
         # Use cp {}/. rather than {}/* to allow for empty output directories from a plugin (e.g when no service exists,
@@ -116,7 +117,7 @@ def proto_compile_impl(ctx):
         # Copy directories and files to shared output directory in one action
         ctx.actions.run_shell(
             mnemonic = "CopyDirs",
-            inputs = depset(direct=command_input_files, transitive=[output_dirs]),
+            inputs = depset(direct = command_input_files, transitive = [output_dirs]),
             outputs = [new_dir],
             command = " && ".join(command_parts),
             progress_message = "copying directories and files to {}".format(new_dir.path),
@@ -157,23 +158,23 @@ def proto_compile_impl(ctx):
     if ctx.attr.merge_directories:
         # If we've merged directories, we have copied files/dirs that are now direct rather than
         # transitive dependencies
-        all_outputs = depset(direct=final_output_files_list + final_output_dirs.to_list())
+        all_outputs = depset(direct = final_output_files_list + final_output_dirs.to_list())
     else:
         # If we have not merged directories, all files/dirs are transitive
         all_outputs = depset(
-            transitive=[depset(direct=final_output_files_list), final_output_dirs]
+            transitive = [depset(direct = final_output_files_list), final_output_dirs],
         )
 
     # Create default and proto compile providers
     return [
         ProtoCompileInfo(
-            label=ctx.label,
-            output_files=final_output_files,
-            output_dirs=final_output_dirs,
+            label = ctx.label,
+            output_files = final_output_files,
+            output_dirs = final_output_dirs,
         ),
         DefaultInfo(
-            files=all_outputs,
-            data_runfiles=ctx.runfiles(transitive_files=all_outputs),
+            files = all_outputs,
+            data_runfiles = ctx.runfiles(transitive_files = all_outputs),
         ),
     ]
 
@@ -454,7 +455,7 @@ def proto_compile_aspect_impl(target, ctx):
     return [
         ProtoLibraryAspectNodeInfo(
             output_files = output_files_dict,
-            output_dirs = depset(direct=output_dirs_list, transitive=transitive_output_dirs_list),
+            output_dirs = depset(direct = output_dirs_list, transitive = transitive_output_dirs_list),
             plugins = plugins,
         ),
     ]

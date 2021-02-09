@@ -1,5 +1,5 @@
 load(
-    "//:plugin.bzl",
+    "@build_stack_rules_proto//rules:proto_plugin.bzl",
     "ProtoPluginInfo",
     "proto_plugin_info_to_struct",
 )
