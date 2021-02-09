@@ -4,25 +4,14 @@ def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def py_grpc_compile_deps():
-    rules_python()
+def py_grpc_library_deps():
     zlib()
     com_google_protobuf()
     six()
     build_bazel_rules_swift()
     com_github_grpc_grpc()
     bazel_skylib()
-
-def rules_python():
-    _maybe(
-        http_archive,
-        name = "rules_python",
-        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
-        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
-        urls = [
-            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
-        ],
-    )
+    rules_python()
 
 def zlib():
     _maybe(
@@ -90,5 +79,16 @@ def bazel_skylib():
         strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
         urls = [
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+        ],
+    )
+
+def rules_python():
+    _maybe(
+        http_archive,
+        name = "rules_python",
+        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
+        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
+        urls = [
+            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
         ],
     )

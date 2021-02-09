@@ -16,8 +16,9 @@ load(
 )
 
 proto_rule(
-    name = "py_grpc_compile",
-    kind = "grpc",
+    name = "py_grpc_library",
+    implementation_tmpl = "py_grpc_library.bzl.tmpl",
+    kind = "proto",
     language = "//language/python",
     package = "rules",
     plugins = [
@@ -32,23 +33,23 @@ proto_rule(
 )
 
 proto_rule_info_provider_test(
-    name = "py_grpc_compile_info_provider_test",
-    srcs = ["py_grpc_compile_info_provider_test.golden.1.prototext"],
-    deps = [":py_grpc_compile"],
+    name = "py_grpc_library_info_provider_test",
+    srcs = ["py_grpc_library_info_provider_test.golden.1.prototext"],
+    deps = [":py_grpc_library"],
 )
 
 proto_rule_test(
-    name = "py_grpc_compile_rule_test",
+    name = "py_grpc_library_rule_test",
     srcs = [
-        "//rules:py_grpc_compile.bzl",
-        "//rules:py_grpc_compile_deps.bzl",
+        "//rules:py_grpc_library.bzl",
+        "//rules:py_grpc_library_deps.bzl",
     ],
     package = "rules",
-    deps = [":py_grpc_compile"],
+    deps = [":py_grpc_library"],
 )
 
 proto_rule_bazel_test(
-    name = "py_grpc_compile_rule_bazel_test",
+    name = "py_grpc_library_rule_bazel_test",
     tags = ["exclusive"],
-    deps = ["py_grpc_compile"],
+    deps = ["py_grpc_library"],
 )

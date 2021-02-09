@@ -25,8 +25,7 @@ Generates protocol buffer sources for the [{{ .Rule.Language.Name }}](/{{ .Rule.
 
 | Label | Tool | Outputs |
 | ---- | ---- | ------- |{{ range .Rule.Plugins }}
-| `{{ .Label }}` | {{ .Tool }} | {{ range .Outputs }} `{{ . }}`{{ end }} |
-{{ end }}
+| `{{ .Label }}` | {{ .Tool }} | {{ range .Outputs }} `{{ . }}`{{ end }} |{{ end }}
 
 ## Dependencies
 

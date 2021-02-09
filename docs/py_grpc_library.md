@@ -1,28 +1,73 @@
+---
+layout: default
+title: py_grpc_library
+permalink: python/py_grpc_library
+parent: python
+---
+
+# py_grpc_library
+
+Generates protocol buffer sources for the [python](/python) language.
+
+## `WORKSPACE`
+
+```python
+load("@build_stack_rules_proto//toolchains:protoc.bzl", "protoc_toolchain")
+
+protoc_toolchain()
+
+load("@build_stack_rules_proto//rules:py_grpc_library_deps.bzl", "py_grpc_library_deps")
+
+py_grpc_library_deps()
+
+
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
+    
+```
+
+## `BUILD.bazel`
+
+```python
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules:py_grpc_library.bzl", "py_grpc_library")
+
+proto_library(
+    name = "foo_proto",
+    srcs = ["foo.proto"],
+)
+
+py_grpc_library(
+    name = "py_grpc_library_foo_proto",
+    deps = [":foo_proto"],
+)
+```
+
+## Plugins
+
+| Label | Tool | Outputs |
+| ---- | ---- | ------- |
+| `//plugins/python/proto:proto` |  |  `{protopath|python}_pb2.py` |
+| `//plugins/python/grpc:grpc` |  |  `{protopath|python}_pb2_grpc.py` |
+
+## Dependencies
+
+```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 
 def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def py_grpc_compile_deps():
-    rules_python()
+def py_grpc_library_deps():
     zlib()
     com_google_protobuf()
     six()
     build_bazel_rules_swift()
     com_github_grpc_grpc()
     bazel_skylib()
-
-def rules_python():
-    _maybe(
-        http_archive,
-        name = "rules_python",
-        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
-        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
-        urls = [
-            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
-        ],
-    )
+    rules_python()
 
 def zlib():
     _maybe(
@@ -92,3 +137,16 @@ def bazel_skylib():
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
         ],
     )
+
+def rules_python():
+    _maybe(
+        http_archive,
+        name = "rules_python",
+        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
+        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
+        urls = [
+            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
+        ],
+    )
+
+```

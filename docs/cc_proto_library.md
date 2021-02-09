@@ -45,7 +45,6 @@ cc_proto_library(
 | ---- | ---- | ------- |
 | `//plugins/cc/proto:proto` |  |  `{protopath}.pb.h` `{protopath}.pb.cc` |
 
-
 ## Dependencies
 
 ```python
@@ -56,21 +55,10 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def cc_proto_library_deps():
-    com_google_protobuf()
     bazel_skylib()
     rules_python()
     zlib()
-
-def com_google_protobuf():
-    _maybe(
-        http_archive,
-        name = "com_google_protobuf",
-        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
-        strip_prefix = "protobuf-3.14.0",
-        urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
-        ],
-    )
+    com_google_protobuf()
 
 def bazel_skylib():
     _maybe(
@@ -105,6 +93,17 @@ def zlib():
             "https://zlib.net/zlib-1.2.11.tar.gz",
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
+    )
+
+def com_google_protobuf():
+    _maybe(
+        http_archive,
+        name = "com_google_protobuf",
+        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
+        strip_prefix = "protobuf-3.14.0",
+        urls = [
+            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+        ],
     )
 
 ```

@@ -1,6 +1,6 @@
-bazel_test_file: "language/python/py_grpc_compile/py_grpc_compile_bazel_test.go"
-build_file: "language/python/py_grpc_compile/py_grpc_compile.BUILD"
-bzl_file: "language/python/py_grpc_compile/py_grpc_compile.bzl"
+bazel_test_file: "language/python/py_grpc_library/py_grpc_library_bazel_test.go"
+build_file: "language/python/py_grpc_library/py_grpc_library.BUILD"
+bzl_file: "language/python/py_grpc_library/py_grpc_library.bzl"
 deps {
   buildFile: ""
   label: "//core:bazel_skylib"
@@ -52,7 +52,7 @@ deps {
   urls: "https://pypi.python.org/packages/source/s/six/six-1.13.0.tar.gz"
   workspaceSnippet: ""
 }
-deps_file: "language/python/py_grpc_compile/py_grpc_compile_deps.bzl"
-json_file: "language/python/py_grpc_compile/py_grpc_compile.json"
-name: "py_grpc_compile"
-workspace_file: "language/python/py_grpc_compile/py_grpc_compile.WORKSPACE"
+deps_file: "language/python/py_grpc_library/py_grpc_library_deps.bzl"
+json_file: "language/python/py_grpc_library/py_grpc_library.json"
+name: "py_grpc_library"
+workspace_file: "language/python/py_grpc_library/py_grpc_library.WORKSPACE"

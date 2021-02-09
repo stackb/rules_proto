@@ -45,7 +45,6 @@ cc_proto_compile(
 | ---- | ---- | ------- |
 | `//plugins/cc/proto:proto` |  |  `{protopath}.pb.h` `{protopath}.pb.cc` |
 
-
 ## Dependencies
 
 ```python
