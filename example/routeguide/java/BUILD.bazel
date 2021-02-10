@@ -1,0 +1,24 @@
+load("@rules_java//java:defs.bzl", "java_binary")
+
+java_binary(
+    name = "client",
+    srcs = [
+        "io/grpc/examples/routeguide/RouteGuideClient.java",
+        "io/grpc/examples/routeguide/RouteGuideServer.java",
+        "io/grpc/examples/routeguide/RouteGuideUtil.java",
+    ],
+    main_class = "io.grpc.examples.routeguide.RouteGuideClient",
+    resources = ["route_guide_db.json"],
+    deps = ["//example/routeguide:routeguide_java_grpc"],
+)
+
+java_binary(
+    name = "server",
+    srcs = [
+        "io/grpc/examples/routeguide/RouteGuideServer.java",
+        "io/grpc/examples/routeguide/RouteGuideUtil.java",
+    ],
+    main_class = "io.grpc.examples.routeguide.RouteGuideServer",
+    resources = ["route_guide_db.json"],
+    deps = ["//example/routeguide:routeguide_java_grpc"],
+)

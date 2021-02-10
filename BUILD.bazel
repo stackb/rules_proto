@@ -18,7 +18,6 @@ filegroup(
         "//example/person/v1:all_files",
         "//example/place/v1:all_files",
         "//example/thing/v1:all_files",
-        "//internal:all_files",
         "//plugins:all_files",
         "//rules:all_files",
         "//third_party:all_files",

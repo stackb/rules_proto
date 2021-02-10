@@ -115,7 +115,7 @@ com_github_stackb_grpc_js()
 
 io_grpc_grpc_java()
 
-load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS", "grpc_java_repositories")
 
 grpc_java_repositories()
 
@@ -136,6 +136,27 @@ yarn_install(
     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:package.json",
     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:yarn.lock",
 )
+
+load("@build_stack_rules_proto//rules:java_grpc_compile_deps.bzl", "java_grpc_compile_deps")
+
+java_grpc_compile_deps()
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+maven_install(
+    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
+    generate_compat_repositories = True,
+    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
+    repositories = [
+        "https://repo.maven.apache.org/maven2/",
+    ],
+)
+
+load("@maven//:compat.bzl", "compat_repositories")
+
+compat_repositories()
+
+grpc_java_repositories()
 
 # #
 # # Core

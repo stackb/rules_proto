@@ -1,7 +1,7 @@
 filegroup(
     name = "all_files",
     testonly = True,
-    srcs = glob(["**"]),
+    srcs = ["//rules/internal:all_files"] + glob(["**"]),
     visibility = ["//visibility:public"],
 )
 

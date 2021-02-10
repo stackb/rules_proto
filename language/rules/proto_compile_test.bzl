@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//internal:common.bzl", "ProtoCompileInfo")
+load("@build_stack_rules_proto//rules/internal:common.bzl", "ProtoCompileInfo")
 load(
     "@build_stack_rules_proto//tools/gencopy:gencopy.bzl",
     "gencopy_action",

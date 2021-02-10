@@ -1,7 +1,7 @@
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "ProtoPluginInfo")
 load(
-    "//internal:common.bzl",
+    "//rules/internal:common.bzl",
     "ProtoCompileInfo",
     "copy_file",
     "descriptor_proto_path",
