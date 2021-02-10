@@ -20,11 +20,9 @@ load("@build_stack_rules_proto//rules:py_grpc_compile_deps.bzl", "py_grpc_compil
 
 py_grpc_compile_deps()
 
-
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
-    
 ```
 
 ## `BUILD.bazel`

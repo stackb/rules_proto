@@ -1,4 +1,7 @@
 lang {
+  avatarUrl: "https://user-images.githubusercontent.com/50580/78734761-54effc80-7906-11ea-8f5e-42725718f419.png"
+  description: ""
+  displayName: "grpc.js"
   markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/grpc_js/grpc_js.md"
   markdownTmpl: "language/proto_language.md.tmpl"
   name: "grpc_js"

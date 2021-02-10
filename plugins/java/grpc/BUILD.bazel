@@ -1,0 +1,16 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "grpc",
+    out = "{name}_grpc.jar",
+    protoc_plugin_name = "grpc_java",
+    tool = "@io_grpc_grpc_java//compiler:grpc_java_plugin",
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)

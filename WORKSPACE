@@ -15,6 +15,7 @@ load(
     "com_google_protobuf",
     "io_bazel_rules_closure",
     "io_bazel_rules_go",
+    "io_grpc_grpc_java",
     "rules_proto",
     "rules_python",
     "zlib",
@@ -110,6 +111,12 @@ rules_closure_dependencies(
 rules_closure_toolchains()
 
 com_github_stackb_grpc_js()
+
+io_grpc_grpc_java()
+
+load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
+grpc_java_repositories()
 
 # #
 # # Core

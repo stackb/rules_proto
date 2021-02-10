@@ -1,13 +1,13 @@
 ---
 layout: default
-title: closure_proto_library
-permalink: closure/closure_proto_library
-parent: closure
+title: java_grpc_compile
+permalink: java/java_grpc_compile
+parent: java
 ---
 
-# closure_proto_library
+# java_grpc_compile
 
-Generates protocol buffer sources for the [closure](/closure) language.
+Generates protocol buffer sources for the [java](/java) language.
 
 ## `WORKSPACE`
 
@@ -16,34 +16,45 @@ load("@build_stack_rules_proto//toolchains:protoc.bzl", "protoc_toolchain")
 
 protoc_toolchain()
 
-load("@build_stack_rules_proto//rules:closure_proto_library_deps.bzl", "closure_proto_library_deps")
+load("@build_stack_rules_proto//rules:java_grpc_compile_deps.bzl", "java_grpc_compile_deps")
 
-closure_proto_library_deps()
+java_grpc_compile_deps()
 
-load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS")
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS")
 
-rules_closure_dependencies(
-    omit_bazel_skylib = True,
-    omit_com_google_protobuf = True,
-    omit_zlib = True,
+maven_install(
+    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
+    generate_compat_repositories = True,
+    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
+    repositories = [
+        "https://repo.maven.apache.org/maven2/",
+    ],
 )
 
-rules_closure_toolchains()
+load("@maven//:compat.bzl", "compat_repositories")
+
+compat_repositories()
+
+load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
+grpc_java_repositories()
 ```
 
 ## `BUILD.bazel`
 
 ```python
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules:closure_proto_library.bzl", "closure_proto_library")
+load("@build_stack_rules_proto//rules:java_grpc_compile.bzl", "java_grpc_compile")
 
 proto_library(
     name = "foo_proto",
     srcs = ["foo.proto"],
 )
 
-closure_proto_library(
-    name = "closure_proto_library_foo_proto",
+java_grpc_compile(
+    name = "java_grpc_compile_foo_proto",
     deps = [":foo_proto"],
 )
 ```
@@ -52,7 +63,8 @@ closure_proto_library(
 
 | Label | Tool | Outputs |
 | ---- | ---- | ------- |
-| `//plugins/closure/proto:proto` |  |  `{protopath}.js` |
+| `//plugins/java/proto:proto` |  |  |
+| `//plugins/java/grpc:grpc` |  |  |
 
 ## Dependencies
 
@@ -63,10 +75,12 @@ def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def closure_proto_library_deps():
+def java_grpc_compile_deps():
     bazel_skylib()
     com_google_protobuf()
-    io_bazel_rules_closure()
+    io_grpc_grpc_java()
+    rules_java()
+    rules_jvm_external()
     rules_python()
     zlib()
 
@@ -92,14 +106,36 @@ def com_google_protobuf():
         ],
     )
 
-def io_bazel_rules_closure():
+def io_grpc_grpc_java():
     _maybe(
         http_archive,
-        name = "io_bazel_rules_closure",
-        sha256 = "4c98a6b8d2d81210f3e291b1c7c5034ab2e22e7870ab3e9603599c79833f7da3",
-        strip_prefix = "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3",
+        name = "io_grpc_grpc_java",
+        sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
+        strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
         urls = [
-            "https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz",
+            "https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz",
+        ],
+    )
+
+def rules_java():
+    _maybe(
+        http_archive,
+        name = "rules_java",
+        sha256 = "7c4bbe11e41c61212a5cf16d9aafaddade3f5b1b6c8bf94270d78215fafd4007",
+        strip_prefix = "rules_java-c13e3ead84afb95f81fbddfade2749d8ba7cb77f",
+        urls = [
+            "https://github.com/bazelbuild/rules_java/archive/c13e3ead84afb95f81fbddfade2749d8ba7cb77f.tar.gz",
+        ],
+    )
+
+def rules_jvm_external():
+    _maybe(
+        http_archive,
+        name = "rules_jvm_external",
+        sha256 = "cee024d5892c3191937d52909a86cba0ef7b5cdda488d00be84fc37590194339",
+        strip_prefix = "rules_jvm_external-576cc9da001be3bae4021ae9e0c06ebb48fcae5d",
+        urls = [
+            "https://github.com/bazelbuild/rules_jvm_external/archive/576cc9da001be3bae4021ae9e0c06ebb48fcae5d.tar.gz",
         ],
     )
 

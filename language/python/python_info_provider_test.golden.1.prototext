@@ -1,4 +1,7 @@
 lang {
+  avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
+  description: ""
+  displayName: "Python"
   markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/python/python.md"
   markdownTmpl: "language/proto_language.md.tmpl"
   name: "python"

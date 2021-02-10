@@ -177,3 +177,23 @@ def com_github_stackb_grpc_js():
         strip_prefix = "grpc.js-beb6ac3b43247816c1a1ebf741ebf0c98203414a",
         urls = ["https://github.com/stackb/grpc.js/archive/beb6ac3b43247816c1a1ebf741ebf0c98203414a.tar.gz"],
     )
+
+def io_grpc_grpc_java():
+    # Release: v1.35.0
+    # Commit: master
+    # Date: 2021-01-12 23:05:49 +0000 UTC
+    # URL: https://github.com/grpc/grpc-java/releases/tag/v1.35.0
+    # Branch: master
+    # Commit: 7f7821c616598ce4e33d2045c5641b2348728cb8
+    # Date: 2021-02-10 00:56:26 +0000 UTC
+    # URL: https://github.com/grpc/grpc-java/commit/7f7821c616598ce4e33d2045c5641b2348728cb8
+    #
+    # interop-testing: add fake altsHandshakerService for test (#7847)
+    # Size: 2337953 (2.3 MB)
+    maybe(
+        http_archive,
+        name = "io_grpc_grpc_java",
+        sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
+        strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
+        urls = ["https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz"],
+    )

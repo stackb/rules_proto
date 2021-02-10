@@ -1,4 +1,7 @@
 lang {
+  avatarUrl: "/rules_proto/assets/images/closure-logo.svg"
+  description: ""
+  displayName: "Closure"
   markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/language/closure/closure.md"
   markdownTmpl: "language/proto_language.md.tmpl"
   name: "closure"

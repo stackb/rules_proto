@@ -1,0 +1,7 @@
+label: "//plugins/java/proto:proto"
+name: "proto"
+output_directory: false
+protoc_plugin_name: "java"
+separate_options_flag: false
+tool_executable: ""
+use_built_in_shell_environment: false
