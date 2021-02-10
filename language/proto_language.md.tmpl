@@ -6,3 +6,15 @@ has_children: true
 ---
 
 # {{ .Lang.Name }}
+
+Bazel protocol buffer rules for {{ .Lang.DisplayName }}
+
+<table border="0" style="text-align: center"><tr>
+<td><img src="{{ .Lang.AvatarUrl }}" style="height: 140px"/></td>{{ if .HasProtoRule }}
+<td><img src="/rules_proto/assets/images/protobuf.png" style="height: 140px"/></td>{{ end }}{{ if .HasGrpcRule }}
+<td><img src="https://avatars2.githubusercontent.com/u/7802525?v=4&s=400" style="height: 140px"/></td>{{ end }}
+</tr><tr>
+<td>{{ .Lang.DisplayName }}</td>{{ if .HasProtoRule }}
+<td>Protobuf</td>{{ end }}{{ if .HasGrpcRule }}
+<td>gRPC</td>{{ end }}
+</tr></table>

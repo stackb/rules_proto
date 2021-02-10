@@ -17,6 +17,8 @@ load(
 
 proto_language(
     name = "grpc_js",
+    avatar_url = "https://user-images.githubusercontent.com/50580/78734761-54effc80-7906-11ea-8f5e-42725718f419.png",
+    display_name = "grpc.js",
     package = "rules",
     prefix = "grpc_js",
     rules = [

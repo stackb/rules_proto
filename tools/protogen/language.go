@@ -3,8 +3,9 @@ package protogen
 import (
 	"encoding/json"
 	"fmt"
-	"text/template"
 	"io/ioutil"
+	"strings"
+	"text/template"
 )
 
 // Generate takes the given rule definition and writes the result files to the
@@ -46,4 +47,22 @@ func NewProtoLanguageFromJSONFile(filename string) (*ProtoLanguage, error) {
 // langTemplateData is the type used by language templates
 type langTemplateData struct {
 	Lang *ProtoLanguage
+}
+
+func (d langTemplateData) HasProtoRule() bool {
+    for _, ruleName := range d.Lang.Rules {
+		if strings.Contains(ruleName, "_proto_") {
+			return true
+		}
+	}
+    return false
+}
+
+func (d langTemplateData) HasGrpcRule() bool {
+    for _, ruleName := range d.Lang.Rules {
+		if strings.Contains(ruleName, "_grpc_") {
+			return true
+		}
+	}
+    return false
 }

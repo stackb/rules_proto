@@ -21,6 +21,8 @@ load(
 
 proto_language(
     name = "closure",
+    avatar_url = "/rules_proto/assets/images/closure-logo.svg",
+    display_name = "Closure",
     package = "rules",
     prefix = "closure",
     rules = [

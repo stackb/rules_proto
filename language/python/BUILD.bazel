@@ -21,6 +21,8 @@ load(
 
 proto_language(
     name = "python",
+    avatar_url = "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+    display_name = "Python",
     package = "rules",
     prefix = "py",
     rules = [

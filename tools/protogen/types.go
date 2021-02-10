@@ -84,7 +84,7 @@ type ProtoRule struct {
 	// The language this rule belongs to
 	Language *ProtoLanguage
 
-	Deps   []*ProtoDependency
+	Deps []*ProtoDependency
 }
 
 // ProtoPlugin represents the starlark ProtoPluginInfo provider.
@@ -105,12 +105,12 @@ type ProtoPlugin struct {
 
 // ProtoDependency represents the starlark ProtoDependencyInfo provider.
 type ProtoDependency struct {
-	BuildFile      string
-	Name           string
-	RepositoryRule string
-	Sha256         string
-	StripPrefix    string
-	Urls           []string
+	BuildFile        string
+	Name             string
+	RepositoryRule   string
+	Sha256           string
+	StripPrefix      string
+	Urls             []string
 	WorkspaceSnippet string
 }
 
@@ -119,6 +119,10 @@ type ProtoLanguage struct {
 	Name   string   // e.g. "python"
 	Prefix string   // e.g. "py"
 	Rules  []string // e.g. ["py_proto_compile", "py_proto_library"]
+
+	Description                string
+	DisplayName                string
+	AvatarUrl                  string
 
 	// Package of the language.  This determines the package name where the rule
 	// will be imported as well as the directory where the file will be copied.

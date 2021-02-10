@@ -25,6 +25,9 @@ def lang_to_struct(lang):
         markdownFilename = redact_host_configuration(lang.markdownFilename),
         markdownTmpl = redact_host_configuration(lang.markdownTmpl),
         name = lang.name,
+        displayName = lang.displayName,
+        description = lang.description,
+        avatarUrl = lang.avatarUrl,
         package = lang.package,
         prefix = lang.prefix,
         rules = lang.rules,
@@ -41,6 +44,9 @@ def _proto_language_impl(ctx):
         markdownFilename = output_markdown.path,
         markdownTmpl = ctx.file.markdown_tmpl.path,
         name = ctx.attr.name,
+        displayName = ctx.attr.display_name,
+        description = ctx.attr.description,
+        avatarUrl = ctx.attr.avatar_url,
         package = ctx.attr.package or ctx.label.package,
         prefix = ctx.attr.prefix,
         rules = ctx.attr.rules,
@@ -95,6 +101,17 @@ proto_language = rule(
     attrs = {
         "prefix": attr.string(
             doc = "The language prefix",
+            mandatory = True,
+        ),
+        "display_name": attr.string(
+            doc = "The language display name",
+            mandatory = True,
+        ),
+        "description": attr.string(
+            doc = "The language description",
+        ),
+        "avatar_url": attr.string(
+            doc = "The language image avatar",
             mandatory = True,
         ),
         "package": attr.string(
