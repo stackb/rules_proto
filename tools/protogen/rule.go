@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"sort"
 	"text/template"
 )
 
@@ -61,27 +60,24 @@ func (rule *ProtoRule) Generate() error {
 	return nil
 }
 
-func collectDeps(rule *ProtoRule) (allDeps []*ProtoDependency) {
-	all := make(map[string]*ProtoDependency)
+func collectDeps(rule *ProtoRule) (all []*ProtoDependency) {
+	seen := make(map[string]bool)
 
 	for _, dep := range rule.Deps {
-		all[dep.Name] = dep
+		if seen[dep.Name] {
+			continue
+		}
+		all = append(all, dep)
 	}
 
 	for _, plugin := range rule.Plugins {
 		for _, dep := range plugin.Deps {
-			all[dep.Name] = dep
+			if seen[dep.Name] {
+				continue
+			}
+			all = append(all, dep)
 		}
 	}
-
-	for _, dep := range all {
-		allDeps = append(allDeps, dep)
-	}
-
-	// These need to be deterministic
-	sort.Slice(allDeps, func(i, j int) bool {
-		return allDeps[i].Name < allDeps[j].Name
-	})
 
 	return
 }

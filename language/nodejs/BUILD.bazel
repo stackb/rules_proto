@@ -61,11 +61,26 @@ proto_dependency(
     strip_prefix = "rules_nodejs-2424d1e32b564fcc37b57d593b871461a62f3237",
     urls = ["https://github.com/bazelbuild/rules_nodejs/archive/2424d1e32b564fcc37b57d593b871461a62f3237.tar.gz"],
     visibility = ["//visibility:public"],
+    workspace_snippet = """load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
+
+node_repositories(package_json = ["//:package.json"])""",
+    deps = [":rules_pkg"],
+)
+
+proto_dependency(
+    name = "rules_pkg",
+    repository_rule = "http_archive",
+    sha256 = "aeca78988341a2ee1ba097641056d168320ecc51372ef7ff8e64b139516a4937",
+    urls = [
+        "https://github.com/bazelbuild/rules_pkg/releases/download/0.2.6-1/rules_pkg-0.2.6.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/0.2.6/rules_pkg-0.2.6.tar.gz",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 # Not an external dependency per-se but provides a workspace snippet for the yarn_install.
 proto_dependency(
-    name = "nodejs_grpc_modules",
+    name = "nodejs_proto_grpc_modules",
     repository_rule = "phony",
     workspace_snippet = """load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
 yarn_install(

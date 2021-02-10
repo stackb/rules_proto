@@ -217,3 +217,14 @@ def build_bazel_rules_nodejs():
         strip_prefix = "rules_nodejs-2424d1e32b564fcc37b57d593b871461a62f3237",
         urls = ["https://github.com/bazelbuild/rules_nodejs/archive/2424d1e32b564fcc37b57d593b871461a62f3237.tar.gz"],
     )
+
+def rules_pkg():
+    maybe(
+        http_archive,
+        name = "rules_pkg",
+        urls = [
+            "https://github.com/bazelbuild/rules_pkg/releases/download/0.2.6-1/rules_pkg-0.2.6.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/0.2.6/rules_pkg-0.2.6.tar.gz",
+        ],
+        sha256 = "aeca78988341a2ee1ba097641056d168320ecc51372ef7ff8e64b139516a4937",
+    )

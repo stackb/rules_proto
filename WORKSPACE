@@ -259,12 +259,13 @@ build_bazel_rules_nodejs()
 # load("//nodejs:repositories.bzl", "nodejs_repos")
 # nodejs_repos()
 
-# load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
-# yarn_install(
-#     name = "nodejs_proto_grpc_modules",
-#     package_json = "//nodejs:requirements/package.json",
-#     yarn_lock = "//nodejs:requirements/yarn.lock",
-# )
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+
+yarn_install(
+    name = "nodejs_proto_grpc_modules",
+    package_json = "//plugins/nodejs/grpc:package.json",
+    yarn_lock = "//plugins/nodejs/grpc:yarn.lock",
+)
 
 # #
 # # Objective-C

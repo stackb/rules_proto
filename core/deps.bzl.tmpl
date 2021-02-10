@@ -6,7 +6,7 @@ def _maybe(repo_rule, name, **kwargs):
 
 def {{ .Rule.Name }}_deps():{{ range .Deps }}
     {{ .Name }}(){{ end }}
-{{ range .Deps }}if {{ if ne .RepositoryRule "phony" }}
+{{ range .Deps }}{{ if ne .RepositoryRule "phony" }}
 def {{ .Name }}():
     _maybe(
         {{ .RepositoryRule }},
