@@ -6,10 +6,10 @@ def _maybe(repo_rule, name, **kwargs):
 
 def java_proto_library_deps():
     bazel_skylib()
-    com_google_protobuf()
-    rules_java()
     rules_python()
     zlib()
+    com_google_protobuf()
+    rules_java()
 
 def bazel_skylib():
     _maybe(
@@ -19,28 +19,6 @@ def bazel_skylib():
         strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
         urls = [
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
-        ],
-    )
-
-def com_google_protobuf():
-    _maybe(
-        http_archive,
-        name = "com_google_protobuf",
-        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
-        strip_prefix = "protobuf-3.14.0",
-        urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
-        ],
-    )
-
-def rules_java():
-    _maybe(
-        http_archive,
-        name = "rules_java",
-        sha256 = "7c4bbe11e41c61212a5cf16d9aafaddade3f5b1b6c8bf94270d78215fafd4007",
-        strip_prefix = "rules_java-c13e3ead84afb95f81fbddfade2749d8ba7cb77f",
-        urls = [
-            "https://github.com/bazelbuild/rules_java/archive/c13e3ead84afb95f81fbddfade2749d8ba7cb77f.tar.gz",
         ],
     )
 
@@ -66,4 +44,26 @@ def zlib():
             "https://zlib.net/zlib-1.2.11.tar.gz",
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
+    )
+
+def com_google_protobuf():
+    _maybe(
+        http_archive,
+        name = "com_google_protobuf",
+        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
+        strip_prefix = "protobuf-3.14.0",
+        urls = [
+            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+        ],
+    )
+
+def rules_java():
+    _maybe(
+        http_archive,
+        name = "rules_java",
+        sha256 = "7c4bbe11e41c61212a5cf16d9aafaddade3f5b1b6c8bf94270d78215fafd4007",
+        strip_prefix = "rules_java-c13e3ead84afb95f81fbddfade2749d8ba7cb77f",
+        urls = [
+            "https://github.com/bazelbuild/rules_java/archive/c13e3ead84afb95f81fbddfade2749d8ba7cb77f.tar.gz",
+        ],
     )

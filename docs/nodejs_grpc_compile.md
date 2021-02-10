@@ -1,13 +1,13 @@
 ---
 layout: default
-title: py_proto_compile
-permalink: python/py_proto_compile
-parent: python
+title: nodejs_grpc_compile
+permalink: nodejs/nodejs_grpc_compile
+parent: nodejs
 ---
 
-# py_proto_compile
+# nodejs_grpc_compile
 
-Generates protocol buffer sources for the [python](/python) language.
+Generates protocol buffer sources for the [nodejs](/nodejs) language.
 
 ## `WORKSPACE`
 
@@ -16,25 +16,36 @@ load("@build_stack_rules_proto//toolchains:protoc.bzl", "protoc_toolchain")
 
 protoc_toolchain()
 
-load("@build_stack_rules_proto//rules:py_proto_compile_deps.bzl", "py_proto_compile_deps")
+load("@build_stack_rules_proto//rules:nodejs_grpc_compile_deps.bzl", "nodejs_grpc_compile_deps")
 
-py_proto_compile_deps()
+nodejs_grpc_compile_deps()
 
+load("@build_bazel_rules_nodejs//:package.bzl", "rules_nodejs_dev_dependencies")
+
+rules_nodejs_dev_dependencies()
+
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+
+yarn_install(
+    name = "nodejs_proto_grpc_modules",
+    package_json = "//plugin/nodejs/grpc:package.json",
+    yarn_json = "//plugin/nodejs/grpc:yarn.json",
+)
 ```
 
 ## `BUILD.bazel`
 
 ```python
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules:py_proto_compile.bzl", "py_proto_compile")
+load("@build_stack_rules_proto//rules:nodejs_grpc_compile.bzl", "nodejs_grpc_compile")
 
 proto_library(
     name = "foo_proto",
     srcs = ["foo.proto"],
 )
 
-py_proto_compile(
-    name = "py_proto_compile_foo_proto",
+nodejs_grpc_compile(
+    name = "nodejs_grpc_compile_foo_proto",
     deps = [":foo_proto"],
 )
 ```
@@ -43,7 +54,8 @@ py_proto_compile(
 
 | Label | Tool | Outputs |
 | ---- | ---- | ------- |
-| `//plugins/python/proto:proto` |  |  `{protopath|python}_pb2.py` |
+| `//plugins/nodejs/proto:proto` |  |  `{protopath}_pb.js` |
+| `//plugins/nodejs/grpc:grpc` |  |  |
 
 ## Dependencies
 
@@ -54,11 +66,13 @@ def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def py_proto_compile_deps():
+def nodejs_grpc_compile_deps():
     bazel_skylib()
     rules_python()
     zlib()
     com_google_protobuf()
+    build_bazel_rules_nodejs()
+    nodejs_proto_grpc_modules()
 
 def bazel_skylib():
     _maybe(
@@ -103,6 +117,17 @@ def com_google_protobuf():
         strip_prefix = "protobuf-3.14.0",
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+        ],
+    )
+
+def build_bazel_rules_nodejs():
+    _maybe(
+        http_archive,
+        name = "build_bazel_rules_nodejs",
+        sha256 = "9f5abe071e596e58283360aaaeb498c9374ba9052bb84b03917b5b0d2ba68387",
+        strip_prefix = "rules_nodejs-2424d1e32b564fcc37b57d593b871461a62f3237",
+        urls = [
+            "https://github.com/bazelbuild/rules_nodejs/archive/2424d1e32b564fcc37b57d593b871461a62f3237.tar.gz",
         ],
     )
 

@@ -6,8 +6,8 @@ load(
 load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
 
 GRPC_DEPS = [
-    "@nodejs_proto_grpc_modules//google-protobuf",
-    "@nodejs_proto_grpc_modules//@grpc/grpc-js",
+    "@google_protobuf_node_modules//google-protobuf",
+    "@grpc_js_node_modules//@grpc/grpc-js",
 ]
 
 def {{ .Rule.Name }}(**kwargs):

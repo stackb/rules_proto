@@ -6,10 +6,10 @@ def _maybe(repo_rule, name, **kwargs):
 
 def nodejs_proto_library_deps():
     bazel_skylib()
-    build_bazel_rules_nodejs()
-    com_google_protobuf()
     rules_python()
     zlib()
+    com_google_protobuf()
+    build_bazel_rules_nodejs()
 
 def bazel_skylib():
     _maybe(
@@ -19,28 +19,6 @@ def bazel_skylib():
         strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
         urls = [
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
-        ],
-    )
-
-def build_bazel_rules_nodejs():
-    _maybe(
-        http_archive,
-        name = "build_bazel_rules_nodejs",
-        sha256 = "9f5abe071e596e58283360aaaeb498c9374ba9052bb84b03917b5b0d2ba68387",
-        strip_prefix = "rules_nodejs-2424d1e32b564fcc37b57d593b871461a62f3237",
-        urls = [
-            "https://github.com/bazelbuild/rules_nodejs/archive/2424d1e32b564fcc37b57d593b871461a62f3237.tar.gz",
-        ],
-    )
-
-def com_google_protobuf():
-    _maybe(
-        http_archive,
-        name = "com_google_protobuf",
-        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
-        strip_prefix = "protobuf-3.14.0",
-        urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
         ],
     )
 
@@ -66,4 +44,26 @@ def zlib():
             "https://zlib.net/zlib-1.2.11.tar.gz",
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
+    )
+
+def com_google_protobuf():
+    _maybe(
+        http_archive,
+        name = "com_google_protobuf",
+        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
+        strip_prefix = "protobuf-3.14.0",
+        urls = [
+            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+        ],
+    )
+
+def build_bazel_rules_nodejs():
+    _maybe(
+        http_archive,
+        name = "build_bazel_rules_nodejs",
+        sha256 = "6fd1205e38326fcc25af12fce99328e4400c1caf00c734f903e6570be20e1adc",
+        strip_prefix = "rules_nodejs-7edc97c23c1e64aaef8f9875209c65f663952bf1",
+        urls = [
+            "https://github.com/bazelbuild/rules_nodejs/archive/7edc97c23c1e64aaef8f9875209c65f663952bf1.tar.gz",
+        ],
     )

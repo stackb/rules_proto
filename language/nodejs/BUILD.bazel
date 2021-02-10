@@ -57,34 +57,85 @@ proto_language_test(
 proto_dependency(
     name = "build_bazel_rules_nodejs",
     repository_rule = "http_archive",
-    sha256 = "9f5abe071e596e58283360aaaeb498c9374ba9052bb84b03917b5b0d2ba68387",
-    strip_prefix = "rules_nodejs-2424d1e32b564fcc37b57d593b871461a62f3237",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/archive/2424d1e32b564fcc37b57d593b871461a62f3237.tar.gz"],
+    sha256 = "6fd1205e38326fcc25af12fce99328e4400c1caf00c734f903e6570be20e1adc",
+    strip_prefix = "rules_nodejs-7edc97c23c1e64aaef8f9875209c65f663952bf1",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/archive/7edc97c23c1e64aaef8f9875209c65f663952bf1.tar.gz"],
     visibility = ["//visibility:public"],
-    workspace_snippet = """load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
+    workspace_snippet = """load("@build_bazel_rules_nodejs//:package.bzl", "rules_nodejs_dev_dependencies")
 
-node_repositories(package_json = ["//:package.json"])""",
-    deps = [":rules_pkg"],
+rules_nodejs_dev_dependencies()""",
+    # deps = [
+    #     ":rules_codeowners",
+    #     ":rules_pkg",
+    # ],
 )
+
+# proto_dependency(
+#     name = "rules_pkg",
+#     repository_rule = "http_archive",
+#     sha256 = "aeca78988341a2ee1ba097641056d168320ecc51372ef7ff8e64b139516a4937",
+#     urls = [
+#         "https://github.com/bazelbuild/rules_pkg/releases/download/0.2.6-1/rules_pkg-0.2.6.tar.gz",
+#         "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/0.2.6/rules_pkg-0.2.6.tar.gz",
+#     ],
+#     visibility = ["//visibility:public"],
+# )
+
+# # Branch: master
+# # Commit: 27fe3bbe6e5b0df196e360fc9e081835f22a10be
+# # Date: 2020-06-10 13:20:02 +0000 UTC
+# # URL: https://github.com/zegl/rules_codeowners/commit/27fe3bbe6e5b0df196e360fc9e081835f22a10be
+# #
+# # Allow user to override the comment in the generated file
+# #
+# # Useful if they have some specific instructions to put there about how to update it
+# # Size: 7198 (7.2 kB)
+# proto_dependency(
+#     name = "rules_codeowners",
+#     repository_rule = "http_archive",
+#     sha256 = "2972e61f08dd41bb00fa4c05a36949a51b32921ae714aa900d9d755ad00533f5",
+#     strip_prefix = "rules_codeowners-27fe3bbe6e5b0df196e360fc9e081835f22a10be",
+#     urls = ["https://github.com/zegl/rules_codeowners/archive/27fe3bbe6e5b0df196e360fc9e081835f22a10be.tar.gz"],
+#     visibility = ["//visibility:public"],
+# )
 
 proto_dependency(
-    name = "rules_pkg",
-    repository_rule = "http_archive",
-    sha256 = "aeca78988341a2ee1ba097641056d168320ecc51372ef7ff8e64b139516a4937",
-    urls = [
-        "https://github.com/bazelbuild/rules_pkg/releases/download/0.2.6-1/rules_pkg-0.2.6.tar.gz",
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/0.2.6/rules_pkg-0.2.6.tar.gz",
-    ],
+    name = "nodejs_proto_modules",
+    repository_rule = "phony",
     visibility = ["//visibility:public"],
+    workspace_snippet = """
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+
+yarn_install(
+    name = "nodejs_proto_modules",
+    package_json = "//plugin/nodejs/proto:package.json",
+    yarn_json = "//plugin/nodejs/proto:yarn.json",
+)""",
 )
 
-# Not an external dependency per-se but provides a workspace snippet for the yarn_install.
 proto_dependency(
     name = "nodejs_proto_grpc_modules",
     repository_rule = "phony",
-    workspace_snippet = """load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+    visibility = ["//visibility:public"],
+    workspace_snippet = """
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+
 yarn_install(
     name = "nodejs_proto_grpc_modules",
+    package_json = "//plugin/nodejs/grpc:package.json",
+    yarn_json = "//plugin/nodejs/grpc:yarn.json",
+)""",
+)
+
+proto_dependency(
+    name = "nodejs_grpc_tools_modules",
+    repository_rule = "phony",
+    visibility = ["//visibility:public"],
+    workspace_snippet = """
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+
+yarn_install(
+    name = "nodejs_grpc_tools_modules",
     package_json = "//plugin/nodejs/grpc:package.json",
     yarn_json = "//plugin/nodejs/grpc:yarn.json",
 )""",

@@ -199,23 +199,12 @@ def io_grpc_grpc_java():
     )
 
 def build_bazel_rules_nodejs():
-    # Release: 3.1.0
-    # Commit: stable
-    # Date: 2021-02-02 01:45:57 +0000 UTC
-    # URL: https://github.com/bazelbuild/rules_nodejs/releases/tag/3.1.0
-    # Branch: master
-    # Commit: 2424d1e32b564fcc37b57d593b871461a62f3237
-    # Date: 2020-09-09 17:40:27 +0000 UTC
-    # URL: https://github.com/bazelbuild/rules_nodejs/commit/2424d1e32b564fcc37b57d593b871461a62f3237
-    #
-    # Add spica to adopter organization list (#2183)
-    # Size: 5204026 (5.2 MB)
     maybe(
         http_archive,
         name = "build_bazel_rules_nodejs",
-        sha256 = "9f5abe071e596e58283360aaaeb498c9374ba9052bb84b03917b5b0d2ba68387",
-        strip_prefix = "rules_nodejs-2424d1e32b564fcc37b57d593b871461a62f3237",
-        urls = ["https://github.com/bazelbuild/rules_nodejs/archive/2424d1e32b564fcc37b57d593b871461a62f3237.tar.gz"],
+        sha256 = "6fd1205e38326fcc25af12fce99328e4400c1caf00c734f903e6570be20e1adc",
+        strip_prefix = "rules_nodejs-7edc97c23c1e64aaef8f9875209c65f663952bf1",
+        urls = ["https://github.com/bazelbuild/rules_nodejs/archive/7edc97c23c1e64aaef8f9875209c65f663952bf1.tar.gz"],
     )
 
 def rules_pkg():
@@ -227,4 +216,22 @@ def rules_pkg():
             "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/0.2.6/rules_pkg-0.2.6.tar.gz",
         ],
         sha256 = "aeca78988341a2ee1ba097641056d168320ecc51372ef7ff8e64b139516a4937",
+    )
+
+def rules_codeowners():
+    # Branch: master
+    # Commit: 27fe3bbe6e5b0df196e360fc9e081835f22a10be
+    # Date: 2020-06-10 13:20:02 +0000 UTC
+    # URL: https://github.com/zegl/rules_codeowners/commit/27fe3bbe6e5b0df196e360fc9e081835f22a10be
+    #
+    # Allow user to override the comment in the generated file
+    #
+    # Useful if they have some specific instructions to put there about how to update it
+    # Size: 7198 (7.2 kB)
+    maybe(
+        http_archive,
+        name = "rules_codeowners",
+        sha256 = "2972e61f08dd41bb00fa4c05a36949a51b32921ae714aa900d9d755ad00533f5",
+        strip_prefix = "rules_codeowners-27fe3bbe6e5b0df196e360fc9e081835f22a10be",
+        urls = ["https://github.com/zegl/rules_codeowners/archive/27fe3bbe6e5b0df196e360fc9e081835f22a10be.tar.gz"],
     )

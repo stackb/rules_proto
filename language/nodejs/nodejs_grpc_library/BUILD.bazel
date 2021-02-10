@@ -30,6 +30,8 @@ proto_rule(
     deps = [
         "//core:com_google_protobuf",
         "//language/nodejs:build_bazel_rules_nodejs",
+        "//plugins/nodejs/modules/google-protobuf:google_protobuf_node_modules",
+        "//plugins/nodejs/modules/grpc-js:grpc_js_node_modules",
     ],
 )
 

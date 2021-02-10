@@ -1,13 +1,13 @@
 ---
 layout: default
-title: py_proto_compile
-permalink: python/py_proto_compile
-parent: python
+title: nodejs_proto_compile
+permalink: nodejs/nodejs_proto_compile
+parent: nodejs
 ---
 
-# py_proto_compile
+# nodejs_proto_compile
 
-Generates protocol buffer sources for the [python](/python) language.
+Generates protocol buffer sources for the [nodejs](/nodejs) language.
 
 ## `WORKSPACE`
 
@@ -16,9 +16,9 @@ load("@build_stack_rules_proto//toolchains:protoc.bzl", "protoc_toolchain")
 
 protoc_toolchain()
 
-load("@build_stack_rules_proto//rules:py_proto_compile_deps.bzl", "py_proto_compile_deps")
+load("@build_stack_rules_proto//rules:nodejs_proto_compile_deps.bzl", "nodejs_proto_compile_deps")
 
-py_proto_compile_deps()
+nodejs_proto_compile_deps()
 
 ```
 
@@ -26,15 +26,15 @@ py_proto_compile_deps()
 
 ```python
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules:py_proto_compile.bzl", "py_proto_compile")
+load("@build_stack_rules_proto//rules:nodejs_proto_compile.bzl", "nodejs_proto_compile")
 
 proto_library(
     name = "foo_proto",
     srcs = ["foo.proto"],
 )
 
-py_proto_compile(
-    name = "py_proto_compile_foo_proto",
+nodejs_proto_compile(
+    name = "nodejs_proto_compile_foo_proto",
     deps = [":foo_proto"],
 )
 ```
@@ -43,7 +43,7 @@ py_proto_compile(
 
 | Label | Tool | Outputs |
 | ---- | ---- | ------- |
-| `//plugins/python/proto:proto` |  |  `{protopath|python}_pb2.py` |
+| `//plugins/nodejs/proto:proto` |  |  `{protopath}_pb.js` |
 
 ## Dependencies
 
@@ -54,7 +54,7 @@ def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def py_proto_compile_deps():
+def nodejs_proto_compile_deps():
     bazel_skylib()
     rules_python()
     zlib()

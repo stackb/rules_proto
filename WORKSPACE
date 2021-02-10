@@ -119,8 +119,23 @@ load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories()
 
+# rules_pkg()
+
+# rules_codeowners()
+
 build_bazel_rules_nodejs()
 
+load("@build_bazel_rules_nodejs//:package.bzl", "rules_nodejs_dev_dependencies")
+
+rules_nodejs_dev_dependencies()
+
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+
+yarn_install(
+    name = "nodejs_proto_grpc_modules",
+    package_json = "//plugins/nodejs/grpc:package.json",
+    yarn_lock = "//plugins/nodejs/grpc:yarn.lock",
+)
 # #
 # # Core
 # #
@@ -258,14 +273,6 @@ build_bazel_rules_nodejs()
 # #
 # load("//nodejs:repositories.bzl", "nodejs_repos")
 # nodejs_repos()
-
-load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
-
-yarn_install(
-    name = "nodejs_proto_grpc_modules",
-    package_json = "//plugins/nodejs/grpc:package.json",
-    yarn_lock = "//plugins/nodejs/grpc:yarn.lock",
-)
 
 # #
 # # Objective-C

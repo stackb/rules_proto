@@ -77,12 +77,12 @@ def _maybe(repo_rule, name, **kwargs):
 
 def java_grpc_library_deps():
     bazel_skylib()
+    rules_python()
+    zlib()
+    rules_jvm_external()
     com_google_protobuf()
     io_grpc_grpc_java()
     rules_java()
-    rules_jvm_external()
-    rules_python()
-    zlib()
 
 def bazel_skylib():
     _maybe(
@@ -92,6 +92,41 @@ def bazel_skylib():
         strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
         urls = [
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+        ],
+    )
+
+def rules_python():
+    _maybe(
+        http_archive,
+        name = "rules_python",
+        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
+        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
+        urls = [
+            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
+        ],
+    )
+
+def zlib():
+    _maybe(
+        http_archive,
+        name = "zlib",
+        sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
+        strip_prefix = "zlib-1.2.11",
+        urls = [
+            "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
+            "https://zlib.net/zlib-1.2.11.tar.gz",
+        ],
+        build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
+    )
+
+def rules_jvm_external():
+    _maybe(
+        http_archive,
+        name = "rules_jvm_external",
+        sha256 = "cee024d5892c3191937d52909a86cba0ef7b5cdda488d00be84fc37590194339",
+        strip_prefix = "rules_jvm_external-576cc9da001be3bae4021ae9e0c06ebb48fcae5d",
+        urls = [
+            "https://github.com/bazelbuild/rules_jvm_external/archive/576cc9da001be3bae4021ae9e0c06ebb48fcae5d.tar.gz",
         ],
     )
 
@@ -126,41 +161,6 @@ def rules_java():
         urls = [
             "https://github.com/bazelbuild/rules_java/archive/c13e3ead84afb95f81fbddfade2749d8ba7cb77f.tar.gz",
         ],
-    )
-
-def rules_jvm_external():
-    _maybe(
-        http_archive,
-        name = "rules_jvm_external",
-        sha256 = "cee024d5892c3191937d52909a86cba0ef7b5cdda488d00be84fc37590194339",
-        strip_prefix = "rules_jvm_external-576cc9da001be3bae4021ae9e0c06ebb48fcae5d",
-        urls = [
-            "https://github.com/bazelbuild/rules_jvm_external/archive/576cc9da001be3bae4021ae9e0c06ebb48fcae5d.tar.gz",
-        ],
-    )
-
-def rules_python():
-    _maybe(
-        http_archive,
-        name = "rules_python",
-        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
-        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
-        urls = [
-            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
-        ],
-    )
-
-def zlib():
-    _maybe(
-        http_archive,
-        name = "zlib",
-        sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
-        strip_prefix = "zlib-1.2.11",
-        urls = [
-            "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
-            "https://zlib.net/zlib-1.2.11.tar.gz",
-        ],
-        build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
 
 ```

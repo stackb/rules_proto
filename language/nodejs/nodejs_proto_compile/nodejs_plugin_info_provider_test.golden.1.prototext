@@ -1,0 +1,11 @@
+exclusions: "google/protobuf"
+label: "//plugins/nodejs/proto:proto"
+name: "proto"
+options: "import_style=commonjs"
+options: "binary"
+output_directory: false
+outputs: "{protopath}_pb.js"
+protoc_plugin_name: "js"
+separate_options_flag: false
+tool_executable: ""
+use_built_in_shell_environment: false

@@ -1,64 +1,16 @@
----
-layout: default
-title: py_proto_compile
-permalink: python/py_proto_compile
-parent: python
----
-
-# py_proto_compile
-
-Generates protocol buffer sources for the [python](/python) language.
-
-## `WORKSPACE`
-
-```python
-load("@build_stack_rules_proto//toolchains:protoc.bzl", "protoc_toolchain")
-
-protoc_toolchain()
-
-load("@build_stack_rules_proto//rules:py_proto_compile_deps.bzl", "py_proto_compile_deps")
-
-py_proto_compile_deps()
-
-```
-
-## `BUILD.bazel`
-
-```python
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules:py_proto_compile.bzl", "py_proto_compile")
-
-proto_library(
-    name = "foo_proto",
-    srcs = ["foo.proto"],
-)
-
-py_proto_compile(
-    name = "py_proto_compile_foo_proto",
-    deps = [":foo_proto"],
-)
-```
-
-## Plugins
-
-| Label | Tool | Outputs |
-| ---- | ---- | ------- |
-| `//plugins/python/proto:proto` |  |  `{protopath|python}_pb2.py` |
-
-## Dependencies
-
-```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 
 def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def py_proto_compile_deps():
+def nodejs_grpc_compile_deps():
     bazel_skylib()
     rules_python()
     zlib()
     com_google_protobuf()
+    build_bazel_rules_nodejs()
+    nodejs_proto_grpc_modules()
 
 def bazel_skylib():
     _maybe(
@@ -106,4 +58,13 @@ def com_google_protobuf():
         ],
     )
 
-```
+def build_bazel_rules_nodejs():
+    _maybe(
+        http_archive,
+        name = "build_bazel_rules_nodejs",
+        sha256 = "9f5abe071e596e58283360aaaeb498c9374ba9052bb84b03917b5b0d2ba68387",
+        strip_prefix = "rules_nodejs-2424d1e32b564fcc37b57d593b871461a62f3237",
+        urls = [
+            "https://github.com/bazelbuild/rules_nodejs/archive/2424d1e32b564fcc37b57d593b871461a62f3237.tar.gz",
+        ],
+    )
