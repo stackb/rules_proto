@@ -7,6 +7,7 @@ proto_dependency(
     workspace_snippet = """yarn_install(
     name = "grpc_js_node_modules",
     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:package.json",
+    symlink_node_modules = False,
     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:yarn.lock",
 )""",
 )

@@ -234,3 +234,44 @@ def rules_codeowners():
         strip_prefix = "rules_codeowners-27fe3bbe6e5b0df196e360fc9e081835f22a10be",
         urls = ["https://github.com/zegl/rules_codeowners/archive/27fe3bbe6e5b0df196e360fc9e081835f22a10be.tar.gz"],
     )
+
+def com_github_grpc_grpc():
+    # Release: v1.35.0
+    # Commit: v1.35.x
+    # Date: 2021-01-19 18:07:57 +0000 UTC
+    # URL: https://github.com/grpc/grpc/releases/tag/v1.35.0
+    # Branch: master
+    # Commit: 5f759fcd1f602b38004b948b071f8b5726a9a4b1
+    # Date: 2021-02-09 05:46:27 +0000 UTC
+    # URL: https://github.com/grpc/grpc/commit/5f759fcd1f602b38004b948b071f8b5726a9a4b1
+    #
+    # Merge pull request #25384 from gnossen/fix_interop_typo
+    #
+    # Fix Interop Client Typo
+    # Size: 7899154 (7.9 MB)
+    maybe(
+        http_archive,
+        name = "com_github_grpc_grpc",
+        sha256 = "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b",
+        strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
+        urls = ["https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz"],
+    )
+
+def rules_cc():
+    # Branch: master
+    # Commit: 40548a2974f1aea06215272d9c2b47a14a24e556
+    # Date: 2021-02-05 12:29:43 +0000 UTC
+    # URL: https://github.com/bazelbuild/rules_cc/commit/40548a2974f1aea06215272d9c2b47a14a24e556
+    #
+    # Automatic code cleanup.
+    #
+    # PiperOrigin-RevId: 355825197
+    # Change-Id: I8acfc20228816c04fcf48bfcc435cbde2b1fb608
+    # Size: 129521 (130 kB)
+    maybe(
+        http_archive,
+        name = "rules_cc",
+        sha256 = "cb8ce8a25464b2a8536450971ad1b45ee309491c1f5e052a611b9e249cfdd35d",
+        strip_prefix = "rules_cc-40548a2974f1aea06215272d9c2b47a14a24e556",
+        urls = ["https://github.com/bazelbuild/rules_cc/archive/40548a2974f1aea06215272d9c2b47a14a24e556.tar.gz"],
+    )

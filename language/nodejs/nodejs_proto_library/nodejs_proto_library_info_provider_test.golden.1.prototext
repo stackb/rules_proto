@@ -59,7 +59,7 @@ deps {
   repositoryRule: "phony"
   sha256: ""
   stripPrefix: ""
-  workspaceSnippet: "yarn_install(\n    name = \"google_protobuf_node_modules\",\n    package_json = \"@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:package.json\",\n    yarn_lock = \"@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:yarn.lock\",\n)"
+  workspaceSnippet: "yarn_install(\n    name = \"google_protobuf_node_modules\",\n    package_json = \"@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:package.json\",\n    symlink_node_modules = False,\n    yarn_lock = \"@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:yarn.lock\",\n)"
 }
 deps_file: "language/nodejs/nodejs_proto_library/nodejs_proto_library_deps.bzl"
 json_file: "language/nodejs/nodejs_proto_library/nodejs_proto_library.json"
