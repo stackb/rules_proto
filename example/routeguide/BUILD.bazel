@@ -59,7 +59,7 @@ proto_compile_test(
         "routeguide.js",
     ],
     rule = closure_proto_compile,
-    deps = ["routeguide_proto"],
+    deps = [":routeguide_proto"],
 )
 
 closure_proto_library(
@@ -71,10 +71,11 @@ closure_proto_library(
 proto_compile_test(
     name = "routeguide_java_grpc_compile_test",
     srcs = [
-        "routeguide.js",
+        "routeguide_proto.srcjar",
+        "routeguide_proto_grpc.srcjar",
     ],
     rule = java_grpc_compile,
-    deps = ["routeguide_grpc"],
+    deps = [":routeguide_proto"],
 )
 
 java_grpc_library(
