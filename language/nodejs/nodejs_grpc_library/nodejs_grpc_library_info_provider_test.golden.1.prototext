@@ -1,6 +1,6 @@
-bazel_test_file: "language/nodejs/nodejs_proto_library/nodejs_proto_library_bazel_test.go"
-build_file: "language/nodejs/nodejs_proto_library/nodejs_proto_library.BUILD"
-bzl_file: "language/nodejs/nodejs_proto_library/nodejs_proto_library.bzl"
+bazel_test_file: "language/nodejs/nodejs_grpc_library/nodejs_grpc_library_bazel_test.go"
+build_file: "language/nodejs/nodejs_grpc_library/nodejs_grpc_library.BUILD"
+bzl_file: "language/nodejs/nodejs_grpc_library/nodejs_grpc_library.bzl"
 deps {
   buildFile: ""
   label: "//core:bazel_skylib"
@@ -61,7 +61,16 @@ deps {
   stripPrefix: ""
   workspaceSnippet: "yarn_install(\n    name = \"google_protobuf_node_modules\",\n    package_json = \"@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:package.json\",\n    yarn_lock = \"@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:yarn.lock\",\n)"
 }
-deps_file: "language/nodejs/nodejs_proto_library/nodejs_proto_library_deps.bzl"
-json_file: "language/nodejs/nodejs_proto_library/nodejs_proto_library.json"
-name: "nodejs_proto_library"
-workspace_file: "language/nodejs/nodejs_proto_library/nodejs_proto_library.WORKSPACE"
+deps {
+  buildFile: ""
+  label: "//plugins/nodejs/modules/grpc-js:grpc_js_node_modules"
+  name: "grpc_js_node_modules"
+  repositoryRule: "phony"
+  sha256: ""
+  stripPrefix: ""
+  workspaceSnippet: "yarn_install(\n    name = \"grpc_js_node_modules\",\n    package_json = \"@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:package.json\",\n    yarn_lock = \"@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:yarn.lock\",\n)"
+}
+deps_file: "language/nodejs/nodejs_grpc_library/nodejs_grpc_library_deps.bzl"
+json_file: "language/nodejs/nodejs_grpc_library/nodejs_grpc_library.json"
+name: "nodejs_grpc_library"
+workspace_file: "language/nodejs/nodejs_grpc_library/nodejs_grpc_library.WORKSPACE"

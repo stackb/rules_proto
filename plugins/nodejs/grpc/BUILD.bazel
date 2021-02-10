@@ -1,5 +1,4 @@
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
-load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
 
 proto_plugin(
     name = "grpc",
@@ -7,22 +6,9 @@ proto_plugin(
     options = ["grpc_js"],
     output_directory = True,
     protoc_plugin_name = "grpc_js",
-    tool = "@nodejs_grpc_tools_modules//grpc-tools/bin:grpc_tools_node_protoc_plugin",
+    tool = "@grpc_tools_node_modules//grpc-tools/bin:grpc_tools_node_protoc_plugin",
     visibility = ["//visibility:public"],
-    deps = [":nodejs_grpc_tools_modules"],
-)
-
-proto_dependency(
-    name = "nodejs_grpc_tools_modules",
-    repository_rule = "phony",
-    workspace_snippet = """
-load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
-
-yarn_install(
-    name = "nodejs_grpc_tools_modules",
-    package_json = "//plugin/nodejs/grpc:package.json",
-    yarn_json = "//plugin/nodejs/grpc:yarn.json",
-)""",
+    deps = ["@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:grpc_tools_node_modules"],
 )
 
 filegroup(

@@ -202,9 +202,8 @@ def build_bazel_rules_nodejs():
     maybe(
         http_archive,
         name = "build_bazel_rules_nodejs",
-        sha256 = "6fd1205e38326fcc25af12fce99328e4400c1caf00c734f903e6570be20e1adc",
-        strip_prefix = "rules_nodejs-7edc97c23c1e64aaef8f9875209c65f663952bf1",
-        urls = ["https://github.com/bazelbuild/rules_nodejs/archive/7edc97c23c1e64aaef8f9875209c65f663952bf1.tar.gz"],
+        sha256 = "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d",
+        urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/3.0.0/rules_nodejs-3.0.0.tar.gz"],
     )
 
 def rules_pkg():

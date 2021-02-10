@@ -7,7 +7,7 @@ parent: java
 
 # java_grpc_library
 
-Generates protocol buffer sources for the [java](/java) language.
+Generates protocol buffer sources for the [java](/rules_proto/java) language.
 
 ## `WORKSPACE`
 
@@ -19,7 +19,6 @@ protoc_toolchain()
 load("@build_stack_rules_proto//rules:java_grpc_library_deps.bzl", "java_grpc_library_deps")
 
 java_grpc_library_deps()
-
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS")
 load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS")
@@ -84,6 +83,7 @@ def java_grpc_library_deps():
     io_grpc_grpc_java()
     rules_java()
 
+
 def bazel_skylib():
     _maybe(
         http_archive,
@@ -94,7 +94,6 @@ def bazel_skylib():
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
         ],
     )
-
 def rules_python():
     _maybe(
         http_archive,
@@ -105,7 +104,6 @@ def rules_python():
             "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
         ],
     )
-
 def zlib():
     _maybe(
         http_archive,
@@ -118,7 +116,6 @@ def zlib():
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
-
 def rules_jvm_external():
     _maybe(
         http_archive,
@@ -129,7 +126,6 @@ def rules_jvm_external():
             "https://github.com/bazelbuild/rules_jvm_external/archive/576cc9da001be3bae4021ae9e0c06ebb48fcae5d.tar.gz",
         ],
     )
-
 def com_google_protobuf():
     _maybe(
         http_archive,
@@ -140,7 +136,6 @@ def com_google_protobuf():
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
         ],
     )
-
 def io_grpc_grpc_java():
     _maybe(
         http_archive,
@@ -151,7 +146,6 @@ def io_grpc_grpc_java():
             "https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz",
         ],
     )
-
 def rules_java():
     _maybe(
         http_archive,
@@ -162,5 +156,4 @@ def rules_java():
             "https://github.com/bazelbuild/rules_java/archive/c13e3ead84afb95f81fbddfade2749d8ba7cb77f.tar.gz",
         ],
     )
-
 ```

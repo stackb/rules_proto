@@ -7,7 +7,7 @@ parent: closure
 
 # closure_proto_library
 
-Generates protocol buffer sources for the [closure](/closure) language.
+Generates protocol buffer sources for the [closure](/rules_proto/closure) language.
 
 ## `WORKSPACE`
 
@@ -19,7 +19,6 @@ protoc_toolchain()
 load("@build_stack_rules_proto//rules:closure_proto_library_deps.bzl", "closure_proto_library_deps")
 
 closure_proto_library_deps()
-
 load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
 
 rules_closure_dependencies(
@@ -70,6 +69,7 @@ def closure_proto_library_deps():
     com_google_protobuf()
     io_bazel_rules_closure()
 
+
 def bazel_skylib():
     _maybe(
         http_archive,
@@ -80,7 +80,6 @@ def bazel_skylib():
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
         ],
     )
-
 def rules_python():
     _maybe(
         http_archive,
@@ -91,7 +90,6 @@ def rules_python():
             "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
         ],
     )
-
 def zlib():
     _maybe(
         http_archive,
@@ -104,7 +102,6 @@ def zlib():
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
-
 def com_google_protobuf():
     _maybe(
         http_archive,
@@ -115,7 +112,6 @@ def com_google_protobuf():
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
         ],
     )
-
 def io_bazel_rules_closure():
     _maybe(
         http_archive,
@@ -126,5 +122,4 @@ def io_bazel_rules_closure():
             "https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz",
         ],
     )
-
 ```

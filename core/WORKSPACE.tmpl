@@ -4,6 +4,5 @@ protoc_toolchain()
 
 load("@build_stack_rules_proto//{{ .Rule.Package }}:{{ .Rule.Name }}_deps.bzl", "{{ .Rule.Name }}_deps")
 
-{{ .Rule.Name }}_deps(){{ if .Deps }}
-{{ range .Deps }}{{ if .WorkspaceSnippet }}
+{{ .Rule.Name }}_deps(){{ if .Deps }}{{ range .Deps }}{{ if .WorkspaceSnippet }}
 {{ .WorkspaceSnippet }}{{ end }}{{ end }}{{ end }}

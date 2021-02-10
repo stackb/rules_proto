@@ -49,6 +49,6 @@ proto_rule_test(
 
 proto_rule_bazel_test(
     name = "nodejs_grpc_compile_rule_bazel_test",
-    tags = ["exclusive"],
+    tags = ["exclusive", "manual"],
     deps = ["nodejs_grpc_compile"],
 )

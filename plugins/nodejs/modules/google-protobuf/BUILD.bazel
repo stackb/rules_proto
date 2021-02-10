@@ -1,0 +1,24 @@
+load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
+
+exports_files([
+    "yarn.lock",
+    "package.json",
+])
+
+proto_dependency(
+    name = "google_protobuf_node_modules",
+    repository_rule = "phony",
+    visibility = ["//visibility:public"],
+    workspace_snippet = """yarn_install(
+    name = "google_protobuf_node_modules",
+    package_json = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:package.json",
+    yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:yarn.lock",
+)""",
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)

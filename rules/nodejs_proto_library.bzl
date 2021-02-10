@@ -6,7 +6,7 @@ load(
 load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
 
 PROTO_DEPS = [
-    "@nodejs_proto_grpc_modules//google-protobuf",
+    "@google_protobuf_node_modules//google-protobuf",
 ]
 
 def nodejs_proto_library(**kwargs):

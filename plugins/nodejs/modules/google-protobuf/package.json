@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "google-protobuf": "3.14.0"
+  }
+}

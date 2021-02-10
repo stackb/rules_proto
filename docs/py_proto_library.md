@@ -7,7 +7,7 @@ parent: python
 
 # py_proto_library
 
-Generates protocol buffer sources for the [python](/python) language.
+Generates protocol buffer sources for the [python](/rules_proto/python) language.
 
 ## `WORKSPACE`
 
@@ -19,7 +19,6 @@ protoc_toolchain()
 load("@build_stack_rules_proto//rules:py_proto_library_deps.bzl", "py_proto_library_deps")
 
 py_proto_library_deps()
-
 ```
 
 ## `BUILD.bazel`
@@ -61,6 +60,7 @@ def py_proto_library_deps():
     com_google_protobuf()
     six()
 
+
 def bazel_skylib():
     _maybe(
         http_archive,
@@ -71,7 +71,6 @@ def bazel_skylib():
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
         ],
     )
-
 def rules_python():
     _maybe(
         http_archive,
@@ -82,7 +81,6 @@ def rules_python():
             "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
         ],
     )
-
 def zlib():
     _maybe(
         http_archive,
@@ -95,7 +93,6 @@ def zlib():
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
-
 def com_google_protobuf():
     _maybe(
         http_archive,
@@ -106,7 +103,6 @@ def com_google_protobuf():
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
         ],
     )
-
 def six():
     _maybe(
         http_archive,
@@ -118,5 +114,4 @@ def six():
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.six",
     )
-
 ```

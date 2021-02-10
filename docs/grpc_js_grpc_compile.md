@@ -7,7 +7,7 @@ parent: grpc_js
 
 # grpc_js_grpc_compile
 
-Generates protocol buffer sources for the [grpc_js](/grpc_js) language.
+Generates protocol buffer sources for the [grpc_js](/rules_proto/grpc_js) language.
 
 ## `WORKSPACE`
 
@@ -19,7 +19,6 @@ protoc_toolchain()
 load("@build_stack_rules_proto//rules:grpc_js_grpc_compile_deps.bzl", "grpc_js_grpc_compile_deps")
 
 grpc_js_grpc_compile_deps()
-
 ```
 
 ## `BUILD.bazel`
@@ -62,6 +61,7 @@ def grpc_js_grpc_compile_deps():
     com_google_protobuf()
     com_github_stackb_grpc_js()
 
+
 def bazel_skylib():
     _maybe(
         http_archive,
@@ -72,7 +72,6 @@ def bazel_skylib():
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
         ],
     )
-
 def rules_python():
     _maybe(
         http_archive,
@@ -83,7 +82,6 @@ def rules_python():
             "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
         ],
     )
-
 def zlib():
     _maybe(
         http_archive,
@@ -96,7 +94,6 @@ def zlib():
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
-
 def com_google_protobuf():
     _maybe(
         http_archive,
@@ -107,7 +104,6 @@ def com_google_protobuf():
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
         ],
     )
-
 def com_github_stackb_grpc_js():
     _maybe(
         http_archive,
@@ -118,5 +114,4 @@ def com_github_stackb_grpc_js():
             "https://github.com/stackb/grpc.js/archive/beb6ac3b43247816c1a1ebf741ebf0c98203414a.tar.gz",
         ],
     )
-
 ```

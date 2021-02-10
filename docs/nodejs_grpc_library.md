@@ -7,7 +7,7 @@ parent: nodejs
 
 # nodejs_grpc_library
 
-Generates protocol buffer sources for the [nodejs](/nodejs) language.
+Generates protocol buffer sources for the [nodejs](/rules_proto/nodejs) language.
 
 ## `WORKSPACE`
 
@@ -20,16 +20,22 @@ load("@build_stack_rules_proto//rules:nodejs_grpc_library_deps.bzl", "nodejs_grp
 
 nodejs_grpc_library_deps()
 
-load("@build_bazel_rules_nodejs//:package.bzl", "rules_nodejs_dev_dependencies")
-
-rules_nodejs_dev_dependencies()
-
 load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
 
 yarn_install(
-    name = "nodejs_proto_grpc_modules",
-    package_json = "//plugin/nodejs/grpc:package.json",
-    yarn_json = "//plugin/nodejs/grpc:yarn.json",
+    name = "google_protobuf_node_modules",
+    package_json = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:package.json",
+    yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:yarn.lock",
+)
+yarn_install(
+    name = "grpc_js_node_modules",
+    package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:package.json",
+    yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:yarn.lock",
+)
+yarn_install(
+    name = "grpc_tools_node_modules",
+    package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:package.json",
+    yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:yarn.lock",
 )
 ```
 
@@ -72,7 +78,7 @@ def nodejs_grpc_library_deps():
     zlib()
     com_google_protobuf()
     build_bazel_rules_nodejs()
-    nodejs_proto_grpc_modules()
+
 
 def bazel_skylib():
     _maybe(
@@ -84,7 +90,6 @@ def bazel_skylib():
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
         ],
     )
-
 def rules_python():
     _maybe(
         http_archive,
@@ -95,7 +100,6 @@ def rules_python():
             "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
         ],
     )
-
 def zlib():
     _maybe(
         http_archive,
@@ -108,7 +112,6 @@ def zlib():
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
-
 def com_google_protobuf():
     _maybe(
         http_archive,
@@ -119,16 +122,13 @@ def com_google_protobuf():
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
         ],
     )
-
 def build_bazel_rules_nodejs():
     _maybe(
         http_archive,
         name = "build_bazel_rules_nodejs",
-        sha256 = "9f5abe071e596e58283360aaaeb498c9374ba9052bb84b03917b5b0d2ba68387",
-        strip_prefix = "rules_nodejs-2424d1e32b564fcc37b57d593b871461a62f3237",
+        sha256 = "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d",
         urls = [
-            "https://github.com/bazelbuild/rules_nodejs/archive/2424d1e32b564fcc37b57d593b871461a62f3237.tar.gz",
+            "https://github.com/bazelbuild/rules_nodejs/releases/download/3.0.0/rules_nodejs-3.0.0.tar.gz",
         ],
     )
-
 ```
