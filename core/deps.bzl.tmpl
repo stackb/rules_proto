@@ -6,7 +6,7 @@ def _maybe(repo_rule, name, **kwargs):
 
 def {{ .Rule.Name }}_deps():{{ range .Deps }}
     {{ .Name }}(){{ end }}
-{{ range .Deps }}
+{{ range .Deps }}if {{ if ne .RepositoryRule "phony" }}
 def {{ .Name }}():
     _maybe(
         {{ .RepositoryRule }},
@@ -18,4 +18,4 @@ def {{ .Name }}():
         ],{{ end }}{{ if .BuildFile }}
         build_file = "{{ .BuildFile }}",{{ end }}
     )
-{{ end }}
+{{ end }}{{ end }}

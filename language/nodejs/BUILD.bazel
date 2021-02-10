@@ -1,0 +1,76 @@
+load(
+    "@build_stack_rules_proto//language/rules:proto_language_info_provider_test.bzl",
+    "proto_language_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_language_test.bzl",
+    "proto_language_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_language.bzl",
+    "proto_language",
+)
+load(
+    "@build_stack_rules_proto//rules:proto_dependency.bzl",
+    "proto_dependency",
+)
+
+proto_language(
+    name = "nodejs",
+    avatar_url = "https://github.com/nodejs.png",
+    display_name = "NodeJS",
+    package = "rules",
+    prefix = "nodejs",
+    rules = [
+        "nodejs_grpc_compile",
+        "nodejs_grpc_library",
+        "nodejs_proto_compile",
+        "nodejs_proto_library",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_language_info_provider_test(
+    name = "nodejs_info_provider_test",
+    srcs = ["nodejs_info_provider_test.golden.1.prototext"],
+    deps = [":nodejs"],
+)
+
+proto_language_test(
+    name = "nodejs_language_test",
+    srcs = ["//rules:nodejs.bzl"],
+    package = "rules",
+    deps = [":nodejs"],
+)
+
+# Release: 3.1.0
+# Commit: stable
+# Date: 2021-02-02 01:45:57 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_nodejs/releases/tag/3.1.0
+# Branch: master
+# Commit: 2424d1e32b564fcc37b57d593b871461a62f3237
+# Date: 2020-09-09 17:40:27 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_nodejs/commit/2424d1e32b564fcc37b57d593b871461a62f3237
+#
+# Add spica to adopter organization list (#2183)
+# Size: 5204026 (5.2 MB)
+proto_dependency(
+    name = "build_bazel_rules_nodejs",
+    repository_rule = "http_archive",
+    sha256 = "9f5abe071e596e58283360aaaeb498c9374ba9052bb84b03917b5b0d2ba68387",
+    strip_prefix = "rules_nodejs-2424d1e32b564fcc37b57d593b871461a62f3237",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/archive/2424d1e32b564fcc37b57d593b871461a62f3237.tar.gz"],
+    visibility = ["//visibility:public"],
+)
+
+# Not an external dependency per-se but provides a workspace snippet for the yarn_install.
+proto_dependency(
+    name = "nodejs_grpc_modules",
+    repository_rule = "phony",
+    workspace_snippet = """load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+yarn_install(
+    name = "nodejs_proto_grpc_modules",
+    package_json = "//plugin/nodejs/grpc:package.json",
+    yarn_json = "//plugin/nodejs/grpc:yarn.json",
+)""",
+)

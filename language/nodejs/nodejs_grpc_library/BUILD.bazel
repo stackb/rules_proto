@@ -1,0 +1,56 @@
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_info_provider_test.bzl",
+    "proto_rule_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_test.bzl",
+    "proto_rule_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_bazel_test.bzl",
+    "proto_rule_bazel_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule.bzl",
+    "proto_rule",
+)
+
+proto_rule(
+    name = "nodejs_grpc_library",
+    build_example_tmpl = "//core/grpc:BUILD.tmpl",
+    implementation_tmpl = "nodejs_grpc_library.bzl.tmpl",
+    kind = "grpc",
+    language = "//language/nodejs",
+    package = "rules",
+    plugins = [
+        "//plugins/nodejs/proto",
+        "//plugins/nodejs/grpc",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//core:com_google_protobuf",
+        "//language/nodejs:build_bazel_rules_nodejs",
+    ],
+)
+
+proto_rule_info_provider_test(
+    name = "nodejs_grpc_library_info_provider_test",
+    srcs = ["nodejs_grpc_library_info_provider_test.golden.1.prototext"],
+    deps = [":nodejs_grpc_library"],
+)
+
+proto_rule_test(
+    name = "nodejs_grpc_library_rule_test",
+    srcs = [
+        "//rules:nodejs_grpc_library.bzl",
+        "//rules:nodejs_grpc_library_deps.bzl",
+    ],
+    package = "rules",
+    deps = [":nodejs_grpc_library"],
+)
+
+proto_rule_bazel_test(
+    name = "nodejs_grpc_library_rule_bazel_test",
+    tags = ["exclusive"],
+    deps = ["nodejs_grpc_library"],
+)

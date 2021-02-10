@@ -1,0 +1,9 @@
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = [
+        "//plugins/nodejs/grpc:all_files",
+        "//plugins/nodejs/proto:all_files",
+    ],
+    visibility = ["//visibility:public"],
+)

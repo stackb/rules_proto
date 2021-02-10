@@ -10,6 +10,7 @@ load(
     "//:deps.bzl",
     "bazel_gazelle",
     "bazel_skylib",
+    "build_bazel_rules_nodejs",
     "build_bazel_rules_swift",
     "com_github_stackb_grpc_js",
     "com_google_protobuf",
@@ -117,6 +118,8 @@ io_grpc_grpc_java()
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories()
+
+build_bazel_rules_nodejs()
 
 # #
 # # Core
@@ -258,7 +261,7 @@ grpc_java_repositories()
 
 # load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
 # yarn_install(
-#     name = "nodejs_modules",
+#     name = "nodejs_proto_grpc_modules",
 #     package_json = "//nodejs:requirements/package.json",
 #     yarn_lock = "//nodejs:requirements/yarn.lock",
 # )

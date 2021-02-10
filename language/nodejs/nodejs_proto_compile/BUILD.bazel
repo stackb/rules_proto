@@ -1,0 +1,57 @@
+load(
+    "@build_stack_rules_proto//language/rules:proto_plugin_info_provider_test.bzl",
+    "proto_plugin_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_info_provider_test.bzl",
+    "proto_rule_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_test.bzl",
+    "proto_rule_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule_bazel_test.bzl",
+    "proto_rule_bazel_test",
+)
+load(
+    "@build_stack_rules_proto//language/rules:proto_rule.bzl",
+    "proto_rule",
+)
+
+proto_rule(
+    name = "nodejs_proto_compile",
+    kind = "proto",
+    language = "//language/nodejs",
+    package = "rules",
+    plugins = ["//plugins/nodejs/proto"],
+    visibility = ["//visibility:public"],
+)
+
+proto_rule_info_provider_test(
+    name = "nodejs_proto_compile_info_provider_test",
+    srcs = ["nodejs_proto_compile_info_provider_test.golden.1.prototext"],
+    deps = [":nodejs_proto_compile"],
+)
+
+proto_rule_test(
+    name = "nodejs_proto_compile_rule_test",
+    srcs = [
+        "//rules:nodejs_proto_compile.bzl",
+        "//rules:nodejs_proto_compile_deps.bzl",
+    ],
+    package = "rules",
+    deps = [":nodejs_proto_compile"],
+)
+
+proto_rule_bazel_test(
+    name = "nodejs_proto_compile_rule_bazel_test",
+    tags = ["exclusive"],
+    deps = ["nodejs_proto_compile"],
+)
+
+proto_plugin_info_provider_test(
+    name = "nodejs_plugin_info_provider_test",
+    srcs = ["nodejs_plugin_info_provider_test.golden.1.prototext"],
+    deps = ["//plugins/nodejs/proto"],
+)

@@ -63,8 +63,8 @@ proto_compile_test(
 
 closure_proto_library(
     name = "routeguide_closure_proto",
-    deps = [":routeguide_proto"],
     visibility = ["//visibility:public"],
+    deps = [":routeguide_proto"],
 )
 
 filegroup(

@@ -1,0 +1,21 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "grpc",
+    exclusions = ["google/protobuf"],
+    options = ["grpc_js"],
+    output_directory = True,
+    protoc_plugin_name = "grpc_js",
+    tool = "@nodejs_proto_grpc_modules//grpc-tools/bin:grpc_tools_node_protoc_plugin",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//language/nodejs:nodejs_proto_grpc_modules",
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)

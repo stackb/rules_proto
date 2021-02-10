@@ -2,3 +2,4 @@ __pycache__
 bazel-*
 vendor
 old-example
+node_modules

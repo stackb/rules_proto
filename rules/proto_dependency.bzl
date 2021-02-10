@@ -52,7 +52,7 @@ proto_dependency = rule(
         ),
         "repository_rule": attr.string(
             doc = "The repository rule that instantiates this dependency",
-            values = ["http_archive", "http_file", "bind", "go_repository"],
+            values = ["http_archive", "http_file", "bind", "go_repository", "phony"],
         ),
         "sha256": attr.string(
             doc = "The sha256 attribute for http_archive",

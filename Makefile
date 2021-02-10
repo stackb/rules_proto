@@ -38,6 +38,12 @@ wip:
 make fix: laze goldens test
 	echo "All fixed up!"
 
+# Run yarn to upgrade the nodejs dependencies
+.PHONY: nodejs_proto_grpc_modules
+nodejs_proto_grpc_modules:
+	cd plugins/nodejs/grpc/ && yarn install
+
+
 # # Run the rulegen system
 # .PHONY: rulegen
 # rulegen:

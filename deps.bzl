@@ -197,3 +197,23 @@ def io_grpc_grpc_java():
         strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
         urls = ["https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz"],
     )
+
+def build_bazel_rules_nodejs():
+    # Release: 3.1.0
+    # Commit: stable
+    # Date: 2021-02-02 01:45:57 +0000 UTC
+    # URL: https://github.com/bazelbuild/rules_nodejs/releases/tag/3.1.0
+    # Branch: master
+    # Commit: 2424d1e32b564fcc37b57d593b871461a62f3237
+    # Date: 2020-09-09 17:40:27 +0000 UTC
+    # URL: https://github.com/bazelbuild/rules_nodejs/commit/2424d1e32b564fcc37b57d593b871461a62f3237
+    #
+    # Add spica to adopter organization list (#2183)
+    # Size: 5204026 (5.2 MB)
+    maybe(
+        http_archive,
+        name = "build_bazel_rules_nodejs",
+        sha256 = "9f5abe071e596e58283360aaaeb498c9374ba9052bb84b03917b5b0d2ba68387",
+        strip_prefix = "rules_nodejs-2424d1e32b564fcc37b57d593b871461a62f3237",
+        urls = ["https://github.com/bazelbuild/rules_nodejs/archive/2424d1e32b564fcc37b57d593b871461a62f3237.tar.gz"],
+    )

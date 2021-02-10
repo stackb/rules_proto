@@ -6,6 +6,7 @@ filegroup(
         "//plugins/closure:all_files",
         "//plugins/grpc_js:all_files",
         "//plugins/java:all_files",
+        "//plugins/nodejs:all_files",
         "//plugins/python:all_files",
     ],
     visibility = ["//visibility:public"],
