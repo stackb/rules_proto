@@ -1,5 +1,5 @@
 load(
-    "@build_stack_rules_proto//:provider_test.bzl",
+    "@build_stack_rules_proto//language/rules:provider_test.bzl",
     "redact_host_configuration",
 )
 

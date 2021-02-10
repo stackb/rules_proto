@@ -1,6 +1,6 @@
 load("@build_stack_rules_proto//internal:common.bzl", "ProtoCompileInfo")
 load(
-    "@build_stack_rules_proto//:provider_test.bzl",
+    "@build_stack_rules_proto//language/rules:provider_test.bzl",
     "provider_test_implementation",
     "provider_test_macro",
     "provider_test_rule_pair",

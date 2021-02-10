@@ -50,7 +50,7 @@ deps {
   sha256: "4c98a6b8d2d81210f3e291b1c7c5034ab2e22e7870ab3e9603599c79833f7da3"
   stripPrefix: "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3"
   urls: "https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz"
-  workspaceSnippet: "load(\"@io_bazel_rules_closure//closure:repositories.bzl\", \"rules_closure_dependencies\", \"rules_closure_toolchains\")\n\nrules_closure_dependencies(\n    omit_bazel_skylib = True,\n    omit_com_google_protobuf = True,\n    omit_zlib = True,\n)\n\nrules_closure_toolchains()"
+  workspaceSnippet: "load(\"@io_bazel_rules_closure//closure:repositories.bzl\", \"rules_closure_dependencies\", \"rules_closure_toolchains\")\n\nrules_closure_dependencies(\n    omit_bazel_skylib = False,\n    omit_com_google_protobuf = True,\n    omit_zlib = True,\n)\n\nrules_closure_toolchains()"
 }
 deps_file: "language/closure/closure_proto_library/closure_proto_library_deps.bzl"
 json_file: "language/closure/closure_proto_library/closure_proto_library.json"
