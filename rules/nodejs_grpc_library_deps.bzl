@@ -8,8 +8,8 @@ def nodejs_grpc_library_deps():
     bazel_skylib()
     rules_python()
     zlib()
-    com_google_protobuf()
     build_bazel_rules_nodejs()
+    com_google_protobuf()
 
 
 def bazel_skylib():
@@ -44,6 +44,15 @@ def zlib():
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
+def build_bazel_rules_nodejs():
+    _maybe(
+        http_archive,
+        name = "build_bazel_rules_nodejs",
+        sha256 = "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d",
+        urls = [
+            "https://github.com/bazelbuild/rules_nodejs/releases/download/3.0.0/rules_nodejs-3.0.0.tar.gz",
+        ],
+    )
 def com_google_protobuf():
     _maybe(
         http_archive,
@@ -52,14 +61,5 @@ def com_google_protobuf():
         strip_prefix = "protobuf-3.14.0",
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
-        ],
-    )
-def build_bazel_rules_nodejs():
-    _maybe(
-        http_archive,
-        name = "build_bazel_rules_nodejs",
-        sha256 = "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d",
-        urls = [
-            "https://github.com/bazelbuild/rules_nodejs/releases/download/3.0.0/rules_nodejs-3.0.0.tar.gz",
         ],
     )

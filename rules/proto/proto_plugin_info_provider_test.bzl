@@ -4,7 +4,7 @@ load(
     "proto_plugin_info_to_struct",
 )
 load(
-    "@build_stack_rules_proto//rules/proto/rules:provider_test.bzl",
+    "@build_stack_rules_proto//rules/proto:provider_test.bzl",
     "provider_test_implementation",
     "provider_test_macro",
     "provider_test_rule_pair",

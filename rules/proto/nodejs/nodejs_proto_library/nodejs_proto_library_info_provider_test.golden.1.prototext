@@ -34,6 +34,16 @@ deps {
 }
 deps {
   buildFile: ""
+  label: "//rules/proto/nodejs:build_bazel_rules_nodejs"
+  name: "build_bazel_rules_nodejs"
+  repositoryRule: "http_archive"
+  sha256: "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d"
+  stripPrefix: ""
+  urls: "https://github.com/bazelbuild/rules_nodejs/releases/download/3.0.0/rules_nodejs-3.0.0.tar.gz"
+  workspaceSnippet: "\nload(\"@build_bazel_rules_nodejs//:index.bzl\", \"yarn_install\")\n"
+}
+deps {
+  buildFile: ""
   label: "//core:com_google_protobuf"
   name: "com_google_protobuf"
   repositoryRule: "http_archive"
@@ -50,16 +60,6 @@ deps {
   sha256: ""
   stripPrefix: ""
   workspaceSnippet: "yarn_install(\n    name = \"google_protobuf_node_modules\",\n    package_json = \"@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:package.json\",\n    symlink_node_modules = False,\n    yarn_lock = \"@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:yarn.lock\",\n)"
-}
-deps {
-  buildFile: ""
-  label: "//rules/proto/nodejs:build_bazel_rules_nodejs"
-  name: "build_bazel_rules_nodejs"
-  repositoryRule: "http_archive"
-  sha256: "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d"
-  stripPrefix: ""
-  urls: "https://github.com/bazelbuild/rules_nodejs/releases/download/3.0.0/rules_nodejs-3.0.0.tar.gz"
-  workspaceSnippet: "\nload(\"@build_bazel_rules_nodejs//:index.bzl\", \"yarn_install\")\n"
 }
 deps_file: "rules/proto/nodejs/nodejs_proto_library/nodejs_proto_library_deps.bzl"
 json_file: "rules/proto/nodejs/nodejs_proto_library/nodejs_proto_library.json"

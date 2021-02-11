@@ -70,23 +70,23 @@ func (*protoRuleLang) Kinds() map[string]rule.KindInfo {
 func (*protoRuleLang) Loads() []rule.LoadInfo {
 	return []rule.LoadInfo{
 		{
-			Name:    "@build_stack_rules_proto//rules/proto/rules:proto_language_info_provider_test.bzl",
+			Name:    "@build_stack_rules_proto//rules/proto:proto_language_info_provider_test.bzl",
 			Symbols: []string{"proto_language_info_provider_test"},
 		},
 		{
-			Name:    "@build_stack_rules_proto//rules/proto/rules:proto_info_provider_test.bzl",
+			Name:    "@build_stack_rules_proto//rules/proto:proto_info_provider_test.bzl",
 			Symbols: []string{"proto_info_provider_test"},
 		},
 		{
-			Name:    "@build_stack_rules_proto//rules/proto/rules:proto_plugin_info_provider_test.bzl",
+			Name:    "@build_stack_rules_proto//rules/proto:proto_plugin_info_provider_test.bzl",
 			Symbols: []string{"proto_plugin_info_provider_test"},
 		},
 		{
-			Name:    "@build_stack_rules_proto//rules/proto/rules:proto_rule_info_provider_test.bzl",
+			Name:    "@build_stack_rules_proto//rules/proto:proto_rule_info_provider_test.bzl",
 			Symbols: []string{"proto_rule_info_provider_test"},
 		},
 		{
-			Name:    "@build_stack_rules_proto//rules/proto/rules:proto_rule_test.bzl",
+			Name:    "@build_stack_rules_proto//rules/proto:proto_rule_test.bzl",
 			Symbols: []string{"proto_rule_test"},
 		},
 	}

@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//rules/proto/rules:proto_language.bzl", "ProtoLanguageInfo")
+load("@build_stack_rules_proto//rules/proto:proto_language.bzl", "ProtoLanguageInfo")
 load(
     "@build_stack_rules_proto//tools/gencopy:gencopy.bzl",
     "gencopy_action",

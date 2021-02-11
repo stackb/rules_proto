@@ -1,17 +1,17 @@
 load(
-    "@build_stack_rules_proto//rules/proto/rules:proto_rule_info_provider_test.bzl",
+    "@build_stack_rules_proto//rules/proto:proto_rule_info_provider_test.bzl",
     "proto_rule_info_provider_test",
 )
 load(
-    "@build_stack_rules_proto//rules/proto/rules:proto_rule_test.bzl",
+    "@build_stack_rules_proto//rules/proto:proto_rule_test.bzl",
     "proto_rule_test",
 )
 load(
-    "@build_stack_rules_proto//rules/proto/rules:proto_rule_bazel_test.bzl",
+    "@build_stack_rules_proto//rules/proto:proto_rule_bazel_test.bzl",
     "proto_rule_bazel_test",
 )
 load(
-    "@build_stack_rules_proto//rules/proto/rules:proto_rule.bzl",
+    "@build_stack_rules_proto//rules/proto:proto_rule.bzl",
     "proto_rule",
 )
 
@@ -26,7 +26,6 @@ proto_rule(
     deps = [
         "//core:com_google_protobuf",
         "//plugins/nodejs/modules/google-protobuf:google_protobuf_node_modules",
-        "//rules/proto/nodejs:build_bazel_rules_nodejs",
     ],
 )
 

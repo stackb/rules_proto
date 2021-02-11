@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//rules/proto/rules:proto_site_test.bzl", "proto_site_test")
+load("@build_stack_rules_proto//rules/proto:proto_site_test.bzl", "proto_site_test")
 
 proto_site_test(
     name = "site_test",

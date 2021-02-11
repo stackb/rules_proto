@@ -67,6 +67,7 @@ func collectDeps(rule *ProtoRule) (all []*ProtoDependency) {
 		if seen[dep.Name] {
 			continue
 		}
+		seen[dep.Name] = true
 		all = append(all, dep)
 	}
 
@@ -75,6 +76,7 @@ func collectDeps(rule *ProtoRule) (all []*ProtoDependency) {
 			if seen[dep.Name] {
 				continue
 			}
+			seen[dep.Name] = true
 			all = append(all, dep)
 		}
 	}

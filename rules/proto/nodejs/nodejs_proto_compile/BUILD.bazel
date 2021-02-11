@@ -1,21 +1,21 @@
 load(
-    "@build_stack_rules_proto//rules/proto/rules:proto_plugin_info_provider_test.bzl",
+    "@build_stack_rules_proto//rules/proto:proto_plugin_info_provider_test.bzl",
     "proto_plugin_info_provider_test",
 )
 load(
-    "@build_stack_rules_proto//rules/proto/rules:proto_rule_info_provider_test.bzl",
+    "@build_stack_rules_proto//rules/proto:proto_rule_info_provider_test.bzl",
     "proto_rule_info_provider_test",
 )
 load(
-    "@build_stack_rules_proto//rules/proto/rules:proto_rule_test.bzl",
+    "@build_stack_rules_proto//rules/proto:proto_rule_test.bzl",
     "proto_rule_test",
 )
 load(
-    "@build_stack_rules_proto//rules/proto/rules:proto_rule_bazel_test.bzl",
+    "@build_stack_rules_proto//rules/proto:proto_rule_bazel_test.bzl",
     "proto_rule_bazel_test",
 )
 load(
-    "@build_stack_rules_proto//rules/proto/rules:proto_rule.bzl",
+    "@build_stack_rules_proto//rules/proto:proto_rule.bzl",
     "proto_rule",
 )
 
