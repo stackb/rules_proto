@@ -1,5 +1,5 @@
-load("@build_stack_rules_proto//language/rules:proto_compile_test.bzl", "proto_compile_test")
-load("@build_stack_rules_proto//language/rules:proto_info_provider_test.bzl", "proto_info_provider_test")
+load("@build_stack_rules_proto//rules/proto/rules:proto_compile_test.bzl", "proto_compile_test")
+load("@build_stack_rules_proto//rules/proto/rules:proto_info_provider_test.bzl", "proto_info_provider_test")
 load("@build_stack_rules_proto//rules:cc.bzl", "cc_grpc_compile", "cc_grpc_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules:python.bzl", "py_grpc_compile", "py_grpc_library")

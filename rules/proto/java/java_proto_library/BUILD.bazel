@@ -1,0 +1,52 @@
+load(
+    "@build_stack_rules_proto//rules/proto/rules:proto_rule_info_provider_test.bzl",
+    "proto_rule_info_provider_test",
+)
+load(
+    "@build_stack_rules_proto//rules/proto/rules:proto_rule_test.bzl",
+    "proto_rule_test",
+)
+load(
+    "@build_stack_rules_proto//rules/proto/rules:proto_rule_bazel_test.bzl",
+    "proto_rule_bazel_test",
+)
+load(
+    "@build_stack_rules_proto//rules/proto/rules:proto_rule.bzl",
+    "proto_rule",
+)
+
+proto_rule(
+    name = "java_proto_library",
+    implementation_tmpl = "java_proto_library.bzl.tmpl",
+    kind = "proto",
+    language = "//rules/proto/java",
+    package = "rules",
+    plugins = ["//plugins/java/proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//core:com_google_protobuf",
+        "//rules/proto/java:rules_java",
+    ],
+)
+
+proto_rule_info_provider_test(
+    name = "java_proto_library_info_provider_test",
+    srcs = ["java_proto_library_info_provider_test.golden.1.prototext"],
+    deps = [":java_proto_library"],
+)
+
+proto_rule_test(
+    name = "java_proto_library_rule_test",
+    srcs = [
+        "//rules:java_proto_library.bzl",
+        "//rules:java_proto_library_deps.bzl",
+    ],
+    package = "rules",
+    deps = [":java_proto_library"],
+)
+
+proto_rule_bazel_test(
+    name = "java_proto_library_rule_bazel_test",
+    tags = ["exclusive"],
+    deps = [":java_proto_library"],
+)

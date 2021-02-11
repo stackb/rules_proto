@@ -19,9 +19,6 @@ protoc_toolchain()
 load("@build_stack_rules_proto//rules:nodejs_grpc_library_deps.bzl", "nodejs_grpc_library_deps")
 
 nodejs_grpc_library_deps()
-
-load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
-
 yarn_install(
     name = "google_protobuf_node_modules",
     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:package.json",
@@ -34,6 +31,9 @@ yarn_install(
     symlink_node_modules = False,
     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:yarn.lock",
 )
+
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+
 yarn_install(
     name = "grpc_tools_node_modules",
     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:package.json",

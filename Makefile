@@ -19,7 +19,7 @@ laze:
 
 .PHONY: test
 test:
-	bazel test //docs/... //example/... //language/... //tools/... --bes_backend=grpc://127.0.0.1:1080 --bes_results_url=http:127.0.0.1:8080/stream --bes_timeout=5s --build_event_publish_all_actions 
+	bazel test //docs/... //example/... //rules/proto/... //tools/... --bes_backend=grpc://127.0.0.1:1080 --bes_results_url=http:127.0.0.1:8080/stream --bes_timeout=5s --build_event_publish_all_actions 
 
 .PHONY: goldens
 goldens:

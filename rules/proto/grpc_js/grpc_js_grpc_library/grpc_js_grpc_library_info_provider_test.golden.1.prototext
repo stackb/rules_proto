@@ -1,0 +1,68 @@
+bazel_test_file: "rules/proto/grpc_js/grpc_js_grpc_library/grpc_js_grpc_library_bazel_test.go"
+build_file: "rules/proto/grpc_js/grpc_js_grpc_library/grpc_js_grpc_library.BUILD"
+bzl_file: "rules/proto/grpc_js/grpc_js_grpc_library/grpc_js_grpc_library.bzl"
+deps {
+  buildFile: ""
+  label: "//core:bazel_skylib"
+  name: "bazel_skylib"
+  repositoryRule: "http_archive"
+  sha256: "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6"
+  stripPrefix: "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d"
+  urls: "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz"
+  workspaceSnippet: ""
+}
+deps {
+  buildFile: ""
+  label: "//core:rules_python"
+  name: "rules_python"
+  repositoryRule: "http_archive"
+  sha256: "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5"
+  stripPrefix: "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27"
+  urls: "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz"
+  workspaceSnippet: ""
+}
+deps {
+  buildFile: "@build_stack_rules_proto//third_party:BUILD.bazel.zlib"
+  label: "//core:zlib"
+  name: "zlib"
+  repositoryRule: "http_archive"
+  sha256: "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1"
+  stripPrefix: "zlib-1.2.11"
+  urls: "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz"
+  urls: "https://zlib.net/zlib-1.2.11.tar.gz"
+  workspaceSnippet: ""
+}
+deps {
+  buildFile: ""
+  label: "//core:com_google_protobuf"
+  name: "com_google_protobuf"
+  repositoryRule: "http_archive"
+  sha256: "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113"
+  stripPrefix: "protobuf-3.14.0"
+  urls: "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz"
+  workspaceSnippet: ""
+}
+deps {
+  buildFile: ""
+  label: "//rules/proto/closure:io_bazel_rules_closure"
+  name: "io_bazel_rules_closure"
+  repositoryRule: "http_archive"
+  sha256: "4c98a6b8d2d81210f3e291b1c7c5034ab2e22e7870ab3e9603599c79833f7da3"
+  stripPrefix: "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3"
+  urls: "https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz"
+  workspaceSnippet: "load(\"@io_bazel_rules_closure//closure:repositories.bzl\", \"rules_closure_dependencies\", \"rules_closure_toolchains\")\n\nrules_closure_dependencies(\n    omit_bazel_skylib = False,\n    omit_com_google_protobuf = True,\n    omit_zlib = True,\n)\n\nrules_closure_toolchains()"
+}
+deps {
+  buildFile: ""
+  label: "//rules/proto/grpc_js:com_github_stackb_grpc_js"
+  name: "com_github_stackb_grpc_js"
+  repositoryRule: "http_archive"
+  sha256: "f9cb4d932badc71d90a89263eabc93551923bb5c621e0940c7cfeaa79ef02596"
+  stripPrefix: "grpc.js-beb6ac3b43247816c1a1ebf741ebf0c98203414a"
+  urls: "https://github.com/stackb/grpc.js/archive/beb6ac3b43247816c1a1ebf741ebf0c98203414a.tar.gz"
+  workspaceSnippet: ""
+}
+deps_file: "rules/proto/grpc_js/grpc_js_grpc_library/grpc_js_grpc_library_deps.bzl"
+json_file: "rules/proto/grpc_js/grpc_js_grpc_library/grpc_js_grpc_library.json"
+name: "grpc_js_grpc_library"
+workspace_file: "rules/proto/grpc_js/grpc_js_grpc_library/grpc_js_grpc_library.WORKSPACE"

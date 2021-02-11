@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//language/rules:proto_info_provider_test.bzl", "proto_info_provider_test")
+load("@build_stack_rules_proto//rules/proto/rules:proto_info_provider_test.bzl", "proto_info_provider_test")
 
 # Some comment to be preserved
 
