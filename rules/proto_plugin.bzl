@@ -1,7 +1,6 @@
 load(
     "@build_stack_rules_proto//rules:proto_dependency.bzl",
     "ProtoDependencyInfo",
-    "proto_dependency_info_to_struct",
 )
 
 ProtoPluginInfo = provider(fields = {
@@ -18,7 +17,7 @@ ProtoPluginInfo = provider(fields = {
     "exclusions": "Exclusion filters to apply when generating outputs with this plugin. Used to prevent generating files that are included in the protobuf library, for example. Can exclude either by proto name prefix or by proto folder prefix",
     "data": "Additional files required for running the plugin",
     "separate_options_flag": "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",
-    "deps": "The set of proto dependencies for this plugin",
+    "deps": "The list of proto dependencies for this plugin",
 })
 
 def proto_plugin_info_to_struct(info):
@@ -35,7 +34,7 @@ def proto_plugin_info_to_struct(info):
         exclusions = info.exclusions,
         data = [f.short_path for f in info.data],
         separate_options_flag = info.separate_options_flag,
-        deps = [proto_dependency_info_to_struct(d) for d in info.deps.to_list()],
+        deps = info.deps,
     )
 
 def _proto_plugin_impl(ctx):
@@ -54,7 +53,7 @@ def _proto_plugin_impl(ctx):
             exclusions = ctx.attr.exclusions,
             data = ctx.files.data,
             separate_options_flag = ctx.attr.separate_options_flag,
-            deps = depset(direct = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps], transitive = [dep[ProtoDependencyInfo].deps for dep in ctx.attr.deps]),
+            deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
         ),
     ]
 

@@ -1,7 +1,7 @@
 ProtoDependencyInfo = provider(fields = {
-    "build_file": "The build_file of this dependency",
-    "deps": "The deps of this dependency",
-    "label": "The proto dependency label",
+    "buildFile": "The build_file of this dependency",
+    "deps": "The list of deps of this dependency  list<ProtoDependencyInfo>",
+    "label": "The proto dependency label string",
     "name": "The proto dependency name (should correspond to the workspace name",
     "repositoryRule": "The name of the repository rule that instantiates this dependency",
     "sha256": "The sha256 attribute for http_archive",
@@ -10,24 +10,12 @@ ProtoDependencyInfo = provider(fields = {
     "workspaceSnippet": "The workspaceSnippet string list",
 })
 
-def proto_dependency_info_to_struct(info):
-    return struct(
-        buildFile = info.build_file,
-        label = str(info.label),
-        name = info.name,
-        repositoryRule = info.repositoryRule,
-        sha256 = info.sha256,
-        stripPrefix = info.stripPrefix,
-        urls = info.urls,
-        workspaceSnippet = info.workspaceSnippet,
-    )
-
 def _proto_dependency_impl(ctx):
     return [
         ProtoDependencyInfo(
-            build_file = ctx.attr.build_file,
-            deps = depset(direct = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps], transitive = [dep[ProtoDependencyInfo].deps for dep in ctx.attr.deps]),
-            label = ctx.label,
+            buildFile = ctx.attr.build_file,
+            deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
+            label = str(ctx.label),
             name = ctx.attr.name,
             repositoryRule = ctx.attr.repository_rule,
             sha256 = ctx.attr.sha256,

@@ -1,58 +1,50 @@
 bazel_test_file: "rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile_bazel_test.go"
 build_file: "rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile.BUILD"
 bzl_file: "rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile.bzl"
-deps {
-  buildFile: ""
-  label: "//core:bazel_skylib"
-  name: "bazel_skylib"
-  repositoryRule: "http_archive"
-  sha256: "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6"
-  stripPrefix: "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d"
-  urls: "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz"
-  workspaceSnippet: ""
-}
-deps {
-  buildFile: ""
-  label: "//core:rules_python"
-  name: "rules_python"
-  repositoryRule: "http_archive"
-  sha256: "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5"
-  stripPrefix: "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27"
-  urls: "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz"
-  workspaceSnippet: ""
-}
-deps {
-  buildFile: "@build_stack_rules_proto//third_party:BUILD.bazel.zlib"
-  label: "//core:zlib"
-  name: "zlib"
-  repositoryRule: "http_archive"
-  sha256: "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1"
-  stripPrefix: "zlib-1.2.11"
-  urls: "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz"
-  urls: "https://zlib.net/zlib-1.2.11.tar.gz"
-  workspaceSnippet: ""
-}
-deps {
-  buildFile: ""
-  label: "//core:com_google_protobuf"
-  name: "com_google_protobuf"
-  repositoryRule: "http_archive"
-  sha256: "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113"
-  stripPrefix: "protobuf-3.14.0"
-  urls: "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz"
-  workspaceSnippet: ""
-}
-deps {
-  buildFile: ""
-  label: "//rules/proto/grpc_js:com_github_stackb_grpc_js"
-  name: "com_github_stackb_grpc_js"
-  repositoryRule: "http_archive"
-  sha256: "f9cb4d932badc71d90a89263eabc93551923bb5c621e0940c7cfeaa79ef02596"
-  stripPrefix: "grpc.js-beb6ac3b43247816c1a1ebf741ebf0c98203414a"
-  urls: "https://github.com/stackb/grpc.js/archive/beb6ac3b43247816c1a1ebf741ebf0c98203414a.tar.gz"
-  workspaceSnippet: ""
-}
 deps_file: "rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile_deps.bzl"
 json_file: "rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile.json"
 name: "grpc_js_grpc_compile"
+rule {
+  bazelTestFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile_bazel_test.go"
+  bazelTestTmpl: "core/bazel_test.go.tmpl"
+  buildExampleFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile.BUILD"
+  buildExampleTmpl: "core/grpc/BUILD.tmpl"
+  depsFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile_deps.bzl"
+  depsTmpl: "core/deps.bzl.tmpl"
+  implementationFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile.bzl"
+  implementationTmpl: "core/proto_compile.bzl.tmpl"
+  kind: "grpc"
+  markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile.md"
+  markdownTmpl: "core/proto_rule.md.tmpl"
+  name: "grpc_js_grpc_compile"
+  package: "rules"
+  plugins {
+    label: "//plugins/closure/proto:proto"
+    name: "proto"
+    options: "import_style=closure"
+    options: "error_on_name_conflict"
+    options: "add_require_for_enums"
+    options: "one_output_file_per_input_file"
+    output_directory: false
+    outputs: "{protopath}.js"
+    protoc_plugin_name: "js"
+    separate_options_flag: false
+    tool_executable: ""
+    use_built_in_shell_environment: false
+  }
+  plugins {
+    exclusions: "google/protobuf"
+    label: "//plugins/grpc_js/grpc:grpc"
+    name: "grpc"
+    output_directory: false
+    outputs: "{protopath}.grpc.js"
+    protoc_plugin_name: "grpc_js"
+    separate_options_flag: false
+    tool_executable: "../com_github_stackb_grpc_js/protoc-gen-grpc-js/protoc-gen-grpc-js"
+    use_built_in_shell_environment: false
+  }
+  skipDirectoriesMerge: false
+  workspaceExampleFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile.WORKSPACE"
+  workspaceExampleTmpl: "core/WORKSPACE.tmpl"
+}
 workspace_file: "rules/proto/grpc_js/grpc_js_grpc_compile/grpc_js_grpc_compile.WORKSPACE"

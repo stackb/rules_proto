@@ -4,7 +4,7 @@ import (
 	"text/template"
 )
 
-// ProtoPlugin loosely represents the starlark ProtoRuleInfo provider.
+// ProtoRule loosely represents the starlark ProtoRuleInfo provider.
 type ProtoRule struct {
 	// Name of the rule
 	Name string
@@ -58,17 +58,11 @@ type ProtoRule struct {
 	// Filename of the BazelTest template
 	BazelTestTmpl string
 
-	// List of attributes
-	Attrs []*Attr
-
 	// List of plugins
 	Plugins []*ProtoPlugin
 
 	// Not expected to be functional
 	Experimental bool
-
-	// Bazel build flags required / suggested
-	Flags []*Flag
 
 	// Additional CI-specific env vars in the form "K=V"
 	PresubmitEnvVars map[string]string
@@ -107,11 +101,13 @@ type ProtoPlugin struct {
 type ProtoDependency struct {
 	BuildFile        string
 	Name             string
+	Label            string
 	RepositoryRule   string
 	Sha256           string
 	StripPrefix      string
 	Urls             []string
 	WorkspaceSnippet string
+	Deps             []*ProtoDependency
 }
 
 // ProtoLanguage represents the starlark ProtoLanguageInfo provider.
@@ -120,9 +116,9 @@ type ProtoLanguage struct {
 	Prefix string   // e.g. "py"
 	Rules  []string // e.g. ["py_proto_compile", "py_proto_library"]
 
-	Description                string
-	DisplayName                string
-	AvatarUrl                  string
+	Description string
+	DisplayName string
+	AvatarUrl   string
 
 	// Package of the language.  This determines the package name where the rule
 	// will be imported as well as the directory where the file will be copied.
@@ -142,20 +138,4 @@ type ProtoLanguage struct {
 
 	// Templates is populated by the NewProtoLanguageFromJSON constructor.
 	Templates *template.Template
-}
-
-// Flag captures information about a bazel build flag.
-type Flag struct {
-	Category    string
-	Name        string
-	Value       string
-	Description string
-}
-
-type Attr struct {
-	Name      string
-	Type      string
-	Default   string
-	Doc       string
-	Mandatory bool
 }

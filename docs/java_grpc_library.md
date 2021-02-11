@@ -75,35 +75,49 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def java_grpc_library_deps():
-    bazel_skylib()
-    rules_python()
-    zlib()
-    rules_jvm_external()
-    com_google_protobuf()
-    io_grpc_grpc_java()
-    rules_java()
+    rules_java()  # via rule java_grpc_library
+    rules_jvm_external()  # via io_grpc_grpc_java
+    io_grpc_grpc_java()  # via rule java_grpc_library
+    zlib()  # via com_google_protobuf
+    rules_python()  # via com_google_protobuf
+    bazel_skylib()  # via com_google_protobuf
+    com_google_protobuf()  # via rule java_grpc_library
 
 
-def bazel_skylib():
+
+def rules_java():
     _maybe(
         http_archive,
-        name = "bazel_skylib",
-        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
+        name = "rules_java",
+        sha256 = "7c4bbe11e41c61212a5cf16d9aafaddade3f5b1b6c8bf94270d78215fafd4007",
+        strip_prefix = "rules_java-c13e3ead84afb95f81fbddfade2749d8ba7cb77f",
         urls = [
-            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+            "https://github.com/bazelbuild/rules_java/archive/c13e3ead84afb95f81fbddfade2749d8ba7cb77f.tar.gz",
         ],
     )
-def rules_python():
+
+def rules_jvm_external():
     _maybe(
         http_archive,
-        name = "rules_python",
-        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
-        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
+        name = "rules_jvm_external",
+        sha256 = "cee024d5892c3191937d52909a86cba0ef7b5cdda488d00be84fc37590194339",
+        strip_prefix = "rules_jvm_external-576cc9da001be3bae4021ae9e0c06ebb48fcae5d",
         urls = [
-            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
+            "https://github.com/bazelbuild/rules_jvm_external/archive/576cc9da001be3bae4021ae9e0c06ebb48fcae5d.tar.gz",
         ],
     )
+
+def io_grpc_grpc_java():
+    _maybe(
+        http_archive,
+        name = "io_grpc_grpc_java",
+        sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
+        strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
+        urls = [
+            "https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz",
+        ],
+    )
+
 def zlib():
     _maybe(
         http_archive,
@@ -116,16 +130,29 @@ def zlib():
         ],
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
-def rules_jvm_external():
+
+def rules_python():
     _maybe(
         http_archive,
-        name = "rules_jvm_external",
-        sha256 = "cee024d5892c3191937d52909a86cba0ef7b5cdda488d00be84fc37590194339",
-        strip_prefix = "rules_jvm_external-576cc9da001be3bae4021ae9e0c06ebb48fcae5d",
+        name = "rules_python",
+        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
+        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
         urls = [
-            "https://github.com/bazelbuild/rules_jvm_external/archive/576cc9da001be3bae4021ae9e0c06ebb48fcae5d.tar.gz",
+            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
         ],
     )
+
+def bazel_skylib():
+    _maybe(
+        http_archive,
+        name = "bazel_skylib",
+        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
+        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
+        urls = [
+            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+        ],
+    )
+
 def com_google_protobuf():
     _maybe(
         http_archive,
@@ -134,26 +161,6 @@ def com_google_protobuf():
         strip_prefix = "protobuf-3.14.0",
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
-        ],
-    )
-def io_grpc_grpc_java():
-    _maybe(
-        http_archive,
-        name = "io_grpc_grpc_java",
-        sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
-        strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
-        urls = [
-            "https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz",
-        ],
-    )
-def rules_java():
-    _maybe(
-        http_archive,
-        name = "rules_java",
-        sha256 = "7c4bbe11e41c61212a5cf16d9aafaddade3f5b1b6c8bf94270d78215fafd4007",
-        strip_prefix = "rules_java-c13e3ead84afb95f81fbddfade2749d8ba7cb77f",
-        urls = [
-            "https://github.com/bazelbuild/rules_java/archive/c13e3ead84afb95f81fbddfade2749d8ba7cb77f.tar.gz",
         ],
     )
 ```

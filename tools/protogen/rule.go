@@ -36,8 +36,8 @@ func NewProtoRuleFromJSONFile(filename string) (*ProtoRule, error) {
 // filesystem.
 func (rule *ProtoRule) Generate() error {
 	data := &ruleTemplateData{
-		Rule: rule,
-		Deps: collectDeps(rule),
+		Rule:     rule,
+		RuleDeps: collectRuleDeps(rule),
 	}
 	if err := generateFile(rule.Templates, rule.ImplementationTmpl, rule.ImplementationFilename, data); err != nil {
 		return err
@@ -60,15 +60,31 @@ func (rule *ProtoRule) Generate() error {
 	return nil
 }
 
-func collectDeps(rule *ProtoRule) (all []*ProtoDependency) {
+// collectRuleDeps accumulates the transitive dependencies of the given rule,
+// eliminating duplicates but maintaining DFS ordering.
+func collectRuleDeps(rule *ProtoRule) (deps []*ruleDependency) {
 	seen := make(map[string]bool)
+
+	var visit func(string, *ProtoDependency)
+	visit = func(parentName string, dep *ProtoDependency) {
+		if seen[dep.Name] {
+			return
+		}
+		seen[dep.Name] = true
+		deps = append(deps, &ruleDependency{
+			ParentName: parentName,
+			Dep:        dep,
+		})
+		for _, child := range dep.Deps {
+			visit(dep.Name, child)
+		}
+	}
 
 	for _, dep := range rule.Deps {
 		if seen[dep.Name] {
 			continue
 		}
-		seen[dep.Name] = true
-		all = append(all, dep)
+		visit("rule "+rule.Name, dep)
 	}
 
 	for _, plugin := range rule.Plugins {
@@ -76,16 +92,28 @@ func collectDeps(rule *ProtoRule) (all []*ProtoDependency) {
 			if seen[dep.Name] {
 				continue
 			}
-			seen[dep.Name] = true
-			all = append(all, dep)
+			visit("plugin "+plugin.Label, dep)
 		}
 	}
+
+	reverseDeps(deps)
 
 	return
 }
 
+func reverseDeps(deps []*ruleDependency) {
+	for i, j := 0, len(deps)-1; i < j; i, j = i+1, j-1 {
+		deps[i], deps[j] = deps[j], deps[i]
+	}
+}
+
 // ruleTemplateData is the type used by rules templates
 type ruleTemplateData struct {
-	Rule *ProtoRule
-	Deps []*ProtoDependency
+	Rule     *ProtoRule
+	RuleDeps []*ruleDependency
+}
+
+type ruleDependency struct {
+	ParentName string
+	Dep        *ProtoDependency
 }

@@ -1,58 +1,67 @@
 bazel_test_file: "rules/proto/python/py_grpc_library/py_grpc_library_bazel_test.go"
 build_file: "rules/proto/python/py_grpc_library/py_grpc_library.BUILD"
 bzl_file: "rules/proto/python/py_grpc_library/py_grpc_library.bzl"
-deps {
-  buildFile: ""
-  label: "//core:bazel_skylib"
-  name: "bazel_skylib"
-  repositoryRule: "http_archive"
-  sha256: "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6"
-  stripPrefix: "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d"
-  urls: "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz"
-  workspaceSnippet: ""
-}
-deps {
-  buildFile: ""
-  label: "//core:rules_python"
-  name: "rules_python"
-  repositoryRule: "http_archive"
-  sha256: "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5"
-  stripPrefix: "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27"
-  urls: "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz"
-  workspaceSnippet: ""
-}
-deps {
-  buildFile: "@build_stack_rules_proto//third_party:BUILD.bazel.zlib"
-  label: "//core:zlib"
-  name: "zlib"
-  repositoryRule: "http_archive"
-  sha256: "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1"
-  stripPrefix: "zlib-1.2.11"
-  urls: "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz"
-  urls: "https://zlib.net/zlib-1.2.11.tar.gz"
-  workspaceSnippet: ""
-}
-deps {
-  buildFile: ""
-  label: "//core:com_google_protobuf"
-  name: "com_google_protobuf"
-  repositoryRule: "http_archive"
-  sha256: "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113"
-  stripPrefix: "protobuf-3.14.0"
-  urls: "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz"
-  workspaceSnippet: ""
-}
-deps {
-  buildFile: "@build_stack_rules_proto//third_party:BUILD.bazel.six"
-  label: "//rules/proto/python:six"
-  name: "six"
-  repositoryRule: "http_archive"
-  sha256: "30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66"
-  stripPrefix: "six-1.13.0"
-  urls: "https://pypi.python.org/packages/source/s/six/six-1.13.0.tar.gz"
-  workspaceSnippet: ""
-}
 deps_file: "rules/proto/python/py_grpc_library/py_grpc_library_deps.bzl"
 json_file: "rules/proto/python/py_grpc_library/py_grpc_library.json"
 name: "py_grpc_library"
+rule {
+  bazelTestFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/python/py_grpc_library/py_grpc_library_bazel_test.go"
+  bazelTestTmpl: "core/bazel_test.go.tmpl"
+  buildExampleFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/python/py_grpc_library/py_grpc_library.BUILD"
+  buildExampleTmpl: "core/BUILD.tmpl"
+  depsFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/python/py_grpc_library/py_grpc_library_deps.bzl"
+  depsTmpl: "core/deps.bzl.tmpl"
+  implementationFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/python/py_grpc_library/py_grpc_library.bzl"
+  implementationTmpl: "rules/proto/python/py_grpc_library/py_grpc_library.bzl.tmpl"
+  kind: "grpc"
+  markdownFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/python/py_grpc_library/py_grpc_library.md"
+  markdownTmpl: "core/proto_rule.md.tmpl"
+  name: "py_grpc_library"
+  package: "rules"
+  plugins {
+    exclusions: "google/protobuf"
+    label: "//plugins/python/proto:proto"
+    name: "proto"
+    output_directory: false
+    outputs: "{protopath|python}_pb2.py"
+    protoc_plugin_name: "python"
+    separate_options_flag: false
+    tool_executable: ""
+    use_built_in_shell_environment: false
+  }
+  plugins {
+    deps {
+      buildFile: ""
+      deps {
+        buildFile: ""
+        label: "//core/grpc:build_bazel_rules_swift"
+        name: "build_bazel_rules_swift"
+        repositoryRule: "http_archive"
+        sha256: "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf"
+        stripPrefix: "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502"
+        urls: "https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"
+        workspaceSnippet: ""
+      }
+      label: "//core/grpc:com_github_grpc_grpc"
+      name: "com_github_grpc_grpc"
+      repositoryRule: "http_archive"
+      sha256: "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b"
+      stripPrefix: "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1"
+      urls: "https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz"
+      workspaceSnippet: "load(\"@com_github_grpc_grpc//bazel:grpc_deps.bzl\", \"grpc_deps\")\n\ngrpc_deps()"
+    }
+    exclusions: "google/protobuf"
+    label: "//plugins/python/grpc:grpc"
+    name: "grpc"
+    output_directory: false
+    outputs: "{protopath|python}_pb2_grpc.py"
+    protoc_plugin_name: ""
+    separate_options_flag: false
+    tool_executable: "../com_github_grpc_grpc/src/compiler/grpc_python_plugin"
+    use_built_in_shell_environment: false
+  }
+  skipDirectoriesMerge: false
+  workspaceExampleFilename: "bazel-out/{HOST_CONFIGURATION}/bin/rules/proto/python/py_grpc_library/py_grpc_library.WORKSPACE"
+  workspaceExampleTmpl: "core/WORKSPACE.tmpl"
+}
 workspace_file: "rules/proto/python/py_grpc_library/py_grpc_library.WORKSPACE"

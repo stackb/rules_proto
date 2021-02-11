@@ -4,18 +4,19 @@ def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def {{ .Rule.Name }}_deps():{{ range .Deps }}{{ if ne .RepositoryRule "phony" }}
-    {{ .Name }}(){{ end }}{{ end }}
+def {{ .Rule.Name }}_deps():{{ range .RuleDeps }}{{ if ne .Dep.RepositoryRule "phony" }}
+    {{ .Dep.Name }}()  # via {{ .ParentName }}{{ end }}{{ end }}
 
-{{ range .Deps }}{{ if ne .RepositoryRule "phony" }}
-def {{ .Name }}():
+{{ range .RuleDeps }}{{ if ne .Dep.RepositoryRule "phony" }}
+
+def {{ .Dep.Name }}():
     _maybe(
-        {{ .RepositoryRule }},
-        name = "{{ .Name }}",{{ if .Sha256 }}
-        sha256 = "{{ .Sha256 }}",{{ end }}{{ if .StripPrefix }}
-        strip_prefix = "{{ .StripPrefix }}",{{ end }}{{ if .Urls }}
-        urls = [{{ range .Urls }}
+        {{ .Dep.RepositoryRule }},
+        name = "{{ .Dep.Name }}",{{ if .Dep.Sha256 }}
+        sha256 = "{{ .Dep.Sha256 }}",{{ end }}{{ if .Dep.StripPrefix }}
+        strip_prefix = "{{ .Dep.StripPrefix }}",{{ end }}{{ if .Dep.Urls }}
+        urls = [{{ range .Dep.Urls }}
             "{{ . }}",{{ end }}
-        ],{{ end }}{{ if .BuildFile }}
-        build_file = "{{ .BuildFile }}",{{ end }}
+        ],{{ end }}{{ if .Dep.BuildFile }}
+        build_file = "{{ .Dep.BuildFile }}",{{ end }}
     ){{ end }}{{ end }}
