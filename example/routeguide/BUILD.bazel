@@ -100,8 +100,6 @@ nodejs_grpc_library(
 
 filegroup(
     name = "routeguide_features",
-    srcs = [
-        "routeguide_features.json",
-    ],
+    srcs = ["routeguide_features.json"],
     visibility = ["//visibility:public"],
 )

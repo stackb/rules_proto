@@ -1,5 +1,10 @@
-load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_descriptor_set", "proto_library")
 load("@build_stack_rules_proto//rules/proto:proto_info_provider_test.bzl", "proto_info_provider_test")
+
+proto_descriptor_set(
+    name = "person_proto_descriptor_set",
+    deps = ["person_proto"],
+)
 
 proto_library(
     name = "person_proto",

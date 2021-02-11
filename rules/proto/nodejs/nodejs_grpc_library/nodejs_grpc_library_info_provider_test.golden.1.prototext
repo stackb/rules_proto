@@ -42,7 +42,7 @@ rule {
         sha256: "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d"
         stripPrefix: ""
         urls: "https://github.com/bazelbuild/rules_nodejs/releases/download/3.0.0/rules_nodejs-3.0.0.tar.gz"
-        workspaceSnippet: "\nload(\"@build_bazel_rules_nodejs//:index.bzl\", \"yarn_install\")\n"
+        workspaceSnippet: "load(\"@build_bazel_rules_nodejs//:index.bzl\", \"yarn_install\")"
       }
       label: "//plugins/nodejs/modules/grpc-tools:grpc_tools_node_modules"
       name: "grpc_tools_node_modules"

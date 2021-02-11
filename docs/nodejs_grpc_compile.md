@@ -19,15 +19,16 @@ protoc_toolchain()
 load("@build_stack_rules_proto//rules:nodejs_grpc_compile_deps.bzl", "nodejs_grpc_compile_deps")
 
 nodejs_grpc_compile_deps()
+
+# via grpc_tools_node_modules
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+# via plugin //plugins/nodejs/grpc:grpc
 yarn_install(
     name = "grpc_tools_node_modules",
     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:package.json",
     symlink_node_modules = False,
     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:yarn.lock",
 )
-
-load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
-
 ```
 
 ## `BUILD.bazel`
@@ -64,10 +65,10 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def nodejs_grpc_compile_deps():
-    build_bazel_rules_nodejs()  # via rule nodejs_grpc_compile
-    zlib()  # via com_google_protobuf
-    rules_python()  # via com_google_protobuf
+    build_bazel_rules_nodejs()  # via grpc_tools_node_modules
     bazel_skylib()  # via com_google_protobuf
+    rules_python()  # via com_google_protobuf
+    zlib()  # via com_google_protobuf
     com_google_protobuf()  # via rule nodejs_grpc_compile
 
 
@@ -82,17 +83,15 @@ def build_bazel_rules_nodejs():
         ],
     )
 
-def zlib():
+def bazel_skylib():
     _maybe(
         http_archive,
-        name = "zlib",
-        sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
-        strip_prefix = "zlib-1.2.11",
+        name = "bazel_skylib",
+        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
+        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
         urls = [
-            "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
-            "https://zlib.net/zlib-1.2.11.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
         ],
-        build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
 
 def rules_python():
@@ -106,15 +105,17 @@ def rules_python():
         ],
     )
 
-def bazel_skylib():
+def zlib():
     _maybe(
         http_archive,
-        name = "bazel_skylib",
-        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
+        name = "zlib",
+        sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
+        strip_prefix = "zlib-1.2.11",
         urls = [
-            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+            "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
+            "https://zlib.net/zlib-1.2.11.tar.gz",
         ],
+        build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
 
 def com_google_protobuf():

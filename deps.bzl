@@ -85,6 +85,23 @@ def rules_python():
 
 def rules_proto():
     # Branch: master
+    # Commit: f7a30f6f80006b591fa7c437fe5a951eb10bcbcf
+    # Date: 2021-02-09 14:25:06 +0000 UTC
+    # URL: https://github.com/bazelbuild/rules_proto/commit/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf
+    #
+    # Merge pull request #77 from Yannic/proto_descriptor_set_rule
+    #
+    # Create proto_descriptor_set
+    # Size: 14397 (14 kB)
+    maybe(
+        http_archive,
+        name = "rules_proto",
+        sha256 = "9fc210a34f0f9e7cc31598d109b5d069ef44911a82f507d5a88716db171615a8",
+        strip_prefix = "rules_proto-f7a30f6f80006b591fa7c437fe5a951eb10bcbcf",
+        urls = ["https://github.com/bazelbuild/rules_proto/archive/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf.tar.gz"],
+    )
+
+    # Branch: master
     # Commit: a0761ed101b939e19d83b2da5f59034bffc19c12
     # Date: 2021-01-26 15:30:54 +0000 UTC
     # URL: https://github.com/bazelbuild/rules_proto/commit/a0761ed101b939e19d83b2da5f59034bffc19c12

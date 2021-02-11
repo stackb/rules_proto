@@ -7,11 +7,11 @@ def _maybe(repo_rule, name, **kwargs):
 def py_grpc_compile_deps():
     build_bazel_rules_swift()  # via com_github_grpc_grpc
     com_github_grpc_grpc()  # via plugin //plugins/python/grpc:grpc
-    six()  # via rule py_grpc_compile
-    zlib()  # via com_google_protobuf
-    rules_python()  # via com_google_protobuf
     bazel_skylib()  # via com_google_protobuf
+    rules_python()  # via com_google_protobuf
+    zlib()  # via com_google_protobuf
     com_google_protobuf()  # via rule py_grpc_compile
+    six()  # via rule py_grpc_compile
 
 
 
@@ -37,16 +37,26 @@ def com_github_grpc_grpc():
         ],
     )
 
-def six():
+def bazel_skylib():
     _maybe(
         http_archive,
-        name = "six",
-        sha256 = "30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66",
-        strip_prefix = "six-1.13.0",
+        name = "bazel_skylib",
+        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
+        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
         urls = [
-            "https://pypi.python.org/packages/source/s/six/six-1.13.0.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
         ],
-        build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.six",
+    )
+
+def rules_python():
+    _maybe(
+        http_archive,
+        name = "rules_python",
+        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
+        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
+        urls = [
+            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
+        ],
     )
 
 def zlib():
@@ -62,28 +72,6 @@ def zlib():
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
 
-def rules_python():
-    _maybe(
-        http_archive,
-        name = "rules_python",
-        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
-        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
-        urls = [
-            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
-        ],
-    )
-
-def bazel_skylib():
-    _maybe(
-        http_archive,
-        name = "bazel_skylib",
-        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
-        urls = [
-            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
-        ],
-    )
-
 def com_google_protobuf():
     _maybe(
         http_archive,
@@ -93,4 +81,16 @@ def com_google_protobuf():
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
         ],
+    )
+
+def six():
+    _maybe(
+        http_archive,
+        name = "six",
+        sha256 = "30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66",
+        strip_prefix = "six-1.13.0",
+        urls = [
+            "https://pypi.python.org/packages/source/s/six/six-1.13.0.tar.gz",
+        ],
+        build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.six",
     )

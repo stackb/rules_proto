@@ -63,6 +63,8 @@ func (rule *ProtoRule) Generate() error {
 // collectRuleDeps accumulates the transitive dependencies of the given rule,
 // eliminating duplicates but maintaining DFS ordering.
 func collectRuleDeps(rule *ProtoRule) (deps []*ruleDependency) {
+	// log.Fatalf("%+v", rule)
+
 	seen := make(map[string]bool)
 
 	var visit func(string, *ProtoDependency)
@@ -71,20 +73,13 @@ func collectRuleDeps(rule *ProtoRule) (deps []*ruleDependency) {
 			return
 		}
 		seen[dep.Name] = true
+		for _, child := range dep.Deps {
+			visit(dep.Name, child)
+		}
 		deps = append(deps, &ruleDependency{
 			ParentName: parentName,
 			Dep:        dep,
 		})
-		for _, child := range dep.Deps {
-			visit(dep.Name, child)
-		}
-	}
-
-	for _, dep := range rule.Deps {
-		if seen[dep.Name] {
-			continue
-		}
-		visit("rule "+rule.Name, dep)
 	}
 
 	for _, plugin := range rule.Plugins {
@@ -96,7 +91,14 @@ func collectRuleDeps(rule *ProtoRule) (deps []*ruleDependency) {
 		}
 	}
 
-	reverseDeps(deps)
+	for _, dep := range rule.Deps {
+		if seen[dep.Name] {
+			continue
+		}
+		visit("rule "+rule.Name, dep)
+	}
+
+	// reverseDeps(deps)
 
 	return
 }

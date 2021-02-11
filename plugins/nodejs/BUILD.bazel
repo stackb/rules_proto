@@ -20,9 +20,7 @@ proto_dependency(
     sha256 = "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d",
     urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/3.0.0/rules_nodejs-3.0.0.tar.gz"],
     visibility = ["//visibility:public"],
-    workspace_snippet = """
-load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
-""",
+    workspace_snippet = """load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")""",
 )
 
 filegroup(

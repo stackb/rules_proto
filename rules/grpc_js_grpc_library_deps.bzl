@@ -5,34 +5,34 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def grpc_js_grpc_library_deps():
-    com_github_stackb_grpc_js()  # via rule grpc_js_grpc_library
-    io_bazel_rules_closure()  # via rule grpc_js_grpc_library
-    zlib()  # via com_google_protobuf
-    rules_python()  # via com_google_protobuf
     bazel_skylib()  # via com_google_protobuf
+    rules_python()  # via com_google_protobuf
+    zlib()  # via com_google_protobuf
     com_google_protobuf()  # via rule grpc_js_grpc_library
+    io_bazel_rules_closure()  # via rule grpc_js_grpc_library
+    com_github_stackb_grpc_js()  # via rule grpc_js_grpc_library
 
 
 
-def com_github_stackb_grpc_js():
+def bazel_skylib():
     _maybe(
         http_archive,
-        name = "com_github_stackb_grpc_js",
-        sha256 = "f9cb4d932badc71d90a89263eabc93551923bb5c621e0940c7cfeaa79ef02596",
-        strip_prefix = "grpc.js-beb6ac3b43247816c1a1ebf741ebf0c98203414a",
+        name = "bazel_skylib",
+        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
+        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
         urls = [
-            "https://github.com/stackb/grpc.js/archive/beb6ac3b43247816c1a1ebf741ebf0c98203414a.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
         ],
     )
 
-def io_bazel_rules_closure():
+def rules_python():
     _maybe(
         http_archive,
-        name = "io_bazel_rules_closure",
-        sha256 = "4c98a6b8d2d81210f3e291b1c7c5034ab2e22e7870ab3e9603599c79833f7da3",
-        strip_prefix = "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3",
+        name = "rules_python",
+        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
+        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
         urls = [
-            "https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz",
+            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
         ],
     )
 
@@ -49,28 +49,6 @@ def zlib():
         build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
     )
 
-def rules_python():
-    _maybe(
-        http_archive,
-        name = "rules_python",
-        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
-        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
-        urls = [
-            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
-        ],
-    )
-
-def bazel_skylib():
-    _maybe(
-        http_archive,
-        name = "bazel_skylib",
-        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
-        urls = [
-            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
-        ],
-    )
-
 def com_google_protobuf():
     _maybe(
         http_archive,
@@ -79,5 +57,27 @@ def com_google_protobuf():
         strip_prefix = "protobuf-3.14.0",
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+        ],
+    )
+
+def io_bazel_rules_closure():
+    _maybe(
+        http_archive,
+        name = "io_bazel_rules_closure",
+        sha256 = "4c98a6b8d2d81210f3e291b1c7c5034ab2e22e7870ab3e9603599c79833f7da3",
+        strip_prefix = "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3",
+        urls = [
+            "https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz",
+        ],
+    )
+
+def com_github_stackb_grpc_js():
+    _maybe(
+        http_archive,
+        name = "com_github_stackb_grpc_js",
+        sha256 = "f9cb4d932badc71d90a89263eabc93551923bb5c621e0940c7cfeaa79ef02596",
+        strip_prefix = "grpc.js-beb6ac3b43247816c1a1ebf741ebf0c98203414a",
+        urls = [
+            "https://github.com/stackb/grpc.js/archive/beb6ac3b43247816c1a1ebf741ebf0c98203414a.tar.gz",
         ],
     )
