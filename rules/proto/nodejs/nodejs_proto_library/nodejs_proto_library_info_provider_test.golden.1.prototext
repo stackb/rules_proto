@@ -34,7 +34,7 @@ deps {
 }
 deps {
   buildFile: ""
-  label: "//rules/proto/nodejs:build_bazel_rules_nodejs"
+  label: "//plugins/nodejs:build_bazel_rules_nodejs"
   name: "build_bazel_rules_nodejs"
   repositoryRule: "http_archive"
   sha256: "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d"

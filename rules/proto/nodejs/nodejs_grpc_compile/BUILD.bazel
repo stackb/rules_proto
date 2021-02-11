@@ -27,7 +27,7 @@ proto_rule(
     visibility = ["//visibility:public"],
     deps = [
         "//core:com_google_protobuf",
-        "//rules/proto/nodejs:build_bazel_rules_nodejs",
+        "//plugins/nodejs:build_bazel_rules_nodejs",
     ],
 )
 

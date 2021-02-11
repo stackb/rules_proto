@@ -15,7 +15,7 @@ proto_dependency(
     symlink_node_modules = False,
     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:yarn.lock",
 )""",
-    deps = ["//rules/proto/nodejs:build_bazel_rules_nodejs"],
+    deps = ["//plugins/nodejs:build_bazel_rules_nodejs"],
 )
 
 filegroup(
