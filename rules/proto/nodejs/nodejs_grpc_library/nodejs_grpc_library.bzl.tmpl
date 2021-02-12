@@ -4,11 +4,6 @@ load(
 )
 load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
 
-# load(
-#     "@build_stack_rules_proto//rules:proto_compile_js_library.bzl",
-#     "proto_compile_js_library",
-# )
-
 GRPC_DEPS = [
     "@google_protobuf_node_modules//google-protobuf",
     "@grpc_js_node_modules//@grpc/grpc-js",
@@ -31,11 +26,3 @@ def {{ .Rule.Name }}(**kwargs):
         package_name = kwargs.get("name"),
         tags = kwargs.get("tags", []),
     )
-
-    # proto_compile_js_library(
-    #     name = kwargs.get("name"),
-    #     deps = [name_pb],
-    #     js_deps = js_deps,
-    #     visibility = kwargs.get("visibility", []),
-    #     tags = kwargs.get("tags", []),
-    # )

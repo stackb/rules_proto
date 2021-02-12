@@ -53,7 +53,7 @@ nodejs_grpc_compile(
 | Label | Tool | Outputs |
 | ---- | ---- | ------- |
 | `//plugins/nodejs/proto:proto` |  |  `{protopath}_pb.js` |
-| `//plugins/nodejs/grpc:grpc` |  |  |
+| `//plugins/nodejs/grpc:grpc` |  |  `{protopath}_grpc_pb.js` |
 
 ## Dependencies
 

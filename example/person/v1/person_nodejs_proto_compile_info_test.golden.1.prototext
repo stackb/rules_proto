@@ -1,0 +1,6 @@
+label: "//example/person/v1:person_nodejs_compile"
+output_files {
+  bazel-out/darwin-fastbuild/bin/example/person/v1/person_nodejs_compile: "example/person/v1/person_nodejs_compile/example/person/v1/person_pb.js"
+  bazel-out/darwin-fastbuild/bin/example/person/v1/person_nodejs_compile: "example/person/v1/person_nodejs_compile/example/place/v1/place_pb.js"
+  bazel-out/darwin-fastbuild/bin/example/person/v1/person_nodejs_compile: "example/person/v1/person_nodejs_compile/example/thing/v1/thing_pb.js"
+}

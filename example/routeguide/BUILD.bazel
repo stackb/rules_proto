@@ -94,17 +94,20 @@ java_grpc_library(
 
 proto_compile_test(
     name = "routeguide_nodejs_grpc_compile_test",
-    srcs = [],  # the js_library rule does not generate DefaultInfo files
+    srcs = [
+        "routeguide_grpc_pb.js",
+        "routeguide_pb.js",
+    ],
     rule = nodejs_grpc_compile,
     deps = [":routeguide_proto"],
 )
 
-proto_compile_info_provider_test(
-    name = "routeguide_nodejs_grpc_compile_info_provider_test",
-    srcs = [],  # the js_library rule does not generate DefaultInfo files
-    rule = nodejs_grpc_compile,
-    deps = [":routeguide_proto"],
-)
+# proto_compile_info_provider_test(
+#     name = "routeguide_nodejs_grpc_compile_info_provider_test",
+#     srcs = [],  # the js_library rule does not generate DefaultInfo files
+#     rule = nodejs_grpc_compile,
+#     deps = [":routeguide_proto"],
+# )
 
 nodejs_grpc_library(
     name = "routeguide_nodejs_grpc",

@@ -50,7 +50,6 @@ def _proto_compile_impl(ctx):
         dep[ProtoLibraryAspectNodeInfo].output_dirs
         for dep in ctx.attr.deps
     ])
-    print("original output dirs: %r" % output_dirs)
 
     # Check merge_directories and prefix_path
     if not ctx.attr.merge_directories and ctx.attr.prefix_path:
