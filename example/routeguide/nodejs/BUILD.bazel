@@ -18,7 +18,7 @@ nodejs_binary(
     name = "server",
     data = [
         "server.js",
-        "//example/proto:routeguide_features",
+        "//example/routeguide:routeguide_features",
         "//example/routeguide:routeguide_nodejs_grpc",
         "@example_routeguide_node_modules//@grpc/grpc-js",
         "@example_routeguide_node_modules//google-protobuf",

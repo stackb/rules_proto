@@ -55,7 +55,8 @@ rule {
     label: "//plugins/nodejs/grpc:grpc"
     name: "grpc"
     options: "grpc_js"
-    output_directory: true
+    output_directory: false
+    outputs: "{protopath}_grpc_pb.js"
     protoc_plugin_name: "grpc_js"
     separate_options_flag: false
     tool_executable: "../grpc_tools_node_modules/grpc-tools/bin/grpc_tools_node_protoc_plugin.sh"

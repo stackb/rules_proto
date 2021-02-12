@@ -19,15 +19,9 @@
 const async = require('async');
 const grpc = require('@grpc/grpc-js');
 
-const routeguide = require('../../example/routeguide/routeguide_nodejs_grpc');
-
-// const messages = require('example/routeguide/routeguide_nodejs_grpc_pb/example/routeguide/routeguide_pb.js')
-// const services = require('example/routeguide/routeguide_nodejs_grpc_pb/example/routeguide/routeguide_grpc_pb.js')
-
-// This is included as data in the client, so we can load
-// this database as a constant.
-const featureList = require('example/routeguide/routeguide_features.json');
-console.log(`Loaded ${featureList.length} from feature database`);
+const routeguide_pb = require('../routeguide_nodejs_grpc_pb/example/routeguide/routeguide_pb.js');
+const routeguide_pb_grpc = require('../routeguide_nodejs_grpc_pb/example/routeguide/routeguide_grpc_pb.js');
+const featureDb = require('../routeguide_features.json');
 
 let port = '50051';
 if (process.env.SERVER_PORT) {
@@ -35,7 +29,7 @@ if (process.env.SERVER_PORT) {
 }
 const addr = 'localhost:' + port;
 
-const client = new services.RouteGuideClient(
+const client = new routeguide_pb_grpc.RouteGuideClient(
   addr,
   grpc.credentials.createInsecure());
 
@@ -77,34 +71,34 @@ function runGetFeature(callback) {
 /**
  * @param {number} latitude
  * @param {number} longitude
- * @returns {!messages.Point}
+ * @returns {!routeguide_pb.Point}
  */
 function newPoint(latitude, longitude) {
-  const point = new messages.Point()
+  const point = new routeguide_pb.Point()
   point.setLatitude(latitude);
   point.setLongitude(longitude);
   return point;
 }
 
 /**
- * @param {!messages.Point} lo
- * @param {!messages.Point} hi
- * @returns {!messages.Rectangle}
+ * @param {!routeguide_pb.Point} lo
+ * @param {!routeguide_pb.Point} hi
+ * @returns {!routeguide_pb.Rectangle}
  */
 function newRectangle(lo, hi) {
-  const rect = new messages.Rectangle()
+  const rect = new routeguide_pb.Rectangle()
   rect.setLo(lo);
   rect.setHi(hi);
   return rect;
 }
 
 /**
- * @param {!messages.Point} point
+ * @param {!routeguide_pb.Point} point
  * @param {string} message
- * @returns {!messages.Note}
+ * @returns {!routeguide_pb.Note}
  */
 function newNote(point, message) {
-  const note = new messages.RouteNote()
+  const note = new routeguide_pb.RouteNote()
   note.setLocation(point);
   note.setMessage(message);
   return note;
@@ -175,9 +169,9 @@ function runRecordRoute(callback) {
   const pointSenders = [];
 
   for (let i = 0; i < num_points; i++) {
-    const randIndex = ~~(Math.random() * (featureList.length - 1))
+    const randIndex = ~~(Math.random() * (featureDb.length - 1))
     console.log("randomIndex", randIndex);
-    const randomPointJson = featureList[randIndex];
+    const randomPointJson = featureDb[randIndex];
     const randomPoint = newPoint(randomPointJson.location.latitude, randomPointJson.location.longitude)
     console.log("randomPoint", randomPointJson, randomPoint.toObject());
     pointSenders[i] = pointSender(randomPoint.getLatitude(),

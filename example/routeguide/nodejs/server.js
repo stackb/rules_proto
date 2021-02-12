@@ -15,14 +15,12 @@
  * limitations under the License.
  *
  */
+const grpc = require('@grpc/grpc-js');
 
-const featureDb = require('rules_proto_grpc/example/proto/routeguide_features.json');
-const messages = require('rules_proto_grpc/nodejs/example/routeguide/routeguide/example/proto/routeguide_pb.js')
-const services = require('rules_proto_grpc/nodejs/example/routeguide/routeguide/example/proto/routeguide_grpc_pb.js')
+const routeguide_pb = require('../routeguide_nodejs_grpc_pb/example/routeguide/routeguide_pb.js');
+const routeguide_pb_grpc = require('../routeguide_nodejs_grpc_pb/example/routeguide/routeguide_grpc_pb.js');
+const featureDb = require('../routeguide_features.json');
 
-const fs = require('fs');
-const path = require('path');
-const grpc = require('grpc');
 const COORD_FACTOR = 1e7;
 
 /**
@@ -54,7 +52,7 @@ function checkFeature(point) {
     }
   }
   const name = '';
-  feature = new messages.Feature();
+  feature = new routeguide_pb.Feature();
   feature.setName(name);
   feature.setLocation(point);
   return feature;
@@ -152,7 +150,7 @@ function recordRoute(call, callback) {
     previous = point;
   });
   call.on('end', function() {
-    const summary = new messages.RouteSummary();
+    const summary = new routeguide_pb.RouteSummary();
     summary.setPointCount(pointCount);
     summary.setFeatureCount(featureCount);
     // Cast the distance to an integer
@@ -206,7 +204,7 @@ function routeChat(call) {
  */
 function getServer() {
   const server = new grpc.Server();
-  server.addService(services.RouteGuideService, {
+  server.addService(routeguide_pb_grpc.RouteGuideService, {
     getFeature: getFeature,
     listFeatures: listFeatures,
     recordRoute: recordRoute,
@@ -216,6 +214,18 @@ function getServer() {
 }
 
 if (require.main === module) {
+  // Transform the loaded features to Feature objects
+  feature_list = featureDb.map(function(value) {
+    const feature = new routeguide_pb.Feature();
+    feature.setName(value.name);
+    const location = new routeguide_pb.Point();
+    location.setLatitude(value.location.latitude);
+    location.setLongitude(value.location.longitude);
+    feature.setLocation(location);
+    return feature;
+  });
+  console.log(`Feature database contains ${feature_list.length} entries.`);
+
   let port = '50051';
   if (process.env.SERVER_PORT) {
     port = process.env.SERVER_PORT;
@@ -223,22 +233,12 @@ if (require.main === module) {
   const addr = '0.0.0.0:'+port;
   // If this is run as a script, start a server on an unused port
   const routeServer = getServer();
-  routeServer.bind(addr, grpc.ServerCredentials.createInsecure());
-
-  // Transform the loaded features to Feature objects
-  feature_list = featureDb.map(function(value) {
-    const feature = new messages.Feature();
-    feature.setName(value.name);
-    const location = new messages.Point();
-    location.setLatitude(value.location.latitude);
-    location.setLongitude(value.location.longitude);
-    feature.setLocation(location);
-    return feature;
+  routeServer.bindAsync(addr, grpc.ServerCredentials.createInsecure(), (err, port) => {
+    console.log(`Node server listening at ${addr}...`)
+    routeServer.start();      
   });
 
-  console.log(`Feature database contains ${feature_list.length} entries.`);
-  console.log(`Node server listening at ${addr}...`)
-  routeServer.start();
+
 }
 
 exports.getServer = getServer;
