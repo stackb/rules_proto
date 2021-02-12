@@ -1,0 +1,26 @@
+load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
+
+exports_files([
+    "yarn.lock",
+    "package.json",
+])
+
+proto_dependency(
+    name = "example_routeguide_node_modules",
+    repository_rule = "phony",
+    visibility = ["//visibility:public"],
+    workspace_snippet = """yarn_install(
+    name = "example_routeguide_node_modules",
+    package_json = "@build_stack_rules_proto//example/routeguide/nodejs/modules:package.json",
+    symlink_node_modules = False,
+    yarn_lock = "@build_stack_rules_proto//example/routeguide/nodejs/modules:yarn.lock",
+)""",
+    deps = ["//example/routeguide/nodejs:build_bazel_rules_nodejs"],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)

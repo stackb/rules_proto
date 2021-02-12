@@ -497,6 +497,6 @@ def proto_compile_rule(aspect):
 def proto_compile_rule_macro(rule, **kwargs):
     rule(
         verbose_string = "{}".format(kwargs.get("verbose", 0)),
-        merge_directories = True,
-        **{k: v for k, v in kwargs.items() if k != "merge_directories"}
+        merge_directories = kwargs.pop("merge_directories", True),
+        **kwargs
     )

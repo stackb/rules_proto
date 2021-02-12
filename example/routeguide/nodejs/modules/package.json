@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@grpc/grpc-js": "1.2.6",
+    "async": "3.2.0",
+    "google-protobuf": "3.14.0"
+  }
+}

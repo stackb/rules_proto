@@ -1,9 +1,8 @@
 load("//rules/internal:common.bzl", "ProtoCompileInfo")
 load(
     "@build_bazel_rules_nodejs//:providers.bzl",
+    "JSModuleInfo",
     "LinkablePackageInfo",
-    # "direct_sources": "Depset of direct JavaScript files and sourcemaps",
-    # "sources": "Depset of direct and transitive JavaScript files and sourcemaps",
 )
 load("@bazel_skylib//lib:paths.bzl", "paths")
 
@@ -28,7 +27,8 @@ def package_name_from_label(label):
 def _proto_compile_js_library_impl(ctx):
     package_file = ctx.outputs.package
     index_file = ctx.actions.declare_file(ctx.label.name + ".js", sibling = package_file)
-    outputs = [package_file, index_file]
+    direct_outputs = [package_file, index_file]
+    transitive_depsets = []
 
     index_lines = [
         "// Generated file - DO NOT EDIT",
@@ -42,38 +42,56 @@ def _proto_compile_js_library_impl(ctx):
         files = [],
     )
 
+    has_output_dirs = False
+
     for dep in ctx.attr.deps:
-        if ProtoCompileInfo in dep:
-            info = dep[ProtoCompileInfo]
-            for [genrootdir, genfiles] in info.output_files.items():
-                for src in genfiles:
-                    relname = get_source_relname(genrootdir, src)
-                    base, ext = paths.split_extension(src.basename)
-                    index_lines.append("  '%s': '%s'" % (base, relname))
-                    dst = ctx.actions.declare_file(relname, sibling = package_file)
-                    outputs.append(dst)
-                    copy_file(ctx, src, dst)
-        else:
+        if not ProtoCompileInfo in dep:
             print("unknown provider: %r" % dep)
+            pass
+
+        info = dep[ProtoCompileInfo]
+        for [genrootdir, genfiles] in info.output_files.items():
+            for src in genfiles:
+                relname = get_source_relname(genrootdir, src)
+                base, ext = paths.split_extension(src.basename)
+                index_lines.append("  '%s': '%s'" % (base, relname))
+                dst = ctx.actions.declare_file(relname, sibling = package_file)
+                direct_outputs.append(dst)
+                copy_file(ctx, src, dst)
+
+        for dir in info.output_dirs.to_list():
+            has_output_dirs = True
+            direct_outputs.append(dir)
+            ctx.actions.run(
+                inputs = [dir],
+                outputs = [index_file],
+                executable = ctx.executable._tool,
+                arguments = [dir.path, index_file.path],
+                mnemonic = "CreateIndexJs",
+                progress_message = "Creating index.js file",
+            )
+
+    for dep in ctx.attr.js_deps:
+        if not JSModuleInfo in dep:
+            print("skipping unknown provider %r" % dep)
+            pass
+        transitive_depsets.append(dep[JSModuleInfo].sources)
 
     index_lines.append("};")
 
     ctx.actions.write(package_file, package.to_json())
-    ctx.actions.write(index_file, "\n".join(index_lines))
 
-    sources = depset(direct = outputs)
+    if not has_output_dirs:
+        ctx.actions.write(index_file, "\n".join(index_lines))
 
     return [
         LinkablePackageInfo(
             package_name = package.name,
             path = ctx.label.package,
-            files = depset(direct = outputs),
+            files = depset(direct = direct_outputs, transitive = transitive_depsets),
         ),
-        # JSModuleInfo(
-        #     sources = sources,
-        # ),
         DefaultInfo(
-            files = sources,
+            files = depset(direct = direct_outputs),
         ),
     ]
 
@@ -85,8 +103,17 @@ proto_compile_js_library = rule(
             mandatory = True,
             providers = [ProtoCompileInfo],
         ),
+        "js_deps": attr.label_list(
+            doc = "List of rules that provide rules_nodejs providers",
+        ),
+        "_tool": attr.label(
+            doc = "The js_module generating tool",
+            default = ":proto_compile_js_module",
+            executable = True,
+            cfg = "exec",
+        ),
     },
     outputs = {
-        "package": "%{name}package.json",
+        "package": "%{name}.package.json",
     },
 )

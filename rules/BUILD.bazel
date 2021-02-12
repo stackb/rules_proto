@@ -1,7 +1,15 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+
 filegroup(
     name = "all_files",
     testonly = True,
     srcs = ["//rules/internal:all_files"] + glob(["**"]),
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "proto_compile_js_module",
+    srcs = ["proto_compile_js_module.py"],
     visibility = ["//visibility:public"],
 )
 
