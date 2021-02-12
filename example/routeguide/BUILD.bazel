@@ -6,6 +6,13 @@ load("@build_stack_rules_proto//rules:python.bzl", "py_grpc_compile", "py_grpc_l
 load("@build_stack_rules_proto//rules:closure.bzl", "closure_proto_compile", "closure_proto_library")
 load("@build_stack_rules_proto//rules:java.bzl", "java_grpc_compile", "java_grpc_library")
 load("@build_stack_rules_proto//rules:nodejs.bzl", "nodejs_grpc_compile", "nodejs_grpc_library")
+load("@build_stack_rules_proto//rules/proto:proto_compile_info_provider_test.bzl", "proto_compile_info_provider_test")
+
+filegroup(
+    name = "routeguide_features",
+    srcs = ["routeguide_features.json"],
+    visibility = ["//visibility:public"],
+)
 
 proto_library(
     name = "routeguide_proto",
@@ -92,14 +99,27 @@ proto_compile_test(
     deps = [":routeguide_proto"],
 )
 
+proto_compile_info_provider_test(
+    name = "routeguide_nodejs_grpc_compile_info_provider_test",
+    srcs = [],  # the js_library rule does not generate DefaultInfo files
+    rule = nodejs_grpc_compile,
+    deps = [":routeguide_proto"],
+)
+
 nodejs_grpc_library(
     name = "routeguide_nodejs_grpc",
     visibility = ["//visibility:public"],
     deps = [":routeguide_proto"],
 )
 
-filegroup(
-    name = "routeguide_features",
-    srcs = ["routeguide_features.json"],
+nodejs_grpc_compile(
+    name = "routeguide_nodejs_grpc_compile",
     visibility = ["//visibility:public"],
+    deps = [":routeguide_proto"],
+)
+
+proto_compile_info_provider_test(
+    name = "routeguide_nodejs_grpc_compile_info_test",
+    srcs = ["routeguide_nodejs_grpc_compile_info_test.golden.1.prototext"],
+    deps = [":routeguide_nodejs_grpc_compile"],
 )

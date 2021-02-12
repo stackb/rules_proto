@@ -28,7 +28,7 @@ func TestCollectRuleDeps(t *testing.T) {
 			expectedOrder: []string{"foo"},
 		},
 		{
-			d: "complex rule deps",
+			d: "nodejs_grpc_library rule deps",
 			rule: &ProtoRule{
 				Name: "nodejs_grpc_library",
 				Deps: []*ProtoDependency{

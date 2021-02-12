@@ -216,11 +216,16 @@ def io_grpc_grpc_java():
     )
 
 def build_bazel_rules_nodejs():
+    # This is a snapshot build from Greg Magolan that should support
+    # "multilinker" (ability for nodejs_binary) to have deps from different
+    # package.jsons
     maybe(
         http_archive,
         name = "build_bazel_rules_nodejs",
-        sha256 = "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d",
-        urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/3.0.0/rules_nodejs-3.0.0.tar.gz"],
+        sha256 = "8617ef45e5691e454835031541f404c84afbab0ad7f3ef62a853a45cd70b7df7",
+        urls = [
+            "https://github.com/aspect-dev/rules_nodejs-builds/raw/3.1.0+bd9eeb0e/build_bazel_rules_nodejs-snapshot_builds-snapshot.tar.gz",
+        ],
     )
 
 def rules_pkg():

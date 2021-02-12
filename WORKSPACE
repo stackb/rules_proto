@@ -73,11 +73,11 @@ com_google_protobuf()
 
 zlib()
 
-load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+# load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
 
-rules_proto_dependencies()
+# rules_proto_dependencies()
 
-rules_proto_toolchains()
+# rules_proto_toolchains()
 
 #
 # Toolchains
@@ -123,12 +123,6 @@ grpc_java_repositories()
 
 # rules_codeowners()
 
-build_bazel_rules_nodejs()
-
-# load("@build_bazel_rules_nodejs//:package.bzl", "rules_nodejs_dev_dependencies")
-
-# rules_nodejs_dev_dependencies()
-
 # =================================================================================================
 # java
 # =================================================================================================
@@ -158,15 +152,14 @@ grpc_java_repositories()
 # nodejs
 # =================================================================================================
 
-load("@build_stack_rules_proto//rules:nodejs_grpc_library_deps.bzl", "nodejs_grpc_library_deps")
-
-nodejs_grpc_library_deps()
+build_bazel_rules_nodejs()
 
 load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
 
 yarn_install(
     name = "google_protobuf_node_modules",
     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:package.json",
+    package_path = "plugins/nodejs/modules/google-protobuf",
     symlink_node_modules = False,
     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:yarn.lock",
 )
@@ -174,6 +167,7 @@ yarn_install(
 yarn_install(
     name = "grpc_js_node_modules",
     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:package.json",
+    package_path = "plugins/nodejs/modules/grpc-js",
     symlink_node_modules = False,
     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:yarn.lock",
 )
@@ -181,8 +175,16 @@ yarn_install(
 yarn_install(
     name = "grpc_tools_node_modules",
     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:package.json",
+    package_path = "plugins/nodejs/modules/grpc-tools",
     symlink_node_modules = False,
     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:yarn.lock",
+)
+
+yarn_install(
+    name = "example_routeguide_node_modules",
+    package_json = "@build_stack_rules_proto//example/routeguide/nodejs/modules:package.json",
+    symlink_node_modules = False,
+    yarn_lock = "@build_stack_rules_proto//example/routeguide/nodejs/modules:yarn.lock",
 )
 
 # #

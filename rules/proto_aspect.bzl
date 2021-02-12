@@ -50,6 +50,7 @@ def _proto_compile_impl(ctx):
         dep[ProtoLibraryAspectNodeInfo].output_dirs
         for dep in ctx.attr.deps
     ])
+    print("original output dirs: %r" % output_dirs)
 
     # Check merge_directories and prefix_path
     if not ctx.attr.merge_directories and ctx.attr.prefix_path:
@@ -475,7 +476,7 @@ def proto_compile_aspect(default_plugins, default_prefix):
             _prefix = attr.string(
                 doc = "String used to disambiguate aspects when generating outputs",
                 default = default_prefix,
-            )
+            ),
         ),
         toolchains = [str(Label("@build_stack_rules_proto//toolchains:protoc_toolchain_type"))],
     )

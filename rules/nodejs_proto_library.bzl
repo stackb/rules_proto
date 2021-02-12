@@ -2,8 +2,10 @@ load(
     "@build_stack_rules_proto//rules:nodejs_proto_compile.bzl",
     "nodejs_proto_compile",
 )
-
-load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
+load(
+    "@build_stack_rules_proto//rules:proto_compile_js_library.bzl",
+    "proto_compile_js_library",
+)
 
 PROTO_DEPS = [
     "@google_protobuf_node_modules//google-protobuf",
@@ -14,14 +16,13 @@ def nodejs_proto_library(**kwargs):
 
     nodejs_proto_compile(
         name = name_pb,
-        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")} # Forward args
+        **{k: v for (k, v) in kwargs.items() if k in ("deps", "verbose")}  # Forward args
     )
 
-    js_library(
+    proto_compile_js_library(
         name = kwargs.get("name"),
-        srcs = [name_pb],
-        deps = PROTO_DEPS,
-        package_name = kwargs.get("name"),
+        deps = [name_pb],
+        # js_deps = PROTO_DEPS,
         visibility = kwargs.get("visibility", []),
         tags = kwargs.get("tags", []),
     )
