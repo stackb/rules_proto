@@ -178,30 +178,13 @@ def _proto_compile_impl(ctx):
         ),
     ]
 
-def _proto_compile_aspect_impl(target, ctx):
-    ###
-    ### Part 1: setup variables used in scope
-    ###
-
-    # <int> verbose level
-    # verbose = ctx.attr.verbose
+def get_output_directories(ctx):
     verbose = get_int_attr(ctx.attr, "verbose_string")
-
-    # <struct> The resolved protoc toolchain
-    protoc_toolchain_info = ctx.toolchains[str(Label("//toolchains:protoc_toolchain_type"))]
-
-    # <Target> The resolved protoc compiler from the protoc toolchain
-    protoc = protoc_toolchain_info.protoc_executable
-
-    # <ProtoInfo> The ProtoInfo of the current node
-    proto_info = target[ProtoInfo]
-
     # <string> The directory where the outputs will be generated, relative to
     # the package. This contains the aspect _prefix attr to disambiguate
     # different aspects that may share the same plugins and would otherwise try
     # to touch the same file. The same is true for the verbose_string attr.
     rel_outdir = "{}/{}_verb{}".format(ctx.label.name, ctx.attr._prefix, verbose)
-
     # <string> The full path to the directory where the outputs will be generated
     full_outdir = ctx.bin_dir.path + "/"
     if ctx.label.workspace_root:
@@ -209,6 +192,20 @@ def _proto_compile_aspect_impl(target, ctx):
     if ctx.label.package:
         full_outdir += ctx.label.package + "/"
     full_outdir += rel_outdir
+    return rel_outdir, full_outdir
+
+def _proto_compile_aspect_impl(target, ctx):
+    ###
+    ### Part 1: setup variables used in scope
+    ###
+    rel_outdir, full_outdir = get_output_directories(ctx)
+
+    # <int> verbose level
+    # verbose = ctx.attr.verbose
+    verbose = get_int_attr(ctx.attr, "verbose_string")
+
+    # <ProtoInfo> The ProtoInfo of the current node
+    proto_info = target[ProtoInfo]
 
     # <list<PluginInfo>> A list of PluginInfo providers for the requested
     # plugins
@@ -352,7 +349,7 @@ def _proto_compile_aspect_impl(target, ctx):
             output_dirs_list.append(out_file)
 
         ###
-        ### Part 2.6: build command
+        ### Part 2.6: build args
         ###
 
         # <Args> argument list for protoc execution
@@ -395,47 +392,19 @@ def _proto_compile_aspect_impl(target, ctx):
             args.add(descriptor_proto_path(proto, proto_info))
 
         ###
-        ### Part 2.7: run command
+        ### Part 2.7: schedule command
         ###
 
-        mnemonic = "ProtoCompile"
-        command = ("mkdir -p '{}' && ".format(full_outdir)) + protoc.path + " $@"  # $@ is replaced with args list
-        inputs = proto_info.transitive_descriptor_sets.to_list() + plugin_runfiles  # Proto files are not inputs, as they come via the descriptor sets
-        tools = [protoc] + ([plugin_tool] if plugin_tool else [])
-
-        # Amend command with debug options
-        if verbose > 0:
-            print("{}:".format(mnemonic), protoc.path, args)
-
-        if verbose > 1:
-            command += " && echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find . -type f "
-
-        if verbose > 2:
-            command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . -type l && " + command
-
-        if verbose > 3:
-            command = "env && " + command
-            for f in inputs:
-                print("INPUT:", f.path)
-            for f in protos:
-                print("TARGET PROTO:", f.path)
-            for f in tools:
-                print("TOOL:", f.path)
-            for f in plugin_outputs:
-                print("EXPECTED OUTPUT:", f.path)
-
-        # Run protoc
-        ctx.actions.run_shell(
-            mnemonic = mnemonic,
-            command = command,
-            arguments = [args],
-            inputs = inputs,
-            tools = tools,
+        compilation = struct(
+            args = args,
+            inputs = proto_info.transitive_descriptor_sets.to_list() + plugin_runfiles,  # Proto files are not inputs, as they come via the descriptor sets
+            tools = [plugin_tool] if plugin_tool else [],
             outputs = plugin_outputs,
             use_default_shell_env = plugin.use_built_in_shell_environment,
             input_manifests = plugin_input_manifests if plugin_input_manifests else [],
-            progress_message = "Compiling protoc outputs for {} plugin".format(plugin.name),
         )
+
+        proto_compile_action(ctx, compilation)
 
     ###
     ### Step 3: generate providers
@@ -459,6 +428,50 @@ def _proto_compile_aspect_impl(target, ctx):
             plugins = plugins,
         ),
     ]
+
+def proto_compile_action(ctx, compilation):
+    mnemonic = "ProtoCompile"
+    verbose = get_int_attr(ctx.attr, "verbose_string")
+
+    # <struct> The resolved protoc toolchain
+    protoc_toolchain_info = ctx.toolchains[str(Label("//toolchains:protoc_toolchain_type"))]
+
+    # <Target> The resolved protoc compiler from the protoc toolchain
+    protoc = protoc_toolchain_info.protoc_executable
+
+    rel_outdir, full_outdir = get_output_directories(ctx)
+
+    command = ("mkdir -p '{}' && ".format(full_outdir)) + protoc.path + " $@"  # $@ is replaced with args list
+
+    # Amend command with debug options
+    if verbose > 0:
+        print("{}:".format(mnemonic), protoc.path, compilation.args)
+
+    if verbose > 1:
+        command += " && echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find . -type f "
+
+    if verbose > 2:
+        command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . -type l && " + command
+
+    if verbose > 3:
+        command = "env && " + command
+        for f in compilation.inputs:
+            print("INPUT:", f.path)
+        for f in compilation.tools:
+            print("TOOL:", f.path)
+        for f in compilation.outputs:
+            print("EXPECTED OUTPUT:", f.path)
+
+    ctx.actions.run_shell(
+        progress_message = "Compiling protoc outputs...",
+        command = command,
+        arguments = [compilation.args],
+        inputs = compilation.inputs,
+        tools = [protoc] + compilation.tools,
+        outputs = compilation.outputs,
+        use_default_shell_env = compilation.use_default_shell_env,
+        input_manifests = compilation.input_manifests,
+    )
 
 def proto_compile_aspect(default_plugins, default_prefix):
     return aspect(
