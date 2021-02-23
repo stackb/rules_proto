@@ -5,7 +5,11 @@ load(
     "ProtoCompileInfo",
     "copy_file",
     "descriptor_proto_path",
+    "get_bool_attr",
     "get_int_attr",
+    "uniq",
+    "flatten",
+    "homogenize",
     "get_output_filename",
     "strip_path_prefix",
 )
@@ -23,7 +27,15 @@ proto_compile_attrs = {
         doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
     ),
     "verbose_string": attr.string(
-        doc = "String version of the verbose string, used for aspect",
+        doc = "String version of the 'verbose' attr (used by the proto_compile_aspect)",
+        default = "0",
+    ),
+    "single_action": attr.bool(
+        doc = "Whether to run all plugins in a single action",
+        default = False,
+    ),
+    "single_action_string": attr.string(
+        doc = "String version of the 'single_action' attr (used by the proto_compile_aspect)",
         default = "0",
     ),
     "prefix_path": attr.string(
@@ -40,6 +52,11 @@ proto_compile_aspect_attrs = {
         doc = "String version of the verbose string, used for aspect",
         values = ["", "None", "0", "1", "2", "3", "4"],
         default = "0",
+    ),
+    "single_action_string": attr.string(
+        doc = "A boolean (as a string) on whether to run all plugins in a single action",
+        values = ["True", "False"],
+        default = "False",
     ),
 }
 
@@ -203,6 +220,8 @@ def _proto_compile_aspect_impl(target, ctx):
     # <int> verbose level
     # verbose = ctx.attr.verbose
     verbose = get_int_attr(ctx.attr, "verbose_string")
+    single_action = get_bool_attr(ctx.attr, "single_action_string")
+    print("single action? %r" % single_action)
 
     # <ProtoInfo> The ProtoInfo of the current node
     proto_info = target[ProtoInfo]
@@ -218,6 +237,11 @@ def _proto_compile_aspect_impl(target, ctx):
     # <list<File>> The list of generated artifacts directories that we
     # expect to be produced.
     output_dirs_list = []
+
+    # <list<compilation>> The list of compilation structs that are to be run
+    # together as a single action.  This list is empty unless the
+    # 'single_action' bool is True.
+    compilations = []
 
     ###
     ### Part 2: iterate over plugins
@@ -352,12 +376,12 @@ def _proto_compile_aspect_impl(target, ctx):
         ### Part 2.6: build args
         ###
 
-        # <Args> argument list for protoc execution
-        args = ctx.actions.args()
+        # <list<string> argument list for protoc execution
+        args = []
 
         # Add descriptors
         pathsep = ctx.configuration.host_path_separator
-        args.add("--descriptor_set_in={}".format(pathsep.join(
+        args.append("--descriptor_set_in={}".format(pathsep.join(
             [f.path for f in proto_info.transitive_descriptor_sets.to_list()],
         )))
 
@@ -372,7 +396,7 @@ def _proto_compile_aspect_impl(target, ctx):
             else:
                 plugin_tool_path = plugin_tool.path
 
-            args.add("--plugin=protoc-gen-{}={}".format(plugin_name, plugin_tool_path))
+            args.append("--plugin=protoc-gen-{}={}".format(plugin_name, plugin_tool_path))
 
         # Add plugin out arg
         out_arg = out_file.path if out_file else full_outdir
@@ -382,14 +406,14 @@ def _proto_compile_aspect_impl(target, ctx):
                 [option.replace("{name}", ctx.label.name) for option in plugin.options],
             )
             if plugin.separate_options_flag:
-                args.add("--{}_opt={}".format(plugin_name, opts_str))
+                args.append("--{}_opt={}".format(plugin_name, opts_str))
             else:
                 out_arg = "{}:{}".format(opts_str, out_arg)
-        args.add("--{}_out={}".format(plugin_name, out_arg))
+        args.append("--{}_out={}".format(plugin_name, out_arg))
 
         # Add source proto files as descriptor paths
         for proto in protos:
-            args.add(descriptor_proto_path(proto, proto_info))
+            args.append(descriptor_proto_path(proto, proto_info))
 
         ###
         ### Part 2.7: schedule command
@@ -404,7 +428,14 @@ def _proto_compile_aspect_impl(target, ctx):
             input_manifests = plugin_input_manifests if plugin_input_manifests else [],
         )
 
-        proto_compile_action(ctx, compilation)
+        if single_action:
+            compilations.append(compilation)
+        else:
+            proto_compile_action(ctx, compilation)
+
+
+    if len(compilations) > 0:
+        proto_compile_action(ctx, merge_compilations(compilations))
 
     ###
     ### Step 3: generate providers
@@ -428,6 +459,20 @@ def _proto_compile_aspect_impl(target, ctx):
             plugins = plugins,
         ),
     ]
+
+def merge_compilations(compilations):
+    """merge_compilations merges a list of compilations into one
+    """
+    return struct(
+        args = uniq(flatten([compilation.args for compilation in compilations])),
+        inputs = uniq(flatten([compilation.inputs for compilation in compilations])),
+        tools = uniq(flatten([compilation.tools for compilation in compilations])),
+        outputs = uniq(flatten([compilation.outputs for compilation in compilations])),
+        # don't apply 'uniq' here to avoid 'Error: unhashable type: 'RunfilesSupplierImpl'
+        input_manifests = flatten([compilation.input_manifests for compilation in compilations]),
+        use_default_shell_env = homogenize("use_default_shell_env", [compilation.use_default_shell_env for compilation in compilations]),
+    )
+
 
 def proto_compile_action(ctx, compilation):
     mnemonic = "ProtoCompile"
@@ -462,10 +507,13 @@ def proto_compile_action(ctx, compilation):
         for f in compilation.outputs:
             print("EXPECTED OUTPUT:", f.path)
 
+    args = ctx.actions.args()
+    args.add_all(compilation.args)
+
     ctx.actions.run_shell(
         progress_message = "Compiling protoc outputs...",
         command = command,
-        arguments = [compilation.args],
+        arguments = [args],
         inputs = compilation.inputs,
         tools = [protoc] + compilation.tools,
         outputs = compilation.outputs,
@@ -508,6 +556,7 @@ def proto_compile_rule(aspect):
 
 def proto_compile_rule_macro(rule, **kwargs):
     rule(
+        single_action_string = "{}".format(kwargs.get("single_action", False)),
         verbose_string = "{}".format(kwargs.get("verbose", 0)),
         merge_directories = kwargs.pop("merge_directories", True),
         **kwargs

@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//rules/internal:common.bzl", "ProtoCompileInfo")
+load("@build_stack_rules_proto//rules/internal:common.bzl", "ProtoCompileInfo", "is_string")
 load(
     "@build_stack_rules_proto//tools/gencopy:gencopy.bzl",
     "gencopy_action",
@@ -44,15 +44,16 @@ _proto_compile_test = _proto_compile_rule(True)
 _proto_compile_run = _proto_compile_rule(False)
 
 def proto_compile_test(**kwargs):
-    proto_compile_rule = kwargs.pop("rule")
+    proto_compile_rule_or_label = kwargs.pop("rule", None)
     srcs = kwargs.pop("srcs", [])
     name = kwargs.pop("name")
 
-    out_name = name + "_out"
+    out_name = name + "_out" if not is_string(proto_compile_rule_or_label) else proto_compile_rule_or_label
     update_target_label_name = "golden"
     update_name = "%s.%s" % (name, update_target_label_name)
 
-    proto_compile_rule(name = out_name, **kwargs)
+    if not is_string(proto_compile_rule_or_label):
+        proto_compile_rule_or_label(name = out_name, **kwargs)
 
     _proto_compile_test(
         name = name,

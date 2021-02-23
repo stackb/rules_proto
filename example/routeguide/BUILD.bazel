@@ -26,8 +26,14 @@ proto_info_provider_test(
     deps = [":routeguide_proto"],
 )
 
-proto_compile_test(
-    name = "routeguide_cc_grpc_compile_test",
+cc_grpc_compile(
+    name = "routeguide_cc_grpc_compile_single_action",
+    deps = [":routeguide_proto"],
+    single_action = True,
+)
+
+filegroup(
+    name = "cc_grpc_compile_goldens",
     srcs = [
         "routeguide.grpc.pb.cc",
         "routeguide.grpc.pb.h",
@@ -35,6 +41,19 @@ proto_compile_test(
         "routeguide.pb.h",
         "routeguide_mock.grpc.pb.h",
     ],
+)
+
+# This test asserts that running the cc_grpc_compile rule using the
+# 'single_action' flag produces all expected files.
+proto_compile_test(
+    name = "routeguide_cc_grpc_compile_single_action_test",
+    srcs = [":cc_grpc_compile_goldens"],
+    rule = ":routeguide_cc_grpc_compile_single_action",
+)
+
+proto_compile_test(
+    name = "routeguide_cc_grpc_compile_test",
+    srcs = [":cc_grpc_compile_goldens"],
     rule = cc_grpc_compile,
     deps = [":routeguide_proto"],
 )
