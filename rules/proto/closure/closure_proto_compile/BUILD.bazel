@@ -31,7 +31,7 @@ proto_rule_info_provider_test(
 )
 
 proto_rule_test(
-    name = "closure_proto_compile_rule_test",
+    name = "closure_proto_compile_aspect_rule_test",
     srcs = [
         "//rules:closure_proto_compile.bzl",
         "//rules:closure_proto_compile_deps.bzl",
@@ -41,7 +41,7 @@ proto_rule_test(
 )
 
 proto_rule_bazel_test(
-    name = "closure_proto_compile_rule_bazel_test",
+    name = "closure_proto_compile_aspect_rule_bazel_test",
     tags = ["exclusive"],
     deps = ["closure_proto_compile"],
 )

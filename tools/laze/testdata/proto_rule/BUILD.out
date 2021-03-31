@@ -15,7 +15,7 @@ proto_rule_info_provider_test(
 )
 
 proto_rule_test(
-    name = "py_proto_compile_rule_test",
+    name = "py_proto_compile_aspect_rule_test",
     srcs = [
         "//python:py_proto_compile.bzl",
         "//python:py_proto_compile_deps.bzl",

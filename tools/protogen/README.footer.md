@@ -201,7 +201,7 @@ repository.  The basic idea is:
 ```starlark
 load("@rules_proto_grpc@build_stack_rules_proto//rules:proto_plugin.bzl", "ProtoPluginInfo")
 load(
-    "@rules_proto_grpc@build_stack_rules_proto//rules:proto_aspect.bzl",
+    "@rules_proto_grpc@build_stack_rules_proto//rules:proto_rules.bzl",
     "ProtoLibraryAspectNodeInfo",
     "proto_compile_aspect_attrs",
     "proto_compile_aspect_impl",

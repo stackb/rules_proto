@@ -1,4 +1,5 @@
-load("@build_stack_rules_proto//rules/internal:common.bzl", "ProtoCompileInfo", "is_string")
+load("@build_stack_rules_proto//rules:proto_providers.bzl", "ProtoCompileInfo")
+load("@build_stack_rules_proto//rules:proto_utils.bzl", "is_string")
 load(
     "@build_stack_rules_proto//tools/gencopy:gencopy.bzl",
     "gencopy_action",
@@ -26,7 +27,7 @@ def _proto_compile_test_impl(ctx):
         ),
     ]
 
-def _proto_compile_rule(is_test):
+def _proto_compile_aspect_rule(is_test):
     return rule(
         implementation = _proto_compile_test_impl,
         attrs = dict(
@@ -40,22 +41,22 @@ def _proto_compile_rule(is_test):
         test = is_test,
     )
 
-_proto_compile_test = _proto_compile_rule(True)
-_proto_compile_run = _proto_compile_rule(False)
+_proto_compile_test = _proto_compile_aspect_rule(True)
+_proto_compile_run = _proto_compile_aspect_rule(False)
 
 def proto_compile_test(**kwargs):
-    proto_compile_rule_or_label = kwargs.pop("rule", None)
+    proto_compile_aspect_rule_or_label = kwargs.pop("rule", None)
     srcs = kwargs.pop("srcs", [])
     name = kwargs.pop("name")
 
     update_target_label_name = "golden"
     update_name = "%s.%s" % (name, update_target_label_name)
 
-    if proto_compile_rule_or_label and not is_string(proto_compile_rule_or_label):
+    if proto_compile_aspect_rule_or_label and not is_string(proto_compile_aspect_rule_or_label):
         out_name = name + "_out"
-        proto_compile_rule_or_label(name = out_name, **kwargs)
+        proto_compile_aspect_rule_or_label(name = out_name, **kwargs)
     else:
-        out_name = proto_compile_rule_or_label
+        out_name = proto_compile_aspect_rule_or_label
 
 
     _proto_compile_test(

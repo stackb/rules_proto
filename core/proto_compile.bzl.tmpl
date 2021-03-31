@@ -1,8 +1,8 @@
 load(
-    "@build_stack_rules_proto//rules:proto_aspect.bzl",
+    "@build_stack_rules_proto//rules:proto_rules.bzl",
     "proto_compile_aspect",
-    "proto_compile_rule_macro",
-    "proto_compile_rule",
+    "proto_compile_aspect_rule_macro",
+    "proto_compile_aspect_rule",
 )
 
 _default_plugins = [{{ range .Rule.Plugins }}
@@ -11,7 +11,7 @@ _default_plugins = [{{ range .Rule.Plugins }}
 
 _{{ .Rule.Name }}_aspect = proto_compile_aspect(_default_plugins, "{{ .Rule.Name }}_aspect")
 
-_{{ .Rule.Name }}_rule = proto_compile_rule(_{{ .Rule.Name }}_aspect)
+_{{ .Rule.Name }}_rule = proto_compile_aspect_rule(_{{ .Rule.Name }}_aspect)
 
 def {{ .Rule.Name }}(**kwargs):
-    proto_compile_rule_macro(_{{ .Rule.Name }}_rule, **kwargs)
+    proto_compile_aspect_rule_macro(_{{ .Rule.Name }}_rule, **kwargs)
