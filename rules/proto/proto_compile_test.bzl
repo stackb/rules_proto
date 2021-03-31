@@ -48,12 +48,15 @@ def proto_compile_test(**kwargs):
     srcs = kwargs.pop("srcs", [])
     name = kwargs.pop("name")
 
-    out_name = name + "_out" if not is_string(proto_compile_rule_or_label) else proto_compile_rule_or_label
     update_target_label_name = "golden"
     update_name = "%s.%s" % (name, update_target_label_name)
 
-    if not is_string(proto_compile_rule_or_label):
+    if proto_compile_rule_or_label and not is_string(proto_compile_rule_or_label):
+        out_name = name + "_out"
         proto_compile_rule_or_label(name = out_name, **kwargs)
+    else:
+        out_name = proto_compile_rule_or_label
+
 
     _proto_compile_test(
         name = name,

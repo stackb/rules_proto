@@ -104,7 +104,7 @@ func readFileAsString(filename string) (string, error) {
 
 func usageHint(cfg *Config) string {
 	return fmt.Sprintf(`You may need to regenerate the files (bazel run) using the '.%[2]s' target,
-update the 'srcs = [...]' attribute to include the generated files, and then re-run the test (bazel test):
+update the 'srcs = [...]' attribute to include the generated files and re-run the test:
 
 $ bazel run %[1]s.%[2]s
 $ bazel test %[1]s
@@ -133,11 +133,11 @@ func check(cfg *Config, pairs []*srcDst) error {
 	for i, pair := range pairs {
 		expected, err := readFileAsString(pair.dst)
 		if err != nil {
-			return fmt.Errorf("check failed: %v", err)
+			return fmt.Errorf("check failed while reading dst %s: %v", pair.dst, err)
 		}
 		actual, err := readFileAsString(cfg.SourceFiles[i])
 		if err != nil {
-			return fmt.Errorf("check failed: %v", err)
+			return fmt.Errorf("check failed while reading src %s: %v", cfg.SourceFiles[i], err)
 		}
 		if diff := cmp.Diff(expected, actual); diff != "" {
 			return fmt.Errorf("gencopy mismatch %q vs. %q (-want +got):\n%s", pair.dst, cfg.SourceFiles[i], diff)
