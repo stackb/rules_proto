@@ -3,6 +3,7 @@ load(
     "proto_compile_aspect",
     "proto_compile_aspect_rule_macro",
     "proto_compile_aspect_rule",
+    "proto_compile_rule",
 )
 
 _default_plugins = [{{ range .Rule.Plugins }}
@@ -11,7 +12,12 @@ _default_plugins = [{{ range .Rule.Plugins }}
 
 _{{ .Rule.Name }}_aspect = proto_compile_aspect(_default_plugins, "{{ .Rule.Name }}_aspect")
 
-_{{ .Rule.Name }}_rule = proto_compile_aspect_rule(_{{ .Rule.Name }}_aspect)
+_{{ .Rule.Name }}_aspect_rule = proto_compile_aspect_rule(_{{ .Rule.Name }}_aspect)
+
+_{{ .Rule.Name }}_rule = proto_compile_rule(_default_plugins)
 
 def {{ .Rule.Name }}(**kwargs):
-    proto_compile_aspect_rule_macro(_{{ .Rule.Name }}_rule, **kwargs)
+    if kwargs.pop("transitive", False):
+        proto_compile_aspect_rule_macro(_{{ .Rule.Name }}_aspect_rule, **kwargs)
+    else:
+        _{{ .Rule.Name }}_rule(**kwargs)

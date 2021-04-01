@@ -30,6 +30,7 @@ ProtoCompileInputInfo = provider(
         "output_directory": "<string> The full output directory where to emit files",
         "outputs": "<list<File>> The list of expected outputs",
         "protoc": "<File> The protoc executable.  This is expected to originate from a toolchain.",
+        "protos": "<list<File>> the list of proto files being compiled",
         "tools": "<list<File>> The list of tools for the compiler action",
         "use_default_shell_env": "<bool> Whether to use the default shell environment",
         "verbose": "<int> A number for the verbosity level",

@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//rules/internal:common.bzl", "ProtoCompileInfo")
+load("@build_stack_rules_proto//rules:proto_providers.bzl", "ProtoCompileInfo")
 load(
     "@build_stack_rules_proto//rules/proto:provider_test.bzl",
     "provider_test_implementation",

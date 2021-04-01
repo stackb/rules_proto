@@ -3,6 +3,7 @@ load(
     "proto_compile_aspect",
     "proto_compile_aspect_rule_macro",
     "proto_compile_aspect_rule",
+    "proto_compile_rule",
 )
 
 _default_plugins = [
@@ -12,7 +13,12 @@ _default_plugins = [
 
 _cc_grpc_compile_aspect = proto_compile_aspect(_default_plugins, "cc_grpc_compile_aspect")
 
-_cc_grpc_compile_rule = proto_compile_aspect_rule(_cc_grpc_compile_aspect)
+_cc_grpc_compile_aspect_rule = proto_compile_aspect_rule(_cc_grpc_compile_aspect)
+
+_cc_grpc_compile_rule = proto_compile_rule(_default_plugins)
 
 def cc_grpc_compile(**kwargs):
-    proto_compile_aspect_rule_macro(_cc_grpc_compile_rule, **kwargs)
+    if kwargs.pop("transitive", False):
+        proto_compile_aspect_rule_macro(_cc_grpc_compile_aspect_rule, **kwargs)
+    else:
+        _cc_grpc_compile_rule(**kwargs)

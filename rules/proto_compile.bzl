@@ -231,6 +231,7 @@ def proto_compile(compilation):
             output_directory = full_outdir,
             outputs = plugin_outputs,
             protoc = compilation.protoc,
+            protos = protos,
             tools = [plugin_tool] if plugin_tool else [],
             use_default_shell_env = plugin.use_built_in_shell_environment,
             verbose = verbose,
@@ -255,8 +256,8 @@ def proto_compile(compilation):
     # Gather transitive info
     transitive_output_dirs_list = []
     for transitive_info in compilation.transitive_outs:
-        output_files_dict.update(**transitive_info.output_files)
-        transitive_output_dirs_list.append(transitive_info.output_dirs)
+        output_files_dict.update(**transitive_info.files)
+        transitive_output_dirs_list.append(transitive_info.dirs)
 
     return [
         ProtoCompileOutputInfo(
@@ -281,6 +282,7 @@ def merge_proto_compile_input_infos(infos):
         output_directory = homogenize("output_directory", [info.output_directory for info in infos]),
         outputs = uniq(flatten([info.outputs for info in infos])),
         protoc = homogenize("protoc", [info.protoc for info in infos]),
+        protos = uniq(flatten([info.protos for info in infos])),
         tools = uniq(flatten([info.tools for info in infos])),
         use_default_shell_env = homogenize("use_default_shell_env", [info.use_default_shell_env for info in infos]),
         verbose = homogenize("verbose", [info.verbose for info in infos]),
@@ -320,7 +322,7 @@ def _proto_compile_action(info):
     args.add_all(info.args)
 
     info.actions.run_shell(
-        progress_message = "Compiling protoc outputs...",
+        progress_message = "Compiling protoc outputs for %r" % info.protos,
         command = command,
         arguments = [args],
         inputs = info.inputs,

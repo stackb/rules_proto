@@ -1,5 +1,5 @@
 label: "//example/routeguide:routeguide_nodejs_grpc_compile"
 output_files {
-  bazel-out/darwin-fastbuild/bin/example/routeguide/routeguide_nodejs_grpc_compile: "example/routeguide/routeguide_nodejs_grpc_compile/example/routeguide/routeguide_pb.js"
-  bazel-out/darwin-fastbuild/bin/example/routeguide/routeguide_nodejs_grpc_compile: "example/routeguide/routeguide_nodejs_grpc_compile/example/routeguide/routeguide_grpc_pb.js"
+  bazel-out/darwin-fastbuild/bin/example/routeguide/routeguide_nodejs_grpc_compile: "example/routeguide/routeguide_pb.js"
+  bazel-out/darwin-fastbuild/bin/example/routeguide/routeguide_nodejs_grpc_compile: "example/routeguide/routeguide_grpc_pb.js"
 }
