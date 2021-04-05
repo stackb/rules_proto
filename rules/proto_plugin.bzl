@@ -1,3 +1,4 @@
+load("@rules_proto//proto:defs.bzl", "ProtoInfo")
 load(
     "@build_stack_rules_proto//rules:proto_dependency.bzl",
     "ProtoDependencyInfo",
@@ -16,6 +17,7 @@ ProtoPluginInfo = provider(fields = {
     "protoc_plugin_name": "The name used for the plugin binary on the protoc command line. Useful for targeting built-in plugins. Uses plugin name when not set",
     "exclusions": "Exclusion filters to apply when generating outputs with this plugin. Used to prevent generating files that are included in the protobuf library, for example. Can exclude either by proto name prefix or by proto folder prefix",
     "data": "Additional files required for running the plugin",
+    "supplementary_proto_deps": "Additional proto dependencies whose descriptors/files should be included in all protoc invocations",
     "separate_options_flag": "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",
     "deps": "The list of proto dependencies for this plugin",
 })
@@ -33,6 +35,7 @@ def proto_plugin_info_to_struct(info):
         protoc_plugin_name = info.protoc_plugin_name,
         exclusions = info.exclusions,
         data = [f.short_path for f in info.data],
+        supplementary_proto_deps = [f.short_path for f in info.supplementary_proto_deps],
         separate_options_flag = info.separate_options_flag,
         deps = info.deps,
     )
@@ -52,6 +55,7 @@ def _proto_plugin_impl(ctx):
             protoc_plugin_name = ctx.attr.protoc_plugin_name,
             exclusions = ctx.attr.exclusions,
             data = ctx.files.data,
+            supplementary_proto_deps = [dep[ProtoInfo] for dep in ctx.attr.supplementary_proto_deps],
             separate_options_flag = ctx.attr.separate_options_flag,
             deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
         ),
@@ -92,6 +96,11 @@ proto_plugin = rule(
         "data": attr.label_list(
             doc = "Additional files required for running the plugin",
             allow_files = True,
+        ),
+        "supplementary_proto_deps": attr.label_list(
+            doc = "Additional proto files/descriptors to be placed on the argument list",
+            allow_files = True,
+            providers = [ProtoInfo],
         ),
         "separate_options_flag": attr.bool(
             doc = "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",

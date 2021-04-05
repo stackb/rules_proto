@@ -1,5 +1,6 @@
 """Compilation functions
 """
+load("@rules_proto//proto:defs.bzl", "ProtoInfo")
 
 load(
     ":proto_utils.bzl",
@@ -60,6 +61,9 @@ def proto_compile(compilation):
         ### Part 2.1: fetch plugin tool and runfiles
         ###
 
+        # <list<File>> The filtered set of .proto files to compile
+        protos = []
+
         # <list<File>> Files required for running the plugins
         plugin_runfiles = []
 
@@ -91,9 +95,12 @@ def proto_compile(compilation):
         ###
         ### Part 2.2: gather proto files and filter by exclusions
         ###
+        descriptors = proto_info.transitive_descriptor_sets.to_list()
 
-        # <list<File>> The filtered set of .proto files to compile
-        protos = []
+        # Add in additional proto deps if specified by the compiler
+        for info in plugin.supplementary_proto_deps:
+            # descriptors.append(info.direct_descriptor_set)
+            descriptors += info.transitive_descriptor_sets.to_list()
 
         for proto in proto_info.direct_sources:
             # Check for exclusion
@@ -186,7 +193,7 @@ def proto_compile(compilation):
         # Add descriptors
         pathsep = compilation.host_path_separator
         args.append("--descriptor_set_in={}".format(pathsep.join(
-            [f.path for f in proto_info.transitive_descriptor_sets.to_list()],
+            [d.path for d in descriptors],
         )))
 
         # Add plugin if not built-in
@@ -219,6 +226,12 @@ def proto_compile(compilation):
         for proto in protos:
             args.append(descriptor_proto_path(proto, proto_info))
 
+        # add final infos
+        for info in plugin.supplementary_proto_deps:
+            for proto in info.direct_sources:
+                protos.append(proto)
+                args.append(descriptor_proto_path(proto, info))
+
         ###
         ### Part 2.7: schedule command
         ###
@@ -227,7 +240,7 @@ def proto_compile(compilation):
             actions = compilation.actions,
             args = args,
             input_manifests = plugin_input_manifests if plugin_input_manifests else [],
-            inputs = proto_info.transitive_descriptor_sets.to_list() + plugin_runfiles,  # Proto files are not inputs, as they come via the descriptor sets
+            inputs = descriptors + plugin_runfiles,
             output_directory = full_outdir,
             outputs = plugin_outputs,
             protoc = compilation.protoc,

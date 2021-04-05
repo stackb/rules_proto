@@ -7,7 +7,6 @@ load(
 )
 
 _default_plugins = [
-    str(Label("//plugins/python/proto:proto")),
     str(Label("//plugins/python/grpc:grpc")),
 ]
 
