@@ -4,6 +4,7 @@ load("@build_stack_rules_proto//rules/proto:proto_compile_info_provider_test.bzl
 load("@build_stack_rules_proto//rules/proto:proto_compile_test.bzl", "proto_compile_test")
 load("@build_stack_rules_proto//rules:py_proto_compile.bzl", "py_proto_compile")
 load("@build_stack_rules_proto//rules:cc_proto_compile.bzl", "cc_proto_compile")
+load("@build_stack_rules_proto//rules:gogofast_proto_compile.bzl", "gogofast_proto_compile")
 
 proto_library(
     name = "thing_proto",
@@ -38,6 +39,11 @@ proto_compile_test(
 
 cc_proto_compile(
     name = "thing_cc_proto",
+    deps = [":thing_proto"],
+)
+
+gogofast_proto_compile(
+    name = "thing_gogofast_proto",
     deps = [":thing_proto"],
 )
 
