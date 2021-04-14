@@ -50,6 +50,7 @@ def _proto_compile_impl(ctx):
         transitive = ctx.attr.transitive,
         transitive_outs = [],
         verbose = ctx.attr.verbose,
+        package_path = ctx.attr.package_path,
     )
 
     return coalesce_outputs(ctx, proto_compile(compilation))
@@ -104,6 +105,9 @@ _proto_compile_attrs = {
     ),
     "prefix_path": attr.string(
         doc = "Path to prefix to the generated files in the output directory. Cannot be set when merge_directories == False",
+    ),
+    "package_path": attr.string(
+        doc = "The package_path option value",
     ),
     "merge_directories": attr.bool(
         doc = "If true, all generated files are merged into a single directory with the name of current label and these new files returned as the outputs. If false, the original generated files are returned across multiple roots",

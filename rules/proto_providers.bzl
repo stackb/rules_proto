@@ -17,6 +17,7 @@ ProtoCompilationInfo = provider(
         "proto_info": "<ProtoInfo> The proto_library provder struct for the thing we are compiling",
         "host_path_separator": "<string> The ctx.configuration.host_path_separator string",
         "transitive_outs": "<list<ProtoCompileOutputInfo>> The list of transitive info providers",
+        "package_path": "<string> A package subpath that influences where the outputs are generated",
     },
 )
 

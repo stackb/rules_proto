@@ -1,7 +1,5 @@
 """Compilation functions
 """
-load("@rules_proto//proto:defs.bzl", "ProtoInfo")
-
 load(
     ":proto_utils.bzl",
     "copy_file",
@@ -129,7 +127,7 @@ def proto_compile(compilation):
 
         for proto in protos:
             for pattern in plugin.outputs:
-                output_filename = get_output_filename(proto, pattern, proto_info)
+                output_filename = get_output_filename(proto, pattern, proto_info, compilation.package_path)
                 filename = "{}/{}".format(rel_outdir, output_filename)
                 file = compilation.actions.declare_file(filename)
                 plugin_outputs.append(file)
