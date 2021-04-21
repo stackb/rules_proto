@@ -8,58 +8,72 @@ def _protoc_impl(ctx):
     ### Part 1: setup variables used in scope
     ###
 
-    # <ProtoInfo> proto provider
-    proto_info = ctx.attr.proto[ProtoInfo]
-    # <list<ProtoPluginInfo>> plugins to be applied
-    plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
-    # <File> the protoc file
-    protoc = get_protoc_executable(ctx)
-    # <list<File>> tools for the compile action
-    tools = [protoc]
-    # <File> the descriptor_set_out file
-    out = ctx.actions.declare_file(ctx.label.name + "_proto-descriptor-set.proto.bin")
-    # <list<File>> files we expect to be generated
-    genfiles = [ctx.actions.declare_file(rel, sibling = out) for rel in ctx.attr.generated_srcs]
-    # <list<File>> outputs for the compile action
-    outputs = [out] + genfiles
-    # <list<File>> set of descriptors for the compile action
-    descriptors = proto_info.transitive_descriptor_sets.to_list()
-    # <list<File>> inputs for the compile action
-    inputs = []
-    # <list<string>> argument list for protoc execution
-    args = []
-    # <list<File>> The (filtered) set of .proto files to compile
-    protos = []
-    # <list<opaque>> Plugin input manifests
-    input_manifests = []
-    # <int> verbosity level
+    # const <int> verbosity level
     verbose = ctx.attr.verbose
+    # const <ProtoInfo> proto provider
+    proto_info = ctx.attr.proto[ProtoInfo]
+    # const <list<ProtoPluginInfo>> plugins to be applied
+    plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
+    # const <File> the protoc file from the toolchain
+    protoc = get_protoc_executable(ctx)
+    # const <File> the descriptor_set_out file.  Primarily used for the output
+    # directory.
+    out = ctx.actions.declare_file(ctx.label.name + "_proto-descriptor-set.proto.bin")
+    # const <list<File>> files we expect to be generated
+    genfiles = ctx.outputs.generated_srcs
+    # const <list<File>> outputs for the compile action
+    outputs = [out] + genfiles
+
+    # mut <list<File>> tools for the compile action
+    tools = [protoc]
+    # mut <list<string>> argument list for protoc execution
+    args = ["--descriptor_set_out="+out.path]
+    # mut <list<File>> set of descriptors for the compile action
+    descriptors = proto_info.transitive_descriptor_sets.to_list()
+    # mut <list<File>> inputs for the compile action
+    inputs = []
+    # mut <list<File>> The (filtered) set of .proto files to compile
+    protos = []
+    # mut <list<opaque>> Plugin input manifests
+    input_manifests = []
 
     ###
     ### Part 2: iterate over plugins
     ###
+
     for plugin in plugins:
-        # Add in additional proto deps if specified by the compiler
+        ### Part 2.1: build protos list
+
+        # add all protos unless excluded
+        for proto in proto_info.direct_sources:
+            if any([
+                proto.dirname.endswith(exclusion) or proto.path.endswith(exclusion)
+                for exclusion in plugin.exclusions
+            ]) or proto in protos:  # TODO: When using import_prefix, the ProtoInfo.direct_sources list appears to contain duplicate records, this line removes these. https://github.com/bazelbuild/bazel/issues/9127
+                continue
+            # Proto not excluded
+            protos.append(proto)
+
+        # augment proto list with those attached to plugin
         for info in plugin.supplementary_proto_deps:
+            for srcs in info.direct_sources:
+                protos += srcs.to_list()
             descriptors += info.transitive_descriptor_sets.to_list()
-        # Add extra plugin data files
+
+        # Include extra plugin data files
         inputs += plugin.data
 
-        ###
-        ### Part 2.1: build --plugin argument
-        ###
+        ### Part 2.2: build --plugin argument
 
-        # Get plugin name
+        # const <string> The name of the plugin
         plugin_name = plugin.protoc_plugin_name if plugin.protoc_plugin_name else plugin.name
-
-        # Add plugin executable if not a built-in plugin
-        plugin_tool = None
-        if plugin.tool_executable:
-            plugin_tool = plugin.tool_executable
+        # const <?File> Add plugin executable if not a built-in plugin
+        plugin_tool = plugin.tool_executable if plugin.tool_executable else None
 
         # Add plugin runfiles if plugin has a tool
         if plugin_tool:
-            tools.append(plugin_tool)  
+            tools.append(plugin_tool)
+            # const <depset<File>, <list<opaque>>
             plugin_runfiles, plugin_input_manifests = ctx.resolve_tools(tools = [plugin.tool])
             if plugin_input_manifests:
                 input_manifests.append(plugin_input_manifests) # TODO: check this
@@ -72,11 +86,12 @@ def _protoc_impl(ctx):
                 plugin_tool_path = plugin_tool.path.replace("/", "\\")
             args.append("--plugin=protoc-gen-{}={}".format(plugin_name, plugin_tool_path))
 
-        ###
-        ### Part 2.2: build --{name}_out=OPTIONS argument
-        ###
+        ### Part 2.3: build --{name}_out=OPTIONS argument
+
+        # mut <string>
         out_arg = out.dirname
         if plugin.options:
+            # const <string>
             opts_str = ",".join(
                 [option.replace("{name}", ctx.label.name) for option in plugin.options],
             )
@@ -86,57 +101,50 @@ def _protoc_impl(ctx):
                 out_arg = "{}:{}".format(opts_str, out_arg)
         args.append("--{}_out={}".format(plugin_name, out_arg))
 
-        ###
-        ### Part 2.3: build protos list
-        ###
-        for proto in proto_info.direct_sources:
-            # Check for exclusion
-            if any([
-                proto.dirname.endswith(exclusion) or proto.path.endswith(exclusion)
-                for exclusion in plugin.exclusions
-            ]) or proto in protos:  # TODO: When using import_prefix, the ProtoInfo.direct_sources list appears to contain duplicate records, this line removes these. https://github.com/bazelbuild/bazel/issues/9127
-                continue
-
-            # Proto not excluded
-            protos.append(proto)
-
-        # Add in extra proto deps if attached to the plugin
-        for info in plugin.supplementary_proto_deps:
-            for srcs in info.direct_sources:
-                protos += srcs.to_list()
-
     ###
-    ### Part 3.1: build --descriptor_set_in args
+    ### Part 3: action
     ###
-    descriptor_set_list = uniq(descriptors)
-    for d in descriptor_set_list:
-        inputs.append(d)
-    
-    pathsep = ctx.configuration.host_path_separator
-    args.append("--descriptor_set_in={}".format(pathsep.join(
-        [d.path for d in descriptor_set_list],
+
+    ### Part 3.1: dedup lists (TODO: use depsets instead)
+
+    protos = uniq(protos)
+    descriptors = uniq(descriptors)
+    inputs += descriptors
+
+    ### Part 3.2: finalize args
+
+    args.append("--descriptor_set_in={}".format(ctx.configuration.host_path_separator.join(
+        [d.path for d in descriptors],
     )))
-
-    args.append("--descriptor_set_out="+out.path)
-
-    # Add source proto files as descriptor paths
-    for proto in uniq(protos):
+    for proto in protos:
         args.append(descriptor_proto_path(proto, proto_info))
 
-    ###
-    ### Step 3: declare action
-    ###
-    mnemonic = "Protoc"
-    command = "mkdir -p {} && {} $@".format(ctx.label.package, protoc.path) # $@ is replaced with args list
-    # for f in ctx.outputs.generated_srcs:
-    #     command += "&& cp {} {}".format(f.short_path, f.path)
+    final_args = ctx.actions.args()
+    final_args.add_all(args)
 
-    if verbose > 0:
+    ### Step 3.3: build command
+
+    command = "mkdir -p {} && {} $@".format(ctx.label.package, protoc.path) # $@ is replaced with args list
+    if verbose > 2:
         command += " && echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find . -type f "
-    if verbose > 0:
-        command = "echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . -type l && " + command
-    if verbose > 0:
-        command = "env && " + command
+        command = "env && echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . -type l && " + command
+
+    ### Step 3.4: declare action
+
+    ctx.actions.run_shell(
+        arguments = [final_args],
+        command = command,
+        inputs = inputs,
+        # input_manifests = input_manifests, TODO
+        mnemonic = "Protoc",
+        outputs = outputs,
+        progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
+        tools = tools,
+    )
+
+    ### Step 3.5: debugging
+
+    if verbose > 1:
         for f in inputs:
             print("INPUT:", f.path)
         for f in tools:
@@ -147,38 +155,18 @@ def _protoc_impl(ctx):
             print("EXPECTED OUTPUT:", f.path)
         for a in args:
             print("ARG:", a)
-        print("FINAL ARGS:", args)
-
-    ctx_args = ctx.actions.args()
-    ctx_args.add_all(args)
-        
-    ctx.actions.run_shell(
-        progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
-        # executable = protoc,
-        command = command,
-        arguments = [ctx_args],
-        inputs = inputs,
-        tools = tools,
-        outputs = outputs,
-        # input_manifests = input_manifests,
-    )
 
     ###
     ### Step 4: generate providers
     ###
-    return [
-        DefaultInfo(files = depset(genfiles)),
-    ]
+    return [DefaultInfo(files = depset(genfiles))]
 
 
 protoc = rule(
     implementation = _protoc_impl,
     attrs = {
         "verbose": attr.int(
-            doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox after running protoc*, 3: *show command and sandbox before and after running protoc*, 4. *show env, command, expected outputs and sandbox before and after running protoc*",
-        ),
-        "package_path": attr.string(
-            doc = "The package_path option value",
+            doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox before+after running protoc*",
         ),
         "proto": attr.label(
             doc = "The single ProtoInfo provider",
@@ -190,7 +178,7 @@ protoc = rule(
             mandatory = True,
             providers = [ProtoPluginInfo],
         ),
-        "generated_srcs": attr.string_list(
+        "generated_srcs": attr.output_list(
             doc = "List of source files we expect to be generated (relative to package)",
             mandatory = True,
         ),
