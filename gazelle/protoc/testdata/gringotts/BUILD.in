@@ -1,4 +1,0 @@
-# gazelle:prefix github.com/robinhoodmarkets/rh/gringotts
-# gazelle:proto package
-# gazelle:proto_language proto_compile
-# gazelle:proto_plugin gogofast @build_stack_rules_proto//plugin:gogofast

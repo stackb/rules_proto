@@ -1,3 +1,0 @@
-# gazelle:proto package
-# gazelle:protoc_gen_rstubs service.proto
-# gazelle:proto_language py

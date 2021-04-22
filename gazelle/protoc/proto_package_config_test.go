@@ -16,7 +16,6 @@ func TestClone(t *testing.T) {
 	check := all(
 		hasLanguageConfig("py", true),
 		hasRuleExclusion("foo", true),
-		hasRstubsEntry("service.proto"),
 		hasImportpathPrefix("github.com/foo/bar"),
 	)
 
@@ -176,15 +175,6 @@ func TestParseDirectives(t *testing.T) {
 			},
 			check: hasImportpathPrefix("github.com/foo/bar"),
 		},
-		"protoc_gen_rstubs": {
-			directives: []rule.Directive{
-				{
-					Key:   "protoc_gen_rstubs",
-					Value: "service.proto",
-				},
-			},
-			check: hasRstubsEntry("service.proto"),
-		},
 	} {
 		t.Run(name, func(t *testing.T) {
 			cfg := newProtoPackageConfig()
@@ -236,14 +226,6 @@ func hasImportpathPrefix(prefix string) configCheck {
 	return func(t *testing.T, cfg *protoPackageConfig) {
 		if cfg.importpathPrefix != prefix {
 			t.Errorf("expected importpath prefix %s, got %s", prefix, cfg.importpathPrefix)
-		}
-	}
-}
-
-func hasRstubsEntry(name string) configCheck {
-	return func(t *testing.T, cfg *protoPackageConfig) {
-		if _, ok := cfg.rstubs[name]; !ok {
-			t.Errorf("expected rstubs entry for %s", name)
 		}
 	}
 }

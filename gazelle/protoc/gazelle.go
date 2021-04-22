@@ -138,27 +138,37 @@ func (*protocLang) Resolve(
 func (*protocLang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
 	cfg := getExtensionConfig(args.Config.Exts)
 
-	protoLibraryRules := make([]*rule.Rule, 0)
-	for _, r := range args.OtherGen {
-		if r.Kind() != "proto_library" {
-			continue
-		}
-		protoLibraryRules = append(protoLibraryRules, r)
-	}
-
-	protoFiles := make([]*ProtoFile, 0)
+	protoFiles := make(map[string]*ProtoFile)
 	for _, f := range args.RegularFiles {
 		if !isProtoFile(f) {
 			continue
 		}
 		file := NewProtoFile(args.Rel, f)
 		if err := file.Parse(); err != nil {
-			log.Fatalf("Unparseable proto file dir=%s, file=%s: %v", args.Dir, file.Basename, err)
+			log.Fatalf("unparseable proto file dir=%s, file=%s: %v", args.Dir, file.Basename, err)
 		}
-		protoFiles = append(protoFiles, file)
+		protoFiles[f] = file
 	}
 
-	pkg := NewProtoPackage(args.File, args.Rel, cfg, protoLibraryRules, protoFiles...)
+	protoLibraries := make([]ProtoLibrary, 0)
+	for _, r := range args.OtherGen {
+		if r.Kind() != "proto_library" {
+			continue
+		}
+		srcs := r.AttrStrings("srcs")
+		srcLabels := make([]label.Label, len(srcs))
+		for i, src := range srcs {
+			srcLabel, err := label.Parse(src)
+			if err != nil {
+				log.Fatalf("%s %q: unparseable source label %q: %v", r.Kind(), r.Name(), src, err)
+			}
+			srcLabels[i] = srcLabel
+		}
+		files := matchingFiles(protoFiles, srcLabels)
+		protoLibraries = append(protoLibraries, &OtherProtoLibrary{rule: r, files: files})
+	}
+
+	pkg := NewProtoPackage(args.File, args.Rel, cfg, protoLibraries)
 
 	return language.GenerateResult{
 		Gen:     pkg.Rules(),

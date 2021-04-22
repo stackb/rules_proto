@@ -1,2 +1,0 @@
-# gazelle:proto_rule -py*
-# gazelle:proto_rule -proto_compile_test

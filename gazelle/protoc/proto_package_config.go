@@ -1,7 +1,6 @@
 package protoc
 
 import (
-	"fmt"
 	"log"
 	"path"
 	"sort"
@@ -17,6 +16,8 @@ const (
 	// protoLanguageDirective tells gazelle which languages a package should
 	// produce
 	protoLanguageDirective = "proto_language"
+	// // protoLanguageConfigDirective configures a proto_language.
+	// protoLanguageConfigDirective = "proto_language_config"
 	// protoPluginDirective created an association between proto_language
 	// and the label of a proto_plugin.
 	protoPluginDirective = "proto_plugin"
@@ -26,18 +27,18 @@ const (
 
 // protoPackageConfig represents the config extension for the rosetta language.
 type protoPackageConfig struct {
+	// the gazelle:prefix for golang
+	importpathPrefix string
+	// configured languages for this package
+	languages map[string]*ProtoLanguageConfig
+	// exclude patterns for rules that should be skipped for this package.
+	plugins map[string]*ProtoPluginConfig
 	// ruleProviders is a mapping from label -> the provider that produced
 	// the rule. we save this in the config such that we can retrieve the
 	// association later in the resolve step.
 	ruleProviders map[label.Label]RuleProvider
 	// exclude patterns for rules that should be skipped for this package.
 	rules map[string]*protoRuleConfig
-	// exclude patterns for rules that should be skipped for this package.
-	plugins map[string]*protoPluginConfig
-	// configured languages
-	languages map[string]ProtoLanguage
-	// the gazelle:prefix for golang
-	importpathPrefix string
 	// IMPORTANT! Adding new fields here?  Don't forget to copy it in the Clone
 	// method!
 }
@@ -45,10 +46,10 @@ type protoPackageConfig struct {
 // newProtoPackageConfig initializes a new protoPackageConfig.
 func newProtoPackageConfig() *protoPackageConfig {
 	return &protoPackageConfig{
+		languages:     make(map[string]*ProtoLanguageConfig),
+		plugins:       make(map[string]*ProtoPluginConfig),
 		ruleProviders: make(map[label.Label]RuleProvider),
 		rules:         make(map[string]*protoRuleConfig),
-		languages:     make(map[string]ProtoLanguage),
-		plugins:       make(map[string]*protoPluginConfig),
 	}
 }
 
@@ -63,22 +64,22 @@ func (c *protoPackageConfig) parseDirectives(rel string, directives []rule.Direc
 		case protoPluginDirective:
 			fields := strings.Fields(d.Value)
 			if len(fields) != 2 {
-				panic(fmt.Sprintf(
+				log.Fatalf(
 					"invalid directive %s: expected {PLUGIN_NAME} {LABEL}, got %q",
-					protoPluginDirective, d.Value))
+					d.Key, d.Value)
 			}
 			pluginName := fields[0]
 			pluginLabel := fields[1]
 			l, err := label.Parse(pluginLabel)
 			if err != nil {
-				panic(fmt.Sprintf(
-					"invalid plugin label: %s", pluginLabel))
+				log.Fatalf(
+					"invalid plugin label: %s", pluginLabel)
 			}
 			plugin, err := LookupProtoPlugin(pluginName)
 			if err != nil {
-				panic(fmt.Sprintf("error while processing gazelle directive %q: %v", pluginName, err))
+				log.Fatalf("error while processing gazelle directive %q: %v", pluginName, err)
 			}
-			c.plugins[pluginName] = &protoPluginConfig{Label: l, Name: pluginName, Plugin: plugin}
+			c.plugins[pluginName] = &ProtoPluginConfig{Label: l, Name: pluginName, Implementation: plugin}
 			log.Printf("Added proto_plugin: %s -> %v", pluginName, l)
 		case protoRuleDirective:
 			pattern := strings.TrimSpace(d.Value)
@@ -88,7 +89,7 @@ func (c *protoPackageConfig) parseDirectives(rel string, directives []rule.Direc
 				pattern = pattern[1:]
 			}
 			if _, err := path.Match(pattern, ""); err == path.ErrBadPattern {
-				panic(fmt.Sprintf("invalid directive %s: bad match pattern %q", protoRuleDirective, pattern))
+				log.Fatalf("invalid directive %s: bad match pattern %q", d.Key, pattern)
 			}
 			cfg := c.rules[pattern]
 			if cfg == nil {
@@ -96,22 +97,34 @@ func (c *protoPackageConfig) parseDirectives(rel string, directives []rule.Direc
 				c.rules[pattern] = cfg
 			}
 			cfg.exclude = negative
+		// case protoLanguageDirective:
+		// 	name := strings.TrimSpace(d.Value)
+		// 	negative := strings.HasPrefix(name, "-")
+		// 	positive := strings.HasPrefix(name, "+")
+		// 	if negative || positive {
+		// 		name = name[1:]
+		// 	}
+		// 	lang, ok := c.languages[name]
+		// 	if !ok {
+		// 		log.Fatalf("invalid or unknown proto_language %q", name)
+		// 	}
+		// 	if negative {
+		// 		lang.Enabled = false
+		// 	} else {
+		// 		lang.Enabled = true
+		// 	}
 		case protoLanguageDirective:
-			name := strings.TrimSpace(d.Value)
-			negative := strings.HasPrefix(name, "-")
-			positive := strings.HasPrefix(name, "+")
-			if negative || positive {
-				name = name[1:]
+			fields := strings.Fields(d.Value)
+			if len(fields) != 3 {
+				log.Fatalf("bad directive %v: expected three fields, got %d", d, len(fields))
 			}
-			lang, err := LookupProtoLanguage(name)
-			if err != nil {
-				panic(fmt.Sprintf("invalid or unknown plugin %q: %v", name, err))
+			name, param, value := fields[0], fields[1], fields[2]
+			lang, ok := c.languages[name]
+			if !ok {
+				lang = &ProtoLanguageConfig{Name: name}
+				lang.Implementation = MustLookupProtoLanguage(name)
 			}
-			if negative {
-				delete(c.languages, name)
-			} else {
-				c.languages[name] = lang
-			}
+			lang.MustParseDirective(c, d.Key, param, value)
 		}
 	}
 }
@@ -144,13 +157,13 @@ func (c *protoPackageConfig) IsRuleIncluded(name string) bool {
 }
 
 // Languages returns a determinstic ordered list of configured languages
-func (c *protoPackageConfig) Languages() []ProtoLanguage {
+func (c *protoPackageConfig) Languages() []*ProtoLanguageConfig {
 	names := make([]string, 0)
 	for name := range c.languages {
 		names = append(names, name)
 	}
 	sort.Strings(names)
-	langs := make([]ProtoLanguage, 0)
+	langs := make([]*ProtoLanguageConfig, 0)
 	for _, name := range names {
 		langs = append(langs, c.languages[name])
 	}
@@ -186,20 +199,6 @@ func (c *protoPackageConfig) LookupRuleProvider(l label.Label) RuleProvider {
 	return c.ruleProviders[l]
 }
 
-// mustGetProtoPlugin hardcodes the mapping between plugin names and
-// implementations.  If the plugin is not recognized the function panics.
-func (c *protoPackageConfig) mustGetProtoPlugin(rel, name string) ProtoPlugin {
-	switch name {
-	case "py_proto":
-		return &PyProtoPlugin{}
-	}
-	panic(fmt.Sprintf(
-		"%s/BUILD.bazel: invalid directive %s: unknown or unsupported proto_plugin %q",
-		rel,
-		protoPluginDirective,
-		name))
-}
-
 // getExtensionConfig either inserts a new config into the map under the rosetta
 // language name or replaces it with a clone.
 func getExtensionConfig(exts map[string]interface{}) *protoPackageConfig {
@@ -217,29 +216,29 @@ func getExtensionConfig(exts map[string]interface{}) *protoPackageConfig {
 func protocKinds() map[string]rule.KindInfo {
 	// build of a list of all possible rules that we can see; delegate to the
 	// rule implementations for the KindInfo.
-	file := NewProtoFile("", "example.proto")
-	protoLibraryRule := rule.NewRule("proto_library", "example")
-	protoLibrary := &OtherProtoLibrary{rule: protoLibraryRule, files: []*ProtoFile{file}}
-	pyProtoCompile := NewProtoRule(protoLibrary, "py", "proto", "compile")
-	protoCompileTest := &ProtoCompileTest{pyProtoCompile}
+	// file := NewProtoFile("", "example.proto")
+	// protoLibraryRule := rule.NewRule("proto_library", "example")
+	// protoLibrary := &OtherProtoLibrary{rule: protoLibraryRule, files: []*ProtoFile{file}}
+	// pyProtoCompile := NewProtoRule(protoLibrary, "py", "proto", "compile")
+	// protoCompileTest := &ProtoCompileTest{pyProtoCompile}
 
 	rules := []RuleProvider{
 		// TODO(pcj): proto_library can apparently not be claimed as a kind by
 		// two separate extensions. We will either have to take over this
 		// responsibility or work with the proto_library targets that get
 		// generated as it stands currently.
-		pyProtoCompile,
-		protoCompileTest,
-		NewProtoDescriptorSet(protoLibrary),
-		NewProtoRule(protoLibrary, "gogo", "proto", "compile"),
-		NewProtoRule(protoLibrary, "gogofast", "proto", "compile"),
-		NewProtoRule(protoLibrary, "gogofaster", "proto", "compile"),
-		NewProtoRule(protoLibrary, "py", "proto", "library"),
-		NewProtoRule(protoLibrary, "py", "grpc", "compile"),
-		NewProtoRule(protoLibrary, "py_abc", "proto", "compile"),
-		NewProtoRule(protoLibrary, "py_enum_choices", "proto", "compile"),
-		NewProtoRule(protoLibrary, "py_rgrpc", "proto", "compile"),
-		&PyLibrary{Lib: protoLibrary},
+		// pyProtoCompile,
+		// protoCompileTest,
+		// NewProtoDescriptorSet(protoLibrary),
+		// NewProtoRule(protoLibrary, "gogo", "proto", "compile"),
+		// NewProtoRule(protoLibrary, "gogofast", "proto", "compile"),
+		// NewProtoRule(protoLibrary, "gogofaster", "proto", "compile"),
+		// NewProtoRule(protoLibrary, "py", "proto", "library"),
+		// NewProtoRule(protoLibrary, "py", "grpc", "compile"),
+		// NewProtoRule(protoLibrary, "py_abc", "proto", "compile"),
+		// NewProtoRule(protoLibrary, "py_enum_choices", "proto", "compile"),
+		// NewProtoRule(protoLibrary, "py_rgrpc", "proto", "compile"),
+		// &PyLibrary{Lib: protoLibrary},
 	}
 
 	kinds := make(map[string]rule.KindInfo)

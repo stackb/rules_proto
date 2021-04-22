@@ -32,37 +32,6 @@ service Greeter {
 `,
 			hasServices: true,
 		},
-		"has detailsTypeFieldOption": {
-			in: `
-syntax = "proto3";
-
-message SickleRestrictionEvent {
-	enum Type {
-		TYPE_UNSPECIFIED = 0;
-
-		restriction = 1 [
-			(rosetta.extensions.details_type) =
-			"rosetta_restrictions_RestrictionEventDetails"
-		];
-	}
-	Type type = 2;
-}
-`,
-			hasMessages:   true,
-			hasEnumOption: detailsTypeOptionName,
-		},
-		"has ": {
-			in: `
-syntax = "proto3";
-
-package protoc.identi.issues;
-
-enum IssueType {
-	option (rosetta.extensions.gen_choices) = true;
-}
-`,
-			hasEnumOption: genChoicesOptionName,
-		},
 	}
 
 	for name, tc := range tests {

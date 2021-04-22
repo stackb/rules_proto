@@ -36,11 +36,11 @@ func (s *ProtoCompileLanguage) GenerateRules(rel string, cfg *protoPackageConfig
 		for name, p := range cfg.plugins {
 			log.Printf(name + ": apply plugin?")
 
-			if !p.Plugin.ShouldApply(rel, cfg, lib) {
+			if !p.Implementation.ShouldApply(rel, cfg, lib) {
 				continue
 			}
 			labels = append(labels, p.Label)
-			srcs := p.Plugin.GeneratedSrcs(rel, cfg, lib)
+			srcs := p.Implementation.GeneratedSrcs(rel, cfg, lib)
 			if len(srcs) > 0 {
 				generatedSrcs = append(generatedSrcs, srcs...)
 			}

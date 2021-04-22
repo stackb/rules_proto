@@ -5,30 +5,26 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-// ProtoPackage provides a specific set of rules for a given list of .proto
-// files.
+// ProtoPackage provides a set of proto_library derived rules for the package.
 type ProtoPackage struct {
-	files []*ProtoFile
 	rules []RuleProvider
 }
 
-// NewProtoPackage constructs a ProtoPackage given a variadic list of
-// ProtoFiles.
-func NewProtoPackage(file *rule.File,
+// NewProtoPackage constructs a ProtoPackage given a list of proto_library rules
+// in the package.
+func NewProtoPackage(
+	file *rule.File,
 	rel string,
 	cfg *protoPackageConfig,
-	protoLibraries []*rule.Rule,
-	files ...*ProtoFile) *ProtoPackage {
+	libs []ProtoLibrary) *ProtoPackage {
 
 	prelim := make([]RuleProvider, 0)
 
-	libs := make([]ProtoLibrary, 0)
-	for _, rule := range protoLibraries {
-		libs = append(libs, &OtherProtoLibrary{rule: rule, files: files})
-	}
-
 	for _, lang := range cfg.Languages() {
-		rules := lang.GenerateRules(rel, cfg, libs)
+		if !lang.Enabled {
+			continue
+		}
+		rules := lang.Implementation.GenerateRules(rel, cfg, libs)
 		for _, rule := range rules {
 			cfg.RegisterRuleProvider(label.Label{
 				Repo: "", // TODO: how to know if we are in an external repo?
@@ -58,10 +54,7 @@ func NewProtoPackage(file *rule.File,
 		}
 	}
 
-	return &ProtoPackage{
-		files: files,
-		rules: rules,
-	}
+	return &ProtoPackage{rules}
 }
 
 // Rules provides the aggregated rule list for the package.
