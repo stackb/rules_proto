@@ -86,6 +86,7 @@ def _proto_compile_impl(ctx):
     # mut <list<opaque>> Plugin input manifests
     input_manifests = []
 
+    # print("ws root:"+ctx.label.workspace_root)
     ###
     ### Part 2: iterate over plugins
     ###
@@ -138,7 +139,7 @@ def _proto_compile_impl(ctx):
         ### Part 2.3: build --{name}_out=OPTIONS argument
 
         # mut <string>
-        out_arg = out.dirname
+        out_arg = ctx.bin_dir.path
         if plugin.options:
             # const <string>
             opts_str = ",".join(
