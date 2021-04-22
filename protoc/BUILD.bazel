@@ -31,6 +31,7 @@ proto_plugin(
 
 proto_plugin(
     name = "java_proto_plugin",
+    out = "{BIN_DIR}/{PACKAGE}/{NAME}.srcjar",
     protoc_plugin_name = "java",
     visibility = ["//visibility:public"],
 )

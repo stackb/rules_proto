@@ -2,11 +2,10 @@ package protoc
 
 import (
 	"log"
+	"path"
 	"strconv"
-	"strings"
 
 	"github.com/emicklei/proto"
-	"github.com/iancoleman/strcase"
 )
 
 func init() {
@@ -28,43 +27,48 @@ func (p *JavaProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib P
 
 // GeneratedSrcs implements part of the ProtoPlugin interface.
 func (p *JavaProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string {
-	srcs := make([]string, 0)
-	for _, f := range lib.Files() {
-		genfiles := make([]string, 0)
+	// srcs := make([]string, 0)
+	// for _, f := range lib.Files() {
+	// 	genfiles := make([]string, 0)
 
-		multipleFiles := javaMultipleFiles(f.GetOptions())
-		if multipleFiles {
-			for _, m := range f.messages {
-				genfiles = append(genfiles, m.Name+".java", m.Name+"OrBuilder.java")
-			}
-			for _, e := range f.enums {
-				genfiles = append(genfiles, e.Name+".java")
-			}
-		}
+	// 	multipleFiles := javaMultipleFiles(f.GetOptions())
+	// 	if multipleFiles {
+	// 		for _, m := range f.messages {
+	// 			genfiles = append(genfiles, m.Name+".java", m.Name+"OrBuilder.java")
+	// 		}
+	// 		for _, e := range f.enums {
+	// 			genfiles = append(genfiles, e.Name+".java")
+	// 		}
+	// 	}
 
-		outerClassname := javaOuterClassname(f.GetOptions())
-		if outerClassname == "" {
-			outerClassname = strcase.ToCamel(f.Name)
-		}
+	// 	outerClassname := javaOuterClassname(f.GetOptions())
+	// 	if outerClassname == "" {
+	// 		outerClassname = strcase.ToCamel(f.Name)
+	// 	}
 
-		if hasMatchingMessageName(f.messages, outerClassname) {
-			outerClassname = outerClassname + "OuterClass"
-		}
-		genfiles = append(genfiles, outerClassname+".java")
+	// 	if hasMatchingMessageName(f.messages, outerClassname) {
+	// 		outerClassname = outerClassname + "OuterClass"
+	// 	}
+	// 	genfiles = append(genfiles, outerClassname+".java")
 
-		pkg := javaPackage(f.GetOptions())
-		if pkg != "" {
-			prefix := strings.ReplaceAll(pkg, ".", "/")
-			// If we are going to generate code outside of the package, bazel
-			// will not be happy.  Use a srcjar instead.
-			if prefix != rel {
-				genfiles = []string{f.Name + ".srcjar"}
-			}
-		}
+	// 	pkg := javaPackage(f.GetOptions())
+	// 	if pkg != "" {
+	// 		prefix := strings.ReplaceAll(pkg, ".", "/")
+	// 		// If we are going to generate code outside of the package, bazel
+	// 		// will not be happy.  Use a srcjar instead.
+	// 		if prefix != rel {
+	// 			genfiles = []string{f.Name + ".srcjar"}
+	// 		}
+	// 	}
 
-		srcs = append(srcs, genfiles...)
-	}
-	return srcs
+	// 	srcs = append(srcs, genfiles...)
+	// }
+	return []string{lib.BaseName() + ".srcjar"}
+}
+
+// GeneratedOut implements part the optional PluginOutProvider interface.
+func (p *JavaProtoPlugin) GeneratedOut(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) string {
+	return path.Join("{BIN_DIR}", "{PACKAGE}", lib.BaseName()+".srcjar")
 }
 
 // javaMultipleFiles is a utility function to seek for the java_outer_classname

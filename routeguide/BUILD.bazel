@@ -5,7 +5,7 @@ load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 # gazelle:proto_language closure_js enable false
 # gazelle:proto_language common_js enable false
 # gazelle:proto_language gogofast enable false
-# gazelle:proto_language java enable false
+# gazelle:proto_language java enable true
 # gazelle:proto_language py enable false
 
 proto_library(
@@ -28,4 +28,21 @@ proto_compile(
     ],
     proto = "routeguide_proto",
     verbose = 3,
+)
+
+proto_compile(
+    name = "routeguide_java_compile",
+    generated_srcs = [
+        "routeguide.srcjar",
+        "routeguide_grpc.srcjar",
+    ],
+    plugin_out = {
+        "//grpc/grpc-java:grpc_java_plugin": "{BIN_DIR}/{PACKAGE}/routeguide_grpc.srcjar",
+        "//protoc:java_proto_plugin": "{BIN_DIR}/{PACKAGE}/routeguide.srcjar",
+    },
+    plugins = [
+        "//protoc:java_proto_plugin",
+        "//grpc/grpc-java:grpc_java_plugin",
+    ],
+    proto = "routeguide_proto",
 )

@@ -20,7 +20,15 @@ type ProtoPlugin interface {
 // PluginOptionsProvider is an optional interface that, if implemented, provides
 // additional options for the protoc invocation.
 type PluginOptionsProvider interface {
-	// GeneratedSrcs inspects the given proto_library and determines what
+	// GeneratedOptions inspects the given proto_library and determines what
 	// additional options are needed.
 	GeneratedOptions(rel string, c *ProtoPackageConfig, lib ProtoLibrary) []string
+}
+
+// PluginOutProvider is an optional interface that, if implemented, provides the
+// plugin-specific value for the --*_out= arg.
+type PluginOutProvider interface {
+	// GeneratedOut inspects the given proto_library and determines the out
+	// arg.
+	GeneratedOut(rel string, c *ProtoPackageConfig, lib ProtoLibrary) string
 }

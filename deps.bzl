@@ -239,6 +239,18 @@ def rules_pkg():
         sha256 = "aeca78988341a2ee1ba097641056d168320ecc51372ef7ff8e64b139516a4937",
     )
 
+def rules_jvm_external():
+    RULES_JVM_EXTERNAL_TAG = "4.0"
+    RULES_JVM_EXTERNAL_SHA = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169"
+    maybe(
+        http_archive,
+        name = "rules_jvm_external",
+        strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
+        sha256 = RULES_JVM_EXTERNAL_SHA,
+        url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
+    )
+
+
 def rules_codeowners():
     # Branch: master
     # Commit: 27fe3bbe6e5b0df196e360fc9e081835f22a10be

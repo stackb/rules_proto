@@ -11,6 +11,7 @@ go_library(
         "gazelle.go",
         "gogo_proto_plugin.go",
         "java_proto_plugin.go",
+        "java_grpc_plugin.go",
         "other_proto_library.go",
         "proto_compile_language.go",
         "proto_compile_rule.go",

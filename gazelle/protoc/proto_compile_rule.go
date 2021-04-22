@@ -21,6 +21,7 @@ type ProtoCompileRule struct {
 	plugins          []label.Label
 	generatedSrcs    []string
 	generatedOptions map[string][]string
+	generatedOuts    map[string]string
 	visibility       []string
 	comment          []string
 }
@@ -32,13 +33,16 @@ func NewProtoCompileRule(
 	library ProtoLibrary,
 	plugins []label.Label,
 	generatedSrcs []string,
-	generatedOptions map[string][]string) *ProtoCompileRule {
+	generatedOptions map[string][]string,
+	generatedOuts map[string]string,
+) *ProtoCompileRule {
 	rule := &ProtoCompileRule{
 		prefix:           prefix,
 		library:          library,
 		plugins:          plugins,
 		generatedSrcs:    generatedSrcs,
 		generatedOptions: generatedOptions,
+		generatedOuts:    generatedOuts,
 	}
 	return rule
 }
@@ -81,7 +85,10 @@ func (s *ProtoCompileRule) Rule() *rule.Rule {
 	newRule.SetAttr("generated_srcs", s.GeneratedSrcs())
 
 	if len(s.generatedOptions) > 0 {
-		newRule.SetAttr("options", s.Options())
+		newRule.SetAttr("plugin_options", s.Options())
+	}
+	if len(s.generatedOuts) > 0 {
+		newRule.SetAttr("plugin_out", s.Out())
 	}
 
 	// // special case for go_package option.  TODO: refactor this to make a
@@ -148,6 +155,24 @@ func (s *ProtoCompileRule) Options() build.Expr {
 		})
 	}
 	return &build.DictExpr{List: items}
+}
+
+// Options computes the out string_dict.
+func (s *ProtoCompileRule) Out() build.Expr {
+	dict := &build.DictExpr{}
+	keys := make([]string, 0)
+	for k := range s.generatedOuts {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	for _, key := range keys {
+		out := s.generatedOuts[key]
+		dict.List = append(dict.List, &build.KeyValueExpr{
+			Key:   &build.StringExpr{Value: key},
+			Value: &build.StringExpr{Value: out},
+		})
+	}
+	return dict
 }
 
 // Resolve implements part of the RuleProvider interface.

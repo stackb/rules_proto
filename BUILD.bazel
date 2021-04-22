@@ -17,6 +17,7 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 # gazelle:proto_plugin cc_grpc //grpc/grpc:grpc_cpp_plugin
 # gazelle:proto_plugin py_proto //protoc:py_proto_plugin
 # gazelle:proto_plugin java_proto //protoc:java_proto_plugin
+# gazelle:proto_plugin java_grpc //grpc/grpc-java:grpc_java_plugin
 # gazelle:proto_plugin closure_js_proto //protoc:closure_js_proto_plugin
 # gazelle:proto_plugin common_js_proto //protoc:common_js_proto_plugin
 # gazelle:proto_plugin gogofast //gogo:gogofast
@@ -43,6 +44,7 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 ## gazelle:proto_language java include *.srcjar
 # gazelle:proto_language java load @rules_java//:deps.bzl
 # gazelle:proto_language java plugin java_proto
+# gazelle:proto_language java plugin java_grpc
 ## gazelle:proto_language java requires @com_google_protobuf//:protobuf_java
 
 # ----------------------------------------------------

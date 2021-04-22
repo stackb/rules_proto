@@ -140,13 +140,16 @@ def _proto_compile_impl(ctx):
         if len(genfiles) == 1 and genfiles[0].short_path.endswith(".srcjar"):
             out = genfiles[0].path
 
-        options = [opt for opt in ctx.attr.options.get(str(plugin.label), [])]
+        options = [opt for opt in ctx.attr.plugin_options.get(str(plugin.label), [])]
         options += plugin.options
         if len(options) > 0:
             if plugin.separate_options_flag:
                 args.append("--{}_opt={}".format(plugin_name, ",".join(options)))
             else:
                 out = "{}:{}".format(",".join(options), out)
+
+        # use the out configured on the rule if specified
+        out = ctx.attr.plugin_out.get(str(plugin.label), out)
         args.append("--{}_out={}".format(plugin_name, out))
 
     ###
@@ -237,8 +240,11 @@ proto_compile = rule(
             doc = "List of source files we expect to be generated (relative to package)",
             mandatory = True,
         ),
-        "options": attr.string_list_dict(
+        "plugin_options": attr.string_list_dict(
             doc = "List of additional options, keyed by proto_plugin label",
+        ),
+        "plugin_out": attr.string_dict(
+            doc = "Output location, keyed by proto_plugin label",
         ),
         "args": attr.string_list(
             doc = "List of additional protoc args",
