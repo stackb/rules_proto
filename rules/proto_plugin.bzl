@@ -15,7 +15,7 @@ ProtoPluginInfo = provider(fields = {
     "data": "Additional files required for running the plugin",
     "supplementary_proto_deps": "Additional proto dependencies whose descriptors/files should be included in all protoc invocations",
     "separate_options_flag": "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",
-    "deps": "The list of proto dependencies for this plugin",
+    # "deps": "The list of proto dependencies for this plugin",
 })
 
 def proto_plugin_info_to_struct(info):
@@ -33,7 +33,7 @@ def proto_plugin_info_to_struct(info):
         data = [f.short_path for f in info.data],
         supplementary_proto_deps = [f.short_path for f in info.supplementary_proto_deps],
         separate_options_flag = info.separate_options_flag,
-        deps = info.deps,
+        # deps = info.deps,
     )
 
 def _proto_plugin_impl(ctx):
@@ -49,7 +49,7 @@ def _proto_plugin_impl(ctx):
             data = ctx.files.data,
             supplementary_proto_deps = [dep[ProtoInfo] for dep in ctx.attr.supplementary_proto_deps],
             separate_options_flag = ctx.attr.separate_options_flag,
-            deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
+            # deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
         ),
     ]
 

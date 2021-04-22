@@ -1,0 +1,30 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+load(":toolchain.bzl", "protoc")
+
+toolchain_type(
+    name = "toolchain_type",
+    visibility = ["//visibility:public"],
+)
+
+protoc(
+    name = "protoc",
+    visibility = ["//visibility:public"],
+)
+
+toolchain(
+    name = "toolchain",
+    toolchain = ":protoc",
+    toolchain_type = ":toolchain_type",
+)
+
+proto_plugin(
+    name = "cc_proto_plugin",
+    protoc_plugin_name = "cpp",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "py_proto_plugin",
+    protoc_plugin_name = "python",
+    visibility = ["//visibility:public"],
+)

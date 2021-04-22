@@ -1,20 +1,21 @@
-load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 
 # ----------------------------------------------------
-# Base Gazelle Configuation 
+# Base Gazelle Configuation
 # ----------------------------------------------------
 # gazelle:prefix github.com/stackb/rules_proto
 
 # ----------------------------------------------------
-# Internal Resolve Directives 
+# Internal Resolve Directives
 # ----------------------------------------------------
 # gazelle:resolve go github.com/bazelbuild/buildtools/build @com_github_bazelbuild_buildtools//build:go_default_library
 
 # ----------------------------------------------------
 # Configuation of the 'cc_proto' plugin
 # ----------------------------------------------------
-# gazelle:proto_plugin cc_proto @build_stack_rules_proto//cc:proto_plugin
-# gazelle:proto_plugin cc_grpc @build_stack_rules_proto//cc:grpc_plugin
+# gazelle:proto_plugin cc_proto //protoc:cc_proto_plugin
+# gazelle:proto_plugin cc_grpc //cc:grpc_plugin
+# gazelle:proto_plugin py_proto //protoc:py_proto_plugin
 
 # ----------------------------------------------------
 # Configuration of the 'cc' proto_language
@@ -24,10 +25,29 @@ load("@bazel_gazelle//:def.bzl", "gazelle")
 # gazelle:proto_language cc plugin cc_proto
 # gazelle:proto_language cc plugin cc_grpc
 
+# ----------------------------------------------------
+# Configuration of the 'py' proto_language
+# ----------------------------------------------------
+# gazelle:proto_language py kind py_library
+# gazelle:proto_language py load @rules_pything//:deps.bzl
+# gazelle:proto_language py plugin py_proto
+
+gazelle_binary(
+    name = "gazelle-proto",
+    # protoc extension is reliant upon the built-in 'proto' language, so test it
+    # in combination with that.
+    languages = [
+        # NOTE: order matters here.  Gazelle will respect the ordering of
+        # languages which will impact the population of 'OtherGen'
+        "@bazel_gazelle//language/proto:go_default_library",
+        "//gazelle/protoc",
+    ],
+    visibility = ["//visibility:public"],
+)
 
 gazelle(
     name = "gazelle",
-    gazelle = "//gazelle/protoc:gazelle-protoc",
+    gazelle = ":gazelle-proto",
 )
 
 gazelle(
@@ -40,4 +60,3 @@ gazelle(
     ],
     command = "update-repos",
 )
-

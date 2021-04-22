@@ -1,1 +1,31 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
 # gazelle:proto_language cc enable true
+# gazelle:proto_language py enable true
+
+proto_library(
+    name = "example_proto",
+    srcs = ["thing.proto"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:timestamp_proto"],
+)
+
+proto_compile(
+    name = "example_cc_compile",
+    generated_srcs = [
+        "thing.pb.cc",
+        "thing.pb.h",
+    ],
+    plugins = ["//protoc:cc_proto_plugin"],
+    proto = "example_proto",
+    verbose = 3,
+)
+
+proto_compile(
+    name = "example_py_compile",
+    generated_srcs = ["thing_pb2.py"],
+    plugins = ["//protoc:py_proto_plugin"],
+    proto = "example_proto",
+    verbose = 3,
+)

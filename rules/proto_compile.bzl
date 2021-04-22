@@ -14,6 +14,9 @@ def _uniq(iterable):
 
     return list(unique_elements.keys())
 
+def get_protoc_executable(ctx):
+    protoc_toolchain_info = ctx.toolchains[str(Label("//protoc:toolchain_type"))]
+    return protoc_toolchain_info.protoc_executable
 
 def _descriptor_proto_path(proto, proto_info):
     """Convert a proto File to the path within the descriptor file.
@@ -48,7 +51,7 @@ def _strip_path_prefix(path, prefix):
     return path
 
 
-def _protoc_impl(ctx):
+def _proto_compile_impl(ctx):
 
     ###
     ### Part 1: setup variables used in scope
@@ -208,8 +211,8 @@ def _protoc_impl(ctx):
     return [DefaultInfo(files = depset(genfiles))]
 
 
-protoc = rule(
-    implementation = _protoc_impl,
+proto_compile = rule(
+    implementation = _proto_compile_impl,
     attrs = {
         "verbose": attr.int(
             doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox before+after running protoc*",
@@ -229,5 +232,5 @@ protoc = rule(
             mandatory = True,
         ),
     },
-    toolchains = [str(Label("@build_stack_rules_proto//toolchains:protoc_toolchain_type"))],
+    toolchains = ["@build_stack_rules_proto//protoc:toolchain_type"],
 )

@@ -25,7 +25,7 @@ func (p *CcProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib P
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
 		if f.HasMessages() || f.HasEnums() {
-			srcs = append(srcs, f.Name+"_pb.cc")
+			srcs = append(srcs, f.Name+".pb.cc", f.Name+".pb.h")
 		}
 	}
 	return srcs

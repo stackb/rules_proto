@@ -67,6 +67,7 @@ func (s *ProtoCompileRule) Rule() *rule.Rule {
 		}
 	}
 
+	newRule.SetAttr("proto", s.library.Name())
 	newRule.SetAttr("plugins", s.pluginLabels())
 	newRule.SetAttr("generated_srcs", s.GeneratedSrcs())
 

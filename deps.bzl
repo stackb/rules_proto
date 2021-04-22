@@ -128,7 +128,7 @@ def zlib():
         ],
         sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
         strip_prefix = "zlib-1.2.11",
-        build_file = "@build_stack_rules_proto//third_party:BUILD.bazel.zlib",
+        build_file = "@build_stack_rules_proto//third_party:zlib.BUILD",
     )
 
 def build_bazel_rules_swift():

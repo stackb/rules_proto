@@ -59,13 +59,13 @@ gazelle_protoc_deps()
 # # Protobuf Core
 # # ==================================================
 # #
-# rules_proto()
+rules_proto()
 
-# rules_python()
+rules_python()
 
-# com_google_protobuf()
+com_google_protobuf()
 
-# zlib()
+zlib()
 
 # # load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
 
@@ -76,9 +76,7 @@ gazelle_protoc_deps()
 # #
 # # Toolchains
 # #
-# load("//toolchains:protoc.bzl", "protoc_toolchain")
-
-# protoc_toolchain()
+register_toolchains("//protoc:toolchain")
 
 # load("//rules:py_grpc_compile_deps.bzl", "py_grpc_compile_deps")
 
