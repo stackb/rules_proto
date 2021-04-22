@@ -10,8 +10,10 @@ load(
     "//:deps.bzl",
     "bazel_gazelle",
     "bazel_skylib",
+    "com_github_grpc_grpc",
     "com_google_protobuf",
     "io_bazel_rules_go",
+    "build_bazel_rules_swift",
     "rules_proto",
     "rules_python",
     "zlib",
@@ -22,6 +24,10 @@ io_bazel_rules_go()
 bazel_gazelle()
 
 bazel_skylib()
+
+com_github_grpc_grpc()
+
+build_bazel_rules_swift()
 
 # ==================================================
 # Go
@@ -77,6 +83,11 @@ zlib()
 # # Toolchains
 # #
 register_toolchains("//protoc:toolchain")
+
+
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
 
 # load("//rules:py_grpc_compile_deps.bzl", "py_grpc_compile_deps")
 

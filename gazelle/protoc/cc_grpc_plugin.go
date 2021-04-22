@@ -21,8 +21,9 @@ func (p *CcGrpcPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib Prot
 func (p *CcGrpcPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string {
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
+		base := f.Name
 		if f.HasServices() {
-			srcs = append(srcs, f.Name+"_pb_grpc.cc")
+			srcs = append(srcs, base+".grpc.pb.cc", base+".grpc.pb.h")
 		}
 	}
 	return srcs

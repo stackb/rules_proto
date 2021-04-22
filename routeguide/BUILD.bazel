@@ -19,7 +19,8 @@ proto_compile(
     generated_srcs = [
         "routeguide.pb.cc",
         "routeguide.pb.h",
-        "routeguide_pb_grpc.cc",
+        "routeguide.grpc.pb.cc",
+        "routeguide.grpc.pb.h",
     ],
     plugins = [
         "//protoc:cc_proto_plugin",
