@@ -1,9 +1,34 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
+# ----------------------------------------------------
+# Base Gazelle Configuation 
+# ----------------------------------------------------
 # gazelle:prefix github.com/stackb/rules_proto
+
+# ----------------------------------------------------
+# Internal Resolve Directives 
+# ----------------------------------------------------
 # gazelle:resolve go github.com/bazelbuild/buildtools/build @com_github_bazelbuild_buildtools//build:go_default_library
 
-gazelle(name = "gazelle")
+# ----------------------------------------------------
+# Configuation of the 'cc_proto' plugin
+# ----------------------------------------------------
+# gazelle:proto_plugin cc_proto @build_stack_rules_proto//cc:proto_plugin
+# gazelle:proto_plugin cc_grpc @build_stack_rules_proto//cc:grpc_plugin
+
+# ----------------------------------------------------
+# Configuration of the 'cc' proto_language
+# ----------------------------------------------------
+# gazelle:proto_language cc kind cc_library
+# gazelle:proto_language cc load @rules_cc//:deps.bzl
+# gazelle:proto_language cc plugin cc_proto
+# gazelle:proto_language cc plugin cc_grpc
+
+
+gazelle(
+    name = "gazelle",
+    gazelle = "//gazelle/protoc:gazelle-protoc",
+)
 
 gazelle(
     name = "update_go_deps",
@@ -15,3 +40,4 @@ gazelle(
     ],
     command = "update-repos",
 )
+
