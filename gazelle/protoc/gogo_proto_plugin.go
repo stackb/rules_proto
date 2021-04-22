@@ -33,3 +33,14 @@ func (p *GogoProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib
 	}
 	return srcs
 }
+
+// GeneratedOptions implements part of the optional PluginOptionsProvider
+// interface.  If the library contains services, apply the grpc plugin.
+func (p *GogoProtoPlugin) GeneratedOptions(rel string, c *ProtoPackageConfig, lib ProtoLibrary) []string {
+	for _, f := range lib.Files() {
+		if f.HasServices() {
+			return []string{"plugins=grpc"}
+		}
+	}
+	return nil
+}

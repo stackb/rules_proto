@@ -4,7 +4,7 @@ load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 # gazelle:proto_language cc enable true
 # gazelle:proto_language closure_js enable false
 # gazelle:proto_language common_js enable false
-# gazelle:proto_language gogofast enable false
+# gazelle:proto_language gogofast enable true
 # gazelle:proto_language java enable true
 # gazelle:proto_language py enable false
 
@@ -44,5 +44,13 @@ proto_compile(
         "//protoc:java_proto_plugin",
         "//grpc/grpc-java:grpc_java_plugin",
     ],
+    proto = "routeguide_proto",
+)
+
+proto_compile(
+    name = "routeguide_gogofast_compile",
+    generated_srcs = ["routeguide.pb.go"],
+    plugin_options = {"//gogo:gogofast": ["plugins=grpc"]},
+    plugins = ["//gogo:gogofast"],
     proto = "routeguide_proto",
 )
