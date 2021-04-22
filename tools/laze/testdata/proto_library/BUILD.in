@@ -1,5 +1,0 @@
-# Some comment to be preserved
-
-proto_library(
-    name = "foo_proto",
-)

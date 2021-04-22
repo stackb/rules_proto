@@ -1,4 +1,0 @@
-label: "//example/person/v1:person_nodejs_compile"
-output_files {
-  bazel-out/darwin-fastbuild/bin/example/person/v1/person_nodejs_compile: "example/person/v1/person_pb.js"
-}

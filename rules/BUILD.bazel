@@ -1,8 +1,0 @@
-filegroup(
-    name = "all_files",
-    testonly = True,
-    srcs = ["//rules/internal:all_files"] + glob(["**"]),
-    visibility = ["//visibility:public"],
-)
-
-exports_files(glob(["*.bzl"]))

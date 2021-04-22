@@ -1,9 +1,0 @@
-filegroup(
-    name = "all_files",
-    testonly = True,
-    srcs = [
-        "//plugins/python/grpc:all_files",
-        "//plugins/python/proto:all_files",
-    ],
-    visibility = ["//visibility:public"],
-)

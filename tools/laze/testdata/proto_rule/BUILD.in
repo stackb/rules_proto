@@ -1,6 +1,0 @@
-# Some comment to be preserved
-
-proto_rule(
-    name = "py_proto_compile",
-    package = "python",
-)

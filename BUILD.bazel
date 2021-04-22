@@ -1,28 +1,17 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/stackb/rules_proto
+# gazelle:resolve go github.com/bazelbuild/buildtools/build @com_github_bazelbuild_buildtools//build:go_default_library
+
 gazelle(name = "gazelle")
 
 gazelle(
-    name = "laze",
-    gazelle = "//tools/laze",
-)
-
-filegroup(
-    name = "all_files",
-    testonly = True,
-    srcs = [
-        "BUILD.bazel",
-        "WORKSPACE",
-        "//core:all_files",
-        "//example/person/v1:all_files",
-        "//example/place/v1:all_files",
-        "//example/thing/v1:all_files",
-        "//plugins:all_files",
-        "//rules:all_files",
-        "//third_party:all_files",
-        "//toolchains:all_files",
-        "//tools/gencopy:all_files",
-    ] + glob(["*.bzl"]),
-    visibility = ["//visibility:public"],
+    name = "update_go_deps",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=go_deps.bzl%go_deps",
+        "-build_file_proto_mode=disable_global",
+        "-prune=true",
+    ],
+    command = "update-repos",
 )

@@ -1,8 +1,0 @@
-filegroup(
-    name = "all_files",
-    testonly = True,
-    srcs = [
-        "//plugins/closure/proto:all_files",
-    ],
-    visibility = ["//visibility:public"],
-)

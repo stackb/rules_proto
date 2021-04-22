@@ -10,13 +10,8 @@ load(
     "//:deps.bzl",
     "bazel_gazelle",
     "bazel_skylib",
-    "build_bazel_rules_nodejs",
-    "build_bazel_rules_swift",
-    "com_github_stackb_grpc_js",
     "com_google_protobuf",
-    "io_bazel_rules_closure",
     "io_bazel_rules_go",
-    "io_grpc_grpc_java",
     "rules_proto",
     "rules_python",
     "zlib",
@@ -43,149 +38,148 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 gazelle_dependencies()
 
 # ==================================================
+# Go Tool Deps
+# ==================================================
+
+load("//:go_deps.bzl", "go_deps")
+
+# gazelle:repository_macro go_deps.bzl%go_deps
+go_deps()
+
+# ==================================================
 # Internal Tools
 # ==================================================
-#
-load("//tools/protogen:deps.bzl", "protogen_deps")
 
-# gazelle:repository_macro tools/protogen/deps.bzl%protogen_deps
-protogen_deps()
+load("//gazelle/protoc:deps.bzl", "gazelle_protoc_deps")
 
-load("//tools/gencopy:deps.bzl", "gencopy_deps")
+# gazelle:repository_macro gazelle/protoc/deps.bzl%laze_deps
+gazelle_protoc_deps()
 
-# gazelle:repository_macro tools/gencopy/deps.bzl%gencopy_deps
-gencopy_deps()
+# # ==================================================
+# # Protobuf Core
+# # ==================================================
+# #
+# rules_proto()
 
-load("//tools/laze:deps.bzl", "laze_deps")
+# rules_python()
 
-# gazelle:repository_macro tools/laze/deps.bzl%laze_deps
-laze_deps()
+# com_google_protobuf()
 
-# ==================================================
-# Protobuf Core
-# ==================================================
-#
-rules_proto()
+# zlib()
 
-rules_python()
+# # load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
 
-com_google_protobuf()
+# # rules_proto_dependencies()
 
-zlib()
+# # rules_proto_toolchains()
 
-# load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+# #
+# # Toolchains
+# #
+# load("//toolchains:protoc.bzl", "protoc_toolchain")
 
-# rules_proto_dependencies()
+# protoc_toolchain()
 
-# rules_proto_toolchains()
+# load("//rules:py_grpc_compile_deps.bzl", "py_grpc_compile_deps")
 
-#
-# Toolchains
-#
-load("//toolchains:protoc.bzl", "protoc_toolchain")
+# py_grpc_compile_deps()
 
-protoc_toolchain()
+# # gazelle:repository_macro tools/laze/deps.bzl%laze_deps
+# laze_deps()
 
-load("//rules:py_grpc_compile_deps.bzl", "py_grpc_compile_deps")
+# build_bazel_rules_swift()
 
-py_grpc_compile_deps()
+# load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
-# gazelle:repository_macro tools/laze/deps.bzl%laze_deps
-laze_deps()
+# grpc_deps()
 
-build_bazel_rules_swift()
+# io_bazel_rules_closure()
 
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+# load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
 
-grpc_deps()
+# rules_closure_dependencies(
+#     omit_bazel_skylib = True,
+#     omit_com_google_protobuf = True,
+#     omit_zlib = True,
+# )
 
-io_bazel_rules_closure()
+# rules_closure_toolchains()
 
-load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
+# com_github_stackb_grpc_js()
 
-rules_closure_dependencies(
-    omit_bazel_skylib = True,
-    omit_com_google_protobuf = True,
-    omit_zlib = True,
-)
+# io_grpc_grpc_java()
 
-rules_closure_toolchains()
+# load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS", "grpc_java_repositories")
 
-com_github_stackb_grpc_js()
+# grpc_java_repositories()
 
-io_grpc_grpc_java()
+# # rules_pkg()
 
-load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS", "grpc_java_repositories")
+# # rules_codeowners()
 
-grpc_java_repositories()
+# # =================================================================================================
+# # java
+# # =================================================================================================
 
-# rules_pkg()
+# load("@build_stack_rules_proto//rules:java_grpc_library_deps.bzl", "java_grpc_library_deps")
 
-# rules_codeowners()
+# java_grpc_library_deps()
 
-# =================================================================================================
-# java
-# =================================================================================================
+# load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-load("@build_stack_rules_proto//rules:java_grpc_library_deps.bzl", "java_grpc_library_deps")
+# maven_install(
+#     artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
+#     generate_compat_repositories = True,
+#     override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
+#     repositories = [
+#         "https://repo.maven.apache.org/maven2/",
+#     ],
+# )
 
-java_grpc_library_deps()
+# load("@maven//:compat.bzl", "compat_repositories")
 
-load("@rules_jvm_external//:defs.bzl", "maven_install")
+# compat_repositories()
 
-maven_install(
-    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
-    generate_compat_repositories = True,
-    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
-    repositories = [
-        "https://repo.maven.apache.org/maven2/",
-    ],
-)
+# grpc_java_repositories()
 
-load("@maven//:compat.bzl", "compat_repositories")
+# # =================================================================================================
+# # nodejs
+# # =================================================================================================
 
-compat_repositories()
+# build_bazel_rules_nodejs()
 
-grpc_java_repositories()
+# load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
 
-# =================================================================================================
-# nodejs
-# =================================================================================================
+# yarn_install(
+#     name = "google_protobuf_node_modules",
+#     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:package.json",
+#     package_path = "plugins/nodejs/modules/google-protobuf",
+#     symlink_node_modules = False,
+#     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:yarn.lock",
+# )
 
-build_bazel_rules_nodejs()
+# yarn_install(
+#     name = "grpc_js_node_modules",
+#     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:package.json",
+#     package_path = "plugins/nodejs/modules/grpc-js",
+#     symlink_node_modules = False,
+#     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:yarn.lock",
+# )
 
-load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+# yarn_install(
+#     name = "grpc_tools_node_modules",
+#     package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:package.json",
+#     package_path = "plugins/nodejs/modules/grpc-tools",
+#     symlink_node_modules = False,
+#     yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:yarn.lock",
+# )
 
-yarn_install(
-    name = "google_protobuf_node_modules",
-    package_json = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:package.json",
-    package_path = "plugins/nodejs/modules/google-protobuf",
-    symlink_node_modules = False,
-    yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/google-protobuf:yarn.lock",
-)
-
-yarn_install(
-    name = "grpc_js_node_modules",
-    package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:package.json",
-    package_path = "plugins/nodejs/modules/grpc-js",
-    symlink_node_modules = False,
-    yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-js:yarn.lock",
-)
-
-yarn_install(
-    name = "grpc_tools_node_modules",
-    package_json = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:package.json",
-    package_path = "plugins/nodejs/modules/grpc-tools",
-    symlink_node_modules = False,
-    yarn_lock = "@build_stack_rules_proto//plugins/nodejs/modules/grpc-tools:yarn.lock",
-)
-
-yarn_install(
-    name = "example_routeguide_node_modules",
-    package_json = "@build_stack_rules_proto//example/routeguide/nodejs/modules:package.json",
-    symlink_node_modules = False,
-    yarn_lock = "@build_stack_rules_proto//example/routeguide/nodejs/modules:yarn.lock",
-)
+# yarn_install(
+#     name = "example_routeguide_node_modules",
+#     package_json = "@build_stack_rules_proto//example/routeguide/nodejs/modules:package.json",
+#     symlink_node_modules = False,
+#     yarn_lock = "@build_stack_rules_proto//example/routeguide/nodejs/modules:yarn.lock",
+# )
 
 # #
 # # Core

@@ -1,8 +1,0 @@
-filegroup(
-    name = "all_files",
-    testonly = True,
-    srcs = [
-        "//plugins/grpc_js/grpc:all_files",
-    ],
-    visibility = ["//visibility:public"],
-)

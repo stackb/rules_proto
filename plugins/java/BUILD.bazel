@@ -1,9 +1,0 @@
-filegroup(
-    name = "all_files",
-    testonly = True,
-    srcs = [
-        "//plugins/java/grpc:all_files",
-        "//plugins/java/proto:all_files",
-    ],
-    visibility = ["//visibility:public"],
-)
