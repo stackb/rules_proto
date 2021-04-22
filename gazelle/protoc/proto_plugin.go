@@ -10,9 +10,9 @@ type ProtoPlugin interface {
 	// be added to the list of plugins to use?  We cannot rely on GeneratedSrcs
 	// alone for this information as not all plugins actually generate source
 	// code (some only perform validation/checking).
-	ShouldApply(rel string, cfg *protoPackageConfig, lib ProtoLibrary) bool
+	ShouldApply(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) bool
 
 	// GeneratedSrcs inspects the given proto_library and determines what source
 	// files will be generated.
-	GeneratedSrcs(rel string, cfg *protoPackageConfig, lib ProtoLibrary) []string
+	GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string
 }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -35,8 +34,7 @@ func (s *OtherProtoLibrary) Rule() *rule.Rule {
 
 // Files implements part of the ProtoLibrary interface
 func (s *OtherProtoLibrary) Files() []*ProtoFile {
-	matching := make([]*ProtoFile, 0)
-	return matching
+	return s.files
 }
 
 // Deps implements part of the ProtoLibrary interface
@@ -47,14 +45,4 @@ func (s *OtherProtoLibrary) Deps() []string {
 // Srcs returns the srcs attribute
 func (s *OtherProtoLibrary) Srcs() []string {
 	return s.rule.AttrStrings("deps")
-}
-
-func matchingFiles(files map[string]*ProtoFile, srcs []label.Label) []*ProtoFile {
-	matching := make([]*ProtoFile, 0)
-	for _, src := range srcs {
-		if file, ok := files[src.Name]; ok {
-			matching = append(matching, file)
-		}
-	}
-	return matching
 }

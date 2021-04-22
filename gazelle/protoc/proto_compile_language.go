@@ -6,48 +6,42 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/label"
 )
 
-// ProtoCompileLanguageName is the name of the proto_compile language
-// implementation.
-const ProtoCompileLanguageName = "proto_compile"
-
-func init() {
-	MustRegisterProtoLanguage(ProtoCompileLanguageName, &ProtoCompileLanguage{})
-}
-
 // ProtoCompileLanguage implements a ProtoLanguage for that adds in
-// *_proto_compile targets along with an associated test.
+// *_proto_compile targets along with an associated test.  It is the default
+// implementation chosen if no existing other implementaiton is registered.
 type ProtoCompileLanguage struct {
 	Name string
-	Cfg  *protoPackageConfig
 }
 
 // GenerateRules implements the ProtoLanguage interface.
-func (s *ProtoCompileLanguage) GenerateRules(rel string, cfg *protoPackageConfig, libs []ProtoLibrary) []RuleProvider {
+func (s *ProtoCompileLanguage) GenerateRules(
+	rel string,
+	c *ProtoPackageConfig,
+	p *ProtoLanguageConfig,
+	libs []ProtoLibrary,
+) []RuleProvider {
 	rules := make([]RuleProvider, 0)
-
-	log.Printf(ProtoCompileLanguageName+": Generate Rules: %+v", cfg)
 
 	for _, lib := range libs {
 		labels := make([]label.Label, 0)
 		generatedSrcs := make([]string, 0)
 
-		log.Printf(ProtoCompileLanguageName+": Iterate plugins %d", len(cfg.plugins))
-
-		for name, p := range cfg.plugins {
-			log.Printf(name + ": apply plugin?")
-
-			if !p.Implementation.ShouldApply(rel, cfg, lib) {
+		for _, plugin := range p.Plugins {
+			log.Printf("processing plugin %s", plugin.Name)
+			if !plugin.Implementation.ShouldApply(rel, c, lib) {
+				log.Printf("skipping plugin %s (should not apply)", plugin.Name)
 				continue
 			}
-			labels = append(labels, p.Label)
-			srcs := p.Implementation.GeneratedSrcs(rel, cfg, lib)
+			labels = append(labels, plugin.Label)
+			srcs := plugin.Implementation.GeneratedSrcs(rel, c, lib)
 			if len(srcs) > 0 {
 				generatedSrcs = append(generatedSrcs, srcs...)
 			}
+			log.Printf("plugin %s generated_srcs: %v", plugin.Name, srcs)
 		}
 
 		if len(labels) > 0 {
-			rules = append(rules, NewProtoCompileRule(lib, labels, generatedSrcs))
+			rules = append(rules, NewProtoCompileRule(p.Name, lib, labels, generatedSrcs))
 		}
 	}
 

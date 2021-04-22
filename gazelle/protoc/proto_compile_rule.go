@@ -14,6 +14,7 @@ import (
 // gRPC (has_services), and whether it's the "_compile" rule (which generates
 // the sources) or the language-wrapped "_library" rule.
 type ProtoCompileRule struct {
+	prefix        string
 	library       ProtoLibrary
 	plugins       []label.Label
 	generatedSrcs []string
@@ -23,8 +24,9 @@ type ProtoCompileRule struct {
 
 // NewProtoCompileRule constructs a new ProtoCompileRule based on the proto_library on which
 // it depends, as well as the precomputed list of GeneratedSrcs.
-func NewProtoCompileRule(library ProtoLibrary, plugins []label.Label, generatedSrcs []string) *ProtoCompileRule {
+func NewProtoCompileRule(prefix string, library ProtoLibrary, plugins []label.Label, generatedSrcs []string) *ProtoCompileRule {
 	rule := &ProtoCompileRule{
+		prefix:        prefix,
 		library:       library,
 		plugins:       plugins,
 		generatedSrcs: generatedSrcs,
@@ -39,7 +41,7 @@ func (s *ProtoCompileRule) Kind() string {
 
 // Name implements part of the ruleProvider interface.
 func (s *ProtoCompileRule) Name() string {
-	return fmt.Sprintf("%s_%s", s.library.BaseName(), s.Kind())
+	return fmt.Sprintf("%s_%s_compile", s.library.BaseName(), s.prefix)
 }
 
 // Imports implements part of the ruleProvider interface.

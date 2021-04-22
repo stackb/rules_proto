@@ -6,7 +6,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-type configCheck func(t *testing.T, cfg *protoPackageConfig)
+type configCheck func(t *testing.T, cfg *ProtoPackageConfig)
 
 func TestClone(t *testing.T) {
 	cfg := newProtoPackageConfig()
@@ -185,7 +185,7 @@ func TestParseDirectives(t *testing.T) {
 }
 
 func all(checks ...configCheck) configCheck {
-	return func(t *testing.T, cfg *protoPackageConfig) {
+	return func(t *testing.T, cfg *ProtoPackageConfig) {
 		for _, c := range checks {
 			c(t, cfg)
 		}
@@ -193,7 +193,7 @@ func all(checks ...configCheck) configCheck {
 }
 
 func hasRuleExclusion(name string, expected bool) configCheck {
-	return func(t *testing.T, cfg *protoPackageConfig) {
+	return func(t *testing.T, cfg *ProtoPackageConfig) {
 		actual := cfg.IsRuleExcluded(name)
 		if expected != actual {
 			t.Errorf("rule %q exclusion: expected %t", name, expected)
@@ -202,7 +202,7 @@ func hasRuleExclusion(name string, expected bool) configCheck {
 }
 
 func hasRuleInclusion(name string, expected bool) configCheck {
-	return func(t *testing.T, cfg *protoPackageConfig) {
+	return func(t *testing.T, cfg *ProtoPackageConfig) {
 		actual := cfg.IsRuleIncluded(name)
 		if expected != actual {
 			t.Errorf("rule %q inclusion: expected %t", name, expected)
@@ -211,7 +211,7 @@ func hasRuleInclusion(name string, expected bool) configCheck {
 }
 
 func hasLanguageConfig(name string, present bool) configCheck {
-	return func(t *testing.T, cfg *protoPackageConfig) {
+	return func(t *testing.T, cfg *ProtoPackageConfig) {
 		_, ok := cfg.languages[name]
 		if ok && !present {
 			t.Errorf("expected language to be excluded %s", name)
@@ -223,7 +223,7 @@ func hasLanguageConfig(name string, present bool) configCheck {
 }
 
 func hasImportpathPrefix(prefix string) configCheck {
-	return func(t *testing.T, cfg *protoPackageConfig) {
+	return func(t *testing.T, cfg *ProtoPackageConfig) {
 		if cfg.importpathPrefix != prefix {
 			t.Errorf("expected importpath prefix %s, got %s", prefix, cfg.importpathPrefix)
 		}

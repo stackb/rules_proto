@@ -14,10 +14,8 @@ const (
 	// protoRuleDirective is the directive for toggling rule generation.
 	protoRuleDirective = "proto_rule"
 	// protoLanguageDirective tells gazelle which languages a package should
-	// produce
+	// produce and how it is configured.
 	protoLanguageDirective = "proto_language"
-	// // protoLanguageConfigDirective configures a proto_language.
-	// protoLanguageConfigDirective = "proto_language_config"
 	// protoPluginDirective created an association between proto_language
 	// and the label of a proto_plugin.
 	protoPluginDirective = "proto_plugin"
@@ -25,16 +23,16 @@ const (
 	importpathPrefixDirective = "prefix"
 )
 
-// protoPackageConfig represents the config extension for the rosetta language.
-type protoPackageConfig struct {
+// ProtoPackageConfig represents the config extension for the rosetta language.
+type ProtoPackageConfig struct {
 	// the gazelle:prefix for golang
 	importpathPrefix string
 	// configured languages for this package
 	languages map[string]*ProtoLanguageConfig
 	// exclude patterns for rules that should be skipped for this package.
 	plugins map[string]*ProtoPluginConfig
-	// ruleProviders is a mapping from label -> the provider that produced
-	// the rule. we save this in the config such that we can retrieve the
+	// ruleProviders is a mapping from label -> the provider that produced the
+	// rule. we save this in the config such that we can retrieve the
 	// association later in the resolve step.
 	ruleProviders map[label.Label]RuleProvider
 	// exclude patterns for rules that should be skipped for this package.
@@ -43,9 +41,9 @@ type protoPackageConfig struct {
 	// method!
 }
 
-// newProtoPackageConfig initializes a new protoPackageConfig.
-func newProtoPackageConfig() *protoPackageConfig {
-	return &protoPackageConfig{
+// newProtoPackageConfig initializes a new ProtoPackageConfig.
+func newProtoPackageConfig() *ProtoPackageConfig {
+	return &ProtoPackageConfig{
 		languages:     make(map[string]*ProtoLanguageConfig),
 		plugins:       make(map[string]*ProtoPluginConfig),
 		ruleProviders: make(map[label.Label]RuleProvider),
@@ -56,7 +54,7 @@ func newProtoPackageConfig() *protoPackageConfig {
 // parseDirectives is called in each directory visited by gazelle.  The relative
 // directory name is given by 'rel' and the list of directives in the BUILD file
 // are specified by 'directives'.
-func (c *protoPackageConfig) parseDirectives(rel string, directives []rule.Directive) {
+func (c *ProtoPackageConfig) parseDirectives(rel string, directives []rule.Directive) {
 	for _, d := range directives {
 		switch d.Key {
 		case importpathPrefixDirective:
@@ -122,14 +120,20 @@ func (c *protoPackageConfig) parseDirectives(rel string, directives []rule.Direc
 			lang, ok := c.languages[name]
 			if !ok {
 				lang = &ProtoLanguageConfig{Name: name}
-				lang.Implementation = MustLookupProtoLanguage(name)
+				impl, err := LookupProtoLanguage(name)
+				if err == ErrUnknownLanguage {
+					lang.Implementation = &ProtoCompileLanguage{Name: name}
+				} else {
+					lang.Implementation = impl
+				}
+				c.languages[name] = lang
 			}
 			lang.MustParseDirective(c, d.Key, param, value)
 		}
 	}
 }
 
-func (c *protoPackageConfig) IsRuleExcluded(name string) bool {
+func (c *ProtoPackageConfig) IsRuleExcluded(name string) bool {
 	if c.IsRuleIncluded(name) {
 		return false
 	}
@@ -144,7 +148,7 @@ func (c *protoPackageConfig) IsRuleExcluded(name string) bool {
 	return false
 }
 
-func (c *protoPackageConfig) IsRuleIncluded(name string) bool {
+func (c *ProtoPackageConfig) IsRuleIncluded(name string) bool {
 	if len(c.rules) == 0 {
 		return false
 	}
@@ -157,7 +161,7 @@ func (c *protoPackageConfig) IsRuleIncluded(name string) bool {
 }
 
 // Languages returns a determinstic ordered list of configured languages
-func (c *protoPackageConfig) Languages() []*ProtoLanguageConfig {
+func (c *ProtoPackageConfig) Languages() []*ProtoLanguageConfig {
 	names := make([]string, 0)
 	for name := range c.languages {
 		names = append(names, name)
@@ -171,7 +175,7 @@ func (c *protoPackageConfig) Languages() []*ProtoLanguageConfig {
 }
 
 // Clone copies this config to a new one
-func (c *protoPackageConfig) Clone() *protoPackageConfig {
+func (c *ProtoPackageConfig) Clone() *ProtoPackageConfig {
 	clone := newProtoPackageConfig()
 	clone.importpathPrefix = c.importpathPrefix
 
@@ -191,20 +195,20 @@ func (c *protoPackageConfig) Clone() *protoPackageConfig {
 	return clone
 }
 
-func (c *protoPackageConfig) RegisterRuleProvider(l label.Label, provider RuleProvider) {
+func (c *ProtoPackageConfig) RegisterRuleProvider(l label.Label, provider RuleProvider) {
 	c.ruleProviders[l] = provider
 }
 
-func (c *protoPackageConfig) LookupRuleProvider(l label.Label) RuleProvider {
+func (c *ProtoPackageConfig) LookupRuleProvider(l label.Label) RuleProvider {
 	return c.ruleProviders[l]
 }
 
 // getExtensionConfig either inserts a new config into the map under the rosetta
 // language name or replaces it with a clone.
-func getExtensionConfig(exts map[string]interface{}) *protoPackageConfig {
-	var cfg *protoPackageConfig
+func getExtensionConfig(exts map[string]interface{}) *ProtoPackageConfig {
+	var cfg *ProtoPackageConfig
 	if existingExt, ok := exts[languageName]; ok {
-		cfg = existingExt.(*protoPackageConfig).Clone()
+		cfg = existingExt.(*ProtoPackageConfig).Clone()
 	} else {
 		cfg = newProtoPackageConfig()
 	}
@@ -214,6 +218,17 @@ func getExtensionConfig(exts map[string]interface{}) *protoPackageConfig {
 
 // protocKinds provides the aggregated list of KindInfo for the package.
 func protocKinds() map[string]rule.KindInfo {
+	return map[string]rule.KindInfo{
+		"proto_compile": rule.KindInfo{
+			MatchAttrs:     []string{"proto"},
+			NonEmptyAttrs:  map[string]bool{"generated_deps": true},
+			MergeableAttrs: map[string]bool{"generated_deps": true},
+		},
+	}
+	// rule.KindInfo{
+	// 	NonEmptyAttrs:  map[string]bool{"deps": true},
+	// 	MergeableAttrs: map[string]bool{},
+	// }
 	// build of a list of all possible rules that we can see; delegate to the
 	// rule implementations for the KindInfo.
 	// file := NewProtoFile("", "example.proto")
@@ -222,40 +237,40 @@ func protocKinds() map[string]rule.KindInfo {
 	// pyProtoCompile := NewProtoRule(protoLibrary, "py", "proto", "compile")
 	// protoCompileTest := &ProtoCompileTest{pyProtoCompile}
 
-	rules := []RuleProvider{
-		// TODO(pcj): proto_library can apparently not be claimed as a kind by
-		// two separate extensions. We will either have to take over this
-		// responsibility or work with the proto_library targets that get
-		// generated as it stands currently.
-		// pyProtoCompile,
-		// protoCompileTest,
-		// NewProtoDescriptorSet(protoLibrary),
-		// NewProtoRule(protoLibrary, "gogo", "proto", "compile"),
-		// NewProtoRule(protoLibrary, "gogofast", "proto", "compile"),
-		// NewProtoRule(protoLibrary, "gogofaster", "proto", "compile"),
-		// NewProtoRule(protoLibrary, "py", "proto", "library"),
-		// NewProtoRule(protoLibrary, "py", "grpc", "compile"),
-		// NewProtoRule(protoLibrary, "py_abc", "proto", "compile"),
-		// NewProtoRule(protoLibrary, "py_enum_choices", "proto", "compile"),
-		// NewProtoRule(protoLibrary, "py_rgrpc", "proto", "compile"),
-		// &PyLibrary{Lib: protoLibrary},
-	}
+	// rules := []RuleProvider{
+	// TODO(pcj): proto_library can apparently not be claimed as a kind by
+	// two separate extensions. We will either have to take over this
+	// responsibility or work with the proto_library targets that get
+	// generated as it stands currently.
+	// pyProtoCompile,
+	// protoCompileTest,
+	// NewProtoDescriptorSet(protoLibrary),
+	// NewProtoRule(protoLibrary, "gogo", "proto", "compile"),
+	// NewProtoRule(protoLibrary, "gogofast", "proto", "compile"),
+	// NewProtoRule(protoLibrary, "gogofaster", "proto", "compile"),
+	// NewProtoRule(protoLibrary, "py", "proto", "library"),
+	// NewProtoRule(protoLibrary, "py", "grpc", "compile"),
+	// NewProtoRule(protoLibrary, "py_abc", "proto", "compile"),
+	// NewProtoRule(protoLibrary, "py_enum_choices", "proto", "compile"),
+	// NewProtoRule(protoLibrary, "py_rgrpc", "proto", "compile"),
+	// &PyLibrary{Lib: protoLibrary},
+	// }
 
-	kinds := make(map[string]rule.KindInfo)
-	for _, r := range rules {
-		kinds[r.Kind()] = r.KindInfo()
-	}
+	// kinds := make(map[string]rule.KindInfo)
+	// for _, r := range rules {
+	// 	kinds[r.Kind()] = r.KindInfo()
+	// }
 
-	return kinds
+	// return kinds
 }
 
 // protocLoads provides the aggregated list of LoadInfo for the package.
 func protocLoads() []rule.LoadInfo {
 	return []rule.LoadInfo{
 		{
-			Name: "@build_stack_rules_proto//rules:protoc.bzl",
+			Name: "@build_stack_rules_proto//rules:proto_compile.bzl",
 			Symbols: []string{
-				"protoc",
+				"proto_compile",
 			},
 		},
 		{

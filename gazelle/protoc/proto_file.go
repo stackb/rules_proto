@@ -3,10 +3,12 @@ package protoc
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
 
+	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/emicklei/proto"
 )
 
@@ -173,4 +175,19 @@ func getGoPackageOption(options []*proto.Option) (string, string, bool) {
 	}
 
 	return "", "", false
+}
+
+func matchingFiles(files map[string]*ProtoFile, srcs []label.Label) []*ProtoFile {
+	log.Printf("matching %v files in %v", srcs, files)
+
+	matching := make([]*ProtoFile, 0)
+	for _, src := range srcs {
+		if file, ok := files[src.Name]; ok {
+			matching = append(matching, file)
+		}
+	}
+
+	log.Printf("matched %d", len(matching))
+
+	return matching
 }

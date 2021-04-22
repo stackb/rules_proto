@@ -15,6 +15,8 @@ go_library(
         # "proto_descriptor_set.go",
         # "proto_descriptor_set_language.go",
         "proto_enum_option_collector.go",
+        "cc_proto_plugin.go",
+        "cc_grpc_plugin.go",
         "proto_file.go",
         "proto_language.go",
         "proto_language_config.go",

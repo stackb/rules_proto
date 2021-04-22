@@ -58,7 +58,7 @@ func exampleGrpcLibrary() ProtoLibrary {
 	return &OtherProtoLibrary{rule: exampleGrpcLibraryRule(), files: []*ProtoFile{exampleGrpcFile()}}
 }
 
-func exampleProtoPackageConfig() *protoPackageConfig {
+func exampleProtoPackageConfig() *ProtoPackageConfig {
 	c := newProtoPackageConfig()
 	c.languages[ProtoDescriptorSetLanguageName] = MustLookupProtoLanguage(ProtoDescriptorSetLanguageName)
 	return c
@@ -72,7 +72,7 @@ func exampleProtoPackage() *ProtoPackage {
 		exampleProtoFile())
 }
 
-func exampleRstubsProtoPackageConfig() *protoPackageConfig {
+func exampleRstubsProtoPackageConfig() *ProtoPackageConfig {
 	c := newProtoPackageConfig()
 	c.languages[ProtoDescriptorSetLanguageName] = MustLookupProtoLanguage(ProtoDescriptorSetLanguageName)
 	return c

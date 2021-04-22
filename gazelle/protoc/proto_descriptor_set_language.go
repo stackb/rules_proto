@@ -14,7 +14,8 @@ type ProtoDescriptorSetLanguage struct{}
 // GenerateRules implements the ProtoLanguage interface.
 func (s *ProtoDescriptorSetLanguage) GenerateRules(
 	rel string,
-	cfg *protoPackageConfig,
+	c *ProtoPackageConfig,
+	p *ProtoLanguageConfig,
 	libs []ProtoLibrary,
 ) []RuleProvider {
 	rules := make([]RuleProvider, 0)

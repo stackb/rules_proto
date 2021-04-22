@@ -1,6 +1,8 @@
 package protoc
 
 import (
+	"log"
+
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
@@ -15,7 +17,7 @@ type ProtoPackage struct {
 func NewProtoPackage(
 	file *rule.File,
 	rel string,
-	cfg *protoPackageConfig,
+	cfg *ProtoPackageConfig,
 	libs []ProtoLibrary) *ProtoPackage {
 
 	prelim := make([]RuleProvider, 0)
@@ -24,7 +26,7 @@ func NewProtoPackage(
 		if !lang.Enabled {
 			continue
 		}
-		rules := lang.Implementation.GenerateRules(rel, cfg, libs)
+		rules := lang.Implementation.GenerateRules(rel, cfg, lang, libs)
 		for _, rule := range rules {
 			cfg.RegisterRuleProvider(label.Label{
 				Repo: "", // TODO: how to know if we are in an external repo?
@@ -63,6 +65,7 @@ func (s *ProtoPackage) Rules() []*rule.Rule {
 	for _, r := range s.rules {
 		rules = append(rules, r.Rule())
 	}
+	log.Printf("%d rules generated", len(rules))
 	return rules
 }
 

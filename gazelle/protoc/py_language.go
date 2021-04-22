@@ -13,7 +13,7 @@ type PyLanguage struct{}
 // GenerateRules implements the ProtoLanguage interface.
 func (s *PyLanguage) GenerateRules(
 	rel string,
-	cfg *protoPackageConfig,
+	cfg *ProtoPackageConfig,
 	libs []ProtoLibrary,
 ) []RuleProvider {
 	rules := make([]RuleProvider, 0)
