@@ -3,7 +3,6 @@ package protoc
 import (
 	"fmt"
 	"sort"
-	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -139,7 +138,10 @@ func (s *ProtoCompileRule) Options() build.Expr {
 	for _, key := range keys {
 		opts := s.generatedOptions[key]
 		sort.Strings(opts)
-		value := &build.StringExpr{Value: strings.Join(opts, ",")}
+		value := &build.ListExpr{List: make([]build.Expr, len(opts))}
+		for i, opt := range opts {
+			value.List[i] = &build.StringExpr{Value: opt}
+		}
 		items = append(items, &build.KeyValueExpr{
 			Key:   &build.StringExpr{Value: key},
 			Value: value,

@@ -42,6 +42,7 @@ proto_plugin(
         "binary",
         "error_on_name_conflict",
         "import_style=closure",
+        # "library={PACKAGE}/{NAME}", # performed by gazelle
     ],
     protoc_plugin_name = "js",
     visibility = ["//visibility:public"],

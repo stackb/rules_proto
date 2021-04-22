@@ -65,17 +65,14 @@ def _proto_compile_impl(ctx):
     plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
     # const <File> the protoc file from the toolchain
     protoc = get_protoc_executable(ctx)
-    # const <File> the descriptor_set_out file.  Primarily used for the output
-    # directory.
-    dsout = ctx.actions.declare_file(ctx.label.name + "_proto-descriptor-set.proto.bin")
     # const <list<File>> files we expect to be generated
     genfiles = ctx.outputs.generated_srcs
     # const <list<File>> outputs for the compile action
-    outputs = [dsout] + genfiles
+    outputs = [] + genfiles
     # mut <list<File>> tools for the compile action
     tools = [protoc]
     # mut <list<string>> argument list for protoc execution
-    args = ctx.attr.args + ["--descriptor_set_out="+dsout.path] 
+    args = [] + ctx.attr.args
     # mut <list<File>> set of descriptors for the compile action
     descriptors = proto_info.transitive_descriptor_sets.to_list()
     # mut <list<File>> inputs for the compile action

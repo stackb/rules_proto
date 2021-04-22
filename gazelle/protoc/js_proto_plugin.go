@@ -26,20 +26,6 @@ func (p *JsProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib Pro
 func (p *JsProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string {
 	base := strings.ToLower(lib.BaseName())
 	return []string{base + ".js"}
-	// for _, f := range lib.Files() {
-	// 	genfiles := make([]string, 0)
-	// 	for _, m := range f.messages {
-	// 		base := strings.ToLower(m.Name)
-	// 		genfiles = append(genfiles, base+".js")
-	// 	}
-	// 	for _, e := range f.enums {
-	// 		base := strings.ToLower(e.Name)
-	// 		genfiles = append(genfiles, base+".js")
-	// 	}
-
-	// 	srcs = append(srcs, genfiles...)
-	// }
-	// return srcs
 }
 
 // GeneratedOptions implements part of the optional PluginOptionsProvider
