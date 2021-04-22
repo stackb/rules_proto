@@ -14,7 +14,7 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 # Configuation of the plugins
 # ----------------------------------------------------
 # gazelle:proto_plugin cc_proto //protoc:cc_proto_plugin
-# gazelle:proto_plugin cc_grpc //cc:grpc_plugin
+# gazelle:proto_plugin cc_grpc //grpc/grpc:grpc_cpp_plugin
 # gazelle:proto_plugin py_proto //protoc:py_proto_plugin
 # gazelle:proto_plugin java_proto //protoc:java_proto_plugin
 # gazelle:proto_plugin closure_js_proto //protoc:closure_js_proto_plugin

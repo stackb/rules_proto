@@ -1,7 +1,5 @@
 package protoc
 
-import "log"
-
 func init() {
 	MustRegisterProtoPlugin("cc_proto", &CcProtoPlugin{})
 }
@@ -11,7 +9,6 @@ type CcProtoPlugin struct{}
 
 // ShouldApply implements part of the ProtoPlugin interface.
 func (p *CcProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) bool {
-	log.Printf("checking %d files...", len(lib.Files()))
 	for _, f := range lib.Files() {
 		if f.HasMessages() || f.HasEnums() {
 			return true

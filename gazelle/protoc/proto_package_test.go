@@ -117,7 +117,7 @@ func ExampleProtoPackageRules() {
 }
 
 func ExampleProtoPackageImports() {
-	for _, i := range exampleProtoPackage().Imports() {
+	for _, i := range Imports(exampleProtoPackage().generateRules(true)) {
 		fmt.Println(i)
 	}
 	// Output:

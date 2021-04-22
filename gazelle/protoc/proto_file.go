@@ -3,7 +3,6 @@ package protoc
 import (
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -178,16 +177,11 @@ func getGoPackageOption(options []*proto.Option) (string, string, bool) {
 }
 
 func matchingFiles(files map[string]*ProtoFile, srcs []label.Label) []*ProtoFile {
-	log.Printf("matching %v files in %v", srcs, files)
-
 	matching := make([]*ProtoFile, 0)
 	for _, src := range srcs {
 		if file, ok := files[src.Name]; ok {
 			matching = append(matching, file)
 		}
 	}
-
-	log.Printf("matched %d", len(matching))
-
 	return matching
 }

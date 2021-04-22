@@ -1,0 +1,30 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+# gazelle:proto_language cc enable true
+# gazelle:proto_language closure_js enable false
+# gazelle:proto_language common_js enable false
+# gazelle:proto_language gogofast enable false
+# gazelle:proto_language java enable false
+# gazelle:proto_language py enable false
+
+proto_library(
+    name = "routeguide_proto",
+    srcs = ["routeguide.proto"],
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "routeguide_cc_compile",
+    generated_srcs = [
+        "routeguide.pb.cc",
+        "routeguide.pb.h",
+        "routeguide_pb_grpc.cc",
+    ],
+    plugins = [
+        "//protoc:cc_proto_plugin",
+        "//grpc/grpc:grpc_cpp_plugin",
+    ],
+    proto = "routeguide_proto",
+    verbose = 3,
+)

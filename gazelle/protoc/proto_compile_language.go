@@ -1,7 +1,6 @@
 package protoc
 
 import (
-	"log"
 	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -30,7 +29,6 @@ func (s *ProtoCompileLanguage) GenerateRules(
 
 		for _, plugin := range p.Plugins {
 			if !plugin.Implementation.ShouldApply(rel, c, lib) {
-				log.Printf("skipping plugin %s (should not apply)", plugin.Name)
 				continue
 			}
 			labels = append(labels, plugin.Label)

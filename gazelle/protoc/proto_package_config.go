@@ -78,7 +78,6 @@ func (c *ProtoPackageConfig) parseDirectives(rel string, directives []rule.Direc
 				log.Fatalf("error while processing gazelle directive %q: %v", pluginName, err)
 			}
 			c.plugins[pluginName] = &ProtoPluginConfig{Label: l, Name: pluginName, Implementation: plugin}
-			log.Printf("Added proto_plugin: %s -> %v", pluginName, l)
 		case protoRuleDirective:
 			pattern := strings.TrimSpace(d.Value)
 			negative := strings.HasPrefix(pattern, "-")

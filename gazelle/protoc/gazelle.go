@@ -118,7 +118,6 @@ func (*protocLang) Resolve(
 	provider := cfg.LookupRuleProvider(from)
 	if provider == nil {
 		return
-		// panic(fmt.Sprintf("RuleProvider of %q was not registered.", from))
 	}
 	provider.Resolve(c, r, importsRaw, from)
 }
@@ -173,5 +172,6 @@ func (*protocLang) GenerateRules(args language.GenerateArgs) language.GenerateRe
 	return language.GenerateResult{
 		Gen:     pkg.Rules(),
 		Imports: pkg.Imports(),
+		Empty:   pkg.Empty(),
 	}
 }
