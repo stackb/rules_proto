@@ -5,6 +5,8 @@ load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 # gazelle:proto_language cc enable true
 # gazelle:proto_language py enable true
 # gazelle:proto_language java enable true
+# gazelle:proto_language closure_js enable true
+# gazelle:proto_language common_js enable true
 
 proto_library(
     name = "example_proto",
@@ -35,11 +37,27 @@ proto_compile(
     generated_srcs = ["thing.srcjar"],
     plugins = ["//protoc:java_proto_plugin"],
     proto = "example_proto",
-    verbose = 3,
 )
 
 java_library(
     name = "example_java_proto",
     srcs = [":example_java_compile"],
     deps = ["@com_google_protobuf//:protobuf_java"],
+)
+
+proto_compile(
+    name = "example_closure_js_compile",
+    generated_srcs = ["example.js"],
+    options = {"//protoc:closure_js_proto_plugin": ["library=example/example"]},
+    plugins = ["//protoc:closure_js_proto_plugin"],
+    proto = "example_proto",
+    verbose = 3,
+    args = ["--proto_path={BIN_DIR}/{PACKAGE}/example"],
+)
+
+proto_compile(
+    name = "example_common_js_compile",
+    generated_srcs = ["thing_pb.js"],
+    plugins = ["//protoc:common_js_proto_plugin"],
+    proto = "example_proto",
 )

@@ -26,6 +26,7 @@ func (s *ProtoCompileLanguage) GenerateRules(
 	for _, lib := range libs {
 		labels := make([]label.Label, 0)
 		generatedSrcs := make([]string, 0)
+		generatedOptions := make(map[string][]string)
 
 		for _, plugin := range p.Plugins {
 			if !plugin.Implementation.ShouldApply(rel, c, lib) {
@@ -37,12 +38,18 @@ func (s *ProtoCompileLanguage) GenerateRules(
 			if len(srcs) > 0 {
 				generatedSrcs = append(generatedSrcs, srcs...)
 			}
+			if provider, ok := plugin.Implementation.(PluginOptionsProvider); ok {
+				options := provider.GeneratedOptions(rel, c, lib)
+				if len(options) > 0 {
+					generatedOptions[plugin.Label.String()] = options
+				}
+			}
 			// log.Printf("plugin %s generated_srcs: %v", plugin.Name, srcs)
 		}
 
 		if len(labels) > 0 {
 			sort.Strings(generatedSrcs)
-			rules = append(rules, NewProtoCompileRule(p.Name, lib, labels, generatedSrcs))
+			rules = append(rules, NewProtoCompileRule(p.Name, lib, labels, generatedSrcs, generatedOptions))
 		}
 	}
 

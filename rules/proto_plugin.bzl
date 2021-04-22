@@ -13,6 +13,7 @@ ProtoPluginInfo = provider(fields = {
     "protoc_plugin_name": "The name used for the plugin binary on the protoc command line. Useful for targeting built-in plugins. Uses plugin name when not set",
     "exclusions": "Exclusion filters to apply when generating outputs with this plugin. Used to prevent generating files that are included in the protobuf library, for example. Can exclude either by proto name prefix or by proto folder prefix",
     "data": "Additional files required for running the plugin",
+    "out": "The format for the --x_out argument.  Defaults to to {BIN_DIR}",
     "supplementary_proto_deps": "Additional proto dependencies whose descriptors/files should be included in all protoc invocations",
     "separate_options_flag": "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",
     # "deps": "The list of proto dependencies for this plugin",
@@ -24,6 +25,7 @@ def proto_plugin_info_to_struct(info):
         label = str(info.label),
         options = info.options,
         outputs = info.outputs,
+        out = info.out,
         output_directory = info.output_directory,
         # tool = info.tool.short_path if info.tool else "", TODO(pcj): serialize this to document the type.
         tool_executable = info.tool_executable.short_path if info.tool_executable else "",
@@ -41,6 +43,7 @@ def _proto_plugin_impl(ctx):
         ProtoPluginInfo(
             name = ctx.attr.name,
             label = ctx.label,
+            out = ctx.attr.out,
             options = ctx.attr.options,
             tool_executable = ctx.executable.tool,
             use_built_in_shell_environment = ctx.attr.use_built_in_shell_environment,
@@ -71,6 +74,10 @@ proto_plugin = rule(
         ),
         "protoc_plugin_name": attr.string(
             doc = "The name used for the plugin binary on the protoc command line. Useful for targeting built-in plugins. Uses plugin name when not set",
+        ),
+        "out": attr.string(
+            doc = "The output scheme for the plugin.  Can be a string like '.' or a symbol such as {BIN_DIR} or {PACKAGE}.",
+            default = "{BIN_DIR}",
         ),
         "exclusions": attr.string_list(
             doc = "Exclusion filters to apply when generating outputs with this plugin. Used to prevent generating files that are included in the protobuf library, for example. Can exclude either by proto name prefix or by proto folder prefix",

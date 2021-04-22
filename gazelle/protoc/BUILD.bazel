@@ -39,6 +39,8 @@ go_library(
         # "py_library.go",
         # "py_library.go",
         "py_proto_plugin.go",
+        "js_proto_plugin.go",
+        "commonjs_proto_plugin.go",
         "rule_provider.go",
     ],
     importpath = "github.com/stackb/rules_proto/gazelle/protoc",

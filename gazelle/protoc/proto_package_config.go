@@ -224,6 +224,7 @@ func protocKinds() map[string]rule.KindInfo {
 			MergeableAttrs: map[string]bool{
 				"generated_srcs": true,
 				"plugins":        true,
+				// "options":        true,
 			},
 		},
 	}

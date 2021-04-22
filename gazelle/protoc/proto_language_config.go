@@ -18,7 +18,6 @@ type ProtoLanguageConfig struct {
 
 // MustParseDirective parses the directive string or panics.
 func (s *ProtoLanguageConfig) MustParseDirective(cfg *ProtoPackageConfig, d, param, value string) {
-	log.Printf("parsng %v %s -> %s", d, param, value)
 	switch param {
 	case "enable":
 		enabled, err := strconv.ParseBool(value)

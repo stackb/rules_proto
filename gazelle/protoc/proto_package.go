@@ -1,8 +1,6 @@
 package protoc
 
 import (
-	"log"
-
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
@@ -65,7 +63,7 @@ func (s *ProtoPackage) Rules() []*rule.Rule {
 	for _, r := range s.rules {
 		rules = append(rules, r.Rule())
 	}
-	log.Printf("%d rules generated", len(rules))
+	// log.Printf("%d rules generated", len(rules))
 	return rules
 }
 

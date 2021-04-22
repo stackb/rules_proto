@@ -67,16 +67,15 @@ def _proto_compile_impl(ctx):
     protoc = get_protoc_executable(ctx)
     # const <File> the descriptor_set_out file.  Primarily used for the output
     # directory.
-    out = ctx.actions.declare_file(ctx.label.name + "_proto-descriptor-set.proto.bin")
+    dsout = ctx.actions.declare_file(ctx.label.name + "_proto-descriptor-set.proto.bin")
     # const <list<File>> files we expect to be generated
     genfiles = ctx.outputs.generated_srcs
     # const <list<File>> outputs for the compile action
-    outputs = [out] + genfiles
-
+    outputs = [dsout] + genfiles
     # mut <list<File>> tools for the compile action
     tools = [protoc]
     # mut <list<string>> argument list for protoc execution
-    args = ["--descriptor_set_out="+out.path]
+    args = ctx.attr.args + ["--descriptor_set_out="+dsout.path] 
     # mut <list<File>> set of descriptors for the compile action
     descriptors = proto_info.transitive_descriptor_sets.to_list()
     # mut <list<File>> inputs for the compile action
@@ -86,9 +85,8 @@ def _proto_compile_impl(ctx):
     # mut <list<opaque>> Plugin input manifests
     input_manifests = []
 
-    # print("ws root:"+ctx.label.workspace_root)
     ###
-    ### Part 2: iterate over plugins
+    ### Part 2: per-plugin args
     ###
 
     for plugin in plugins:
@@ -139,53 +137,60 @@ def _proto_compile_impl(ctx):
         ### Part 2.3: build --{name}_out=OPTIONS argument
 
         # mut <string>
-        out_arg = ctx.bin_dir.path
-        
+        out = plugin.out
         # special case (java): if the user has requested only a single srcjar,
         # use that instead.
         if len(genfiles) == 1 and genfiles[0].short_path.endswith(".srcjar"):
-            out_arg = genfiles[0].path
-        
-        if plugin.options:
-            # const <string>
-            opts_str = ",".join(
-                [option.replace("{name}", ctx.label.name) for option in plugin.options],
-            )
+            out = genfiles[0].path
+
+        options = [opt for opt in ctx.attr.options.get(str(plugin.label), [])]
+        options += plugin.options
+        if len(options) > 0:
             if plugin.separate_options_flag:
-                args.append("--{}_opt={}".format(plugin_name, opts_str))
+                args.append("--{}_opt={}".format(plugin_name, ",".join(options)))
             else:
-                out_arg = "{}:{}".format(opts_str, out_arg)
-        args.append("--{}_out={}".format(plugin_name, out_arg))
+                out = "{}:{}".format(",".join(options), out)
+        args.append("--{}_out={}".format(plugin_name, out))
 
     ###
-    ### Part 3: action
+    ### Part 3: trailing args
     ###
 
-    ### Part 3.1: dedup lists (TODO: use depsets instead)
+    ### Part 3.1: add descriptor sets
 
-    protos = _uniq(protos)
     descriptors = _uniq(descriptors)
     inputs += descriptors
-
-    ### Part 3.2: finalize args
-
     args.append("--descriptor_set_in={}".format(ctx.configuration.host_path_separator.join(
         [d.path for d in descriptors],
     )))
+
+    ### Part 3.3: arg symbol replacements
+
+    args = [arg.replace("{BIN_DIR}", ctx.bin_dir.path) for arg in args]
+    args = [arg.replace("{NAME}", ctx.label.name) for arg in args]
+    args = [arg.replace("{PACKAGE}", ctx.label.package) for arg in args]
+
+    ### Part 3.4: add proto file args
+
+    protos = _uniq(protos)
     for proto in protos:
         args.append(_descriptor_proto_path(proto, proto_info))
+
+    ### Step 3.5: build args object
 
     final_args = ctx.actions.args()
     final_args.add_all(args)
 
-    ### Step 3.3: build command
+    ###
+    ### Step 4: command action
+    ###
 
     command = "mkdir -p {} && {} $@".format(ctx.label.package, protoc.path) # $@ is replaced with args list
     if verbose > 2:
         command += " && echo '\n##### SANDBOX AFTER RUNNING PROTOC' && find . -type f "
         command = "env && echo '\n##### SANDBOX BEFORE RUNNING PROTOC' && find . -type l && " + command
 
-    ### Step 3.4: declare action
+    ### Step 3.6: declare action
 
     ctx.actions.run_shell(
         arguments = [final_args],
@@ -198,7 +203,7 @@ def _proto_compile_impl(ctx):
         tools = tools,
     )
 
-    ### Step 3.5: debugging
+    ### Step 3.7: debugging
 
     if verbose > 1:
         for f in inputs:
@@ -212,9 +217,6 @@ def _proto_compile_impl(ctx):
         for a in args:
             print("ARG:", a)
 
-    ###
-    ### Step 4: generate providers
-    ###
     return [DefaultInfo(files = depset(genfiles))]
 
 
@@ -237,6 +239,12 @@ proto_compile = rule(
         "generated_srcs": attr.output_list(
             doc = "List of source files we expect to be generated (relative to package)",
             mandatory = True,
+        ),
+        "options": attr.string_list_dict(
+            doc = "List of additional options, keyed by proto_plugin label",
+        ),
+        "args": attr.string_list(
+            doc = "List of additional protoc args",
         ),
     },
     toolchains = ["@build_stack_rules_proto//protoc:toolchain_type"],

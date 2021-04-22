@@ -11,12 +11,14 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 # gazelle:resolve go github.com/bazelbuild/buildtools/build @com_github_bazelbuild_buildtools//build:go_default_library
 
 # ----------------------------------------------------
-# Configuation of the 'cc_proto' plugin
+# Configuation of the plugins
 # ----------------------------------------------------
 # gazelle:proto_plugin cc_proto //protoc:cc_proto_plugin
 # gazelle:proto_plugin cc_grpc //cc:grpc_plugin
 # gazelle:proto_plugin py_proto //protoc:py_proto_plugin
 # gazelle:proto_plugin java_proto //protoc:java_proto_plugin
+# gazelle:proto_plugin closure_js_proto //protoc:closure_js_proto_plugin
+# gazelle:proto_plugin common_js_proto //protoc:common_js_proto_plugin
 
 # ----------------------------------------------------
 # Configuration of the 'cc' proto_language
@@ -37,8 +39,24 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 # Configuration of the 'java' proto_language
 # ----------------------------------------------------
 # gazelle:proto_language java kind java_library
+## gazelle:proto_language java include *.srcjar
 # gazelle:proto_language java load @rules_java//:deps.bzl
 # gazelle:proto_language java plugin java_proto
+## gazelle:proto_language java requires @com_google_protobuf//:protobuf_java
+
+# ----------------------------------------------------
+# Configuration of the 'closure_js' proto_language
+# ----------------------------------------------------
+# gazelle:proto_language closure_js kind closure_js_library
+# gazelle:proto_language closure_js load @rules_closure_js//:deps.bzl
+# gazelle:proto_language closure_js plugin closure_js_proto
+
+# ----------------------------------------------------
+# Configuration of the 'common_js' proto_language
+# ----------------------------------------------------
+# gazelle:proto_language common_js kind js_library
+# gazelle:proto_language common_js load @rules_js//:deps.bzl
+# gazelle:proto_language common_js plugin common_js_proto
 
 gazelle_binary(
     name = "gazelle-proto",

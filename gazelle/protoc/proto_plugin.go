@@ -16,3 +16,11 @@ type ProtoPlugin interface {
 	// files will be generated.
 	GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string
 }
+
+// PluginOptionsProvider is an optional interface that, if implemented, provides
+// additional options for the protoc invocation.
+type PluginOptionsProvider interface {
+	// GeneratedSrcs inspects the given proto_library and determines what
+	// additional options are needed.
+	GeneratedOptions(rel string, c *ProtoPackageConfig, lib ProtoLibrary) []string
+}
