@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package protoc.sickle.event;
+
+import "google/protobuf/timestamp.proto";
+
+import "rosetta/rosetta/sickle/event/bulk_order_component.proto";
+import "rosetta/rosetta/sickle/event/end_of_day.proto";
+import "rosetta/rosetta/sickle/event/event_enums.proto";
+
+option go_package = "github.com/robinhoodmarkets/rh/rosetta/rosetta/sickle/event;rosetta_sickle_event";
+
+
+message Event {
+    string id = 1;
+    EventType type = 2;
+    google.protobuf.Timestamp at = 3;
+    int64 account_id = 4;
+    oneof details {
+        EndOfDayDetails end_of_day_details = 5;
+        BulkOrderComponentDetails bulk_order_component_details = 6;
+    }
+}

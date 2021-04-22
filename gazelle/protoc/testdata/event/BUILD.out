@@ -1,0 +1,14 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+# gazelle:proto_rule -py*
+# gazelle:proto_rule -proto_compile_test
+
+proto_library(
+    name = "rosetta_sickle_event_proto",
+    srcs = ["event.proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//rosetta/rosetta/sickle/event:event_proto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)

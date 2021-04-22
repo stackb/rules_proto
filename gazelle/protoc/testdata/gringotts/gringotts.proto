@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package protoc.gringotts.v1;
+
+option go_package = "github.com/robinhoodmarkets/rh/rosetta/rosetta/gringotts/v1;gringotts";
+
+import "rosetta/rosetta/common/money.proto";
+import "rosetta/rosetta/gringotts/v1/account.proto";
+import "rosetta/rosetta/gringotts/v1/common.proto";
+
+message HealthRequest {
+}
+
+message HealthResponse {
+  string message = 2;
+}
+
+service Gringotts {
+  rpc Health(HealthRequest) returns (HealthResponse);
+}

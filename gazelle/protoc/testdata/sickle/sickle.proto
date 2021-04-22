@@ -1,0 +1,206 @@
+syntax = "proto3";
+
+package protoc.events;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "rosetta/rosetta/common/datetime.proto";
+import "rosetta/rosetta/common/money.proto";
+import "rosetta/rosetta/events/enums.proto";
+import "rosetta/rosetta/extensions.proto";
+import "rosetta/rosetta/ledger/adjustments.proto";
+import "rosetta/rosetta/ledger/details.proto";
+import "rosetta/rosetta/ledger/enums.proto";
+
+
+message SickleAdjustmentEvent {
+    enum Type {
+        TYPE_UNSPECIFIED = 0;
+
+        adjustment = 1 [
+            (rosetta.extensions.details_type) =
+            "rosetta_ledger_SickleAdjustmentEventDetails"
+        ];
+    }
+
+    string id = 1;  // uuid
+    Type type = 2;
+    google.protobuf.Timestamp at = 3;
+    google.protobuf.Timestamp queued_at = 4;
+    int64 offset = 5;
+    int64 journaled_offset = 6;
+    int32 journaled_partition = 7;
+    string record_date = 8;
+    int32 partition = 9;
+    google.protobuf.Int64Value account_id = 10;
+    google.protobuf.Struct details = 11;
+    google.protobuf.Int64Value batch_id = 12;
+    string trigger_id = 13;  // uuid
+    int32 to_partition = 14;
+    string event_id = 15; // uuid
+}
+
+message SickleRestrictionEvent {
+    enum Type {
+        TYPE_UNSPECIFIED = 0;
+
+        restriction = 1 [
+            (rosetta.extensions.details_type) =
+            "rosetta_restrictions_RestrictionEventDetails"
+        ];
+    }
+
+    string id = 1;  // uuid
+    Type type = 2;
+    google.protobuf.Timestamp at = 3;
+    google.protobuf.Timestamp queued_at = 4;
+    int64 offset = 5;
+    int64 journaled_offset = 6;
+    int32 journaled_partition = 7;
+    string record_date = 8;
+    int32 partition = 9;
+    google.protobuf.Int64Value account_id = 10;
+    google.protobuf.Struct details = 11;
+    google.protobuf.Int64Value batch_id = 12;
+    string trigger_id = 13;  // uuid
+    int32 to_partition = 14;
+}
+
+message SweepProgramUpdateEvent {
+    int64 account_number = 1;
+    string accrued_interest = 2;  // Decimal
+    string sweep_balance = 3;  // Decimal
+    string ytd_paid_interest = 4; // Decimal
+    rosetta.common.Date next_update_date = 5;
+    string total_paid_interest = 6; // Decimal
+}
+
+message SweepInterestAdjustmentEvent {
+    int64 account_number = 1;
+    string amount = 2;  // Decimal
+    string description = 3; // Filled if reason is OTHER
+    rosetta.ledger.AdjustmentType direction = 4;
+    InterestAdjustmentReason reason = 5;
+    rosetta.common.Date start_date = 6;
+    rosetta.common.Date end_date = 7;
+    rosetta.common.Date original_payment_date = 12;
+
+    // IDs used to link interest adjustments together for reversal of payments.
+    string interest_adjustment_chain_id = 8;  // (deprecated) UUID
+    string interest_adjustment_id = 10;  // UUID
+    string previous_interest_adjustment_id = 11;  // UUID
+
+    SweepInterestPayoutType type = 9;
+
+    // Next field is 13
+}
+
+message SweepInterestAccrualAdjustmentEvent {
+    int64 account_number = 1;
+    string delta = 2;  // Decimal
+    InterestAdjustmentReason reason = 3;
+    rosetta.common.Date start_date = 4;
+    rosetta.common.Date end_date = 5;
+}
+
+message SweepInterestRateEvent {
+    string interest_annual_percentage_rate = 1;  // Decimal
+}
+
+message SweepStateEvent {
+    enum SweepState {
+        SWEEP_STATE_UNSPECIFIED = 0;
+
+        ENABLED = 1 [(rosetta.extensions.json_value) = "enabled"];
+        DISABLED_DUE_TO_PDT = 2 [(rosetta.extensions.json_value) = "disabled_due_to_pdt"];
+        MANUAL_ENABLED = 3 [(rosetta.extensions.json_value) = "manual_enabled"];
+        MANUAL_DISABLED = 4 [(rosetta.extensions.json_value) = "manual_disabled"];
+    }
+
+    int64 account_number = 1;
+    SweepState sweep_state = 2;
+}
+
+message BackupWithholdingEvent {
+    string withholding_record_id = 1;  // uuid
+    rosetta.events.BackupWithholdingActionType action_type = 2;
+    string amount = 3;  // Decimal
+    string tax_region = 4;
+    rosetta.common.Date action_date = 5;
+    int64 account_number = 6;
+}
+
+message NRAWithholdingEvent {
+    string withholding_record_id = 1;  // uuid
+    string delta = 2;  // Decimal
+    string tax_country = 3;
+    rosetta.common.Date record_date = 4;
+    int64 account_number = 5;
+}
+
+message AdjustmentEvent {
+    rosetta.ledger.JournalEntries journal_entries = 1;
+    repeated rosetta.ledger.ClientLedgerAdjustment cl_adjustments = 2;
+    repeated rosetta.ledger.GeneralLedgerAdjustment gl_adjustments = 3;
+    repeated rosetta.ledger.StockRecordAdjustment sr_adjustments = 4;
+    bool prior_period = 5;
+    rosetta.ledger.InitiatingService initiating_service = 6;
+    bool is_sr_break_adjustments = 7;
+}
+
+message StockLoanPayment {
+    int64 account_number = 1;
+    rosetta.common.Money amount = 2;  // Decimal
+    string instrument_id = 5;
+    string description = 3;
+    rosetta.common.Date record_date = 4;
+    // Next ID: 6
+}
+
+message AnnotationEvent {
+    int64 account_number = 1;
+    rosetta.events.AnnotationAction action = 2;
+    string annotation = 3;
+}
+
+// BaseRhsToRhfEvent is a top-level proto definition utilized by the varys publisher.
+// Varys reads the DB and transform the rows into a BaseRhsToRhfEvent proto. 
+message BaseRhsToRhfEvent {
+    int64 order_id = 1;
+    bytes serialized_message = 2;
+    string event_id = 3; // uuid
+}
+
+message RhsToRhfEvent {
+    enum Type {
+        TYPE_UNSPECIFIED = 0;
+
+        SWEEP_PROGRAM_UPDATE = 1 [(rosetta.extensions.json_value) = "sweep_program_update"];
+        SWEEP_INTEREST_ADJUSTMENT = 2 [(rosetta.extensions.json_value) = "sweep_interest_adjustment"];
+        SWEEP_INTEREST_RATE_EVENT = 3 [(rosetta.extensions.json_value) = "sweep_interest_rate_event"];
+        BACKUP_WITHHOLDING_EVENT = 4 [(rosetta.extensions.json_value) = "backup_withholding_event"];
+        ADJUSTMENT_EVENT = 5 [(rosetta.extensions.json_value) = "adjustment_event"];
+        STOCK_LOAN_PAYMENT = 6 [(rosetta.extensions.json_value) = "stock_loan_payment"];
+        SWEEP_INTEREST_ACCRUAL_ADJUSTMENT = 7 [(rosetta.extensions.json_value) = "sweep_interest_accrual_adjustment"];
+        SWEEP_STATE = 8 [(rosetta.extensions.json_value) = "sweep_state"];
+        ANNOTATION_EVENT = 9 [(rosetta.extensions.json_value) = "annotation_event"];
+        NRA_WITHHOLDING = 10 [(rosetta.extensions.json_value) = "nra_withholding"];
+    }
+
+    Type type = 1;
+    rosetta.common.Date date = 2;
+
+    oneof details {
+        SweepProgramUpdateEvent sweep_program_update_details = 16;
+        SweepInterestAdjustmentEvent sweep_interest_adjustment_details = 17;
+        SweepInterestRateEvent sweep_interest_rate_details = 18;
+        BackupWithholdingEvent backup_withholding_details = 19;
+        AdjustmentEvent adjustment_details = 20;
+        StockLoanPayment stock_loan_payment_details = 21;
+        SweepInterestAccrualAdjustmentEvent sweep_interest_accrual_adjustment_details = 22;
+        SweepStateEvent sweep_state_details = 23;
+        AnnotationEvent annotation_details = 24;
+        NRAWithholdingEvent nra_withholding_event = 25;
+    }
+}

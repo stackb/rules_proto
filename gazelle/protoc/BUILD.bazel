@@ -1,0 +1,80 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@bazel_gazelle//:def.bzl", "gazelle_binary")
+
+# gazelle:exclude testdata
+
+go_library(
+    name = "protoc",
+    srcs = [
+        "gazelle.go",
+        "gogo_proto_plugin.go",
+        "other_proto_library.go",
+        "proto_compile_language.go",
+        "proto_compile_rule.go",
+        "proto_compile_test_rule.go",
+        "proto_descriptor_set.go",
+        "proto_descriptor_set_language.go",
+        "proto_enum_option_collector.go",
+        "proto_file.go",
+        "proto_language.go",
+        "proto_language_registry.go",
+        "proto_library.go",
+        "proto_package.go",
+        "proto_package_config.go",
+        "proto_plugin.go",
+        "proto_plugin_config.go",
+        "proto_plugin_registry.go",
+        "proto_rule.go",
+        "proto_rule_config.go",
+        "proto_rule_option.go",
+        "py_library.go",
+        "py_proto_plugin.go",
+        "rule_provider.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/gazelle/protoc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//language:go_default_library",
+        "@bazel_gazelle//repo:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+        "@com_github_bazelbuild_buildtools//build:go_default_library",
+        "@com_github_emicklei_proto//:proto",
+    ],
+)
+
+go_test(
+    name = "protoc_test",
+    srcs = [
+        "gazelle_test.go",
+        "proto_compile_test_rule_test.go",
+        "proto_descriptor_set_test.go",
+        "proto_file_test.go",
+        "proto_package_config_test.go",
+        "proto_package_test.go",
+        "proto_rule_test.go",
+    ],
+    data = [":gazelle-protoc"] + glob(["testdata/**"]),
+    embed = [":protoc"],
+    deps = [
+        "@bazel_gazelle//rule:go_default_library",
+        "@bazel_gazelle//testtools:go_default_library",
+        "@com_github_emicklei_proto//:proto",
+        "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+    ],
+)
+
+gazelle_binary(
+    name = "gazelle-protoc",
+    # protoc extension is reliant upon the built-in 'proto' language, so test it
+    # in combination with that.
+    languages = [
+        # NOTE: order matters here.  Gazelle will respect the ordering of
+        # languages which will impact the population of 'OtherGen'
+        "@bazel_gazelle//language/proto:go_default_library",
+        "//gazelle/protoc",
+    ],
+    visibility = ["//visibility:public"],
+)
