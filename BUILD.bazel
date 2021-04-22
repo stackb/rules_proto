@@ -16,6 +16,7 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 # gazelle:proto_plugin cc_proto //protoc:cc_proto_plugin
 # gazelle:proto_plugin cc_grpc //cc:grpc_plugin
 # gazelle:proto_plugin py_proto //protoc:py_proto_plugin
+# gazelle:proto_plugin java_proto //protoc:java_proto_plugin
 
 # ----------------------------------------------------
 # Configuration of the 'cc' proto_language
@@ -32,6 +33,13 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 # gazelle:proto_language py load @rules_pything//:deps.bzl
 # gazelle:proto_language py plugin py_proto
 
+# ----------------------------------------------------
+# Configuration of the 'java' proto_language
+# ----------------------------------------------------
+# gazelle:proto_language java kind java_library
+# gazelle:proto_language java load @rules_java//:deps.bzl
+# gazelle:proto_language java plugin java_proto
+
 gazelle_binary(
     name = "gazelle-proto",
     # protoc extension is reliant upon the built-in 'proto' language, so test it
@@ -47,6 +55,10 @@ gazelle_binary(
 
 gazelle(
     name = "gazelle",
+)
+
+gazelle(
+    name = "update_build_files",
     gazelle = ":gazelle-proto",
 )
 

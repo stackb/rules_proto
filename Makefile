@@ -11,6 +11,10 @@ go_deps:
 	bazel run //:update_go_deps
 
 buildfiles:
+	bazel run //:update_build_files
+
+.PHONY: gazelle
+gazelle:
 	bazel run //:gazelle
 
 gazelle_protoc_test:

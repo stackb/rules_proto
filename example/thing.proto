@@ -2,9 +2,18 @@ syntax = "proto3";
 
 package example;
 
+option java_multiple_files = true;
+option java_package = "com.github.stackb.rules_proto.example";
+// option java_package = "example";
+
 import "google/protobuf/timestamp.proto";
 
 message Thing {
     string id = 1;
     google.protobuf.Timestamp created_at = 2;
+}
+
+enum Status {
+    UNKNOWN = 0;
+    OK = 1;
 }

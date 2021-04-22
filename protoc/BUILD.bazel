@@ -28,3 +28,9 @@ proto_plugin(
     protoc_plugin_name = "python",
     visibility = ["//visibility:public"],
 )
+
+proto_plugin(
+    name = "java_proto_plugin",
+    protoc_plugin_name = "java",
+    visibility = ["//visibility:public"],
+)

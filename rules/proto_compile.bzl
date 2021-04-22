@@ -140,6 +140,12 @@ def _proto_compile_impl(ctx):
 
         # mut <string>
         out_arg = ctx.bin_dir.path
+        
+        # special case (java): if the user has requested only a single srcjar,
+        # use that instead.
+        if len(genfiles) == 1 and genfiles[0].short_path.endswith(".srcjar"):
+            out_arg = genfiles[0].path
+        
         if plugin.options:
             # const <string>
             opts_str = ",".join(

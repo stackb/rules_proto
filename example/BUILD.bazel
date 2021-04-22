@@ -1,8 +1,10 @@
+load("@rules_java//java:defs.bzl", "java_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 # gazelle:proto_language cc enable true
 # gazelle:proto_language py enable true
+# gazelle:proto_language java enable true
 
 proto_library(
     name = "example_proto",
@@ -19,7 +21,6 @@ proto_compile(
     ],
     plugins = ["//protoc:cc_proto_plugin"],
     proto = "example_proto",
-    verbose = 3,
 )
 
 proto_compile(
@@ -27,5 +28,18 @@ proto_compile(
     generated_srcs = ["thing_pb2.py"],
     plugins = ["//protoc:py_proto_plugin"],
     proto = "example_proto",
+)
+
+proto_compile(
+    name = "example_java_compile",
+    generated_srcs = ["thing.srcjar"],
+    plugins = ["//protoc:java_proto_plugin"],
+    proto = "example_proto",
     verbose = 3,
+)
+
+java_library(
+    name = "example_java_proto",
+    srcs = [":example_java_compile"],
+    deps = ["@com_google_protobuf//:protobuf_java"],
 )
