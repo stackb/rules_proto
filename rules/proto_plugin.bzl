@@ -8,7 +8,8 @@ ProtoPluginInfo = provider(fields = {
     "name": "The proto plugin name",
     "label": "The proto plugin label",
     "options": "A list of options to pass to the compiler for this plugin",
-    "tool_executable": "The plugin binary executable",
+    "tool": "The plugin binary executable",
+    "tool_target": "The plugin tool target attr",
     "use_built_in_shell_environment": "Whether the tool should use the built in shell environment or not",
     "protoc_plugin_name": "The name used for the plugin binary on the protoc command line. Useful for targeting built-in plugins. Uses plugin name when not set",
     "exclusions": "Exclusion filters to apply when generating outputs with this plugin. Used to prevent generating files that are included in the protobuf library, for example. Can exclude either by proto name prefix or by proto folder prefix",
@@ -19,25 +20,6 @@ ProtoPluginInfo = provider(fields = {
     # "deps": "The list of proto dependencies for this plugin",
 })
 
-def proto_plugin_info_to_struct(info):
-    return struct(
-        name = info.name,
-        label = str(info.label),
-        options = info.options,
-        outputs = info.outputs,
-        out = info.out,
-        output_directory = info.output_directory,
-        # tool = info.tool.short_path if info.tool else "", TODO(pcj): serialize this to document the type.
-        tool_executable = info.tool_executable.short_path if info.tool_executable else "",
-        use_built_in_shell_environment = info.use_built_in_shell_environment,
-        protoc_plugin_name = info.protoc_plugin_name,
-        exclusions = info.exclusions,
-        data = [f.short_path for f in info.data],
-        supplementary_proto_deps = [f.short_path for f in info.supplementary_proto_deps],
-        separate_options_flag = info.separate_options_flag,
-        # deps = info.deps,
-    )
-
 def _proto_plugin_impl(ctx):
     return [
         ProtoPluginInfo(
@@ -45,7 +27,8 @@ def _proto_plugin_impl(ctx):
             label = ctx.label,
             out = ctx.attr.out,
             options = ctx.attr.options,
-            tool_executable = ctx.executable.tool,
+            tool = ctx.executable.tool,
+            tool_target = ctx.attr.tool,
             use_built_in_shell_environment = ctx.attr.use_built_in_shell_environment,
             protoc_plugin_name = ctx.attr.protoc_plugin_name,
             exclusions = ctx.attr.exclusions,

@@ -7,6 +7,7 @@ load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 # gazelle:proto_language java enable true
 # gazelle:proto_language closure_js enable true
 # gazelle:proto_language common_js enable true
+# gazelle:proto_language gogofast enable true
 
 proto_library(
     name = "example_proto",
@@ -57,5 +58,12 @@ proto_compile(
     name = "example_common_js_compile",
     generated_srcs = ["thing_pb.js"],
     plugins = ["//protoc:common_js_proto_plugin"],
+    proto = "example_proto",
+)
+
+proto_compile(
+    name = "example_gogofast_compile",
+    generated_srcs = ["thing.pb.go"],
+    plugins = ["//gogo:gogofast"],
     proto = "example_proto",
 )

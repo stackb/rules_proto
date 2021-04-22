@@ -113,13 +113,13 @@ def _proto_compile_impl(ctx):
         # const <string> The name of the plugin
         plugin_name = plugin.protoc_plugin_name if plugin.protoc_plugin_name else plugin.name
         # const <?File> Add plugin executable if not a built-in plugin
-        plugin_tool = plugin.tool_executable if plugin.tool_executable else None
+        plugin_tool = plugin.tool if plugin.tool else None
 
         # Add plugin runfiles if plugin has a tool
         if plugin_tool:
             tools.append(plugin_tool)
             # const <depset<File>, <list<opaque>>
-            plugin_runfiles, plugin_input_manifests = ctx.resolve_tools(tools = [plugin.tool])
+            plugin_runfiles, plugin_input_manifests = ctx.resolve_tools(tools = [plugin.tool_target])
             if plugin_input_manifests:
                 input_manifests.append(plugin_input_manifests) # TODO: check this
             inputs += plugin_runfiles.to_list()

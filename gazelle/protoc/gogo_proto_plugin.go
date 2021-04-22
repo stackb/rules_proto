@@ -1,14 +1,22 @@
 package protoc
 
 func init() {
-	MustRegisterProtoPlugin("gogo", &GogoProtoPlugin{Name: "gogo"})
-	MustRegisterProtoPlugin("gogofast", &GogoProtoPlugin{Name: "gogofast"})
-	MustRegisterProtoPlugin("gogofaster", &GogoProtoPlugin{Name: "gogofaster"})
+	for _, variant := range []string{
+		"combo",
+		"gogo",
+		"gogofast",
+		"gogofaster",
+		"gogoslick",
+		"gogotypes",
+		"gostring",
+	} {
+		MustRegisterProtoPlugin(variant, &GogoProtoPlugin{Variant: variant})
+	}
 }
 
 // GogoProtoPlugin implements ProtoPlugin for the the gogo_* family of plugins.
 type GogoProtoPlugin struct {
-	Name string
+	Variant string
 }
 
 func (p *GogoProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) bool {
