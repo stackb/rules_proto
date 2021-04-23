@@ -13,7 +13,8 @@ type ProtoPlugin interface {
 	ShouldApply(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) bool
 
 	// GeneratedSrcs inspects the given proto_library and determines what source
-	// files will be generated.
+	// files will be generated.  Each element in the list should be a
+	// fully-qualified path relative to the plugin out.
 	GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string
 }
 

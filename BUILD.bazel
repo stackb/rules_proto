@@ -1,7 +1,7 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 
 # ----------------------------------------------------
-# Base Gazelle Configuation
+# Base Gazelle Configuration
 # ----------------------------------------------------
 # gazelle:prefix github.com/stackb/rules_proto
 
@@ -11,11 +11,12 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 # gazelle:resolve go github.com/bazelbuild/buildtools/build @com_github_bazelbuild_buildtools//build:go_default_library
 
 # ----------------------------------------------------
-# Configuation of the plugins
+# Configuration of the plugins
 # ----------------------------------------------------
 # gazelle:proto_plugin cc_proto //protoc:cc_proto_plugin
 # gazelle:proto_plugin cc_grpc //grpc/grpc:grpc_cpp_plugin
 # gazelle:proto_plugin py_proto //protoc:py_proto_plugin
+# gazelle:proto_plugin py_grpc //protoc:py_proto_plugin
 # gazelle:proto_plugin java_proto //protoc:java_proto_plugin
 # gazelle:proto_plugin java_grpc //grpc/grpc-java:grpc_java_plugin
 # gazelle:proto_plugin closure_js_proto //protoc:closure_js_proto_plugin

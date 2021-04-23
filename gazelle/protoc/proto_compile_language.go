@@ -1,8 +1,6 @@
 package protoc
 
 import (
-	"sort"
-
 	"github.com/bazelbuild/bazel-gazelle/label"
 )
 
@@ -24,43 +22,42 @@ func (s *ProtoCompileLanguage) GenerateRules(
 
 	for _, lib := range libs {
 		labels := make([]label.Label, 0)
-		generatedSrcs := make([]string, 0)
-		generatedOptions := make(map[string][]string)
-		generatedOuts := make(map[string]string)
+		gensrcs := make(map[string][]string)
+		options := make(map[string][]string)
+		outs := make(map[string]string)
 
 		for _, plugin := range p.Plugins {
 			if !plugin.Implementation.ShouldApply(rel, c, lib) {
 				continue
 			}
 			labels = append(labels, plugin.Label)
-			srcs := plugin.Implementation.GeneratedSrcs(rel, c, lib)
-			if len(srcs) > 0 {
-				generatedSrcs = append(generatedSrcs, srcs...)
-			}
+
+			gensrcs[plugin.Label.String()] =
+				plugin.Implementation.GeneratedSrcs(rel, c, lib)
 			if provider, ok := plugin.Implementation.(PluginOptionsProvider); ok {
-				options := provider.GeneratedOptions(rel, c, lib)
+				opts := provider.GeneratedOptions(rel, c, lib)
 				if len(options) > 0 {
-					generatedOptions[plugin.Label.String()] = options
+					options[plugin.Label.String()] = opts
 				}
 			}
 			if provider, ok := plugin.Implementation.(PluginOutProvider); ok {
 				out := provider.GeneratedOut(rel, c, lib)
 				if out != "" {
-					generatedOuts[plugin.Label.String()] = out
+					outs[plugin.Label.String()] = out
 				}
 			}
 			// log.Printf("plugin %s generated_srcs: %v", plugin.Name, srcs)
 		}
 
 		if len(labels) > 0 {
-			sort.Strings(generatedSrcs)
 			rules = append(rules, NewProtoCompileRule(
+				rel,
 				p.Name,
 				lib,
 				labels,
-				generatedSrcs,
-				generatedOptions,
-				generatedOuts,
+				gensrcs,
+				options,
+				outs,
 			))
 		}
 	}

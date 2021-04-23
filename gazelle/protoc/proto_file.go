@@ -150,32 +150,6 @@ func (f *ProtoFile) handleMessage(m *proto.Message) {
 	f.messages = append(f.messages, m)
 }
 
-// getGoPackageOption is a utility function to seek for the go_package option
-// and split it.  If present the return values will be populated with the
-// importpath and alias (e.g. github.com/foo/bar/v1;bar ->
-// "github.com/foo/bar/v1", "bar").  If the option was not found the bool return
-// argument is false.
-func getGoPackageOption(options []*proto.Option) (string, string, bool) {
-	for _, opt := range options {
-		if opt.Name != "go_package" {
-			continue
-		}
-		parts := strings.SplitN(opt.Constant.Source, ";", 2)
-		switch len(parts) {
-		case 0:
-			return "", "", true
-		case 1:
-			return parts[0], "", true
-		case 2:
-			return parts[0], parts[1], true
-		default:
-			return parts[0], strings.Join(parts[1:], ";"), true
-		}
-	}
-
-	return "", "", false
-}
-
 func matchingFiles(files map[string]*ProtoFile, srcs []label.Label) []*ProtoFile {
 	matching := make([]*ProtoFile, 0)
 	for _, src := range srcs {

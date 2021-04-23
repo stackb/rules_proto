@@ -75,7 +75,7 @@ func (s *ProtoRule) Rule() *rule.Rule {
 	// subclass like go_proto_rule that does this.
 	if strings.HasPrefix(s.lang, "go") {
 		for _, file := range s.library.Files() {
-			pkg, _, ok := getGoPackageOption(file.GetOptions())
+			pkg, _, ok := goPackageOption(file.GetOptions())
 			if ok {
 				newRule.SetAttr("go_package", pkg)
 				break

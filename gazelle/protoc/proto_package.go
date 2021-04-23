@@ -42,6 +42,8 @@ func (s *ProtoPackage) generateRules(enabled bool) []RuleProvider {
 		return s.empty
 	}
 
+	// log.Printf("visiting package %s", s.rel)
+
 	prelim := make([]RuleProvider, 0)
 
 	for _, lang := range s.cfg.Languages() {

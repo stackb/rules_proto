@@ -219,11 +219,10 @@ func getExtensionConfig(exts map[string]interface{}) *ProtoPackageConfig {
 func protocKinds() map[string]rule.KindInfo {
 	return map[string]rule.KindInfo{
 		"proto_compile": rule.KindInfo{
-			NonEmptyAttrs: map[string]bool{"generated_srcs": true},
+			NonEmptyAttrs: map[string]bool{"genfiles": true},
 			MergeableAttrs: map[string]bool{
-				"generated_srcs": true,
-				"plugins":        true,
-				// "options":        true,
+				"genfiles": true,
+				"plugins":  true,
 			},
 		},
 	}
