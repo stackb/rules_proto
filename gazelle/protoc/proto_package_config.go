@@ -182,13 +182,13 @@ func (c *ProtoPackageConfig) Clone() *ProtoPackageConfig {
 		clone.ruleProviders[k] = v
 	}
 	for k, v := range c.rules {
-		clone.rules[k] = v
+		clone.rules[k] = v.Clone()
 	}
 	for k, v := range c.languages {
-		clone.languages[k] = v
+		clone.languages[k] = v.Clone()
 	}
 	for k, v := range c.plugins {
-		clone.plugins[k] = v
+		clone.plugins[k] = v.Clone()
 	}
 
 	return clone
@@ -223,6 +223,7 @@ func protocKinds() map[string]rule.KindInfo {
 			MergeableAttrs: map[string]bool{
 				"genfiles": true,
 				"plugins":  true,
+				"rel":      true,
 			},
 		},
 	}

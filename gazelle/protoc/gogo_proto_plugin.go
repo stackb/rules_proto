@@ -27,7 +27,12 @@ type GogoProtoPlugin struct {
 }
 
 func (p *GogoProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) bool {
-	return true
+	for _, f := range lib.Files() {
+		if f.HasMessages() || f.HasEnums() || f.HasServices() {
+			return true
+		}
+	}
+	return false
 }
 
 // GeneratedSrcs implements part of the ProtoPlugin interface

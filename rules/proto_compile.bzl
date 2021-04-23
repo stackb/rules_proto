@@ -228,6 +228,10 @@ def _proto_compile_impl(ctx):
         "mkdir -p " + ctx.label.package,
         protoc.path + " $@",  # $@ is replaced with args list
     ]
+    if verbose > 2:
+        before = ["env", "pwd", "ls -al .", "echo '\n##### SANDBOX BEFORE RUNNING PROTOC'", "find . -type l"]
+        after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find . -type f"]
+        commands = before + commands + after
 
     # if the rule declares any mappings, setup copy file actions for them now
     for basename, intermediate_filename in ctx.attr.mappings.items():
@@ -236,11 +240,6 @@ def _proto_compile_impl(ctx):
         if not genfile:
             fail("the mapped file '%s' was not listed in genfiles" % basename)
         commands.append("cp '{}' '{}'".format(intermediate_filename, genfile.path))
-
-    if verbose > 2:
-        before = ["env", "echo '\n##### SANDBOX BEFORE RUNNING PROTOC'", "find . -type l"]
-        after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find . -type f"]
-        commands = before + commands + after
 
     ctx.actions.run_shell(
         arguments = [final_args],

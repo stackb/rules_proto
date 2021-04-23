@@ -9,6 +9,11 @@ type protoRuleConfig struct {
 	exclude bool
 }
 
+// Clone copies this config to a new one
+func (c *protoRuleConfig) Clone() *protoRuleConfig {
+	return &protoRuleConfig{pattern: c.pattern, exclude: c.exclude}
+}
+
 func (c *protoRuleConfig) IsRuleIncluded(name string) bool {
 	// ignoring error here as we would have already panic'ed if the pattern was bad.
 	match, _ := path.Match(c.pattern, name)
