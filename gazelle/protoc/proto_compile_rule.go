@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"path"
 	"sort"
+	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -36,6 +37,8 @@ type ProtoCompileRule struct {
 	gensrcs map[string][]string
 	// a mapping from plugin name -> list of additional options for the plugin
 	options map[string][]string
+	// a mapping from plugin name -> list of mappings for plugin
+	mappings map[string]map[string]string
 	// a mapping from plugin name -> output location for the plugin invocation
 	outs       map[string]string
 	visibility []string
@@ -51,16 +54,18 @@ func NewProtoCompileRule(
 	plugins []label.Label,
 	gensrcs map[string][]string,
 	options map[string][]string,
+	mappings map[string]map[string]string,
 	outs map[string]string,
 ) *ProtoCompileRule {
 	rule := &ProtoCompileRule{
-		rel:     rel,
-		prefix:  prefix,
-		library: library,
-		plugins: plugins,
-		gensrcs: gensrcs,
-		options: options,
-		outs:    outs,
+		rel:      rel,
+		prefix:   prefix,
+		library:  library,
+		plugins:  plugins,
+		gensrcs:  gensrcs,
+		options:  options,
+		mappings: mappings,
+		outs:     outs,
 	}
 	return rule
 }
@@ -100,16 +105,16 @@ func (s *ProtoCompileRule) Rule() *rule.Rule {
 
 	genfiles, mappings := s.genfiles()
 	newRule.SetAttr("genfiles", genfiles)
+	newRule.SetAttr("plugins", s.pluginLabels())
+	newRule.SetAttr("proto", s.library.Name())
 	if len(mappings) > 0 {
 		newRule.SetAttr("mappings", makeStringDict(mappings))
 	}
-	newRule.SetAttr("proto", s.library.Name())
-	newRule.SetAttr("plugins", s.pluginLabels())
 	if len(s.options) > 0 {
-		newRule.SetAttr("options", s.pluginOpts())
+		newRule.SetAttr("options", makeStringListDict(s.options))
 	}
 	if len(s.outs) > 0 {
-		newRule.SetAttr("outs", s.pluginOuts())
+		newRule.SetAttr("outs", makeStringDict(s.outs))
 	}
 
 	return newRule
@@ -141,13 +146,22 @@ func (s *ProtoCompileRule) pluginLabels() []string {
 func (s *ProtoCompileRule) genfiles() (srcs []string, mappings map[string]string) {
 	mappings = make(map[string]string)
 
-	for _, files := range s.gensrcs {
+	for plugin, files := range s.gensrcs {
+		// if plugin provided mappings for us, use those preferentially
+		pluginMappings := s.mappings[plugin]
+		if len(pluginMappings) > 0 {
+			for k, v := range pluginMappings {
+				mappings[k] = v
+			}
+			continue
+		}
+		// otherwise, fallback to baseline method
 		for _, file := range files {
 			dir := path.Dir(file)
 			base := path.Base(file)
 			if dir == s.rel {
 				// no mapping required, just add to the srcs list
-				srcs = append(srcs, file)
+				srcs = append(srcs, strings.TrimPrefix(file, s.rel+"/"))
 			} else {
 				// add the basename only to the srcs list and add a mapping.
 				srcs = append(srcs, base)
@@ -157,21 +171,6 @@ func (s *ProtoCompileRule) genfiles() (srcs []string, mappings map[string]string
 	}
 
 	return
-}
-
-// pluginOpts computes the options string_list_dict.
-func (s *ProtoCompileRule) pluginOpts() build.Expr {
-	return makeStringListDict(s.options)
-}
-
-// pluginGenfiles computes the plugin_outputs string_list_dict.
-func (s *ProtoCompileRule) pluginGenfiles() build.Expr {
-	return makeStringListDict(s.gensrcs)
-}
-
-// pluginOuts computes the plugin_outdirs string_dict.
-func (s *ProtoCompileRule) pluginOuts() build.Expr {
-	return makeStringDict(s.outs)
 }
 
 // Resolve implements part of the RuleProvider interface.

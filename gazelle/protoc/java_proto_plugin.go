@@ -63,12 +63,16 @@ func (p *JavaProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib
 
 	// 	srcs = append(srcs, genfiles...)
 	// }
-	return []string{lib.BaseName() + ".srcjar"}
+	return []string{srcjarFile(rel, lib.BaseName())}
 }
 
 // GeneratedOut implements part the optional PluginOutProvider interface.
 func (p *JavaProtoPlugin) GeneratedOut(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) string {
-	return path.Join("{BIN_DIR}", "{PACKAGE}", lib.BaseName()+".srcjar")
+	return srcjarFile(rel, lib.BaseName())
+}
+
+func srcjarFile(dir, name string) string {
+	return path.Join(dir, name+".srcjar")
 }
 
 // javaMultipleFiles is a utility function to seek for the java_outer_classname

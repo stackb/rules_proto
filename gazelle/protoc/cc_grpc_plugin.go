@@ -1,5 +1,7 @@
 package protoc
 
+import "path"
+
 func init() {
 	MustRegisterProtoPlugin("cc_grpc", &CcGrpcPlugin{})
 }
@@ -22,6 +24,9 @@ func (p *CcGrpcPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib Pr
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
 		base := f.Name
+		if f.protoPackage.Name != "" {
+			base = path.Join(packagePath(f.protoPackage), base)
+		}
 		if f.HasServices() {
 			srcs = append(srcs, base+".grpc.pb.cc", base+".grpc.pb.h")
 		}

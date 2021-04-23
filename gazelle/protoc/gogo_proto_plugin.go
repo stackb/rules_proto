@@ -38,6 +38,8 @@ func (p *GogoProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib
 		// see https://github.com/gogo/protobuf/blob/master/protoc-gen-gogo/generator/generator.go#L347
 		if goPackage, _, ok := goPackageOption(f.GetOptions()); ok {
 			base = path.Join(goPackage, base)
+		} else if f.protoPackage.Name != "" {
+			base = path.Join(packagePath(f.protoPackage), base)
 		}
 		if f.HasMessages() || f.HasEnums() {
 			srcs = append(srcs, base+".pb.go")

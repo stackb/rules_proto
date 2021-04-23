@@ -16,7 +16,7 @@ proto_library(
 
 proto_compile(
     name = "routeguide_cc_compile",
-    generated_srcs = [
+    genfiles = [
         "routeguide.pb.cc",
         "routeguide.pb.h",
         "routeguide.grpc.pb.cc",
@@ -27,30 +27,29 @@ proto_compile(
         "//grpc/grpc:grpc_cpp_plugin",
     ],
     proto = "routeguide_proto",
-    verbose = 3,
-)
-
-proto_compile(
-    name = "routeguide_java_compile",
-    generated_srcs = [
-        "routeguide.srcjar",
-        "routeguide_grpc.srcjar",
-    ],
-    plugin_out = {
-        "//grpc/grpc-java:grpc_java_plugin": "{BIN_DIR}/{PACKAGE}/routeguide_grpc.srcjar",
-        "//protoc:java_proto_plugin": "{BIN_DIR}/{PACKAGE}/routeguide.srcjar",
-    },
-    plugins = [
-        "//protoc:java_proto_plugin",
-        "//grpc/grpc-java:grpc_java_plugin",
-    ],
-    proto = "routeguide_proto",
 )
 
 proto_compile(
     name = "routeguide_gogofast_compile",
-    generated_srcs = ["routeguide.pb.go"],
-    plugin_options = {"//gogo:gogofast": ["plugins=grpc"]},
+    genfiles = ["routeguide.pb.go"],
+    options = {"//gogo:gogofast": ["plugins=grpc"]},
     plugins = ["//gogo:gogofast"],
+    proto = "routeguide_proto",
+)
+
+proto_compile(
+    name = "routeguide_java_compile",
+    outs = {
+        "//grpc/grpc-java:grpc_java_plugin": "routeguide/routeguide_grpc.srcjar",
+        "//protoc:java_proto_plugin": "routeguide/routeguide.srcjar",
+    },
+    genfiles = [
+        "routeguide.srcjar",
+        "routeguide_grpc.srcjar",
+    ],
+    plugins = [
+        "//protoc:java_proto_plugin",
+        "//grpc/grpc-java:grpc_java_plugin",
+    ],
     proto = "routeguide_proto",
 )

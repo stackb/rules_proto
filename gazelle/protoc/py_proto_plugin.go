@@ -1,5 +1,7 @@
 package protoc
 
+import "path"
+
 func init() {
 	MustRegisterProtoPlugin("py_proto", &PyProtoPlugin{})
 }
@@ -21,8 +23,12 @@ func (p *PyProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib Pro
 func (p *PyProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string {
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
+		base := f.Name
+		if f.protoPackage.Name != "" {
+			base = path.Join(packagePath(f.protoPackage), base)
+		}
 		if f.HasMessages() || f.HasEnums() {
-			srcs = append(srcs, f.Name+"_pb2.py")
+			srcs = append(srcs, base+"_pb2.py")
 		}
 	}
 	return srcs

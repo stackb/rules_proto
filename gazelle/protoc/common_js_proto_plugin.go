@@ -1,5 +1,7 @@
 package protoc
 
+import "path"
+
 func init() {
 	MustRegisterProtoPlugin("common_js_proto", &CommonJsProtoPlugin{})
 }
@@ -22,8 +24,12 @@ func (p *CommonJsProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, l
 func (p *CommonJsProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string {
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
+		base := f.Name
+		if f.protoPackage.Name != "" {
+			base = path.Join(packagePath(f.protoPackage), base)
+		}
 		if f.HasMessages() || f.HasEnums() {
-			srcs = append(srcs, f.Name+"_pb.js")
+			srcs = append(srcs, base+"_pb.js")
 		}
 	}
 	return srcs

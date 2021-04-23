@@ -26,6 +26,14 @@ type PluginOptionsProvider interface {
 	GeneratedOptions(rel string, c *ProtoPackageConfig, lib ProtoLibrary) []string
 }
 
+// PluginMappingsProvider is an optional interface that, if implemented,
+// provides mapping data for the protoc invocation.
+type PluginMappingsProvider interface {
+	// GeneratedOptions inspects the given proto_library and determines what
+	// additional mappings are needed.
+	GeneratedMappings(rel string, c *ProtoPackageConfig, lib ProtoLibrary) map[string]string
+}
+
 // PluginOutProvider is an optional interface that, if implemented, provides the
 // plugin-specific value for the --*_out= arg.
 type PluginOutProvider interface {

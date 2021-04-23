@@ -190,7 +190,10 @@ def _proto_compile_impl(ctx):
                 out = "{}:{}".format(",".join(opts), out)
 
         # override with the out configured on the rule if specified
-        out = outs.get(str(plugin.label), out)
+        plugin_out = outs.get(str(plugin.label), None)
+        if plugin_out:
+            # bin-dir relative is implied for plugin_out overrides
+            out = "/".join([ctx.bin_dir.path, plugin_out])
         args.append("--{}_out={}".format(plugin_name, out))
 
 

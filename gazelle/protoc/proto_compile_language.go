@@ -24,6 +24,7 @@ func (s *ProtoCompileLanguage) GenerateRules(
 		labels := make([]label.Label, 0)
 		gensrcs := make(map[string][]string)
 		options := make(map[string][]string)
+		mappings := make(map[string]map[string]string)
 		outs := make(map[string]string)
 
 		for _, plugin := range p.Plugins {
@@ -34,10 +35,17 @@ func (s *ProtoCompileLanguage) GenerateRules(
 
 			gensrcs[plugin.Label.String()] =
 				plugin.Implementation.GeneratedSrcs(rel, c, lib)
+
 			if provider, ok := plugin.Implementation.(PluginOptionsProvider); ok {
 				opts := provider.GeneratedOptions(rel, c, lib)
-				if len(options) > 0 {
+				if len(opts) > 0 {
 					options[plugin.Label.String()] = opts
+				}
+			}
+			if provider, ok := plugin.Implementation.(PluginMappingsProvider); ok {
+				m := provider.GeneratedMappings(rel, c, lib)
+				if len(m) > 0 {
+					mappings[plugin.Label.String()] = m
 				}
 			}
 			if provider, ok := plugin.Implementation.(PluginOutProvider); ok {
@@ -46,7 +54,6 @@ func (s *ProtoCompileLanguage) GenerateRules(
 					outs[plugin.Label.String()] = out
 				}
 			}
-			// log.Printf("plugin %s generated_srcs: %v", plugin.Name, srcs)
 		}
 
 		if len(labels) > 0 {
@@ -57,6 +64,7 @@ func (s *ProtoCompileLanguage) GenerateRules(
 				labels,
 				gensrcs,
 				options,
+				mappings,
 				outs,
 			))
 		}

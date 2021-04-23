@@ -1,5 +1,12 @@
 package protoc
 
+import (
+	"path"
+	"strings"
+
+	"github.com/emicklei/proto"
+)
+
 func init() {
 	MustRegisterProtoPlugin("cc_proto", &CcProtoPlugin{})
 }
@@ -21,9 +28,17 @@ func (p *CcProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib Pro
 func (p *CcProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string {
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
+		base := f.Name
+		if f.protoPackage.Name != "" {
+			base = path.Join(packagePath(f.protoPackage), base)
+		}
 		if f.HasMessages() || f.HasEnums() {
-			srcs = append(srcs, f.Name+".pb.cc", f.Name+".pb.h")
+			srcs = append(srcs, base+".pb.cc", base+".pb.h")
 		}
 	}
 	return srcs
+}
+
+func packagePath(pkg *proto.Package) string {
+	return strings.ReplaceAll(pkg.Name, ".", "/")
 }
