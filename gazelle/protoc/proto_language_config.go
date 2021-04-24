@@ -45,24 +45,8 @@ func (s *ProtoLanguageConfig) MustParseDirective(cfg *ProtoPackageConfig, d, par
 	}
 }
 
-// Clone validates and clones the config.  An invalid config is fatal.
+// Clone, well... it clones the config.
 func (s *ProtoLanguageConfig) Clone() *ProtoLanguageConfig {
-	if s.Name == "" {
-		log.Fatal("bad proto_language_config: 'name' is not defined")
-	}
-	if s.Load == "" {
-		log.Fatal("bad proto_language_config: 'load' is not defined")
-	}
-	if s.Kind == "" {
-		log.Fatal("bad proto_language_config: 'kind' is not defined")
-	}
-	if s.Pattern == "" {
-		log.Fatal("bad proto_language_config: 'pattern' is not defined")
-	}
-	if len(s.Plugins) == 0 {
-		log.Fatal("bad proto_language_config: 'plugin' list is empty")
-	}
-
 	clone := &ProtoLanguageConfig{
 		Name:           s.Name,
 		Load:           s.Load,
@@ -75,6 +59,5 @@ func (s *ProtoLanguageConfig) Clone() *ProtoLanguageConfig {
 	for i, p := range s.Plugins {
 		clone.Plugins[i] = p.Clone()
 	}
-
 	return clone
 }
