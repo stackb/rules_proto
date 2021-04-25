@@ -10,7 +10,7 @@ import (
 type protoEnumOptionCollector struct {
 	// the collected options after visiting the nodes.  Includes both options on
 	// enums as well as enum field options.
-	options []*proto.Option
+	options []proto.Option
 }
 
 func (c *protoEnumOptionCollector) VisitMessage(m *proto.Message) {}
@@ -18,7 +18,7 @@ func (c *protoEnumOptionCollector) VisitService(v *proto.Service) {}
 func (c *protoEnumOptionCollector) VisitSyntax(s *proto.Syntax)   {}
 func (c *protoEnumOptionCollector) VisitPackage(p *proto.Package) {}
 func (c *protoEnumOptionCollector) VisitOption(o *proto.Option) {
-	c.options = append(c.options, o)
+	c.options = append(c.options, *o)
 }
 func (c *protoEnumOptionCollector) VisitImport(i *proto.Import)           {}
 func (c *protoEnumOptionCollector) VisitNormalField(i *proto.NormalField) {}

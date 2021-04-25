@@ -31,13 +31,13 @@ type ProtoFile struct {
 	Basename string // e.g. "foo.proto"
 	Name     string // e.g. "foo"
 
-	protoPackage *proto.Package
-	imports      []*proto.Import
-	services     []*proto.Service
-	messages     []*proto.Message
-	options      []*proto.Option
-	enums        []*proto.Enum
-	enumOptions  []*proto.Option
+	pkg         proto.Package
+	imports     []proto.Import
+	options     []proto.Option
+	services    []proto.Service
+	messages    []proto.Message
+	enums       []proto.Enum
+	enumOptions []proto.Option
 }
 
 // Relname returns the relative path of the proto file.
@@ -48,9 +48,39 @@ func (f *ProtoFile) Relname() string {
 	return filepath.Join(f.Dir, f.Basename)
 }
 
-// GetOptions returns the list of top-level options defined in the proto file.
-func (f *ProtoFile) GetOptions() []*proto.Option {
+// GetPackage returns the defined package or the empty value.
+func (f *ProtoFile) Package() proto.Package {
+	return f.pkg
+}
+
+// Imports returns the list of Imports defined in the proto file.
+func (f *ProtoFile) Imports() []proto.Import {
+	return f.imports
+}
+
+// Options returns the list of top-level options defined in the proto file.
+func (f *ProtoFile) Options() []proto.Option {
 	return f.options
+}
+
+// Services returns the list of Services defined in the proto file.
+func (f *ProtoFile) Services() []proto.Service {
+	return f.services
+}
+
+// Messages returns the list of Messages defined in the proto file.
+func (f *ProtoFile) Messages() []proto.Message {
+	return f.messages
+}
+
+// Enums returns the list of Enums defined in the proto file.
+func (f *ProtoFile) Enums() []proto.Enum {
+	return f.enums
+}
+
+// EnumOptions returns the list of EnumOptions defined in the proto file.
+func (f *ProtoFile) EnumOptions() []proto.Option {
+	return f.enumOptions
 }
 
 // HasEnums returns true if the proto file has at least one enum.
@@ -119,7 +149,7 @@ func (f *ProtoFile) parseReader(in io.Reader) error {
 	// enum field options we need to do extra work.
 	collector := &protoEnumOptionCollector{}
 	for _, enum := range f.enums {
-		collector.VisitEnum(enum)
+		collector.VisitEnum(&enum)
 	}
 	f.enumOptions = collector.options
 
@@ -127,27 +157,27 @@ func (f *ProtoFile) parseReader(in io.Reader) error {
 }
 
 func (f *ProtoFile) handlePackage(p *proto.Package) {
-	f.protoPackage = p
+	f.pkg = *p
 }
 
 func (f *ProtoFile) handleOption(o *proto.Option) {
-	f.options = append(f.options, o)
+	f.options = append(f.options, *o)
 }
 
 func (f *ProtoFile) handleImport(i *proto.Import) {
-	f.imports = append(f.imports, i)
+	f.imports = append(f.imports, *i)
 }
 
 func (f *ProtoFile) handleEnum(i *proto.Enum) {
-	f.enums = append(f.enums, i)
+	f.enums = append(f.enums, *i)
 }
 
 func (f *ProtoFile) handleService(s *proto.Service) {
-	f.services = append(f.services, s)
+	f.services = append(f.services, *s)
 }
 
 func (f *ProtoFile) handleMessage(m *proto.Message) {
-	f.messages = append(f.messages, m)
+	f.messages = append(f.messages, *m)
 }
 
 func matchingFiles(files map[string]*ProtoFile, srcs []label.Label) []*ProtoFile {

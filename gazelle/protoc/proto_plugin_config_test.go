@@ -50,7 +50,7 @@ func withProtoPlugin(name string, checks ...pluginConfigCheck) packageConfigChec
 
 func withPluginLabelEquals(repo, pkg, name string) pluginConfigCheck {
 	return func(t *testing.T, cfg *ProtoPluginConfig) {
-		want := label.Label{Repo: repo, Pkg: pkg, Name: name}
+		want := label.New(repo, pkg, name)
 		got := cfg.Label
 		if want.String() != got.String() {
 			t.Errorf("plugin label: want %s, got %s", want, got)
@@ -60,7 +60,7 @@ func withPluginLabelEquals(repo, pkg, name string) pluginConfigCheck {
 
 func withPluginToolEquals(repo, pkg, name string) pluginConfigCheck {
 	return func(t *testing.T, cfg *ProtoPluginConfig) {
-		want := label.Label{Repo: repo, Pkg: pkg, Name: name}
+		want := label.New(repo, pkg, name)
 		got := cfg.Tool
 		if want.String() != got.String() {
 			t.Errorf("plugin label: want %s, got %s", want, got)

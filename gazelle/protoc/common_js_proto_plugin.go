@@ -25,8 +25,9 @@ func (p *CommonJsProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig,
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
 		base := f.Name
-		if f.protoPackage.Name != "" {
-			base = path.Join(packagePath(f.protoPackage), base)
+		pkg := f.Package()
+		if pkg.Name != "" {
+			base = path.Join(protoPackagePath(pkg.Name), base)
 		}
 		if f.HasMessages() || f.HasEnums() {
 			srcs = append(srcs, base+"_pb.js")

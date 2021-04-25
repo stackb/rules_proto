@@ -49,7 +49,9 @@ func (lang *protocLanguage) Configure(c *config.Config, rel string, f *rule.File
 	if f == nil {
 		return
 	}
-	getExtensionConfig(c.Exts).parseDirectives(rel, f.Directives)
+	if err := getExtensionConfig(c.Exts).parseDirectives(rel, f.Directives); err != nil {
+		log.Fatalf("error while parsing rule directives in package %q: %v", rel, err)
+	}
 }
 
 // Kinds returns a map of maps rule names (kinds) and information on how to
@@ -173,7 +175,13 @@ func (l *protocLanguage) GenerateRules(args language.GenerateArgs) language.Gene
 		protoLibraries = append(protoLibraries, &OtherProtoLibrary{rule: r, files: files})
 	}
 
-	pkg := newProtoPackage(l, args.File, args.Rel, cfg, protoLibraries)
+	pkg := newProtoPackage(args.Rel, cfg, protoLibraries...)
+
+	for _, provider := range pkg.RuleProviders() {
+		labl := label.New(args.Config.RepoName, args.Rel, provider.Name())
+		l.ruleProviders[labl] = provider
+		// TODO: if needed allow FileVisitor to mutate the rule.File here.
+	}
 
 	return language.GenerateResult{
 		Gen:     pkg.Rules(),

@@ -31,10 +31,3 @@ type RuleProvider interface {
 type FileVisitor interface {
 	VisitFile(*rule.File) *rule.File
 }
-
-// RuleProviderRegistry is an interface that associates a label with the
-// RuleProvider that produced it.
-type RuleProviderRegistry interface {
-	// RegisterRuleProvider adds the given rule provider binding.
-	RegisterRuleProvider(l label.Label, provider RuleProvider)
-}

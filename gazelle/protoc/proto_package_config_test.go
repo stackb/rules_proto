@@ -33,25 +33,26 @@ func TestProtoPackageConfigClone(t *testing.T) {
 			withProtoRuleEnabled(false),
 		),
 		withProtoPlugin("py_proto",
-			withPluginToolEquals("other", "some", "tool"),
+			withPluginToolEquals("repo", "pkg", "name"),
 		),
 	)
 
 	a := newProtoPackageConfig()
-	a.parseDirectives("", withDirectives(
+	if err := a.parseDirectives("", withDirectives(
 		"proto_plugin", "py_proto label @fake//proto/plugin",
 		"proto_rule", "fake_proto_library enabled true",
-		"proto_lang", "py label @py//proto/lang",
 		"proto_lang", "py plugin py_proto",
 		"proto_lang", "py rule fake_proto_library",
-	))
+	)); err != nil {
+		t.Fatal(err)
+	}
 	b := a.Clone()
 
 	initialState(t, a)
 	initialState(t, b)
 
 	b.rules["fake_proto_library"].Enabled = false
-	b.plugins["py_proto"].Tool = label.Label{Repo: "other", Pkg: "some", Name: "tool"}
+	b.plugins["py_proto"].Tool = label.New("repo", "pkg", "name")
 
 	initialState(t, a)
 	finalState(t, b)

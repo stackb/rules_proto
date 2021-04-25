@@ -61,15 +61,15 @@ func (c *ProtoRuleConfig) parseDirective(cfg *ProtoPackageConfig, d, param, valu
 		} else {
 			c.Deps[value] = true
 		}
-		return nil
 	case "enabled":
 		enabled, err := strconv.ParseBool(value)
 		if err != nil {
 			return fmt.Errorf("enabled %s: %w", value, err)
 		}
 		c.Enabled = enabled
-		return nil
 	default:
 		return fmt.Errorf("unknown parameter %q", value)
 	}
+
+	return nil
 }

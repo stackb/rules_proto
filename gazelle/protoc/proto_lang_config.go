@@ -50,13 +50,12 @@ func (c *ProtoLangConfig) Clone() *ProtoLangConfig {
 func (c *ProtoLangConfig) parseDirective(cfg *ProtoPackageConfig, d, param, value string) error {
 	intent := parseIntent(param)
 	switch intent.Value {
-	case "enabled":
+	case "enabled", "enable":
 		enabled, err := strconv.ParseBool(value)
 		if err != nil {
 			return fmt.Errorf("enable %s: %w", value, err)
 		}
 		c.Enabled = enabled
-		return nil
 	case "plugin":
 		plugin, ok := cfg.plugins[value]
 		if intent.Negative {
@@ -69,7 +68,6 @@ func (c *ProtoLangConfig) parseDirective(cfg *ProtoPackageConfig, d, param, valu
 			return fmt.Errorf("unknown plugin: %q", value)
 		}
 		c.Plugins[value] = plugin // TODO: clone here?
-		return nil
 	case "rule":
 		rule, ok := cfg.rules[value]
 		if intent.Negative {
@@ -82,10 +80,11 @@ func (c *ProtoLangConfig) parseDirective(cfg *ProtoPackageConfig, d, param, valu
 			return fmt.Errorf("unknown rule: %q", value)
 		}
 		c.Rules[value] = rule
-		return nil
 	default:
 		return fmt.Errorf("unknown parameter %q", value)
 	}
+
+	return nil
 }
 
 // case "match":

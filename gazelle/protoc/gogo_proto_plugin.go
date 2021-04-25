@@ -40,11 +40,12 @@ func (p *GogoProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
 		base := f.Name
+		pkg := f.Package()
 		// see https://github.com/gogo/protobuf/blob/master/protoc-gen-gogo/generator/generator.go#L347
-		if goPackage, _, ok := goPackageOption(f.GetOptions()); ok {
+		if goPackage, _, ok := goPackageOption(f.Options()); ok {
 			base = path.Join(goPackage, base)
-		} else if f.protoPackage.Name != "" {
-			base = path.Join(packagePath(f.protoPackage), base)
+		} else if pkg.Name != "" {
+			base = path.Join(protoPackagePath(pkg.Name), base)
 		}
 		if f.HasMessages() || f.HasEnums() {
 			srcs = append(srcs, base+".pb.go")
@@ -68,7 +69,7 @@ func (p *GogoProtoPlugin) GeneratedOptions(rel string, c *ProtoPackageConfig, li
 // split it.  If present the return values will be populated with the importpath
 // and alias (e.g. github.com/foo/bar/v1;bar -> "github.com/foo/bar/v1", "bar").
 // If the option was not found the bool return argument is false.
-func goPackageOption(options []*proto.Option) (string, string, bool) {
+func goPackageOption(options []proto.Option) (string, string, bool) {
 	for _, opt := range options {
 		if opt.Name != "go_package" {
 			continue

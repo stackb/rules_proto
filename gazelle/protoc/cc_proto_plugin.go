@@ -3,8 +3,6 @@ package protoc
 import (
 	"path"
 	"strings"
-
-	"github.com/emicklei/proto"
 )
 
 func init() {
@@ -29,8 +27,9 @@ func (p *CcProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib P
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
 		base := f.Name
-		if f.protoPackage.Name != "" {
-			base = path.Join(packagePath(f.protoPackage), base)
+		pkg := f.Package()
+		if pkg.Name != "" {
+			base = path.Join(protoPackagePath(pkg.Name), base)
 		}
 		if f.HasMessages() || f.HasEnums() {
 			srcs = append(srcs, base+".pb.cc", base+".pb.h")
@@ -39,6 +38,6 @@ func (p *CcProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib P
 	return srcs
 }
 
-func packagePath(pkg *proto.Package) string {
-	return strings.ReplaceAll(pkg.Name, ".", "/")
+func protoPackagePath(pkg string) string {
+	return strings.ReplaceAll(pkg, ".", "/")
 }

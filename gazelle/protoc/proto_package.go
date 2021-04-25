@@ -1,128 +1,102 @@
 package protoc
 
 import (
-	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
 // protoPackage provides a set of proto_library derived rules for the package.
 type protoPackage struct {
-	registry RuleProviderRegistry
-	// the build file currently being visited
-	file *rule.File
-	rel  string
-	cfg  *ProtoPackageConfig
+	// relative path of build file
+	rel string
+	// the config for this package
+	cfg *ProtoPackageConfig
+	// list of proto_library targets in the package
 	libs []ProtoLibrary
-
-	// cached/computed providers
+	// computed providers
 	gen, empty []RuleProvider
 }
 
 // newProtoPackage constructs a protoPackage given a list of proto_library rules
 // in the package.
-func newProtoPackage(
-	registry RuleProviderRegistry,
-	file *rule.File,
-	rel string,
-	cfg *ProtoPackageConfig,
-	libs []ProtoLibrary) *protoPackage {
-	return &protoPackage{
-		registry: registry,
-		file:     file,
-		rel:      rel,
-		cfg:      cfg,
-		libs:     libs,
+func newProtoPackage(rel string, cfg *ProtoPackageConfig, libs ...ProtoLibrary) *protoPackage {
+	s := &protoPackage{
+		rel:  rel,
+		cfg:  cfg,
+		libs: libs,
 	}
+	s.gen = s.generateRules(true)
+	s.empty = s.generateRules(false)
+	return s
 }
 
 // generateRules constructs a list of rules based on the configured set of
 // languages.
 func (s *protoPackage) generateRules(enabled bool) []RuleProvider {
-	if enabled && s.gen != nil {
-		return s.gen
-	}
-	if !enabled && s.empty != nil {
-		return s.empty
-	}
 
 	rules := make([]RuleProvider, 0)
+	langs := s.cfg.configuredLangs()
 
-	for _, lang := range s.cfg.configuredLangs() {
+	for _, lang := range langs {
 		if enabled != lang.Enabled {
 			continue
 		}
 		for _, lib := range s.libs {
-			rules := s.libraryRules(s.rel, s.cfg, lang, lib)
-			for _, rule := range rules {
-				s.registry.RegisterRuleProvider(label.Label{
-					Repo: "", // TODO: how to know if we are in an external repo?
-					Pkg:  s.rel,
-					Name: rule.Rule().Name(),
-				}, rule)
-			}
-			rules = append(rules, rules...)
+			rules = append(rules, s.libraryRules(lang, lib)...)
 		}
 	}
-
-	if enabled {
-		s.gen = rules
-	} else {
-		s.empty = rules
-	}
-
 	return rules
 }
 
-func (s *protoPackage) libraryRules(
-	rel string,
-	c *ProtoPackageConfig,
-	p *ProtoLangConfig,
-	lib ProtoLibrary,
-) []RuleProvider {
+func (s *protoPackage) libraryRules(p *ProtoLangConfig, lib ProtoLibrary) []RuleProvider {
 	// list of plugin configurations that apply to this proto_library
 	configs := make([]*PluginConfiguration, 0)
 
 	for _, plugin := range p.Plugins {
-		if !plugin.Implementation.ShouldApply(rel, c, lib) {
+		if !plugin.Implementation.ShouldApply(s.rel, s.cfg, lib) {
 			continue
 		}
 		config := &PluginConfiguration{
 			Label: plugin.Label,
-			Srcs:  plugin.Implementation.GeneratedSrcs(rel, c, lib),
+			Srcs:  plugin.Implementation.GeneratedSrcs(s.rel, s.cfg, lib),
 		}
-		configs = append(configs, config)
-
 		if provider, ok := plugin.Implementation.(PluginOptionsProvider); ok {
-			config.Options = provider.GeneratedOptions(rel, c, lib)
+			config.Options = provider.GeneratedOptions(s.rel, s.cfg, lib)
 		}
 		if provider, ok := plugin.Implementation.(PluginMappingsProvider); ok {
-			config.Mappings = provider.GeneratedMappings(rel, c, lib)
+			config.Mappings = provider.GeneratedMappings(s.rel, s.cfg, lib)
 		}
 		if provider, ok := plugin.Implementation.(PluginOutProvider); ok {
-			config.Out = provider.GeneratedOut(rel, c, lib)
+			config.Out = provider.GeneratedOut(s.rel, s.cfg, lib)
 		}
+		configs = append(configs, config)
 	}
 	if len(configs) == 0 {
 		return nil
 	}
 
-	pc := newProtocConfiguration(rel, p.Name, lib, configs)
-
 	rules := make([]RuleProvider, 0)
+
+	pc := newProtocConfiguration(s.rel, p.Name, lib, configs)
 	for _, cfg := range p.Rules {
 		rules = append(rules, cfg.Implementation.GenerateRule(cfg, pc))
 	}
+
 	return rules
+}
+
+// RuleProviders returns the list of generated rules.
+func (s *protoPackage) RuleProviders() []RuleProvider {
+	return s.gen
 }
 
 // Rules provides the aggregated rule list for the package.
 func (s *protoPackage) Rules() []*rule.Rule {
-	return getProvidedRules(s.generateRules(true))
+	return getProvidedRules(s.gen)
 }
 
 // Empty names the rules that can be deleted.
 func (s *protoPackage) Empty() []*rule.Rule {
-	rules := getProvidedRules(s.generateRules(false))
+	rules := getProvidedRules(s.empty)
 
 	// it's a bit sad that we construct the full rules only for their kind and
 	// name, but that's how it is right now.
@@ -136,7 +110,7 @@ func (s *protoPackage) Empty() []*rule.Rule {
 
 // Imports provides the aggregated list of imports for the package.
 func (s *protoPackage) Imports() []interface{} {
-	return getProvidedImports(s.generateRules(true))
+	return getProvidedImports(s.gen)
 }
 
 func getProvidedRules(providers []RuleProvider) []*rule.Rule {

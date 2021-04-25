@@ -3,6 +3,7 @@ package protoc
 import (
 	"fmt"
 	"sort"
+	"strconv"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
 )
@@ -32,6 +33,9 @@ func newProtoPluginConfig(name string) *ProtoPluginConfig {
 }
 
 func (c *ProtoPluginConfig) Clone() *ProtoPluginConfig {
+	// if c.Label.Name == "" {
+	// 	panic(fmt.Sprintf("proto_plugin label is mandatory, please declare it (e.g. '#gazelle:proto_plugin label @foo//bar'): %+v", c))
+	// }
 	clone := &ProtoPluginConfig{
 		Label:          c.Label,
 		Name:           c.Name,
@@ -62,29 +66,33 @@ func (c *ProtoPluginConfig) GetOptions() []string {
 func (c *ProtoPluginConfig) parseDirective(cfg *ProtoPackageConfig, d, param, value string) error {
 	intent := parseIntent(param)
 	switch intent.Value {
+	case "enabled", "enable":
+		enabled, err := strconv.ParseBool(value)
+		if err != nil {
+			return fmt.Errorf("enabled %s: %w", value, err)
+		}
+		c.Enabled = enabled
 	case "label":
 		l, err := label.Parse(value)
 		if err != nil {
 			return fmt.Errorf("label %q: %w", value, err)
 		}
 		c.Label = l
-		return nil
 	case "tool":
 		l, err := label.Parse(value)
 		if err != nil {
 			return fmt.Errorf("tool %q: %w", value, err)
 		}
 		c.Tool = l
-		return nil
 	case "option":
 		if intent.Negative {
 			delete(c.Options, value)
 		} else {
 			c.Options[value] = true
 		}
-		return nil
 	default:
 		return fmt.Errorf("invalid directive %q: unknown parameter %q", d, value)
 	}
+
 	return nil
 }
