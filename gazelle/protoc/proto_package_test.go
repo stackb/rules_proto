@@ -7,6 +7,9 @@ import (
 	"github.com/emicklei/proto"
 )
 
+type protoPackageTestCase struct {
+}
+
 func exampleProtoLibraryRule() *rule.Rule {
 	rule := rule.NewRule("proto_library", "foo_proto")
 	rule.SetAttr("deps", []string{"//rosetta/rosetta:common_proto"})
@@ -60,7 +63,7 @@ func exampleGrpcLibrary() ProtoLibrary {
 
 func exampleProtoPackageConfig() *ProtoPackageConfig {
 	c := newProtoPackageConfig()
-	c.languages[ProtoDescriptorSetLanguageName] = MustLookupProtoLanguage(ProtoDescriptorSetLanguageName)
+	c.languages[ProtoDescriptorSetLanguageName] = MustLookupProtoLang(ProtoDescriptorSetLanguageName)
 	return c
 }
 
@@ -74,7 +77,7 @@ func exampleProtoPackage() *ProtoPackage {
 
 func exampleRstubsProtoPackageConfig() *ProtoPackageConfig {
 	c := newProtoPackageConfig()
-	c.languages[ProtoDescriptorSetLanguageName] = MustLookupProtoLanguage(ProtoDescriptorSetLanguageName)
+	c.languages[ProtoDescriptorSetLanguageName] = MustLookupProtoLang(ProtoDescriptorSetLanguageName)
 	return c
 }
 

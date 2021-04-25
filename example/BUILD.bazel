@@ -2,12 +2,12 @@ load("@rules_java//java:defs.bzl", "java_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
-# gazelle:proto_language cc enable true
-# gazelle:proto_language py enable true
-# gazelle:proto_language java enable true
-# gazelle:proto_language closure_js enable true
-# gazelle:proto_language common_js enable true
-# gazelle:proto_language gogofast enable true
+# gazelle:proto_lang cc enable true
+# gazelle:proto_lang py enable true
+# gazelle:proto_lang java enable true
+# gazelle:proto_lang closure_js enable true
+# gazelle:proto_lang common_js enable true
+# gazelle:proto_lang gogofast enable true
 
 proto_library(
     name = "example_proto",

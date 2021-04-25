@@ -5,8 +5,9 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-// ProtoPackage provides a set of proto_library derived rules for the package.
-type ProtoPackage struct {
+// protoPackage provides a set of proto_library derived rules for the package.
+type protoPackage struct {
+	registry RuleProviderRegistry
 	// the build file currently being visited
 	file *rule.File
 	rel  string
@@ -17,24 +18,26 @@ type ProtoPackage struct {
 	gen, empty []RuleProvider
 }
 
-// NewProtoPackage constructs a ProtoPackage given a list of proto_library rules
+// newProtoPackage constructs a protoPackage given a list of proto_library rules
 // in the package.
-func NewProtoPackage(
+func newProtoPackage(
+	registry RuleProviderRegistry,
 	file *rule.File,
 	rel string,
 	cfg *ProtoPackageConfig,
-	libs []ProtoLibrary) *ProtoPackage {
-	return &ProtoPackage{
-		file: file,
-		rel:  rel,
-		cfg:  cfg,
-		libs: libs,
+	libs []ProtoLibrary) *protoPackage {
+	return &protoPackage{
+		registry: registry,
+		file:     file,
+		rel:      rel,
+		cfg:      cfg,
+		libs:     libs,
 	}
 }
 
 // generateRules constructs a list of rules based on the configured set of
 // languages.
-func (s *ProtoPackage) generateRules(enabled bool) []RuleProvider {
+func (s *protoPackage) generateRules(enabled bool) []RuleProvider {
 	if enabled && s.gen != nil {
 		return s.gen
 	}
@@ -42,35 +45,23 @@ func (s *ProtoPackage) generateRules(enabled bool) []RuleProvider {
 		return s.empty
 	}
 
-	// log.Printf("visiting package %s", s.rel)
+	rules := make([]RuleProvider, 0)
 
-	prelim := make([]RuleProvider, 0)
-
-	for _, lang := range s.cfg.Languages() {
+	for _, lang := range s.cfg.configuredLangs() {
 		if enabled != lang.Enabled {
 			continue
 		}
-		rules := lang.Implementation.GenerateRules(s.rel, s.cfg, lang, s.libs)
-		for _, rule := range rules {
-			s.cfg.RegisterRuleProvider(label.Label{
-				Repo: "", // TODO: how to know if we are in an external repo?
-				Pkg:  s.rel,
-				Name: rule.Rule().Name(),
-			}, rule)
+		for _, lib := range s.libs {
+			rules := s.libraryRules(s.rel, s.cfg, lang, lib)
+			for _, rule := range rules {
+				s.registry.RegisterRuleProvider(label.Label{
+					Repo: "", // TODO: how to know if we are in an external repo?
+					Pkg:  s.rel,
+					Name: rule.Rule().Name(),
+				}, rule)
+			}
+			rules = append(rules, rules...)
 		}
-		prelim = append(prelim, rules...)
-	}
-
-	rules := make([]RuleProvider, 0)
-	for _, rule := range prelim {
-		// Remove blacklisted rules unless they are specifically whitelisted
-		if s.cfg.IsRuleExcluded(rule.Kind()) {
-			continue
-		}
-		if s.cfg.IsRuleExcluded(rule.Name()) {
-			continue
-		}
-		rules = append(rules, rule)
 	}
 
 	if enabled {
@@ -82,13 +73,55 @@ func (s *ProtoPackage) generateRules(enabled bool) []RuleProvider {
 	return rules
 }
 
+func (s *protoPackage) libraryRules(
+	rel string,
+	c *ProtoPackageConfig,
+	p *ProtoLangConfig,
+	lib ProtoLibrary,
+) []RuleProvider {
+	// list of plugin configurations that apply to this proto_library
+	configs := make([]*PluginConfiguration, 0)
+
+	for _, plugin := range p.Plugins {
+		if !plugin.Implementation.ShouldApply(rel, c, lib) {
+			continue
+		}
+		config := &PluginConfiguration{
+			Label: plugin.Label,
+			Srcs:  plugin.Implementation.GeneratedSrcs(rel, c, lib),
+		}
+		configs = append(configs, config)
+
+		if provider, ok := plugin.Implementation.(PluginOptionsProvider); ok {
+			config.Options = provider.GeneratedOptions(rel, c, lib)
+		}
+		if provider, ok := plugin.Implementation.(PluginMappingsProvider); ok {
+			config.Mappings = provider.GeneratedMappings(rel, c, lib)
+		}
+		if provider, ok := plugin.Implementation.(PluginOutProvider); ok {
+			config.Out = provider.GeneratedOut(rel, c, lib)
+		}
+	}
+	if len(configs) == 0 {
+		return nil
+	}
+
+	pc := newProtocConfiguration(rel, p.Name, lib, configs)
+
+	rules := make([]RuleProvider, 0)
+	for _, cfg := range p.Rules {
+		rules = append(rules, cfg.Implementation.GenerateRule(cfg, pc))
+	}
+	return rules
+}
+
 // Rules provides the aggregated rule list for the package.
-func (s *ProtoPackage) Rules() []*rule.Rule {
+func (s *protoPackage) Rules() []*rule.Rule {
 	return getProvidedRules(s.generateRules(true))
 }
 
 // Empty names the rules that can be deleted.
-func (s *ProtoPackage) Empty() []*rule.Rule {
+func (s *protoPackage) Empty() []*rule.Rule {
 	rules := getProvidedRules(s.generateRules(false))
 
 	// it's a bit sad that we construct the full rules only for their kind and
@@ -102,7 +135,7 @@ func (s *ProtoPackage) Empty() []*rule.Rule {
 }
 
 // Imports provides the aggregated list of imports for the package.
-func (s *ProtoPackage) Imports() []interface{} {
+func (s *protoPackage) Imports() []interface{} {
 	return getProvidedImports(s.generateRules(true))
 }
 

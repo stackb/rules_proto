@@ -3,226 +3,100 @@ package protoc
 import (
 	"testing"
 
+	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-type configCheck func(t *testing.T, cfg *ProtoPackageConfig)
+type packageConfigCheck func(t *testing.T, cfg *ProtoPackageConfig)
 
-func TestClone(t *testing.T) {
-	cfg := newProtoPackageConfig()
-	cfg.rules["foo"] = &protoRuleConfig{"foo", true}
-	cfg.importpathPrefix = "github.com/foo/bar"
-
-	check := all(
-		hasLanguageConfig("py", true),
-		hasRuleExclusion("foo", true),
-		hasImportpathPrefix("github.com/foo/bar"),
-	)
-
-	check(t, cfg)
-	check(t, cfg.Clone())
+type packageConfigTestCase struct {
+	rel        string
+	directives []rule.Directive
+	check      packageConfigCheck
+	err        error
 }
 
-func TestParseDirectives(t *testing.T) {
-	type testCase struct {
-		rel        string
-		directives []rule.Directive
-		check      configCheck
-	}
+func TestProtoPackageConfigClone(t *testing.T) {
+	initialState := allPackageChecks(
+		withProtoLang("py",
+			withProtoLangEnabled(true),
+		),
+		withProtoRule("fake_proto_library",
+			withProtoRuleEnabled(true),
+		),
+	)
+	finalState := allPackageChecks(
+		withProtoLang("py",
+			withProtoLangEnabled(true),
+		),
+		withProtoRule("fake_proto_library",
+			withProtoRuleEnabled(false),
+		),
+		withProtoPlugin("py_proto",
+			withPluginToolEquals("other", "some", "tool"),
+		),
+	)
 
-	for name, tc := range map[string]testCase{
-		"proto_rule not mentioned": {
-			directives: []rule.Directive{},
-			check: all(
-				hasRuleInclusion("foo", false),
-				hasRuleExclusion("foo", false),
-			),
-		},
-		"proto_rule present": {
-			directives: []rule.Directive{
-				{
-					Key:   "proto_rule",
-					Value: "foo",
-				},
-			},
-			check: all(
-				hasRuleInclusion("foo", true),
-				hasRuleExclusion("foo", false),
-			),
-		},
-		"proto_rule positive": {
-			directives: []rule.Directive{
-				{
-					Key:   "proto_rule",
-					Value: "+foo",
-				},
-			},
-			check: all(
-				hasRuleInclusion("foo", true),
-				hasRuleExclusion("foo", false),
-			),
-		},
-		"proto_rule negative": {
-			directives: []rule.Directive{
-				{
-					Key:   "proto_rule",
-					Value: "-foo",
-				},
-			},
-			check: all(
-				hasRuleInclusion("foo", false),
-				hasRuleExclusion("foo", true),
-			),
-		},
-		"proto_rule negative glob": {
-			directives: []rule.Directive{
-				{
-					Key:   "proto_rule",
-					Value: "-f*",
-				},
-			},
-			check: all(
-				hasRuleInclusion("foo", false),
-				hasRuleExclusion("foo", true),
-				hasRuleExclusion("baz", false),
-				hasRuleExclusion("fdr", true),
-			),
-		},
-		"proto_rule negative glob recover (glob before)": {
-			directives: []rule.Directive{
-				{
-					Key:   "proto_rule",
-					Value: "-f*",
-				},
-				{
-					Key:   "proto_rule",
-					Value: "+fdr",
-				},
-			},
-			check: all(
-				hasRuleInclusion("foo", false),
-				hasRuleExclusion("foo", true),
-				hasRuleExclusion("baz", false),
-				hasRuleExclusion("fdr", false),
-				hasRuleInclusion("fdr", true),
-			),
-		},
-		"proto_rule negative glob recover (glob after)": {
-			directives: []rule.Directive{
-				{
-					Key:   "proto_rule",
-					Value: "+fdr",
-				},
-				{
-					Key:   "proto_rule",
-					Value: "-f*",
-				},
-			},
-			check: all(
-				hasRuleInclusion("foo", false),
-				hasRuleExclusion("foo", true),
-				hasRuleExclusion("baz", false),
-				hasRuleExclusion("fdr", false),
-				hasRuleInclusion("fdr", true),
-			),
-		},
-		"proto_language": {
-			directives: []rule.Directive{
-				{
-					Key:   "proto_language",
-					Value: "py",
-				},
-			},
-			check: hasLanguageConfig("py", true),
-		},
-		"+proto_language": {
-			directives: []rule.Directive{
-				{
-					Key:   "proto_language",
-					Value: "+py",
-				},
-			},
-			check: hasLanguageConfig("py", true),
-		},
-		"-proto_language": {
-			directives: []rule.Directive{
-				{
-					Key:   "proto_language",
-					Value: "-py",
-				},
-			},
-			check: hasLanguageConfig("py", false),
-		},
-		"-proto_language recover": {
-			directives: []rule.Directive{
-				{
-					Key:   "proto_language",
-					Value: "-py",
-				},
-				{
-					Key:   "proto_language",
-					Value: "+py",
-				},
-			},
-			check: hasLanguageConfig("py", true),
-		},
-		"prefix": {
-			directives: []rule.Directive{
-				{
-					Key:   "prefix",
-					Value: "github.com/foo/bar",
-				},
-			},
-			check: hasImportpathPrefix("github.com/foo/bar"),
-		},
-	} {
+	a := newProtoPackageConfig()
+	a.parseDirectives("", withDirectives(
+		"proto_plugin", "py_proto label @fake//proto/plugin",
+		"proto_rule", "fake_proto_library enabled true",
+		"proto_lang", "py label @py//proto/lang",
+		"proto_lang", "py plugin py_proto",
+		"proto_lang", "py rule fake_proto_library",
+	))
+	b := a.Clone()
+
+	initialState(t, a)
+	initialState(t, b)
+
+	b.rules["fake_proto_library"].Enabled = false
+	b.plugins["py_proto"].Tool = label.Label{Repo: "other", Pkg: "some", Name: "tool"}
+
+	initialState(t, a)
+	finalState(t, b)
+}
+
+func testDirectives(t *testing.T, cases map[string]packageConfigTestCase) {
+	for name, tc := range cases {
 		t.Run(name, func(t *testing.T) {
 			cfg := newProtoPackageConfig()
-			cfg.parseDirectives(tc.rel, tc.directives)
+			t.Logf("test case: %+v", tc)
+			if err := cfg.parseDirectives(tc.rel, tc.directives); err != nil {
+				if tc.err == nil {
+					t.Fatalf("unexpected error: %v", err)
+				}
+				if tc.err.Error() != err.Error() {
+					t.Fatalf("unexpected error: want %v, got %v", tc.err, err)
+				}
+				return
+			}
 			tc.check(t, cfg)
 		})
 	}
 }
 
-func all(checks ...configCheck) configCheck {
+func allPackageChecks(checks ...packageConfigCheck) packageConfigCheck {
 	return func(t *testing.T, cfg *ProtoPackageConfig) {
-		for _, c := range checks {
-			c(t, cfg)
+		for _, check := range checks {
+			check(t, cfg)
 		}
 	}
 }
-
-func hasRuleExclusion(name string, expected bool) configCheck {
-	return func(t *testing.T, cfg *ProtoPackageConfig) {
-		actual := cfg.IsRuleExcluded(name)
-		if expected != actual {
-			t.Errorf("rule %q exclusion: expected %t", name, expected)
-		}
+func withDirectives(items ...string) (d []rule.Directive) {
+	if len(items)%2 != 0 {
+		panic("directive list must be a sequence of key/value pairs")
 	}
+	if len(items) < 2 {
+		return
+	}
+	for i := 1; i < len(items); i = i + 2 {
+		d = append(d, rule.Directive{Key: items[i-1], Value: items[i]})
+	}
+	return
 }
 
-func hasRuleInclusion(name string, expected bool) configCheck {
-	return func(t *testing.T, cfg *ProtoPackageConfig) {
-		actual := cfg.IsRuleIncluded(name)
-		if expected != actual {
-			t.Errorf("rule %q inclusion: expected %t", name, expected)
-		}
-	}
-}
-
-func hasLanguageConfig(name string, present bool) configCheck {
-	return func(t *testing.T, cfg *ProtoPackageConfig) {
-		_, ok := cfg.languages[name]
-		if ok && !present {
-			t.Errorf("expected language to be excluded %s", name)
-		}
-		if !ok && present {
-			t.Errorf("expected language to be included %s", name)
-		}
-	}
-}
-
-func hasImportpathPrefix(prefix string) configCheck {
+func withImportpathPrefix(prefix string) packageConfigCheck {
 	return func(t *testing.T, cfg *ProtoPackageConfig) {
 		if cfg.importpathPrefix != prefix {
 			t.Errorf("expected importpath prefix %s, got %s", prefix, cfg.importpathPrefix)

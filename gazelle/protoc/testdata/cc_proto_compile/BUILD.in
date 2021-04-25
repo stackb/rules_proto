@@ -5,10 +5,10 @@
 # gazelle:proto_plugin cc_grpc @build_stack_rules_proto//cc:grpc_plugin
 
 # ----------------------------------------------------
-# Configuration of the 'cc' proto_language
+# Configuration of the 'cc' proto_lang
 # ----------------------------------------------------
-# gazelle:proto_language cc kind cc_library
-# gazelle:proto_language cc load @rules_cc//:deps.bzl
-# gazelle:proto_language cc plugin cc_proto
-# gazelle:proto_language cc plugin cc_grpc
-# gazelle:proto_language cc enable true
+# gazelle:proto_lang cc kind cc_library
+# gazelle:proto_lang cc load @rules_cc//:deps.bzl
+# gazelle:proto_lang cc plugin cc_proto
+# gazelle:proto_lang cc plugin cc_grpc
+# gazelle:proto_lang cc enable true
