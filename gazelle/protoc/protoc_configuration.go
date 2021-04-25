@@ -56,7 +56,7 @@ func mergeSources(rel string, plugins []*PluginConfiguration) ([]string, map[str
 		// otherwise, fallback to baseline method
 		for _, filename := range plugin.Srcs {
 			dir := path.Dir(filename)
-			if dir == "." {
+			if dir == "." && rel == "" {
 				dir = rel
 			}
 			base := path.Base(filename)

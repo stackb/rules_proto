@@ -11,6 +11,9 @@ const exampleDir = "proto/test"
 
 func exampleProtoFile() *ProtoFile {
 	file := NewProtoFile(exampleDir, "test.proto")
+	file.pkg = proto.Package{
+		Name: "proto.test",
+	}
 	file.messages = append(file.messages, proto.Message{
 		Name: "Foo",
 	})

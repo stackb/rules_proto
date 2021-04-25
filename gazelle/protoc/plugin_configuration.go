@@ -5,11 +5,11 @@ import "github.com/bazelbuild/bazel-gazelle/label"
 // PluginConfiguration reprensts the configuration of a protoc plugin and the
 // sources & source mappings that are expected to be produced.
 type PluginConfiguration struct {
-	Name     string
 	Label    label.Label
-	Out      string
-	Options  []string
 	Mappings map[string]string
+	Name     string
+	Options  []string
+	Out      string
 	Srcs     []string
 }
 
