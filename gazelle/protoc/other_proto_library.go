@@ -44,5 +44,5 @@ func (s *OtherProtoLibrary) Deps() []string {
 
 // Srcs returns the srcs attribute
 func (s *OtherProtoLibrary) Srcs() []string {
-	return s.rule.AttrStrings("deps")
+	return s.rule.AttrStrings("srcs")
 }

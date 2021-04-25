@@ -56,6 +56,7 @@ go_test(
     srcs = [
         # "gazelle_test.go",
         "intent_test.go",
+        "other_proto_library_test.go",
         "proto_file_test.go",
         "proto_plugin_config_test.go",
         "proto_rule_config_test.go",

@@ -28,11 +28,6 @@ type protocLanguage struct {
 	ruleProviders map[label.Label]RuleProvider
 }
 
-// RegisterRuleProvider implements the RuleProviderRegistry interface.
-func (c *protocLanguage) RegisterRuleProvider(l label.Label, provider RuleProvider) {
-	c.ruleProviders[l] = provider
-}
-
 // mustLookupProtoRule returns the given rule or panics.
 func (p *protocLanguage) mustLookupProtoRule(name string) ProtoRule {
 	rule, ok := p.rules[name]
@@ -42,13 +37,9 @@ func (p *protocLanguage) mustLookupProtoRule(name string) ProtoRule {
 	return rule
 }
 
-// mustLookupProtoPlugin returns the given rule or panics.
-func (p *protocLanguage) mustLookupProtoPlugin(name string) ProtoPlugin {
-	plugin, ok := p.plugins[name]
-	if !ok {
-		panic("unknown plugin: " + name)
-	}
-	return plugin
+// RegisterRuleProvider implements the RuleProviderRegistry interface.
+func (c *protocLanguage) RegisterRuleProvider(l label.Label, provider RuleProvider) {
+	c.ruleProviders[l] = provider
 }
 
 // RuleNames implements part of the ProtoRuleRegistry interface.
