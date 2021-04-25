@@ -1,3 +1,5 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 load("@rules_java//java:defs.bzl", "java_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
@@ -61,4 +63,18 @@ proto_compile(
     genfiles = ["example.srcjar"],
     plugins = ["//protoc:java_proto_plugin"],
     proto = "example_proto",
+)
+
+go_proto_library(
+    name = "example_go_proto",
+    importpath = "github.com/stackb/rules_proto/example",
+    proto = ":example_proto",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "example",
+    embed = [":example_go_proto"],
+    importpath = "github.com/stackb/rules_proto/example",
+    visibility = ["//visibility:public"],
 )

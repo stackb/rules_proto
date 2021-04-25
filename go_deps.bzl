@@ -141,13 +141,6 @@ def go_deps():
         sum = "h1:L8R9j+yAqZuZjsqh/z+F1NCffTKKLShY6zXTItVIZ8M=",
         version = "v0.5.4",
     )
-    go_repository(
-        name = "com_github_iancoleman_strcase",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/iancoleman/strcase",
-        sum = "h1:dJBk1m2/qjL1twPLf68JND55vvivMupZ4wIzE8CTdBw=",
-        version = "v0.1.3",
-    )
 
     go_repository(
         name = "com_github_kr_pretty",

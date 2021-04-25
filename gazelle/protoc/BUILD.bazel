@@ -47,7 +47,6 @@ go_library(
         "@bazel_gazelle//rule:go_default_library",
         "@com_github_bazelbuild_buildtools//build:go_default_library",
         "@com_github_emicklei_proto//:proto",
-        "@com_github_iancoleman_strcase//:strcase",
     ],
 )
 
@@ -58,16 +57,17 @@ go_test(
         "intent_test.go",
         "other_proto_library_test.go",
         "proto_file_test.go",
-        "proto_plugin_config_test.go",
-        "proto_rule_config_test.go",
         "proto_lang_config_test.go",
         "proto_package_config_test.go",
-        "protoc_configuration_test.go",
         "proto_package_test.go",
+        "proto_plugin_config_test.go",
+        "proto_rule_config_test.go",
+        "protoc_configuration_test.go",
     ],
     data = [":gazelle-protoc"] + glob(["testdata/**"]),
     embed = [":protoc"],
     deps = [
+        "@bazel_gazelle//label:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
         "@bazel_gazelle//testtools:go_default_library",
         "@com_github_emicklei_proto//:proto",
