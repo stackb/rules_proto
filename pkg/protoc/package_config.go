@@ -101,7 +101,10 @@ func (c *PackageConfig) parsePluginDirective(d rule.Directive) error {
 		plugin = newLanguagePluginConfig(name)
 		impl, err := globalRegistry.LookupPlugin(name)
 		if err == ErrUnknownPlugin {
-			return fmt.Errorf("invalid proto_plugin directive: plugin not registered: %s", name)
+			return fmt.Errorf(
+				"invalid proto_plugin directive: plugin not registered: %s (available: %v)",
+				name,
+				globalRegistry.PluginNames())
 		}
 		plugin.Implementation = impl
 		c.plugins[name] = plugin

@@ -7,5 +7,5 @@ import (
 )
 
 func TestProtoc(t *testing.T) {
-	golden.NewTestDataDir("gazelle/protoc").Run(t, "protoc")
+	golden.NewTestDataDir("gazelle/protoc").Run(t, "gazelle-protoc")
 }

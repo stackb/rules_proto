@@ -1,6 +1,7 @@
 package protoc
 
 import (
+	"log"
 	"sort"
 )
 
@@ -43,6 +44,7 @@ func (p *registry) MustRegisterRule(name string, rule LanguageRule) RuleRegistry
 		panic("duplicate proto_rule registration: " + name)
 	}
 	p.rules[name] = rule
+	log.Println("Registered rule:", name)
 	return p
 }
 
@@ -72,6 +74,7 @@ func (p *registry) MustRegisterPlugin(name string, plugin Plugin) PluginRegistry
 		panic("duplicate proto_plugin registration: " + name)
 	}
 	p.plugins[name] = plugin
+	log.Println("Registered plugin:", name)
 	return p
 }
 
