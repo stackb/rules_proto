@@ -9,7 +9,7 @@ go_library(
     importpath = "github.com/stackb/rules_proto/pkg/java",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/gazelle/protoclang:protoc",
+        "//pkg/protoc",
         "@com_github_emicklei_proto//:proto",
     ],
 )

@@ -1,2 +1,2 @@
 # gazelle:proto_plugin java_proto //java:java_proto
-# gazelle:proto_lang java plugin java_proto
+# gazelle:proto_language java plugin java_proto

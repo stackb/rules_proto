@@ -1,14 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_test")
 load("@bazel_gazelle//:def.bzl", "gazelle_binary")
 
 gazelle_binary(
-    name = "gazelle",
+    name = "protoc",
     # protoc extension is reliant upon the built-in 'proto' language, so test it
     # in combination with that.
     languages = [
         # NOTE: order matters here.  Gazelle will respect the ordering of
         # languages which will impact the population of 'OtherGen'
-        "@bazel_gazelle//language/proto:go_default_library",
-        ":protoc",
+        "@bazel_gazelle//language/proto",
+        "//pkg/gazelle/protoc",       
     ],
     visibility = ["//visibility:public"],
+)
+
+# gazelle:exclude testdata
+go_test(
+    name = "protoc_test",
+    srcs = ["protoc_test.go"],
+    data = [":protoc"] + glob(["testdata/**"]),
+    deps = ["//pkg/golden"],
 )

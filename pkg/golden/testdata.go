@@ -28,21 +28,26 @@ import (
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 
-type TestHarness struct {
+// TestDataDir is a helper for running glob(["testdata/**"]) style test setups.
+type TestDataDir struct {
 	extensionDir string
 	testDataPath string
-	gazellePath  string
 }
 
-func NewTestHarness(extensionDir, gazelleBinaryName string) *TestHarness {
-	return &TestHarness{
+// NewTestDataDir returns a test helper.
+func NewTestDataDir(extensionDir string) *TestDataDir {
+	return &TestDataDir{
 		extensionDir: extensionDir,
 		testDataPath: path.Join(extensionDir, "testdata") + "/",
-		gazellePath:  mustFindGazelle("cmd/protoc", gazelleBinaryName),
 	}
 }
 
-func (g *TestHarness) Run(t *testing.T) {
+func (g *TestDataDir) Run(t *testing.T, gazelleName string) {
+	gazellePath, ok := bazel.FindBinary(g.extensionDir, gazelleName)
+	if !ok {
+		t.Fatalf("could not find gazelle: %q", gazelleName)
+	}
+
 	tests := map[string][]bazel.RunfileEntry{}
 
 	files, err := bazel.ListRunfiles()
@@ -69,11 +74,11 @@ func (g *TestHarness) Run(t *testing.T) {
 	}
 
 	for testName, files := range tests {
-		g.testPath(t, testName, files)
+		g.testPath(t, gazellePath, testName, files)
 	}
 }
 
-func (g *TestHarness) testPath(t *testing.T, name string, files []bazel.RunfileEntry) {
+func (g *TestDataDir) testPath(t *testing.T, gazellePath, name string, files []bazel.RunfileEntry) {
 	t.Run(name, func(t *testing.T) {
 		var inputs []testtools.FileSpec
 		var goldens []testtools.FileSpec
@@ -126,7 +131,7 @@ func (g *TestHarness) testPath(t *testing.T, name string, files []bazel.RunfileE
 		// }
 
 		t.Log("running test dir:", dir)
-		cmd := exec.Command(g.gazellePath, "-build_file_name=BUILD")
+		cmd := exec.Command(gazellePath, "-build_file_name=BUILD")
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		cmd.Dir = dir
@@ -145,12 +150,4 @@ func (g *TestHarness) testPath(t *testing.T, name string, files []bazel.RunfileE
 			})
 		}
 	})
-}
-
-func mustFindGazelle(extensionDir, gazelleBinaryName string) string {
-	gazellePath, ok := bazel.FindBinary(extensionDir, gazelleBinaryName)
-	if !ok {
-		panic("could not find gazelle binary")
-	}
-	return gazellePath
 }

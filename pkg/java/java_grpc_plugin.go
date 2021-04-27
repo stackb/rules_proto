@@ -1,11 +1,11 @@
 package java
 
-import "github.com/stackb/rules_proto/cmd/protoc"
+import "github.com/stackb/rules_proto/pkg/protoc"
 
 const JavaGrpcName = "java_grpc"
 
 func init() {
-	protoc.MustRegisterPlugin(JavaGrpcName, &JavaGrpcPlugin{})
+	protoc.Plugins().MustRegisterPlugin(JavaGrpcName, &JavaGrpcPlugin{})
 }
 
 // JavaGrpcPlugin implements Plugin for the built-in protoc java plugin.

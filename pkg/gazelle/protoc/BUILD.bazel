@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "protoc",
+    srcs = ["protoc.go"],
+    importpath = "github.com/stackb/rules_proto/pkg/gazelle/protoc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "//pkg/java",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//language:go_default_library",
+        "@bazel_gazelle//repo:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)

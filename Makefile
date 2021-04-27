@@ -17,5 +17,5 @@ buildfiles:
 gazelle:
 	bazel run //:gazelle
 
-gazelle_protoc_test:
-	bazel test //cmd/protoc:protoc_test
+protoclang_test:
+	bazel test //pkg/protoclang:protoclang_test

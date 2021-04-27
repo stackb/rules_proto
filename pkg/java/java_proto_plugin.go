@@ -6,13 +6,13 @@ import (
 	"strconv"
 
 	"github.com/emicklei/proto"
-	"github.com/stackb/rules_proto/cmd/protoc"
+	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
 const JavaProtoName = "java_proto"
 
 func init() {
-	protoc.MustRegisterPlugin(JavaProtoName, &JavaPlugin{})
+	protoc.Plugins().MustRegisterPlugin(JavaProtoName, &JavaPlugin{})
 }
 
 // JavaPlugin implements Plugin for the built-in protoc java plugin.
