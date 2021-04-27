@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+exports_files(["gencopy.bash.in"])
+
+go_library(
+    name = "gencopy_lib",
+    srcs = ["gencopy.go"],
+    importpath = "github.com/stackb/rules_proto/cmd/gencopy",
+    visibility = ["//visibility:private"],
+    deps = ["@com_github_google_go_cmp//cmp"],
+)
+
+go_binary(
+    name = "gencopy",
+    embed = [":gencopy_lib"],
+    visibility = ["//visibility:public"],
+)

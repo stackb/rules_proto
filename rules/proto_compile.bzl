@@ -1,5 +1,6 @@
-load("@build_stack_rules_proto//rules:proto_plugin.bzl", "ProtoPluginInfo")
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
+load(":providers.bzl", "ProtoCompileInfo", "ProtoPluginInfo")
+
 
 def _uniq(iterable):
     """Returns a list of unique elements in `iterable`.
@@ -279,7 +280,10 @@ def _proto_compile_impl(ctx):
         for c in commands:
             print("COMMAND:", c)
 
-    return [DefaultInfo(files = depset(outputs))]
+    return [
+        ProtoCompileInfo(label = ctx.label, outputs = outputs),
+        DefaultInfo(files = depset(outputs)),
+    ]
 
 proto_compile = rule(
     implementation = _proto_compile_impl,

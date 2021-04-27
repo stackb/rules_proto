@@ -23,8 +23,8 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/gazelle/protoc",
-        "//pkg/java",
         "//pkg/gogo",
+        "//pkg/java",
         "@bazel_gazelle//language:go_default_library",
     ],
 )

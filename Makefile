@@ -16,6 +16,3 @@ buildfiles:
 .PHONY: gazelle
 gazelle:
 	bazel run //:gazelle
-
-protoclang_test:
-	bazel test //pkg/protoclang:protoclang_test
