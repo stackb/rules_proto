@@ -1,0 +1,58 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "protoc",
+    srcs = [
+        "file.go",
+        "intent.go",
+        "language_config.go",
+        "language_plugin_config.go",
+        "language_rule.go",
+        "language_rule_config.go",
+        "other_proto_library.go",
+        "package.go",
+        "package_config.go",
+        "plugin.go",
+        "plugin_configuration.go",
+        "plugin_registry.go",
+        "proto_compile.go",
+        "proto_enum_option_collector.go",
+        "proto_library.go",
+        "protoc_configuration.go",
+        "registry.go",
+        "rule_provider.go",
+        "rule_registry.go",
+        "syntaxutil.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/protoc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+        "@com_github_bazelbuild_buildtools//build:go_default_library",
+        "@com_github_emicklei_proto//:proto",
+    ],
+)
+
+go_test(
+    name = "protoc_test",
+    srcs = [
+        "fake_proto_library_test.go",
+        "file_test.go",
+        "intent_test.go",
+        "language_config_test.go",
+        "language_rule_config_test.go",
+        "other_proto_library_test.go",
+        "package_config_test.go",
+        "package_test.go",
+        "proto_plugin_config_test.go",
+        "protoc_configuration_test.go",
+    ],
+    embed = [":protoc"],
+    deps = [
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+        "@com_github_emicklei_proto//:proto",
+    ],
+)

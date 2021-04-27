@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "java",
+    srcs = [
+        "java_grpc_plugin.go",
+        "java_proto_plugin.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/java",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/gazelle/protoclang:protoc",
+        "@com_github_emicklei_proto//:proto",
+    ],
+)
+
+go_test(
+    name = "java_test",
+    srcs = ["java_test.go"],
+    embed = [":java"],
+)

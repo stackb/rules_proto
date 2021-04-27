@@ -1,0 +1,46 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@bazel_gazelle//:def.bzl", "gazelle_binary")
+
+go_library(
+    name = "protoc",
+    srcs = ["gazelle.go"],
+    importpath = "github.com/stackb/rules_proto/cmd/protoc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//language:go_default_library",
+        "@bazel_gazelle//repo:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)
+
+gazelle_binary(
+    name = "gazelle",
+    # protoc extension is reliant upon the built-in 'proto' language, so test it
+    # in combination with that.
+    languages = [
+        # NOTE: order matters here.  Gazelle will respect the ordering of
+        # languages which will impact the population of 'OtherGen'
+        "@bazel_gazelle//language/proto:go_default_library",
+        ":protoc",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "protoclang",
+    srcs = ["protoclang.go"],
+    importpath = "github.com/stackb/rules_proto/pkg/gazelle/protoclang",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//language:go_default_library",
+        "@bazel_gazelle//repo:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)

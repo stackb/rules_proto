@@ -58,15 +58,6 @@ load("//:go_deps.bzl", "go_deps")
 # gazelle:repository_macro go_deps.bzl%go_deps
 go_deps()
 
-# ==================================================
-# Internal Tools
-# ==================================================
-
-load("//gazelle/protoc:deps.bzl", "gazelle_protoc_deps")
-
-# gazelle:repository_macro gazelle/protoc/deps.bzl%laze_deps
-gazelle_protoc_deps()
-
 # # ==================================================
 # # Protobuf Core
 # # ==================================================

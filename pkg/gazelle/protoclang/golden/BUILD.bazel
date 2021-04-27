@@ -6,7 +6,7 @@ go_library(
     name = "golden",
     testonly = True,
     srcs = ["test_harness.go"],
-    importpath = "github.com/stackb/rules_proto/gazelle/protoc/golden",
+    importpath = "github.com/stackb/rules_proto/pkg/gazelle/protoclang/golden",
     visibility = ["//visibility:public"],
     deps = [
         "@bazel_gazelle//testtools:go_default_library",

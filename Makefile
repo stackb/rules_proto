@@ -18,4 +18,4 @@ gazelle:
 	bazel run //:gazelle
 
 gazelle_protoc_test:
-	bazel test //gazelle/protoc:protoc_test
+	bazel test //cmd/protoc:protoc_test
