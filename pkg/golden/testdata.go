@@ -43,10 +43,13 @@ func NewTestDataDir(extensionDir string) *TestDataDir {
 }
 
 func (g *TestDataDir) Run(t *testing.T, gazelleName string) {
+	t.Log("Run", g.extensionDir)
+
 	gazellePath, ok := bazel.FindBinary(g.extensionDir, gazelleName)
 	if !ok {
 		t.Fatalf("could not find gazelle: %q", gazelleName)
 	}
+	t.Log("Found gazelle binary:", gazellePath)
 
 	tests := map[string][]bazel.RunfileEntry{}
 
@@ -56,7 +59,7 @@ func (g *TestDataDir) Run(t *testing.T, gazelleName string) {
 	}
 
 	for _, f := range files {
-		// t.Log("runfile short path:", f.ShortPath)
+		t.Log("runfile short path:", f.ShortPath)
 		if strings.HasPrefix(f.ShortPath, g.testDataPath) {
 			relativePath := strings.TrimPrefix(f.ShortPath, g.testDataPath)
 			parts := strings.SplitN(relativePath, "/", 2)
@@ -136,8 +139,10 @@ func (g *TestDataDir) testPath(t *testing.T, gazellePath, name string, files []b
 		cmd.Stderr = os.Stderr
 		cmd.Dir = dir
 		if err := cmd.Run(); err != nil {
-			t.Fatal(err)
+			t.Fatal("gazelle command failed!", err)
 		}
+
+		t.Log("checking files:", dir)
 
 		testtools.CheckFiles(t, dir, goldens)
 
@@ -146,6 +151,7 @@ func (g *TestDataDir) testPath(t *testing.T, gazellePath, name string, files []b
 				if err != nil {
 					return err
 				}
+				t.Log("failed file list>", path)
 				return nil
 			})
 		}

@@ -15,18 +15,12 @@ import (
 	pc "github.com/stackb/rules_proto/pkg/protoc"
 )
 
-// NewLanguage is called by Gazelle to install this language extension in a
-// binary.
-func NewLanguage() language.Language {
-	return NewProtoc("protoc")
-}
-
 // NewProtoc create a new Protoc Gazelle extension implementation.
 func NewProtoc(name string) *Protoc {
 	return &Protoc{
-		name:          name,
-		rules:         pc.Rules(),
-		ruleProviders: make(map[label.Label]pc.RuleProvider),
+		name:      name,
+		rules:     pc.Rules(),
+		providers: make(map[label.Label]pc.RuleProvider),
 	}
 }
 
@@ -34,10 +28,10 @@ func NewProtoc(name string) *Protoc {
 type Protoc struct {
 	name  string
 	rules pc.RuleRegistry
-	// ruleProviders is a mapping from label -> the provider that produced the
+	// providers is a mapping from label -> the provider that produced the
 	// rule. we save this in the config such that we can retrieve the
 	// association later in the resolve step.
-	ruleProviders map[label.Label]pc.RuleProvider
+	providers map[label.Label]pc.RuleProvider
 }
 
 // Name returns the name of the language. This should be a prefix of the kinds
@@ -156,7 +150,7 @@ func (pl *Protoc) Resolve(
 	importsRaw interface{},
 	from label.Label,
 ) {
-	if provider, ok := pl.ruleProviders[from]; ok {
+	if provider, ok := pl.providers[from]; ok {
 		provider.Resolve(c, r, importsRaw, from)
 	}
 }
@@ -210,7 +204,7 @@ func (pl *Protoc) GenerateRules(args language.GenerateArgs) language.GenerateRes
 
 	for _, provider := range pkg.RuleProviders() {
 		labl := label.New(args.Config.RepoName, args.Rel, provider.Name())
-		pl.ruleProviders[labl] = provider
+		pl.providers[labl] = provider
 		// TODO: if needed allow FileVisitor to mutate the rule.File here.
 	}
 

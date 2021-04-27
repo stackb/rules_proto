@@ -11,7 +11,7 @@ gazelle_binary(
         # NOTE: order matters here.  Gazelle will respect the ordering of
         # languages which will impact the population of 'OtherGen'
         "@bazel_gazelle//language/proto",
-        "//pkg/gazelle/protoc",
+        ":protoc",
     ],
     visibility = ["//visibility:public"],
 )

@@ -1,2 +1,2 @@
-# gazelle:proto_plugin java_proto label //java:java_proto
+# gazelle:proto_plugin java_proto label @build_stack_rules_proto//java:java_proto
 # gazelle:proto_language java plugin java_proto
