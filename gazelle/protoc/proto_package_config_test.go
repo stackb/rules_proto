@@ -37,8 +37,8 @@ func TestProtoPackageConfigClone(t *testing.T) {
 		),
 	)
 
-	a := newProtoPackageConfig()
-	if err := a.parseDirectives("", withDirectives(
+	a := NewProtoPackageConfig()
+	if err := a.ParseDirectives("", withDirectives(
 		"proto_plugin", "py_proto label @fake//proto/plugin",
 		"proto_rule", "fake_proto_library enabled true",
 		"proto_lang", "py plugin py_proto",
@@ -61,9 +61,9 @@ func TestProtoPackageConfigClone(t *testing.T) {
 func testDirectives(t *testing.T, cases map[string]packageConfigTestCase) {
 	for name, tc := range cases {
 		t.Run(name, func(t *testing.T) {
-			cfg := newProtoPackageConfig()
+			cfg := NewProtoPackageConfig()
 			t.Logf("test case: %+v", tc)
-			if err := cfg.parseDirectives(tc.rel, tc.directives); err != nil {
+			if err := cfg.ParseDirectives(tc.rel, tc.directives); err != nil {
 				if tc.err == nil {
 					t.Fatalf("unexpected error: %v", err)
 				}
@@ -84,6 +84,7 @@ func allPackageChecks(checks ...packageConfigCheck) packageConfigCheck {
 		}
 	}
 }
+
 func withDirectives(items ...string) (d []rule.Directive) {
 	if len(items)%2 != 0 {
 		panic("directive list must be a sequence of key/value pairs")

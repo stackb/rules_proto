@@ -1,4 +1,4 @@
-package protoc
+package golden
 
 /* Copyright 2020 The Bazel Authors. All rights reserved.
 
@@ -19,6 +19,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -27,27 +28,32 @@ import (
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 
-var gazellePath = mustFindGazelle()
+type TestHarness struct {
+	extensionDir string
+	testDataPath string
+	gazellePath  string
+}
 
-const (
-	extensionDir      = "gazelle/protoc/"
-	testDataPath      = extensionDir + "testdata/"
-	gazelleBinaryName = "gazelle-protoc"
-)
+func NewTestHarness(extensionDir, gazelleBinaryName string) *TestHarness {
+	return &TestHarness{
+		extensionDir: extensionDir,
+		testDataPath: path.Join(extensionDir, "testdata") + "/",
+		gazellePath:  mustFindGazelle("gazelle/protoc", gazelleBinaryName),
+	}
+}
 
-// TestGazelleBinary runs a gazelle binary with starlib installed on each
-// directory in `testdata/*`. Please see `testdata/README.md` for more
-// information on each test.
-func TestGazelleBinary(t *testing.T) {
+func (g *TestHarness) Run(t *testing.T) {
 	tests := map[string][]bazel.RunfileEntry{}
 
 	files, err := bazel.ListRunfiles()
 	if err != nil {
 		t.Fatalf("bazel.ListRunfiles() error: %v", err)
 	}
+
 	for _, f := range files {
-		if strings.HasPrefix(f.ShortPath, testDataPath) {
-			relativePath := strings.TrimPrefix(f.ShortPath, testDataPath)
+		// t.Log("runfile short path:", f.ShortPath)
+		if strings.HasPrefix(f.ShortPath, g.testDataPath) {
+			relativePath := strings.TrimPrefix(f.ShortPath, g.testDataPath)
 			parts := strings.SplitN(relativePath, "/", 2)
 			if len(parts) < 2 {
 				// This file is not a part of a testcase since it must be in a dir that
@@ -63,18 +69,18 @@ func TestGazelleBinary(t *testing.T) {
 	}
 
 	for testName, files := range tests {
-		testPath(t, testName, files)
+		g.testPath(t, testName, files)
 	}
 }
 
-func testPath(t *testing.T, name string, files []bazel.RunfileEntry) {
+func (g *TestHarness) testPath(t *testing.T, name string, files []bazel.RunfileEntry) {
 	t.Run(name, func(t *testing.T) {
 		var inputs []testtools.FileSpec
 		var goldens []testtools.FileSpec
 
 		for _, f := range files {
 			path := f.Path
-			trim := testDataPath + name + "/"
+			trim := g.testDataPath + name + "/"
 			shortPath := strings.TrimPrefix(f.ShortPath, trim)
 			info, err := os.Stat(path)
 			if err != nil {
@@ -85,8 +91,6 @@ func testPath(t *testing.T, name string, files []bazel.RunfileEntry) {
 			if info.IsDir() {
 				continue
 			}
-
-			t.Logf("test path: %s", path)
 
 			content, err := ioutil.ReadFile(path)
 			if err != nil {
@@ -117,9 +121,12 @@ func testPath(t *testing.T, name string, files []bazel.RunfileEntry) {
 		}
 
 		dir, cleanup := testtools.CreateFiles(t, inputs)
+		// if false {
 		defer cleanup()
+		// }
 
-		cmd := exec.Command(gazellePath, "-build_file_name=BUILD")
+		t.Log("running test dir:", dir)
+		cmd := exec.Command(g.gazellePath, "-build_file_name=BUILD")
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		cmd.Dir = dir
@@ -134,14 +141,13 @@ func testPath(t *testing.T, name string, files []bazel.RunfileEntry) {
 				if err != nil {
 					return err
 				}
-				t.Logf("%q exists", path)
 				return nil
 			})
 		}
 	})
 }
 
-func mustFindGazelle() string {
+func mustFindGazelle(extensionDir, gazelleBinaryName string) string {
 	gazellePath, ok := bazel.FindBinary(extensionDir, gazelleBinaryName)
 	if !ok {
 		panic("could not find gazelle binary")

@@ -1,4 +1,4 @@
-package protoc
+package java
 
 import (
 	"log"
@@ -6,17 +6,20 @@ import (
 	"strconv"
 
 	"github.com/emicklei/proto"
+	"github.com/stackb/rules_proto/gazelle/protoc"
 )
 
+const JavaProtoName = "java_proto"
+
 func init() {
-	MustRegisterProtoPlugin("java_proto", &JavaProtoPlugin{})
+	protoc.MustRegisterProtoPlugin(JavaProtoName, &JavaProtoPlugin{})
 }
 
 // JavaProtoPlugin implements ProtoPlugin for the built-in protoc java plugin.
 type JavaProtoPlugin struct{}
 
 // ShouldApply implements part of the ProtoPlugin interface.
-func (p *JavaProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) bool {
+func (p *JavaProtoPlugin) ShouldApply(rel string, cfg protoc.ProtoPackageConfig, lib protoc.ProtoLibrary) bool {
 	for _, f := range lib.Files() {
 		if f.HasMessages() || f.HasEnums() {
 			return true
@@ -26,7 +29,7 @@ func (p *JavaProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib P
 }
 
 // GeneratedSrcs implements part of the ProtoPlugin interface.
-func (p *JavaProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string {
+func (p *JavaProtoPlugin) GeneratedSrcs(rel string, cfg protoc.ProtoPackageConfig, lib protoc.ProtoLibrary) []string {
 	// srcs := make([]string, 0)
 	// for _, f := range lib.Files() {
 	// 	genfiles := make([]string, 0)
@@ -67,7 +70,7 @@ func (p *JavaProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib
 }
 
 // GeneratedOut implements part the optional PluginOutProvider interface.
-func (p *JavaProtoPlugin) GeneratedOut(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) string {
+func (p *JavaProtoPlugin) GeneratedOut(rel string, cfg *protoc.ProtoPackageConfig, lib protoc.ProtoLibrary) string {
 	return srcjarFile(rel, lib.BaseName())
 }
 

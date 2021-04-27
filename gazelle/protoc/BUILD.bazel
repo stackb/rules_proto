@@ -1,8 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 load("@bazel_gazelle//:def.bzl", "gazelle_binary")
 
-# gazelle:exclude testdata
-
 go_library(
     name = "protoc",
     srcs = [
@@ -13,8 +11,6 @@ go_library(
         "gazelle.go",
         "gogo_proto_plugin.go",
         "intent.go",
-        "java_grpc_plugin.go",
-        "java_proto_plugin.go",
         "other_proto_library.go",
         "plugin_configuration.go",
         "proto_compile.go",
@@ -53,7 +49,6 @@ go_library(
 go_test(
     name = "protoc_test",
     srcs = [
-        # "gazelle_test.go",
         "intent_test.go",
         "other_proto_library_test.go",
         "proto_file_test.go",
@@ -64,26 +59,23 @@ go_test(
         "proto_rule_config_test.go",
         "protoc_configuration_test.go",
     ],
-    data = [":gazelle-protoc"] + glob(["testdata/**"]),
     embed = [":protoc"],
     deps = [
         "@bazel_gazelle//label:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
-        "@bazel_gazelle//testtools:go_default_library",
         "@com_github_emicklei_proto//:proto",
-        "@io_bazel_rules_go//go/tools/bazel:go_default_library",
     ],
 )
 
 gazelle_binary(
-    name = "gazelle-protoc",
+    name = "gazelle",
     # protoc extension is reliant upon the built-in 'proto' language, so test it
     # in combination with that.
     languages = [
         # NOTE: order matters here.  Gazelle will respect the ordering of
         # languages which will impact the population of 'OtherGen'
         "@bazel_gazelle//language/proto:go_default_library",
-        "//gazelle/protoc",
+        ":protoc",
     ],
     visibility = ["//visibility:public"],
 )

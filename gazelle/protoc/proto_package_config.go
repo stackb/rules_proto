@@ -36,8 +36,8 @@ type ProtoPackageConfig struct {
 	// method!
 }
 
-// newProtoPackageConfig initializes a new ProtoPackageConfig.
-func newProtoPackageConfig() *ProtoPackageConfig {
+// NewProtoPackageConfig initializes a new ProtoPackageConfig.
+func NewProtoPackageConfig() *ProtoPackageConfig {
 	return &ProtoPackageConfig{
 		langs:   make(map[string]*ProtoLangConfig),
 		plugins: make(map[string]*ProtoPluginConfig),
@@ -47,7 +47,7 @@ func newProtoPackageConfig() *ProtoPackageConfig {
 
 // Clone copies this config to a new one
 func (c *ProtoPackageConfig) Clone() *ProtoPackageConfig {
-	clone := newProtoPackageConfig()
+	clone := NewProtoPackageConfig()
 	clone.importpathPrefix = c.importpathPrefix
 
 	for k, v := range c.rules {
@@ -63,10 +63,10 @@ func (c *ProtoPackageConfig) Clone() *ProtoPackageConfig {
 	return clone
 }
 
-// parseDirectives is called in each directory visited by gazelle.  The relative
+// ParseDirectives is called in each directory visited by gazelle.  The relative
 // directory name is given by 'rel' and the list of directives in the BUILD file
 // are specified by 'directives'.
-func (c *ProtoPackageConfig) parseDirectives(rel string, directives []rule.Directive) (err error) {
+func (c *ProtoPackageConfig) ParseDirectives(rel string, directives []rule.Directive) (err error) {
 	for _, d := range directives {
 		switch d.Key {
 		case importpathPrefixDirective:

@@ -7,12 +7,12 @@ type ProtoPlugin interface {
 	// be added to the list of plugins to use?  We cannot rely on GeneratedSrcs
 	// alone for this information as not all plugins actually generate source
 	// code (some only perform validation/checking).
-	ShouldApply(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) bool
+	ShouldApply(rel string, cfg ProtoPackageConfig, lib ProtoLibrary) bool
 
 	// GeneratedSrcs inspects the given proto_library and determines what source
 	// files will be generated.  Each element in the list should be a
 	// fully-qualified path relative to the plugin out.
-	GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string
+	GeneratedSrcs(rel string, cfg ProtoPackageConfig, lib ProtoLibrary) []string
 }
 
 // PluginOptionsProvider is an optional interface that, if implemented, provides
@@ -20,7 +20,7 @@ type ProtoPlugin interface {
 type PluginOptionsProvider interface {
 	// GeneratedOptions inspects the given proto_library and determines what
 	// additional options are needed.
-	GeneratedOptions(rel string, c *ProtoPackageConfig, lib ProtoLibrary) []string
+	GeneratedOptions(rel string, cfg ProtoPackageConfig, lib ProtoLibrary) []string
 }
 
 // PluginMappingsProvider is an optional interface that, if implemented,
@@ -28,7 +28,7 @@ type PluginOptionsProvider interface {
 type PluginMappingsProvider interface {
 	// GeneratedOptions inspects the given proto_library and determines what
 	// additional mappings are needed.
-	GeneratedMappings(rel string, c *ProtoPackageConfig, lib ProtoLibrary) map[string]string
+	GeneratedMappings(rel string, cfg ProtoPackageConfig, lib ProtoLibrary) map[string]string
 }
 
 // PluginOutProvider is an optional interface that, if implemented, provides the
@@ -36,5 +36,5 @@ type PluginMappingsProvider interface {
 type PluginOutProvider interface {
 	// GeneratedOut inspects the given proto_library and determines the out
 	// arg.
-	GeneratedOut(rel string, c *ProtoPackageConfig, lib ProtoLibrary) string
+	GeneratedOut(rel string, cfg ProtoPackageConfig, lib ProtoLibrary) string
 }

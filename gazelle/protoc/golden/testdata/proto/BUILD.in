@@ -1,0 +1,2 @@
+# gazelle:proto_plugin java_proto label //java:java_proto
+# gazelle:proto_lang java plugin java_proto

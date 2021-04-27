@@ -52,21 +52,21 @@ func (s *protoPackage) libraryRules(p *ProtoLangConfig, lib ProtoLibrary) []Rule
 	configs := make([]*PluginConfiguration, 0)
 
 	for _, plugin := range p.Plugins {
-		if !plugin.Implementation.ShouldApply(s.rel, s.cfg, lib) {
+		if !plugin.Implementation.ShouldApply(s.rel, *s.cfg, lib) {
 			continue
 		}
 		config := &PluginConfiguration{
 			Label: plugin.Label,
-			Srcs:  plugin.Implementation.GeneratedSrcs(s.rel, s.cfg, lib),
+			Srcs:  plugin.Implementation.GeneratedSrcs(s.rel, *s.cfg, lib),
 		}
 		if provider, ok := plugin.Implementation.(PluginOptionsProvider); ok {
-			config.Options = provider.GeneratedOptions(s.rel, s.cfg, lib)
+			config.Options = provider.GeneratedOptions(s.rel, *s.cfg, lib)
 		}
 		if provider, ok := plugin.Implementation.(PluginMappingsProvider); ok {
-			config.Mappings = provider.GeneratedMappings(s.rel, s.cfg, lib)
+			config.Mappings = provider.GeneratedMappings(s.rel, *s.cfg, lib)
 		}
 		if provider, ok := plugin.Implementation.(PluginOutProvider); ok {
-			config.Out = provider.GeneratedOut(s.rel, s.cfg, lib)
+			config.Out = provider.GeneratedOut(s.rel, *s.cfg, lib)
 		}
 		configs = append(configs, config)
 	}

@@ -10,7 +10,7 @@ func init() {
 type PyProtoPlugin struct{}
 
 // ShouldApply implements part of the ProtoPlugin interface.
-func (p *PyProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) bool {
+func (p *PyProtoPlugin) ShouldApply(rel string, cfg ProtoPackageConfig, lib ProtoLibrary) bool {
 	for _, f := range lib.Files() {
 		if f.HasMessages() || f.HasEnums() {
 			return true
@@ -20,7 +20,7 @@ func (p *PyProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib Pro
 }
 
 // GeneratedSrcs implements part of the ProtoPlugin interface.
-func (p *PyProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string {
+func (p *PyProtoPlugin) GeneratedSrcs(rel string, cfg ProtoPackageConfig, lib ProtoLibrary) []string {
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
 		base := f.Name

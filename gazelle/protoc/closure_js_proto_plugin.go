@@ -14,7 +14,7 @@ func init() {
 type ClosureJsProtoPlugin struct{}
 
 // ShouldApply implements part of the ProtoPlugin interface.
-func (p *ClosureJsProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) bool {
+func (p *ClosureJsProtoPlugin) ShouldApply(rel string, cfg ProtoPackageConfig, lib ProtoLibrary) bool {
 	for _, f := range lib.Files() {
 		if f.HasMessages() || f.HasEnums() {
 			return true
@@ -24,14 +24,14 @@ func (p *ClosureJsProtoPlugin) ShouldApply(rel string, cfg *ProtoPackageConfig, 
 }
 
 // GeneratedSrcs implements part of the ProtoPlugin interface.
-func (p *ClosureJsProtoPlugin) GeneratedSrcs(rel string, cfg *ProtoPackageConfig, lib ProtoLibrary) []string {
+func (p *ClosureJsProtoPlugin) GeneratedSrcs(rel string, cfg ProtoPackageConfig, lib ProtoLibrary) []string {
 	base := strings.ToLower(lib.BaseName())
 	return []string{path.Join(rel, base+".js")}
 }
 
 // GeneratedOptions implements part of the optional PluginOptionsProvider
 // interface.
-func (p *ClosureJsProtoPlugin) GeneratedOptions(rel string, c *ProtoPackageConfig, lib ProtoLibrary) []string {
+func (p *ClosureJsProtoPlugin) GeneratedOptions(rel string, cfg ProtoPackageConfig, lib ProtoLibrary) []string {
 	library := fmt.Sprintf("library=%s/%s", rel, lib.BaseName())
 	return []string{library}
 }

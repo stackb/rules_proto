@@ -37,8 +37,8 @@ func exampleProtoLibrary() ProtoLibrary {
 }
 
 func exampleProtoPackageConfig() *ProtoPackageConfig {
-	c := newProtoPackageConfig()
-	if err := c.parseDirectives(exampleDir, withDirectives(
+	c := NewProtoPackageConfig()
+	if err := c.ParseDirectives(exampleDir, withDirectives(
 		"proto_plugin", "py_proto label @fake//proto/plugin",
 		"proto_plugin", "py_proto enabled true",
 		"proto_lang", "py plugin py_proto",

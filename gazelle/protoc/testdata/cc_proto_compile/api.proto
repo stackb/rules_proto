@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package example;
-
-service API {
-    rpc GetThing(Thing) returns (Thing) {}
-}

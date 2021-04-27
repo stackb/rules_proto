@@ -1,0 +1,16 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_test")
+
+# gazelle:exclude testdata
+
+go_test(
+    name = "golden_test",
+    srcs = [
+        "golden_test.go",
+        "test_harness.go",
+    ],
+    data = ["//gazelle/protoc:gazelle"] + glob(["testdata/**"]),
+    deps = [
+        "@bazel_gazelle//testtools:go_default_library",
+        "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+    ],
+)

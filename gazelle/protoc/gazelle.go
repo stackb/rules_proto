@@ -49,7 +49,7 @@ func (lang *protocLanguage) Configure(c *config.Config, rel string, f *rule.File
 	if f == nil {
 		return
 	}
-	if err := getExtensionConfig(c.Exts).parseDirectives(rel, f.Directives); err != nil {
+	if err := getExtensionConfig(c.Exts).ParseDirectives(rel, f.Directives); err != nil {
 		log.Fatalf("error while parsing rule directives in package %q: %v", rel, err)
 	}
 }
@@ -197,7 +197,7 @@ func getExtensionConfig(exts map[string]interface{}) *ProtoPackageConfig {
 	if existingExt, ok := exts[languageName]; ok {
 		cfg = existingExt.(*ProtoPackageConfig).Clone()
 	} else {
-		cfg = newProtoPackageConfig()
+		cfg = NewProtoPackageConfig()
 	}
 	exts[languageName] = cfg
 	return cfg
