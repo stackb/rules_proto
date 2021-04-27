@@ -88,7 +88,7 @@ def _proto_compile_impl(ctx):
     srcs = ctx.files.srcs
 
     # mut <list<File>>
-    outputs = ctx.outputs.outputs
+    outputs = [] + ctx.outputs.outputs
 
     if not outputs:
         if not srcs:
@@ -292,6 +292,7 @@ proto_compile = rule(
         ),
         "srcs": attr.label_list(
             doc = "List of source files that have already been precompiled via the proto_compile_test rule",
+            allow_files = True,
         ),
         "plugins": attr.label_list(
             doc = "List of ProtoPluginInfo providers",
