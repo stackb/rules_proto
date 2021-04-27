@@ -2,6 +2,7 @@ package protoc
 
 import (
 	"fmt"
+	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -25,8 +26,9 @@ func (s *protoCompiledSources) KindInfo() rule.KindInfo {
 			"srcs": true,
 		},
 		MergeableAttrs: map[string]bool{
-			"srcs":    true,
-			"plugins": true,
+			"srcs":       true,
+			"plugins":    true,
+			"visibility": true,
 		},
 	}
 }
@@ -41,12 +43,13 @@ func (s *protoCompiledSources) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *protoCompiledSources) ProvideRule(cfg *LanguageRuleConfig, config *ProtocConfiguration) RuleProvider {
-	return &protoCompiledSourcesRule{config}
+	return &protoCompiledSourcesRule{ruleConfig: cfg, config: config}
 }
 
 // protoCompiledSources implements RuleProvider for the 'proto_compile' rule.
 type protoCompiledSourcesRule struct {
-	config *ProtocConfiguration
+	config     *ProtocConfiguration
+	ruleConfig *LanguageRuleConfig
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -66,7 +69,15 @@ func (s *protoCompiledSourcesRule) Imports() []string {
 
 // Visibility implements part of the ruleProvider interface.
 func (s *protoCompiledSourcesRule) Visibility() []string {
-	return nil // TODO: visibility feature?
+	visibility := make([]string, 0)
+	for k, want := range s.ruleConfig.Visibility {
+		if !want {
+			continue
+		}
+		visibility = append(visibility, k)
+	}
+	sort.Strings(visibility)
+	return visibility
 }
 
 // Rule implements part of the ruleProvider interface.
@@ -89,6 +100,11 @@ func (s *protoCompiledSourcesRule) Rule() *rule.Rule {
 	outs := GetPluginOuts(s.config.Plugins)
 	if len(outs) > 0 {
 		newRule.SetAttr("outs", makeStringDict(outs))
+	}
+
+	visibility := s.Visibility()
+	if len(visibility) > 0 {
+		newRule.SetAttr("visibility", visibility)
 	}
 
 	return newRule

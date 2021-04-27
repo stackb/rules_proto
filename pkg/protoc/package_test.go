@@ -41,6 +41,7 @@ func examplePackageConfig() *PackageConfig {
 		"proto_plugin", "fake_proto enabled true",
 		"proto_language", "fake plugin fake_proto",
 		"proto_language", "fake enabled true",
+		"proto_language", "fake rule proto_compile",
 	)); err != nil {
 		panic("bad config: " + err.Error())
 	}

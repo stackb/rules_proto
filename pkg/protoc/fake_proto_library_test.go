@@ -4,6 +4,7 @@ import (
 	"path"
 	"strings"
 
+	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -17,6 +18,11 @@ type fakePlugin struct{}
 
 func (p *fakePlugin) ShouldApply(rel string, cfg PackageConfig, lib ProtoLibrary) bool {
 	return true
+}
+
+// Label implements part of the Plugin interface.
+func (p *fakePlugin) Label() label.Label {
+	return label.New("build_stack_rules_proto", "protocolbuffers/protobuf", "py_proto_plugin")
 }
 
 // Outputs implements part of the Plugin interface

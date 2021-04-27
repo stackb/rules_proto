@@ -18,7 +18,7 @@ proto_library(
 
 proto_compile(
     name = "routeguide_cc_compile",
-    genfiles = [
+    outputs = [
         "routeguide.pb.cc",
         "routeguide.pb.h",
         "routeguide.grpc.pb.cc",
@@ -33,9 +33,9 @@ proto_compile(
 
 proto_compile(
     name = "routeguide_gogofast_compile",
-    genfiles = ["routeguide.pb.go"],
-    options = {"//gogo:gogofast": ["plugins=grpc"]},
-    plugins = ["//gogo:gogofast"],
+    options = {"//gogo/protobuf:gogofast_plugin": ["plugins=grpc"]},
+    outputs = ["routeguide.pb.go"],
+    plugins = ["//gogo/protobuf:gogofast_plugin"],
     proto = "routeguide_proto",
 )
 
@@ -45,7 +45,7 @@ proto_compile(
         "//grpc/grpc-java:grpc_java_plugin": "routeguide/routeguide_grpc.srcjar",
         "//protoc:java_proto_plugin": "routeguide/routeguide.srcjar",
     },
-    genfiles = [
+    outputs = [
         "routeguide.srcjar",
         "routeguide_grpc.srcjar",
     ],

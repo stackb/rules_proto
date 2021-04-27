@@ -88,7 +88,7 @@ func (c *LanguagePluginConfig) parseDirective(cfg *PackageConfig, d, param, valu
 			c.Options[value] = true
 		}
 	default:
-		return fmt.Errorf("invalid directive %q: unknown parameter %q", d, value)
+		return fmt.Errorf("unknown parameter %q", intent.Value)
 	}
 
 	return nil

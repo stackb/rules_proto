@@ -12,15 +12,17 @@ type LanguageRuleConfig struct {
 	Enabled        bool
 	Implementation LanguageRule
 	Name           string
+	Visibility     map[string]bool
 }
 
 // newLanguageRuleConfig returns a pointer to a new LanguageRule config with the
 // 'Enabled' bit set to true.
 func newLanguageRuleConfig(name string) *LanguageRuleConfig {
 	return &LanguageRuleConfig{
-		Name:    name,
-		Enabled: true,
-		Deps:    make(map[string]bool),
+		Name:       name,
+		Enabled:    true,
+		Deps:       make(map[string]bool),
+		Visibility: make(map[string]bool),
 	}
 }
 
@@ -39,14 +41,14 @@ func (c *LanguageRuleConfig) GetDeps() []string {
 
 // clone copies this config to a new one
 func (c *LanguageRuleConfig) clone() *LanguageRuleConfig {
-	clone := &LanguageRuleConfig{
-		Deps:           c.Deps,
-		Enabled:        c.Enabled,
-		Implementation: c.Implementation,
-		Name:           c.Name,
-	}
+	clone := newLanguageRuleConfig(c.Name)
+	clone.Enabled = c.Enabled
+	clone.Implementation = c.Implementation
 	for k, v := range c.Deps {
 		clone.Deps[k] = v
+	}
+	for k, v := range c.Visibility {
+		clone.Visibility[k] = v
 	}
 	return clone
 }
@@ -61,6 +63,12 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 		} else {
 			c.Deps[value] = true
 		}
+	case "visibility":
+		if intent.Negative {
+			delete(c.Visibility, value)
+		} else {
+			c.Visibility[value] = true
+		}
 	case "enabled":
 		enabled, err := strconv.ParseBool(value)
 		if err != nil {
@@ -68,7 +76,7 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 		}
 		c.Enabled = enabled
 	default:
-		return fmt.Errorf("unknown parameter %q", value)
+		return fmt.Errorf("unknown parameter %q", intent.Value)
 	}
 
 	return nil

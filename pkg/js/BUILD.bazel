@@ -8,4 +8,8 @@ go_library(
     ],
     importpath = "github.com/stackb/rules_proto/pkg/js",
     visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+    ],
 )

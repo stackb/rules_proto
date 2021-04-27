@@ -20,7 +20,7 @@ proto_library(
 
 proto_compile(
     name = "example_cc_compile",
-    genfiles = [
+    outputs = [
         "thing.pb.cc",
         "thing.pb.h",
     ],
@@ -30,29 +30,29 @@ proto_compile(
 
 proto_compile(
     name = "example_closure_js_compile",
-    genfiles = ["example.js"],
     options = {"//protoc:closure_js_proto_plugin": ["library=example/example"]},
+    outputs = ["example.js"],
     plugins = ["//protoc:closure_js_proto_plugin"],
     proto = "example_proto",
 )
 
 proto_compile(
     name = "example_common_js_compile",
-    genfiles = ["thing_pb.js"],
+    outputs = ["thing_pb.js"],
     plugins = ["//protoc:common_js_proto_plugin"],
     proto = "example_proto",
 )
 
 proto_compile(
     name = "example_gogofast_compile",
-    genfiles = ["thing.pb.go"],
-    plugins = ["//gogo:gogofast"],
+    outputs = ["thing.pb.go"],
+    plugins = ["//gogo/protobuf:gogofast_plugin"],
     proto = "example_proto",
 )
 
 proto_compile(
     name = "example_py_compile",
-    genfiles = ["thing_pb2.py"],
+    outputs = ["thing_pb2.py"],
     plugins = ["//protoc:py_proto_plugin"],
     proto = "example_proto",
 )
@@ -60,7 +60,7 @@ proto_compile(
 proto_compile(
     name = "example_java_compile",
     outs = {"//protoc:java_proto_plugin": "example/example.srcjar"},
-    genfiles = ["example.srcjar"],
+    outputs = ["example.srcjar"],
     plugins = ["//protoc:java_proto_plugin"],
     proto = "example_proto",
 )
