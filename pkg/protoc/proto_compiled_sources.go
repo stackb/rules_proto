@@ -8,25 +8,23 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-// ProtoCompileName the name the protoCompile rule registers under.
-const ProtoCompileName = "proto_compile"
+// ProtoCompiledSourcesName the name the protoCompiledSourcesdSources rule registers under.
+const ProtoCompiledSourcesName = "proto_compiled_sources"
 
 func init() {
-	Rules().MustRegisterRule(ProtoCompileName, &protoCompile{})
+	Rules().MustRegisterRule(ProtoCompiledSourcesName, &protoCompiledSources{})
 }
 
-// protoCompile implements LanguageRule for the 'proto_compile' rule.
-type protoCompile struct{}
+// protoCompiledSources implements LanguageRule for the 'proto_compiled_sources' rule.
+type protoCompiledSources struct{}
 
 // KindInfo implements part of the LanguageRule interface.
-func (s *protoCompile) KindInfo() rule.KindInfo {
+func (s *protoCompiledSources) KindInfo() rule.KindInfo {
 	return rule.KindInfo{
 		NonEmptyAttrs: map[string]bool{
-			"outputs": true,
-			"srcs":    true,
+			"srcs": true,
 		},
 		MergeableAttrs: map[string]bool{
-			"outputs": true,
 			"srcs":    true,
 			"plugins": true,
 		},
@@ -34,48 +32,48 @@ func (s *protoCompile) KindInfo() rule.KindInfo {
 }
 
 // LoadInfo implements part of the LanguageRule interface.
-func (s *protoCompile) LoadInfo() rule.LoadInfo {
+func (s *protoCompiledSources) LoadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
-		Name:    "@build_stack_rules_proto//rules:proto_compile.bzl",
-		Symbols: []string{ProtoCompileName},
+		Name:    "@build_stack_rules_proto//rules:proto_compiled_sources.bzl",
+		Symbols: []string{ProtoCompiledSourcesName},
 	}
 }
 
 // ProvideRule implements part of the LanguageRule interface.
-func (s *protoCompile) ProvideRule(cfg *LanguageRuleConfig, config *ProtocConfiguration) RuleProvider {
-	return &protoCompileRule{config}
+func (s *protoCompiledSources) ProvideRule(cfg *LanguageRuleConfig, config *ProtocConfiguration) RuleProvider {
+	return &protoCompiledSourcesRule{config}
 }
 
-// protoCompile implements RuleProvider for the 'proto_compile' rule.
-type protoCompileRule struct {
+// protoCompiledSources implements RuleProvider for the 'proto_compile' rule.
+type protoCompiledSourcesRule struct {
 	config *ProtocConfiguration
 }
 
 // Kind implements part of the ruleProvider interface.
-func (s *protoCompileRule) Kind() string {
-	return ProtoCompileName
+func (s *protoCompiledSourcesRule) Kind() string {
+	return ProtoCompiledSourcesName
 }
 
 // Name implements part of the ruleProvider interface.
-func (s *protoCompileRule) Name() string {
-	return fmt.Sprintf("%s_%s_compile", s.config.Library.BaseName(), s.config.Prefix)
+func (s *protoCompiledSourcesRule) Name() string {
+	return fmt.Sprintf("%s_%s_compiled_sources", s.config.Library.BaseName(), s.config.Prefix)
 }
 
 // Imports implements part of the ruleProvider interface.
-func (s *protoCompileRule) Imports() []string {
+func (s *protoCompiledSourcesRule) Imports() []string {
 	return []string{s.Kind()}
 }
 
 // Visibility implements part of the ruleProvider interface.
-func (s *protoCompileRule) Visibility() []string {
+func (s *protoCompiledSourcesRule) Visibility() []string {
 	return nil // TODO: visibility feature?
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *protoCompileRule) Rule() *rule.Rule {
+func (s *protoCompiledSourcesRule) Rule() *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
-	newRule.SetAttr("outputs", s.config.Outputs)
+	newRule.SetAttr("srcs", s.config.Outputs)
 	newRule.SetAttr("plugins", GetPluginLabels(s.config.Plugins))
 	newRule.SetAttr("proto", s.config.Library.Name())
 
@@ -97,5 +95,5 @@ func (s *protoCompileRule) Rule() *rule.Rule {
 }
 
 // Resolve implements part of the RuleProvider interface.
-func (s *protoCompileRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func (s *protoCompiledSourcesRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
 }

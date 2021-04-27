@@ -1,6 +1,9 @@
 package java
 
-import "github.com/stackb/rules_proto/pkg/protoc"
+import (
+	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/stackb/rules_proto/pkg/protoc"
+)
 
 const JavaGrpcName = "java_grpc"
 
@@ -19,6 +22,11 @@ func (p *JavaGrpcPlugin) ShouldApply(rel string, cfg protoc.PackageConfig, lib p
 		}
 	}
 	return false
+}
+
+// Label implements part of the Plugin interface.
+func (p *JavaGrpcPlugin) Label() label.Label {
+	return label.New("build_stack_rules_proto", "grpc/grpc-java", "grpc_plugin")
 }
 
 // Outputs implements part of the Plugin interface.

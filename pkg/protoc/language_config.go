@@ -56,27 +56,23 @@ func (c *LanguageConfig) parseDirective(cfg *PackageConfig, d, param, value stri
 		}
 		c.Enabled = enabled
 	case "plugin":
-		plugin, ok := cfg.plugins[value]
+		plugin, err := cfg.getOrCreateLanguagePluginConfig(value)
+		if err != nil {
+			return fmt.Errorf("could not bind plugin %q to language: %w", value, err)
+		}
+		plugin = plugin.clone()
 		if intent.Negative {
-			if ok {
-				plugin.Enabled = false
-			}
-			return nil
+			plugin.Enabled = false
 		}
-		if !ok {
-			return fmt.Errorf("unknown plugin: %q", value)
-		}
-		c.Plugins[value] = plugin // TODO: clone here?
+		c.Plugins[value] = plugin
 	case "rule":
-		rule, ok := cfg.rules[value]
-		if intent.Negative {
-			if ok {
-				rule.Enabled = false
-			}
-			return nil
+		rule, err := cfg.getOrCreateLanguageRuleConfig(value)
+		if err != nil {
+			return fmt.Errorf("could not bind rule %q to language: %w", value, err)
 		}
-		if !ok {
-			return fmt.Errorf("unknown rule: %q", value)
+		rule = rule.clone()
+		if intent.Negative {
+			rule.Enabled = false
 		}
 		c.Rules[value] = rule
 	default:

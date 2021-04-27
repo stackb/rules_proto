@@ -2,7 +2,6 @@ package protoc
 
 import (
 	"fmt"
-	"log"
 	"sort"
 	"strings"
 
@@ -90,24 +89,29 @@ func (c *PackageConfig) parsePrefixDirective(d rule.Directive) error {
 	return nil
 }
 
+func (c *PackageConfig) parseLanguageDirective(d rule.Directive) error {
+	fields := strings.Fields(d.Value)
+	if len(fields) != 3 {
+		return fmt.Errorf("invalid directive %v: expected three fields, got %d", d, len(fields))
+	}
+	name, param, value := fields[0], fields[1], fields[2]
+	lang, ok := c.langs[name]
+	if !ok {
+		lang = newLanguageConfig(name)
+		c.langs[name] = lang
+	}
+	return lang.parseDirective(c, name, param, value)
+}
+
 func (c *PackageConfig) parsePluginDirective(d rule.Directive) error {
 	fields := strings.Fields(d.Value)
 	if len(fields) != 3 {
 		return fmt.Errorf("invalid directive %v: expected three fields, got %d", d, len(fields))
 	}
 	name, param, value := fields[0], fields[1], fields[2]
-	plugin, ok := c.plugins[name]
-	if !ok {
-		plugin = newLanguagePluginConfig(name)
-		impl, err := globalRegistry.LookupPlugin(name)
-		if err == ErrUnknownPlugin {
-			return fmt.Errorf(
-				"invalid proto_plugin directive: plugin not registered: %s (available: %v)",
-				name,
-				globalRegistry.PluginNames())
-		}
-		plugin.Implementation = impl
-		c.plugins[name] = plugin
+	plugin, err := c.getOrCreateLanguagePluginConfig(name)
+	if err != nil {
+		return fmt.Errorf("invalid proto_plugin directive %+v: %w", d, err)
 	}
 	return plugin.parseDirective(c, name, param, value)
 }
@@ -118,46 +122,47 @@ func (c *PackageConfig) parseRuleDirective(d rule.Directive) error {
 		return fmt.Errorf("invalid directive %v: expected three fields, got %d", d, len(fields))
 	}
 	name, param, value := fields[0], fields[1], fields[2]
-	r, ok := c.rules[name]
-	if !ok {
-		r = newLanguageRuleConfig(name)
-		impl, err := Rules().LookupRule(name)
-		if err == ErrUnknownRule {
-			return fmt.Errorf("invalid proto_rule directive: rule not registered: %s", name)
-		}
-		r.Implementation = impl
-		c.rules[name] = r
+	r, err := c.getOrCreateLanguageRuleConfig(name)
+	if err != nil {
+		return fmt.Errorf("invalid proto_rule directive %+v: %w", d, err)
 	}
 	return r.parseDirective(c, name, param, value)
 }
 
-func (c *PackageConfig) parseLanguageDirective(d rule.Directive) error {
-	fields := strings.Fields(d.Value)
-	if len(fields) != 3 {
-		return fmt.Errorf("invalid directive %v: expected three fields, got %d", d, len(fields))
-	}
-	name, param, value := fields[0], fields[1], fields[2]
-	lang, ok := c.langs[name]
+func (c *PackageConfig) getOrCreateLanguagePluginConfig(name string) (*LanguagePluginConfig, error) {
+	plugin, ok := c.plugins[name]
 	if !ok {
-		// All language configurations get the proto_compile rule by default
-		lang = newLanguageConfig(name, c.mustGetOrCreateLanguageRuleConfig(ProtoCompileName))
-		c.langs[name] = lang
+		plugin = newLanguagePluginConfig(name)
+		impl, err := globalRegistry.LookupPlugin(name)
+		if err == ErrUnknownPlugin {
+			return nil, fmt.Errorf(
+				"plugin not registered: %s (available: %v)", name,
+				globalRegistry.PluginNames())
+		}
+		plugin.Implementation = impl
+		plugin.Label = impl.Label()
+		c.plugins[name] = plugin
 	}
-	return lang.parseDirective(c, name, param, value)
+	return plugin, nil
 }
 
-func (c *PackageConfig) mustGetOrCreateLanguageRuleConfig(name string) *LanguageRuleConfig {
+func (c *PackageConfig) getOrCreateLanguageRuleConfig(name string) (*LanguageRuleConfig, error) {
 	r, ok := c.rules[name]
 	if !ok {
 		r = newLanguageRuleConfig(name)
 		impl, err := Rules().LookupRule(name)
 		if err == ErrUnknownRule {
-			log.Fatalf("required proto_rule not registered: %s", name)
+			return nil, fmt.Errorf(
+				"rule not registered: %q (available: %v)", name,
+				globalRegistry.RuleNames())
+		}
+		if err != nil {
+			return nil, err
 		}
 		r.Implementation = impl
 		c.rules[name] = r
 	}
-	return r
+	return r, nil
 }
 
 // configuredLangs returns a determinstic ordered list of configured

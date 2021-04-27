@@ -5,5 +5,9 @@ go_library(
     srcs = ["gogo_proto_plugin.go"],
     importpath = "github.com/stackb/rules_proto/pkg/gogo",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_emicklei_proto//:proto"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+        "@com_github_emicklei_proto//:proto",
+    ],
 )

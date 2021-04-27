@@ -5,6 +5,7 @@ import (
 	"path"
 	"strconv"
 
+	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/emicklei/proto"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
@@ -12,14 +13,14 @@ import (
 const JavaProtoName = "java_proto"
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(JavaProtoName, &JavaPlugin{})
+	protoc.Plugins().MustRegisterPlugin(JavaProtoName, &JavaProtoPlugin{})
 }
 
-// JavaPlugin implements Plugin for the built-in protoc java plugin.
-type JavaPlugin struct{}
+// JavaProtoPlugin implements Plugin for the built-in protoc java plugin.
+type JavaProtoPlugin struct{}
 
 // ShouldApply implements part of the Plugin interface.
-func (p *JavaPlugin) ShouldApply(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) bool {
+func (p *JavaProtoPlugin) ShouldApply(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) bool {
 	for _, f := range lib.Files() {
 		if f.HasMessages() || f.HasEnums() {
 			return true
@@ -28,8 +29,13 @@ func (p *JavaPlugin) ShouldApply(rel string, cfg protoc.PackageConfig, lib proto
 	return false
 }
 
+// Label implements part of the Plugin interface.
+func (p *JavaProtoPlugin) Label() label.Label {
+	return label.New("build_stack_rules_proto", "protocolbuffers/protobuf", "java_plugin")
+}
+
 // Outputs implements part of the Plugin interface.
-func (p *JavaPlugin) Outputs(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) []string {
+func (p *JavaProtoPlugin) Outputs(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) []string {
 	// srcs := make([]string, 0)
 	// for _, f := range lib.Files() {
 	// 	outputs := make([]string, 0)
@@ -70,7 +76,7 @@ func (p *JavaPlugin) Outputs(rel string, cfg protoc.PackageConfig, lib protoc.Pr
 }
 
 // Out implements part the optional PluginOutProvider interface.
-func (p *JavaPlugin) Out(rel string, cfg *protoc.PackageConfig, lib protoc.ProtoLibrary) string {
+func (p *JavaProtoPlugin) Out(rel string, cfg *protoc.PackageConfig, lib protoc.ProtoLibrary) string {
 	return srcjarFile(rel, lib.BaseName())
 }
 

@@ -4,7 +4,9 @@ import (
 	"path"
 	"strings"
 
+	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/emicklei/proto"
+	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
 func init() {
@@ -17,7 +19,7 @@ func init() {
 		"gogotypes",
 		"gostring",
 	} {
-		MustRegisterPlugin(variant, &GogoPlugin{Variant: variant})
+		protoc.Plugins().MustRegisterPlugin(variant, &GogoPlugin{Variant: variant})
 	}
 }
 
@@ -26,7 +28,12 @@ type GogoPlugin struct {
 	Variant string
 }
 
-func (p *GogoPlugin) ShouldApply(rel string, cfg PackageConfig, lib ProtoLibrary) bool {
+// Label implements part of the Plugin interface.
+func (p *GogoPlugin) Label() label.Label {
+	return label.New("build_stack_rules_proto", "gogo/protobuf", p.Variant+"_plugin")
+}
+
+func (p *GogoPlugin) ShouldApply(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) bool {
 	for _, f := range lib.Files() {
 		if f.HasMessages() || f.HasEnums() || f.HasServices() {
 			return true
@@ -36,7 +43,7 @@ func (p *GogoPlugin) ShouldApply(rel string, cfg PackageConfig, lib ProtoLibrary
 }
 
 // Outputs implements part of the Plugin interface
-func (p *GogoPlugin) Outputs(rel string, cfg PackageConfig, lib ProtoLibrary) []string {
+func (p *GogoPlugin) Outputs(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) []string {
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
 		base := f.Name
@@ -45,7 +52,7 @@ func (p *GogoPlugin) Outputs(rel string, cfg PackageConfig, lib ProtoLibrary) []
 		if goPackage, _, ok := goPackageOption(f.Options()); ok {
 			base = path.Join(goPackage, base)
 		} else if pkg.Name != "" {
-			base = path.Join(GoPackagePath(pkg.Name), base)
+			base = path.Join(strings.ReplaceAll(pkg.Name, ".", "/"), base)
 		}
 		if f.HasMessages() || f.HasEnums() {
 			srcs = append(srcs, base+".pb.go")
@@ -56,7 +63,7 @@ func (p *GogoPlugin) Outputs(rel string, cfg PackageConfig, lib ProtoLibrary) []
 
 // Options implements part of the optional PluginOptionsProvider
 // interface.  If the library contains services, apply the grpc plugin.
-func (p *GogoPlugin) Options(rel string, c *PackageConfig, lib ProtoLibrary) []string {
+func (p *GogoPlugin) Options(rel string, c *protoc.PackageConfig, lib protoc.ProtoLibrary) []string {
 	for _, f := range lib.Files() {
 		if f.HasServices() {
 			return []string{"plugins=grpc"}

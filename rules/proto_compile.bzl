@@ -81,6 +81,22 @@ def is_windows(ctx):
     return ctx.configuration.host_path_separator == ";"
 
 def _proto_compile_impl(ctx):
+    # const <list<File>>
+    output_descriptor = ctx.outputs.descriptor
+
+    # const <list<File>>
+    srcs = ctx.files.srcs
+
+    # mut <list<File>>
+    outputs = ctx.outputs.outputs
+
+    if not outputs:
+        if not srcs:
+            fail("proto_compile rule MUST specify 'srcs' if 'outputs' list is empty")
+        for src in srcs:
+            output = ctx.actions.declare_file(src.basename, sibling=output_descriptor)
+            outputs.append(output)
+
     ###
     ### Part 1: setup variables used in scope
     ###
@@ -100,11 +116,8 @@ def _proto_compile_impl(ctx):
     # const <dict<string,string>>
     outs = ctx.attr.outs
 
-    # const <list<File>>
-    outputs = ctx.outputs.genfiles
-
-    # const <dict<string,File>.  genfiles indexed by basename.
-    genfiles_by_basename = {f.basename: f for f in ctx.outputs.genfiles}
+    # const <dict<string,File>.  outputs indexed by basename.
+    outputs_by_basename = {f.basename: f for f in outputs}
 
     # mut <list<File>> set of descriptors for the compile action
     descriptors = proto_info.transitive_descriptor_sets.to_list()
@@ -113,7 +126,7 @@ def _proto_compile_impl(ctx):
     tools = [protoc]
 
     # mut <list<string>> argument list for protoc execution
-    args = [] + ctx.attr.args
+    args = ["--descriptor_set_out="+output_descriptor.path] + ctx.attr.args
 
     # mut <list<File>> inputs for the compile action
     inputs = []
@@ -236,10 +249,10 @@ def _proto_compile_impl(ctx):
     # if the rule declares any mappings, setup copy file actions for them now
     for basename, intermediate_filename in ctx.attr.mappings.items():
         intermediate_filename = "/".join([ctx.bin_dir.path, intermediate_filename])
-        genfile = genfiles_by_basename.get(basename, None)
-        if not genfile:
-            fail("the mapped file '%s' was not listed in genfiles" % basename)
-        commands.append("cp '{}' '{}'".format(intermediate_filename, genfile.path))
+        output = outputs_by_basename.get(basename, None)
+        if not output:
+            fail("the mapped file '%s' was not listed in outputs" % basename)
+        commands.append("cp '{}' '{}'".format(intermediate_filename, output.path))
 
     ctx.actions.run_shell(
         arguments = [final_args],
@@ -247,7 +260,7 @@ def _proto_compile_impl(ctx):
         inputs = inputs,
         # input_manifests = input_manifests, TODO
         mnemonic = "Protoc",
-        outputs = outputs,
+        outputs = [output_descriptor] + outputs,
         progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
         tools = tools,
     )
@@ -266,7 +279,7 @@ def _proto_compile_impl(ctx):
         for c in commands:
             print("COMMAND:", c)
 
-    return [DefaultInfo(files = depset(ctx.outputs.genfiles))]
+    return [DefaultInfo(files = depset(outputs))]
 
 proto_compile = rule(
     implementation = _proto_compile_impl,
@@ -274,9 +287,11 @@ proto_compile = rule(
         "args": attr.string_list(
             doc = "List of additional protoc args",
         ),
-        "genfiles": attr.output_list(
+        "outputs": attr.output_list(
             doc = "List of source files we expect to be generated (relative to package)",
-            mandatory = True,
+        ),
+        "srcs": attr.label_list(
+            doc = "List of source files that have already been precompiled via the proto_compile_test rule",
         ),
         "plugins": attr.label_list(
             doc = "List of ProtoPluginInfo providers",
@@ -300,6 +315,9 @@ proto_compile = rule(
         "verbose": attr.int(
             doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox before+after running protoc*",
         ),
+    },
+    outputs = {
+        "descriptor": "%{name}_descriptor.proto.bin",
     },
     toolchains = ["@build_stack_rules_proto//protoc:toolchain_type"],
 )
