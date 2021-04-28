@@ -46,13 +46,11 @@ func (c *LanguagePluginConfig) GetOptions() []string {
 }
 
 func (c *LanguagePluginConfig) clone() *LanguagePluginConfig {
-	clone := &LanguagePluginConfig{
-		Label:          c.Label,
-		Name:           c.Name,
-		Tool:           c.Tool,
-		Implementation: c.Implementation,
-		Enabled:        c.Enabled,
-	}
+	clone := newLanguagePluginConfig(c.Name)
+	clone.Label = c.Label
+	clone.Tool = c.Tool
+	clone.Implementation = c.Implementation
+	clone.Enabled = c.Enabled
 	for k, v := range c.Options {
 		clone.Options[k] = v
 	}
@@ -82,11 +80,7 @@ func (c *LanguagePluginConfig) parseDirective(cfg *PackageConfig, d, param, valu
 		}
 		c.Tool = l
 	case "option":
-		if intent.Negative {
-			delete(c.Options, value)
-		} else {
-			c.Options[value] = true
-		}
+		c.Options[value] = !intent.Negative
 	default:
 		return fmt.Errorf("unknown parameter %q", intent.Value)
 	}

@@ -1,10 +1,6 @@
 load("@bazel_skylib//lib:shell.bzl", "shell")
 
 gencopy_attrs = {
-    "srcs": attr.label_list(
-        doc = "The list of files that exist in the source tree.  This list is initially empty.",
-        allow_files = True,
-    ),
     "mode": attr.string(
         doc = "The gencopy mode.  For update, overwrite existing files.  For check, assert file equality",
         values = ["update", "check"],
@@ -35,20 +31,12 @@ def gencopy_config(ctx):
     return struct(
         mode = ctx.attr.mode,
         updateTargetLabelName = ctx.attr.update_target_label_name,
-        targetLabel = str(ctx.label),
-        targetPackage = ctx.attr.package or ctx.label.package,
-        generatedFiles = [],
-        sourceFiles = [],
+        packageConfigs = [],
     )
 
-def gencopy_action(ctx, config, outputs):
+def gencopy_action(ctx, config, srcs, outputs):
     script = ctx.actions.declare_file(ctx.label.name + ".bash")
     config_json = ctx.actions.declare_file(ctx.label.name + ".config.json")
-
-    for f in outputs:
-        config.generatedFiles.append(f.short_path)
-    for f in ctx.files.srcs:
-        config.sourceFiles.append(f.short_path)
 
     substitutions = {
         "@@GENCOPY_LABEL@@": shell.quote(str(ctx.attr._gencopy.label)),
@@ -73,4 +61,4 @@ def gencopy_action(ctx, config, outputs):
         is_executable = True,
     )
 
-    return script, ctx.runfiles(files = [ctx.executable._gencopy, config_json] + outputs + ctx.files.srcs)
+    return config_json, script, ctx.runfiles(files = [ctx.executable._gencopy, config_json] + srcs + outputs)

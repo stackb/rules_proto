@@ -20,6 +20,7 @@ ProtoPluginInfo = provider(
 ProtoCompileInfo = provider("ProtoCompileInfo provides downstream rules with the outputs of proto_compile",
     fields = {
         "label": "The proto_compile rule label",
+        "srcs": "The source files from the rule",
         "outputs": "The output files from the rule",
     },
 )

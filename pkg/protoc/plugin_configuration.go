@@ -7,7 +7,6 @@ import "github.com/bazelbuild/bazel-gazelle/label"
 type PluginConfiguration struct {
 	Label    label.Label
 	Mappings map[string]string
-	Name     string
 	Options  []string
 	Out      string
 	Srcs     []string
@@ -29,7 +28,7 @@ func GetPluginOptions(plugins []*PluginConfiguration) map[string][]string {
 		if len(plugin.Options) == 0 {
 			continue
 		}
-		options[plugin.Name] = plugin.Options
+		options[plugin.Label.String()] = plugin.Options
 	}
 	return options
 }
@@ -41,7 +40,7 @@ func GetPluginOuts(plugins []*PluginConfiguration) map[string]string {
 		if plugin.Out == "" {
 			continue
 		}
-		outs[plugin.Name] = plugin.Out
+		outs[plugin.Label.String()] = plugin.Out
 	}
 	return outs
 }

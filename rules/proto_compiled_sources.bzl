@@ -17,7 +17,6 @@ def proto_compiled_sources(**kwargs):
     proto_compile_gencopy_test(
         name = name_test,
         deps = [name],
-        srcs = srcs,
         mode = "check",
         update_target_label_name = name_update,
     )

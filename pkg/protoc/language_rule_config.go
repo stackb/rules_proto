@@ -64,11 +64,7 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 			c.Deps[value] = true
 		}
 	case "visibility":
-		if intent.Negative {
-			delete(c.Visibility, value)
-		} else {
-			c.Visibility[value] = true
-		}
+		c.Visibility[value] = !intent.Negative
 	case "enabled":
 		enabled, err := strconv.ParseBool(value)
 		if err != nil {

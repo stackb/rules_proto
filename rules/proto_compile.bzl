@@ -281,7 +281,7 @@ def _proto_compile_impl(ctx):
             print("COMMAND:", c)
 
     return [
-        ProtoCompileInfo(label = ctx.label, outputs = outputs),
+        ProtoCompileInfo(label = ctx.label, outputs = outputs, srcs = ctx.files.srcs),
         DefaultInfo(files = depset(outputs)),
     ]
 

@@ -9,6 +9,8 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
+const gogoGrpcPluginOption = "plugins=grpc"
+
 func init() {
 	for _, variant := range []string{
 		"combo",
@@ -54,21 +56,31 @@ func (p *GogoPlugin) Outputs(rel string, cfg protoc.PackageConfig, lib protoc.Pr
 		} else if pkg.Name != "" {
 			base = path.Join(strings.ReplaceAll(pkg.Name, ".", "/"), base)
 		}
-		if f.HasMessages() || f.HasEnums() {
-			srcs = append(srcs, base+".pb.go")
-		}
+		srcs = append(srcs, base+".pb.go")
 	}
 	return srcs
 }
 
 // Options implements part of the optional PluginOptionsProvider
 // interface.  If the library contains services, apply the grpc plugin.
-func (p *GogoPlugin) Options(rel string, c *protoc.PackageConfig, lib protoc.ProtoLibrary) []string {
+func (p *GogoPlugin) Options(rel string, c protoc.PackageConfig, lib protoc.ProtoLibrary) []string {
+	cfg, ok := c.Plugin(p.Variant)
+	if !ok {
+		panic("unable to access the plugin config: " + p.Variant)
+	}
+
+	// if the configuration specifically states that we don't want grpc, return
+	// early
+	if want, ok := cfg.Options[gogoGrpcPluginOption]; ok && !want {
+		return nil
+	}
+
 	for _, f := range lib.Files() {
 		if f.HasServices() {
-			return []string{"plugins=grpc"}
+			return []string{gogoGrpcPluginOption}
 		}
 	}
+
 	return nil
 }
 

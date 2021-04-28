@@ -44,6 +44,13 @@ func NewPackageConfig() *PackageConfig {
 	}
 }
 
+// Plugin returns a readonly copy of the plugin configuration having the given
+// name. If the plugin is not known the bool return arg is false.
+func (c *PackageConfig) Plugin(name string) (LanguagePluginConfig, bool) {
+	plugin, ok := c.plugins[name]
+	return *plugin, ok
+}
+
 // Clone copies this config to a new one
 func (c *PackageConfig) Clone() *PackageConfig {
 	clone := NewPackageConfig()

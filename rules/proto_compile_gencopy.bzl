@@ -2,14 +2,28 @@ load("//cmd/gencopy:gencopy.bzl", "gencopy_action", "gencopy_attrs", "gencopy_co
 load(":providers.bzl", "ProtoCompileInfo")
 
 def _proto_compile_gencopy_impl(ctx):
-    outputs = []
-    for info in [dep[ProtoCompileInfo] for dep in ctx.attr.deps]:
-        outputs += info.outputs
 
-    script, runfiles = gencopy_action(ctx, gencopy_config(ctx), outputs)
+    config = gencopy_config(ctx)
+
+    srcs = []
+    outputs = []
+
+    for info in [dep[ProtoCompileInfo] for dep in ctx.attr.deps]:
+        srcs += info.srcs
+        outputs += info.outputs
+        config.packageConfigs.append(
+            struct(
+                targetLabel = str(info.label),
+                targetPackage = info.label.package,
+                generatedFiles = [f.short_path for f in info.outputs],
+                sourceFiles = [f.short_path for f in info.srcs],
+            )
+        )
+
+    config_json, script, runfiles = gencopy_action(ctx, config, srcs, outputs)
 
     return [DefaultInfo(
-        files = depset(outputs),
+        files = depset(outputs + [config_json]),
         runfiles = runfiles,
         executable = script,
     )]

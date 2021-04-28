@@ -30,6 +30,11 @@ func (s *protoCompiledSources) KindInfo() rule.KindInfo {
 			"plugins":    true,
 			"visibility": true,
 		},
+		SubstituteAttrs: map[string]bool{
+			"options":  true,
+			"out":      true,
+			"mappings": true,
+		},
 	}
 }
 
