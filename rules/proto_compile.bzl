@@ -15,24 +15,6 @@ def _uniq(iterable):
 
     return list(unique_elements.keys())
 
-def _copy_file(actions, src, dst, sibling = None):
-    """Copy a file to a new path destination
-    Args:
-      actions: the <ctx.actions> object
-      src: the source file <File>
-      dst: the destination path of the file
-      sibling: a file to use as a sibling to declare_file <File>
-    Returns:
-      <Generated File> for the copied file
-    """
-    actions.run_shell(
-        mnemonic = "CopyFile",
-        inputs = [src],
-        outputs = [dst],
-        command = "cp '{}' '{}'".format(src.path, dst.path),
-        progress_message = "copying {} to {}".format(src.path, dst.path),
-    )
-
 def _ctx_replace_args(ctx, args):
     return [_ctx_replace_arg(ctx, arg) for arg in args]
 

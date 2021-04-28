@@ -8,12 +8,10 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
-	"sort"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -76,27 +74,18 @@ func fileExists(filename string) bool {
 // copyFile - copy bytes from one file to another
 func copyFile(src, dst string) error {
 	if _, err := os.Stat(src); os.IsNotExist(err) {
-		return fmt.Errorf("CopyFile: srcFile not found: %s", src)
+		return fmt.Errorf("copyFile: src not found: %s", src)
 	}
 
-	in, err := os.Open(src)
+	// NOTE: for some reason the io.Copy approach was writing an empty file...
+	// for now OK to copy in-memory
+
+	data, err := ioutil.ReadFile(src)
 	if err != nil {
 		return err
 	}
-	defer in.Close()
+	return ioutil.WriteFile(dst, data, os.ModePerm)
 
-	out, err := os.Create(dst)
-	if err != nil {
-		return err
-	}
-	defer out.Close()
-
-	_, err = io.Copy(out, in)
-	if err != nil {
-		return err
-	}
-
-	return out.Close()
 }
 
 // readFileAsString reads the given file assumed to be text
@@ -119,40 +108,23 @@ $ bazel test %[1]s
 }
 
 func check(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
-	lenGen := len(pairs)
-	lenSrc := len(pkg.SourceFiles)
-
-	if lenSrc != lenGen {
-		return fmt.Errorf(
-			"check failed.  The number of source files (%d) does not match the number of generated files (%d)\n\n%s",
-			lenSrc, lenGen, usageHint(cfg, pkg))
-	}
-
-	// Sort all filenames by basename
-	sort.Slice(pairs, func(i, j int) bool {
-		return filepath.Base(pairs[i].dst) < filepath.Base(pairs[j].dst)
-	})
-	sort.Slice(pkg.SourceFiles, func(i, j int) bool {
-		return filepath.Base(pkg.SourceFiles[i]) < filepath.Base(pkg.SourceFiles[j])
-	})
-
-	for i, pair := range pairs {
-		expected, err := readFileAsString(pair.dst)
+	for _, pair := range pairs {
+		expected, err := readFileAsString(pair.src)
+		if err != nil {
+			return fmt.Errorf("check failed while reading src %s: %v", pair.src, err)
+		}
+		actual, err := readFileAsString(pair.dst)
 		if err != nil {
 			return fmt.Errorf("check failed while reading dst %s: %v", pair.dst, err)
 		}
-		actual, err := readFileAsString(pkg.SourceFiles[i])
-		if err != nil {
-			return fmt.Errorf("check failed while reading src %s: %v", pkg.SourceFiles[i], err)
-		}
 		if diff := cmp.Diff(expected, actual); diff != "" {
-			return fmt.Errorf("gencopy mismatch %q vs. %q (-want +got):\n%s", pair.dst, pkg.SourceFiles[i], diff)
+			return fmt.Errorf("gencopy mismatch %q vs. %q (-want +got):\n%s", pair.src, pair.dst, diff)
 		}
 	}
 
 	fmt.Printf("Target %s: generated files are up-to-date:\n", pkg.TargetLabel)
-	for _, filename := range pkg.SourceFiles {
-		fmt.Printf("  %s\n", filename)
+	for _, pair := range pairs {
+		fmt.Printf("  %s\n", pair.dst)
 	}
 
 	return nil
@@ -164,7 +136,7 @@ func update(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
 			return fmt.Errorf("could not copy file (directory create error): %w", err)
 		}
 		if err := copyFile(pair.src, pair.dst); err != nil {
-			return fmt.Errorf("could not copy file (%v): %w", pair, err)
+			return fmt.Errorf("could not copy file pair (%+v): %w", pair, err)
 		}
 	}
 
@@ -176,34 +148,45 @@ func update(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
 	return nil
 }
 
-func run(cfg *Config) (err error) {
-	for _, pkg := range cfg.PackageConfigs {
-		// Prepare the src -> dst pairs
-		pairs := make([]*srcDst, 0)
+func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
+	// Prepare the src -> dst pairs
+	pairs := make([]*srcDst, len(pkg.GeneratedFiles))
 
-		for _, src := range pkg.GeneratedFiles {
-			if !fileExists(src) {
-				return fmt.Errorf("could not prepare (file not found): %q", src)
-			}
-			base := filepath.Base(src)
-			dst := filepath.Join(cfg.WorkspaceRootDirectory, pkg.TargetPackage, base)
-			pairs = append(pairs, &srcDst{src, dst})
+	// we are copying/comparing generated files to their source file
+	// equivalents.  So here 'src' is the generated file and 'dst' is the
+	// source file target. So yeah.
+	for i, src := range pkg.GeneratedFiles {
+		if !fileExists(src) {
+			return fmt.Errorf("could not prepare (generated file not found): %q", src)
 		}
+		dst := filepath.Join(cfg.WorkspaceRootDirectory, pkg.SourceFiles[i])
+		pair := &srcDst{src, dst}
+		pairs[i] = pair
+		// log.Printf("pair: %+v", pair)
+	}
 
-		switch cfg.Mode {
-		case ModeCheck:
-			err = check(cfg, pkg, pairs)
-		case ModeUpdate:
-			err = update(cfg, pkg, pairs)
-		default:
-			err = fmt.Errorf("unknown run mode %q (should be one of %s, %s", cfg.Mode, ModeCheck, ModeUpdate)
-		}
-		if err != nil {
-			return err
-		}
+	switch cfg.Mode {
+	case ModeCheck:
+		err = check(cfg, pkg, pairs)
+	case ModeUpdate:
+		err = update(cfg, pkg, pairs)
+	default:
+		err = fmt.Errorf("unknown run mode %q (should be one of %s, %s", cfg.Mode, ModeCheck, ModeUpdate)
+	}
+	if err != nil {
+		return err
 	}
 
 	return
+}
+
+func run(cfg *Config) error {
+	for _, pkg := range cfg.PackageConfigs {
+		if err := runPkg(cfg, pkg); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func readConfig(workspaceRootDirectory string) (*Config, error) {
@@ -232,6 +215,10 @@ func main() {
 	cfg, err := readConfig(*workspaceDir)
 	if err != nil {
 		log.Fatalf("gencopy: %v", err)
+	}
+
+	if cfg.Mode == ModeUpdate && cfg.WorkspaceRootDirectory == "" {
+		log.Fatalln("workspace directory is mandatory in update mode")
 	}
 
 	if err := run(cfg); err != nil {

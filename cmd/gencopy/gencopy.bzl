@@ -34,9 +34,9 @@ def gencopy_config(ctx):
         packageConfigs = [],
     )
 
-def gencopy_action(ctx, config, srcs, outputs):
+def gencopy_action(ctx, config, runfiles):
     script = ctx.actions.declare_file(ctx.label.name + ".bash")
-    config_json = ctx.actions.declare_file(ctx.label.name + ".config.json")
+    config_json = ctx.actions.declare_file("%s.%s.json" % (ctx.label.name, config.mode))
 
     substitutions = {
         "@@GENCOPY_LABEL@@": shell.quote(str(ctx.attr._gencopy.label)),
@@ -61,4 +61,4 @@ def gencopy_action(ctx, config, srcs, outputs):
         is_executable = True,
     )
 
-    return config_json, script, ctx.runfiles(files = [ctx.executable._gencopy, config_json] + srcs + outputs)
+    return config_json, script, ctx.runfiles(files = [ctx.executable._gencopy, config_json] + runfiles)
