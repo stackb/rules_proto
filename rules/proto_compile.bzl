@@ -64,11 +64,16 @@ def is_windows(ctx):
     return ctx.configuration.host_path_separator == ";"
 
 def _proto_compile_impl(ctx):
-    # const <list<File>>
-    output_descriptor = ctx.outputs.descriptor
-
     # mut <list<File>>
     outputs = [] + ctx.outputs.outputs
+
+    # mut <?string> If defined, we are using the srcs to predict the outputs
+    # srcgen_ext = None
+    if len(ctx.attr.srcs) > 0:
+        if len(ctx.outputs.outputs) > 0:
+            fail("rule must provide 'srcs' or 'outputs', but not both")
+        # srcgen_ext = ctx.attr.srcgen_ext
+        outputs = [ctx.actions.declare_file(name) for name in ctx.attr.srcs]
 
     ###
     ### Part 1: setup variables used in scope
@@ -99,7 +104,7 @@ def _proto_compile_impl(ctx):
     tools = [protoc]
 
     # mut <list<string>> argument list for protoc execution
-    args = ["--descriptor_set_out="+output_descriptor.path] + ctx.attr.args
+    args = [] + ctx.attr.args
 
     # mut <list<File>> inputs for the compile action
     inputs = []
@@ -221,6 +226,8 @@ def _proto_compile_impl(ctx):
 
     # if the rule declares any mappings, setup copy file actions for them now
     for basename, intermediate_filename in ctx.attr.mappings.items():
+        # keyname = basename + srcgen_ext
+        # basename + srcgen_ext
         intermediate_filename = "/".join([ctx.bin_dir.path, intermediate_filename])
         output = outputs_by_basename.get(basename, None)
         if not output:
@@ -233,7 +240,7 @@ def _proto_compile_impl(ctx):
         inputs = inputs,
         # input_manifests = input_manifests, TODO
         mnemonic = "Protoc",
-        outputs = [output_descriptor] + outputs,
+        outputs = outputs,
         progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
         tools = tools,
     )
@@ -266,9 +273,9 @@ proto_compile = rule(
         "outputs": attr.output_list(
             doc = "List of source files we expect to be generated (relative to package)",
         ),
-        # "srcs": attr.output_list(
-        #     doc = "List of source files coming in",
-        # ),
+        "srcs": attr.string_list(
+            doc = "List of source files we expect to be regenerated (relative to package)",
+        ),
         "plugins": attr.label_list(
             doc = "List of ProtoPluginInfo providers",
             mandatory = True,
@@ -291,9 +298,6 @@ proto_compile = rule(
         "verbose": attr.int(
             doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox before+after running protoc*",
         ),
-    },
-    outputs = {
-        "descriptor": "%{name}_descriptor.proto.bin",
     },
     toolchains = ["@build_stack_rules_proto//protoc:toolchain_type"],
 )

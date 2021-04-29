@@ -10,7 +10,7 @@ def proto_compiled_sources(**kwargs):
 
     proto_compile(
         name = name,
-        outputs = srcs,
+        srcs = srcs,
         **kwargs,
     )
 

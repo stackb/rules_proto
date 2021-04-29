@@ -25,8 +25,8 @@ def _proto_compile_gencopy_impl(ctx):
 
     runfiles = []
 
-    # comprehend a mapping of path -> File
-    srcfiles = { f.path: f for f in ctx.files.srcs }
+    # comprehend a mapping of relpath -> File
+    srcfiles = { f.path[len(ctx.label.package):].lstrip("/"): f for f in ctx.files.srcs }
 
     for info in [dep[ProtoCompileInfo] for dep in ctx.attr.deps]:
         runfiles += info.outputs
@@ -38,19 +38,19 @@ def _proto_compile_gencopy_impl(ctx):
                 # make a copy of it...  but first, we need to find it in the srcs files!
                 found = False
                 for srcfilename, srcfile in srcfiles.items():
-                    if srcfilename.endswith(f.basename):
+                    if srcfilename == f.basename:
                         replica = ctx.actions.declare_file(f.basename+".actual", sibling=f)
                         _copy_file(ctx.actions, srcfile, replica)
                         runfiles.append(replica)
                         srcs.append(replica.short_path)
+                        found = True
+                        break
                 if not found:
                     fail("could find matching source file for generate file %s in %r" % (f.short_path, srcfiles))
 
             else:
-                # if we are in 'update' mode, the source file is assumed to not exist yet.
-                # in that case the source and output share the same short path.
                 srcs.append(f.short_path)
-        
+
         config.packageConfigs.append(
             struct(
                 targetLabel = str(info.label),
