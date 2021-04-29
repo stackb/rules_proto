@@ -10,12 +10,13 @@ def proto_compiled_sources(**kwargs):
 
     proto_compile(
         name = name,
-        srcs = srcs,
+        outputs = srcs,
         **kwargs,
     )
 
     proto_compile_gencopy_test(
         name = name_test,
+        srcs = srcs,
         deps = [name],
         mode = "check",
         update_target_label_name = name_update,

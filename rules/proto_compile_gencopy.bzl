@@ -25,29 +25,38 @@ def _proto_compile_gencopy_impl(ctx):
 
     runfiles = []
 
+    # comprehend a mapping of path -> File
+    srcfiles = { f.path: f for f in ctx.files.srcs }
+
     for info in [dep[ProtoCompileInfo] for dep in ctx.attr.deps]:
-        srcs = []
-        # here's the tricky bit: if we have a source file and generated file
-        # that have the same relative path, the source file will get shadowed by
-        # the generated one.  In the "update" case, that's not a problem.  In
-        # the "check" case, it means we have to disambiguate the source files
-        # with a different name.
-        if config.mode == "check":
-            for src in info.srcs:
-                replica = ctx.actions.declare_file(src.basename+".actual", sibling=src)
-                _copy_file(ctx.actions, src, replica)
-                srcs.append(replica)
-        else:
-            srcs += info.srcs
+        runfiles += info.outputs
 
-        runfiles += info.outputs + srcs
+        srcs = [] # list of string
+        for f in info.outputs:
+            if config.mode == "check":
+                # if we are in 'check' mode, the src and dst cannot be the same file, so
+                # make a copy of it...  but first, we need to find it in the srcs files!
+                found = False
+                for srcfilename, srcfile in srcfiles.items():
+                    if srcfilename.endswith(f.basename):
+                        replica = ctx.actions.declare_file(f.basename+".actual", sibling=f)
+                        _copy_file(ctx.actions, srcfile, replica)
+                        runfiles.append(replica)
+                        srcs.append(replica.short_path)
+                if not found:
+                    fail("could find matching source file for generate file %s in %r" % (f.short_path, srcfiles))
 
+            else:
+                # if we are in 'update' mode, the source file is assumed to not exist yet.
+                # in that case the source and output share the same short path.
+                srcs.append(f.short_path)
+        
         config.packageConfigs.append(
             struct(
                 targetLabel = str(info.label),
                 targetPackage = info.label.package,
                 generatedFiles = [f.short_path for f in info.outputs],
-                sourceFiles = [f.short_path for f in srcs],
+                sourceFiles = srcs,
             )
         )
 
@@ -68,6 +77,10 @@ def _proto_compile_gencopy_rule(is_test):
             deps = attr.label_list(
                 doc = "The ProtoCompileInfo providers",
                 providers = [ProtoCompileInfo],
+            ),
+            srcs = attr.label_list(
+                doc = "The ProtoCompileInfo providers",
+                allow_files = True
             ),
         ),
         executable = True,

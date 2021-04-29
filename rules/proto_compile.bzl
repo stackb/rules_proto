@@ -67,18 +67,8 @@ def _proto_compile_impl(ctx):
     # const <list<File>>
     output_descriptor = ctx.outputs.descriptor
 
-    # const <list<File>>
-    srcs = ctx.files.srcs
-
     # mut <list<File>>
     outputs = [] + ctx.outputs.outputs
-
-    if not outputs:
-        if not srcs:
-            fail("proto_compile rule MUST specify 'srcs' if 'outputs' list is empty")
-        for src in srcs:
-            output = ctx.actions.declare_file(src.basename, sibling=output_descriptor)
-            outputs.append(output)
 
     ###
     ### Part 1: setup variables used in scope
@@ -263,7 +253,7 @@ def _proto_compile_impl(ctx):
             print("COMMAND:", c)
 
     return [
-        ProtoCompileInfo(label = ctx.label, outputs = outputs, srcs = ctx.files.srcs),
+        ProtoCompileInfo(label = ctx.label, outputs = outputs),
         DefaultInfo(files = depset(outputs)),
     ]
 
@@ -276,10 +266,9 @@ proto_compile = rule(
         "outputs": attr.output_list(
             doc = "List of source files we expect to be generated (relative to package)",
         ),
-        "srcs": attr.label_list(
-            doc = "List of source files that have already been precompiled via the proto_compile_test rule",
-            allow_files = True,
-        ),
+        # "srcs": attr.output_list(
+        #     doc = "List of source files coming in",
+        # ),
         "plugins": attr.label_list(
             doc = "List of ProtoPluginInfo providers",
             mandatory = True,

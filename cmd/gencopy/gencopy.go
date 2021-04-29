@@ -84,8 +84,8 @@ func copyFile(src, dst string) error {
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(dst, data, os.ModePerm)
 
+	return ioutil.WriteFile(dst, data, os.ModePerm)
 }
 
 // readFileAsString reads the given file assumed to be text
