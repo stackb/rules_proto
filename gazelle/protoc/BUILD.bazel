@@ -25,6 +25,7 @@ go_library(
         "//pkg/gazelle/protoc",
         "//pkg/gogo",
         "//pkg/java",
+        "//pkg/grpc_gateway",
         "@bazel_gazelle//language:go_default_library",
     ],
 )
