@@ -122,10 +122,10 @@ func (f *File) Parse() error {
 	}
 	defer reader.Close()
 
-	return f.parseReader(reader)
+	return f.ParseReader(reader)
 }
 
-func (f *File) parseReader(in io.Reader) error {
+func (f *File) ParseReader(in io.Reader) error {
 	parser := proto.NewParser(in)
 	definition, err := parser.Parse()
 	if err != nil {
