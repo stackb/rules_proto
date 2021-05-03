@@ -52,6 +52,9 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 	configs := make([]*PluginConfiguration, 0)
 
 	for _, plugin := range p.Plugins {
+		if !plugin.Enabled {
+			continue
+		}
 		if !plugin.Implementation.ShouldApply(s.rel, *s.cfg, lib) {
 			continue
 		}

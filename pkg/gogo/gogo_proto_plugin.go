@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
-	"github.com/emicklei/proto"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
@@ -51,7 +50,7 @@ func (p *GogoPlugin) Outputs(rel string, cfg protoc.PackageConfig, lib protoc.Pr
 		base := f.Name
 		pkg := f.Package()
 		// see https://github.com/gogo/protobuf/blob/master/protoc-gen-gogo/generator/generator.go#L347
-		if goPackage, _, ok := goPackageOption(f.Options()); ok {
+		if goPackage, _, ok := protoc.GoPackageOption(f.Options()); ok {
 			base = path.Join(goPackage, base)
 		} else if pkg.Name != "" {
 			base = path.Join(strings.ReplaceAll(pkg.Name, ".", "/"), base)
@@ -82,29 +81,4 @@ func (p *GogoPlugin) Options(rel string, c protoc.PackageConfig, lib protoc.Prot
 	}
 
 	return nil
-}
-
-// goPackageOption is a utility function to seek for the go_package option and
-// split it.  If present the return values will be populated with the importpath
-// and alias (e.g. github.com/foo/bar/v1;bar -> "github.com/foo/bar/v1", "bar").
-// If the option was not found the bool return argument is false.
-func goPackageOption(options []proto.Option) (string, string, bool) {
-	for _, opt := range options {
-		if opt.Name != "go_package" {
-			continue
-		}
-		parts := strings.SplitN(opt.Constant.Source, ";", 2)
-		switch len(parts) {
-		case 0:
-			return "", "", true
-		case 1:
-			return parts[0], "", true
-		case 2:
-			return parts[0], parts[1], true
-		default:
-			return parts[0], strings.Join(parts[1:], ";"), true
-		}
-	}
-
-	return "", "", false
 }
