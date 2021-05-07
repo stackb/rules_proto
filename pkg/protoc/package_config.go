@@ -47,6 +47,9 @@ func NewPackageConfig() *PackageConfig {
 // Plugin returns a readonly copy of the plugin configuration having the given
 // name. If the plugin is not known the bool return arg is false.
 func (c *PackageConfig) Plugin(name string) (LanguagePluginConfig, bool) {
+	if c.plugins == nil {
+		return LanguagePluginConfig{}, false
+	}
 	if plugin, ok := c.plugins[name]; ok {
 		return *plugin, true
 	} else {

@@ -1,9 +1,12 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "gogo",
-    srcs = ["gogo_proto_plugin.go"],
-    importpath = "github.com/stackb/rules_proto/pkg/gogo",
+    name = "golang",
+    srcs = [
+        "protoc-gen-go.go",
+        "protoc-gen-go-grpc.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/golang",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",

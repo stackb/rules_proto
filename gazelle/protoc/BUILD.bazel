@@ -24,8 +24,9 @@ go_library(
     deps = [
         "//pkg/gazelle/protoc",
         "//pkg/gogo",
-        "//pkg/java",
+        "//pkg/golang",
         "//pkg/grpc_gateway",
+        "//pkg/java",
         "@bazel_gazelle//language:go_default_library",
     ],
 )

@@ -6,6 +6,10 @@ gencopy_attrs = {
         values = ["update", "check"],
         default = "check",
     ),
+    "file_mode": attr.string(
+        doc = "The target unix file mode.",
+        default = "0644",
+    ),
     "package": attr.string(
         doc = "The target package for the rule. If empty, default to ctx.label.package",
     ),
@@ -30,6 +34,7 @@ gencopy_attrs = {
 def gencopy_config(ctx):
     return struct(
         mode = ctx.attr.mode,
+        fileMode = ctx.attr.file_mode,
         updateTargetLabelName = ctx.attr.update_target_label_name,
         packageConfigs = [],
     )

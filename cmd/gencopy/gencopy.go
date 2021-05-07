@@ -12,6 +12,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -40,6 +41,9 @@ type (
 		// mode == "check", a file difference check will be performed to
 		// assert that the source and dst file contents are identical.
 		Mode string
+		// FileMode is the desired FileMode for file copy operations.  This
+		// should be expressed as an octal number like '0644'.
+		FileMode string
 		// The set of packages we are generating for
 		PackageConfigs []*PackageConfig
 	}
@@ -72,7 +76,7 @@ func fileExists(filename string) bool {
 }
 
 // copyFile - copy bytes from one file to another
-func copyFile(src, dst string) error {
+func copyFile(src, dst string, mode os.FileMode) error {
 	if _, err := os.Stat(src); os.IsNotExist(err) {
 		return fmt.Errorf("copyFile: src not found: %s", src)
 	}
@@ -85,7 +89,7 @@ func copyFile(src, dst string) error {
 		return err
 	}
 
-	return ioutil.WriteFile(dst, data, os.ModePerm)
+	return ioutil.WriteFile(dst, data, mode)
 }
 
 // readFileAsString reads the given file assumed to be text
@@ -131,11 +135,15 @@ func check(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
 }
 
 func update(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
+	mode, err := parseFileMode(cfg.FileMode)
+	if err != nil {
+		return fmt.Errorf("update: %v", err)
+	}
 	for _, pair := range pairs {
 		if err := os.MkdirAll(filepath.Base(pair.dst), os.ModePerm); err != nil {
 			return fmt.Errorf("could not copy file (directory create error): %w", err)
 		}
-		if err := copyFile(pair.src, pair.dst); err != nil {
+		if err := copyFile(pair.src, pair.dst, mode); err != nil {
 			return fmt.Errorf("could not copy file pair (%+v): %w", pair, err)
 		}
 	}
@@ -162,7 +170,6 @@ func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
 		dst := filepath.Join(cfg.WorkspaceRootDirectory, pkg.SourceFiles[i])
 		pair := &srcDst{src, dst}
 		pairs[i] = pair
-		// log.Printf("pair: %+v", pair)
 	}
 
 	switch cfg.Mode {
@@ -204,6 +211,10 @@ func readConfig(workspaceRootDirectory string) (*Config, error) {
 		return nil, fmt.Errorf("could not parse config file: %w", err)
 	}
 
+	if cfg.FileMode == "" {
+		cfg.FileMode = "0644"
+	}
+
 	// log.Printf("%+v", cfg)
 
 	return cfg, nil
@@ -224,4 +235,12 @@ func main() {
 	if err := run(cfg); err != nil {
 		log.Fatalf("gencopy: %v", err)
 	}
+}
+
+func parseFileMode(s string) (os.FileMode, error) {
+	value, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return 0, err
+	}
+	return os.FileMode(value), nil
 }
