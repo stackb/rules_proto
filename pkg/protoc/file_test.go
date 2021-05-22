@@ -7,7 +7,7 @@ import (
 
 func mustParseTestFile(t *testing.T, in string) *File {
 	f := &File{}
-	if err := f.parseReader(strings.NewReader(in)); err != nil {
+	if err := f.ParseReader(strings.NewReader(in)); err != nil {
 		t.Fatalf("mustTestFile: %v", err)
 	}
 	return f
