@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin("common_js_proto", &CommonJsPlugin{})
+	protoc.Plugins().MustRegisterPlugin("commonjs", &CommonJsPlugin{})
 }
 
 // CommonJsPlugin implements Plugin for the built-in js plugin with

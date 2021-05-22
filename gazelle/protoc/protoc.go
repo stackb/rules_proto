@@ -8,6 +8,8 @@ import (
 	_ "github.com/stackb/rules_proto/pkg/golang"
 	_ "github.com/stackb/rules_proto/pkg/grpc_gateway"
 	_ "github.com/stackb/rules_proto/pkg/java"
+	_ "github.com/stackb/rules_proto/pkg/js"
+	_ "github.com/stackb/rules_proto/pkg/protobufjs"
 )
 
 // NewLanguage is called by Gazelle to install this language extension in a
