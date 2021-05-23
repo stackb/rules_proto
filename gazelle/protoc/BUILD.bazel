@@ -28,7 +28,6 @@ go_library(
         "//pkg/grpc_gateway",
         "//pkg/java",
         "//pkg/js",
-        "//pkg/protobufjs",
         "@bazel_gazelle//language:go_default_library",
     ],
 )
