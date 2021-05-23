@@ -4,8 +4,9 @@ go_library(
     name = "protobufjs",
     srcs = [
         "pbjs.go",
-        "ts_proto.go",
+        "protoc-gen-go-grpc.go",
         "protoc_gen_ts.go",
+        "ts_proto.go",
     ],
     importpath = "github.com/stackb/rules_proto/pkg/protobufjs",
     visibility = ["//visibility:public"],

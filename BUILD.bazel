@@ -13,65 +13,65 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 # ----------------------------------------------------
 # Configuration of the plugins
 # ----------------------------------------------------
-# gazelle:proto_plugin cc_proto //protoc:cc_proto_plugin
-# gazelle:proto_plugin cc_grpc //grpc/grpc:grpc_cpp_plugin
-# gazelle:proto_plugin py_proto //protoc:py_proto_plugin
-# gazelle:proto_plugin java_proto //protoc:java_proto_plugin
-# gazelle:proto_plugin java_grpc //grpc/grpc-java:grpc_java_plugin
-# gazelle:proto_plugin closure_js_proto //protoc:closure_js_proto_plugin
-# gazelle:proto_plugin common_js_proto //protoc:common_js_proto_plugin
-# gazelle:proto_plugin gogofast //gogo:gogofast
+## gazelle:proto_plugin cc_proto label //protoc:cc_proto_plugin
+## gazelle:proto_plugin cc_grpc label //grpc/grpc:grpc_cpp_plugin
+## gazelle:proto_plugin py_proto label //protoc:py_proto_plugin
+# gazelle:proto_plugin java_proto label //protoc:java_proto_plugin
+# gazelle:proto_plugin java_grpc label //grpc/grpc-java:grpc_java_plugin
+# gazelle:proto_plugin closure_js_proto label //protoc:closure_js_proto_plugin
+# gazelle:proto_plugin commonjs label //protoc:common_js_proto_plugin
+# gazelle:proto_plugin gogofast label //gogo:gogofast
 
 # ----------------------------------------------------
 # Configuration of the proto rules
 # ----------------------------------------------------
-# gazelle:proto_rule cc_proto_library dep @foo//:bar
+## gazelle:proto_rule cc_proto_library dep @foo//:bar
 
 # ----------------------------------------------------
 # Configuration of the 'cc' proto_lang
 # ----------------------------------------------------
-# gazelle:proto_language cc kind cc_library
-# gazelle:proto_language cc load @rules_cc//:deps.bzl
-# gazelle:proto_language cc plugin cc_proto
-# gazelle:proto_language cc plugin cc_grpc
+## gazelle:proto_language cc kind cc_library
+## gazelle:proto_language cc load @rules_cc//:deps.bzl
+## gazelle:proto_language cc plugin cc_proto
+## gazelle:proto_language cc plugin cc_grpc
 
 # ----------------------------------------------------
 # Configuration of the 'py' proto_lang
 # ----------------------------------------------------
-# gazelle:proto_language py kind py_library
-# gazelle:proto_language py load @rules_pything//:deps.bzl
-# gazelle:proto_language py plugin py_proto
+## gazelle:proto_language py kind py_library
+## gazelle:proto_language py load @rules_pything//:deps.bzl
+## gazelle:proto_language py plugin py_proto
 
 # ----------------------------------------------------
 # Configuration of the 'java' proto_lang
 # ----------------------------------------------------
-# gazelle:proto_language java kind java_library
+## gazelle:proto_language java kind java_library
 ## gazelle:proto_language java include *.srcjar
-# gazelle:proto_language java load @rules_java//:deps.bzl
-# gazelle:proto_language java plugin java_proto
-# gazelle:proto_language java plugin java_grpc
+## gazelle:proto_language java load @rules_java//:deps.bzl
+## gazelle:proto_language java plugin java_proto
+## gazelle:proto_language java plugin java_grpc
 ## gazelle:proto_language java requires @com_google_protobuf//:protobuf_java
 
 # ----------------------------------------------------
 # Configuration of the 'closure_js' proto_lang
 # ----------------------------------------------------
-# gazelle:proto_language closure_js kind closure_js_library
-# gazelle:proto_language closure_js load @rules_closure_js//:deps.bzl
-# gazelle:proto_language closure_js plugin closure_js_proto
+## gazelle:proto_language closure_js kind closure_js_library
+## gazelle:proto_language closure_js load @rules_closure_js//:deps.bzl
+## gazelle:proto_language closure_js plugin closure_js_proto
 
 # ----------------------------------------------------
 # Configuration of the 'common_js' proto_lang
 # ----------------------------------------------------
-# gazelle:proto_language common_js kind js_library
-# gazelle:proto_language common_js load @rules_js//:deps.bzl
-# gazelle:proto_language common_js plugin common_js_proto
+## gazelle:proto_language common_js kind js_library
+## gazelle:proto_language common_js load @rules_js//:deps.bzl
+## gazelle:proto_language common_js plugin common_js_proto
 
 # ----------------------------------------------------
 # Configuration of the 'gogofast' proto_lang
 # ----------------------------------------------------
-# gazelle:proto_language gogofast kind go_library
-# gazelle:proto_language gogofast load @rules_js//:deps.bzl
-# gazelle:proto_language gogofast plugin gogofast
+## gazelle:proto_language gogofast kind go_library
+## gazelle:proto_language gogofast load @rules_js//:deps.bzl
+## gazelle:proto_language gogofast plugin gogofast
 
 gazelle_binary(
     name = "gazelle-protoc",
@@ -80,6 +80,7 @@ gazelle_binary(
     languages = [
         # NOTE: order matters here.  Gazelle will respect the ordering of
         # languages which will impact the population of 'OtherGen'
+        "@bazel_gazelle//language/go:go_default_library",
         "@bazel_gazelle//language/proto:go_default_library",
         "//gazelle/protoc",
     ],
@@ -92,7 +93,7 @@ gazelle(
 
 gazelle(
     name = "update_build_files",
-    gazelle = ":gazelle-proto",
+    gazelle = ":gazelle-protoc",
 )
 
 gazelle(

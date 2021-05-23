@@ -114,6 +114,14 @@ def go_deps():
         version = "v1.4.7",
     )
     go_repository(
+        name = "com_github_gogo_protobuf",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/gogo/protobuf",
+        sum = "h1:DqDEcV5aeaTmdFBePNpYsp3FlcVH/2ISVVM9Qf8PSls=",
+        version = "v1.3.1",
+    )
+
+    go_repository(
         name = "com_github_golang_glog",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/golang/glog",
@@ -141,6 +149,20 @@ def go_deps():
         sum = "h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=",
         version = "v0.5.5",
     )
+    go_repository(
+        name = "com_github_kisielk_errcheck",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/kisielk/errcheck",
+        sum = "h1:reN85Pxc5larApoH1keMBiu2GWtPqXQ1nc9gx+jOU+E=",
+        version = "v1.2.0",
+    )
+    go_repository(
+        name = "com_github_kisielk_gotool",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/kisielk/gotool",
+        sum = "h1:AV2c/EiW3KqPNT9ZKl07ehoAGi4C5/01Cfbblndcapg=",
+        version = "v1.0.0",
+    )
 
     go_repository(
         name = "com_github_kr_pretty",
@@ -164,6 +186,14 @@ def go_deps():
         version = "v0.1.0",
     )
     go_repository(
+        name = "com_github_kylelemons_godebug",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/kylelemons/godebug",
+        sum = "h1:MtvEpTB6LX3vkb4ax0b5D2DHbNAUsen0Gx5wZoq3lV4=",
+        version = "v0.0.0-20170820004349-d65d576e9348",
+    )
+
+    go_repository(
         name = "com_github_pelletier_go_toml",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/pelletier/go-toml",
@@ -184,6 +214,14 @@ def go_deps():
         sum = "h1:gQz4mCbXsO+nc9n1hCxHcGA3Zx3Eo+UHZoInFGUIXNM=",
         version = "v0.0.0-20190812154241-14fe0d1b01d4",
     )
+    go_repository(
+        name = "com_github_stripe_skycfg",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/stripe/skycfg",
+        sum = "h1:Kl/jvboLcvI67K6MEh75iCJOvG/Hhx8rDhlhIjNMwFw=",
+        version = "v0.1.0",
+    )
+
     go_repository(
         name = "com_google_cloud_go",
         build_file_proto_mode = "disable_global",
