@@ -1,0 +1,21 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+# gazelle:proto_language builtins plugin protoc:cpp
+# gazelle:proto_language builtins rule proto_compile
+
+proto_library(
+    name = "test_proto",
+    srcs = ["test.proto"],
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "test_builtins_compile",
+    outputs = [
+        "test.pb.cc",
+        "test.pb.h",
+    ],
+    plugins = ["@build_stack_rules_proto//plugin/protoc:cpp"],
+    proto = "test_proto",
+)

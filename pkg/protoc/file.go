@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -173,6 +174,18 @@ func (f *File) handleService(s *proto.Service) {
 
 func (f *File) handleMessage(m *proto.Message) {
 	f.messages = append(f.messages, *m)
+}
+
+// PackageFileName is a utility function that returns the name of a predicted
+// generated file having the given extension.  If the proto package is defined,
+// the output file will be in the corresponding directory.
+func PackageFileName(f *File) string {
+	name := f.Name
+	pkg := f.Package()
+	if pkg.Name != "" {
+		name = path.Join(strings.ReplaceAll(pkg.Name, ".", "/"), name)
+	}
+	return name
 }
 
 // GoPackagePath replaces dots with forward slashes.

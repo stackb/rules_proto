@@ -23,6 +23,7 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/gazelle/protoc",
+        "//pkg/plugin",
         "//pkg/gogo",
         "//pkg/golang",
         "//pkg/grpc_gateway",

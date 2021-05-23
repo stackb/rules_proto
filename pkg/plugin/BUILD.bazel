@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "plugin",
+    srcs = [
+        "doc.go",
+        "grpc_grpc_cpp.go",
+        "plugin_test_case.go",
+        "protoc_cpp.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/plugin",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)
+
+go_test(
+    name = "plugin_test",
+    srcs = ["protoc_cpp_test.go"],
+    embed = [":plugin"],
+)

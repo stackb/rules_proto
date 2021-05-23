@@ -1,2 +1,0 @@
-# gazelle:proto_language gogofast plugin gogofast
-# gazelle:proto_language gogofast rule proto_compiled_sources
