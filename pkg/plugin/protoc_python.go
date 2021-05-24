@@ -12,7 +12,7 @@ func init() {
 	protoc.Plugins().MustRegisterPlugin(&ProtocPythonPlugin{})
 }
 
-// ProtocPythonPlugin implements Plugin for the built-in protoc C++ plugin.
+// ProtocPythonPlugin implements Plugin for the built-in protoc python plugin.
 type ProtocPythonPlugin struct{}
 
 // Name implements part of the Plugin interface.

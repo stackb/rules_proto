@@ -13,6 +13,7 @@ go_library(
         "protoc_php.go",
         "protoc_python.go",
         "protoc_ruby.go",
+        "protoc_csharp.go",
     ],
     importpath = "github.com/stackb/rules_proto/pkg/plugin",
     visibility = ["//visibility:public"],
@@ -27,6 +28,7 @@ go_test(
     name = "plugin_test",
     srcs = [
         "protoc_cpp_test.go",
+        "protoc_csharp_test.go",
         "protoc_java_test.go",
         "protoc_js_closure_test.go",
         "protoc_js_common_test.go",

@@ -12,7 +12,7 @@ func init() {
 	protoc.Plugins().MustRegisterPlugin(&ProtocPhpPlugin{})
 }
 
-// ProtocPhpPlugin implements Plugin for the built-in protoc C++ plugin.
+// ProtocPhpPlugin implements Plugin for the built-in protoc php plugin.
 type ProtocPhpPlugin struct{}
 
 // Name implements part of the Plugin interface.

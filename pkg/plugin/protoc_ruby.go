@@ -9,7 +9,7 @@ func init() {
 	protoc.Plugins().MustRegisterPlugin(&ProtocRubyPlugin{})
 }
 
-// ProtocRubyPlugin implements Plugin for the built-in protoc C++ plugin.
+// ProtocRubyPlugin implements Plugin for the built-in protoc ruby plugin.
 type ProtocRubyPlugin struct{}
 
 // Name implements part of the Plugin interface.

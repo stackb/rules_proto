@@ -300,3 +300,14 @@ func GoPackageOption(options []proto.Option) (string, string, bool) {
 
 	return "", "", false
 }
+
+// GetNamedOption is a utility function to seek for the php_namespace option.
+func GetNamedOption(options []proto.Option, name string) string {
+	for _, opt := range options {
+		if opt.Name != name {
+			continue
+		}
+		return opt.Constant.Source
+	}
+	return ""
+}
