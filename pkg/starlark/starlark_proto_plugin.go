@@ -24,7 +24,12 @@ func init() {
 		os.Exit(1)
 	}
 
-	protoc.Plugins().MustRegisterPlugin("skycfg", &StarlarkPlugin{config})
+	protoc.Plugins().MustRegisterPlugin(&StarlarkPlugin{config})
+}
+
+// Name implements part of the Plugin interface.
+func (p *StarlarkPlugin) Name() string {
+	return "starlark"
 }
 
 // Label implements part of the Plugin interface.
@@ -34,12 +39,12 @@ func (p *StarlarkPlugin) Label() label.Label {
 }
 
 // ShouldApply implements part of the Plugin interface.
-func (p *StarlarkPlugin) ShouldApply(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) bool {
+func (p *StarlarkPlugin) ShouldApply(ctx *protoc.PluginContext) bool {
 	return false
 }
 
 // Outputs implements part of the Plugin interface.
-func (p *StarlarkPlugin) Outputs(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) []string {
+func (p *StarlarkPlugin) Outputs(ctx *protoc.PluginContext) []string {
 	srcs := make([]string, 0)
 	return srcs
 }

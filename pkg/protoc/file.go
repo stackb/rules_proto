@@ -176,16 +176,72 @@ func (f *File) handleMessage(m *proto.Message) {
 	f.messages = append(f.messages, *m)
 }
 
-// PackageFileName is a utility function that returns the name of a predicted
-// generated file having the given extension.  If the proto package is defined,
-// the output file will be in the corresponding directory.
-func PackageFileName(f *File) string {
-	name := f.Name
-	pkg := f.Package()
-	if pkg.Name != "" {
-		name = path.Join(strings.ReplaceAll(pkg.Name, ".", "/"), name)
+// PackageFileName is a utility function that returns a fucntion that compuutes
+// the name of a predicted generated file having the given extension(s).  If the
+// proto package is defined, the output file will be in the corresponding
+// directory.
+func PackageFileNameWithExtensions(exts ...string) func(f *File) []string {
+	return func(f *File) []string {
+		outs := make([]string, len(exts))
+		name := f.Name
+		pkg := f.Package()
+		if pkg.Name != "" {
+			name = path.Join(strings.ReplaceAll(pkg.Name, ".", "/"), name)
+		}
+		for i, ext := range exts {
+			outs[i] = name + ext
+		}
+		return outs
 	}
-	return name
+}
+
+// HasMessagesOrEnums is a utility function that tests if any of the given files
+// has a message or an enum.
+func HasMessagesOrEnums(files ...*File) bool {
+	for _, f := range files {
+		if HasMessageOrEnum(f) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasServices is a utility function that tests if any of the given files has a
+// service.
+func HasServices(files ...*File) bool {
+	for _, f := range files {
+		if HasService(f) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasMessageOrEnum is a utility function that tests if any of the given file
+// has a message or an enum.
+func HasMessageOrEnum(file *File) bool {
+	return file.HasMessages() || file.HasEnums()
+}
+
+// HasService is a utility function that tests if any of the given file has a
+// message or an enum.
+func HasService(file *File) bool {
+	return file.HasServices()
+}
+
+// FlatMapFiles is a utility function intended for use in computing a list of
+// output files for a given proto_library. The given apply function is executed
+// foreach file that passes the filter function, and flattens the strings into a
+// single list.
+func FlatMapFiles(apply func(file *File) []string, filter func(file *File) bool, files ...*File) []string {
+	values := make([]string, 0)
+	for _, f := range files {
+		if !filter(f) {
+			continue
+		}
+		values = append(values, apply(f)...)
+	}
+	return values
 }
 
 // GoPackagePath replaces dots with forward slashes.

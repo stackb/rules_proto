@@ -1,8 +1,8 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
-# gazelle:proto_language builtins plugin protoc:cpp
 # gazelle:proto_language builtins rule proto_compile
+# gazelle:proto_language builtins plugin protoc:cpp
 
 proto_library(
     name = "test_proto",

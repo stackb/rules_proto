@@ -8,23 +8,26 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
-const PyProtoName = "py_proto"
-
 func init() {
-	protoc.Plugins().MustRegisterPlugin(PyProtoName, &PyProtoPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&ProtocPythonPlugin{})
 }
 
-// PyProtoPlugin implements Plugin for the built-in protoc python plugin.
-type PyProtoPlugin struct{}
+// ProtocPythonPlugin implements Plugin for the built-in protoc python plugin.
+type ProtocPythonPlugin struct{}
 
 // Label implements part of the Plugin interface.
-func (p *PyProtoPlugin) Label() label.Label {
+func (p *ProtocPythonPlugin) Name() string {
+	return "protoc:python"
+}
+
+// Label implements part of the Plugin interface.
+func (p *ProtocPythonPlugin) Label() label.Label {
 	return label.New("build_stack_rules_proto", "protocolbuffers/protobuf", "py_proto_plugin")
 }
 
 // ShouldApply implements part of the Plugin interface.
-func (p *PyProtoPlugin) ShouldApply(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) bool {
-	for _, f := range lib.Files() {
+func (p *ProtocPythonPlugin) ShouldApply(ctx *protoc.PluginContext) bool {
+	for _, f := range ctx.ProtoLibrary.Files() {
 		if f.HasMessages() || f.HasEnums() {
 			return true
 		}
@@ -33,9 +36,9 @@ func (p *PyProtoPlugin) ShouldApply(rel string, cfg protoc.PackageConfig, lib pr
 }
 
 // Outputs implements part of the Plugin interface.
-func (p *PyProtoPlugin) Outputs(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) []string {
+func (p *ProtocPythonPlugin) Outputs(ctx *protoc.PluginContext) []string {
 	srcs := make([]string, 0)
-	for _, f := range lib.Files() {
+	for _, f := range ctx.ProtoLibrary.Files() {
 		base := f.Name
 		pkg := f.Package()
 		if pkg.Name != "" {

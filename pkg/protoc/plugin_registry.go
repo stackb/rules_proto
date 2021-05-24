@@ -14,5 +14,5 @@ type PluginRegistry interface {
 	// MustRegisterPlugin installs a Plugin implementation under the given
 	// name in the global plugin registry.  Panic will occur of the same plugin is
 	// registered multiple times.
-	MustRegisterPlugin(name string, plugin Plugin) PluginRegistry
+	MustRegisterPlugin(plugin Plugin) PluginRegistry
 }

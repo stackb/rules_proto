@@ -45,7 +45,7 @@ func mergeSources(rel string, plugins []*PluginConfiguration) ([]string, map[str
 	for _, plugin := range plugins {
 		// if plugin provided mappings for us, use those preferentially
 		if len(plugin.Mappings) > 0 {
-			srcs = append(srcs, plugin.Srcs...)
+			srcs = append(srcs, plugin.Outputs...)
 
 			for k, v := range plugin.Mappings {
 				mappings[k] = v
@@ -54,7 +54,7 @@ func mergeSources(rel string, plugins []*PluginConfiguration) ([]string, map[str
 		}
 
 		// otherwise, fallback to baseline method
-		for _, filename := range plugin.Srcs {
+		for _, filename := range plugin.Outputs {
 			dir := path.Dir(filename)
 			if dir == "." && rel == "" {
 				dir = rel

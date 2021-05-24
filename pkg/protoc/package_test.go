@@ -37,7 +37,7 @@ func exampleProtoLibrary() ProtoLibrary {
 func examplePackageConfig() *PackageConfig {
 	c := NewPackageConfig()
 	if err := c.ParseDirectives(exampleDir, withDirectives(
-		"proto_plugin", "fake_proto label @fake//proto/plugin",
+		"proto_plugin", "fake_proto implementation protoc:fake",
 		"proto_plugin", "fake_proto enabled true",
 		"proto_language", "fake plugin fake_proto",
 		"proto_language", "fake enabled true",
@@ -56,13 +56,13 @@ func examplePackage() *Package {
 	)
 }
 
-func ExamplePackageRules() {
+func ExamplePackage() {
 	printRules(examplePackage().Rules())
 	// Output:
 	// proto_compile(
 	//     name = "test_fake_compile",
 	//     outputs = ["test_fake.pb.go"],
-	//     plugins = ["@fake//proto/plugin"],
+	//     plugins = ["@build_stack_rules_proto//plugin/protoc:fake"],
 	//     proto = "test_proto",
 	// )
 }
@@ -72,11 +72,5 @@ func printRules(rules []*rule.Rule) {
 	for _, r := range rules {
 		r.Insert(file)
 	}
-	fmt.Println(string(file.Format()))
-}
-
-func printRule(r *rule.Rule) {
-	file := rule.EmptyFile(exampleDir, "")
-	r.Insert(file)
 	fmt.Println(string(file.Format()))
 }

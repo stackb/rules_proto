@@ -4,48 +4,48 @@ import (
 	"testing"
 )
 
-func TestProtocCppPlugin(t *testing.T) {
-	PluginTestCases(t, &ProtocCppPlugin{}, map[string]PluginTestCase{
+func TestProtocJavaPlugin(t *testing.T) {
+	PluginTestCases(t, &ProtocJavaPlugin{}, map[string]PluginTestCase{
 		"empty file": {
 			Input: "",
 			Directives: WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "java implementation protoc:java",
 			),
 			Configuration: WithConfiguration(
-				WithName("cpp"),
+				WithName("java"),
 				WithSkip(true),
 			),
 		},
 		"only services": {
 			Input: "service S{}",
 			Directives: WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "java implementation protoc:java",
 			),
 			Configuration: WithConfiguration(
-				WithName("cpp"),
+				WithName("java"),
 				WithSkip(true),
 			),
 		},
 		"message with no package": {
 			Input: "message M{}",
 			Directives: WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "java implementation protoc:java",
 			),
 			Configuration: WithConfiguration(
-				WithName("cpp"),
+				WithName("java"),
 				WithSkip(false),
-				WithOutputs("test.pb.cc", "test.pb.h"),
+				WithOutputs("test.srcjar"),
 			),
 		},
 		"message with a package": {
 			Input: "package a;\n\nmessage M{}",
 			Directives: WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "java implementation protoc:java",
 			),
 			Configuration: WithConfiguration(
-				WithName("cpp"),
+				WithName("java"),
 				WithSkip(false),
-				WithOutputs("a/test.pb.cc", "a/test.pb.h"),
+				WithOutputs("test.srcjar"),
 			),
 		},
 	})

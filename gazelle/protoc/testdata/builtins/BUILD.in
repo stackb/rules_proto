@@ -1,2 +1,3 @@
-# gazelle:proto_language builtins plugin protoc:cpp
 # gazelle:proto_language builtins rule proto_compile
+# gazelle:proto_language builtins plugin protoc:cpp
+# gazelle:proto_language builtins plugin grpc:grpc:cpp

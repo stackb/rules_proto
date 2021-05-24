@@ -11,7 +11,6 @@ def _proto_plugin_impl(ctx):
             name = ctx.attr.name,
             label = ctx.label,
             out = ctx.attr.out,
-            options = ctx.attr.options,
             tool = ctx.executable.tool,
             tool_target = ctx.attr.tool,
             use_built_in_shell_environment = ctx.attr.use_built_in_shell_environment,
@@ -27,9 +26,6 @@ def _proto_plugin_impl(ctx):
 proto_plugin = rule(
     implementation = _proto_plugin_impl,
     attrs = {
-        "options": attr.string_list(
-            doc = "A list of options to pass to the compiler for this plugin",
-        ),
         "tool": attr.label(
             doc = "The plugin binary. If absent, it is assumed the plugin is built-in to protoc itself and builtin_plugin_name will be used if available, otherwise the plugin name",
             cfg = "exec",

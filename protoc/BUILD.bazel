@@ -38,22 +38,22 @@ proto_plugin(
 
 proto_plugin(
     name = "closure_js_proto_plugin",
-    options = [
-        "add_require_for_enums",
-        "binary",
-        "error_on_name_conflict",
-        "import_style=closure",
-    ],
+    # options = [
+    #     "add_require_for_enums",
+    #     "binary",
+    #     "error_on_name_conflict",
+    #     "import_style=closure",
+    # ],
     protoc_plugin_name = "js",
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
     name = "common_js_proto_plugin",
-    options = [
-        "import_style=commonjs",
-        "binary",
-    ],
+    # options = [
+    #     "import_style=commonjs",
+    #     "binary",
+    # ],
     protoc_plugin_name = "js",
     visibility = ["//visibility:public"],
 )

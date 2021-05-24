@@ -146,14 +146,6 @@ func (c *PackageConfig) getOrCreateLanguagePluginConfig(name string) (*LanguageP
 	plugin, ok := c.plugins[name]
 	if !ok {
 		plugin = newLanguagePluginConfig(name)
-		impl, err := globalRegistry.LookupPlugin(name)
-		if err == ErrUnknownPlugin {
-			return nil, fmt.Errorf(
-				"plugin not registered: %s (available: %v)", name,
-				globalRegistry.PluginNames())
-		}
-		plugin.Implementation = impl
-		plugin.Label = impl.Label()
 		c.plugins[name] = plugin
 	}
 	return plugin, nil

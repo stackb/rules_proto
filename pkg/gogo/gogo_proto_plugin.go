@@ -29,6 +29,11 @@ type GogoPlugin struct {
 	Variant string
 }
 
+// Name implements part of the Plugin interface.
+func (p *GogoPlugin) Name() string {
+	return "gogo:protobuf:" + p.Variant
+}
+
 // Label implements part of the Plugin interface.
 func (p *GogoPlugin) Label() label.Label {
 	return label.New("build_stack_rules_proto", "gogo/protobuf", p.Variant+"_plugin")

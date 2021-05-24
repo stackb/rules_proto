@@ -14,6 +14,7 @@ go_library(
         "package_config.go",
         "plugin.go",
         "plugin_configuration.go",
+        "plugin_context.go",
         "plugin_registry.go",
         "proto_compile.go",
         "proto_compiled_sources.go",

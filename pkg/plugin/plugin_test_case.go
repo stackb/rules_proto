@@ -1,6 +1,10 @@
 package plugin
 
 import (
+	"log"
+	"os"
+	"os/exec"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -9,30 +13,80 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
+func PluginTestCases(t *testing.T, subject protoc.Plugin, cases map[string]PluginTestCase) {
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			tc.Run(t, subject)
+		})
+	}
+}
+
 type PluginTestCase struct {
 	// The name of the proto file to mock parse.  If not set, defaults to 'test.proto'
 	Filename string
 	// The relative package path
 	Rel string
+	// The Configuration
 	// Optional directives for the package config
 	Directives []rule.Directive
 	// The input proto file source.  "syntax = proto3" will be automatically prepended.
 	Input string
-	// The expected value for "ShouldApply"
-	ShouldApply bool
-	// The expected outputs for "Outputs"
-	Outputs []string
+	// The expected value for the final configuration state
+	Configuration *protoc.PluginConfiguration
+}
+
+type PluginConfigurationOption func(c *protoc.PluginConfiguration)
+
+func WithConfiguration(options ...PluginConfigurationOption) *protoc.PluginConfiguration {
+	c := &protoc.PluginConfiguration{}
+	for _, opt := range options {
+		opt(c)
+	}
+	return c
+}
+
+func WithSkip(skip bool) PluginConfigurationOption {
+	return func(c *protoc.PluginConfiguration) {
+		c.Skip = skip
+	}
+}
+
+func WithName(name string) PluginConfigurationOption {
+	return func(c *protoc.PluginConfiguration) {
+		c.Name = name
+	}
+}
+
+func WithOutputs(outputs ...string) PluginConfigurationOption {
+	return func(c *protoc.PluginConfiguration) {
+		c.Outputs = outputs
+	}
+}
+
+func WithDirectives(items ...string) (d []rule.Directive) {
+	if len(items)%2 != 0 {
+		panic("directive list must be a sequence of key/value pairs")
+	}
+	if len(items) < 2 {
+		return
+	}
+	for i := 1; i < len(items); i = i + 2 {
+		d = append(d, rule.Directive{Key: items[i-1], Value: items[i]})
+	}
+	return
 }
 
 func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
+	tempDir := os.TempDir()
+	defer os.RemoveAll(tempDir)
+
 	filename := tc.Filename
 	if filename == "" {
 		filename = "test.proto"
 	}
 
 	f := protoc.NewFile(tc.Rel, filename)
-	in := "syntax = \"proto3\";\n\n" + tc.Input
-	if err := f.ParseReader(strings.NewReader(in)); err != nil {
+	if err := f.ParseReader(strings.NewReader("syntax = \"proto3\";\n\n" + tc.Input)); err != nil {
 		t.Fatalf("unparseable proto file: %s: %v", tc.Input, err)
 	}
 	c := protoc.NewPackageConfig()
@@ -40,31 +94,73 @@ func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
 		t.Fatalf("bad directives: %v", err)
 	}
 	r := rule.NewRule("proto_library", "test_proto")
+	pluginConfig, ok := c.Plugin(tc.Configuration.Name)
+	if !ok {
+		t.Fatalf("unregistered plugin configuration %q (%+v)", subject.Name(), c)
+	}
 	lib := protoc.NewOtherProtoLibrary(r, f)
-	// p := protoc.NewPackage(tc.Rel, c, lib)
-
-	apply := subject.ShouldApply(tc.Rel, *c, lib)
-	if apply != tc.ShouldApply {
-		t.Errorf("%T.ShouldApply: want %t, got %t", subject, apply, tc.ShouldApply)
+	ctx := &protoc.PluginContext{
+		Rel:           tc.Rel,
+		ProtoLibrary:  lib,
+		PackageConfig: *c,
+		PluginConfig:  pluginConfig,
 	}
 
-	outputs := subject.Outputs(tc.Rel, *c, lib)
-	if len(tc.Outputs) != len(outputs) {
-		t.Fatalf("%T.Outputs: want %d, got %d", subject, len(tc.Outputs), len(outputs))
+	got := &protoc.PluginConfiguration{}
+	subject.Configure(ctx, got)
+
+	if got.Skip != tc.Configuration.Skip {
+		t.Errorf("%T.Skip: want %t, got %t", subject, tc.Configuration.Skip, got.Skip)
+	}
+
+	outputs := got.Outputs
+	if len(tc.Configuration.Outputs) != len(outputs) {
+		t.Fatalf("%T.Outputs: want %d, got %d", subject, len(tc.Configuration.Outputs), len(outputs))
 	}
 
 	for i, got := range outputs {
-		want := tc.Outputs[i]
+		want := tc.Configuration.Outputs[i]
 		if want != got {
 			t.Errorf("%T.Outputs[%d]: want %q, got %q", subject, i, want, got)
 		}
 	}
+
+	// mustExecProtoc(t, tempDir)
 }
 
-func PluginTestCases(t *testing.T, subject protoc.Plugin, cases map[string]PluginTestCase) {
-	for name, tc := range cases {
-		t.Run(name, func(t *testing.T) {
-			tc.Run(t, subject)
-		})
+func mustExecProtoc(t *testing.T, dir string, args ...string) {
+
+	cmd := exec.Command("./protoc", args...)
+	cmd.Dir = dir
+	cmd.Env = []string{
+		"HOME=/tmp",
 	}
+
+	_, err := cmd.CombinedOutput()
+	if err != nil {
+		t.Fatal("protoc exec error: %v", err)
+	}
+
+	listFiles(dir)
+}
+
+// listFiles - convenience debugging function to log the files under a given dir
+func listFiles(dir string) error {
+	return filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			log.Printf("%v\n", err)
+			return err
+		}
+		if info.Mode()&os.ModeSymlink > 0 {
+			link, err := os.Readlink(path)
+			if err != nil {
+				return err
+			}
+			log.Printf("%s -> %s", path, link)
+			return nil
+		}
+
+		log.Println(path)
+		return nil
+	})
 }

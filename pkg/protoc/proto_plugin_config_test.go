@@ -14,10 +14,6 @@ func TestPluginDirectives(t *testing.T) {
 			directives: withDirectives("proto_plugin", "fake_proto label //protoc:fake_proto_plugin"),
 			check:      withPlugin("fake_proto", withPluginLabelEquals("", "protoc", "fake_proto_plugin")),
 		},
-		"proto_plugin tool": {
-			directives: withDirectives("proto_plugin", "fake_proto tool @com_github_gogo_protobuf//protoc-gen-fake"),
-			check:      withPlugin("fake_proto", withPluginToolEquals("com_github_gogo_protobuf", "protoc-gen-fake", "protoc-gen-fake")),
-		},
 		"proto_plugin option": {
 			directives: withDirectives("proto_plugin", "fake_proto option grpc"),
 			check:      withPlugin("fake_proto", withPluginOptionsEquals("grpc")),
@@ -52,16 +48,6 @@ func withPluginLabelEquals(repo, pkg, name string) LanguagePluginConfigCheck {
 	return func(t *testing.T, cfg *LanguagePluginConfig) {
 		want := label.New(repo, pkg, name)
 		got := cfg.Label
-		if want.String() != got.String() {
-			t.Errorf("plugin label: want %s, got %s", want, got)
-		}
-	}
-}
-
-func withPluginToolEquals(repo, pkg, name string) LanguagePluginConfigCheck {
-	return func(t *testing.T, cfg *LanguagePluginConfig) {
-		want := label.New(repo, pkg, name)
-		got := cfg.Tool
 		if want.String() != got.String() {
 			t.Errorf("plugin label: want %s, got %s", want, got)
 		}

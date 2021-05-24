@@ -66,12 +66,12 @@ func (p *registry) PluginNames() []string {
 }
 
 // MustRegisterPlugin implements part of the PluginRegistry interface.
-func (p *registry) MustRegisterPlugin(name string, plugin Plugin) PluginRegistry {
-	_, ok := p.plugins[name]
+func (p *registry) MustRegisterPlugin(plugin Plugin) PluginRegistry {
+	_, ok := p.plugins[plugin.Name()]
 	if ok {
-		panic("duplicate proto_plugin registration: " + name)
+		panic("duplicate proto_plugin registration: " + plugin.Name())
 	}
-	p.plugins[name] = plugin
+	p.plugins[plugin.Name()] = plugin
 	return p
 }
 

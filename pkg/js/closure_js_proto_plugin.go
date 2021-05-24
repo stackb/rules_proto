@@ -9,14 +9,17 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
-const ClosureJsProtoName = "closure_js_proto"
-
 func init() {
-	protoc.Plugins().MustRegisterPlugin(ClosureJsProtoName, &ClosureJsPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&ClosureJsPlugin{})
 }
 
 // ClosureJsPlugin implements Plugin for the built-in protoc python plugin.
 type ClosureJsPlugin struct{}
+
+// Name implements part of the Plugin interface.
+func (p *ClosureJsPlugin) Name() string {
+	return "protoc:js:closure"
+}
 
 // Label implements part of the Plugin interface.
 func (p *ClosureJsPlugin) Label() label.Label {

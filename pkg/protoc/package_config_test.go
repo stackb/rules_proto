@@ -3,7 +3,6 @@ package protoc
 import (
 	"testing"
 
-	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -32,9 +31,8 @@ func TestPackageConfigClone(t *testing.T) {
 		withLanguageRule("fake_proto_library",
 			withLanguageRuleEnabled(false),
 		),
-		withPlugin("fake_proto",
-			withPluginToolEquals("repo", "pkg", "name"),
-		),
+		withPlugin("fake_proto"), // withPluginToolEquals("repo", "pkg", "name"),
+
 	)
 
 	a := NewPackageConfig()
@@ -52,7 +50,6 @@ func TestPackageConfigClone(t *testing.T) {
 	initialState(t, b)
 
 	b.rules["fake_proto_library"].Enabled = false
-	b.plugins["fake_proto"].Tool = label.New("repo", "pkg", "name")
 
 	initialState(t, a)
 	finalState(t, b)

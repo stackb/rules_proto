@@ -1,6 +1,8 @@
 package protoc
 
 import (
+	"log"
+
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -55,22 +57,36 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		if !plugin.Enabled {
 			continue
 		}
-		if !plugin.Implementation.ShouldApply(s.rel, *s.cfg, lib) {
+
+		ctx := &PluginContext{
+			Rel:           s.rel,
+			ProtoLibrary:  lib,
+			PackageConfig: *s.cfg,
+			PluginConfig:  *plugin,
+		}
+
+		impl, err := globalRegistry.LookupPlugin(plugin.Implementation)
+		if err == ErrUnknownPlugin {
+			log.Fatalf(
+				"plugin not registered: %q (available: %v)", plugin.Implementation,
+				globalRegistry.PluginNames())
+		}
+
+		config := &PluginConfiguration{}
+
+		// Delegate to the implementation for configuration
+		impl.Configure(ctx, config)
+
+		// if implementation says "skip", abort now.
+		if config.Skip {
 			continue
 		}
-		config := &PluginConfiguration{
-			Label: plugin.Label,
-			Srcs:  plugin.Implementation.Outputs(s.rel, *s.cfg, lib),
+
+		// plugin.Label overrides the default value from the implementation
+		if plugin.Label.Name != "" {
+			config.Label = plugin.Label
 		}
-		if provider, ok := plugin.Implementation.(PluginOptionsProvider); ok {
-			config.Options = provider.Options(s.rel, *s.cfg, lib)
-		}
-		if provider, ok := plugin.Implementation.(PluginMappingsProvider); ok {
-			config.Mappings = provider.Mappings(s.rel, *s.cfg, lib)
-		}
-		if provider, ok := plugin.Implementation.(PluginOutProvider); ok {
-			config.Out = provider.Out(s.rel, *s.cfg, lib)
-		}
+
 		configs = append(configs, config)
 	}
 	if len(configs) == 0 {

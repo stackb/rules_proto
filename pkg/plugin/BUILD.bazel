@@ -7,6 +7,7 @@ go_library(
         "grpc_grpc_cpp.go",
         "plugin_test_case.go",
         "protoc_cpp.go",
+        "protoc_java.go",
     ],
     importpath = "github.com/stackb/rules_proto/pkg/plugin",
     visibility = ["//visibility:public"],
@@ -19,6 +20,18 @@ go_library(
 
 go_test(
     name = "plugin_test",
-    srcs = ["protoc_cpp_test.go"],
+    srcs = [
+        "protoc_cpp_test.go",
+        "protoc_java_test.go",
+    ],
     embed = [":plugin"],
+    data = [":protoc_tool"],
+)
+
+genrule(
+    name = "protoc_tool",
+    tools = ["@com_google_protobuf//:protoc"],
+    outs = ["protoc"],
+    cmd = "cat $(SRCS) > $@",
+    executable = True,
 )

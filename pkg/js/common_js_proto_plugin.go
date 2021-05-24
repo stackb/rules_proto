@@ -9,21 +9,25 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin("commonjs", &CommonJsPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&ProtocJsPlugin{})
 }
 
-// CommonJsPlugin implements Plugin for the built-in js plugin with
-// commonjs option.
-type CommonJsPlugin struct{}
+// ProtocJsPlugin implements Plugin for the built-in js plugin.
+type ProtocJsPlugin struct{}
+
+// Name implements part of the Plugin interface.
+func (p *ProtocJsPlugin) Name() string {
+	return "protoc:js"
+}
 
 // Label implements part of the Plugin interface.
-func (p *CommonJsPlugin) Label() label.Label {
-	return label.New("build_stack_rules_proto", "protocolbuffers/protobuf", "common_js_plugin")
+func (p *ProtocJsPlugin) Label() label.Label {
+	return label.New("build_stack_rules_proto", "plugin/protoc", "js")
 }
 
 // ShouldApply implements part of the Plugin interface.
-func (p *CommonJsPlugin) ShouldApply(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) bool {
-	for _, f := range lib.Files() {
+func (p *ProtocJsPlugin) ShouldApply(ctx *protoc.PluginContext) bool {
+	for _, f := range ctx.ProtoLibrary.Files() {
 		if f.HasMessages() || f.HasEnums() {
 			return true
 		}
@@ -32,9 +36,9 @@ func (p *CommonJsPlugin) ShouldApply(rel string, cfg protoc.PackageConfig, lib p
 }
 
 // Outputs implements part of the Plugin interface.
-func (p *CommonJsPlugin) Outputs(rel string, cfg protoc.PackageConfig, lib protoc.ProtoLibrary) []string {
+func (p *ProtocJsPlugin) Outputs(ctx *protoc.PluginContext) []string {
 	srcs := make([]string, 0)
-	for _, f := range lib.Files() {
+	for _, f := range ctx.ProtoLibrary.Files() {
 		base := f.Name
 		pkg := f.Package()
 		if pkg.Name != "" {

@@ -9,24 +9,26 @@ import (
 )
 
 func init() {
-	Plugins().MustRegisterPlugin("fake_proto", &fakePlugin{})
+	Plugins().MustRegisterPlugin(&fakePlugin{})
 	Rules().MustRegisterRule("fake_proto_library", &fakeProtoLibrary{})
 }
 
 // fakePlugin implements a mock Plugin
 type fakePlugin struct{}
 
-func (p *fakePlugin) ShouldApply(rel string, cfg PackageConfig, lib ProtoLibrary) bool {
-	return true
+// Name implements part of the Plugin interface.
+func (p *fakePlugin) Name() string {
+	return "protoc:fake"
 }
 
-// Label implements part of the Plugin interface.
-func (p *fakePlugin) Label() label.Label {
-	return label.New("build_stack_rules_proto", "protocolbuffers/protobuf", "py_proto_plugin")
+// Configure implements part of the Plugin interface
+func (p *fakePlugin) Configure(ctx *PluginContext, cfg *PluginConfiguration) {
+	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "fake")
+	cfg.Outputs = p.outputs(ctx.ProtoLibrary)
+	cfg.Options = p.options(ctx.ProtoLibrary)
 }
 
-// Outputs implements part of the Plugin interface
-func (p *fakePlugin) Outputs(rel string, cfg PackageConfig, lib ProtoLibrary) []string {
+func (p *fakePlugin) outputs(lib ProtoLibrary) []string {
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
 		base := f.Name
@@ -41,9 +43,9 @@ func (p *fakePlugin) Outputs(rel string, cfg PackageConfig, lib ProtoLibrary) []
 	return srcs
 }
 
-// Options implements part of the optional PluginOptionsProvider interface.  If
-// the library contains services, apply the grpc plugin.
-func (p *fakePlugin) Options(rel string, c *PackageConfig, lib ProtoLibrary) []string {
+// Options computes additional options for the plugin.  If the library contains
+// services, apply the grpc plugin.
+func (p *fakePlugin) options(lib ProtoLibrary) []string {
 	for _, f := range lib.Files() {
 		if f.HasServices() {
 			return []string{"plugins=grpc"}

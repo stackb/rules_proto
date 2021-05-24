@@ -8,21 +8,21 @@ import (
 
 func TestOtherProtoLibrary(t *testing.T) {
 	for name, tc := range map[string]struct {
-		rule     *rule.Rule
-		wantName string
-		wantBase string
-		wantSrcs []string
-		wantDeps []string
+		rule        *rule.Rule
+		wantName    string
+		wantBase    string
+		wantOutputs []string
+		wantDeps    []string
 	}{
 		"prototypical": {
 			rule: withProtoLibraryRule("foo_proto",
 				withRuleSrcs("foo.py"),
 				withRuleDeps("@a//b:c"),
 			),
-			wantName: "foo_proto",
-			wantBase: "foo",
-			wantSrcs: withSrcs("foo.py"),
-			wantDeps: withSrcs("@a//b:c"),
+			wantName:    "foo_proto",
+			wantBase:    "foo",
+			wantOutputs: withOutputs("foo.py"),
+			wantDeps:    withOutputs("@a//b:c"),
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
@@ -38,14 +38,14 @@ func TestOtherProtoLibrary(t *testing.T) {
 			if tc.wantBase != base {
 				t.Errorf("base: want %s, got %s", tc.wantBase, base)
 			}
-			if len(tc.wantSrcs) != len(srcs) {
-				t.Fatalf("srcs: want %d, got %d", len(tc.wantSrcs), len(srcs))
+			if len(tc.wantOutputs) != len(srcs) {
+				t.Fatalf("srcs: want %d, got %d", len(tc.wantOutputs), len(srcs))
 			}
 			if len(tc.wantDeps) != len(deps) {
 				t.Fatalf("deps: want %d, got %d", len(tc.wantDeps), len(deps))
 			}
 			for i, got := range srcs {
-				want := tc.wantSrcs[i]
+				want := tc.wantOutputs[i]
 				if want != got {
 					t.Errorf("srcs %d: want %s, got %s", i, want, got)
 				}
