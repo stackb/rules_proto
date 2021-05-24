@@ -72,7 +72,9 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 				globalRegistry.PluginNames())
 		}
 
-		config := &PluginConfiguration{}
+		config := &PluginConfiguration{
+			Options: plugin.GetOptions(),
+		}
 
 		// Delegate to the implementation for configuration
 		impl.Configure(ctx, config)
