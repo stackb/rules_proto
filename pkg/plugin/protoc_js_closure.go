@@ -34,5 +34,5 @@ func (p *ProtocJsClosurePlugin) Configure(ctx *protoc.PluginContext, cfg *protoc
 
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "closurejs")
 	cfg.Outputs = []string{library}
-	cfg.Options = []string{fmt.Sprintf("library=%s", strings.TrimSuffix(library, filepath.Ext(library)))}
+	cfg.Options = []string{"import_style=closure", fmt.Sprintf("library=%s", strings.TrimSuffix(library, filepath.Ext(library)))}
 }
