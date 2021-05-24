@@ -22,7 +22,7 @@ go_test(
     name = "plugin_test",
     srcs = [
         "protoc_cpp_test.go",
-        # "protoc_java_test.go",
+        "protoc_java_test.go",
     ],
     embed = [":plugin"],
     data = [":protoc"],

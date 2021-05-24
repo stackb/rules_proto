@@ -168,10 +168,9 @@ func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
 	}
 
 	for _, want := range outputs {
-		relpath := filepath.Join(tc.Rel, want)
-		realpath := filepath.Join(execrootDir, relpath)
+		realpath := filepath.Join(execrootDir, want)
 		if !fileExists(realpath) {
-			t.Errorf("expected file %q was not produced: (got %v)", relpath, actuals)
+			t.Errorf("expected file %q was not produced: (got %v)", want, actuals)
 		}
 	}
 
