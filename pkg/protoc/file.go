@@ -223,6 +223,11 @@ func HasMessageOrEnum(file *File) bool {
 	return file.HasMessages() || file.HasEnums()
 }
 
+// Always is a utility function that always returns true.
+func Always(file *File) bool {
+	return true
+}
+
 // HasService is a utility function that tests if any of the given file has a
 // message or an enum.
 func HasService(file *File) bool {

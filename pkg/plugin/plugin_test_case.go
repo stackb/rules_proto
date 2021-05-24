@@ -1,7 +1,8 @@
 package plugin
 
 import (
-	"log"
+	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -77,8 +78,11 @@ func WithDirectives(items ...string) (d []rule.Directive) {
 }
 
 func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
-	tempDir := os.TempDir()
-	defer os.RemoveAll(tempDir)
+	tempDir := os.Getenv("TEST_TMPDIR")
+	outDir := filepath.Join(tempDir, "out")
+	if err := os.MkdirAll(outDir, os.ModePerm); err != nil {
+		t.Fatalf("outDir: %v", err)
+	}
 
 	filename := tc.Filename
 	if filename == "" {
@@ -86,7 +90,8 @@ func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
 	}
 
 	f := protoc.NewFile(tc.Rel, filename)
-	if err := f.ParseReader(strings.NewReader("syntax = \"proto3\";\n\n" + tc.Input)); err != nil {
+	in := "syntax = \"proto3\";\n\n" + tc.Input
+	if err := f.ParseReader(strings.NewReader(in)); err != nil {
 		t.Fatalf("unparseable proto file: %s: %v", tc.Input, err)
 	}
 	c := protoc.NewPackageConfig()
@@ -112,12 +117,10 @@ func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
 	if got.Skip != tc.Configuration.Skip {
 		t.Errorf("%T.Skip: want %t, got %t", subject, tc.Configuration.Skip, got.Skip)
 	}
-
 	outputs := got.Outputs
 	if len(tc.Configuration.Outputs) != len(outputs) {
 		t.Fatalf("%T.Outputs: want %d, got %d", subject, len(tc.Configuration.Outputs), len(outputs))
 	}
-
 	for i, got := range outputs {
 		want := tc.Configuration.Outputs[i]
 		if want != got {
@@ -125,42 +128,69 @@ func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
 		}
 	}
 
-	// mustExecProtoc(t, tempDir)
-}
-
-func mustExecProtoc(t *testing.T, dir string, args ...string) {
-
-	cmd := exec.Command("./protoc", args...)
-	cmd.Dir = dir
-	cmd.Env = []string{
-		"HOME=/tmp",
+	protoFile := filepath.Join(tempDir, filename)
+	if err := ioutil.WriteFile(protoFile, []byte(in), os.ModePerm); err != nil {
+		t.Fatal(err)
 	}
 
-	_, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Fatal("protoc exec error: %v", err)
+	args := []string{
+		fmt.Sprintf("--proto_path=%s", tempDir),
+		fmt.Sprintf("--%s_out=%s:%s", tc.Configuration.Name, strings.Join(got.Options, ","), outDir),
+		filename,
 	}
 
-	listFiles(dir)
-}
+	mustExecProtoc(t, args...)
+	actuals := mustListFiles(t, outDir)
+	if len(tc.Configuration.Outputs) != len(actuals) {
+		t.Fatalf("%T.Exec: want %d, got %d: %v", subject, len(tc.Configuration.Outputs), len(actuals), actuals)
+	}
 
-// listFiles - convenience debugging function to log the files under a given dir
-func listFiles(dir string) error {
-	return filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			log.Printf("%v\n", err)
-			return err
+	for _, want := range outputs {
+		realpath := filepath.Join(outDir, tc.Rel, want)
+		if !fileExists(realpath) {
+			t.Errorf("expected file %q was not produced by %v", realpath, args)
 		}
-		if info.Mode()&os.ModeSymlink > 0 {
-			link, err := os.Readlink(path)
-			if err != nil {
-				return err
-			}
-			log.Printf("%s -> %s", path, link)
+	}
+
+}
+
+func mustExecProtoc(t *testing.T, args ...string) {
+	cmd := exec.Command("protoc", args...)
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		t.Fatalf("protoc exec error: %v\n\n%s", err, out)
+	}
+}
+
+// mustListFiles - convenience debugging function to log the files under a given dir
+func mustListFiles(t *testing.T, dir string) []string {
+	files := make([]string, 0)
+
+	if err := filepath.Walk(dir, func(relname string, info os.FileInfo, err error) error {
+		if err != nil {
+			t.Fatal(err)
+		}
+		if info.IsDir() {
 			return nil
 		}
-
-		log.Println(path)
+		files = append(files, relname[len(dir)+1:])
 		return nil
-	})
+	}); err != nil {
+		t.Fatal(err)
+	}
+
+	return files
+}
+
+// fileExists checks if a file exists and is not a directory before we try using
+// it to prevent further errors.
+func fileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	if info == nil {
+		return false
+	}
+	return !info.IsDir()
 }

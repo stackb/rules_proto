@@ -22,16 +22,16 @@ go_test(
     name = "plugin_test",
     srcs = [
         "protoc_cpp_test.go",
-        "protoc_java_test.go",
+        # "protoc_java_test.go",
     ],
     embed = [":plugin"],
-    data = [":protoc_tool"],
+    data = [":protoc"],
 )
 
 genrule(
     name = "protoc_tool",
     tools = ["@com_google_protobuf//:protoc"],
     outs = ["protoc"],
-    cmd = "cat $(SRCS) > $@",
+    cmd = "cp $(location @com_google_protobuf//:protoc) $@",
     executable = True,
 )

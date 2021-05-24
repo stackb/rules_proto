@@ -19,14 +19,11 @@ func (p *ProtocCppPlugin) Name() string {
 
 // Configure implements part of the Plugin interface.
 func (p *ProtocCppPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Skip = !protoc.HasMessagesOrEnums(ctx.ProtoLibrary.Files()...)
-	if cfg.Skip {
-		return
-	}
+	cfg.Skip = false
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "cpp")
 	cfg.Outputs = protoc.FlatMapFiles(
 		protoc.PackageFileNameWithExtensions(".pb.cc", ".pb.h"),
-		protoc.HasMessageOrEnum,
+		protoc.Always,
 		ctx.ProtoLibrary.Files()...,
 	)
 }
