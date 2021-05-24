@@ -94,17 +94,17 @@ func (s *protoCompiledSourcesRule) Rule() *rule.Rule {
 	newRule.SetAttr("proto", s.config.Library.Name())
 
 	if len(s.config.Mappings) > 0 {
-		newRule.SetAttr("mappings", makeStringDict(s.config.Mappings))
+		newRule.SetAttr("mappings", MakeStringDict(s.config.Mappings))
 	}
 
 	options := GetPluginOptions(s.config.Plugins)
 	if len(options) > 0 {
-		newRule.SetAttr("options", makeStringListDict(options))
+		newRule.SetAttr("options", MakeStringListDict(options))
 	}
 
 	outs := GetPluginOuts(s.config.Plugins)
 	if len(outs) > 0 {
-		newRule.SetAttr("outs", makeStringDict(outs))
+		newRule.SetAttr("outs", MakeStringDict(outs))
 	}
 
 	visibility := s.Visibility()

@@ -6,7 +6,9 @@ import (
 	"github.com/bazelbuild/buildtools/build"
 )
 
-func makeStringListDict(in map[string][]string) build.Expr {
+// MakeStringListDict converts the given string -> string_list into a build
+// expression.
+func MakeStringListDict(in map[string][]string) build.Expr {
 	items := make([]*build.KeyValueExpr, 0)
 	keys := make([]string, 0)
 	for k := range in {
@@ -28,7 +30,8 @@ func makeStringListDict(in map[string][]string) build.Expr {
 	return &build.DictExpr{List: items}
 }
 
-func makeStringDict(in map[string]string) build.Expr {
+// MakeStringDict converts the given string -> string into a build expression.
+func MakeStringDict(in map[string]string) build.Expr {
 	dict := &build.DictExpr{}
 	keys := make([]string, 0)
 	for k := range in {
