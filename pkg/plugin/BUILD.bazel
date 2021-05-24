@@ -8,6 +8,7 @@ go_library(
         "plugin_test_case.go",
         "protoc_cpp.go",
         "protoc_java.go",
+        "protoc_python.go",
     ],
     importpath = "github.com/stackb/rules_proto/pkg/plugin",
     visibility = ["//visibility:public"],
@@ -23,6 +24,7 @@ go_test(
     srcs = [
         "protoc_cpp_test.go",
         "protoc_java_test.go",
+        "protoc_python_test.go",
     ],
     embed = [":plugin"],
     data = [":protoc"],

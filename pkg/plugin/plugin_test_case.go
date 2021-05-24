@@ -3,6 +3,7 @@ package plugin
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -122,7 +123,7 @@ func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
 	}
 	outputs := got.Outputs
 	if len(tc.Configuration.Outputs) != len(outputs) {
-		t.Fatalf("%T.Outputs: want %d, got %d", subject, len(tc.Configuration.Outputs), len(outputs))
+		t.Fatalf("%T.Outputs: want %d, got %d (%v)", subject, len(tc.Configuration.Outputs), len(outputs), outputs)
 	}
 	for i, got := range outputs {
 		want := tc.Configuration.Outputs[i]
@@ -197,9 +198,6 @@ func mustListFiles(t *testing.T, dir string) []string {
 		if info.IsDir() {
 			return nil
 		}
-		// if relname == "plugin_test_/plugin_test" || relname == "protoc" {
-		// 	return nil
-		// }
 		if filepath.Ext(relname) == ".proto" {
 			return nil
 		}
@@ -223,4 +221,25 @@ func fileExists(filename string) bool {
 		return false
 	}
 	return !info.IsDir()
+}
+
+// listFiles - convenience debugging function to log the files under a given dir
+func listFiles(dir string) error {
+	return filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			log.Printf("%v\n", err)
+			return err
+		}
+		if info.Mode()&os.ModeSymlink > 0 {
+			link, err := os.Readlink(path)
+			if err != nil {
+				return err
+			}
+			log.Printf("%s -> %s", path, link)
+			return nil
+		}
+
+		log.Println(path)
+		return nil
+	})
 }
