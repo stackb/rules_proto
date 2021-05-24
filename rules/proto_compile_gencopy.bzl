@@ -26,7 +26,7 @@ def _proto_compile_gencopy_impl(ctx):
     runfiles = []
 
     # comprehend a mapping of relpath -> File
-    srcfiles = { f.path[len(ctx.label.package):].lstrip("/"): f for f in ctx.files.srcs }
+    srcfiles = { f.short_path[len(ctx.label.package):].lstrip("/"): f for f in ctx.files.srcs }
 
     for info in [dep[ProtoCompileInfo] for dep in ctx.attr.deps]:
         runfiles += info.outputs
