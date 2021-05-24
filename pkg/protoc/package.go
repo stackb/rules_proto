@@ -62,8 +62,15 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			Label: plugin.Label,
 			Srcs:  plugin.Implementation.Outputs(s.rel, *s.cfg, lib),
 		}
+		for opt, want := range plugin.Options {
+			if !want {
+				continue
+			}
+			config.Options = append(config.Options, opt)
+		}
+
 		if provider, ok := plugin.Implementation.(PluginOptionsProvider); ok {
-			config.Options = provider.Options(s.rel, *s.cfg, lib)
+			config.Options = append(config.Options, provider.Options(s.rel, *s.cfg, lib)...)
 		}
 		if provider, ok := plugin.Implementation.(PluginMappingsProvider); ok {
 			config.Mappings = provider.Mappings(s.rel, *s.cfg, lib)
