@@ -195,6 +195,22 @@ func PackageFileNameWithExtensions(exts ...string) func(f *File) []string {
 	}
 }
 
+// RelativeFileName is a utility function that returns a fucntion that compuutes
+// the name of a predicted generated file having the given extension(s) relative to the given dir.
+func RelativeFileNameWithExtensions(reldir string, exts ...string) func(f *File) []string {
+	return func(f *File) []string {
+		outs := make([]string, len(exts))
+		name := f.Name
+		if reldir != "" {
+			name = path.Join(reldir, name)
+		}
+		for i, ext := range exts {
+			outs[i] = name + ext
+		}
+		return outs
+	}
+}
+
 // HasMessagesOrEnums is a utility function that tests if any of the given files
 // has a message or an enum.
 func HasMessagesOrEnums(files ...*File) bool {

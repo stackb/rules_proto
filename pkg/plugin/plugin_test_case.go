@@ -23,8 +23,8 @@ func PluginTestCases(t *testing.T, subject protoc.Plugin, cases map[string]Plugi
 }
 
 type PluginTestCase struct {
-	// The name of the proto file to mock parse.  If not set, defaults to 'test.proto'
-	Filename string
+	// The base name of the proto file to mock parse.  If not set, defaults to 'test' ('test.proto')
+	Basename string
 	// The relative package path
 	Rel string
 	// The Configuration
@@ -78,16 +78,19 @@ func WithDirectives(items ...string) (d []rule.Directive) {
 }
 
 func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
-	tempDir := os.Getenv("TEST_TMPDIR")
-	outDir := filepath.Join(tempDir, "out")
-	if err := os.MkdirAll(outDir, os.ModePerm); err != nil {
-		t.Fatalf("outDir: %v", err)
+	execrootDir := os.Getenv("TEST_TMPDIR")
+	defer os.RemoveAll(execrootDir)
+	cwd, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
 	}
+	protocPath := filepath.Join(cwd, "protoc")
 
-	filename := tc.Filename
-	if filename == "" {
-		filename = "test.proto"
+	basename := tc.Basename
+	if basename == "" {
+		basename = "test"
 	}
+	filename := basename + ".proto"
 
 	f := protoc.NewFile(tc.Rel, filename)
 	in := "syntax = \"proto3\";\n\n" + tc.Input
@@ -98,7 +101,7 @@ func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
 	if err := c.ParseDirectives(tc.Rel, tc.Directives); err != nil {
 		t.Fatalf("bad directives: %v", err)
 	}
-	r := rule.NewRule("proto_library", "test_proto")
+	r := rule.NewRule("proto_library", basename+"_proto")
 	pluginConfig, ok := c.Plugin(tc.Configuration.Name)
 	if !ok {
 		t.Fatalf("unregistered plugin configuration %q (%+v)", subject.Name(), c)
@@ -128,41 +131,63 @@ func (tc *PluginTestCase) Run(t *testing.T, subject protoc.Plugin) {
 		}
 	}
 
-	protoFile := filepath.Join(tempDir, filename)
-	if err := ioutil.WriteFile(protoFile, []byte(in), os.ModePerm); err != nil {
+	// relDir is the location where the proto files are written.  A BUILD.bazel
+	// file containing the proto_library would normally be here.
+	relDir := filepath.Join(".", tc.Rel)
+	if err := os.MkdirAll(filepath.Join(execrootDir, relDir), os.ModePerm); err != nil {
+		t.Fatalf("relDir: %v", err)
+	}
+	if err := ioutil.WriteFile(filepath.Join(execrootDir, relDir, filename), []byte(in), os.ModePerm); err != nil {
 		t.Fatal(err)
 	}
 
-	args := []string{
-		fmt.Sprintf("--proto_path=%s", tempDir),
-		fmt.Sprintf("--%s_out=%s:%s", tc.Configuration.Name, strings.Join(got.Options, ","), outDir),
-		filename,
+	// gendir is the root location where we expect generated files to be
+	// written.  Within a bazel action, this is the execroot unless the "Out"
+	// setting is configured.
+	outDir := "."
+	if got.Out != "" {
+		outDir = filepath.Join(outDir, got.Out)
+		if err := os.MkdirAll(outDir, os.ModePerm); err != nil {
+			t.Fatalf("outDir: %v", err)
+		}
 	}
 
-	mustExecProtoc(t, args...)
-	actuals := mustListFiles(t, outDir)
+	args := []string{
+		"--proto_path=.", // this is the default (just a reminder)  The execroot is '.'
+		fmt.Sprintf("--%s_out=%s:%s", tc.Configuration.Name, strings.Join(got.Options, ","), outDir),
+		filepath.Join(tc.Rel, filename),
+	}
+
+	t.Log("protoc args:", args)
+
+	mustExecProtoc(t, protocPath, execrootDir, args...)
+
+	actuals := mustListFiles(t, execrootDir)
 	if len(tc.Configuration.Outputs) != len(actuals) {
-		t.Fatalf("%T.Exec: want %d, got %d: %v", subject, len(tc.Configuration.Outputs), len(actuals), actuals)
+		t.Fatalf("%T.Actuals: want %d, got %d: %v", subject, len(tc.Configuration.Outputs), len(actuals), actuals)
 	}
 
 	for _, want := range outputs {
-		realpath := filepath.Join(outDir, tc.Rel, want)
+		relpath := filepath.Join(tc.Rel, want)
+		realpath := filepath.Join(execrootDir, relpath)
 		if !fileExists(realpath) {
-			t.Errorf("expected file %q was not produced by %v", realpath, args)
+			t.Errorf("expected file %q was not produced: (got %v)", relpath, actuals)
 		}
 	}
 
 }
 
-func mustExecProtoc(t *testing.T, args ...string) {
-	cmd := exec.Command("protoc", args...)
+func mustExecProtoc(t *testing.T, protoc, dir string, args ...string) {
+	cmd := exec.Command(protoc, args...)
+	cmd.Dir = dir
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		t.Fatalf("protoc exec error: %v\n\n%s", err, out)
 	}
 }
 
-// mustListFiles - convenience debugging function to log the files under a given dir
+// mustListFiles - convenience debugging function to log the files under a given
+// dir, excluding proto files and the extra binaries here.
 func mustListFiles(t *testing.T, dir string) []string {
 	files := make([]string, 0)
 
@@ -173,7 +198,13 @@ func mustListFiles(t *testing.T, dir string) []string {
 		if info.IsDir() {
 			return nil
 		}
-		files = append(files, relname[len(dir)+1:])
+		// if relname == "plugin_test_/plugin_test" || relname == "protoc" {
+		// 	return nil
+		// }
+		if filepath.Ext(relname) == ".proto" {
+			return nil
+		}
+		files = append(files, relname)
 		return nil
 	}); err != nil {
 		t.Fatal(err)

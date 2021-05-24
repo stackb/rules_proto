@@ -21,8 +21,9 @@ func (p *ProtocCppPlugin) Name() string {
 func (p *ProtocCppPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	cfg.Skip = false
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "cpp")
+	cfg.Out = ctx.Rel
 	cfg.Outputs = protoc.FlatMapFiles(
-		protoc.PackageFileNameWithExtensions(".pb.cc", ".pb.h"),
+		protoc.RelativeFileNameWithExtensions(ctx.Rel, ".pb.cc", ".pb.h"),
 		protoc.Always,
 		ctx.ProtoLibrary.Files()...,
 	)
