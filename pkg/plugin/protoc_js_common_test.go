@@ -1,12 +1,9 @@
 package plugin
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestProtocJsCommonPlugin(t *testing.T) {
 	PluginTestCases(t, &ProtocJsCommonPlugin{}, map[string]PluginTestCase{
-		// --js_out with an empty proto generates an interesting result!
 		"empty file": {
 			Input: "",
 			Directives: WithDirectives(
@@ -37,7 +34,6 @@ func TestProtocJsCommonPlugin(t *testing.T) {
 				WithOutputs("test_pb.js"),
 			),
 		},
-		// package statement does not affect output location
 		"with a package": {
 			Input: "package pkg;\n\nmessage M{}",
 			Directives: WithDirectives(
@@ -48,7 +44,6 @@ func TestProtocJsCommonPlugin(t *testing.T) {
 				WithOutputs("test_pb.js"),
 			),
 		},
-		// reldir affects output location via --js_out=REL.
 		"relative directory": {
 			Rel:   "rel",
 			Input: "message M{}",

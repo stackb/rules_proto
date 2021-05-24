@@ -1,8 +1,6 @@
 package plugin
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestProtocCsharpPlugin(t *testing.T) {
 	PluginTestCases(t, &ProtocCsharpPlugin{}, map[string]PluginTestCase{

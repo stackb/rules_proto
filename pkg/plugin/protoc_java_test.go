@@ -1,8 +1,6 @@
 package plugin
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestProtocJavaPlugin(t *testing.T) {
 	PluginTestCases(t, &ProtocJavaPlugin{}, map[string]PluginTestCase{
@@ -16,7 +14,6 @@ func TestProtocJavaPlugin(t *testing.T) {
 				WithOutputs("test.srcjar"),
 			),
 		},
-		// package statement does not affect srcjar location
 		"message with a package": {
 			Input: "package a;\n\nmessage M{}",
 			Directives: WithDirectives(
@@ -28,7 +25,6 @@ func TestProtocJavaPlugin(t *testing.T) {
 				WithOutputs("test.srcjar"),
 			),
 		},
-		// Rel affects srcjar location
 		"relative package location": {
 			Rel:   "src/main/java/foo",
 			Input: "package a;\n\nmessage M{}",

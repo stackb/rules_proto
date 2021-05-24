@@ -1,12 +1,9 @@
 package plugin
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestProtocCppPlugin(t *testing.T) {
 	PluginTestCases(t, &ProtocCppPlugin{}, map[string]PluginTestCase{
-		// --cpp_out always generates output files
 		"empty file": {
 			Input: "",
 			Directives: WithDirectives(
@@ -17,7 +14,6 @@ func TestProtocCppPlugin(t *testing.T) {
 				WithOutputs("test.pb.cc", "test.pb.h"),
 			),
 		},
-		// it does not matter if it only has services
 		"only services": {
 			Input: "service S{}",
 			Directives: WithDirectives(
@@ -28,7 +24,6 @@ func TestProtocCppPlugin(t *testing.T) {
 				WithOutputs("test.pb.cc", "test.pb.h"),
 			),
 		},
-		// package statement does not affect output location
 		"with a package": {
 			Input: "package pkg;\n\nmessage M{}",
 			Directives: WithDirectives(
@@ -39,8 +34,6 @@ func TestProtocCppPlugin(t *testing.T) {
 				WithOutputs("test.pb.cc", "test.pb.h"),
 			),
 		},
-		// reldir influences output location via --cpp_out=REL.  However, since
-		// we are expecting a relative output location by default (otherwise PluginConfiguration.Mappings would be populated)
 		"in a relative directory": {
 			Rel:   "rel",
 			Input: "package a;\n\nmessage M{}",

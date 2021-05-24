@@ -1,8 +1,6 @@
 package protoc
 
-import (
-	"testing"
-)
+import "testing"
 
 type languageConfigCheck func(t *testing.T, cfg *LanguageConfig)
 
