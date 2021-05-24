@@ -7,6 +7,7 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+	"unicode"
 
 	"github.com/emicklei/proto"
 )
@@ -310,4 +311,28 @@ func GetNamedOption(options []proto.Option, name string) string {
 		return opt.Constant.Source
 	}
 	return ""
+}
+
+// ToPascalCase converts s to PascalCase.
+//
+// Splits on '-', '_', ' ', '\t', '\n', '\r'.
+// Uppercase letters will stay uppercase,
+func ToPascalCase(s string) string {
+	output := ""
+	var previous rune
+	for i, c := range strings.TrimSpace(s) {
+		if !isDelimiter(c) {
+			if i == 0 || isDelimiter(previous) || unicode.IsUpper(c) {
+				output += string(unicode.ToUpper(c))
+			} else {
+				output += string(unicode.ToLower(c))
+			}
+		}
+		previous = c
+	}
+	return output
+}
+
+func isDelimiter(r rune) bool {
+	return r == '.' || r == '-' || r == '_' || r == ' ' || r == '\t' || r == '\n' || r == '\r'
 }

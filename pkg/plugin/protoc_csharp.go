@@ -3,7 +3,6 @@ package plugin
 import (
 	"path"
 	"strings"
-	"unicode"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -43,31 +42,7 @@ func csharpFileName(rel string, cfg protoc.LanguagePluginConfig) func(*protoc.Fi
 			}
 		}
 
-		return []string{path.Join(rel, toPascalCase(f.Name)) + ext}
+		return []string{path.Join(rel, protoc.ToPascalCase(f.Name)) + ext}
 	}
 
-}
-
-// toPascalCase converts s to PascalCase.
-//
-// Splits on '-', '_', ' ', '\t', '\n', '\r'.
-// Uppercase letters will stay uppercase,
-func toPascalCase(s string) string {
-	output := ""
-	var previous rune
-	for i, c := range strings.TrimSpace(s) {
-		if !isDelimiter(c) {
-			if i == 0 || isDelimiter(previous) || unicode.IsUpper(c) {
-				output += string(unicode.ToUpper(c))
-			} else {
-				output += string(unicode.ToLower(c))
-			}
-		}
-		previous = c
-	}
-	return output
-}
-
-func isDelimiter(r rune) bool {
-	return r == '.' || r == '-' || r == '_' || r == ' ' || r == '\t' || r == '\n' || r == '\r'
 }
