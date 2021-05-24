@@ -19,7 +19,6 @@ func (p *ProtocCppPlugin) Name() string {
 
 // Configure implements part of the Plugin interface.
 func (p *ProtocCppPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Skip = false
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "cpp")
 	cfg.Outputs = protoc.FlatMapFiles(
 		protoc.RelativeFileNameWithExtensions(ctx.Rel, ".pb.cc", ".pb.h"),

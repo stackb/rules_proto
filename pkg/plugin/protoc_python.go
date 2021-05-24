@@ -22,7 +22,6 @@ func (p *ProtocPythonPlugin) Name() string {
 
 // Configure implements part of the Plugin interface.
 func (p *ProtocPythonPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Skip = false
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "python")
 	cfg.Outputs = protoc.FlatMapFiles(
 		pythonGeneratedFileName(ctx.Rel),
