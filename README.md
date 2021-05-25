@@ -53,3 +53,11 @@ You can use `rules_proto` without the gazelle extension, but this document descr
 ## Step 1: ensure rules_go and bazel-gazelle WORKSPACE dependencies
 
 If you don't already have these dependencies in your `WORKSPACE`
+
+OK: you built the depsgen thing.  Now what?  How does it help you add tests or
+improve docs?  Sorta wanted to have the full end-to-end workflow of testing and
+docs in place before adding more plugins and increasing that surface area.
+
+What will be the pages in the docsite?  Examples?  Might be a good time to start
+writing the docs and see how they look.  At the end of the day you need
+reproducible examples that run as example_bazel_tests.
