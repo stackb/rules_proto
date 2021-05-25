@@ -10,6 +10,7 @@ def _proto_plugin_impl(ctx):
         ProtoPluginInfo(
             name = ctx.attr.name,
             label = ctx.label,
+            options = ctx.attr.options,
             out = ctx.attr.out,
             tool = ctx.executable.tool,
             tool_target = ctx.attr.tool,
@@ -39,6 +40,9 @@ proto_plugin = rule(
         "protoc_plugin_name": attr.string(
             doc = "The name used for the plugin binary on the protoc command line. Useful for targeting built-in plugins. Uses plugin name when not set",
         ),
+        "options": attr.string_list(
+            doc = "A list of options to pass to the compiler for this plugin",
+        ),        
         "out": attr.string(
             doc = "The output scheme for the plugin.  Can be a string like '.' or a symbol such as {BIN_DIR} or {PACKAGE}.",
             default = "{BIN_DIR}",

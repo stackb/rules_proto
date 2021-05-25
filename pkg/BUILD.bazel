@@ -1,8 +1,5 @@
 filegroup(
     name = "all_files",
-    srcs = [
-        "BUILD.bazel",
-        "zlib.BUILD",
-    ],
+    srcs = glob(["**/*"]),
     visibility = ["//:__pkg__"],
 )

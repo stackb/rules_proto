@@ -1,0 +1,56 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "cpp",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "java",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "commonjs",
+    protoc_plugin_name = "js",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "closurejs",
+    protoc_plugin_name = "js",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "python",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "ruby",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "objc",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "csharp",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "php",
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+    ],
+    visibility = ["//:__pkg__"],
+)

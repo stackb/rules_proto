@@ -1,4 +1,3 @@
-load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 load(":toolchain.bzl", "protoc")
 
 toolchain_type(
@@ -17,43 +16,11 @@ toolchain(
     toolchain_type = ":toolchain_type",
 )
 
-proto_plugin(
-    name = "cc_proto_plugin",
-    protoc_plugin_name = "cpp",
-    visibility = ["//visibility:public"],
-)
-
-proto_plugin(
-    name = "py_proto_plugin",
-    protoc_plugin_name = "python",
-    visibility = ["//visibility:public"],
-)
-
-proto_plugin(
-    name = "java_proto_plugin",
-    out = "{BIN_DIR}/{PACKAGE}/{NAME}.srcjar",
-    protoc_plugin_name = "java",
-    visibility = ["//visibility:public"],
-)
-
-proto_plugin(
-    name = "closure_js_proto_plugin",
-    # options = [
-    #     "add_require_for_enums",
-    #     "binary",
-    #     "error_on_name_conflict",
-    #     "import_style=closure",
-    # ],
-    protoc_plugin_name = "js",
-    visibility = ["//visibility:public"],
-)
-
-proto_plugin(
-    name = "common_js_proto_plugin",
-    # options = [
-    #     "import_style=commonjs",
-    #     "binary",
-    # ],
-    protoc_plugin_name = "js",
-    visibility = ["//visibility:public"],
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "toolchain.bzl",
+    ],
+    visibility = ["//:__pkg__"],
 )

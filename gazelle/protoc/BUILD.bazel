@@ -1,5 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 load("@bazel_gazelle//:def.bzl", "gazelle_binary")
+load("//cmd/bazeltestgen:bazeltestgen.bzl", "gazelle_testdata_go_bazel_test")
 
 # gazelle:exclude testdata
 
@@ -38,4 +39,20 @@ go_test(
     data = [":gazelle-protoc"] + glob(["testdata/**"]),
     embed = [":protoc"],
     deps = ["//pkg/goldentest"],
+)
+
+# filegroup(
+#     name = "testdata",
+#     srcs = glob(["testdata/**"]),
+# )
+
+gazelle_testdata_go_bazel_test(
+    name = "builtins",
+    srcs = glob(["testdata/**/*"]),
+)
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"] + glob(["*.go"]),
+    visibility = ["//:__pkg__"],
 )
