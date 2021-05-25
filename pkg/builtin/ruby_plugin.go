@@ -1,4 +1,4 @@
-package plugin
+package builtin
 
 import (
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -6,19 +6,19 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&ProtocRubyPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&RubyPlugin{})
 }
 
-// ProtocRubyPlugin implements Plugin for the built-in protoc ruby plugin.
-type ProtocRubyPlugin struct{}
+// RubyPlugin implements Plugin for the built-in protoc ruby plugin.
+type RubyPlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *ProtocRubyPlugin) Name() string {
+func (p *RubyPlugin) Name() string {
 	return "protoc:ruby"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ProtocRubyPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *RubyPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "ruby")
 	cfg.Outputs = protoc.FlatMapFiles(
 		protoc.RelativeFileNameWithExtensions(ctx.Rel, "_pb.rb"),

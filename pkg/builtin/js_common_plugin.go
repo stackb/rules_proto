@@ -1,6 +1,6 @@
 // for some bizarre reason, naming this file 'protoc_js.go' makes it be ignored
 // by the compiler?
-package plugin
+package builtin
 
 import (
 	"path"
@@ -11,19 +11,19 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&ProtocJsCommonPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&JsCommonPlugin{})
 }
 
-// ProtocJsCommonPlugin implements Plugin for the built-in protoc js/library plugin.
-type ProtocJsCommonPlugin struct{}
+// JsCommonPlugin implements Plugin for the built-in protoc js/library plugin.
+type JsCommonPlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *ProtocJsCommonPlugin) Name() string {
+func (p *JsCommonPlugin) Name() string {
 	return "protoc:js:common"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ProtocJsCommonPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *JsCommonPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	basename := strings.ToLower(ctx.ProtoLibrary.BaseName())
 	library := basename + "_pb.js"
 	if ctx.Rel != "" {

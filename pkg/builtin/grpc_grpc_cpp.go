@@ -1,4 +1,4 @@
-package plugin
+package builtin
 
 import (
 	"github.com/bazelbuild/bazel-gazelle/label"

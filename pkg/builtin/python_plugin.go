@@ -1,4 +1,4 @@
-package plugin
+package builtin
 
 import (
 	"path"
@@ -9,19 +9,19 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&ProtocPythonPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&PythonPlugin{})
 }
 
-// ProtocPythonPlugin implements Plugin for the built-in protoc python plugin.
-type ProtocPythonPlugin struct{}
+// PythonPlugin implements Plugin for the built-in protoc python plugin.
+type PythonPlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *ProtocPythonPlugin) Name() string {
+func (p *PythonPlugin) Name() string {
 	return "protoc:python"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ProtocPythonPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *PythonPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "python")
 	cfg.Outputs = protoc.FlatMapFiles(
 		pythonGeneratedFileName(ctx.Rel),

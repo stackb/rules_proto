@@ -1,6 +1,6 @@
 // for some bizarre reason, naming this file 'protoc_js.go' makes it be ignored
 // by the compiler?
-package plugin
+package builtin
 
 import (
 	"fmt"
@@ -13,19 +13,19 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&ProtocJsClosurePlugin{})
+	protoc.Plugins().MustRegisterPlugin(&JsClosurePlugin{})
 }
 
-// ProtocJsClosurePlugin implements Plugin for the built-in protoc js/library plugin.
-type ProtocJsClosurePlugin struct{}
+// JsClosurePlugin implements Plugin for the built-in protoc js/library plugin.
+type JsClosurePlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *ProtocJsClosurePlugin) Name() string {
+func (p *JsClosurePlugin) Name() string {
 	return "protoc:js:closure"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ProtocJsClosurePlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *JsClosurePlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	basename := strings.ToLower(ctx.ProtoLibrary.BaseName())
 	library := basename + ".js"
 	if ctx.Rel != "" {

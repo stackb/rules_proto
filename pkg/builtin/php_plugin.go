@@ -1,4 +1,4 @@
-package plugin
+package builtin
 
 import (
 	"path"
@@ -9,19 +9,19 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&ProtocPhpPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&PhpPlugin{})
 }
 
-// ProtocPhpPlugin implements Plugin for the built-in protoc php plugin.
-type ProtocPhpPlugin struct{}
+// PhpPlugin implements Plugin for the built-in protoc php plugin.
+type PhpPlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *ProtocPhpPlugin) Name() string {
+func (p *PhpPlugin) Name() string {
 	return "protoc:php"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ProtocPhpPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *PhpPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "php")
 	cfg.Outputs = protoc.FlatMapFiles(
 		phpFileName(ctx.Rel),

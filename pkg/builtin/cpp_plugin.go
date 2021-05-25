@@ -1,4 +1,4 @@
-package plugin
+package builtin
 
 import (
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -6,19 +6,19 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&ProtocCppPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&CppPlugin{})
 }
 
-// ProtocCppPlugin implements Plugin for the built-in protoc C++ plugin.
-type ProtocCppPlugin struct{}
+// CppPlugin implements Plugin for the built-in protoc C++ plugin.
+type CppPlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *ProtocCppPlugin) Name() string {
+func (p *CppPlugin) Name() string {
 	return "protoc:cpp"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ProtocCppPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *CppPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "cpp")
 	cfg.Outputs = protoc.FlatMapFiles(
 		protoc.RelativeFileNameWithExtensions(ctx.Rel, ".pb.cc", ".pb.h"),

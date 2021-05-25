@@ -1,4 +1,4 @@
-package plugin
+package builtin
 
 import (
 	"path"
@@ -8,19 +8,19 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&ProtocObjcPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&ObjcPlugin{})
 }
 
-// ProtocObjcPlugin implements Plugin for the built-in protoc C# plugin.
-type ProtocObjcPlugin struct{}
+// ObjcPlugin implements Plugin for the built-in protoc C# plugin.
+type ObjcPlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *ProtocObjcPlugin) Name() string {
+func (p *ObjcPlugin) Name() string {
 	return "protoc:objc"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ProtocObjcPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *ObjcPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "objc")
 	cfg.Outputs = protoc.FlatMapFiles(
 		objcFileName(ctx.Rel, ctx.PluginConfig),

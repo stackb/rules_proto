@@ -1,4 +1,4 @@
-package plugin
+package builtin
 
 import (
 	"path"
@@ -8,19 +8,19 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&ProtocJavaPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&JavaPlugin{})
 }
 
-// ProtocJavaPlugin implements Plugin for the built-in protoc java plugin.
-type ProtocJavaPlugin struct{}
+// JavaPlugin implements Plugin for the built-in protoc java plugin.
+type JavaPlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *ProtocJavaPlugin) Name() string {
+func (p *JavaPlugin) Name() string {
 	return "protoc:java"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ProtocJavaPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *JavaPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "java")
 	cfg.Outputs = []string{srcjarFile(ctx.Rel, ctx.ProtoLibrary.BaseName())}
 	cfg.Out = srcjarFile(ctx.Rel, ctx.ProtoLibrary.BaseName())

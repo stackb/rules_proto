@@ -22,13 +22,12 @@ go_library(
     importpath = "github.com/stackb/rules_proto/gazelle/protoc",
     visibility = ["//visibility:public"],
     deps = [
+        "//pkg/builtin",
         "//pkg/gazelle/protoc",
-        "//pkg/plugin",
-        "//pkg/gogo",
-        "//pkg/golang",
-        "//pkg/grpc_gateway",
-        "//pkg/java",
-        "//pkg/js",
+        # "//pkg/golang",
+        # "//pkg/grpc_gateway",
+        # "//pkg/java",
+        # "//pkg/js",
         "@bazel_gazelle//language:go_default_library",
     ],
 )

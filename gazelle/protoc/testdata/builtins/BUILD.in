@@ -1,3 +1,10 @@
 # gazelle:proto_language builtins rule proto_compile
 # gazelle:proto_language builtins plugin protoc:cpp
-# gazelle:proto_language builtins plugin grpc:grpc:cpp
+# gazelle:proto_language builtins plugin protoc:java
+# gazelle:proto_language builtins plugin protoc:js:closure
+# gazelle:proto_language builtins plugin protoc:js:common
+# gazelle:proto_language builtins plugin protoc:php
+# gazelle:proto_language builtins plugin protoc:python
+# gazelle:proto_language builtins plugin protoc:ruby
+# gazelle:proto_language builtins plugin protoc:csharp
+# gazelle:proto_language builtins plugin protoc:objc

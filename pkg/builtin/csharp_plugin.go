@@ -1,4 +1,4 @@
-package plugin
+package builtin
 
 import (
 	"path"
@@ -9,19 +9,19 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&ProtocCsharpPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&CsharpPlugin{})
 }
 
-// ProtocCsharpPlugin implements Plugin for the built-in protoc C# plugin.
-type ProtocCsharpPlugin struct{}
+// CsharpPlugin implements Plugin for the built-in protoc C# plugin.
+type CsharpPlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *ProtocCsharpPlugin) Name() string {
+func (p *CsharpPlugin) Name() string {
 	return "protoc:csharp"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ProtocCsharpPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *CsharpPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "csharp")
 	cfg.Outputs = protoc.FlatMapFiles(
 		csharpFileName(ctx.Rel, ctx.PluginConfig),

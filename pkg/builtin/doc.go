@@ -16,4 +16,4 @@
 // 'gogo:protobuf:gogofast'.  In this scheme the domain 'github.com' is left
 // out. The first two names are easy to choose.  The final name of the "variant"
 // is just a string, and hopefully a concise and meaningful name is chosen.
-package plugin
+package builtin
