@@ -65,11 +65,17 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			PluginConfig:  *plugin,
 		}
 
+		if plugin.Implementation == "" {
+			plugin.Implementation = plugin.Name
+		}
 		impl, err := globalRegistry.LookupPlugin(plugin.Implementation)
 		if err == ErrUnknownPlugin {
 			log.Fatalf(
-				"plugin not registered: %q (available: %v)", plugin.Implementation,
-				globalRegistry.PluginNames())
+				"plugin not registered: %q (available: %v) [%+v]",
+				plugin.Implementation,
+				globalRegistry.PluginNames(),
+				plugin,
+			)
 		}
 
 		config := &PluginConfiguration{

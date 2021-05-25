@@ -17,12 +17,12 @@ type PhpPlugin struct{}
 
 // Name implements part of the Plugin interface.
 func (p *PhpPlugin) Name() string {
-	return "protoc:php"
+	return "builtin:php"
 }
 
 // Configure implements part of the Plugin interface.
 func (p *PhpPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "php")
+	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "php")
 	cfg.Outputs = protoc.FlatMapFiles(
 		phpFileName(ctx.Rel),
 		protoc.Always,

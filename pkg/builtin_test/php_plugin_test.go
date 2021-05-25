@@ -12,7 +12,7 @@ func TestPhpPlugin(t *testing.T) {
 		"empty file": {
 			Input: "",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "php implementation protoc:php",
+				"proto_plugin", "php implementation builtin:php",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("php"),
@@ -22,7 +22,7 @@ func TestPhpPlugin(t *testing.T) {
 		"single enum message service": {
 			Input: "enum E{U=0;} message M{} service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "php implementation protoc:php",
+				"proto_plugin", "php implementation builtin:php",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("php"),
@@ -32,7 +32,7 @@ func TestPhpPlugin(t *testing.T) {
 		"package": {
 			Input: "package p; enum E{U=0;} message M{} service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "php implementation protoc:php",
+				"proto_plugin", "php implementation builtin:php",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("php"),
@@ -42,7 +42,7 @@ func TestPhpPlugin(t *testing.T) {
 		"php_namespace": {
 			Input: "package p; option php_namespace=\"foo\"; enum E{U=0;} message M{} service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "php implementation protoc:php",
+				"proto_plugin", "php implementation builtin:php",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("php"),
@@ -52,7 +52,7 @@ func TestPhpPlugin(t *testing.T) {
 		"php_metadata_namespace": {
 			Input: "package p; option php_metadata_namespace=\"bar\"; enum E{U=0;} message M{} service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "php implementation protoc:php",
+				"proto_plugin", "php implementation builtin:php",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("php"),
@@ -63,7 +63,7 @@ func TestPhpPlugin(t *testing.T) {
 			Rel:   "a/b/c",
 			Input: "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "php implementation protoc:php",
+				"proto_plugin", "php implementation builtin:php",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("php"),

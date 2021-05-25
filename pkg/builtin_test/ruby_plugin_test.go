@@ -12,7 +12,7 @@ func TestRubyPlugin(t *testing.T) {
 		"empty file": {
 			Input: "",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "ruby implementation protoc:ruby",
+				"proto_plugin", "ruby implementation builtin:ruby",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("ruby"),
@@ -22,7 +22,7 @@ func TestRubyPlugin(t *testing.T) {
 		"only services": {
 			Input: "service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "ruby implementation protoc:ruby",
+				"proto_plugin", "ruby implementation builtin:ruby",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("ruby"),
@@ -32,7 +32,7 @@ func TestRubyPlugin(t *testing.T) {
 		"with a package": {
 			Input: "package pkg;\n\nmessage M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "ruby implementation protoc:ruby",
+				"proto_plugin", "ruby implementation builtin:ruby",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("ruby"),
@@ -43,7 +43,7 @@ func TestRubyPlugin(t *testing.T) {
 			Rel:   "rel",
 			Input: "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "ruby implementation protoc:ruby",
+				"proto_plugin", "ruby implementation builtin:ruby",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("ruby"),

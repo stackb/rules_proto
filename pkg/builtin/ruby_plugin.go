@@ -14,12 +14,12 @@ type RubyPlugin struct{}
 
 // Name implements part of the Plugin interface.
 func (p *RubyPlugin) Name() string {
-	return "protoc:ruby"
+	return "builtin:ruby"
 }
 
 // Configure implements part of the Plugin interface.
 func (p *RubyPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "ruby")
+	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "ruby")
 	cfg.Outputs = protoc.FlatMapFiles(
 		protoc.RelativeFileNameWithExtensions(ctx.Rel, "_pb.rb"),
 		protoc.Always,

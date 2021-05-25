@@ -1,6 +1,10 @@
 package protoc
 
-import "github.com/bazelbuild/bazel-gazelle/label"
+import (
+	"sort"
+
+	"github.com/bazelbuild/bazel-gazelle/label"
+)
 
 // PluginConfiguration represents the configuration of a protoc plugin
 // and the sources & source mappings that are expected to be produced.
@@ -20,6 +24,7 @@ func GetPluginLabels(plugins []*PluginConfiguration) []string {
 	for i, plugin := range plugins {
 		labels[i] = plugin.Label.String()
 	}
+	sort.Strings(labels)
 	return labels
 }
 
@@ -30,7 +35,9 @@ func GetPluginOptions(plugins []*PluginConfiguration) map[string][]string {
 		if len(plugin.Options) == 0 {
 			continue
 		}
-		options[plugin.Label.String()] = plugin.Options
+		opts := plugin.Options
+		sort.Strings(opts)
+		options[plugin.Label.String()] = opts
 	}
 	return options
 }

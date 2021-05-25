@@ -12,7 +12,7 @@ func TestObjcPlugin(t *testing.T) {
 		"empty file": {
 			Input: "",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "objc implementation protoc:objc",
+				"proto_plugin", "objc implementation builtin:objc",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("objc"),
@@ -22,7 +22,7 @@ func TestObjcPlugin(t *testing.T) {
 		"single enum message service": {
 			Input: "enum E{U=0;} message M{} service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "objc implementation protoc:objc",
+				"proto_plugin", "objc implementation builtin:objc",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("objc"),
@@ -32,7 +32,7 @@ func TestObjcPlugin(t *testing.T) {
 		"package does not affect output location": {
 			Input: "package p; enum E{U=0;} message M{} service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "objc implementation protoc:objc",
+				"proto_plugin", "objc implementation builtin:objc",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("objc"),
@@ -42,7 +42,7 @@ func TestObjcPlugin(t *testing.T) {
 		"objc_class_prefix does not affect output location": {
 			Input: "package p; option objc_class_prefix=\"CGOOP\"; enum E{U=0;} message M{} service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "objc implementation protoc:objc",
+				"proto_plugin", "objc implementation builtin:objc",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("objc"),
@@ -53,7 +53,7 @@ func TestObjcPlugin(t *testing.T) {
 			Rel:   "rel",
 			Input: "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "objc implementation protoc:objc",
+				"proto_plugin", "objc implementation builtin:objc",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("objc"),
@@ -64,7 +64,7 @@ func TestObjcPlugin(t *testing.T) {
 			Basename: "foo_bar-baz",
 			Input:    "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "objc implementation protoc:objc",
+				"proto_plugin", "objc implementation builtin:objc",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("objc"),

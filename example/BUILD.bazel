@@ -57,8 +57,8 @@ proto_compile(
 
 proto_compile(
     name = "example_java_compile",
-    outs = {"//protoc:java_proto_plugin": "example/example.srcjar"},
+    outs = {"//builtin:java_proto_plugin": "example/example.srcjar"},
     outputs = ["example.srcjar"],
-    plugins = ["//protoc:java_proto_plugin"],
+    plugins = ["//builtin:java_proto_plugin"],
     proto = "example_proto",
 )

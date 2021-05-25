@@ -2,6 +2,7 @@ package protoc
 
 import (
 	"fmt"
+	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -80,7 +81,10 @@ func (s *protoCompileRule) Visibility() []string {
 func (s *protoCompileRule) Rule() *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
-	newRule.SetAttr("outputs", s.config.Outputs)
+	outputs := s.config.Outputs
+	sort.Strings(outputs)
+
+	newRule.SetAttr("outputs", outputs)
 	newRule.SetAttr("plugins", GetPluginLabels(s.config.Plugins))
 	newRule.SetAttr("proto", s.config.Library.Name())
 

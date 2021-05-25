@@ -12,7 +12,7 @@ func TestJsCommonPlugin(t *testing.T) {
 		"empty file": {
 			Input: "",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "js implementation protoc:js:common",
+				"proto_plugin", "js implementation builtin:js:common",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("js"),
@@ -22,7 +22,7 @@ func TestJsCommonPlugin(t *testing.T) {
 		"only services": {
 			Input: "service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "js implementation protoc:js:common",
+				"proto_plugin", "js implementation builtin:js:common",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("js"),
@@ -32,7 +32,7 @@ func TestJsCommonPlugin(t *testing.T) {
 		"single message & enum": {
 			Input: "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "js implementation protoc:js:common",
+				"proto_plugin", "js implementation builtin:js:common",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("js"),
@@ -42,7 +42,7 @@ func TestJsCommonPlugin(t *testing.T) {
 		"with a package": {
 			Input: "package pkg;\n\nmessage M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "js implementation protoc:js:common",
+				"proto_plugin", "js implementation builtin:js:common",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("js"),
@@ -53,7 +53,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			Rel:   "rel",
 			Input: "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "js implementation protoc:js:common",
+				"proto_plugin", "js implementation builtin:js:common",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("js"),

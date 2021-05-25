@@ -12,7 +12,7 @@ func TestCppPlugin(t *testing.T) {
 		"empty file": {
 			Input: "",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("cpp"),
@@ -22,7 +22,7 @@ func TestCppPlugin(t *testing.T) {
 		"only services": {
 			Input: "service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("cpp"),
@@ -32,7 +32,7 @@ func TestCppPlugin(t *testing.T) {
 		"with a package": {
 			Input: "package pkg;\n\nmessage M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("cpp"),
@@ -43,7 +43,7 @@ func TestCppPlugin(t *testing.T) {
 			Rel:   "rel",
 			Input: "package a;\n\nmessage M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("cpp"),
@@ -54,7 +54,7 @@ func TestCppPlugin(t *testing.T) {
 			Basename: "snake_case",
 			Input:    "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("cpp"),
@@ -65,7 +65,7 @@ func TestCppPlugin(t *testing.T) {
 			Basename: "PascalCase",
 			Input:    "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("cpp"),
@@ -76,7 +76,7 @@ func TestCppPlugin(t *testing.T) {
 			Basename: "camelCase",
 			Input:    "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "cpp implementation protoc:cpp",
+				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("cpp"),

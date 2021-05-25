@@ -16,7 +16,7 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 ## gazelle:proto_plugin cc_proto label //protoc:cc_proto_plugin
 ## gazelle:proto_plugin cc_grpc label //grpc/grpc:grpc_cpp_plugin
 ## gazelle:proto_plugin py_proto label //protoc:py_proto_plugin
-# gazelle:proto_plugin java_proto label //protoc:java_proto_plugin
+# gazelle:proto_plugin java_proto label //builtin:java_proto_plugin
 # gazelle:proto_plugin java_grpc label //grpc/grpc-java:grpc_java_plugin
 # gazelle:proto_plugin closure_js_proto label //protoc:closure_js_proto_plugin
 # gazelle:proto_plugin commonjs label //protoc:common_js_proto_plugin

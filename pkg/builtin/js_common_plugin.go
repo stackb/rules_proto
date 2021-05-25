@@ -19,7 +19,7 @@ type JsCommonPlugin struct{}
 
 // Name implements part of the Plugin interface.
 func (p *JsCommonPlugin) Name() string {
-	return "protoc:js:common"
+	return "builtin:js:common"
 }
 
 // Configure implements part of the Plugin interface.
@@ -30,7 +30,7 @@ func (p *JsCommonPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.Plugin
 		library = path.Join(ctx.Rel, library)
 	}
 
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "commonjs")
+	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "commonjs")
 	cfg.Outputs = []string{library}
 	cfg.Options = []string{"import_style=commonjs"}
 }

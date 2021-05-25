@@ -17,12 +17,12 @@ type CsharpPlugin struct{}
 
 // Name implements part of the Plugin interface.
 func (p *CsharpPlugin) Name() string {
-	return "protoc:csharp"
+	return "builtin:csharp"
 }
 
 // Configure implements part of the Plugin interface.
 func (p *CsharpPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "csharp")
+	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "csharp")
 	cfg.Outputs = protoc.FlatMapFiles(
 		csharpFileName(ctx.Rel, ctx.PluginConfig),
 		protoc.Always,

@@ -16,12 +16,12 @@ type JavaPlugin struct{}
 
 // Name implements part of the Plugin interface.
 func (p *JavaPlugin) Name() string {
-	return "protoc:java"
+	return "builtin:java"
 }
 
 // Configure implements part of the Plugin interface.
 func (p *JavaPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "java")
+	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "java")
 	cfg.Outputs = []string{srcjarFile(ctx.Rel, ctx.ProtoLibrary.BaseName())}
 	cfg.Out = srcjarFile(ctx.Rel, ctx.ProtoLibrary.BaseName())
 }

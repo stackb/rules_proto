@@ -12,7 +12,7 @@ func TestPythonPlugin(t *testing.T) {
 		"empty file": {
 			Input: "",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "python implementation protoc:python",
+				"proto_plugin", "python implementation builtin:python",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("python"),
@@ -22,7 +22,7 @@ func TestPythonPlugin(t *testing.T) {
 		"only services": {
 			Input: "service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "python implementation protoc:python",
+				"proto_plugin", "python implementation builtin:python",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("python"),
@@ -32,7 +32,7 @@ func TestPythonPlugin(t *testing.T) {
 		"with a package": {
 			Input: "package pkg;\n\nmessage M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "python implementation protoc:python",
+				"proto_plugin", "python implementation builtin:python",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("python"),
@@ -43,7 +43,7 @@ func TestPythonPlugin(t *testing.T) {
 			Rel:   "rel",
 			Input: "package a;\n\nmessage M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "python implementation protoc:python",
+				"proto_plugin", "python implementation builtin:python",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("python"),
@@ -54,7 +54,7 @@ func TestPythonPlugin(t *testing.T) {
 			Basename: "a-b*c+d=e|g!h#i",
 			Input:    "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "python implementation protoc:python",
+				"proto_plugin", "python implementation builtin:python",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("python"),

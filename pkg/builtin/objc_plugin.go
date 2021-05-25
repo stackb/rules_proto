@@ -16,12 +16,12 @@ type ObjcPlugin struct{}
 
 // Name implements part of the Plugin interface.
 func (p *ObjcPlugin) Name() string {
-	return "protoc:objc"
+	return "builtin:objc"
 }
 
 // Configure implements part of the Plugin interface.
 func (p *ObjcPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "objc")
+	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "objc")
 	cfg.Outputs = protoc.FlatMapFiles(
 		objcFileName(ctx.Rel, ctx.PluginConfig),
 		protoc.Always,

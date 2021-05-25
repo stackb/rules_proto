@@ -3,9 +3,9 @@ package protoc
 import (
 	"testing"
 
-	"github.com/stackb/rules_proto/pkg/golden"
+	"github.com/stackb/rules_proto/pkg/goldentest"
 )
 
 func TestProtoc(t *testing.T) {
-	golden.NewTestDataDir("gazelle/protoc").Run(t, "gazelle-protoc")
+	goldentest.FromDir("gazelle/protoc").Run(t, "gazelle-protoc")
 }

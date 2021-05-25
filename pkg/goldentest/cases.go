@@ -1,4 +1,4 @@
-package golden
+package goldentest
 
 /* Copyright 2020 The Bazel Authors. All rights reserved.
 
@@ -28,21 +28,21 @@ import (
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 
-// TestDataDir is a helper for running glob(["testdata/**"]) style test setups.
-type TestDataDir struct {
+// Cases is a helper for running glob(["testdata/**"]) style test setups.
+type Cases struct {
 	extensionDir string
 	testDataPath string
 }
 
-// NewTestDataDir returns a test helper.
-func NewTestDataDir(extensionDir string) *TestDataDir {
-	return &TestDataDir{
+// FromDir construct a Cases tester that searches the given directory.
+func FromDir(extensionDir string) *Cases {
+	return &Cases{
 		extensionDir: extensionDir,
 		testDataPath: path.Join(extensionDir, "testdata") + "/",
 	}
 }
 
-func (g *TestDataDir) Run(t *testing.T, gazelleName string) {
+func (g *Cases) Run(t *testing.T, gazelleName string) {
 	t.Log("Run", g.extensionDir)
 
 	gazellePath, ok := bazel.FindBinary(g.extensionDir, gazelleName)
@@ -81,7 +81,7 @@ func (g *TestDataDir) Run(t *testing.T, gazelleName string) {
 	}
 }
 
-func (g *TestDataDir) testPath(t *testing.T, gazellePath, name string, files []bazel.RunfileEntry) {
+func (g *Cases) testPath(t *testing.T, gazellePath, name string, files []bazel.RunfileEntry) {
 	t.Run(name, func(t *testing.T) {
 		var inputs []testtools.FileSpec
 		var goldens []testtools.FileSpec

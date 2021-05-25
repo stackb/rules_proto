@@ -13,7 +13,7 @@ func TestCsharpPlugin(t *testing.T) {
 		"empty file": {
 			Input: "",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "csharp implementation protoc:csharp",
+				"proto_plugin", "csharp implementation builtin:csharp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("csharp"),
@@ -24,7 +24,7 @@ func TestCsharpPlugin(t *testing.T) {
 		"single enum message service": {
 			Input: "enum E{U=0;} message M{} service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "csharp implementation protoc:csharp",
+				"proto_plugin", "csharp implementation builtin:csharp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("csharp"),
@@ -35,7 +35,7 @@ func TestCsharpPlugin(t *testing.T) {
 		"package enum message service": {
 			Input: "package p; enum E{U=0;} message M{} service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "csharp implementation protoc:csharp",
+				"proto_plugin", "csharp implementation builtin:csharp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("csharp"),
@@ -45,7 +45,7 @@ func TestCsharpPlugin(t *testing.T) {
 		"csharp_namespace does not on affect output location": {
 			Input: "package p; option csharp_namespace=\"Aa.Bb.Cc\"; enum E{U=0;} message M{} service S{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "csharp implementation protoc:csharp",
+				"proto_plugin", "csharp implementation builtin:csharp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("csharp"),
@@ -56,7 +56,7 @@ func TestCsharpPlugin(t *testing.T) {
 			Rel:   "rel",
 			Input: "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "csharp implementation protoc:csharp",
+				"proto_plugin", "csharp implementation builtin:csharp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("csharp"),
@@ -67,7 +67,7 @@ func TestCsharpPlugin(t *testing.T) {
 			Basename: "foo_bar-baz",
 			Input:    "message M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "csharp implementation protoc:csharp",
+				"proto_plugin", "csharp implementation builtin:csharp",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("csharp"),

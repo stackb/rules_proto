@@ -37,5 +37,5 @@ go_test(
     srcs = ["protoc_test.go"],
     data = [":gazelle-protoc"] + glob(["testdata/**"]),
     embed = [":protoc"],
-    deps = ["//pkg/golden"],
+    deps = ["//pkg/goldentest"],
 )

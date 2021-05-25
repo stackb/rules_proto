@@ -41,14 +41,14 @@ proto_compile(
     name = "routeguide_java_compile",
     outs = {
         "//grpc/grpc-java:grpc_java_plugin": "routeguide/routeguide_grpc.srcjar",
-        "//protoc:java_proto_plugin": "routeguide/routeguide.srcjar",
+        "//builtin:java_proto_plugin": "routeguide/routeguide.srcjar",
     },
     outputs = [
         "routeguide.srcjar",
         "routeguide_grpc.srcjar",
     ],
     plugins = [
-        "//protoc:java_proto_plugin",
+        "//builtin:java_proto_plugin",
         "//grpc/grpc-java:grpc_java_plugin",
     ],
     proto = "routeguide_proto",

@@ -17,12 +17,12 @@ type PythonPlugin struct{}
 
 // Name implements part of the Plugin interface.
 func (p *PythonPlugin) Name() string {
-	return "protoc:python"
+	return "builtin:python"
 }
 
 // Configure implements part of the Plugin interface.
 func (p *PythonPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "python")
+	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "python")
 	cfg.Outputs = protoc.FlatMapFiles(
 		pythonGeneratedFileName(ctx.Rel),
 		protoc.Always,

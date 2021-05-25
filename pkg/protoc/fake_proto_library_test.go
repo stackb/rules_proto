@@ -23,7 +23,7 @@ func (p *fakePlugin) Name() string {
 
 // Configure implements part of the Plugin interface
 func (p *fakePlugin) Configure(ctx *PluginContext, cfg *PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/protoc", "fake")
+	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "fake")
 	cfg.Outputs = p.outputs(ctx.ProtoLibrary)
 	cfg.Options = p.options(ctx.ProtoLibrary)
 }

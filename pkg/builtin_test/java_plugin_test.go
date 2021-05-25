@@ -12,7 +12,7 @@ func TestJavaPlugin(t *testing.T) {
 		"empty file": {
 			Input: "",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "java implementation protoc:java",
+				"proto_plugin", "java implementation builtin:java",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("java"),
@@ -22,7 +22,7 @@ func TestJavaPlugin(t *testing.T) {
 		"message with a package": {
 			Input: "package a;\n\nmessage M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "java implementation protoc:java",
+				"proto_plugin", "java implementation builtin:java",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("java"),
@@ -34,7 +34,7 @@ func TestJavaPlugin(t *testing.T) {
 			Rel:   "src/main/java/foo",
 			Input: "package a;\n\nmessage M{}",
 			Directives: plugintest.WithDirectives(
-				"proto_plugin", "java implementation protoc:java",
+				"proto_plugin", "java implementation builtin:java",
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("java"),

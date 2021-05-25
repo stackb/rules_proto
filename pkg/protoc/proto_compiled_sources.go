@@ -89,7 +89,10 @@ func (s *protoCompiledSourcesRule) Visibility() []string {
 func (s *protoCompiledSourcesRule) Rule() *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
-	newRule.SetAttr("srcs", s.config.Outputs)
+	outputs := s.config.Outputs
+	sort.Strings(outputs)
+
+	newRule.SetAttr("srcs", outputs)
 	newRule.SetAttr("plugins", GetPluginLabels(s.config.Plugins))
 	newRule.SetAttr("proto", s.config.Library.Name())
 
