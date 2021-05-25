@@ -7,17 +7,25 @@ proto_plugin(
 
 proto_plugin(
     name = "java",
+    out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}.srcjar",
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
     name = "commonjs",
     protoc_plugin_name = "js",
+    options = [
+        "import_style=commonjs",
+    ],
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
     name = "closurejs",
+    options = [
+        "import_style=closure",
+        "library={PACKAGE}/{PROTO_LIBRARY_BASENAME}",
+    ],
     protoc_plugin_name = "js",
     visibility = ["//visibility:public"],
 )

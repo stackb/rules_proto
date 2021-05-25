@@ -3,9 +3,7 @@
 package builtin
 
 import (
-	"fmt"
 	"path"
-	"path/filepath"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -27,12 +25,9 @@ func (p *JsClosurePlugin) Name() string {
 // Configure implements part of the Plugin interface.
 func (p *JsClosurePlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
 	basename := strings.ToLower(ctx.ProtoLibrary.BaseName())
-	library := basename + ".js"
-	if ctx.Rel != "" {
-		library = path.Join(ctx.Rel, library)
-	}
+	library := path.Join(ctx.Rel, basename+".js")
 
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "closurejs")
 	cfg.Outputs = []string{library}
-	cfg.Options = []string{"import_style=closure", fmt.Sprintf("library=%s", strings.TrimSuffix(library, filepath.Ext(library)))}
+	// cfg.Options = []string{"import_style=closure", fmt.Sprintf("library=%s", strings.TrimSuffix(library, filepath.Ext(library)))}
 }

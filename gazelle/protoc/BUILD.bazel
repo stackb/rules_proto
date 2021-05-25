@@ -41,11 +41,6 @@ go_test(
     deps = ["//pkg/goldentest"],
 )
 
-# filegroup(
-#     name = "testdata",
-#     srcs = glob(["testdata/**"]),
-# )
-
 gazelle_testdata_go_bazel_test(
     name = "builtins",
     srcs = glob(["testdata/**/*"]),

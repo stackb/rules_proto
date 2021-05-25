@@ -1,4 +1,3 @@
-load("@rules_java//java:defs.bzl", "java_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
@@ -17,48 +16,48 @@ proto_library(
 )
 
 proto_compile(
-    name = "example_cc_compile",
+    name = "example_cpp_compile",
     outputs = [
         "thing.pb.cc",
         "thing.pb.h",
     ],
-    plugins = ["//protoc:cc_proto_plugin"],
+    plugins = ["//plugin/builtin:cpp"],
     proto = "example_proto",
 )
 
 proto_compile(
-    name = "example_closure_js_compile",
-    options = {"//protoc:closure_js_proto_plugin": ["library=example/example"]},
+    name = "example_closurejs_compile",
+    options = {"//plugin/builtin:closurejs": ["library=example/example"]},
     outputs = ["example.js"],
-    plugins = ["//protoc:closure_js_proto_plugin"],
+    plugins = ["//plugin/builtin:closurejs"],
     proto = "example_proto",
 )
 
 proto_compile(
-    name = "example_common_js_compile",
+    name = "example_commonjs_compile",
     outputs = ["thing_pb.js"],
-    plugins = ["//protoc:common_js_proto_plugin"],
+    plugins = ["//plugin/builtin:commonjs"],
     proto = "example_proto",
 )
 
-proto_compile(
-    name = "example_gogofast_compile",
-    outputs = ["thing.pb.go"],
-    plugins = ["//gogo/protobuf:gogofast_plugin"],
-    proto = "example_proto",
-)
+# proto_compile(
+#     name = "example_gogofast_compile",
+#     outputs = ["thing.pb.go"],
+#     plugins = ["//gogo/protobuf:gogofast_plugin"],
+#     proto = "example_proto",
+# )
 
 proto_compile(
-    name = "example_py_compile",
+    name = "example_python_compile",
     outputs = ["thing_pb2.py"],
-    plugins = ["//protoc:py_proto_plugin"],
+    plugins = ["//plugin/builtin:python"],
     proto = "example_proto",
 )
 
 proto_compile(
     name = "example_java_compile",
-    outs = {"//builtin:java_proto_plugin": "example/example.srcjar"},
     outputs = ["example.srcjar"],
-    plugins = ["//builtin:java_proto_plugin"],
+    plugins = ["//plugin/builtin:java"],
     proto = "example_proto",
+    verbose = 3,
 )

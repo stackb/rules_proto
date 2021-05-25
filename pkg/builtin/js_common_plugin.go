@@ -32,5 +32,5 @@ func (p *JsCommonPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.Plugin
 
 	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "commonjs")
 	cfg.Outputs = []string{library}
-	cfg.Options = []string{"import_style=commonjs"}
+	// cfg.Options = []string{"import_style=commonjs"}
 }

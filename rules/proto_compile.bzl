@@ -1,7 +1,6 @@
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
 load(":providers.bzl", "ProtoCompileInfo", "ProtoPluginInfo")
 
-
 def _uniq(iterable):
     """Returns a list of unique elements in `iterable`.
 
@@ -22,6 +21,12 @@ def _ctx_replace_arg(ctx, arg):
     arg = arg.replace("{BIN_DIR}", ctx.bin_dir.path)
     arg = arg.replace("{PACKAGE}", ctx.label.package)
     arg = arg.replace("{NAME}", ctx.label.name)
+
+    if arg.find("{PROTO_LIBRARY_BASENAME}") != -1:
+        basename = ctx.attr.proto.label.name
+        if basename.endswith("_proto"):
+            basename = basename[:len(basename)-len("_proto")]
+        arg = arg.replace("{PROTO_LIBRARY_BASENAME}", basename)
     return arg
 
 def get_protoc_executable(ctx):
@@ -72,6 +77,7 @@ def _proto_compile_impl(ctx):
     if len(ctx.attr.srcs) > 0:
         if len(ctx.outputs.outputs) > 0:
             fail("rule must provide 'srcs' or 'outputs', but not both")
+
         # srcgen_ext = ctx.attr.srcgen_ext
         outputs = [ctx.actions.declare_file(name) for name in ctx.attr.srcs]
 
@@ -185,8 +191,8 @@ def _proto_compile_impl(ctx):
         if plugin_out:
             # bin-dir relative is implied for plugin_out overrides
             out = "/".join([ctx.bin_dir.path, plugin_out])
-        args.append("--{}_out={}".format(plugin_name, out))
 
+        args.append("--{}_out={}".format(plugin_name, out))
 
     ###
     ### Part 3: trailing args
@@ -209,8 +215,9 @@ def _proto_compile_impl(ctx):
 
     ### Step 3.3: build args object
 
+    replaced_args = _ctx_replace_args(ctx, args)
     final_args = ctx.actions.args()
-    final_args.add_all(_ctx_replace_args(ctx, args))
+    final_args.add_all(replaced_args)
 
     ###
     ### Step 4: command action
@@ -254,7 +261,7 @@ def _proto_compile_impl(ctx):
             print("PROTO:", f.path)
         for f in outputs:
             print("EXPECTED OUTPUT:", f.path)
-        for a in args:
+        for a in replaced_args:
             print("ARG:", a)
         for c in commands:
             print("COMMAND:", c)

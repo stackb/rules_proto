@@ -3,8 +3,6 @@
 # gazelle:proto_language builtins plugin builtin:java
 # gazelle:proto_language builtins plugin builtin:js:closure
 # gazelle:proto_language builtins plugin builtin:js:common
-# gazelle:proto_language builtins plugin builtin:php
 # gazelle:proto_language builtins plugin builtin:python
 # gazelle:proto_language builtins plugin builtin:ruby
-# gazelle:proto_language builtins plugin builtin:csharp
 # gazelle:proto_language builtins plugin builtin:objc

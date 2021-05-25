@@ -1,3 +1,7 @@
+"""proto_plugin.bzl provides the "proto_plugin" rule.
+
+A "proto_plugin" rule wraps metadata about a proto compiler plugin.
+"""
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
 load(":providers.bzl", "ProtoPluginInfo")
 # load(
@@ -42,7 +46,7 @@ proto_plugin = rule(
         ),
         "options": attr.string_list(
             doc = "A list of options to pass to the compiler for this plugin",
-        ),        
+        ),
         "out": attr.string(
             doc = "The output scheme for the plugin.  Can be a string like '.' or a symbol such as {BIN_DIR} or {PACKAGE}.",
             default = "{BIN_DIR}",
