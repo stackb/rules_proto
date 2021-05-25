@@ -2,12 +2,9 @@
 
 A "proto_plugin" rule wraps metadata about a proto compiler plugin.
 """
+
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
-load(":providers.bzl", "ProtoPluginInfo")
-# load(
-#     "@build_stack_rules_proto//rules:proto_dependency.bzl",
-#     "ProtoDependencyInfo",
-# )
+load("@build_stack_rules_proto//rules:providers.bzl", "ProtoPluginInfo", "ProtoDependencyInfo")
 
 def _proto_plugin_impl(ctx):
     return [
@@ -24,7 +21,7 @@ def _proto_plugin_impl(ctx):
             data = ctx.files.data,
             supplementary_proto_deps = [dep[ProtoInfo] for dep in ctx.attr.supplementary_proto_deps],
             separate_options_flag = ctx.attr.separate_options_flag,
-            # deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
+            deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
         ),
     ]
 
@@ -67,9 +64,9 @@ proto_plugin = rule(
             doc = "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",
             default = False,
         ),
-        # "deps": attr.label_list(
-        #     doc = "Proto dependencies",
-        #     providers = [ProtoDependencyInfo],
-        # ),
+        "deps": attr.label_list(
+            doc = "Proto dependencies",
+            providers = [ProtoDependencyInfo],
+        ),
     },
 )

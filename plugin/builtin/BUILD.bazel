@@ -1,23 +1,27 @@
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+load("@build_stack_rules_proto//cmd/depsgen:depsgen.bzl", "depsgen")
 
 proto_plugin(
     name = "cpp",
     visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
 )
 
 proto_plugin(
     name = "java",
     out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}.srcjar",
     visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
 )
 
 proto_plugin(
     name = "commonjs",
-    protoc_plugin_name = "js",
     options = [
         "import_style=commonjs",
     ],
+    protoc_plugin_name = "js",
     visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
 )
 
 proto_plugin(
@@ -28,31 +32,37 @@ proto_plugin(
     ],
     protoc_plugin_name = "js",
     visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
 )
 
 proto_plugin(
     name = "python",
     visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
 )
 
 proto_plugin(
     name = "ruby",
     visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
 )
 
 proto_plugin(
     name = "objc",
     visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
 )
 
 proto_plugin(
     name = "csharp",
     visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
 )
 
 proto_plugin(
     name = "php",
     visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
 )
 
 filegroup(
@@ -61,4 +71,9 @@ filegroup(
         "BUILD.bazel",
     ],
     visibility = ["//:__pkg__"],
+)
+
+depsgen(
+    name = "builtin",
+    deps = ["//deps:com_google_protobuf"],
 )

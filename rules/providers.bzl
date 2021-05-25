@@ -23,3 +23,17 @@ ProtoCompileInfo = provider("ProtoCompileInfo provides downstream rules with the
         "outputs": "The output files from the rule",
     },
 )
+
+ProtoDependencyInfo = provider("Provider for a single external dependency",
+    fields = {
+        "buildFile": "The build_file of this dependency",
+        "deps": "The list of deps of this dependency  list<ProtoDependencyInfo>",
+        "label": "The proto dependency label string",
+        "name": "The proto dependency name (should correspond to the workspace name",
+        "repositoryRule": "The name of the repository rule that instantiates this dependency",
+        "sha256": "The sha256 attribute for http_archive",
+        "stripPrefix": "The strip_prefix attribute for http_archive",
+        "urls": "The urls string list",
+        "workspaceSnippet": "The workspaceSnippet string list",
+    },
+)
