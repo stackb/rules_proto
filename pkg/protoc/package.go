@@ -53,7 +53,11 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 	// list of plugin configurations that apply to this proto_library
 	configs := make([]*PluginConfiguration, 0)
 
-	for _, plugin := range p.Plugins {
+	for name, want := range p.Plugins {
+		if !want {
+			continue
+		}
+		plugin := s.cfg.plugins[name]
 		if !plugin.Enabled {
 			continue
 		}
@@ -99,7 +103,14 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 	rules := make([]RuleProvider, 0)
 
 	pc := newProtocConfiguration(s.rel, p.Name, lib, configs)
-	for _, cfg := range p.Rules {
+	for name, want := range p.Rules {
+		if !want {
+			continue
+		}
+		cfg := s.cfg.rules[name]
+		if !cfg.Enabled {
+			continue
+		}
 		rules = append(rules, cfg.Implementation.ProvideRule(cfg, pc))
 	}
 

@@ -10,8 +10,8 @@ import (
 type LanguageConfig struct {
 	Name    string
 	Enabled bool
-	Plugins map[string]*LanguagePluginConfig
-	Rules   map[string]*LanguageRuleConfig
+	Plugins map[string]bool
+	Rules   map[string]bool
 }
 
 // newLanguageConfig constructs a new language configuration having the
@@ -19,28 +19,24 @@ type LanguageConfig struct {
 func newLanguageConfig(name string, rules ...*LanguageRuleConfig) *LanguageConfig {
 	c := &LanguageConfig{
 		Name:    name,
-		Rules:   make(map[string]*LanguageRuleConfig),
-		Plugins: make(map[string]*LanguagePluginConfig),
+		Rules:   make(map[string]bool),
+		Plugins: make(map[string]bool),
 		Enabled: true,
 	}
 	for _, rule := range rules {
-		c.Rules[rule.Name] = rule.clone()
+		c.Rules[rule.Name] = true
 	}
 	return c
 }
 
 func (c *LanguageConfig) clone() *LanguageConfig {
-	clone := &LanguageConfig{
-		Name:    c.Name,
-		Enabled: c.Enabled,
-		Plugins: make(map[string]*LanguagePluginConfig),
-		Rules:   make(map[string]*LanguageRuleConfig),
-	}
+	clone := newLanguageConfig(c.Name)
+	clone.Enabled = c.Enabled
 	for k, v := range c.Plugins {
-		clone.Plugins[k] = v.clone()
+		clone.Plugins[k] = v
 	}
 	for k, v := range c.Rules {
-		clone.Rules[k] = v.clone()
+		clone.Rules[k] = v
 	}
 	return clone
 }
@@ -56,25 +52,9 @@ func (c *LanguageConfig) parseDirective(cfg *PackageConfig, d, param, value stri
 		}
 		c.Enabled = enabled
 	case "plugin":
-		plugin, err := cfg.getOrCreateLanguagePluginConfig(value)
-		if err != nil {
-			return fmt.Errorf("could not bind plugin %q to language: %w", value, err)
-		}
-		plugin = plugin.clone()
-		if !intent.Want {
-			plugin.Enabled = false
-		}
-		c.Plugins[value] = plugin
+		c.Plugins[value] = intent.Want
 	case "rule":
-		rule, err := cfg.getOrCreateLanguageRuleConfig(value)
-		if err != nil {
-			return fmt.Errorf("could not bind rule %q to language: %w", value, err)
-		}
-		rule = rule.clone()
-		if !intent.Want {
-			rule.Enabled = false
-		}
-		c.Rules[value] = rule
+		c.Rules[value] = intent.Want
 	default:
 		return fmt.Errorf("unknown parameter %q", value)
 	}

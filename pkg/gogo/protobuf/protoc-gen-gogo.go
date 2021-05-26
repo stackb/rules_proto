@@ -1,7 +1,6 @@
 package protobuf
 
 import (
-	"log"
 	"path"
 	"strings"
 
@@ -73,7 +72,6 @@ func (p *GogoPlugin) outputs(lib protoc.ProtoLibrary) []string {
 }
 
 func (p *GogoPlugin) options(rel string, cfg protoc.LanguagePluginConfig, lib protoc.ProtoLibrary) []string {
-	log.Printf("%s: %+v", rel, cfg)
 	// if the configuration specifically states that we don't want grpc, return
 	// early
 	if want, ok := cfg.Options[gogoGrpcPluginOption]; ok && !want {

@@ -2,7 +2,6 @@ package protoc
 
 import (
 	"fmt"
-	"log"
 	"sort"
 	"strconv"
 
@@ -75,7 +74,6 @@ func (c *LanguagePluginConfig) parseDirective(cfg *PackageConfig, d, param, valu
 		c.Implementation = value
 	case "option":
 		c.Options[value] = intent.Want
-		log.Printf("pluginConfig.parseDrirectives: %s => %+v :%+v", value, intent, c)
 	default:
 		return fmt.Errorf("unknown parameter %q", intent.Value)
 	}
