@@ -6,8 +6,6 @@ type languageConfigCheck func(t *testing.T, cfg *LanguageConfig)
 
 func TestLanguageConfigClone(t *testing.T) {
 	a := newLanguageConfig("fake")
-	a.Plugins["fake_proto"] = newLanguagePluginConfig("fake_proto")
-	a.Rules["fake_proto_library"] = newLanguageRuleConfig("fake_proto_library")
 	b := a.clone()
 
 	check := allLanguageChecks(
@@ -18,8 +16,8 @@ func TestLanguageConfigClone(t *testing.T) {
 	check(t, b)
 
 	b.Enabled = false
-	b.Plugins["fake_proto"].Enabled = false
-	b.Rules["fake_proto_library"].Enabled = false
+	b.Plugins["fake_proto"] = false
+	b.Rules["fake_proto_library"] = false
 
 	withLanguageEnabled(true)(t, a)
 	withLanguageEnabled(false)(t, b)
@@ -115,27 +113,27 @@ func withLanguageEnabled(enabled bool) languageConfigCheck {
 	}
 }
 
-func withLanguagePluginEnabled(name string, enabled bool) languageConfigCheck {
+func withLanguagePluginEnabled(name string, want bool) languageConfigCheck {
 	return func(t *testing.T, cfg *LanguageConfig) {
-		plugin, ok := cfg.Plugins[name]
+		actual, ok := cfg.Plugins[name]
 		if !ok {
 			t.Fatal("plugin not found:", name)
 		}
-		if plugin.Enabled != enabled {
+		if actual != want {
 			t.Logf("failing lang config: %+v", cfg)
-			t.Errorf("lang plugin enabled: want %t, got %t", enabled, plugin.Enabled)
+			t.Errorf("lang plugin enabled: want %t, got %t", want, actual)
 		}
 	}
 }
 
-func withNamedRuleEnabled(name string, enabled bool) languageConfigCheck {
+func withNamedRuleEnabled(name string, want bool) languageConfigCheck {
 	return func(t *testing.T, cfg *LanguageConfig) {
-		rule, ok := cfg.Rules[name]
+		got, ok := cfg.Rules[name]
 		if !ok {
 			t.Fatal("rule not found:", name)
 		}
-		if rule.Enabled != enabled {
-			t.Errorf("lang rule enabled: want %t, got %t", enabled, rule.Enabled)
+		if got != want {
+			t.Errorf("lang rule enabled: want %t, got %t", want, got)
 		}
 	}
 }

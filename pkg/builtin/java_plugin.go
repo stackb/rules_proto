@@ -28,7 +28,3 @@ func (p *JavaPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigur
 		Outputs: []string{srcjar},
 	}
 }
-
-// func srcjarFile(dir, name string) string {
-// 	return path.Join(dir, name+".srcjar")
-// }

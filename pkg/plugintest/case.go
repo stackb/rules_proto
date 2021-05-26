@@ -74,10 +74,9 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 		PluginConfig:  pluginConfig,
 	}
 
-	got := &protoc.PluginConfiguration{}
-	subject.Configure(ctx, got)
+	got := subject.Configure(ctx)
 
-	if got.Skip != tc.Configuration.Skip {
+	if got == nil != tc.Configuration.Skip {
 		t.Errorf("%T.Skip: want %t, got %t", subject, tc.Configuration.Skip, got.Skip)
 	}
 	outputs := got.Outputs
