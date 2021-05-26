@@ -18,15 +18,16 @@ func (p *GrpcGrpcCppPlugin) Name() string {
 }
 
 // Configure implements part of the Plugin interface.
-func (p *GrpcGrpcCppPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Skip = !protoc.HasServices(ctx.ProtoLibrary.Files()...)
-	if cfg.Skip {
-		return
+func (p *GrpcGrpcCppPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	if !protoc.HasServices(ctx.ProtoLibrary.Files()...) {
+		return nil
 	}
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/grpc/grpc", "cpp")
-	cfg.Outputs = protoc.FlatMapFiles(
-		protoc.PackageFileNameWithExtensions(".grpc.pb.cc", ".grpc.pb.h"),
-		protoc.HasService,
-		ctx.ProtoLibrary.Files()...,
-	)
+	return &protoc.PluginConfiguration{
+		Label: label.New("build_stack_rules_proto", "plugin/grpc/grpc", "cpp"),
+		Outputs: protoc.FlatMapFiles(
+			protoc.PackageFileNameWithExtensions(".grpc.pb.cc", ".grpc.pb.h"),
+			protoc.HasService,
+			ctx.ProtoLibrary.Files()...,
+		),
+	}
 }

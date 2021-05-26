@@ -9,6 +9,7 @@ def _proto_dependency_impl(ctx):
             deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
             label = str(ctx.label),
             name = ctx.attr.name,
+            path = ctx.attr.path,
             repositoryRule = ctx.attr.repository_rule,
             sha256 = ctx.attr.sha256,
             stripPrefix = ctx.attr.strip_prefix,
@@ -23,6 +24,9 @@ proto_dependency = rule(
         "build_file": attr.string(
             doc = "The build_file attribute for http_archive",
         ),
+        "path": attr.string(
+            doc = "The path attribute for local_repository",
+        ),
         "workspace_snippet": attr.string(
             doc = "The starlark code snippet for the WORKSPACE needed when using this dependency",
         ),
@@ -32,7 +36,7 @@ proto_dependency = rule(
         ),
         "repository_rule": attr.string(
             doc = "The repository rule that instantiates this dependency",
-            values = ["http_archive", "http_file", "bind", "go_repository", "phony"],
+            values = ["http_archive", "http_file", "bind", "go_repository", "local_repository", "phony"],
         ),
         "sha256": attr.string(
             doc = "The sha256 attribute for http_archive",

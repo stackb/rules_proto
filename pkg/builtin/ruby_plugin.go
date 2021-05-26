@@ -18,11 +18,13 @@ func (p *RubyPlugin) Name() string {
 }
 
 // Configure implements part of the Plugin interface.
-func (p *RubyPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "ruby")
-	cfg.Outputs = protoc.FlatMapFiles(
-		protoc.RelativeFileNameWithExtensions(ctx.Rel, "_pb.rb"),
-		protoc.Always,
-		ctx.ProtoLibrary.Files()...,
-	)
+func (p *RubyPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	return &protoc.PluginConfiguration{
+		Label: label.New("build_stack_rules_proto", "plugin/builtin", "ruby"),
+		Outputs: protoc.FlatMapFiles(
+			protoc.RelativeFileNameWithExtensions(ctx.Rel, "_pb.rb"),
+			protoc.Always,
+			ctx.ProtoLibrary.Files()...,
+		),
+	}
 }

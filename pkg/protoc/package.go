@@ -78,17 +78,12 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			)
 		}
 
-		config := &PluginConfiguration{
-			Options: plugin.GetOptions(),
-		}
-
 		// Delegate to the implementation for configuration
-		impl.Configure(ctx, config)
-
-		// if implementation says "skip", abort now.
-		if config.Skip {
+		config := impl.Configure(ctx)
+		if config == nil {
 			continue
 		}
+		config.Options = append(config.Options, plugin.GetOptions()...)
 
 		// plugin.Label overrides the default value from the implementation
 		if plugin.Label.Name != "" {

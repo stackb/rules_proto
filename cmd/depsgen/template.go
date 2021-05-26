@@ -18,13 +18,13 @@ def _maybe(repo_rule, name, **kwargs):
 
 def {{ .Name }}_deps():{{ range .Deps }}{{ if ne .Dep.RepositoryRule "phony" }}
     {{ .Dep.Name }}()  # via {{ .ParentName }}{{ end }}{{ end }}
-
 {{ range .Deps }}{{ if ne .Dep.RepositoryRule "phony" }}
 
 def {{ .Dep.Name }}():
     _maybe(
         {{ .Dep.RepositoryRule }},
-        name = "{{ .Dep.Name }}",{{ if .Dep.Sha256 }}
+        name = "{{ .Dep.Name }}",{{ if .Dep.Path }}
+        path = "{{ .Dep.Path }}",{{ end }}{{ if .Dep.StripPrefix }}
         sha256 = "{{ .Dep.Sha256 }}",{{ end }}{{ if .Dep.StripPrefix }}
         strip_prefix = "{{ .Dep.StripPrefix }}",{{ end }}{{ if .Dep.Urls }}
         urls = [{{ range .Dep.Urls }}

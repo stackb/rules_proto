@@ -65,7 +65,7 @@ proto_plugin = rule(
             default = False,
         ),
         "deps": attr.label_list(
-            doc = "Proto dependencies",
+            doc = "Workspace dependencies the plugin tool requires",
             providers = [ProtoDependencyInfo],
         ),
     },

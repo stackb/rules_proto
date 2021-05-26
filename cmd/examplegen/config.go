@@ -4,11 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 )
 
 type Config struct {
-	Out   string
-	Files []string
+	TestOut     string
+	MarkdownOut string
+	Files       []string
 }
 
 // fromJSON constructs a Config struct from the given filename that contains a
@@ -24,5 +26,6 @@ func fromJSON(filename string) (*Config, error) {
 		return nil, fmt.Errorf("unmarshal: %w", err)
 	}
 
+	log.Printf("config: %+v", config)
 	return &config, nil
 }

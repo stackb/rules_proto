@@ -21,10 +21,12 @@ func (p *JavaPlugin) Name() string {
 }
 
 // Configure implements part of the Plugin interface.
-func (p *JavaPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *JavaPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	srcjar := path.Join(ctx.Rel, fmt.Sprintf("%s.srcjar", ctx.ProtoLibrary.BaseName()))
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "java")
-	cfg.Outputs = []string{srcjar}
+	return &protoc.PluginConfiguration{
+		Label:   label.New("build_stack_rules_proto", "plugin/builtin", "java"),
+		Outputs: []string{srcjar},
+	}
 }
 
 // func srcjarFile(dir, name string) string {

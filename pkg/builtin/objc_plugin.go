@@ -20,13 +20,15 @@ func (p *ObjcPlugin) Name() string {
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ObjcPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "objc")
-	cfg.Outputs = protoc.FlatMapFiles(
-		objcFileName(ctx.Rel, ctx.PluginConfig),
-		protoc.Always,
-		ctx.ProtoLibrary.Files()...,
-	)
+func (p *ObjcPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	return &protoc.PluginConfiguration{
+		Label: label.New("build_stack_rules_proto", "plugin/builtin", "objc"),
+		Outputs: protoc.FlatMapFiles(
+			objcFileName(ctx.Rel, ctx.PluginConfig),
+			protoc.Always,
+			ctx.ProtoLibrary.Files()...,
+		),
+	}
 }
 
 func objcFileName(rel string, cfg protoc.LanguagePluginConfig) func(*protoc.File) []string {

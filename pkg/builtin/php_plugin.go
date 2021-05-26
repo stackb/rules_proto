@@ -21,14 +21,16 @@ func (p *PhpPlugin) Name() string {
 }
 
 // Configure implements part of the Plugin interface.
-func (p *PhpPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "php")
-	cfg.Outputs = protoc.FlatMapFiles(
-		phpFileName(ctx.Rel),
-		protoc.Always,
-		ctx.ProtoLibrary.Files()...,
-	)
-	cfg.Out = ctx.Rel
+func (p *PhpPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	return &protoc.PluginConfiguration{
+		Label: label.New("build_stack_rules_proto", "plugin/builtin", "php"),
+		Outputs: protoc.FlatMapFiles(
+			phpFileName(ctx.Rel),
+			protoc.Always,
+			ctx.ProtoLibrary.Files()...,
+		),
+		Out: ctx.Rel,
+	}
 }
 
 func phpFileName(rel string) func(f *protoc.File) []string {

@@ -21,13 +21,14 @@ func (p *ProtocGenGoGrpcPlugin) Name() string {
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ProtocGenGoGrpcPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *ProtocGenGoGrpcPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	if !p.shouldApply(ctx.ProtoLibrary) {
-		cfg.Skip = true
-		return
+		return nil
 	}
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/grpc/grpc-go", "protoc-gen-go-grpc")
-	cfg.Outputs = p.outputs(ctx.ProtoLibrary)
+	return &protoc.PluginConfiguration{
+		Label:   label.New("build_stack_rules_proto", "plugin/grpc/grpc-go", "protoc-gen-go-grpc"),
+		Outputs: p.outputs(ctx.ProtoLibrary),
+	}
 }
 
 func (p *ProtocGenGoGrpcPlugin) shouldApply(lib protoc.ProtoLibrary) bool {

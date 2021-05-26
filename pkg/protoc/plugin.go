@@ -5,8 +5,9 @@ package protoc
 type Plugin interface {
 	// Name is the name of the plugin and its associated configuration
 	Name() string
-	// Configure allows the implementation to modify the given configuration
-	Configure(ctx *PluginContext, cfg *PluginConfiguration)
+	// Configure creates the plugin configuration.  If nil is returned, the
+	// plugin should be skipped for the current package/library.
+	Configure(ctx *PluginContext) *PluginConfiguration
 }
 
 // // ShouldApply asks the plugin: for the given proto_library rule, should you

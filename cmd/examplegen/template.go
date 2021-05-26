@@ -1,6 +1,6 @@
 package main
 
-var header = `
+var testHeader = `
 package main
 
 import (

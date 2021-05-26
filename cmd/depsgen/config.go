@@ -16,16 +16,18 @@ type Config struct {
 }
 
 // ProtoDependencyInfo represents the starlark ProtoDependencyInfo provider.
+// The fields are a mashup of all possible fields from repository rules.
 type ProtoDependencyInfo struct {
 	BuildFile        string
 	Name             string
+	Path             string
 	Label            string
 	RepositoryRule   string
 	Sha256           string
 	StripPrefix      string
 	Urls             []string
 	WorkspaceSnippet string
-	Deps             []*ProtoDependencyInfo
+	Deps    []*ProtoDependencyInfo
 }
 
 // fromJSON constructs a Config struct from the given filename that contains a

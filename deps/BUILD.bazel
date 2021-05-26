@@ -45,6 +45,13 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
+proto_dependency(
+    name = "build_stack_rules_proto",
+    path = "../build_stack_rules_proto",
+    repository_rule = "local_repository",
+    visibility = ["//visibility:public"],
+)
+
 filegroup(
     name = "all_files",
     srcs = [

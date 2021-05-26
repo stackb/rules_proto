@@ -18,11 +18,13 @@ func (p *CppPlugin) Name() string {
 }
 
 // Configure implements part of the Plugin interface.
-func (p *CppPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "cpp")
-	cfg.Outputs = protoc.FlatMapFiles(
-		protoc.RelativeFileNameWithExtensions(ctx.Rel, ".pb.cc", ".pb.h"),
-		protoc.Always,
-		ctx.ProtoLibrary.Files()...,
-	)
+func (p *CppPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	return &protoc.PluginConfiguration{
+		Label: label.New("build_stack_rules_proto", "plugin/builtin", "cpp"),
+		Outputs: protoc.FlatMapFiles(
+			protoc.RelativeFileNameWithExtensions(ctx.Rel, ".pb.cc", ".pb.h"),
+			protoc.Always,
+			ctx.ProtoLibrary.Files()...,
+		),
+	}
 }

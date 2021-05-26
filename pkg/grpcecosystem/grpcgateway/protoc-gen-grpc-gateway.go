@@ -20,13 +20,14 @@ func (p *protocGenGrpcGatewayPlugin) Name() string {
 }
 
 // Configure implements part of the Plugin interface.
-func (p *protocGenGrpcGatewayPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
+func (p *protocGenGrpcGatewayPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	if !p.shouldApply(ctx.ProtoLibrary) {
-		cfg.Skip = true
-		return
+		return nil
 	}
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/grpc-ecosystem/grpc-gateway", "protoc-gen-grpc-gateway")
-	cfg.Outputs = p.outputs(ctx.Rel, ctx.ProtoLibrary)
+	return &protoc.PluginConfiguration{
+		Label:   label.New("build_stack_rules_proto", "plugin/grpc-ecosystem/grpc-gateway", "protoc-gen-grpc-gateway"),
+		Outputs: p.outputs(ctx.Rel, ctx.ProtoLibrary),
+	}
 }
 
 func (p *protocGenGrpcGatewayPlugin) shouldApply(lib protoc.ProtoLibrary) bool {

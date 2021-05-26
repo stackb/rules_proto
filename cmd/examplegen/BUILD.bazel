@@ -1,19 +1,19 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
-    name = "bazeltestgen_lib",
+    name = "examplegen_lib",
     srcs = [
-        "bazeltestgen.go",
+        "examplegen.go",
         "config.go",
         "generator.go",
         "template.go",
     ],
-    importpath = "github.com/stackb/rules_proto/cmd/bazeltestgen",
+    importpath = "github.com/stackb/rules_proto/cmd/examplegen",
     visibility = ["//visibility:private"],
 )
 
 go_binary(
-    name = "bazeltestgen",
-    embed = [":bazeltestgen_lib"],
+    name = "examplegen",
+    embed = [":examplegen_lib"],
     visibility = ["//visibility:public"],
 )

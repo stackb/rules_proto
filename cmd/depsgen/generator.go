@@ -13,7 +13,7 @@ func generate(c *Config) error {
 	}
 	defer f.Close()
 
-	t := template.Must(template.New("deps.bzl").Option("missingkey=error").Parse(depsBzl))
+	t := template.Must(template.New(c.Name + "_deps.bzl").Option("missingkey=error").Parse(depsBzl))
 
 	data := &templateData{
 		Name: c.Name,

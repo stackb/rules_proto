@@ -21,14 +21,16 @@ func (p *CsharpPlugin) Name() string {
 }
 
 // Configure implements part of the Plugin interface.
-func (p *CsharpPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "csharp")
-	cfg.Outputs = protoc.FlatMapFiles(
-		csharpFileName(ctx.Rel, ctx.PluginConfig),
-		protoc.Always,
-		ctx.ProtoLibrary.Files()...,
-	)
-	cfg.Out = ctx.Rel
+func (p *CsharpPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	return &protoc.PluginConfiguration{
+		Label: label.New("build_stack_rules_proto", "plugin/builtin", "csharp"),
+		Outputs: protoc.FlatMapFiles(
+			csharpFileName(ctx.Rel, ctx.PluginConfig),
+			protoc.Always,
+			ctx.ProtoLibrary.Files()...,
+		),
+		Out: ctx.Rel,
+	}
 }
 
 func csharpFileName(rel string, cfg protoc.LanguagePluginConfig) func(*protoc.File) []string {

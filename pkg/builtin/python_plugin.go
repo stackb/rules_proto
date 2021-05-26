@@ -21,13 +21,15 @@ func (p *PythonPlugin) Name() string {
 }
 
 // Configure implements part of the Plugin interface.
-func (p *PythonPlugin) Configure(ctx *protoc.PluginContext, cfg *protoc.PluginConfiguration) {
-	cfg.Label = label.New("build_stack_rules_proto", "plugin/builtin", "python")
-	cfg.Outputs = protoc.FlatMapFiles(
-		pythonGeneratedFileName(ctx.Rel),
-		protoc.Always,
-		ctx.ProtoLibrary.Files()...,
-	)
+func (p *PythonPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	return &protoc.PluginConfiguration{
+		Label: label.New("build_stack_rules_proto", "plugin/builtin", "python"),
+		Outputs: protoc.FlatMapFiles(
+			pythonGeneratedFileName(ctx.Rel),
+			protoc.Always,
+			ctx.ProtoLibrary.Files()...,
+		),
+	}
 }
 
 // pythonGeneratedFileName is a utility function that returns a fucntion that

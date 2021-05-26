@@ -1,6 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 load("@bazel_gazelle//:def.bzl", "gazelle_binary")
-load("//cmd/bazeltestgen:bazeltestgen.bzl", "gazelle_testdata_go_bazel_test")
+load("//rules:example.bzl", "gazelle_testdata_example")
 
 # gazelle:exclude testdata
 
@@ -25,6 +25,9 @@ go_library(
     deps = [
         "//pkg/builtin",
         "//pkg/gazelle/protoc",
+        "//pkg/gogo/protobuf",
+        "//pkg/grpc/grpcgo",
+        "//pkg/grpcecosystem/grpcgateway",
         # "//pkg/golang",
         # "//pkg/grpc_gateway",
         # "//pkg/java",
@@ -41,7 +44,7 @@ go_test(
     deps = ["//pkg/goldentest"],
 )
 
-gazelle_testdata_go_bazel_test(
+gazelle_testdata_example(
     name = "builtins",
     srcs = glob(["testdata/builtins/*"]),
 )
