@@ -110,7 +110,10 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		if !want {
 			continue
 		}
-		cfg := s.cfg.rules[name]
+		cfg, ok := s.cfg.rules[name]
+		if !ok {
+			log.Fatalf("proto_rule %q is not configured", name)
+		}
 		if !cfg.Enabled {
 			continue
 		}
