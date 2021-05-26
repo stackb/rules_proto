@@ -57,7 +57,10 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		if !want {
 			continue
 		}
-		plugin := s.cfg.plugins[name]
+		plugin, ok := s.cfg.plugins[name]
+		if !ok {
+			log.Fatalf("plugin not configured: %q", name)
+		}
 		if !plugin.Enabled {
 			continue
 		}
