@@ -110,14 +110,15 @@ gazelle(
 filegroup(
     name = "all_files",
     srcs = [
-        "WORKSPACE",
         "BUILD.bazel",
+        "WORKSPACE",
         "deps.bzl",
         "go_deps.bzl",
-        "//rules:all_files",
+        "//deps:all_files",
         "//pkg:all_files",
-        "//protoc:all_files",
         "//plugin/builtin:all_files",
+        "//protoc:all_files",
+        "//rules:all_files",
         "//third_party:all_files",
     ],
     visibility = ["//visibility:public"],

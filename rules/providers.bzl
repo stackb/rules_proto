@@ -1,3 +1,6 @@
+"""providers.bzl
+"""
+
 ProtoPluginInfo = provider(
     "ProtoPluginInfo provides metadata about how a protoc plugin should be run",
     fields = {
@@ -13,7 +16,7 @@ ProtoPluginInfo = provider(
         "out": "The format for the --x_out argument.  Defaults to to {BIN_DIR}",
         "supplementary_proto_deps": "Additional proto dependencies whose descriptors/files should be included in all protoc invocations",
         "separate_options_flag": "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",
-        # "deps": "The list of proto dependencies for this plugin",
+        "deps": "The list of proto dependencies for this plugin",
     },
 )
 

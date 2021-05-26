@@ -1,12 +1,14 @@
 filegroup(
     name = "all_files",
     srcs = [
-        "providers.bzl",
         "BUILD.bazel",
+        "depsgen.bzl",
         "proto_compile.bzl",
+        "proto_dependency.bzl",
         "proto_compile_gencopy.bzl",
         "proto_compiled_sources.bzl",
         "proto_plugin.bzl",
+        "providers.bzl",
     ],
     visibility = ["//:__pkg__"],
 )
