@@ -1,6 +1,7 @@
 package plugintest
 
 import (
+	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -21,12 +22,6 @@ func WithConfiguration(options ...PluginConfigurationOption) *protoc.PluginConfi
 		opt(c)
 	}
 	return c
-}
-
-func WithSkip(skip bool) PluginConfigurationOption {
-	return func(c *protoc.PluginConfiguration) {
-		c.Skip = skip
-	}
 }
 
 // WithSkip assigns th Skip field.
@@ -57,9 +52,10 @@ func WithDirectives(items ...string) (d []rule.Directive) {
 	return
 }
 
-func mustExecProtoc(t *testing.T, protoc, dir string, args ...string) {
+func mustExecProtoc(t *testing.T, protoc, dir string, env []string, args ...string) {
 	cmd := exec.Command(protoc, args...)
 	cmd.Dir = dir
+	cmd.Env = env
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		t.Fatalf("protoc exec error: %v\n\n%s", err, out)
@@ -101,4 +97,25 @@ func fileExists(filename string) bool {
 		return false
 	}
 	return !info.IsDir()
+}
+
+// listFiles - convenience debugging function to log the files under a given dir
+func listFiles(dir string) error {
+	return filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			log.Printf("%v\n", err)
+			return err
+		}
+		if info.Mode()&os.ModeSymlink > 0 {
+			link, err := os.Readlink(path)
+			if err != nil {
+				return err
+			}
+			log.Printf("%s -> %s", path, link)
+			return nil
+		}
+
+		log.Println(path)
+		return nil
+	})
 }

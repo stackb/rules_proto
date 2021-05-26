@@ -9,7 +9,6 @@ import (
 // PluginConfiguration represents the configuration of a protoc plugin
 // and the sources & source mappings that are expected to be produced.
 type PluginConfiguration struct {
-	Skip     bool
 	Name     string
 	Label    label.Label
 	Mappings map[string]string

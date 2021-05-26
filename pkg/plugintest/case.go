@@ -38,6 +38,8 @@ type Case struct {
 }
 
 func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
+	// listFiles(".")
+
 	execrootDir := os.Getenv("TEST_TMPDIR")
 	defer os.RemoveAll(execrootDir)
 	cwd, err := os.Getwd()
@@ -62,9 +64,9 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 		t.Fatalf("bad directives: %v", err)
 	}
 	r := rule.NewRule("proto_library", basename+"_proto")
-	pluginConfig, ok := c.Plugin(tc.Configuration.Name)
-	if !ok {
-		t.Fatalf("unregistered plugin configuration %q (%+v)", subject.Name(), c)
+	var pluginConfig protoc.LanguagePluginConfig
+	if tc.Configuration != nil {
+		pluginConfig, _ = c.Plugin(tc.Configuration.Name)
 	}
 	lib := protoc.NewOtherProtoLibrary(r, f)
 	ctx := &protoc.PluginContext{
@@ -75,10 +77,13 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 	}
 
 	got := subject.Configure(ctx)
-
-	if got == nil != tc.Configuration.Skip {
-		t.Errorf("%T.Skip: want %t, got %t", subject, tc.Configuration.Skip, got.Skip)
+	if got == nil && tc.Configuration == nil {
+		return
 	}
+	if got == nil && tc.Configuration != nil {
+		t.Fatalf("expected non-nil return value from %T.Configure()", subject)
+	}
+
 	outputs := got.Outputs
 	if len(tc.Configuration.Outputs) != len(outputs) {
 		t.Fatalf("%T.Outputs: want %d, got %d (%v)", subject, len(tc.Configuration.Outputs), len(outputs), outputs)
@@ -119,7 +124,8 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 
 	t.Log("protoc args:", args)
 
-	mustExecProtoc(t, protocPath, execrootDir, args...)
+	env := []string{"PATH=.:" + cwd}
+	mustExecProtoc(t, protocPath, execrootDir, env, args...)
 
 	actuals := mustListFiles(t, execrootDir)
 	if len(tc.Configuration.Outputs) != len(actuals) {
