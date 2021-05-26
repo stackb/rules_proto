@@ -43,7 +43,7 @@ go_test(
 
 gazelle_testdata_go_bazel_test(
     name = "builtins",
-    srcs = glob(["testdata/**/*"]),
+    srcs = glob(["testdata/builtins/*"]),
 )
 
 filegroup(
