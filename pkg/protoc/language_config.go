@@ -61,7 +61,7 @@ func (c *LanguageConfig) parseDirective(cfg *PackageConfig, d, param, value stri
 			return fmt.Errorf("could not bind plugin %q to language: %w", value, err)
 		}
 		plugin = plugin.clone()
-		if intent.Negative {
+		if !intent.Want {
 			plugin.Enabled = false
 		}
 		c.Plugins[value] = plugin
@@ -71,7 +71,7 @@ func (c *LanguageConfig) parseDirective(cfg *PackageConfig, d, param, value stri
 			return fmt.Errorf("could not bind rule %q to language: %w", value, err)
 		}
 		rule = rule.clone()
-		if intent.Negative {
+		if !intent.Want {
 			rule.Enabled = false
 		}
 		c.Rules[value] = rule

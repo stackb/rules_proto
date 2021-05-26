@@ -6,27 +6,27 @@ func TestParseIntent(t *testing.T) {
 	for name, tc := range map[string]struct {
 		in        string
 		wantValue string
-		wantNeg   bool
+		want      bool
 	}{
 		"": {
 			in:        "",
 			wantValue: "",
-			wantNeg:   false,
+			want:      true,
 		},
 		"bare": {
 			in:        "foo",
 			wantValue: "foo",
-			wantNeg:   false,
+			want:      true,
 		},
 		"+": {
 			in:        "+foo",
 			wantValue: "foo",
-			wantNeg:   false,
+			want:      true,
 		},
 		"-": {
 			in:        "-foo",
 			wantValue: "foo",
-			wantNeg:   true,
+			want:      false,
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
@@ -34,8 +34,8 @@ func TestParseIntent(t *testing.T) {
 			if tc.wantValue != intent.Value {
 				t.Errorf("value: want %s, got %s", tc.wantValue, intent.Value)
 			}
-			if tc.wantNeg != intent.Negative {
-				t.Errorf("value: want %t, got %t", tc.wantNeg, intent.Negative)
+			if tc.want != intent.Want {
+				t.Errorf("value: want %t, got %t", tc.want, intent.Want)
 			}
 		})
 	}

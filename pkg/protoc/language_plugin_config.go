@@ -31,7 +31,7 @@ func newLanguagePluginConfig(name string) *LanguagePluginConfig {
 	}
 }
 
-// GetOptions returns the sorted list of options
+// GetOptions returns the sorted list of options with positive intent.
 func (c *LanguagePluginConfig) GetOptions() []string {
 	opts := make([]string, 0)
 	for opt, want := range c.Options {
@@ -74,8 +74,8 @@ func (c *LanguagePluginConfig) parseDirective(cfg *PackageConfig, d, param, valu
 	case "implementation":
 		c.Implementation = value
 	case "option":
-		c.Options[value] = !intent.Negative
-		log.Printf("pluginConfig.parseDrirectives: %s => %t :%+v", value, !intent.Negative, c)
+		c.Options[value] = intent.Want
+		log.Printf("pluginConfig.parseDrirectives: %s => %+v :%+v", value, intent, c)
 	default:
 		return fmt.Errorf("unknown parameter %q", intent.Value)
 	}

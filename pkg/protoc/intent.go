@@ -8,8 +8,8 @@ import (
 // prefixed by a '+' or '-'.  If the prefix is missing, the intent is not
 // negative.
 type intent struct {
-	Value    string
-	Negative bool
+	Value string
+	Want  bool
 }
 
 func parseIntent(value string) *intent {
@@ -19,5 +19,5 @@ func parseIntent(value string) *intent {
 	if negative || positive {
 		value = value[1:]
 	}
-	return &intent{Value: value, Negative: negative}
+	return &intent{Value: value, Want: !negative}
 }
