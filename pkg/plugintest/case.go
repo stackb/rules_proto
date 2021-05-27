@@ -83,6 +83,9 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 	if got == nil && tc.Configuration != nil {
 		t.Fatalf("expected non-nil return value from %T.Configure()", subject)
 	}
+	if got != nil && tc.Configuration == nil {
+		t.Fatalf("unexpected non-nil return value from %T.Configure()", subject)
+	}
 
 	outputs := got.Outputs
 	if len(tc.Configuration.Outputs) != len(outputs) {
