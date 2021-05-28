@@ -73,13 +73,25 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 ## gazelle:proto_language gogofast load @rules_js//:deps.bzl
 ## gazelle:proto_language gogofast plugin gogofast
 
+gazelle_binary(
+    name = "gazelle-protobuf",
+    languages = [
+        # NOTE: order matters here.  Gazelle will respect the ordering of
+        # languages which will impact the population of 'OtherGen'
+        "@bazel_gazelle//language/go",
+        "@bazel_gazelle//language/proto",
+        "//language/protobuf",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 gazelle(
     name = "gazelle",
 )
 
 gazelle(
     name = "update_build_files",
-    gazelle = "//gazelle/protoc:gazelle-protoc",
+    gazelle = ":gazelle-protobuf",
 )
 
 gazelle(
