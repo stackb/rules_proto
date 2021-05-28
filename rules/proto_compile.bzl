@@ -30,7 +30,7 @@ def _ctx_replace_arg(ctx, arg):
     return arg
 
 def get_protoc_executable(ctx):
-    protoc_toolchain_info = ctx.toolchains[str(Label("//protoc:toolchain_type"))]
+    protoc_toolchain_info = ctx.toolchains[str(Label("//toolchain:toolchain_type"))]
     return protoc_toolchain_info.protoc_executable
 
 def _descriptor_proto_path(proto, proto_info):
@@ -215,7 +215,7 @@ def _proto_compile_impl(ctx):
 
     ### Step 3.3: build args object
 
-    replaced_args = _ctx_replace_args(ctx, uniq(args))
+    replaced_args = _ctx_replace_args(ctx, _uniq(args))
     final_args = ctx.actions.args()
     final_args.add_all(replaced_args)
 
@@ -306,5 +306,5 @@ proto_compile = rule(
             doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox before+after running protoc*",
         ),
     },
-    toolchains = ["@build_stack_rules_proto//protoc:toolchain_type"],
+    toolchains = ["@build_stack_rules_proto//toolchain:toolchain_type"],
 )

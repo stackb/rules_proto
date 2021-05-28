@@ -21,6 +21,7 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "toolchain.bzl",
+        "z.txt",
     ],
     visibility = ["//:__pkg__"],
 )

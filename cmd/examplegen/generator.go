@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -15,20 +16,30 @@ func generateMarkdown(c *Config) error {
 	}
 	defer f.Close()
 
-	var buildIn, buildOut, protoFile string
+	var workspace, buildIn, buildOut, protoFile string
 	for _, src := range c.Files {
-		if filepath.Ext(src) == ".proto" {
+		base := filepath.Base(src)
+		ext := filepath.Ext(base)
+
+		if ext == ".proto" {
 			protoFile = src
 			continue
 		}
-		if filepath.Base(src) == "BUILD.in" {
+
+		switch base {
+		case "BUILD.in":
 			buildIn = src
-			continue
-		}
-		if filepath.Base(src) == "BUILD.out" {
+		case "BUILD.out":
 			buildOut = src
-			continue
+		case "WORKSPACE":
+			workspace = src
 		}
+	}
+
+	// Print the WORKSPACE
+	//
+	if err := printFileBlock(filepath.Base(workspace), "python", workspace, f); err != nil {
+		return err
 	}
 
 	fmt.Fprintf(f, "# %s example\n\n", filepath.Base(c.MarkdownOut))
@@ -80,17 +91,17 @@ func generateTest(c *Config) error {
 		}
 
 		fmt.Fprintf(f, "-- %s --\n", dst)
-		if dst == "WORKSPACE" {
-			fmt.Fprintln(f, workspace)
-			continue
-		}
+		// if dst == "WORKSPACE" {
+		// 	fmt.Fprintln(f, workspace)
+		// 	continue
+		// }
 
 		data, err := ioutil.ReadFile(src)
 		if err != nil {
-			return fmt.Errorf("read %s: %v", src, err)
+			return fmt.Errorf("read %q: %v", src, err)
 		}
 		if _, err := f.Write(data); err != nil {
-			return fmt.Errorf("write %s: %v", dst, err)
+			return fmt.Errorf("write %q: %v", dst, err)
 		}
 	}
 
@@ -120,10 +131,10 @@ func printFileBlock(name, syntax, filename string, out io.Writer) error {
 	fmt.Fprintf(out, "# -- %s --\n", name)
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return fmt.Errorf("read %s: %v", filename, err)
+		log.Panicf("%s: read %q: %v", name, filename, err)
 	}
 	if _, err := out.Write(data); err != nil {
-		return fmt.Errorf("write %s: %v", filename, err)
+		log.Panicf("%s: write %q: %v", name, filename, err)
 	}
 	fmt.Fprintf(out, "~~~\n\n")
 
