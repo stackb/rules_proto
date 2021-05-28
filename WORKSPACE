@@ -10,13 +10,13 @@ load(
     "//:deps.bzl",
     "bazel_gazelle",
     "bazel_skylib",
+    "build_bazel_rules_swift",
     "com_github_grpc_grpc",
     "com_google_protobuf",
     "io_bazel_rules_go",
-    "build_bazel_rules_swift",
-    "rules_proto",
-    "rules_jvm_external",
     "io_grpc_grpc_java",
+    "rules_jvm_external",
+    "rules_proto",
     "rules_python",
     "zlib",
 )
@@ -81,17 +81,14 @@ zlib()
 # #
 register_toolchains("//toolchain")
 
-
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
 
-
 ### Java
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
-load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS")
-load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS")
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS", "grpc_java_repositories")
 
 maven_install(
     artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
@@ -106,10 +103,7 @@ load("@maven//:compat.bzl", "compat_repositories")
 
 compat_repositories()
 
-load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
-
 grpc_java_repositories()
-
 
 # load("//rules:py_grpc_compile_deps.bzl", "py_grpc_compile_deps")
 
