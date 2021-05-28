@@ -8,6 +8,7 @@ gazelle_binary(
     languages = [
         # NOTE: order matters here.  Gazelle will respect the ordering of
         # languages which will impact the population of 'OtherGen'
+        "@bazel_gazelle//language/go",
         "@bazel_gazelle//language/proto",
         ":protoc",
     ],
