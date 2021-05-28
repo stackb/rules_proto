@@ -3,6 +3,14 @@ load("//rules:example.bzl", "gazelle_testdata_example")
 
 # gazelle:exclude testdata
 
+genrule(
+    name = "gazelle_tool",
+    outs = ["gazelle"],
+    cmd = "cp $(location //:gazelle-protobuf) $@",
+    executable = True,
+    tools = ["//:gazelle-protobuf"],
+)
+
 go_test(
     name = "golden_test",
     srcs = ["golden_test.go"],
@@ -19,12 +27,4 @@ filegroup(
     name = "all_files",
     srcs = ["BUILD.bazel"] + glob(["*.go"]),
     visibility = ["//:__pkg__"],
-)
-
-genrule(
-    name = "gazelle_tool",
-    outs = ["gazelle"],
-    cmd = "cp $(location //:gazelle-protobuf) $@",
-    executable = True,
-    tools = ["//:gazelle-protobuf"],
 )

@@ -16,3 +16,9 @@ buildfiles:
 .PHONY: gazelle
 gazelle:
 	bazel run //:gazelle
+
+.PHONY: deps
+deps:
+	bazel build //deps:*
+	cp ./bazel-bin/deps/core_deps.bzl deps/core_deps.bzl
+	cp ./bazel-bin/deps/protobuf_deps.bzl deps/protobuf_deps.bzl

@@ -1,4 +1,56 @@
 load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
+load("@build_stack_rules_proto//rules:depsgen.bzl", "depsgen")
+
+depsgen(
+    name = "core",
+    deps = [
+        ":bazel_gazelle",
+        ":rules_proto",
+    ],
+)
+
+depsgen(
+    name = "protobuf",
+    deps = ["//deps:com_google_protobuf"],
+)
+
+# Release: v0.27.0
+# TargetCommitish: release-0.27
+# Date: 2021-03-17 18:52:49 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.27.0
+# Size: 634757 (635 kB)
+proto_dependency(
+    name = "io_bazel_rules_go",
+    repository_rule = "http_archive",
+    sha256 = "69de5c704a05ff37862f7e0f5534d4f479418afc21806c887db544a316f3cb6b",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Release: v0.22.3
+# Commit: release-0.22
+# Date: 2020-12-23 18:58:38 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-gazelle/releases/tag/v0.22.3
+# Branch: master
+# Commit: e4496b956eb46bdf8c9bf95b8d1d85e3a086c4be
+# Date: 2021-02-01 16:04:14 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-gazelle/commit/e4496b956eb46bdf8c9bf95b8d1d85e3a086c4be
+#
+# Upgrade Google go-cmp to v0.5.4 (#986)
+# Size: 1633162 (1.6 MB)
+proto_dependency(
+    name = "bazel_gazelle",
+    repository_rule = "http_archive",
+    sha256 = "7359a9a7071dff5343a52626fce1aae2a78936d3004ef89d038daaefd3fd6608",
+    strip_prefix = "bazel-gazelle-e4496b956eb46bdf8c9bf95b8d1d85e3a086c4be",
+    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/e4496b956eb46bdf8c9bf95b8d1d85e3a086c4be.tar.gz"],
+    deps = [
+        ":io_bazel_rules_go",
+    ],
+)
 
 proto_dependency(
     name = "com_google_protobuf",
@@ -14,6 +66,13 @@ proto_dependency(
     ],
 )
 
+# Branch: master
+# Commit: c7e068d38e2fec1d899e1c150e372f205c220e27
+# Date: 2021-02-02 22:16:45 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_python/commit/c7e068d38e2fec1d899e1c150e372f205c220e27
+#
+# pip: 20.3.3 -> 20.3.4 (#405)
+# Size: 2563550 (2.6 MB)
 proto_dependency(
     name = "rules_python",
     repository_rule = "http_archive",
@@ -21,6 +80,23 @@ proto_dependency(
     strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
     urls = ["https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz"],
     visibility = ["//visibility:public"],
+)
+
+# Branch: master
+# Commit: f7a30f6f80006b591fa7c437fe5a951eb10bcbcf
+# Date: 2021-02-09 14:25:06 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_proto/commit/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf
+#
+# Merge pull request #77 from Yannic/proto_descriptor_set_rule
+#
+# Create proto_descriptor_set
+# Size: 14397 (14 kB)
+proto_dependency(
+    name = "rules_proto",
+    repository_rule = "http_archive",
+    sha256 = "9fc210a34f0f9e7cc31598d109b5d069ef44911a82f507d5a88716db171615a8",
+    strip_prefix = "rules_proto-f7a30f6f80006b591fa7c437fe5a951eb10bcbcf",
+    urls = ["https://github.com/bazelbuild/rules_proto/archive/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf.tar.gz"],
 )
 
 proto_dependency(
