@@ -61,3 +61,9 @@ docs in place before adding more plugins and increasing that surface area.
 What will be the pages in the docsite?  Examples?  Might be a good time to start
 writing the docs and see how they look.  At the end of the day you need
 reproducible examples that run as example_bazel_tests.
+
+- split examples for each language
+- add docs foreach example
+- protoc-gen-go
+- protoc-gen-go-grpc
+- protoc-gen-go

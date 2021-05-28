@@ -1,13 +1,10 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@bazel_gazelle//:def.bzl", "gazelle_binary")
-load("//rules:example.bzl", "gazelle_testdata_example")
 
 # gazelle:exclude testdata
 
 gazelle_binary(
     name = "gazelle-protoc",
-    # protoc extension is reliant upon the built-in 'proto' language, so test it
-    # in combination with that.
     languages = [
         # NOTE: order matters here.  Gazelle will respect the ordering of
         # languages which will impact the population of 'OtherGen'
@@ -31,19 +28,6 @@ go_library(
         "//pkg/grpcecosystem/grpcgateway",
         "@bazel_gazelle//language:go_default_library",
     ],
-)
-
-go_test(
-    name = "protoc_test",
-    srcs = ["protoc_test.go"],
-    data = [":gazelle-protoc"] + glob(["testdata/**"]),
-    embed = [":protoc"],
-    deps = ["//pkg/goldentest"],
-)
-
-gazelle_testdata_example(
-    name = "builtins",
-    srcs = glob(["testdata/builtins/*"]),
 )
 
 filegroup(

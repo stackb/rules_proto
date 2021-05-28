@@ -17,6 +17,7 @@ limitations under the License.
 
 import (
 	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
 	"path"
@@ -28,22 +29,23 @@ import (
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 
-// Cases is a helper for running glob(["testdata/**"]) style test setups.
-type Cases struct {
+// GoldenTests is a helper for running glob(["testdata/**"]) style test setups.
+type GoldenTests struct {
 	extensionDir string
 	testDataPath string
 }
 
-// FromDir construct a Cases tester that searches the given directory.
-func FromDir(extensionDir string) *Cases {
-	return &Cases{
+// FromDir construct a GoldenTests tester that searches the given directory.
+func FromDir(extensionDir string) *GoldenTests {
+	return &GoldenTests{
 		extensionDir: extensionDir,
 		testDataPath: path.Join(extensionDir, "testdata") + "/",
 	}
 }
 
-func (g *Cases) Run(t *testing.T, gazelleName string) {
+func (g *GoldenTests) Run(t *testing.T, gazelleName string) {
 	t.Log("Run", g.extensionDir)
+	listFiles(".")
 
 	gazellePath, ok := bazel.FindBinary(g.extensionDir, gazelleName)
 	if !ok {
@@ -81,7 +83,7 @@ func (g *Cases) Run(t *testing.T, gazelleName string) {
 	}
 }
 
-func (g *Cases) testPath(t *testing.T, gazellePath, name string, files []bazel.RunfileEntry) {
+func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []bazel.RunfileEntry) {
 	t.Run(name, func(t *testing.T) {
 		var inputs []testtools.FileSpec
 		var goldens []testtools.FileSpec
@@ -155,5 +157,26 @@ func (g *Cases) testPath(t *testing.T, gazellePath, name string, files []bazel.R
 				return nil
 			})
 		}
+	})
+}
+
+// listFiles - convenience debugging function to log the files under a given dir
+func listFiles(dir string) error {
+	return filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			log.Printf("%v\n", err)
+			return err
+		}
+		if info.Mode()&os.ModeSymlink > 0 {
+			link, err := os.Readlink(path)
+			if err != nil {
+				return err
+			}
+			log.Printf("%s -> %s", path, link)
+			return nil
+		}
+
+		log.Println(path)
+		return nil
 	})
 }
