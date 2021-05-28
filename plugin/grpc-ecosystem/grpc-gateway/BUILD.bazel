@@ -1,14 +1,14 @@
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 
 proto_plugin(
-    name = "gateway_plugin",
+    name = "protoc-gen-grpc-gateway",
     options = ["paths=source_relative"],
     tool = "@grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway",
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
-    name = "openapiv2_plugin",
+    name = "protoc-gen-grpc-openapiv2",
     tool = "@grpc_ecosystem_grpc_gateway//protoc-gen-openapiv2",
     visibility = ["//visibility:public"],
 )
