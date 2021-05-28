@@ -22,3 +22,8 @@ deps:
 	bazel build //deps:*
 	cp ./bazel-bin/deps/core_deps.bzl deps/core_deps.bzl
 	cp ./bazel-bin/deps/protobuf_deps.bzl deps/protobuf_deps.bzl
+
+.PHONY: site
+site:
+	bazel build //example/golden:*
+	cp ./bazel-bin/example/golden/cpp.md docs/

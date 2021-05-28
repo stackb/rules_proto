@@ -23,6 +23,11 @@ gazelle_testdata_example(
     srcs = glob(["testdata/builtins/*"]),
 )
 
+gazelle_testdata_example(
+    name = "cpp",
+    srcs = glob(["testdata/cpp/*"]),
+)
+
 filegroup(
     name = "all_files",
     srcs = ["BUILD.bazel"] + glob(["*.go"]),

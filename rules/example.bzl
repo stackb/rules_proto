@@ -6,6 +6,8 @@ def _examplegen_impl(ctx):
     output_markdown = ctx.outputs.markdown
 
     config = struct(
+        name = ctx.label.name,
+        label = str(ctx.label),
         testOut = output_test.path,
         markdownOut = output_markdown.path,
         files = [f.path for f in ctx.files.srcs],

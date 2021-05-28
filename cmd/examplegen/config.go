@@ -8,6 +8,8 @@ import (
 )
 
 type Config struct {
+	Name        string
+	Label       string
 	TestOut     string
 	MarkdownOut string
 	Files       []string
