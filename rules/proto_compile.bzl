@@ -215,7 +215,7 @@ def _proto_compile_impl(ctx):
 
     ### Step 3.3: build args object
 
-    replaced_args = _ctx_replace_args(ctx, args)
+    replaced_args = _ctx_replace_args(ctx, uniq(args))
     final_args = ctx.actions.args()
     final_args.add_all(replaced_args)
 
