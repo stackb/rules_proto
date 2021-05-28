@@ -1,3 +1,5 @@
+"""variants.bzl
+"""
 GOGO_VARIANTS = [
     "combo",
     "gogo",
