@@ -5,4 +5,5 @@
 # gazelle:proto_plugin cpp implementation builtin:cpp
 
 # "proto_language" binds the rule(s) and plugin(s) together
-# gazelle:proto_language builtins plugin cpp
+# gazelle:proto_language cpp rule proto_compile
+# gazelle:proto_language cpp plugin cpp

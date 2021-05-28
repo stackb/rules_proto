@@ -8,7 +8,7 @@ proto_plugin(
 
 proto_plugin(
     name = "java",
-    out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}.srcjar",
+    # out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}.srcjar",
     visibility = ["//visibility:public"],
     deps = ["//deps:com_google_protobuf"],
 )

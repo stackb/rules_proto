@@ -2,6 +2,7 @@ package builtin
 
 import (
 	"fmt"
+	"log"
 	"path"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -22,6 +23,7 @@ func (p *JavaPlugin) Name() string {
 
 // Configure implements part of the Plugin interface.
 func (p *JavaPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	log.Printf("REL: %q", ctx.Rel)
 	srcjar := path.Join(ctx.Rel, fmt.Sprintf("%s.srcjar", ctx.ProtoLibrary.BaseName()))
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/builtin", "java"),

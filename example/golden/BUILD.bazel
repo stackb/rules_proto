@@ -18,15 +18,20 @@ go_test(
     deps = ["//pkg/goldentest"],
 )
 
-gazelle_testdata_example(
-    name = "builtins",
-    srcs = glob(["testdata/builtins/*"]),
-)
+# gazelle_testdata_example(
+#     name = "builtins",
+#     srcs = glob(["testdata/builtins/*"]),
+# )
 
-gazelle_testdata_example(
-    name = "cpp",
-    srcs = glob(["testdata/cpp/*"]),
-)
+# gazelle_testdata_example(
+#     name = "cpp",
+#     srcs = glob(["testdata/cpp/*"]),
+# )
+
+# gazelle_testdata_example(
+#     name = "java",
+#     srcs = glob(["testdata/java/*"]),
+# )
 
 filegroup(
     name = "all_files",

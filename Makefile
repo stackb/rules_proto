@@ -27,3 +27,4 @@ deps:
 site:
 	bazel build //example/golden:*
 	cp ./bazel-bin/example/golden/cpp.md docs/
+	cp ./bazel-bin/example/golden/java.md docs/
