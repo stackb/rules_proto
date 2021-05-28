@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_test")
+load("//rules:example.bzl", "gazelle_testdata_example")
+
+# gazelle:exclude testdata
+
+go_test(
+    name = "golden_test",
+    srcs = ["golden_test.go"],
+    data = ["//gazelle/protoc:gazelle-protoc"] + glob(["testdata/**"]),
+    deps = ["//pkg/goldentest"],
+)
+
+gazelle_testdata_example(
+    name = "builtins",
+    srcs = glob(["testdata/builtins/*"]),
+)
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"] + glob(["*.go"]),
+    visibility = ["//:__pkg__"],
+)

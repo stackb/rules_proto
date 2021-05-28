@@ -1,4 +1,4 @@
-package protoc
+package golden
 
 import (
 	"testing"
