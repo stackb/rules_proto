@@ -9,11 +9,8 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-// ProtoCompiledSourcesName the name the protoCompiledSourcesdSources rule registers under.
-const ProtoCompiledSourcesName = "proto_compiled_sources"
-
 func init() {
-	Rules().MustRegisterRule(ProtoCompiledSourcesName, &protoCompiledSources{})
+	Rules().MustRegisterRule("stackb:rules_proto:proto_compiled_sources", &protoCompiledSources{})
 }
 
 // protoCompiledSources implements LanguageRule for the 'proto_compiled_sources' rule.
@@ -42,7 +39,7 @@ func (s *protoCompiledSources) KindInfo() rule.KindInfo {
 func (s *protoCompiledSources) LoadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
 		Name:    "@build_stack_rules_proto//rules:proto_compiled_sources.bzl",
-		Symbols: []string{ProtoCompiledSourcesName},
+		Symbols: []string{"proto_compiled_sources"},
 	}
 }
 
@@ -59,7 +56,7 @@ type protoCompiledSourcesRule struct {
 
 // Kind implements part of the ruleProvider interface.
 func (s *protoCompiledSourcesRule) Kind() string {
-	return ProtoCompiledSourcesName
+	return "proto_compiled_sources"
 }
 
 // Name implements part of the ruleProvider interface.

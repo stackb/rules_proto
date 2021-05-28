@@ -155,16 +155,7 @@ func (c *PackageConfig) getOrCreateLanguageRuleConfig(name string) (*LanguageRul
 	r, ok := c.rules[name]
 	if !ok {
 		r = newLanguageRuleConfig(name)
-		impl, err := Rules().LookupRule(name)
-		if err == ErrUnknownRule {
-			return nil, fmt.Errorf(
-				"rule not registered: %q (available: %v)", name,
-				globalRegistry.RuleNames())
-		}
-		if err != nil {
-			return nil, err
-		}
-		r.Implementation = impl
+		r.Implementation = name
 		c.rules[name] = r
 	}
 	return r, nil

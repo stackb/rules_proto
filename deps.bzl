@@ -19,17 +19,19 @@ def com_google_protobuf():
     )
 
 def io_bazel_rules_go():
-    # Release: v0.24.11
-    # TargetCommitish: release-0.24
-    # Date: 2021-01-19 23:11:54 +0000 UTC
-    # URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.24.11
-    # Size: 523890 (524 kB)
+    # Release: v0.27.0
+    # TargetCommitish: release-0.27
+    # Date: 2021-03-17 18:52:49 +0000 UTC
+    # URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.27.0
+    # Size: 634757 (635 kB)
     maybe(
         http_archive,
         name = "io_bazel_rules_go",
-        sha256 = "d2b5751d8ae55ac011540453cf9da49ee12b832d0a98ca8ffae99285abb481f7",
-        strip_prefix = "rules_go-0.24.11",
-        urls = ["https://github.com/bazelbuild/rules_go/archive/v0.24.11.tar.gz"],
+        sha256 = "69de5c704a05ff37862f7e0f5534d4f479418afc21806c887db544a316f3cb6b",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
+            "https://github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
+        ],        
     )
 
 def bazel_gazelle():

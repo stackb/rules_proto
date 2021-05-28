@@ -1,6 +1,7 @@
 package protoc
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/bazelbuild/bazel-gazelle/rule"
@@ -77,7 +78,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		}
 		impl, err := globalRegistry.LookupPlugin(plugin.Implementation)
 		if err == ErrUnknownPlugin {
-			log.Fatalf(
+			log.Panicf(
 				"plugin not registered: %q (available: %v) [%+v]",
 				plugin.Implementation,
 				globalRegistry.PluginNames(),
@@ -110,14 +111,25 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		if !want {
 			continue
 		}
-		cfg, ok := s.cfg.rules[name]
+		rule, ok := s.cfg.rules[name]
 		if !ok {
-			log.Fatalf("proto_rule %q is not configured", name)
+			panic(fmt.Sprintf("proto_rule %q is not configured", name))
 		}
-		if !cfg.Enabled {
+		if !rule.Enabled {
 			continue
 		}
-		rules = append(rules, cfg.Implementation.ProvideRule(cfg, pc))
+		impl, err := globalRegistry.LookupRule(rule.Implementation)
+		if err == ErrUnknownRule {
+			log.Panicf(
+				"rule not registered: %q (available: %v) [%+v]",
+				rule.Implementation,
+				globalRegistry.RuleNames(),
+				rule,
+			)
+		}
+		rule.Impl = impl
+
+		rules = append(rules, impl.ProvideRule(rule, pc))
 	}
 
 	return rules

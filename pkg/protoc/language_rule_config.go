@@ -10,7 +10,8 @@ import (
 type LanguageRuleConfig struct {
 	Deps           map[string]bool
 	Enabled        bool
-	Implementation LanguageRule
+	Implementation string
+	Impl           LanguageRule
 	Name           string
 	Visibility     map[string]bool
 }
@@ -65,6 +66,8 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 		}
 	case "visibility":
 		c.Visibility[value] = intent.Want
+	case "implementation":
+		c.Implementation = value
 	case "enabled":
 		enabled, err := strconv.ParseBool(value)
 		if err != nil {

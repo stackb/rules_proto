@@ -26,7 +26,6 @@ func TestJavaPlugin(t *testing.T) {
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("java"),
-				plugintest.WithSkip(false),
 				plugintest.WithOutputs("test.srcjar"),
 			),
 		},
@@ -38,7 +37,6 @@ func TestJavaPlugin(t *testing.T) {
 			),
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithName("java"),
-				plugintest.WithSkip(false),
 				plugintest.WithOutputs("src/main/java/foo/test.srcjar"),
 			),
 		},

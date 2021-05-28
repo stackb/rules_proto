@@ -9,11 +9,8 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-// ProtoCompileName the name the protoCompile rule registers under.
-const ProtoCompileName = "proto_compile"
-
 func init() {
-	Rules().MustRegisterRule(ProtoCompileName, &protoCompile{})
+	Rules().MustRegisterRule("stackb:rules_proto:proto_compile", &protoCompile{})
 }
 
 // protoCompile implements LanguageRule for the 'proto_compile' rule.
@@ -43,7 +40,7 @@ func (s *protoCompile) KindInfo() rule.KindInfo {
 func (s *protoCompile) LoadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
 		Name:    "@build_stack_rules_proto//rules:proto_compile.bzl",
-		Symbols: []string{ProtoCompileName},
+		Symbols: []string{"proto_compile"},
 	}
 }
 
@@ -59,7 +56,7 @@ type protoCompileRule struct {
 
 // Kind implements part of the ruleProvider interface.
 func (s *protoCompileRule) Kind() string {
-	return ProtoCompileName
+	return "proto_compile"
 }
 
 // Name implements part of the ruleProvider interface.

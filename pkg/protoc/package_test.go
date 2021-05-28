@@ -37,6 +37,7 @@ func exampleProtoLibrary() ProtoLibrary {
 func examplePackageConfig() *PackageConfig {
 	c := NewPackageConfig()
 	if err := c.ParseDirectives(exampleDir, withDirectives(
+		"proto_rule", "proto_compile implementation stackb:rules_proto:proto_compile",
 		"proto_plugin", "fake_proto implementation protoc:fake",
 		"proto_plugin", "fake_proto enabled true",
 		"proto_language", "fake plugin fake_proto",
@@ -62,7 +63,7 @@ func ExamplePackage() {
 	// proto_compile(
 	//     name = "test_fake_compile",
 	//     outputs = ["test_fake.pb.go"],
-	//     plugins = ["@build_stack_rules_proto//plugin/protoc:fake"],
+	//     plugins = ["@build_stack_rules_proto//plugin/builtin:fake"],
 	//     proto = "test_proto",
 	// )
 }
