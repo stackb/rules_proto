@@ -10,8 +10,8 @@ import (
 )
 
 func TestProtoc(t *testing.T) {
-	listFiles(".")
-	goldentest.FromDir("example/golden").Run(t, "gazelle/protoc/gazelle-protoc_gazelle-protoc")
+	// listFiles(".")
+	goldentest.FromDir("example/golden").Run(t, "gazelle")
 }
 
 // listFiles - convenience debugging function to log the files under a given dir
