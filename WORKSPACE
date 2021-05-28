@@ -79,7 +79,7 @@ zlib()
 # #
 # # Toolchains
 # #
-register_toolchains("//protoc:toolchain")
+register_toolchains("//toolchain")
 
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
