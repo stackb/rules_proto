@@ -13,6 +13,9 @@ proto_plugin(
     deps = ["//deps:com_google_protobuf"],
 )
 
+# very confused here.  If the workspace is being gazelled such that the Rel is
+# empty, we cannot then run it having a different package structure.  How to reconcile this?
+
 proto_plugin(
     name = "commonjs",
     options = [

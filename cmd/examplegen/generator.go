@@ -87,7 +87,7 @@ func generateTest(c *Config) error {
 			continue
 		}
 
-		fmt.Fprintf(f, "-- %s --\n", dst)
+		fmt.Fprintf(f, "-- %s --\n", filepath.Base(dst))
 		// if dst == "WORKSPACE" {
 		// 	fmt.Fprintln(f, workspace)
 		// 	continue

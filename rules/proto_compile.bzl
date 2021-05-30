@@ -85,7 +85,7 @@ def _proto_compile_impl(ctx):
     ### Part 1: setup variables used in scope
     ###
 
-    # const <int> verbosity level
+    # const <bool> verbosity flag
     verbose = ctx.attr.verbose
 
     # const <File> the protoc file from the toolchain
@@ -223,10 +223,10 @@ def _proto_compile_impl(ctx):
     ### Step 4: command action
     ###
     commands = [
-        "mkdir -p " + ctx.label.package,
+        "mkdir -p ./" + ctx.label.package,
         protoc.path + " $@",  # $@ is replaced with args list
     ]
-    if verbose > 2:
+    if verbose:
         before = ["env", "pwd", "ls -al .", "echo '\n##### SANDBOX BEFORE RUNNING PROTOC'", "find . -type l"]
         after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find . -type f"]
         commands = before + commands + after
@@ -252,7 +252,7 @@ def _proto_compile_impl(ctx):
         tools = tools,
     )
 
-    if verbose > 1:
+    if verbose:
         for f in inputs:
             print("INPUT:", f.path)
         for f in tools:
@@ -302,8 +302,8 @@ proto_compile = rule(
             mandatory = True,
             providers = [ProtoInfo],
         ),
-        "verbose": attr.int(
-            doc = "The verbosity level. Supported values and results are 1: *show command*, 2: *show command and sandbox before+after running protoc*",
+        "verbose": attr.bool(
+            doc = "The verbosity flag.",
         ),
     },
     toolchains = ["@build_stack_rules_proto//toolchain:toolchain_type"],

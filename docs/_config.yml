@@ -25,7 +25,7 @@ gitweb: "https://github.com/stackb/rules_proto/blob/master"
 markdown: kramdown
 remote_theme: pmarsceill/just-the-docs
 search_enabled: true
-color_scheme: dark
+color_scheme: light
 footer_content: "Copyright &copy; 2021 Stack.Build."
 
 

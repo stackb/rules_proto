@@ -1,8 +1,9 @@
 ---
 layout: default
-title: examples
+title: Examples
 permalink: examples
 has_children: true
+nav_order: 5
 ---
 
 See [examples/golden/testdata](examples/golden/testdata) for a complete list of example test cases.

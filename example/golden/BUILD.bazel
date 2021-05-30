@@ -23,15 +23,15 @@ go_test(
 #     srcs = glob(["testdata/builtins/*"]),
 # )
 
-# gazelle_testdata_example(
-#     name = "cpp",
-#     srcs = glob(["testdata/cpp/*"]),
-# )
+gazelle_testdata_example(
+    name = "cpp",
+    srcs = glob(["testdata/cpp/*"]),
+)
 
-# gazelle_testdata_example(
-#     name = "java",
-#     srcs = glob(["testdata/java/*"]),
-# )
+gazelle_testdata_example(
+    name = "java",
+    srcs = glob(["testdata/java/*"]),
+)
 
 filegroup(
     name = "all_files",
