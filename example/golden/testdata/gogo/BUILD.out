@@ -4,12 +4,12 @@ load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 # "proto_rule" instantiates the proto_compile rule
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
 
-# "proto_plugin" instantiates the builtin objc plugin
-# gazelle:proto_plugin objc implementation builtin:objc
+# "proto_plugin" instantiates the builtin gogo plugin
+# gazelle:proto_plugin gogo implementation gogo:protobuf:protoc-gen-gogo
 
 # "proto_language" binds the rule(s) and plugin(s) together
-# gazelle:proto_language objc rule proto_compile
-# gazelle:proto_language objc plugin objc
+# gazelle:proto_language gogo rule proto_compile
+# gazelle:proto_language gogo plugin gogo
 
 proto_library(
     name = "example_proto",
@@ -18,11 +18,9 @@ proto_library(
 )
 
 proto_compile(
-    name = "example_objc_compile",
-    outputs = [
-        "Example.pbobjc.h",
-        "Example.pbobjc.m",
-    ],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:objc"],
+    name = "example_gogo_compile",
+    options = {"@build_stack_rules_proto//gogo/protobuf:gogo_plugin": ["plugins=grpc"]},
+    outputs = ["example.pb.go"],
+    plugins = ["@build_stack_rules_proto//gogo/protobuf:gogo_plugin"],
     proto = "example_proto",
 )

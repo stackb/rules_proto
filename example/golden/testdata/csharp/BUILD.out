@@ -19,9 +19,7 @@ proto_library(
 
 proto_compile(
     name = "example_csharp_compile",
-    outputs = [
-        "Example.cs",
-    ],
+    outputs = ["Example.cs"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:csharp"],
     proto = "example_proto",
 )

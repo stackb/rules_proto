@@ -1,14 +1,14 @@
 ---
 layout: default
-title: cpp
-permalink: examples/cpp
+title: python
+permalink: examples/python
 parent: Examples
 ---
 
 
-# cpp example
+# python example
 
-`bazel test //example/golden:cpp_test`
+`bazel test //example/golden:python_test`
 
 
 ## `BUILD.bazel` (after gazelle)
@@ -20,12 +20,12 @@ load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 # "proto_rule" instantiates the proto_compile rule
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
 
-# "proto_plugin" instantiates the builtin cpp plugin
-# gazelle:proto_plugin cpp implementation builtin:cpp
+# "proto_plugin" instantiates the builtin python plugin
+# gazelle:proto_plugin python implementation builtin:python
 
 # "proto_language" binds the rule(s) and plugin(s) together
-# gazelle:proto_language cpp rule proto_compile
-# gazelle:proto_language cpp plugin cpp
+# gazelle:proto_language python rule proto_compile
+# gazelle:proto_language python plugin python
 
 proto_library(
     name = "example_proto",
@@ -34,12 +34,11 @@ proto_library(
 )
 
 proto_compile(
-    name = "example_cpp_compile",
+    name = "example_python_compile",
     outputs = [
-        "example.pb.cc",
-        "example.pb.h",
+        "example_pb2.py",
     ],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
     proto = "example_proto",
 )
 ~~~
@@ -51,12 +50,12 @@ proto_compile(
 # "proto_rule" instantiates the proto_compile rule
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
 
-# "proto_plugin" instantiates the builtin cpp plugin
-# gazelle:proto_plugin cpp implementation builtin:cpp
+# "proto_plugin" instantiates the builtin python plugin
+# gazelle:proto_plugin python implementation builtin:python
 
 # "proto_language" binds the rule(s) and plugin(s) together
-# gazelle:proto_language cpp rule proto_compile
-# gazelle:proto_language cpp plugin cpp
+# gazelle:proto_language python rule proto_compile
+# gazelle:proto_language python plugin python
 ~~~
 
 

@@ -19,6 +19,10 @@ proto_library(
 
 proto_compile(
     name = "example_closurejs_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
+        "import_style=closure",
+        "library=example",
+    ]},
     outputs = ["example.js"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
     proto = "example_proto",

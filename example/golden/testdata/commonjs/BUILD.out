@@ -19,6 +19,7 @@ proto_library(
 
 proto_compile(
     name = "example_commonjs_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"]},
     outputs = ["example_pb.js"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
     proto = "example_proto",

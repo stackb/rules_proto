@@ -1,14 +1,14 @@
 ---
 layout: default
-title: cpp
-permalink: examples/cpp
+title: closurejs
+permalink: examples/closurejs
 parent: Examples
 ---
 
 
-# cpp example
+# closurejs example
 
-`bazel test //example/golden:cpp_test`
+`bazel test //example/golden:closurejs_test`
 
 
 ## `BUILD.bazel` (after gazelle)
@@ -20,12 +20,12 @@ load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 # "proto_rule" instantiates the proto_compile rule
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
 
-# "proto_plugin" instantiates the builtin cpp plugin
-# gazelle:proto_plugin cpp implementation builtin:cpp
+# "proto_plugin" instantiates the builtin closurejs plugin
+# gazelle:proto_plugin closurejs implementation builtin:js:closure
 
 # "proto_language" binds the rule(s) and plugin(s) together
-# gazelle:proto_language cpp rule proto_compile
-# gazelle:proto_language cpp plugin cpp
+# gazelle:proto_language closurejs rule proto_compile
+# gazelle:proto_language closurejs plugin closurejs
 
 proto_library(
     name = "example_proto",
@@ -34,12 +34,9 @@ proto_library(
 )
 
 proto_compile(
-    name = "example_cpp_compile",
-    outputs = [
-        "example.pb.cc",
-        "example.pb.h",
-    ],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
+    name = "example_closurejs_compile",
+    outputs = ["example.js"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
     proto = "example_proto",
 )
 ~~~
@@ -51,12 +48,12 @@ proto_compile(
 # "proto_rule" instantiates the proto_compile rule
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
 
-# "proto_plugin" instantiates the builtin cpp plugin
-# gazelle:proto_plugin cpp implementation builtin:cpp
+# "proto_plugin" instantiates the builtin closurejs plugin
+# gazelle:proto_plugin closurejs implementation builtin:js:closure
 
 # "proto_language" binds the rule(s) and plugin(s) together
-# gazelle:proto_language cpp rule proto_compile
-# gazelle:proto_language cpp plugin cpp
+# gazelle:proto_language closurejs rule proto_compile
+# gazelle:proto_language closurejs plugin closurejs
 ~~~
 
 

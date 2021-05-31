@@ -77,6 +77,12 @@ gazelle_testdata_example(
     workspace_template = "builtin.WORKSPACE",
 )
 
+gazelle_testdata_example(
+    name = "gogo",
+    srcs = glob(["testdata/gogo/*"]),
+    workspace_template = "builtin.WORKSPACE",
+)
+
 filegroup(
     name = "all_files",
     srcs = ["BUILD.bazel"] + glob(["*.go"]),

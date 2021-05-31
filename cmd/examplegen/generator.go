@@ -40,7 +40,7 @@ func generateMarkdown(c *Config) error {
 	fmt.Fprintf(f, "layout: default\n")
 	fmt.Fprintf(f, "title: %s\n", c.Name)
 	fmt.Fprintf(f, "permalink: examples/%s\n", c.Name)
-	fmt.Fprintf(f, "parent: examples\n")
+	fmt.Fprintf(f, "parent: Examples\n")
 	fmt.Fprintf(f, "---\n\n\n")
 
 	fmt.Fprintf(f, "# %s example\n\n", c.Name)

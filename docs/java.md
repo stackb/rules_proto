@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Java
+title: java
 permalink: examples/java
 parent: Examples
 ---
@@ -24,7 +24,8 @@ load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 # gazelle:proto_plugin java implementation builtin:java
 
 # "proto_language" binds the rule(s) and plugin(s) together
-# gazelle:proto_language builtins plugin java
+# gazelle:proto_language java rule proto_compile
+# gazelle:proto_language java plugin java
 
 proto_library(
     name = "example_proto",
@@ -33,10 +34,9 @@ proto_library(
 )
 
 proto_compile(
-    name = "example_builtins_compile",
-    outputs = [
-        "example.srcjar",
-    ],
+    name = "example_java_compile",
+    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example.srcjar"},
+    outputs = ["example.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
     proto = "example_proto",
 )
@@ -53,44 +53,13 @@ proto_compile(
 # gazelle:proto_plugin java implementation builtin:java
 
 # "proto_language" binds the rule(s) and plugin(s) together
-# gazelle:proto_language builtins plugin java
+# gazelle:proto_language java rule proto_compile
+# gazelle:proto_language java plugin java
 ~~~
 
 
 ## `WORKSPACE`
 
 ~~~python
-local_repository(
-    name = "build_stack_rules_proto",
-    path = "../build_stack_rules_proto",
-)
-
-register_toolchains("@build_stack_rules_proto//toolchain")
-
-# == Externals ==
-
-load("@build_stack_rules_proto//deps:core_deps.bzl", "core_deps")
-
-core_deps()
-
-# == Go ==
-
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains(version = "1.16.2")
-
-# == Gazelle ==
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-
-gazelle_dependencies()
-
-# == Protobuf ==
-
-load("@build_stack_rules_proto//deps:protobuf_deps.bzl", "protobuf_deps")
-
-protobuf_deps()
 ~~~
 

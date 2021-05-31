@@ -252,7 +252,7 @@ def _proto_compile_impl(ctx):
         tools = tools,
     )
 
-    if verbose:
+    if verbose and False:
         for f in inputs:
             print("INPUT:", f.path)
         for f in tools:
