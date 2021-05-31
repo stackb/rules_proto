@@ -11,3 +11,12 @@ load(":variants.bzl", "GOGO_VARIANTS")
     tool = "@com_github_gogo_protobuf//protoc-gen-" + variant,
     visibility = ["//visibility:public"],
 ) for variant in GOGO_VARIANTS]
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "variants.bzl",
+    ],
+    visibility = ["//plugin:__pkg__"],
+)

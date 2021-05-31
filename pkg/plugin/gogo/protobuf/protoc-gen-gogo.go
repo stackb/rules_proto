@@ -40,7 +40,7 @@ func (p *GogoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigur
 		return nil
 	}
 	return &protoc.PluginConfiguration{
-		Label:   label.New("build_stack_rules_proto", "gogo/protobuf", p.variant+"_plugin"),
+		Label:   label.New("build_stack_rules_proto", "plugin/gogo/protobuf", "protoc-gen-"+p.variant),
 		Outputs: p.outputs(ctx.ProtoLibrary),
 		Options: p.options(ctx.Rel, ctx.PluginConfig, ctx.ProtoLibrary),
 	}

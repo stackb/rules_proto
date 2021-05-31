@@ -19,8 +19,8 @@ proto_library(
 
 proto_compile(
     name = "example_gogo_compile",
-    options = {"@build_stack_rules_proto//gogo/protobuf:gogo_plugin": ["plugins=grpc"]},
+    options = {"@build_stack_rules_proto//plugin/gogo/protobuf:protoc-gen-gogo": ["plugins=grpc"]},
     outputs = ["example.pb.go"],
-    plugins = ["@build_stack_rules_proto//gogo/protobuf:gogo_plugin"],
+    plugins = ["@build_stack_rules_proto//plugin/gogo/protobuf:protoc-gen-gogo"],
     proto = "example_proto",
 )

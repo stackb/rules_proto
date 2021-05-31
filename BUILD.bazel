@@ -49,7 +49,7 @@ filegroup(
         "go_deps.bzl",
         "//deps:all_files",
         "//pkg:all_files",
-        "//plugin/builtin:all_files",
+        "//plugin:all_files",
         "//rules:all_files",
         "//third_party:all_files",
         "//toolchain:all_files",

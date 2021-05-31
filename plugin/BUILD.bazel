@@ -1,0 +1,9 @@
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "//plugin/builtin:all_files",
+        "//plugin/gogo/protobuf:all_files",
+    ],
+    visibility = ["//visibility:public"],
+)

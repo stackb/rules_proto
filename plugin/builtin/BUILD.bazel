@@ -72,5 +72,5 @@ filegroup(
     srcs = [
         "BUILD.bazel",
     ],
-    visibility = ["//:__pkg__"],
+    visibility = ["//plugin:__pkg__"],
 )
