@@ -466,9 +466,9 @@ grpc_java_repositories()
 # )
 # apple_support_dependencies()
 
-# #
-# # Misc
-# #
+#
+# Misc
+#
 # load("@bazel_gazelle//:deps.bzl", "go_repository")
 # go_repository(
 #     name = "com_github_urfave_cli",

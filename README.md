@@ -67,3 +67,8 @@ reproducible examples that run as example_bazel_tests.
 - protoc-gen-go
 - protoc-gen-go-grpc
 - protoc-gen-go
+
+The go_repository issue is possibly a dealbreaker in terms of 3rd-party usage
+for external proto sources.  It does a go-install, so the repo must be
+accessible.  You need to prototype that.  Maybe just needs to be go-installable
+from local via  GOPROXY, so perhaps just need to improve the DX on it.

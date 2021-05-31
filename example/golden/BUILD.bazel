@@ -26,11 +26,55 @@ go_test(
 gazelle_testdata_example(
     name = "cpp",
     srcs = glob(["testdata/cpp/*"]),
+    workspace_template = "builtin.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "java",
     srcs = glob(["testdata/java/*"]),
+    workspace_template = "builtin.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "python",
+    srcs = glob(["testdata/python/*"]),
+    workspace_template = "builtin.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "ruby",
+    srcs = glob(["testdata/ruby/*"]),
+    workspace_template = "builtin.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "csharp",
+    srcs = glob(["testdata/csharp/*"]),
+    workspace_template = "builtin.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "objc",
+    srcs = glob(["testdata/objc/*"]),
+    workspace_template = "builtin.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "commonjs",
+    srcs = glob(["testdata/commonjs/*"]),
+    workspace_template = "builtin.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "closurejs",
+    srcs = glob(["testdata/closurejs/*"]),
+    workspace_template = "builtin.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "php",
+    srcs = glob(["testdata/php/*"]),
+    workspace_template = "builtin.WORKSPACE",
 )
 
 filegroup(

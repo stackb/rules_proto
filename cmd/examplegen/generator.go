@@ -81,6 +81,15 @@ func generateTest(c *Config) error {
 	fmt.Fprintln(f, testHeader)
 	fmt.Fprintln(f, "var txtar=`")
 
+	fmt.Fprintf(f, "-- WORKSPACE --\n")
+	data, err := ioutil.ReadFile(c.WorkspaceIn)
+	if err != nil {
+		return fmt.Errorf("read %q: %v", c.WorkspaceIn, err)
+	}
+	if _, err := f.Write(data); err != nil {
+		return fmt.Errorf("write %q: %v", c.WorkspaceIn, err)
+	}
+
 	for _, src := range c.Files {
 		dst := mapFilename(src)
 		if dst == "" {
@@ -113,7 +122,7 @@ func mapFilename(in string) string {
 
 	switch base {
 	case "WORKSPACE":
-		return "WORKSPACE"
+		return ""
 	case "BUILD.in":
 		return ""
 	case "BUILD.out":

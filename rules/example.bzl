@@ -10,6 +10,7 @@ def _examplegen_impl(ctx):
         label = str(ctx.label),
         testOut = output_test.path,
         markdownOut = output_markdown.path,
+        workspaceIn = ctx.file.workspace_template.path,
         files = [f.path for f in ctx.files.srcs],
     )
 
@@ -23,7 +24,7 @@ def _examplegen_impl(ctx):
         progress_message = "Generating %s test" % ctx.attr.name,
         executable = ctx.file._examplegen,
         arguments = ["--config_json=%s" % config_json.path],
-        inputs = [config_json] + ctx.files.srcs,
+        inputs = [config_json, ctx.file.workspace_template] + ctx.files.srcs,
         outputs = [output_test, output_markdown],
     )
 
@@ -37,6 +38,11 @@ _examplegen = rule(
         "srcs": attr.label_list(
             doc = "Sources for the test txtar file",
             allow_files = True,
+        ),
+        "workspace_template": attr.label(
+            doc = "Template for the test WORKSPACE",
+            allow_single_file = True,
+            mandatory = True,
         ),
         "_examplegen": attr.label(
             doc = "The examplegen generator tool",
@@ -61,6 +67,7 @@ def gazelle_testdata_example(**kwargs):
     _examplegen(
         name = name,
         srcs = srcs,
+        workspace_template = kwargs.pop("workspace_template", ""),
     )
 
     go_bazel_test(

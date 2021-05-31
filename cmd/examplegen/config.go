@@ -12,6 +12,7 @@ type Config struct {
 	Label       string
 	TestOut     string
 	MarkdownOut string
+	WorkspaceIn string
 	Files       []string
 }
 

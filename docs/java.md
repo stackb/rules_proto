@@ -1,8 +1,8 @@
 ---
 layout: default
-title: java
+title: Java
 permalink: examples/java
-parent: examples
+parent: Examples
 ---
 
 

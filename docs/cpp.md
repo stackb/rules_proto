@@ -1,6 +1,6 @@
 ---
 layout: default
-title: cpp
+title: CPP
 permalink: examples/cpp
 parent: Examples
 ---
