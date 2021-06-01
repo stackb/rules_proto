@@ -35,9 +35,7 @@ proto_library(
 
 proto_compile(
     name = "example_ruby_compile",
-    outputs = [
-        "example_pb.rb",
-    ],
+    outputs = ["example_pb.rb"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:ruby"],
     proto = "example_proto",
 )

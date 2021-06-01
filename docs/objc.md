@@ -36,8 +36,8 @@ proto_library(
 proto_compile(
     name = "example_objc_compile",
     outputs = [
-        "Example.pbobjc.m",
         "Example.pbobjc.h",
+        "Example.pbobjc.m",
     ],
     plugins = ["@build_stack_rules_proto//plugin/builtin:objc"],
     proto = "example_proto",

@@ -72,12 +72,6 @@ gazelle_testdata_example(
 )
 
 gazelle_testdata_example(
-    name = "php",
-    srcs = glob(["testdata/php/*"]),
-    workspace_template = "builtin.WORKSPACE",
-)
-
-gazelle_testdata_example(
     name = "gogo",
     srcs = glob(["testdata/gogo/*"]),
     workspace_template = "builtin.WORKSPACE",

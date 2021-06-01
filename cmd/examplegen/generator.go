@@ -36,6 +36,13 @@ func generateMarkdown(c *Config) error {
 		}
 	}
 
+	if buildIn == "" {
+		log.Panicf("BUILD.in not found: %+v", c)
+	}
+	if buildOut == "" {
+		log.Panicf("BUILD.out not found: %+v", c)
+	}
+
 	fmt.Fprintf(f, "---\n")
 	fmt.Fprintf(f, "layout: default\n")
 	fmt.Fprintf(f, "title: %s\n", c.Name)

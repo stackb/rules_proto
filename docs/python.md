@@ -35,9 +35,7 @@ proto_library(
 
 proto_compile(
     name = "example_python_compile",
-    outputs = [
-        "example_pb2.py",
-    ],
+    outputs = ["example_pb2.py"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
     proto = "example_proto",
 )
