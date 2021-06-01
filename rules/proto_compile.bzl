@@ -141,8 +141,8 @@ def _proto_compile_impl(ctx):
 
         # augment proto list with those attached to plugin
         for info in plugin.supplementary_proto_deps:
-            for srcs in info.direct_sources:
-                protos += srcs.to_list()
+            for src in info.direct_sources:
+                protos.append(src)
             descriptors += info.transitive_descriptor_sets.to_list()
 
         # Include extra plugin data files

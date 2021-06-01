@@ -35,18 +35,12 @@ type Case struct {
 	Input string
 	// The expected value for the final configuration state
 	Configuration *protoc.PluginConfiguration
+	// Whether to perform integration test portion of the test
+	SkipIntegration bool
 }
 
 func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 	// listFiles(".")
-
-	execrootDir := os.Getenv("TEST_TMPDIR")
-	defer os.RemoveAll(execrootDir)
-	cwd, err := os.Getwd()
-	if err != nil {
-		t.Fatal(err)
-	}
-	protocPath := filepath.Join(cwd, "protoc")
 
 	basename := tc.Basename
 	if basename == "" {
@@ -98,6 +92,23 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 		}
 	}
 
+	if tc.SkipIntegration {
+		return
+	}
+
+	tc.RunIntegration(t, subject, got, filename, in)
+}
+
+func (tc *Case) RunIntegration(t *testing.T, subject protoc.Plugin, got *protoc.PluginConfiguration, filename, in string) {
+	execrootDir := os.Getenv("TEST_TMPDIR")
+	defer os.RemoveAll(execrootDir)
+	cwd, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	protocPath := filepath.Join(cwd, "protoc")
+
 	// relDir is the location where the proto files are written.  A BUILD.bazel
 	// file containing the proto_library would normally be here.
 	relDir := filepath.Join(".", tc.Rel)
@@ -135,7 +146,7 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 		t.Fatalf("%T.Actuals: want %d, got %d: %v", subject, len(tc.Configuration.Outputs), len(actuals), actuals)
 	}
 
-	for _, want := range outputs {
+	for _, want := range got.Outputs {
 		realpath := filepath.Join(execrootDir, want)
 		if !fileExists(realpath) {
 			t.Errorf("expected file %q was not produced: (got %v)", want, actuals)
