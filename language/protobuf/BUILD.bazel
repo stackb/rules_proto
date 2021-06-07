@@ -6,12 +6,13 @@ go_library(
     importpath = "github.com/stackb/rules_proto/language/protobuf",
     visibility = ["//visibility:public"],
     deps = [
+        "//pkg/language/protobuf",
         "//pkg/plugin/builtin",
         "//pkg/plugin/gogo/protobuf",
+        "//pkg/plugin/grpc/grpc",
         "//pkg/plugin/grpc/grpcgo",
         "//pkg/plugin/grpc/grpcjava",
         "//pkg/plugin/grpcecosystem/grpcgateway",
-        "//pkg/language/protobuf",
         "@bazel_gazelle//language:go_default_library",
     ],
 )

@@ -14,6 +14,11 @@ depsgen(
     deps = ["//deps:com_google_protobuf"],
 )
 
+depsgen(
+    name = "grpc",
+    deps = ["//deps:com_github_grpc_grpc"],
+)
+
 # Release: v0.27.0
 # TargetCommitish: release-0.27
 # Date: 2021-03-17 18:52:49 +0000 UTC
@@ -126,6 +131,55 @@ proto_dependency(
     path = "../build_stack_rules_proto",
     repository_rule = "local_repository",
     visibility = ["//visibility:public"],
+)
+
+# Release: v1.35.0
+# Commit: v1.35.x
+# Date: 2021-01-19 18:07:57 +0000 UTC
+# URL: https://github.com/grpc/grpc/releases/tag/v1.35.0
+# Branch: master
+# Commit: 5f759fcd1f602b38004b948b071f8b5726a9a4b1
+# Date: 2021-02-09 05:46:27 +0000 UTC
+# URL: https://github.com/grpc/grpc/commit/5f759fcd1f602b38004b948b071f8b5726a9a4b1
+#
+# Merge pull request #25384 from gnossen/fix_interop_typo
+#
+# Fix Interop Client Typo
+# Size: 7899154 (7.9 MB)
+proto_dependency(
+    name = "com_github_grpc_grpc",
+    repository_rule = "http_archive",
+    sha256 = "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b",
+    strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
+    urls = ["https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz"],
+    deps = [
+        ":build_bazel_rules_swift",
+        ":com_google_protobuf",
+    ],
+)
+
+# Release: 0.18.0
+# Commit: master
+# Date: 2021-01-04 23:36:38 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_swift/releases/tag/0.18.0
+# Branch: master
+# Commit: dadd12190182530cf6f91ca7f9e70391644ce502
+# Date: 2021-02-08 21:24:10 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_swift/commit/dadd12190182530cf6f91ca7f9e70391644ce502
+#
+# Don't re-export the modules imported by a Swift generated header.
+#
+# This was an unintentional change in behavior from https://github.com/bazelbuild/rules_swift/commit/5f51ca9c5149122f41cada6122c61788d880fee9; this puts us back to the original behavior, but leaves an API in place for finer-grained control over re-exporting modules in the future. (But the BUILD rules today don't really have the flexibility to support it yet.)
+#
+# PiperOrigin-RevId: 356338982
+# (cherry picked from commit f45eea8c02a87c3077e5209f471fe4a193b5b0ba)
+# Size: 157518 (158 kB)
+proto_dependency(
+    name = "build_bazel_rules_swift",
+    repository_rule = "http_archive",
+    sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
+    strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
+    urls = ["https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"],
 )
 
 filegroup(
