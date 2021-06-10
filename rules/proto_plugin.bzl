@@ -18,6 +18,7 @@ def _proto_plugin_impl(ctx):
             use_built_in_shell_environment = ctx.attr.use_built_in_shell_environment,
             protoc_plugin_name = ctx.attr.protoc_plugin_name,
             exclusions = ctx.attr.exclusions,
+            mods = ctx.attr.mods,
             data = ctx.files.data,
             supplementary_proto_deps = [dep[ProtoInfo] for dep in ctx.attr.supplementary_proto_deps],
             separate_options_flag = ctx.attr.separate_options_flag,
@@ -67,6 +68,9 @@ proto_plugin = rule(
         "deps": attr.label_list(
             doc = "Workspace dependencies the plugin tool requires",
             providers = [ProtoDependencyInfo],
+        ),
+        "mods": attr.string_dict(
+            doc = "content modifications to apply to the output files",
         ),
     },
 )

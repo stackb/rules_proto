@@ -121,6 +121,9 @@ def _proto_compile_impl(ctx):
     # mut <list<opaque>> Plugin input manifests
     input_manifests = []
 
+    # mut <dict<string,string>> post-processing modifications for the compile action
+    mods = dict()
+
     ###
     ### Part 2: per-plugin args
     ###
@@ -194,6 +197,10 @@ def _proto_compile_impl(ctx):
 
         args.append("--{}_out={}".format(plugin_name, out))
 
+        ### Part 2.4: setup awk modifications if any
+        for k, v in plugin.mods.items():
+            mods[k] = v
+
     ###
     ### Part 3: trailing args
     ###
@@ -226,6 +233,7 @@ def _proto_compile_impl(ctx):
         "mkdir -p ./" + ctx.label.package,
         protoc.path + " $@",  # $@ is replaced with args list
     ]
+
     if verbose:
         before = ["env", "pwd", "ls -al .", "echo '\n##### SANDBOX BEFORE RUNNING PROTOC'", "find . -type l"]
         after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find . -type f"]
@@ -241,9 +249,16 @@ def _proto_compile_impl(ctx):
             fail("the mapped file '%s' was not listed in outputs" % basename)
         commands.append("cp '{}' '{}'".format(intermediate_filename, output.path))
 
+    # if there are any mods to apply, set those up now
+    for suffix, action in mods.items():
+        for f in outputs:
+            if f.short_path.endswith(suffix):
+                commands.append("awk '%s' %s > %s.tmp" % (action, f.path, f.path))
+                commands.append("mv %s.tmp %s" % (f.path, f.path))
+
     ctx.actions.run_shell(
         arguments = [final_args],
-        command = " && ".join(commands),
+        command = "\n".join(commands),
         inputs = inputs,
         # input_manifests = input_manifests, TODO
         mnemonic = "Protoc",
