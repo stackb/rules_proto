@@ -46,7 +46,7 @@ def _proto_compile_gencopy_impl(ctx):
                         found = True
                         break
                 if not found:
-                    fail("could find matching source file for generate file %s in %r" % (f.short_path, srcfiles))
+                    fail("could find matching source file for generated file %s in %r" % (f.short_path, srcfiles))
 
             else:
                 srcs.append(f.short_path)
