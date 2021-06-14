@@ -8,6 +8,8 @@ import (
 // ProtocConfiguration represents the complete configuration and source
 // mappings.
 type ProtocConfiguration struct {
+	// The config for the p
+	LanguageConfig *LanguageConfig
 	// the workspace relative path of the BUILD file where this rule is being
 	// generated.
 	Rel string
@@ -23,16 +25,17 @@ type ProtocConfiguration struct {
 	Mappings map[string]string
 }
 
-func newProtocConfiguration(rel, prefix string, lib ProtoLibrary, plugins []*PluginConfiguration) *ProtocConfiguration {
+func newProtocConfiguration(lc *LanguageConfig, rel, prefix string, lib ProtoLibrary, plugins []*PluginConfiguration) *ProtocConfiguration {
 	srcs, mappings := mergeSources(rel, plugins)
 
 	return &ProtocConfiguration{
-		Rel:      rel,
-		Prefix:   prefix,
-		Library:  lib,
-		Plugins:  plugins,
-		Outputs:  srcs,
-		Mappings: mappings,
+		LanguageConfig: lc,
+		Rel:            rel,
+		Prefix:         prefix,
+		Library:        lib,
+		Plugins:        plugins,
+		Outputs:        srcs,
+		Mappings:       mappings,
 	}
 }
 

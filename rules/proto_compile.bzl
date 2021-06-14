@@ -30,6 +30,8 @@ def _ctx_replace_arg(ctx, arg):
     return arg
 
 def get_protoc_executable(ctx):
+    if ctx.file.protoc:
+        return ctx.file.protoc
     protoc_toolchain_info = ctx.toolchains[str(Label("//toolchain:toolchain_type"))]
     return protoc_toolchain_info.protoc_executable
 
@@ -230,6 +232,7 @@ def _proto_compile_impl(ctx):
     ### Step 4: command action
     ###
     commands = [
+        "set -euo pipefail",
         "mkdir -p ./" + ctx.label.package,
         protoc.path + " $@",  # $@ is replaced with args list
     ]
@@ -316,6 +319,12 @@ proto_compile = rule(
             doc = "The single ProtoInfo provider",
             mandatory = True,
             providers = [ProtoInfo],
+        ),
+        "protoc": attr.label(
+            doc = "Overrides the protoc from the toolchain",
+            allow_single_file = True,
+            executable = True,
+            cfg = "exec",
         ),
         "verbose": attr.bool(
             doc = "The verbosity flag.",

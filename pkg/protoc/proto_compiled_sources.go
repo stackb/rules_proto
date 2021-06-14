@@ -93,6 +93,10 @@ func (s *protoCompiledSourcesRule) Rule() *rule.Rule {
 	newRule.SetAttr("plugins", GetPluginLabels(s.config.Plugins))
 	newRule.SetAttr("proto", s.config.Library.Name())
 
+	if s.config.LanguageConfig.Protoc != "" {
+		newRule.SetAttr("protoc", s.config.LanguageConfig.Protoc)
+	}
+
 	if len(s.config.Mappings) > 0 {
 		newRule.SetAttr("mappings", MakeStringDict(s.config.Mappings))
 	}

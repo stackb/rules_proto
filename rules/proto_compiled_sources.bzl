@@ -5,12 +5,14 @@ load(":proto_compile_gencopy.bzl", "proto_compile_gencopy_test", "proto_compile_
 def proto_compiled_sources(**kwargs):
     name = kwargs.pop("name")
     srcs = kwargs.pop("srcs", [])
+    protoc = kwargs.pop("protoc", None)
     name_update = name + ".update"
     name_test = name + "_test"
 
     proto_compile(
         name = name,
         srcs = srcs,
+        protoc = protoc,
         **kwargs,
     )
 

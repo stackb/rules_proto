@@ -106,7 +106,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 
 	rules := make([]RuleProvider, 0)
 
-	pc := newProtocConfiguration(s.rel, p.Name, lib, configs)
+	pc := newProtocConfiguration(p, s.rel, p.Name, lib, configs)
 	for name, want := range p.Rules {
 		if !want {
 			continue

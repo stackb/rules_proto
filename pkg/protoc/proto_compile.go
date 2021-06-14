@@ -27,11 +27,13 @@ func (s *protoCompile) KindInfo() rule.KindInfo {
 			"outputs": true,
 			"srcs":    true,
 			"plugins": true,
+			"protoc":  true,
 		},
 		SubstituteAttrs: map[string]bool{
 			"options":  true,
 			"out":      true,
 			"mappings": true,
+			"protoc":   true,
 		},
 	}
 }
@@ -84,6 +86,10 @@ func (s *protoCompileRule) Rule() *rule.Rule {
 	newRule.SetAttr("outputs", outputs)
 	newRule.SetAttr("plugins", GetPluginLabels(s.config.Plugins))
 	newRule.SetAttr("proto", s.config.Library.Name())
+
+	if s.config.LanguageConfig.Protoc != "" {
+		newRule.SetAttr("protoc", s.config.LanguageConfig.Protoc)
+	}
 
 	if len(s.config.Mappings) > 0 {
 		newRule.SetAttr("mappings", MakeStringDict(s.config.Mappings))

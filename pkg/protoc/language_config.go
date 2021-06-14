@@ -9,6 +9,7 @@ import (
 // contribute to a protoc invocation.
 type LanguageConfig struct {
 	Name    string
+	Protoc  string
 	Enabled bool
 	Plugins map[string]bool
 	Rules   map[string]bool
@@ -32,6 +33,7 @@ func newLanguageConfig(name string, rules ...*LanguageRuleConfig) *LanguageConfi
 func (c *LanguageConfig) clone() *LanguageConfig {
 	clone := newLanguageConfig(c.Name)
 	clone.Enabled = c.Enabled
+	clone.Protoc = c.Protoc
 	for k, v := range c.Plugins {
 		clone.Plugins[k] = v
 	}
@@ -53,6 +55,8 @@ func (c *LanguageConfig) parseDirective(cfg *PackageConfig, d, param, value stri
 		c.Enabled = enabled
 	case "plugin":
 		c.Plugins[value] = intent.Want
+	case "protoc":
+		c.Protoc = value
 	case "rule":
 		c.Rules[value] = intent.Want
 	default:
