@@ -18,6 +18,7 @@ go_library(
         "plugin_registry.go",
         "proto_compile.go",
         "proto_compiled_sources.go",
+        "proto_descriptor_set.go",
         "proto_enum_option_collector.go",
         "proto_library.go",
         "protoc_configuration.go",
