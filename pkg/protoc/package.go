@@ -100,6 +100,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 
 		configs = append(configs, config)
 	}
+
 	if len(configs) == 0 {
 		return nil
 	}
@@ -107,29 +108,30 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 	rules := make([]RuleProvider, 0)
 
 	pc := newProtocConfiguration(p, s.rel, p.Name, lib, configs)
-	for name, want := range p.Rules {
-		if !want {
-			continue
-		}
-		rule, ok := s.cfg.rules[name]
+	for _, name := range p.GetRulesByIntent(true) {
+		ruleConfig, ok := s.cfg.rules[name]
 		if !ok {
 			panic(fmt.Sprintf("proto_rule %q is not configured", name))
 		}
-		if !rule.Enabled {
+		if !ruleConfig.Enabled {
 			continue
 		}
-		impl, err := globalRegistry.LookupRule(rule.Implementation)
+		impl, err := globalRegistry.LookupRule(ruleConfig.Implementation)
 		if err == ErrUnknownRule {
 			log.Panicf(
-				"rule not registered: %q (available: %v) [%+v]",
-				rule.Implementation,
+				"rule not registered: %q (available: %v)",
+				ruleConfig.Implementation,
 				globalRegistry.RuleNames(),
-				rule,
 			)
 		}
-		rule.Impl = impl
+		ruleConfig.Impl = impl
 
-		rules = append(rules, impl.ProvideRule(rule, pc))
+		rule := impl.ProvideRule(ruleConfig, pc)
+		if rule == nil {
+			continue
+		}
+
+		rules = append(rules, rule)
 	}
 
 	return rules

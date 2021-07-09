@@ -49,7 +49,7 @@ func (g *GoldenTests) Run(t *testing.T, gazelleName string) {
 
 	gazellePath, ok := bazel.FindBinary(g.extensionDir, gazelleName)
 	if !ok {
-		t.Fatalf("could not find gazelle: %q", gazelleName)
+		t.Fatalf("could not find gazelle: %q in %s", gazelleName, g.extensionDir)
 	}
 	t.Log("Found gazelle binary:", gazellePath)
 

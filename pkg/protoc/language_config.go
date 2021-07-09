@@ -2,6 +2,7 @@ package protoc
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 )
 
@@ -28,6 +29,19 @@ func newLanguageConfig(name string, rules ...*LanguageRuleConfig) *LanguageConfi
 		c.Rules[rule.Name] = true
 	}
 	return c
+}
+
+// GetEnabledRules filters the list of enabled Rules in a sorted manner.
+func (c *LanguageConfig) GetRulesByIntent(intent bool) []string {
+	names := make([]string, 0)
+	for name, want := range c.Rules {
+		if want != intent {
+			continue
+		}
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	return names
 }
 
 func (c *LanguageConfig) clone() *LanguageConfig {

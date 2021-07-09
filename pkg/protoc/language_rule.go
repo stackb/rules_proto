@@ -12,6 +12,7 @@ type LanguageRule interface {
 	// KindInfo returns the gazelle KindInfo.
 	KindInfo() rule.KindInfo
 	// ProvideRule takes the given configration and compilation and emits a
-	// RuleProvider
+	// RuleProvider.  If the state of the ProtocConfiguration is such that the
+	// rule should not be emitted, implementation should return nil.
 	ProvideRule(rc *LanguageRuleConfig, pc *ProtocConfiguration) RuleProvider
 }
