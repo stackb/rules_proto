@@ -157,7 +157,7 @@ proto_library(
 )
 ```
 
-In this example we have a dependency on a well-known type `any.proto` hance the
+In this example we have a dependency on a well-known type `any.proto` hence the
 `proto_library` to `proto_library` dependency.
 
 **Step 3**: add a `cpp_proto_compile` rule (substitute `cpp_` for the language
