@@ -15,7 +15,7 @@ type ProtocConfiguration struct {
 	Rel string
 	// the prefix for the rule (e.g. 'java')
 	Prefix string
-	// the library thar holds the proto filees
+	// the library thar holds the proto files
 	Library ProtoLibrary
 	// the configuration for the plugins
 	Plugins []*PluginConfiguration

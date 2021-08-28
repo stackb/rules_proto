@@ -27,7 +27,7 @@ func newLanguageRuleConfig(name string) *LanguageRuleConfig {
 	}
 }
 
-// GetDeps returns the sorted list of options
+// GetDeps returns the sorted list of dependencies
 func (c *LanguageRuleConfig) GetDeps() []string {
 	deps := make([]string, 0)
 	for dep, want := range c.Deps {

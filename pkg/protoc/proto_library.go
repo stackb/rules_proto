@@ -16,6 +16,6 @@ type ProtoLibrary interface {
 	Rule() *rule.Rule
 	// Deps lists all direct library dependencies.
 	Deps() []string
-	// Lists all files references in the rule.
+	// Files returns the list of proto files in the rule.
 	Files() []*File
 }

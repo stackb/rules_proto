@@ -45,13 +45,13 @@ func FromDir(extensionDir string) *GoldenTests {
 
 func (g *GoldenTests) Run(t *testing.T, gazelleName string) {
 	t.Log("Run", g.extensionDir)
-	listFiles(".")
+	// listFiles(".")
 
 	gazellePath, ok := bazel.FindBinary(g.extensionDir, gazelleName)
 	if !ok {
 		t.Fatalf("could not find gazelle: %q in %s", gazelleName, g.extensionDir)
 	}
-	t.Log("Found gazelle binary:", gazellePath)
+	// t.Log("Found gazelle binary:", gazellePath)
 
 	tests := map[string][]bazel.RunfileEntry{}
 
@@ -61,7 +61,6 @@ func (g *GoldenTests) Run(t *testing.T, gazelleName string) {
 	}
 
 	for _, f := range files {
-		t.Log("runfile short path:", f.ShortPath)
 		if strings.HasPrefix(f.ShortPath, g.testDataPath) {
 			relativePath := strings.TrimPrefix(f.ShortPath, g.testDataPath)
 			parts := strings.SplitN(relativePath, "/", 2)

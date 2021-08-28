@@ -19,6 +19,11 @@ func init() {
 // rule from @rules_proto.
 type protoDescriptorSetRule struct{}
 
+// Name implements part of the LanguageRule interface.
+func (s *protoDescriptorSetRule) Name() string {
+	return "proto_descriptor_set"
+}
+
 // KindInfo implements part of the LanguageRule interface.
 func (s *protoDescriptorSetRule) KindInfo() rule.KindInfo {
 	return rule.KindInfo{

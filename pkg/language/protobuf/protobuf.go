@@ -80,7 +80,7 @@ func (*ProtobufLanguage) Kinds() map[string]rule.KindInfo {
 		if err != nil {
 			log.Fatal("Kinds:", err)
 		}
-		kinds[name] = rule.KindInfo()
+		kinds[rule.Name()] = rule.KindInfo()
 	}
 
 	return kinds

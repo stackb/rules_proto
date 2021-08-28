@@ -38,6 +38,11 @@ func (s *protoCompile) KindInfo() rule.KindInfo {
 	}
 }
 
+// Name implements part of the LanguageRule interface.
+func (s *protoCompile) Name() string {
+	return "proto_compile"
+}
+
 // LoadInfo implements part of the LanguageRule interface.
 func (s *protoCompile) LoadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
