@@ -9,38 +9,3 @@ type Plugin interface {
 	// plugin should be skipped for the current package/library.
 	Configure(ctx *PluginContext) *PluginConfiguration
 }
-
-// // ShouldApply asks the plugin: for the given proto_library rule, should you
-// // be added to the list of plugins to use?  We cannot rely on Outputs alone
-// // for this information as not all plugins actually generate source code
-// // (some only perform validation/checking).
-// ShouldApply(ctx *PluginContext) bool
-// // Outputs inspects the given proto_library and determines what source files
-// // will be generated.  Each element in the list should be a fully-qualified
-// // path relative to the plugin out.
-// Outputs(ctx *PluginContext) []string
-
-// PluginOptionsProvider is an optional interface that, if implemented, provides
-// the set of options for the protoc invocation.  If not implemented, any
-// options named in the plugin configuration are applied.
-// type PluginOptionsProvider interface {
-// 	// Options inspects the given proto_library and determines what additional
-// 	// options are needed.
-// 	Options(ctx *PluginContext) []string
-// }
-
-// // PluginMappingsProvider is an optional interface that, if implemented,
-// // provides mapping data for the protoc invocation.  If not implemented, a
-// // default algorithm is applied.
-// type PluginMappingsProvider interface {
-// 	// Options inspects the given proto_library and determines what additional
-// 	// mappings are needed.
-// 	Mappings(ctx *PluginContext) map[string]string
-// }
-
-// // PluginOutProvider is an optional interface that, if implemented, provides the
-// // plugin-specific value for the --*_out= arg.  In not implemented, a default value at the execroot is used.
-// type PluginOutProvider interface {
-// 	// Out inspects the given proto_library and determines the out arg.
-// 	Out(ctx *PluginContext) string
-// }

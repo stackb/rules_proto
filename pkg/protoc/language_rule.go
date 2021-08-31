@@ -7,6 +7,7 @@ import "github.com/bazelbuild/bazel-gazelle/rule"
 // might collect all the emitted *.srcjar files from the protoc configuration
 // and wrap it with a java_library.
 type LanguageRule interface {
+	// Name returns the name of the rule
 	Name() string
 	// LoadInfo returns the gazelle LoadInfo.
 	LoadInfo() rule.LoadInfo

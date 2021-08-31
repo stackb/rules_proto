@@ -69,11 +69,6 @@ func (s *protoCompiledSourcesRule) Name() string {
 	return fmt.Sprintf("%s_%s_compiled_sources", s.config.Library.BaseName(), s.config.Prefix)
 }
 
-// Imports implements part of the ruleProvider interface.
-func (s *protoCompiledSourcesRule) Imports() []string {
-	return []string{s.Kind()}
-}
-
 // Visibility implements part of the ruleProvider interface.
 func (s *protoCompiledSourcesRule) Visibility() []string {
 	visibility := make([]string, 0)

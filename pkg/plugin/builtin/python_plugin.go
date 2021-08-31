@@ -29,11 +29,16 @@ func (p *PythonPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfig
 			protoc.Always,
 			ctx.ProtoLibrary.Files()...,
 		),
+		Imports: protoc.FlatMapFiles(
+			pyImports(),
+			protoc.Always,
+			ctx.ProtoLibrary.Files()...,
+		),
 	}
 }
 
-// pythonGeneratedFileName is a utility function that returns a fucntion that
-// compuutes the name of a predicted generated file having the given
+// pythonGeneratedFileName is a utility function that returns a function that
+// computes the name of a predicted generated file having the given
 // extension(s) relative to the given dir.
 func pythonGeneratedFileName(reldir string) func(f *protoc.File) []string {
 	return func(f *protoc.File) []string {
@@ -43,4 +48,32 @@ func pythonGeneratedFileName(reldir string) func(f *protoc.File) []string {
 		}
 		return []string{name + "_pb2.py"}
 	}
+}
+
+// pyImports is a utility function that returns a function that
+// computes the name of a predicted imports for a given proto file.
+func pyImports() func(f *protoc.File) []string {
+	return func(f *protoc.File) []string {
+		imports := make([]string, 0)
+
+		pkg := f.Name + "_pb"
+		if f.Package().Name != "" {
+			pkg = f.Package().Name + "." + pkg
+		}
+		for _, m := range f.Messages() {
+			imports = append(imports, getPythonImportName(pkg, m.Name))
+		}
+		for _, e := range f.Enums() {
+			imports = append(imports, getPythonImportName(pkg, e.Name))
+		}
+
+		return imports
+	}
+}
+
+func getPythonImportName(pkg, name string) string {
+	if pkg == "" {
+		return name
+	}
+	return pkg + "." + name
 }

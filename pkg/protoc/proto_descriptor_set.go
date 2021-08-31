@@ -63,11 +63,6 @@ func (s *protoDescriptorSetRuleRule) Name() string {
 	return fmt.Sprintf("%s_descriptor", s.config.Library.BaseName())
 }
 
-// Imports implements part of the ruleProvider interface.
-func (s *protoDescriptorSetRuleRule) Imports() []string {
-	return []string{s.Kind()}
-}
-
 // Visibility implements part of the ruleProvider interface.
 func (s *protoDescriptorSetRuleRule) Visibility() []string {
 	visibility := make([]string, 0)

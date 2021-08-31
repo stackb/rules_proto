@@ -71,11 +71,6 @@ func (s *protoCompileRule) Name() string {
 	return fmt.Sprintf("%s_%s_compile", s.config.Library.BaseName(), s.config.Prefix)
 }
 
-// Imports implements part of the ruleProvider interface.
-func (s *protoCompileRule) Imports() []string {
-	return []string{s.Kind()}
-}
-
 // Visibility implements part of the ruleProvider interface.
 func (s *protoCompileRule) Visibility() []string {
 	return nil // TODO: visibility feature?

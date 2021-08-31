@@ -9,12 +9,25 @@ import (
 // PluginConfiguration represents the configuration of a protoc plugin
 // and the sources & source mappings that are expected to be produced.
 type PluginConfiguration struct {
-	Name     string
-	Label    label.Label
+	// Name is the name of the plugin.
+	Name string
+	// Label is the bazel label for the corresponding proto_plugin rule.
+	Label label.Label
+	// Mappings is a dictionary that maps filenames listed in Outputs to
+	// 'Out'-relative filepaths.  This is used when the plugin writes to a
+	// location outside the bazel package and needs to be relocated (copied) to
+	// the Output location.
 	Mappings map[string]string
-	Options  []string
-	Out      string
-	Outputs  []string
+	// Options is the list of options that the plugin expects
+	Options []string
+	// Out is the output directory the plugin is predicted to write to
+	Out string
+	// Outputs is the list of output files the plugin generates
+	Outputs []string
+	// Imports is a list of language-specific imports that are provided by the
+	// output files.  This can be used to populate the GazelleImportsKey private
+	// attr for import resolution.
+	Imports []string
 }
 
 // GetPluginLabels returns the list of labels strings for a list of plugins.

@@ -161,25 +161,10 @@ func (s *Package) Empty() []*rule.Rule {
 	return empty
 }
 
-// Imports provides the aggregated list of imports for the package.
-func (s *Package) Imports() []interface{} {
-	return getProvidedImports(s.gen)
-}
-
 func getProvidedRules(providers []RuleProvider) []*rule.Rule {
 	rules := make([]*rule.Rule, len(providers))
 	for i, p := range providers {
 		rules[i] = p.Rule()
 	}
 	return rules
-}
-
-func getProvidedImports(providers []RuleProvider) []interface{} {
-	imports := make([]interface{}, 0)
-	for _, r := range providers {
-		for _, v := range r.Imports() {
-			imports = append(imports, v)
-		}
-	}
-	return imports
 }

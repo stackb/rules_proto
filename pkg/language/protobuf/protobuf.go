@@ -228,9 +228,15 @@ func (pl *ProtobufLanguage) GenerateRules(args language.GenerateArgs) language.G
 		// TODO: if needed allow FileVisitor to mutate the rule.File here.
 	}
 
+	rules := pkg.Rules()
+	imports := make([]interface{}, len(rules))
+	for i, rule := range rules {
+		imports[i] = rule.PrivateAttr(config.GazelleImportsKey)
+	}
+
 	return language.GenerateResult{
-		Gen:     pkg.Rules(),
-		Imports: pkg.Imports(),
+		Gen:     rules,
+		Imports: imports,
 		Empty:   pkg.Empty(),
 	}
 }

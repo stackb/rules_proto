@@ -15,8 +15,6 @@ type RuleProvider interface {
 	Name() string
 	// Rule provides the gazelle rule implementation.
 	Rule() *rule.Rule
-	// Imports provides the list of imported symbols for the rule.
-	Imports() []string
 	// Visibility provides the visibility list for the rule.
 	Visibility() []string
 	// Resolve performs deps resolution, similar to the gazelle Resolver interface.
