@@ -119,11 +119,6 @@ func (s *protoCcLibraryRule) Rule() *rule.Rule {
 	newRule.SetAttr("srcs", s.Srcs())
 	newRule.SetAttr("hdrs", s.Hdrs())
 
-	deps := s.Deps()
-	if len(deps) > 0 {
-		newRule.SetAttr("deps", s.Deps())
-	}
-
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)
@@ -134,4 +129,17 @@ func (s *protoCcLibraryRule) Rule() *rule.Rule {
 
 // Resolve implements part of the RuleProvider interface.
 func (s *protoCcLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+	deps := s.Deps()
+
+	for _, d := range s.config.Library.Deps() {
+		if strings.HasPrefix(d, "@com_google_protobuf//") {
+			continue
+		}
+		d = strings.TrimSuffix(d, "_proto")
+		deps = append(deps, d+"_cc_library")
+	}
+
+	if len(deps) > 0 {
+		r.SetAttr("deps", deps)
+	}
 }

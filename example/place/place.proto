@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package example.place;
+
+option go_package = "github.com/stackb/rules_proto/example/place;place";
+
+import "example/thing/thing.proto";
+
+message Place {
+    string name = 1;
+    example.thing.Thing thing = 2;
+}

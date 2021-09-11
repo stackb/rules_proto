@@ -1,63 +1,8 @@
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
-
-# gazelle:proto_language cc enable true
-# gazelle:proto_language py enable true
-# gazelle:proto_language java enable true
-# gazelle:proto_language closure_js enable true
-# gazelle:proto_language common_js enable true
-# gazelle:proto_language gogofast enable true
-
-proto_library(
-    name = "example_proto",
-    srcs = ["thing.proto"],
-    visibility = ["//visibility:public"],
-    deps = ["@com_google_protobuf//:timestamp_proto"],
-)
-
-proto_compile(
-    name = "example_cpp_compile",
-    outputs = [
-        "thing.pb.cc",
-        "thing.pb.h",
-    ],
-    plugins = ["//plugin/builtin:cpp"],
-    proto = "example_proto",
-)
-
-proto_compile(
-    name = "example_closurejs_compile",
-    options = {"//plugin/builtin:closurejs": ["library=example/example"]},
-    outputs = ["example.js"],
-    plugins = ["//plugin/builtin:closurejs"],
-    proto = "example_proto",
-)
-
-proto_compile(
-    name = "example_commonjs_compile",
-    outputs = ["thing_pb.js"],
-    plugins = ["//plugin/builtin:commonjs"],
-    proto = "example_proto",
-)
-
-# proto_compile(
-#     name = "example_gogofast_compile",
-#     outputs = ["thing.pb.go"],
-#     plugins = ["//gogo/protobuf:gogofast_plugin"],
-#     proto = "example_proto",
-# )
-
-proto_compile(
-    name = "example_python_compile",
-    outputs = ["thing_pb2.py"],
-    plugins = ["//plugin/builtin:python"],
-    proto = "example_proto",
-)
-
-proto_compile(
-    name = "example_java_compile",
-    outputs = ["example.srcjar"],
-    plugins = ["//plugin/builtin:java"],
-    proto = "example_proto",
-    verbose = 3,
-)
+# gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
+# gazelle:proto_rule proto_cc_library implementation stackb:rules_proto:proto_cc_library
+# gazelle:proto_rule proto_cc_library deps @com_google_protobuf//:protobuf
+# gazelle:proto_rule proto_cc_library visibility //visibility:public
+# gazelle:proto_plugin cpp implementation builtin:cpp
+# gazelle:proto_language cpp rule proto_compile
+# gazelle:proto_language cpp rule proto_cc_library
+# gazelle:proto_language cpp plugin cpp
