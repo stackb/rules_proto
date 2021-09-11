@@ -58,7 +58,7 @@ func (c *LanguageRuleConfig) clone() *LanguageRuleConfig {
 func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value string) error {
 	intent := parseIntent(param)
 	switch intent.Value {
-	case "dep":
+	case "dep", "deps":
 		if intent.Want {
 			c.Deps[value] = true
 		} else {

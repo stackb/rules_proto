@@ -13,6 +13,7 @@ go_library(
         "//pkg/plugin/grpc/grpcgo",
         "//pkg/plugin/grpc/grpcjava",
         "//pkg/plugin/grpcecosystem/grpcgateway",
+        "//pkg/rule/builtin",
         "@bazel_gazelle//language:go_default_library",
     ],
 )
