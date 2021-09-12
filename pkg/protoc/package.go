@@ -35,7 +35,6 @@ func NewPackage(rel string, cfg *PackageConfig, libs ...ProtoLibrary) *Package {
 // generateRules constructs a list of rules based on the configured set of
 // languages.
 func (s *Package) generateRules(enabled bool) []RuleProvider {
-
 	rules := make([]RuleProvider, 0)
 	langs := s.cfg.configuredLangs()
 
@@ -91,6 +90,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		if config == nil {
 			continue
 		}
+		config.Name = plugin.Implementation
 		config.Options = append(config.Options, plugin.GetOptions()...)
 
 		// plugin.Label overrides the default value from the implementation

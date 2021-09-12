@@ -196,8 +196,8 @@ func PackageFileNameWithExtensions(exts ...string) func(f *File) []string {
 	}
 }
 
-// RelativeFileName is a utility function that returns a function that computes
-// the name of a predicted generated file having the given extension(s) relative to the given dir.
+// RelativeFileName returns a function that computes the name of a predicted
+// generated file having the given extension(s) relative to the given dir.
 func RelativeFileNameWithExtensions(reldir string, exts ...string) func(f *File) []string {
 	return func(f *File) []string {
 		outs := make([]string, len(exts))

@@ -23,7 +23,7 @@ func (p *GrpcGrpcCppPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginC
 		return nil
 	}
 	return &protoc.PluginConfiguration{
-		Label: label.New("build_stack_rules_proto", "plugin/grpc/grpc", "cpp"),
+		Label: label.New("build_stack_rules_proto", "plugin/grpc/grpc", "protoc-gen-grpc-cpp"),
 		Outputs: protoc.FlatMapFiles(
 			protoc.PackageFileNameWithExtensions(".grpc.pb.cc", ".grpc.pb.h"),
 			protoc.HasService,

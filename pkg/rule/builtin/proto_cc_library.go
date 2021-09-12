@@ -1,8 +1,6 @@
 package builtin
 
 import (
-	"fmt"
-	"sort"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -10,6 +8,11 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/protoc"
+)
+
+const (
+	ProtoCcLibraryRuleName   = "proto_cc_library"
+	ProtoCcLibraryRuleSuffix = "_cc_library"
 )
 
 func init() {
@@ -22,7 +25,7 @@ type protoCcLibrary struct{}
 
 // Name implements part of the LanguageRule interface.
 func (s *protoCcLibrary) Name() string {
-	return "proto_cc_library"
+	return ProtoCcLibraryRuleName
 }
 
 // KindInfo implements part of the LanguageRule interface.
@@ -41,105 +44,36 @@ func (s *protoCcLibrary) KindInfo() rule.KindInfo {
 func (s *protoCcLibrary) LoadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
 		Name:    "@build_stack_rules_proto//rules/cc:proto_cc_library.bzl",
-		Symbols: []string{"proto_cc_library"},
+		Symbols: []string{ProtoCcLibraryRuleName},
 	}
 }
 
 // ProvideRule implements part of the LanguageRule interface.
-func (s *protoCcLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, config *protoc.ProtocConfiguration) protoc.RuleProvider {
-	return &protoCcLibraryRule{ruleConfig: cfg, config: config}
-}
-
-// protoCcLibrary implements RuleProvider for the 'proto_compile' rule.
-type protoCcLibraryRule struct {
-	config     *protoc.ProtocConfiguration
-	ruleConfig *protoc.LanguageRuleConfig
-}
-
-// Kind implements part of the ruleProvider interface.
-func (s *protoCcLibraryRule) Kind() string {
-	return "proto_cc_library"
-}
-
-// Name implements part of the ruleProvider interface.
-func (s *protoCcLibraryRule) Name() string {
-	return fmt.Sprintf("%s_cc_library", s.config.Library.BaseName())
-}
-
-// Srcs computes the srcs list for the rule.
-func (s *protoCcLibraryRule) Srcs() []string {
-	srcs := make([]string, 0)
-	for _, output := range s.config.Outputs {
-		if strings.HasSuffix(output, ".pb.cc") {
-			srcs = append(srcs, output)
-		}
+func (s *protoCcLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
+	outputs := pc.GetPluginOutputs("builtin:cpp")
+	if len(outputs) == 0 {
+		return nil
 	}
-	return srcs
-}
+	return &CcLibraryRule{
+		KindName:       ProtoCcLibraryRuleName,
+		RuleNameSuffix: ProtoCcLibraryRuleSuffix,
+		Outputs:        outputs,
+		RuleConfig:     cfg,
+		Config:         pc,
+		Resolver: func(impl *CcLibraryRule, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+			deps := impl.Deps()
 
-// Hdrs computes the hdrs list for the rule.
-func (s *protoCcLibraryRule) Hdrs() []string {
-	hdrs := make([]string, 0)
-	for _, output := range s.config.Outputs {
-		if strings.HasSuffix(output, ".pb.h") {
-			hdrs = append(hdrs, output)
-		}
-	}
-	return hdrs
-}
+			for _, d := range impl.Config.Library.Deps() {
+				if strings.HasPrefix(d, "@com_google_protobuf//") {
+					continue
+				}
+				d = strings.TrimSuffix(d, "_proto")
+				deps = append(deps, d+ProtoCcLibraryRuleSuffix)
+			}
 
-// Deps computes the deps list for the rule.
-func (s *protoCcLibraryRule) Deps() []string {
-	deps := s.ruleConfig.GetDeps()
-	// for _, output := range s.config.Outputs {
-	// 	if strings.HasSuffix(output, ".pb.cc") {
-	// 		deps = append(deps, output)
-	// 	}
-	// }
-	return deps
-}
-
-// Visibility implements part of the ruleProvider interface.
-func (s *protoCcLibraryRule) Visibility() []string {
-	visibility := make([]string, 0)
-	for k, want := range s.ruleConfig.Visibility {
-		if !want {
-			continue
-		}
-		visibility = append(visibility, k)
-	}
-	sort.Strings(visibility)
-	return visibility
-}
-
-// Rule implements part of the ruleProvider interface.
-func (s *protoCcLibraryRule) Rule() *rule.Rule {
-	newRule := rule.NewRule(s.Kind(), s.Name())
-
-	newRule.SetAttr("srcs", s.Srcs())
-	newRule.SetAttr("hdrs", s.Hdrs())
-
-	visibility := s.Visibility()
-	if len(visibility) > 0 {
-		newRule.SetAttr("visibility", visibility)
-	}
-
-	return newRule
-}
-
-// Resolve implements part of the RuleProvider interface.
-func (s *protoCcLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
-	deps := s.Deps()
-
-	for _, d := range s.config.Library.Deps() {
-		if strings.HasPrefix(d, "@com_google_protobuf//") {
-			continue
-		}
-		d = strings.TrimSuffix(d, "_proto")
-		deps = append(deps, d+"_cc_library")
-	}
-
-	if len(deps) > 0 {
-		r.SetAttr("deps", deps)
+			if len(deps) > 0 {
+				r.SetAttr("deps", deps)
+			}
+		},
 	}
 }

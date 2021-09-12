@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/cc:proto_grpc_cc_library.bzl", "proto_grpc_cc_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
@@ -28,4 +29,16 @@ proto_compile(
     ],
     plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
     proto = "person_proto",
+)
+
+proto_grpc_cc_library(
+    name = "person_grpc_cc_library",
+    srcs = [],
+    hdrs = [],
+    visibility = ["//visibility:public"],
+    deps = [
+        "person_proto_cc_library",
+        "@com_github_grpc_grpc//:grpc++",
+        "@com_github_grpc_grpc//:grpc++_reflection",
+    ],
 )
