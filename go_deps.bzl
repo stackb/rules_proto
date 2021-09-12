@@ -1,6 +1,17 @@
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
+def gazelle_protobuf_extension_go_deps():
+    go_repository(
+        name = "com_github_emicklei_proto",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/emicklei/proto",
+        sum = "h1:l0QiNT6Qs7Yj0Mb4X6dnWBQer4ebei2BFcgQLbGqUDc=",
+        version = "v1.9.0",
+    )
+
 def go_deps():
+    gazelle_protobuf_extension_go_deps()
+
     go_repository(
         name = "co_honnef_go_tools",
         build_file_proto_mode = "disable_global",
@@ -84,13 +95,6 @@ def go_deps():
         importpath = "github.com/davecgh/go-spew",
         sum = "h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=",
         version = "v1.1.1",
-    )
-    go_repository(
-        name = "com_github_emicklei_proto",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/emicklei/proto",
-        sum = "h1:l0QiNT6Qs7Yj0Mb4X6dnWBQer4ebei2BFcgQLbGqUDc=",
-        version = "v1.9.0",
     )
     go_repository(
         name = "com_github_envoyproxy_go_control_plane",
@@ -354,4 +358,16 @@ def go_deps():
         importpath = "golang.org/x/xerrors",
         sum = "h1:go1bK/D/BFZV2I8cIQd1NKEZ+0owSTG1fDTci4IqFcE=",
         version = "v0.0.0-20200804184101-5ec99f83aff1",
+    )
+    go_repository(
+        name = "com_github_stretchr_testify",
+        importpath = "github.com/stretchr/testify",
+        sum = "h1:hDPOHmpOpP40lSULcqw7IrRb/u7w6RpDC9399XyoNd0=",
+        version = "v1.6.1",
+    )
+    go_repository(
+        name = "in_gopkg_yaml_v3",
+        importpath = "gopkg.in/yaml.v3",
+        sum = "h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=",
+        version = "v3.0.0-20200313102051-9f266ea9e77c",
     )

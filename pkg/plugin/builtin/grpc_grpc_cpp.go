@@ -22,10 +22,13 @@ func (p *GrpcGrpcCppPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginC
 	if !protoc.HasServices(ctx.ProtoLibrary.Files()...) {
 		return nil
 	}
+
+	stripImportPrefix := ctx.ProtoLibrary.Rule().AttrString("strip_import_prefix")
+
 	return &protoc.PluginConfiguration{
 		Label: label.New("build_stack_rules_proto", "plugin/grpc/grpc", "protoc-gen-grpc-cpp"),
 		Outputs: protoc.FlatMapFiles(
-			protoc.PackageFileNameWithExtensions(".grpc.pb.cc", ".grpc.pb.h"),
+			protoc.ImportPrefixRelativeFileNameWithExtensions(stripImportPrefix, ctx.Rel, ".grpc.pb.cc", ".grpc.pb.h"),
 			protoc.HasService,
 			ctx.ProtoLibrary.Files()...,
 		),

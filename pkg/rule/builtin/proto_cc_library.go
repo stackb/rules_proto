@@ -30,14 +30,7 @@ func (s *protoCcLibrary) Name() string {
 
 // KindInfo implements part of the LanguageRule interface.
 func (s *protoCcLibrary) KindInfo() rule.KindInfo {
-	return rule.KindInfo{
-		MergeableAttrs: map[string]bool{
-			"srcs":       true,
-			"hdrs":       true,
-			"deps":       true,
-			"visibility": true,
-		},
-	}
+	return ccLibraryKindInfo
 }
 
 // LoadInfo implements part of the LanguageRule interface.

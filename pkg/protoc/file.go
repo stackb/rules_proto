@@ -212,6 +212,30 @@ func RelativeFileNameWithExtensions(reldir string, exts ...string) func(f *File)
 	}
 }
 
+// ImportPrefixRelativeFileNameWithExtensions returns a function that computes
+// the name of a predicted generated file. In this case, first
+// RelativeFileNameWithExtensions is applied, then stripImportPrefix is removed
+// from the predicted filename.
+func ImportPrefixRelativeFileNameWithExtensions(stripImportPrefix, reldir string, exts ...string) func(f *File) []string {
+	// if the stripImportPrefix is defined and "absolute" (starting with a
+	// slash), this means it is relative to the repository root.
+	// https://github.com/bazelbuild/bazel/issues/3867#issuecomment-441971525
+	prefix := stripImportPrefix
+	if strings.HasPrefix(prefix, "/") {
+		prefix = prefix[1:]
+	}
+	relfunc := RelativeFileNameWithExtensions(reldir, exts...)
+	return func(f *File) []string {
+		outs := relfunc(f)
+		for i, out := range outs {
+			if strings.HasPrefix(out, prefix) {
+				outs[i] = strings.TrimPrefix(out[len(prefix):], "/")
+			}
+		}
+		return outs
+	}
+}
+
 // HasMessagesOrEnums is a utility function that tests if any of the given files
 // has a message or an enum.
 func HasMessagesOrEnums(files ...*File) bool {

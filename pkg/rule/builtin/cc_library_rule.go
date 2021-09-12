@@ -11,6 +11,15 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
+var ccLibraryKindInfo = rule.KindInfo{
+	MergeableAttrs: map[string]bool{
+		"srcs":       true,
+		"hdrs":       true,
+		"deps":       true,
+		"visibility": true,
+	},
+}
+
 type Resolver func(impl *CcLibraryRule, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label)
 
 // CcLibraryRule implements RuleProvider for 'cc_library'-derived rules.
