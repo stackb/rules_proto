@@ -1,3 +1,5 @@
+"go_deps.bzl contains golang dependencies."
+
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
 def gazelle_protobuf_extension_go_deps():

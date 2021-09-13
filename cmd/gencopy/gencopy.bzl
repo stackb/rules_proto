@@ -1,3 +1,5 @@
+"gencopy.bzl provides an action for copying generated files into the workspace."
+
 load("@bazel_skylib//lib:shell.bzl", "shell")
 
 gencopy_attrs = {

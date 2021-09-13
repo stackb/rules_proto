@@ -1,6 +1,4 @@
-#
-# Toolchains
-#
+"toolchain.bzl provides the protoc toolchain rule"
 
 def _protoc_impl(ctx):
     return [platform_common.ToolchainInfo(

@@ -1,8 +1,12 @@
+"""proto_compile_gencopy.bzl provides the proto_compile_gencopy_run and proto_compile_gencopy_test rules.
+"""
+
 load("//cmd/gencopy:gencopy.bzl", "gencopy_action", "gencopy_attrs", "gencopy_config")
 load(":providers.bzl", "ProtoCompileInfo")
 
 def _copy_file(actions, src, dst):
     """Copy a file to a new path destination
+
     Args:
       actions: the <ctx.actions> object
       src: the source file <File>

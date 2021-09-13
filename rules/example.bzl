@@ -1,3 +1,5 @@
+"example.bzl provides the gazelle_testdata_example rule."
+
 load("@io_bazel_rules_go//go/tools/bazel_testing:def.bzl", "go_bazel_test")
 
 def _examplegen_impl(ctx):
@@ -60,6 +62,12 @@ _examplegen = rule(
 )
 
 def gazelle_testdata_example(**kwargs):
+    """
+    gazelle_testdata_example rule runs an go_bazel_test for an example dir
+
+    Args:
+        **kwargs: the kwargs dict passed to 'go_bazel_test'
+    """
     name = kwargs.pop("name")
     srcs = kwargs.pop("srcs", [])
     rule_files = kwargs.pop("rule_files", ["//:all_files"])

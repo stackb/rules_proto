@@ -1,3 +1,8 @@
+"""proto_compile.bzl provides the proto_compile rule.
+
+This runs the protoc tool and generates output source files.
+"""
+
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
 load(":providers.bzl", "ProtoCompileInfo", "ProtoPluginInfo")
 
