@@ -3,7 +3,6 @@ package protoc
 import (
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -229,7 +228,6 @@ func ImportPrefixRelativeFileNameWithExtensions(stripImportPrefix, reldir string
 	return func(f *File) []string {
 		outs := relfunc(f)
 		for i, out := range outs {
-			log.Println("IPRFNWE", "stripImportPrefix:", stripImportPrefix, "prefix:", prefix, "i:", i, "out:", out)
 			if strings.HasPrefix(out, prefix) {
 				outs[i] = strings.TrimPrefix(out[len(prefix):], "/")
 			}

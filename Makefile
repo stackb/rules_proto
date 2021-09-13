@@ -1,16 +1,8 @@
-cleanup: go_mod_tidy go_deps buildfiles
-	@echo "Done."
-
+.PHONY: tidy
 tidy:
 	bazel run @go_sdk//:bin/go -- mod tidy
 	bazel run //:update_go_deps
-
-.PHONY: lint
-lint:
 	bazel run //:buildifier
-
-.PHONY: gazelle
-gazelle:
 	bazel run //:gazelle
 
 .PHONY: deps

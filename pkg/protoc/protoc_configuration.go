@@ -1,7 +1,6 @@
 package protoc
 
 import (
-	"log"
 	"path"
 	"sort"
 	"strings"
@@ -60,11 +59,7 @@ func mergeSources(rel string, plugins []*PluginConfiguration) ([]string, map[str
 	srcs := make([]string, 0)
 	mappings := make(map[string]string)
 
-	debug := false
 	for _, plugin := range plugins {
-		if plugin.Name == "builtin:cpp" {
-			debug = true
-		}
 
 		// if plugin provided mappings for us, use those preferentially
 		if len(plugin.Mappings) > 0 {
@@ -78,9 +73,6 @@ func mergeSources(rel string, plugins []*PluginConfiguration) ([]string, map[str
 
 		// otherwise, fallback to baseline method
 		for _, filename := range plugin.Outputs {
-			if debug {
-				log.Println("plugin output", filename)
-			}
 			dir := path.Dir(filename)
 			if dir == "." && rel == "" {
 				dir = rel

@@ -28,10 +28,8 @@ gazelle_binary(
     visibility = ["//visibility:public"],
 )
 
-gazelle(name = "gazelle")
-
 gazelle(
-    name = "update_build_files",
+    name = "gazelle",
     gazelle = ":gazelle-protobuf",
 )
 
