@@ -3,6 +3,7 @@
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
 def gazelle_protobuf_extension_go_deps():
+    "additional go_repository rules beyond gazelle itself needed for the gazelle-protobuf extension."
     go_repository(
         name = "com_github_emicklei_proto",
         build_file_proto_mode = "disable_global",
@@ -12,6 +13,7 @@ def gazelle_protobuf_extension_go_deps():
     )
 
 def go_deps():
+    "go_repository rules derived from the go.mod file."
     gazelle_protobuf_extension_go_deps()
 
     go_repository(

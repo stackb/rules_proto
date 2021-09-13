@@ -1,3 +1,5 @@
+"proto_compiled_source_update.bzl provides the proto_compiled_source_update rule."
+
 load(":proto_compile_gencopy.bzl", "proto_compile_gencopy_run")
 
 def proto_compiled_source_update(**kwargs):

@@ -42,6 +42,15 @@ def gencopy_config(ctx):
     )
 
 def gencopy_action(ctx, config, runfiles):
+    """gencopy_action declared a bazel action that runs the gencopy.bash script.
+
+    Args:
+        ctx: the context object.
+        config: a struct to be written as json, for the gencopy tool.
+        runfiles: additional runfiles needed for the action.
+    Returns:
+        a list containing the config_json File, the script File, and a Runfiles object.
+    """
     script = ctx.actions.declare_file(ctx.label.name + ".bash")
     config_json = ctx.actions.declare_file("%s.%s.json" % (ctx.label.name, config.mode))
 
