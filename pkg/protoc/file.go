@@ -3,6 +3,7 @@ package protoc
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -196,8 +197,8 @@ func PackageFileNameWithExtensions(exts ...string) func(f *File) []string {
 	}
 }
 
-// RelativeFileName is a utility function that returns a function that computes
-// the name of a predicted generated file having the given extension(s) relative to the given dir.
+// RelativeFileName returns a function that computes the name of a predicted
+// generated file having the given extension(s) relative to the given dir.
 func RelativeFileNameWithExtensions(reldir string, exts ...string) func(f *File) []string {
 	return func(f *File) []string {
 		outs := make([]string, len(exts))
@@ -207,6 +208,31 @@ func RelativeFileNameWithExtensions(reldir string, exts ...string) func(f *File)
 		}
 		for i, ext := range exts {
 			outs[i] = name + ext
+		}
+		return outs
+	}
+}
+
+// ImportPrefixRelativeFileNameWithExtensions returns a function that computes
+// the name of a predicted generated file. In this case, first
+// RelativeFileNameWithExtensions is applied, then stripImportPrefix is removed
+// from the predicted filename.
+func ImportPrefixRelativeFileNameWithExtensions(stripImportPrefix, reldir string, exts ...string) func(f *File) []string {
+	// if the stripImportPrefix is defined and "absolute" (starting with a
+	// slash), this means it is relative to the repository root.
+	// https://github.com/bazelbuild/bazel/issues/3867#issuecomment-441971525
+	prefix := stripImportPrefix
+	if strings.HasPrefix(prefix, "/") {
+		prefix = prefix[1:]
+	}
+	relfunc := RelativeFileNameWithExtensions(reldir, exts...)
+	return func(f *File) []string {
+		outs := relfunc(f)
+		for i, out := range outs {
+			log.Println("IPRFNWE", "stripImportPrefix:", stripImportPrefix, "prefix:", prefix, "i:", i, "out:", out)
+			if strings.HasPrefix(out, prefix) {
+				outs[i] = strings.TrimPrefix(out[len(prefix):], "/")
+			}
 		}
 		return outs
 	}

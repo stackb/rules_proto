@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package example;
+package example.thing;
 
 option java_multiple_files = true;
-option java_package = "com.github.stackb.rules_proto.example";
+option java_package = "com.github.stackb.rules_proto.example.thing";
 // option java_package = "example";
 
 import "google/protobuf/timestamp.proto";

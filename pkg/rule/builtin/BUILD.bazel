@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "builtin",
+    srcs = [
+        "cc_library_rule.go",
+        "proto_cc_library.go",
+        "proto_grpc_cc_library.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/rule/builtin",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)

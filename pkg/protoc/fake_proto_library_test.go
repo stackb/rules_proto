@@ -59,6 +59,11 @@ func (p *fakePlugin) options(lib ProtoLibrary) []string {
 // fakeProtoLibrary implements a mock LanguageRule
 type fakeProtoLibrary struct{}
 
+// Name implements part of the LanguageRule interface.
+func (s *fakeProtoLibrary) Name() string {
+	return "fake_proto_library"
+}
+
 // KindInfo implements part of the LanguageRule interface.
 func (s *fakeProtoLibrary) KindInfo() rule.KindInfo {
 	return rule.KindInfo{}

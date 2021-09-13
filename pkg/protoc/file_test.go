@@ -3,6 +3,8 @@ package protoc
 import (
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func mustParseTestFile(t *testing.T, in string) *File {
@@ -14,13 +16,12 @@ func mustParseTestFile(t *testing.T, in string) *File {
 }
 
 func TestHas(t *testing.T) {
-	type hasTestCase struct {
+	tests := map[string]struct {
 		in            string
 		hasMessages   bool
 		hasServices   bool
 		hasEnumOption string
-	}
-	tests := map[string]*hasTestCase{
+	}{
 		"empty file": {},
 		"has services": {
 			in: `
@@ -47,6 +48,121 @@ service Greeter {
 				t.Errorf("hasEnumOption: expected %s",
 					tc.hasEnumOption)
 			}
+		})
+	}
+}
+
+func TestRelativeFileNameWithExtensions(t *testing.T) {
+	tests := map[string]struct {
+		dir  string
+		name string
+		rel  string
+		exts []string
+		want []string
+	}{
+		"empty": {
+			want: []string{},
+		},
+		"single": {
+			name: "a",
+			rel:  "proto",
+			exts: []string{".cc"},
+			want: []string{
+				"proto/a.cc",
+			},
+		},
+		"multiple": {
+			name: "a",
+			rel:  "proto",
+			exts: []string{".cc", ".h"},
+			want: []string{
+				"proto/a.cc",
+				"proto/a.h",
+			},
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			fn := RelativeFileNameWithExtensions(tc.rel, tc.exts...)
+			got := fn(&File{
+				Dir:  tc.dir,
+				Name: tc.name,
+			})
+			assert.Equal(t, got, tc.want, "generated filenames")
+		})
+	}
+}
+
+func TestImportPrefixRelativeFileNameWithExtensions(t *testing.T) {
+	tests := map[string]struct {
+		stripImportPrefix string
+		dir               string
+		name              string
+		rel               string
+		exts              []string
+		want              []string
+	}{
+		"empty": {
+			want: []string{},
+		},
+		"single": {
+			name: "a",
+			rel:  "proto",
+			exts: []string{".cc"},
+			want: []string{
+				"proto/a.cc",
+			},
+		},
+		"multiple": {
+			name: "a",
+			rel:  "proto",
+			exts: []string{".cc", ".h"},
+			want: []string{
+				"proto/a.cc",
+				"proto/a.h",
+			},
+		},
+		"strip": {
+			stripImportPrefix: "foo/bar",
+			name:              "a",
+			rel:               "foo/bar/baz",
+			exts:              []string{".cc", ".h"},
+			want: []string{
+				"baz/a.cc",
+				"baz/a.h",
+			},
+		},
+		"strip-abs": {
+			stripImportPrefix: "/foo/bar",
+			name:              "a",
+			rel:               "foo/bar/baz",
+			exts:              []string{".cc", ".h"},
+			want: []string{
+				"baz/a.cc",
+				"baz/a.h",
+			},
+		},
+		"strip-abs-with-trailing-slash": {
+			stripImportPrefix: "/foo/bar/",
+			name:              "a",
+			rel:               "foo/bar/baz",
+			exts:              []string{".cc", ".h"},
+			want: []string{
+				"baz/a.cc",
+				"baz/a.h",
+			},
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			fn := ImportPrefixRelativeFileNameWithExtensions(tc.stripImportPrefix, tc.rel, tc.exts...)
+			got := fn(&File{
+				Dir:  tc.dir,
+				Name: tc.name,
+			})
+			assert.Equal(t, got, tc.want, "generated filenames")
 		})
 	}
 }

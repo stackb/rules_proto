@@ -1,55 +1,45 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules/cc:proto_grpc_cc_library.bzl", "proto_grpc_cc_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
-# gazelle:proto_language cc enable true
-# gazelle:proto_language closure_js enable false
-# gazelle:proto_language common_js enable false
-# gazelle:proto_language gogofast enable true
-# gazelle:proto_language java enable true
-# gazelle:proto_language py enable false
-
 proto_library(
-    name = "routeguide_proto",
+    name = "example_routeguide_proto",
     srcs = ["routeguide.proto"],
     visibility = ["//visibility:public"],
 )
 
+proto_cc_library(
+    name = "example_routeguide_cc_library",
+    srcs = ["routeguide.pb.cc"],
+    hdrs = ["routeguide.pb.h"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf"],
+)
+
 proto_compile(
-    name = "routeguide_cc_compile",
+    name = "example_routeguide_cpp_compile",
     outputs = [
-        "routeguide.pb.cc",
-        "routeguide.pb.h",
         "routeguide.grpc.pb.cc",
         "routeguide.grpc.pb.h",
+        "routeguide.pb.cc",
+        "routeguide.pb.h",
     ],
     plugins = [
-        "//protoc:cc_proto_plugin",
-        "//grpc/grpc:grpc_cpp_plugin",
+        "@build_stack_rules_proto//plugin/builtin:cpp",
+        "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-cpp",
     ],
-    proto = "routeguide_proto",
+    proto = "example_routeguide_proto",
 )
 
-proto_compile(
-    name = "routeguide_gogofast_compile",
-    options = {"//gogo/protobuf:gogofast_plugin": ["plugins=grpc"]},
-    outputs = ["routeguide.pb.go"],
-    plugins = ["//gogo/protobuf:gogofast_plugin"],
-    proto = "routeguide_proto",
-)
-
-proto_compile(
-    name = "routeguide_java_compile",
-    outs = {
-        "//grpc/grpc-java:grpc_java_plugin": "routeguide/routeguide_grpc.srcjar",
-        "//builtin:java_proto_plugin": "routeguide/routeguide.srcjar",
-    },
-    outputs = [
-        "routeguide.srcjar",
-        "routeguide_grpc.srcjar",
+proto_grpc_cc_library(
+    name = "example_routeguide_grpc_cc_library",
+    srcs = ["routeguide.grpc.pb.cc"],
+    hdrs = ["routeguide.grpc.pb.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":example_routeguide_cc_library",
+        "@com_github_grpc_grpc//:grpc++",
+        "@com_github_grpc_grpc//:grpc++_reflection",
     ],
-    plugins = [
-        "//builtin:java_proto_plugin",
-        "//grpc/grpc-java:grpc_java_plugin",
-    ],
-    proto = "routeguide_proto",
 )

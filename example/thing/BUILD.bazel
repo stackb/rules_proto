@@ -1,0 +1,41 @@
+load("@build_stack_rules_proto//rules/cc:proto_grpc_cc_library.bzl", "proto_grpc_cc_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+proto_library(
+    name = "example_thing_proto",
+    srcs = ["thing.proto"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:timestamp_proto"],
+)
+
+proto_cc_library(
+    name = "example_thing_cc_library",
+    srcs = ["thing.pb.cc"],
+    hdrs = ["thing.pb.h"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf"],
+)
+
+proto_compile(
+    name = "example_thing_cpp_compile",
+    outputs = [
+        "thing.pb.cc",
+        "thing.pb.h",
+    ],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
+    proto = "example_thing_proto",
+)
+
+proto_grpc_cc_library(
+    name = "example_thing_grpc_cc_library",
+    srcs = [],
+    hdrs = [],
+    visibility = ["//visibility:public"],
+    deps = [
+        "example_thing_proto_cc_library",
+        "@com_github_grpc_grpc//:grpc++",
+        "@com_github_grpc_grpc//:grpc++_reflection",
+    ],
+)

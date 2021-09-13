@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package example.person;
+
+option go_package = "github.com/stackb/rules_proto/example/person;person";
+
+import "example/place/place.proto";
+
+message Person {
+    // name identifies a Person
+    string name = 1;
+    // place is where the Person is located.
+    example.place.Place place = 2;
+}

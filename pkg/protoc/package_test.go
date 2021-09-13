@@ -31,7 +31,7 @@ func exampleProtoLibraryRule() *rule.Rule {
 }
 
 func exampleProtoLibrary() ProtoLibrary {
-	return NewOtherProtoLibrary(exampleProtoLibraryRule(), exampleFile())
+	return NewOtherProtoLibrary(nil, exampleProtoLibraryRule(), exampleFile())
 }
 
 func examplePackageConfig() *PackageConfig {
