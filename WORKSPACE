@@ -323,6 +323,7 @@ grpc_java_repositories()
 # gateway_repos()
 
 # load("@grpc_ecosystem_grpc_gateway//:repositories.bzl", "go_repositories")
+
 # go_repositories()
 
 # #

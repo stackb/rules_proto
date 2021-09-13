@@ -62,7 +62,7 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 	if tc.Configuration != nil {
 		pluginConfig, _ = c.Plugin(tc.Configuration.Name)
 	}
-	lib := protoc.NewOtherProtoLibrary(nil, r, f)
+	lib := protoc.NewOtherProtoLibrary(nil, r, f) // File is nil, not needed for the test
 	ctx := &protoc.PluginContext{
 		Rel:           tc.Rel,
 		ProtoLibrary:  lib,
