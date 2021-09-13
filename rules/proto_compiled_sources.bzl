@@ -16,6 +16,11 @@ load(":proto_compile.bzl", "proto_compile")
 load(":proto_compile_gencopy.bzl", "proto_compile_gencopy_run", "proto_compile_gencopy_test")
 
 def proto_compiled_sources(**kwargs):
+    """proto_compiled_sources macro.
+
+    Args:
+        **kwargs: the kwargs dict for the 'proto_compile' rule.
+    """
     name = kwargs.pop("name")
     srcs = kwargs.pop("srcs", [])
     protoc = kwargs.pop("protoc", None)
