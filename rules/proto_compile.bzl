@@ -25,7 +25,7 @@ def _ctx_replace_arg(ctx, arg):
     if arg.find("{PROTO_LIBRARY_BASENAME}") != -1:
         basename = ctx.attr.proto.label.name
         if basename.endswith("_proto"):
-            basename = basename[:len(basename)-len("_proto")]
+            basename = basename[:len(basename) - len("_proto")]
         arg = arg.replace("{PROTO_LIBRARY_BASENAME}", basename)
     return arg
 

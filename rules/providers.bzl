@@ -21,14 +21,16 @@ ProtoPluginInfo = provider(
     },
 )
 
-ProtoCompileInfo = provider("ProtoCompileInfo provides downstream rules with the outputs of proto_compile",
+ProtoCompileInfo = provider(
+    "ProtoCompileInfo provides downstream rules with the outputs of proto_compile",
     fields = {
         "label": "The proto_compile rule label",
         "outputs": "The output files from the rule",
     },
 )
 
-ProtoDependencyInfo = provider("Provider for a single external dependency",
+ProtoDependencyInfo = provider(
+    "Provider for a single external dependency",
     fields = {
         "buildFile": "The build_file of this dependency",
         "deps": "The list of deps of this dependency  list<ProtoDependencyInfo>",

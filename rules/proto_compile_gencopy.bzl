@@ -1,7 +1,6 @@
 load("//cmd/gencopy:gencopy.bzl", "gencopy_action", "gencopy_attrs", "gencopy_config")
 load(":providers.bzl", "ProtoCompileInfo")
 
-
 def _copy_file(actions, src, dst):
     """Copy a file to a new path destination
     Args:
@@ -20,18 +19,17 @@ def _copy_file(actions, src, dst):
     )
 
 def _proto_compile_gencopy_impl(ctx):
-
     config = gencopy_config(ctx)
 
     runfiles = []
 
     # comprehend a mapping of relpath -> File
-    srcfiles = { f.short_path[len(ctx.label.package):].lstrip("/"): f for f in ctx.files.srcs }
+    srcfiles = {f.short_path[len(ctx.label.package):].lstrip("/"): f for f in ctx.files.srcs}
 
     for info in [dep[ProtoCompileInfo] for dep in ctx.attr.deps]:
         runfiles += info.outputs
 
-        srcs = [] # list of string
+        srcs = []  # list of string
         for f in info.outputs:
             if config.mode == "check":
                 # if we are in 'check' mode, the src and dst cannot be the same file, so
@@ -39,7 +37,7 @@ def _proto_compile_gencopy_impl(ctx):
                 found = False
                 for srcfilename, srcfile in srcfiles.items():
                     if srcfilename == f.basename:
-                        replica = ctx.actions.declare_file(f.basename+".actual", sibling=f)
+                        replica = ctx.actions.declare_file(f.basename + ".actual", sibling = f)
                         _copy_file(ctx.actions, srcfile, replica)
                         runfiles.append(replica)
                         srcs.append(replica.short_path)
@@ -57,7 +55,7 @@ def _proto_compile_gencopy_impl(ctx):
                 targetPackage = info.label.package,
                 generatedFiles = [f.short_path for f in info.outputs],
                 sourceFiles = srcs,
-            )
+            ),
         )
 
     config_json, script, runfiles = gencopy_action(ctx, config, runfiles)
@@ -67,7 +65,6 @@ def _proto_compile_gencopy_impl(ctx):
         runfiles = runfiles,
         executable = script,
     )]
-
 
 def _proto_compile_gencopy_rule(is_test):
     return rule(
@@ -80,7 +77,7 @@ def _proto_compile_gencopy_rule(is_test):
             ),
             srcs = attr.label_list(
                 doc = "The ProtoCompileInfo providers",
-                allow_files = True
+                allow_files = True,
             ),
         ),
         executable = True,

@@ -13,7 +13,6 @@ def core_deps():
     bazel_gazelle()  # via <TOP>
     rules_proto()  # via <TOP>
 
-
 def io_bazel_rules_go():
     _maybe(
         http_archive,

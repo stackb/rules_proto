@@ -1,6 +1,5 @@
 load(":proto_compile.bzl", "proto_compile")
-load(":proto_compile_gencopy.bzl", "proto_compile_gencopy_test", "proto_compile_gencopy_run")
-
+load(":proto_compile_gencopy.bzl", "proto_compile_gencopy_run", "proto_compile_gencopy_test")
 
 def proto_compiled_sources(**kwargs):
     name = kwargs.pop("name")
@@ -13,7 +12,7 @@ def proto_compiled_sources(**kwargs):
         name = name,
         srcs = srcs,
         protoc = protoc,
-        **kwargs,
+        **kwargs
     )
 
     proto_compile_gencopy_test(

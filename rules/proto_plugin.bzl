@@ -4,7 +4,7 @@ A "proto_plugin" rule wraps metadata about a proto compiler plugin.
 """
 
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
-load("@build_stack_rules_proto//rules:providers.bzl", "ProtoPluginInfo", "ProtoDependencyInfo")
+load("@build_stack_rules_proto//rules:providers.bzl", "ProtoDependencyInfo", "ProtoPluginInfo")
 
 def _proto_plugin_impl(ctx):
     return [

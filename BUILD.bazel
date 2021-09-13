@@ -1,4 +1,10 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+
+# ----------------------------------------------------
+# Buildifier Configuration
+# ----------------------------------------------------
+buildifier(name = "buildifier")
 
 # ----------------------------------------------------
 # Base Gazelle Configuration

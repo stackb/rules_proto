@@ -71,7 +71,7 @@ def gazelle_testdata_example(**kwargs):
     )
 
     go_bazel_test(
-        name = name+"_test",
+        name = name + "_test",
         srcs = [name + "_test.go"],
         rule_files = rule_files,
         **kwargs

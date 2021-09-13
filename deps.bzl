@@ -31,7 +31,7 @@ def io_bazel_rules_go():
         urls = [
             "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
             "https://github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
-        ],        
+        ],
     )
 
 def bazel_gazelle():
@@ -251,7 +251,6 @@ def rules_jvm_external():
         sha256 = RULES_JVM_EXTERNAL_SHA,
         url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
     )
-
 
 def rules_codeowners():
     # Branch: master

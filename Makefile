@@ -10,6 +10,10 @@ go_mod_init:
 go_deps:
 	bazel run //:update_go_deps
 
+.PHONY: lint
+lint:
+	bazel run //:buildifier
+
 buildfiles:
 	bazel run //:update_build_files
 

@@ -14,7 +14,6 @@ def protobuf_deps():
     zlib()  # via com_google_protobuf
     com_google_protobuf()  # via <TOP>
 
-
 def bazel_skylib():
     _maybe(
         http_archive,

@@ -1,5 +1,6 @@
 """proto_dependency.bzl 
 """
+
 load("//rules:providers.bzl", "ProtoDependencyInfo")
 
 def _proto_dependency_impl(ctx):
