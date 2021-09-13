@@ -1,6 +1,6 @@
 common:quiet --noshow_progress --ui_event_filters=-INFO
 
-build:bazelci --deleted_packages=docs/
+build:bazelci --deleted_packages=docs
 
 #common --deleted_packages=docs/_site
 # build --strategy=CoreCompile=standalone
