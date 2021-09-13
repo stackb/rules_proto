@@ -101,6 +101,14 @@ def go_deps():
         version = "v1.1.1",
     )
     go_repository(
+        name = "com_github_emicklei_proto",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/emicklei/proto",
+        sum = "h1:l0QiNT6Qs7Yj0Mb4X6dnWBQer4ebei2BFcgQLbGqUDc=",
+        version = "v1.9.0",
+    )
+
+    go_repository(
         name = "com_github_envoyproxy_go_control_plane",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/envoyproxy/go-control-plane",
@@ -120,13 +128,6 @@ def go_deps():
         importpath = "github.com/fsnotify/fsnotify",
         sum = "h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=",
         version = "v1.4.7",
-    )
-    go_repository(
-        name = "com_github_gogo_protobuf",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/gogo/protobuf",
-        sum = "h1:DqDEcV5aeaTmdFBePNpYsp3FlcVH/2ISVVM9Qf8PSls=",
-        version = "v1.3.1",
     )
 
     go_repository(
@@ -157,20 +158,6 @@ def go_deps():
         sum = "h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=",
         version = "v0.5.5",
     )
-    go_repository(
-        name = "com_github_kisielk_errcheck",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/kisielk/errcheck",
-        sum = "h1:reN85Pxc5larApoH1keMBiu2GWtPqXQ1nc9gx+jOU+E=",
-        version = "v1.2.0",
-    )
-    go_repository(
-        name = "com_github_kisielk_gotool",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/kisielk/gotool",
-        sum = "h1:AV2c/EiW3KqPNT9ZKl07ehoAGi4C5/01Cfbblndcapg=",
-        version = "v1.0.0",
-    )
 
     go_repository(
         name = "com_github_kr_pretty",
@@ -192,13 +179,6 @@ def go_deps():
         importpath = "github.com/kr/text",
         sum = "h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=",
         version = "v0.1.0",
-    )
-    go_repository(
-        name = "com_github_kylelemons_godebug",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/kylelemons/godebug",
-        sum = "h1:MtvEpTB6LX3vkb4ax0b5D2DHbNAUsen0Gx5wZoq3lV4=",
-        version = "v0.0.0-20170820004349-d65d576e9348",
     )
 
     go_repository(
@@ -223,13 +203,20 @@ def go_deps():
         version = "v0.0.0-20190812154241-14fe0d1b01d4",
     )
     go_repository(
-        name = "com_github_stripe_skycfg",
+        name = "com_github_stretchr_objx",
         build_file_proto_mode = "disable_global",
-        importpath = "github.com/stripe/skycfg",
-        sum = "h1:Kl/jvboLcvI67K6MEh75iCJOvG/Hhx8rDhlhIjNMwFw=",
+        importpath = "github.com/stretchr/objx",
+        sum = "h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=",
         version = "v0.1.0",
     )
 
+    go_repository(
+        name = "com_github_stretchr_testify",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/stretchr/testify",
+        sum = "h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=",
+        version = "v1.7.0",
+    )
     go_repository(
         name = "com_google_cloud_go",
         build_file_proto_mode = "disable_global",
@@ -250,6 +237,14 @@ def go_deps():
         importpath = "gopkg.in/yaml.v2",
         sum = "h1:ZCJp+EgiOT7lHqUV2J862kp8Qj64Jo6az82+3Td9dZw=",
         version = "v2.2.2",
+    )
+
+    go_repository(
+        name = "in_gopkg_yaml_v3",
+        build_file_proto_mode = "disable_global",
+        importpath = "gopkg.in/yaml.v3",
+        sum = "h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=",
+        version = "v3.0.0-20200313102051-9f266ea9e77c",
     )
     go_repository(
         name = "net_starlark_go",
@@ -362,16 +357,4 @@ def go_deps():
         importpath = "golang.org/x/xerrors",
         sum = "h1:go1bK/D/BFZV2I8cIQd1NKEZ+0owSTG1fDTci4IqFcE=",
         version = "v0.0.0-20200804184101-5ec99f83aff1",
-    )
-    go_repository(
-        name = "com_github_stretchr_testify",
-        importpath = "github.com/stretchr/testify",
-        sum = "h1:hDPOHmpOpP40lSULcqw7IrRb/u7w6RpDC9399XyoNd0=",
-        version = "v1.6.1",
-    )
-    go_repository(
-        name = "in_gopkg_yaml_v3",
-        importpath = "gopkg.in/yaml.v3",
-        sum = "h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=",
-        version = "v3.0.0-20200313102051-9f266ea9e77c",
     )
