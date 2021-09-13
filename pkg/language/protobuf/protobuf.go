@@ -216,7 +216,7 @@ func (pl *ProtobufLanguage) GenerateRules(args language.GenerateArgs) language.G
 			}
 			srcLabels[i] = srcLabel
 		}
-		lib := pc.NewOtherProtoLibrary(r, matchingFiles(files, srcLabels)...)
+		lib := pc.NewOtherProtoLibrary(args.File, r, matchingFiles(files, srcLabels)...)
 		protoLibraries = append(protoLibraries, lib)
 	}
 

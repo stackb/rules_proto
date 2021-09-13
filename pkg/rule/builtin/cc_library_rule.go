@@ -89,6 +89,10 @@ func (s *CcLibraryRule) Rule() *rule.Rule {
 	newRule.SetAttr("srcs", s.Srcs())
 	newRule.SetAttr("hdrs", s.Hdrs())
 
+	stripImportPrefix := s.Config.Library.StripImportPrefix()
+	if stripImportPrefix != "" {
+		newRule.SetAttr("strip_include_prefix", stripImportPrefix)
+	}
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)
