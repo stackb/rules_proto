@@ -1,8 +1,6 @@
 package builtin
 
 import (
-	"log"
-
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
@@ -21,7 +19,6 @@ func (p *CppPlugin) Name() string {
 
 // Configure implements part of the Plugin interface.
 func (p *CppPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
-	log.Println("sip", ctx.ProtoLibrary.StripImportPrefix())
 	return &protoc.PluginConfiguration{
 		Label: label.New("build_stack_rules_proto", "plugin/builtin", "cpp"),
 		Outputs: protoc.FlatMapFiles(
