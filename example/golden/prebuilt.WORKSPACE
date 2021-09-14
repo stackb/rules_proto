@@ -30,9 +30,3 @@ gazelle_dependencies()
 load("@build_stack_rules_proto//deps:prebuilt_deps.bzl", "prebuilt_deps")
 
 prebuilt_deps()
-
-# == rules_proto ==
-
-load("@rules_proto//proto:repositories.bzl", "rules_proto_toolchains")
-
-rules_proto_toolchains()

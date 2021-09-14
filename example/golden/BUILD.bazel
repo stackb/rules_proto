@@ -32,49 +32,50 @@ gazelle_testdata_example(
 gazelle_testdata_example(
     name = "java",
     srcs = glob(["testdata/java/*"]),
-    workspace_template = "builtin.WORKSPACE",
+    tags = ["manual"],
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "python",
     srcs = glob(["testdata/python/*"]),
-    workspace_template = "builtin.WORKSPACE",
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "ruby",
     srcs = glob(["testdata/ruby/*"]),
-    workspace_template = "builtin.WORKSPACE",
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "csharp",
     srcs = glob(["testdata/csharp/*"]),
-    workspace_template = "builtin.WORKSPACE",
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "objc",
     srcs = glob(["testdata/objc/*"]),
-    workspace_template = "builtin.WORKSPACE",
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "commonjs",
     srcs = glob(["testdata/commonjs/*"]),
-    workspace_template = "builtin.WORKSPACE",
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "closurejs",
     srcs = glob(["testdata/closurejs/*"]),
-    workspace_template = "builtin.WORKSPACE",
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "gogo",
     srcs = glob(["testdata/gogo/*"]),
-    workspace_template = "builtin.WORKSPACE",
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 filegroup(
