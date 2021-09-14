@@ -20,6 +20,7 @@ proto_library(
 
 proto_compile(
     name = "example_java_compile",
+    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example.srcjar"},
     outputs = ["example.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
     proto = "example_proto",
