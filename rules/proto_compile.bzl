@@ -275,7 +275,7 @@ def _proto_compile_impl(ctx):
         tools = tools,
     )
 
-    if verbose and False:
+    if verbose and False:  # enable True for developer-level debugging
         for f in inputs:
             # buildifier: disable=print
             print("INPUT:", f.path)

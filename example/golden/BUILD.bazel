@@ -32,8 +32,9 @@ gazelle_testdata_example(
 gazelle_testdata_example(
     name = "java",
     srcs = glob(["testdata/java/*"]),
-    tags = ["manual"],
-    workspace_template = "prebuilt.WORKSPACE",
+    # TODO: investigate java does not PASS with the prebuilt toolchain protoc.
+    # Perhaps the version is too old?
+    workspace_template = "builtin.WORKSPACE",
 )
 
 gazelle_testdata_example(
