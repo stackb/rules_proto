@@ -52,3 +52,9 @@ proto_compile(
     proto = "example_routeguide_proto",
     verbose = True,
 )
+
+java_library(
+    name = "example_routeguide_java_library",
+    srcs = ["example_routeguide.srcjar"],
+    deps = ["@com_google_protobuf//:protobuf_java"],
+)
