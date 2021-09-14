@@ -1,10 +1,6 @@
 package builtin
 
 import (
-	"strings"
-
-	"github.com/bazelbuild/bazel-gazelle/config"
-	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -53,20 +49,6 @@ func (s *protoCcLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver: func(impl *CcLibraryRule, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
-			deps := impl.Deps()
-
-			for _, d := range impl.Config.Library.Deps() {
-				if strings.HasPrefix(d, "@com_google_protobuf//") {
-					continue
-				}
-				d = strings.TrimSuffix(d, "_proto")
-				deps = append(deps, d+ProtoCcLibraryRuleSuffix)
-			}
-
-			if len(deps) > 0 {
-				r.SetAttr("deps", deps)
-			}
-		},
+		Resolver:       ResolveWithSuffix(ProtoCcLibraryRuleSuffix),
 	}
 }

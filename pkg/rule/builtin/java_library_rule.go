@@ -11,17 +11,16 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
-var ccLibraryKindInfo = rule.KindInfo{
+var javaLibraryKindInfo = rule.KindInfo{
 	MergeableAttrs: map[string]bool{
 		"srcs":       true,
-		"hdrs":       true,
 		"deps":       true,
 		"visibility": true,
 	},
 }
 
-// CcLibraryRule implements RuleProvider for 'cc_library'-derived rules.
-type CcLibraryRule struct {
+// JavaLibraryRule implements RuleProvider for 'cc_library'-derived rules.
+type JavaLibraryRule struct {
 	KindName       string
 	RuleNameSuffix string
 	Outputs        []string
@@ -31,44 +30,33 @@ type CcLibraryRule struct {
 }
 
 // Kind implements part of the ruleProvider interface.
-func (s *CcLibraryRule) Kind() string {
+func (s *JavaLibraryRule) Kind() string {
 	return s.KindName
 }
 
 // Name implements part of the ruleProvider interface.
-func (s *CcLibraryRule) Name() string {
+func (s *JavaLibraryRule) Name() string {
 	return s.Config.Library.BaseName() + s.RuleNameSuffix
 }
 
 // Srcs computes the srcs list for the rule.
-func (s *CcLibraryRule) Srcs() []string {
+func (s *JavaLibraryRule) Srcs() []string {
 	srcs := make([]string, 0)
 	for _, output := range s.Outputs {
-		if strings.HasSuffix(output, ".cc") {
+		if strings.HasSuffix(output, ".srcjar") {
 			srcs = append(srcs, derel(s.Config.Rel, output))
 		}
 	}
 	return srcs
 }
 
-// Hdrs computes the hdrs list for the rule.
-func (s *CcLibraryRule) Hdrs() []string {
-	hdrs := make([]string, 0)
-	for _, output := range s.Outputs {
-		if strings.HasSuffix(output, ".h") {
-			hdrs = append(hdrs, derel(s.Config.Rel, output))
-		}
-	}
-	return hdrs
-}
-
 // Deps computes the deps list for the rule.
-func (s *CcLibraryRule) Deps() []string {
+func (s *JavaLibraryRule) Deps() []string {
 	return s.RuleConfig.GetDeps()
 }
 
 // Visibility implements part of the ruleProvider interface.
-func (s *CcLibraryRule) Visibility() []string {
+func (s *JavaLibraryRule) Visibility() []string {
 	visibility := make([]string, 0)
 	for k, want := range s.RuleConfig.Visibility {
 		if !want {
@@ -81,11 +69,10 @@ func (s *CcLibraryRule) Visibility() []string {
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *CcLibraryRule) Rule() *rule.Rule {
+func (s *JavaLibraryRule) Rule() *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	newRule.SetAttr("srcs", s.Srcs())
-	newRule.SetAttr("hdrs", s.Hdrs())
 
 	stripImportPrefix := s.Config.Library.StripImportPrefix()
 	if stripImportPrefix != "" {
@@ -100,16 +87,9 @@ func (s *CcLibraryRule) Rule() *rule.Rule {
 }
 
 // Resolve implements part of the RuleProvider interface.
-func (s *CcLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func (s *JavaLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
 	if s.Resolver == nil {
 		return
 	}
 	s.Resolver(s, s.Config, c, r, importsRaw, from)
-}
-
-func derel(rel string, filename string) string {
-	if !strings.HasPrefix(filename, rel) {
-		return filename
-	}
-	return filename[len(rel)+1:] // +1 for slash separator
 }
