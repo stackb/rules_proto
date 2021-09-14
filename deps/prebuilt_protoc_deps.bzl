@@ -13,7 +13,6 @@ def prebuilt_protoc_deps():
     prebuilt_protoc_osx()  # via <TOP>
     prebuilt_protoc_windows()  # via <TOP>
 
-
 def prebuilt_protoc_linux():
     _maybe(
         http_archive,
