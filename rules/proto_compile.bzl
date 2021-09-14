@@ -277,16 +277,22 @@ def _proto_compile_impl(ctx):
 
     if verbose and False:
         for f in inputs:
+            # buildifier: disable=print
             print("INPUT:", f.path)
         for f in tools:
+            # buildifier: disable=print
             print("TOOL:", f.path)
         for f in protos:
+            # buildifier: disable=print
             print("PROTO:", f.path)
         for f in outputs:
+            # buildifier: disable=print
             print("EXPECTED OUTPUT:", f.path)
         for a in replaced_args:
+            # buildifier: disable=print
             print("ARG:", a)
         for c in commands:
+            # buildifier: disable=print
             print("COMMAND:", c)
 
     return [

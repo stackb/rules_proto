@@ -43,3 +43,12 @@ proto_grpc_cc_library(
         "@com_github_grpc_grpc//:grpc++_reflection",
     ],
 )
+
+proto_compile(
+    name = "example_routeguide_java_compile",
+    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/routeguide/example_routeguide.srcjar"},
+    outputs = ["example_routeguide.srcjar"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
+    proto = "example_routeguide_proto",
+    verbose = True,
+)

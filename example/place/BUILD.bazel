@@ -42,3 +42,11 @@ proto_grpc_cc_library(
         "@com_github_grpc_grpc//:grpc++_reflection",
     ],
 )
+
+proto_compile(
+    name = "place_java_compile",
+    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/place/place.srcjar"},
+    outputs = ["place.srcjar"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
+    proto = "place_proto",
+)

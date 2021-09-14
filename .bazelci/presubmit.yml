@@ -1,7 +1,6 @@
 ---
 buildifier:
   version: 4.0.1
-  warnings: "-print"
 bazel: 4.0.0
 tasks:
   default_workspace_ubuntu1804:
