@@ -2,36 +2,40 @@ workspace(name = "build_stack_rules_proto")
 
 # gazelle:repo bazel_gazelle
 
-# ==================================================
-# Foundational
-# ==================================================
-#
-load(
-    "//:deps.bzl",
-    "bazel_gazelle",
-    "build_bazel_rules_swift",
-    "com_github_grpc_grpc",
-    "io_bazel_rules_go",
-    "io_grpc_grpc_java",
-    "rules_jvm_external",
-)
+# ----------------------------------------------------
+# Toolchain-Related
+# ----------------------------------------------------
 
-io_bazel_rules_go()
+register_toolchains("//toolchain:standard")
 
-bazel_gazelle()
+# ----------------------------------------------------
+# Top-Level Dependency Trees
+# ----------------------------------------------------
 
-com_github_grpc_grpc()
+load("//deps:core_deps.bzl", "core_deps")
 
-build_bazel_rules_swift()
+core_deps()
 
-io_grpc_grpc_java()
+load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
-rules_jvm_external()
+protobuf_core_deps()
 
-# ==================================================
+load("//deps:prebuilt_deps.bzl", "prebuilt_deps")
+
+prebuilt_deps()
+
+load("//deps:grpc_core_deps.bzl", "grpc_core_deps")
+
+grpc_core_deps()
+
+load("//deps:grpc_java_deps.bzl", "grpc_java_deps")
+
+grpc_java_deps()
+
+# ----------------------------------------------------
 # Go
-# ==================================================
-#
+# ----------------------------------------------------
+
 load(
     "@io_bazel_rules_go//go:deps.bzl",
     "go_register_toolchains",
@@ -42,6 +46,10 @@ go_rules_dependencies()
 
 go_register_toolchains(version = "1.16.2")
 
+# ----------------------------------------------------
+# Gazelle
+# ----------------------------------------------------
+
 load(
     "@bazel_gazelle//:deps.bzl",
     "gazelle_dependencies",
@@ -49,37 +57,14 @@ load(
 
 gazelle_dependencies()
 
-# ==================================================
-# Go Tool Deps
-# ==================================================
-
 load("//:go_deps.bzl", "go_deps")
 
 # gazelle:repository_macro go_deps.bzl%go_deps
 go_deps()
 
-# # ==================================================
-# # Protobuf Core
-# # ==================================================
-# #
-load("//deps:protobuf_deps.bzl", "protobuf_deps")
-
-protobuf_deps()
-
-load("//deps:prebuilt_deps.bzl", "prebuilt_deps")
-
-prebuilt_deps()
-
-# # load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
-
-# # rules_proto_dependencies()
-
-# # rules_proto_toolchains()
-
-# #
-# # Toolchains
-# #
-register_toolchains("//toolchain:standard")
+# ----------------------------------------------------
+# Core gRPC
+# ----------------------------------------------------
 
 load(
     "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
@@ -88,7 +73,9 @@ load(
 
 grpc_deps()
 
-### Java
+# ----------------------------------------------------
+# Java
+# ----------------------------------------------------
 
 load(
     "@rules_jvm_external//:defs.bzl",
@@ -118,6 +105,10 @@ load(
 compat_repositories()
 
 grpc_java_repositories()
+
+# ----------------------------------------------------
+# END
+# ----------------------------------------------------
 
 # load("//rules:py_grpc_compile_deps.bzl", "py_grpc_compile_deps")
 

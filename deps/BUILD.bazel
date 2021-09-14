@@ -2,7 +2,7 @@ load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
 load("@build_stack_rules_proto//rules:depsgen.bzl", "depsgen")
 
 depsgen(
-    name = "core",
+    name = "core_deps",
     deps = [
         ":bazel_gazelle",
         ":rules_proto",
@@ -10,13 +10,18 @@ depsgen(
 )
 
 depsgen(
-    name = "protobuf",
+    name = "protobuf_core",
     deps = ["//deps:com_google_protobuf"],
 )
 
 depsgen(
-    name = "grpc",
+    name = "grpc_core",
     deps = ["//deps:com_github_grpc_grpc"],
+)
+
+depsgen(
+    name = "grpc_java",
+    deps = ["//deps:io_grpc_grpc_java"],
 )
 
 # Release: v0.28.0
@@ -153,6 +158,7 @@ proto_dependency(
     deps = [
         ":build_bazel_rules_swift",
         ":com_google_protobuf",
+        ":rules_jvm_external",
     ],
 )
 
@@ -180,13 +186,45 @@ proto_dependency(
     urls = ["https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"],
 )
 
+# Release: v1.35.0
+# Commit: master
+# Date: 2021-01-12 23:05:49 +0000 UTC
+# URL: https://github.com/grpc/grpc-java/releases/tag/v1.35.0
+# Branch: master
+# Commit: 7f7821c616598ce4e33d2045c5641b2348728cb8
+# Date: 2021-02-10 00:56:26 +0000 UTC
+# URL: https://github.com/grpc/grpc-java/commit/7f7821c616598ce4e33d2045c5641b2348728cb8
+#
+# interop-testing: add fake altsHandshakerService for test (#7847)
+# Size: 2337953 (2.3 MB)
+proto_dependency(
+    name = "io_grpc_grpc_java",
+    repository_rule = "http_archive",
+    sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
+    strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
+    urls = ["https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz"],
+    deps = [
+        ":rules_jvm_external",
+    ],
+)
+
+proto_dependency(
+    name = "rules_jvm_external",
+    repository_rule = "http_archive",
+    sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
+    strip_prefix = "rules_jvm_external-4.0",
+    urls = ["https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip"],
+)
+
 filegroup(
     name = "all_files",
     srcs = [
         "BUILD.bazel",
         "core_deps.bzl",
+        "grpc_core_deps.bzl",
+        "grpc_java_deps.bzl",
         "prebuilt_deps.bzl",
-        "protobuf_deps.bzl",
+        "protobuf_core_deps.bzl",
     ],
     visibility = ["//:__pkg__"],
 )

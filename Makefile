@@ -8,8 +8,10 @@ tidy: deps
 .PHONY: deps
 deps:
 	bazel build //deps:*
-	cp ./bazel-bin/deps/core_deps.bzl deps/core_deps.bzl
-	cp ./bazel-bin/deps/protobuf_deps.bzl deps/protobuf_deps.bzl
+	cp -f ./bazel-bin/deps/core_deps.bzl deps/core_deps.bzl
+	cp -f ./bazel-bin/deps/protobuf_core_deps.bzl deps/protobuf_core_deps.bzl
+	cp -f ./bazel-bin/deps/grpc_core_deps.bzl deps/grpc_core_deps.bzl
+	cp -f ./bazel-bin/deps/grpc_java_deps.bzl deps/grpc_java_deps.bzl
 
 .PHONY: site
 site:

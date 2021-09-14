@@ -2,17 +2,32 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 
 def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def protobuf_core_deps():
+def grpc_core_deps():
+    build_bazel_rules_swift()  # via com_github_grpc_grpc
     bazel_skylib()  # via com_google_protobuf
     rules_python()  # via com_google_protobuf
     zlib()  # via com_google_protobuf
-    com_google_protobuf()  # via <TOP>
+    com_google_protobuf()  # via com_github_grpc_grpc
+    rules_jvm_external()  # via com_github_grpc_grpc
+    com_github_grpc_grpc()  # via <TOP>
+
+
+def build_bazel_rules_swift():
+    _maybe(
+        http_archive,
+        name = "build_bazel_rules_swift",
+        sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
+        strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
+        urls = [
+            "https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz",
+        ],
+    )
 
 def bazel_skylib():
     _maybe(
@@ -57,5 +72,27 @@ def com_google_protobuf():
         strip_prefix = "protobuf-3.14.0",
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+        ],
+    )
+
+def rules_jvm_external():
+    _maybe(
+        http_archive,
+        name = "rules_jvm_external",
+        sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
+        strip_prefix = "rules_jvm_external-4.0",
+        urls = [
+            "https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip",
+        ],
+    )
+
+def com_github_grpc_grpc():
+    _maybe(
+        http_archive,
+        name = "com_github_grpc_grpc",
+        sha256 = "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b",
+        strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
+        urls = [
+            "https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz",
         ],
     )

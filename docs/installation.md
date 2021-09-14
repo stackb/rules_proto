@@ -45,14 +45,14 @@ gazelle_dependencies()
 
 # == Protobuf ==
 
-load("@build_stack_rules_proto//deps:protobuf_deps.bzl", "protobuf_deps")
+load("@build_stack_rules_proto//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
-protobuf_deps()
+protobuf_core_deps()
 ```
 
 > NOTE: If you already have `rules_go` and `bazel_gazelle` in your workspace,
 > you can skip the `core_deps`.  If you already have `com_google_protobuf`, you
-> can skip `protobuf_deps`.
+> can skip `protobuf_core_deps`.
 
 ## `./BUILD.bazel`
 

@@ -27,9 +27,9 @@ local_repository(
 
 register_toolchains("@build_stack_rules_proto//toolchain:standard")
 
-load("@build_stack_rules_proto//deps:protobuf_deps.bzl", "protobuf_deps")
+load("@build_stack_rules_proto//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
-protobuf_deps()
+protobuf_core_deps()
 
 -- BUILD.bazel --
 # empty file

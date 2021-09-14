@@ -129,8 +129,8 @@ gazelle_dependencies()
 
 # == Protobuf ==
 
-load("@build_stack_rules_proto//deps:protobuf_deps.bzl", "protobuf_deps")
+load("@build_stack_rules_proto//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
-protobuf_deps()
+protobuf_core_deps()
 ~~~
 
