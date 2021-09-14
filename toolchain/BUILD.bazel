@@ -1,27 +1,59 @@
 load(":toolchain.bzl", "protoc")
 
 toolchain_type(
-    name = "toolchain_type",
-    visibility = ["//visibility:public"],
-)
-
-protoc(
-    name = "protoc",
+    name = "stackb_rules_proto",
     visibility = ["//visibility:public"],
 )
 
 toolchain(
-    name = "toolchain",
-    toolchain = ":protoc",
-    toolchain_type = ":toolchain_type",
+    name = "standard",
+    toolchain = ":compiled",
+    toolchain_type = ":stackb_rules_proto",
+)
+
+toolchain(
+    name = "prebuilt",
+    toolchain = ":precompiled",
+    toolchain_type = ":stackb_rules_proto",
+)
+
+protoc(
+    name = "compiled",
+    tool = "@com_google_protobuf//:protoc",
+    visibility = ["//visibility:public"],
+)
+
+protoc(
+    name = "precompiled",
+    tool = ":protoc.exe",
+    visibility = ["//visibility:public"],
+)
+
+genrule(
+    name = "protoc",
+    srcs = select({
+        "@bazel_tools//src/conditions:darwin": [
+            "@protoc_bin_osx//:protoc",
+        ],
+        "@bazel_tools//src/conditions:windows": [
+            "@protoc_bin_windows//:protoc",
+        ],
+        "//conditions:default": [
+            "@protoc_bin//:protoc",
+        ],
+    }),
+    outs = ["protoc.exe"],
+    cmd = "cp $< $@",
+    executable = True,
+    visibility = ["//visibility:public"],
 )
 
 filegroup(
     name = "all_files",
     srcs = [
         "BUILD.bazel",
+        "dummy.txt",
         "toolchain.bzl",
-        "z.txt",
     ],
     visibility = ["//:__pkg__"],
 )

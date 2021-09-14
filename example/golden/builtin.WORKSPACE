@@ -3,7 +3,7 @@ local_repository(
     path = "../build_stack_rules_proto",
 )
 
-register_toolchains("@build_stack_rules_proto//toolchain")
+register_toolchains("@build_stack_rules_proto//toolchain:standard")
 
 # == Externals ==
 

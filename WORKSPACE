@@ -39,13 +39,20 @@ rules_jvm_external()
 # Go
 # ==================================================
 #
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+load(
+    "@io_bazel_rules_go//go:deps.bzl",
+    "go_register_toolchains",
+    "go_rules_dependencies",
+)
 
 go_rules_dependencies()
 
 go_register_toolchains(version = "1.16.2")
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load(
+    "@bazel_gazelle//:deps.bzl",
+    "gazelle_dependencies",
+)
 
 gazelle_dependencies()
 
@@ -79,16 +86,27 @@ zlib()
 # #
 # # Toolchains
 # #
-register_toolchains("//toolchain")
+register_toolchains("//toolchain:standard")
 
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+load(
+    "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
+    "grpc_deps",
+)
 
 grpc_deps()
 
 ### Java
 
-load("@rules_jvm_external//:defs.bzl", "maven_install")
-load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS", "grpc_java_repositories")
+load(
+    "@rules_jvm_external//:defs.bzl",
+    "maven_install",
+)
+load(
+    "@io_grpc_grpc_java//:repositories.bzl",
+    "IO_GRPC_GRPC_JAVA_ARTIFACTS",
+    "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS",
+    "grpc_java_repositories",
+)
 
 maven_install(
     artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
@@ -99,7 +117,10 @@ maven_install(
     ],
 )
 
-load("@maven//:compat.bzl", "compat_repositories")
+load(
+    "@maven//:compat.bzl",
+    "compat_repositories",
+)
 
 compat_repositories()
 

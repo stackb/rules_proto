@@ -2,6 +2,15 @@
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+# Generated content for @protoc_bin_{osx}
+_protoc_bin_build = """
+filegroup(
+    name = "protoc",
+    srcs = ["bin/protoc"],
+    visibility = ["//visibility:public"],
+)
+"""
+
 def maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
@@ -21,19 +30,17 @@ def com_google_protobuf():
     )
 
 def io_bazel_rules_go():
-    # Release: v0.27.0
-    # TargetCommitish: release-0.27
-    # Date: 2021-03-17 18:52:49 +0000 UTC
-    # URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.27.0
-    # Size: 634757 (635 kB)
+    # Release: v0.28.0
+    # TargetCommitish: release-0.28
+    # Date: 2021-07-06 23:21:45 +0000 UTC
+    # URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.28.0
+    # Size: 687092 (687 kB)
     maybe(
         http_archive,
         name = "io_bazel_rules_go",
-        sha256 = "69de5c704a05ff37862f7e0f5534d4f479418afc21806c887db544a316f3cb6b",
-        urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
-            "https://github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
-        ],
+        sha256 = "38171ce619b2695fa095427815d52c2a115c716b15f4cd0525a88c376113f584",
+        strip_prefix = "rules_go-0.28.0",
+        urls = ["https://github.com/bazelbuild/rules_go/archive/v0.28.0.tar.gz"],
     )
 
 def bazel_gazelle():
@@ -311,4 +318,20 @@ def rules_cc():
         sha256 = "cb8ce8a25464b2a8536450971ad1b45ee309491c1f5e052a611b9e249cfdd35d",
         strip_prefix = "rules_cc-40548a2974f1aea06215272d9c2b47a14a24e556",
         urls = ["https://github.com/bazelbuild/rules_cc/archive/40548a2974f1aea06215272d9c2b47a14a24e556.tar.gz"],
+    )
+
+def prebuilt_protoc_361():
+    maybe(
+        http_archive,
+        name = "protoc_bin",
+        sha256 = "6003de742ea3fcf703cfec1cd4a3380fd143081a2eb0e559065563496af27807",
+        urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip"],
+        build_file_content = _protoc_bin_build,
+    )
+    maybe(
+        http_archive,
+        name = "protoc_bin_osx",
+        sha256 = "0decc6ce5beed07f8c20361ddeb5ac7666f09cf34572cca530e16814093f9c0c",
+        urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-osx-x86_64.zip"],
+        build_file_content = _protoc_bin_build,
     )

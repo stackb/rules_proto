@@ -2,18 +2,14 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 
 # ----------------------------------------------------
-# Buildifier Configuration
+# Buildifier
 # ----------------------------------------------------
 buildifier(name = "buildifier")
 
 # ----------------------------------------------------
-# Base Gazelle Configuration
+# Gazelle
 # ----------------------------------------------------
 # gazelle:prefix github.com/stackb/rules_proto
-
-# ----------------------------------------------------
-# Internal Resolve Directives
-# ----------------------------------------------------
 # gazelle:resolve go github.com/bazelbuild/buildtools/build @com_github_bazelbuild_buildtools//build:go_default_library
 
 gazelle_binary(
@@ -43,6 +39,10 @@ gazelle(
     ],
     command = "update-repos",
 )
+
+# ----------------------------------------------------
+# Test-Related
+# ----------------------------------------------------
 
 filegroup(
     name = "all_files",

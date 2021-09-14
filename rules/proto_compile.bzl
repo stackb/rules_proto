@@ -335,5 +335,5 @@ proto_compile = rule(
             doc = "The verbosity flag.",
         ),
     },
-    toolchains = ["@build_stack_rules_proto//toolchain:toolchain_type"],
+    toolchains = ["@build_stack_rules_proto//toolchain:stackb_rules_proto"],
 )

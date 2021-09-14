@@ -9,9 +9,8 @@ def _protoc_impl(ctx):
 protoc = rule(
     implementation = _protoc_impl,
     attrs = {
-        "protoc": attr.label(
+        "tool": attr.label(
             doc = "The protocol compiler tool",
-            default = "@com_google_protobuf//:protoc",
             executable = True,
             cfg = "exec",
         ),

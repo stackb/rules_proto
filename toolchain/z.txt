@@ -1,1 +1,0 @@
-https://github.com/bazelbuild/rules_go/pull/2887
