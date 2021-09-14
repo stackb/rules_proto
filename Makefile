@@ -1,5 +1,5 @@
 .PHONY: tidy
-tidy:
+tidy: deps
 	bazel run @go_sdk//:bin/go -- mod tidy
 	bazel run //:update_go_deps
 	bazel run //:buildifier

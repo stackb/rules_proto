@@ -2,7 +2,7 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 
 def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
@@ -17,9 +17,10 @@ def io_bazel_rules_go():
     _maybe(
         http_archive,
         name = "io_bazel_rules_go",
+        sha256 = "38171ce619b2695fa095427815d52c2a115c716b15f4cd0525a88c376113f584",
+        strip_prefix = "rules_go-0.28.0",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
-            "https://github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
+            "https://github.com/bazelbuild/rules_go/archive/v0.28.0.tar.gz",
         ],
     )
 

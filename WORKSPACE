@@ -9,7 +9,6 @@ workspace(name = "build_stack_rules_proto")
 load(
     "//:deps.bzl",
     "bazel_gazelle",
-    "bazel_skylib",
     "build_bazel_rules_swift",
     "com_github_grpc_grpc",
     "io_bazel_rules_go",
@@ -20,8 +19,6 @@ load(
 io_bazel_rules_go()
 
 bazel_gazelle()
-
-bazel_skylib()
 
 com_github_grpc_grpc()
 
