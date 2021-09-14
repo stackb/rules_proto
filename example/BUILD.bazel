@@ -20,6 +20,7 @@
 # gazelle:proto_plugin java implementation builtin:java
 # gazelle:proto_rule proto_java_library implementation stackb:rules_proto:proto_java_library
 # gazelle:proto_rule proto_java_library deps @com_google_protobuf//:protobuf_java
+# gazelle:proto_rule proto_java_library visibility //visibility:public
 # gazelle:proto_language java plugin java
 # gazelle:proto_language java rule proto_compile
 # gazelle:proto_language java rule proto_java_library

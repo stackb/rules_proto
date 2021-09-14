@@ -1,7 +1,6 @@
 package builtin
 
 import (
-	"fmt"
 	"path"
 
 	"github.com/bazelbuild/bazel-gazelle/label"

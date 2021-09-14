@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@build_stack_rules_proto//rules/cc:proto_grpc_cc_library.bzl", "proto_grpc_cc_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -46,4 +47,11 @@ proto_compile(
     outputs = ["example_thing.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
     proto = "example_thing_proto",
+)
+
+proto_java_library(
+    name = "example_thing_java_library",
+    srcs = ["example_thing.srcjar"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf_java"],
 )

@@ -74,10 +74,6 @@ func (s *JavaLibraryRule) Rule() *rule.Rule {
 
 	newRule.SetAttr("srcs", s.Srcs())
 
-	stripImportPrefix := s.Config.Library.StripImportPrefix()
-	if stripImportPrefix != "" {
-		newRule.SetAttr("strip_include_prefix", stripImportPrefix)
-	}
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)

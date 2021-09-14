@@ -43,7 +43,7 @@ func (s *protoJavaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *proto
 	if len(outputs) == 0 {
 		return nil
 	}
-	return &CcLibraryRule{
+	return &JavaLibraryRule{
 		KindName:       ProtoJavaLibraryRuleName,
 		RuleNameSuffix: ProtoJavaLibraryRuleSuffix,
 		Outputs:        outputs,
