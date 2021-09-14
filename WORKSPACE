@@ -12,13 +12,9 @@ load(
     "bazel_skylib",
     "build_bazel_rules_swift",
     "com_github_grpc_grpc",
-    "com_google_protobuf",
     "io_bazel_rules_go",
     "io_grpc_grpc_java",
     "rules_jvm_external",
-    "rules_proto",
-    "rules_python",
-    "zlib",
 )
 
 io_bazel_rules_go()
@@ -69,13 +65,13 @@ go_deps()
 # # Protobuf Core
 # # ==================================================
 # #
-rules_proto()
+load("//deps:protobuf_deps.bzl", "protobuf_deps")
 
-rules_python()
+protobuf_deps()
 
-com_google_protobuf()
+load("//deps:prebuilt_deps.bzl", "prebuilt_deps")
 
-zlib()
+prebuilt_deps()
 
 # # load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
 

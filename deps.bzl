@@ -319,19 +319,3 @@ def rules_cc():
         strip_prefix = "rules_cc-40548a2974f1aea06215272d9c2b47a14a24e556",
         urls = ["https://github.com/bazelbuild/rules_cc/archive/40548a2974f1aea06215272d9c2b47a14a24e556.tar.gz"],
     )
-
-def prebuilt_protoc_361():
-    maybe(
-        http_archive,
-        name = "protoc_bin",
-        sha256 = "6003de742ea3fcf703cfec1cd4a3380fd143081a2eb0e559065563496af27807",
-        urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip"],
-        build_file_content = _protoc_bin_build,
-    )
-    maybe(
-        http_archive,
-        name = "protoc_bin_osx",
-        sha256 = "0decc6ce5beed07f8c20361ddeb5ac7666f09cf34572cca530e16814093f9c0c",
-        urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-osx-x86_64.zip"],
-        build_file_content = _protoc_bin_build,
-    )

@@ -8,6 +8,7 @@ tasks:
     platform: ubuntu1804
     test_targets:
       - //pkg/...
+      - //example/toolchain/...
     test_flags:
       - --config=bazelci
   default_workspace_macos:

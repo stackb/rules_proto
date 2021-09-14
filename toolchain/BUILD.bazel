@@ -33,13 +33,13 @@ genrule(
     name = "protoc",
     srcs = select({
         "@bazel_tools//src/conditions:darwin": [
-            "@protoc_bin_osx//:protoc",
+            "@prebuilt_protoc_osx//:protoc",
         ],
         "@bazel_tools//src/conditions:windows": [
-            "@protoc_bin_windows//:protoc",
+            "@prebuilt_protoc_windows//:protoc",
         ],
         "//conditions:default": [
-            "@protoc_bin//:protoc",
+            "@prebuilt_protoc_linux//:protoc",
         ],
     }),
     outs = ["protoc.exe"],
@@ -52,7 +52,6 @@ filegroup(
     name = "all_files",
     srcs = [
         "BUILD.bazel",
-        "dummy.txt",
         "toolchain.bzl",
     ],
     visibility = ["//:__pkg__"],

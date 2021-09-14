@@ -187,6 +187,7 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "core_deps.bzl",
+        "prebuilt_deps.bzl",
         "protobuf_deps.bzl",
     ],
     visibility = ["//:__pkg__"],

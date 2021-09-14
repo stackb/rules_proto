@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go/tools/bazel_testing:def.bzl", "go_bazel_test")
+
+# gazelle:ignore
+
+go_bazel_test(
+    name = "standard_test",
+    srcs = ["standard_test.go"],
+    rule_files = ["//:all_files"],
+)
