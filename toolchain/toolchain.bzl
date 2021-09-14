@@ -2,8 +2,8 @@
 
 def _protoc_impl(ctx):
     return [platform_common.ToolchainInfo(
-        protoc_target = ctx.attr.protoc,
-        protoc_executable = ctx.executable.protoc,
+        protoc_target = ctx.attr.tool,
+        protoc_executable = ctx.executable.tool,
     )]
 
 protoc = rule(

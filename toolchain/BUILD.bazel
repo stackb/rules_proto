@@ -20,13 +20,11 @@ toolchain(
 protoc(
     name = "compiled",
     tool = "@com_google_protobuf//:protoc",
-    visibility = ["//visibility:public"],
 )
 
 protoc(
     name = "precompiled",
-    tool = ":protoc.exe",
-    visibility = ["//visibility:public"],
+    tool = ":protoc",
 )
 
 genrule(

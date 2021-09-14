@@ -37,7 +37,7 @@ def _ctx_replace_arg(ctx, arg):
 def get_protoc_executable(ctx):
     if ctx.file.protoc:
         return ctx.file.protoc
-    protoc_toolchain_info = ctx.toolchains[str(Label("//toolchain:toolchain_type"))]
+    protoc_toolchain_info = ctx.toolchains[str(Label("//toolchain:stackb_rules_proto"))]
     return protoc_toolchain_info.protoc_executable
 
 def _descriptor_proto_path(proto, proto_info):
