@@ -4,7 +4,9 @@ load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 # ----------------------------------------------------
 # Buildifier
 # ----------------------------------------------------
-buildifier(name = "buildifier")
+buildifier(
+    name = "buildifier",
+)
 
 # ----------------------------------------------------
 # Gazelle
