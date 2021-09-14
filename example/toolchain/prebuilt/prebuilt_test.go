@@ -17,9 +17,9 @@ local_repository(
 
 register_toolchains("@build_stack_rules_proto//toolchain:prebuilt")
 
-load("@build_stack_rules_proto//deps:prebuilt_deps.bzl", "prebuilt_deps")
+load("@build_stack_rules_proto//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
-prebuilt_deps()
+prebuilt_protoc_deps()
 
 -- BUILD.bazel --
 # empty file

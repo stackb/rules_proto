@@ -19,6 +19,7 @@ type Config struct {
 // The fields are a mashup of all possible fields from repository rules.
 type ProtoDependencyInfo struct {
 	BuildFile        string
+	BuildFileContent string
 	Name             string
 	Path             string
 	Label            string
@@ -27,7 +28,7 @@ type ProtoDependencyInfo struct {
 	StripPrefix      string
 	Urls             []string
 	WorkspaceSnippet string
-	Deps    []*ProtoDependencyInfo
+	Deps             []*ProtoDependencyInfo
 }
 
 // fromJSON constructs a Config struct from the given filename that contains a
@@ -48,7 +49,6 @@ func fromJSON(filename string) (*Config, error) {
 
 // collectDeps accumulates the transitive dependencies.
 func collectDeps(top []*ProtoDependencyInfo) (deps []*dependency) {
-
 	seen := make(map[string]bool)
 
 	var visit func(string, *ProtoDependencyInfo)

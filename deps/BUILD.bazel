@@ -15,6 +15,15 @@ depsgen(
 )
 
 depsgen(
+    name = "prebuilt_protoc",
+    deps = [
+        ":prebuilt_protoc_linux",
+        ":prebuilt_protoc_osx",
+        ":prebuilt_protoc_windows",
+    ],
+)
+
+depsgen(
     name = "grpc_core",
     deps = ["//deps:com_github_grpc_grpc"],
 )
@@ -216,6 +225,48 @@ proto_dependency(
     urls = ["https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip"],
 )
 
+proto_dependency(
+    name = "prebuilt_protoc_linux",
+    build_file_content = """
+filegroup(
+    name = "protoc",
+    srcs = ["bin/protoc"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "6003de742ea3fcf703cfec1cd4a3380fd143081a2eb0e559065563496af27807",
+    urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip"],
+)
+
+proto_dependency(
+    name = "prebuilt_protoc_osx",
+    build_file_content = """
+filegroup(
+    name = "protoc",
+    srcs = ["bin/protoc"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "0decc6ce5beed07f8c20361ddeb5ac7666f09cf34572cca530e16814093f9c0c",
+    urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-osx-x86_64.zip"],
+)
+
+proto_dependency(
+    name = "prebuilt_protoc_windows",
+    build_file_content = """
+filegroup(
+    name = "protoc",
+    srcs = ["bin/protoc.exe"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "0decc6ce5beed07f8c20361ddeb5ac7666f09cf34572cca530e16814093f9c0c",
+    urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-win32.zip"],
+)
+
 filegroup(
     name = "all_files",
     srcs = [
@@ -223,7 +274,7 @@ filegroup(
         "core_deps.bzl",
         "grpc_core_deps.bzl",
         "grpc_java_deps.bzl",
-        "prebuilt_deps.bzl",
+        "prebuilt_protoc_deps.bzl",
         "protobuf_core_deps.bzl",
     ],
     visibility = ["//:__pkg__"],

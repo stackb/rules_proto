@@ -12,6 +12,7 @@ deps:
 	cp -f ./bazel-bin/deps/protobuf_core_deps.bzl deps/protobuf_core_deps.bzl
 	cp -f ./bazel-bin/deps/grpc_core_deps.bzl deps/grpc_core_deps.bzl
 	cp -f ./bazel-bin/deps/grpc_java_deps.bzl deps/grpc_java_deps.bzl
+	cp -f ./bazel-bin/deps/prebuilt_protoc_deps.bzl deps/prebuilt_protoc_deps.bzl
 
 .PHONY: site
 site:

@@ -7,6 +7,7 @@ def _proto_dependency_impl(ctx):
     return [
         ProtoDependencyInfo(
             buildFile = ctx.attr.build_file,
+            buildFileContent = ctx.attr.build_file_content,
             deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
             label = str(ctx.label),
             name = ctx.attr.name,
@@ -24,6 +25,9 @@ proto_dependency = rule(
     attrs = {
         "build_file": attr.string(
             doc = "The build_file attribute for http_archive",
+        ),
+        "build_file_content": attr.string(
+            doc = "The build_file_content attribute for http_archive",
         ),
         "path": attr.string(
             doc = "The path attribute for local_repository",

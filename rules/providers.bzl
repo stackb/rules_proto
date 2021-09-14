@@ -33,6 +33,7 @@ ProtoDependencyInfo = provider(
     "Provider for a single external dependency",
     fields = {
         "buildFile": "The build_file of this dependency",
+        "buildFileContent": "The build_file_content of this dependency",
         "deps": "The list of deps of this dependency  list<ProtoDependencyInfo>",
         "label": "The proto dependency label string",
         "name": "The proto dependency name (should correspond to the workspace name",

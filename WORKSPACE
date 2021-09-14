@@ -20,9 +20,9 @@ load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
 protobuf_core_deps()
 
-load("//deps:prebuilt_deps.bzl", "prebuilt_deps")
+load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
-prebuilt_deps()
+prebuilt_protoc_deps()
 
 load("//deps:grpc_core_deps.bzl", "grpc_core_deps")
 

@@ -30,6 +30,7 @@ def {{ .Dep.Name }}():
         urls = [{{ range .Dep.Urls }}
             "{{ . }}",{{ end }}
         ],{{ end }}{{ if .Dep.BuildFile }}
-        build_file = "{{ .Dep.BuildFile }}",{{ end }}
+        build_file = "{{ .Dep.BuildFile }}",{{ end }}{{ if .Dep.BuildFileContent }}
+        build_file_content = """{{ .Dep.BuildFileContent }}""",{{ end }}
     ){{ end }}{{ end }}
 `
