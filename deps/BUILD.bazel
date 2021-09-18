@@ -17,7 +17,6 @@ depsgen(
 depsgen(
     name = "scala",
     deps = [
-        # ":com_github_scalapb_scalapb",
         ":github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip",
         ":github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip",
         ":io_bazel_rules_scala",
@@ -295,33 +294,6 @@ proto_dependency(
     deps = [
         ":bazel_skylib",
     ],
-)
-
-# Branch: master
-# Commit: 741fb57675d78dac689f823902ded4f995fac929
-# Date: 2021-09-15 03:35:40 +0000 UTC
-# URL: https://github.com/scalapb/ScalaPB/commit/741fb57675d78dac689f823902ded4f995fac929
-#
-# Update silencer-lib, silencer-plugin to 1.7.6 (#1232)
-# Size: 881755 (882 kB)
-proto_dependency(
-    name = "com_github_scalapb_scalapb",
-    build_file_content = """
-java_import(
-    name = "compilerplugin",
-    jars = ["com.thesamet.scalapb.compilerplugin-0.8.0.jar"],
-    visibility = ["//visibility:public"],
-)
-java_import(
-    name = "scala-library",
-    jars = ["org.scala-lang.scala-library-2.11.12.jar"],
-    visibility = ["//visibility:public"],
-)
-""",
-    repository_rule = "http_archive",
-    sha256 = "4ef871f0b9c3d8d6194c2f818ba99640291b23c14a8ff1554462c37692fdaee0",
-    strip_prefix = "ScalaPB-741fb57675d78dac689f823902ded4f995fac929",
-    urls = ["https://github.com/scalapb/ScalaPB/archive/741fb57675d78dac689f823902ded4f995fac929.tar.gz"],
 )
 
 # Last-Modified: Fri, 06 Aug 2021 01:06:35 GMT
