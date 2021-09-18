@@ -14,8 +14,8 @@ func TestJavaPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "java implementation builtin:java",
 			),
+			PluginName: "java",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("java"),
 				plugintest.WithOutputs("test.srcjar"),
 			),
 		},
@@ -24,8 +24,8 @@ func TestJavaPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "java implementation builtin:java",
 			),
+			PluginName: "java",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("java"),
 				plugintest.WithOutputs("test.srcjar"),
 			),
 		},
@@ -35,8 +35,8 @@ func TestJavaPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "java implementation builtin:java",
 			),
+			PluginName: "java",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("java"),
 				plugintest.WithOutputs("src/main/java/foo/test.srcjar"),
 			),
 		},

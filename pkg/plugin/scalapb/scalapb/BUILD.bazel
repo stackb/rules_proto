@@ -1,15 +1,12 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "builtin",
+    name = "scalapb",
     srcs = [
-        "cc_library_rule.go",
-        "grpc_cc_library.go",
-        "java_library_rule.go",
-        "proto_cc_library.go",
-        "proto_java_library.go",
+        "protoc_gen_scala.go",
+        "scala_library.go",
     ],
-    importpath = "github.com/stackb/rules_proto/pkg/rule/builtin",
+    importpath = "github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",

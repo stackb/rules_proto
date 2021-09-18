@@ -13,6 +13,7 @@ deps:
 	cp -f ./bazel-bin/deps/grpc_core_deps.bzl deps/grpc_core_deps.bzl
 	cp -f ./bazel-bin/deps/grpc_java_deps.bzl deps/grpc_java_deps.bzl
 	cp -f ./bazel-bin/deps/prebuilt_protoc_deps.bzl deps/prebuilt_protoc_deps.bzl
+	cp -f ./bazel-bin/deps/scala_deps.bzl deps/scala_deps.bzl
 	chmod 0644 deps/*.bzl
 	
 .PHONY: site

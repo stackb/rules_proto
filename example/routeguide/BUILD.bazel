@@ -1,12 +1,26 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
-load("@build_stack_rules_proto//rules/cc:proto_grpc_cc_library.bzl", "proto_grpc_cc_library")
+load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
+load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 proto_library(
     name = "example_routeguide_proto",
     srcs = ["routeguide.proto"],
     visibility = ["//visibility:public"],
+)
+
+grpc_cc_library(
+    name = "example_routeguide_grpc_cc_library",
+    srcs = ["routeguide.grpc.pb.cc"],
+    hdrs = ["routeguide.grpc.pb.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":example_routeguide_cc_library",
+        "@com_github_grpc_grpc//:grpc++",
+        "@com_github_grpc_grpc//:grpc++_reflection",
+    ],
 )
 
 proto_cc_library(
@@ -32,29 +46,32 @@ proto_compile(
     proto = "example_routeguide_proto",
 )
 
-proto_grpc_cc_library(
-    name = "example_routeguide_grpc_cc_library",
-    srcs = ["routeguide.grpc.pb.cc"],
-    hdrs = ["routeguide.grpc.pb.h"],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":example_routeguide_cc_library",
-        "@com_github_grpc_grpc//:grpc++",
-        "@com_github_grpc_grpc//:grpc++_reflection",
-    ],
-)
-
 proto_compile(
     name = "example_routeguide_java_compile",
     outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/routeguide/example_routeguide.srcjar"},
     outputs = ["example_routeguide.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
     proto = "example_routeguide_proto",
-    verbose = True,
 )
 
-java_library(
+proto_java_library(
     name = "example_routeguide_java_library",
     srcs = ["example_routeguide.srcjar"],
+    visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:protobuf_java"],
+)
+
+grpc_scala_library(
+    name = "example_routeguide_scala_library",
+    srcs = ["example_routeguide_scala.srcjar"],
+    visibility = ["//visibility:public"],
+    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12"],
+)
+
+proto_compile(
+    name = "example_routeguide_scala_compile",
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
+    outputs = ["example_routeguide_scala.srcjar"],
+    plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
+    proto = "example_routeguide_proto",
 )

@@ -14,8 +14,8 @@ func TestJsClosurePlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "js implementation builtin:js:closure",
 			),
+			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("js"),
 				plugintest.WithOutputs("test.js"),
 			),
 		},
@@ -24,8 +24,8 @@ func TestJsClosurePlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "js implementation builtin:js:closure",
 			),
+			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("js"),
 				plugintest.WithOutputs("test.js"),
 			),
 		},
@@ -34,8 +34,8 @@ func TestJsClosurePlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "js implementation builtin:js:closure",
 			),
+			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("js"),
 				plugintest.WithOutputs("test.js"),
 			),
 		},
@@ -44,8 +44,8 @@ func TestJsClosurePlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "js implementation builtin:js:closure",
 			),
+			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("js"),
 				plugintest.WithOutputs("test.js"),
 			),
 		},
@@ -55,8 +55,8 @@ func TestJsClosurePlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "js implementation builtin:js:closure",
 			),
+			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("js"),
 				plugintest.WithOutputs("rel/test.js"),
 			),
 		},

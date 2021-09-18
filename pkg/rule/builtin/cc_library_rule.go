@@ -27,7 +27,7 @@ type CcLibraryRule struct {
 	Outputs        []string
 	Config         *protoc.ProtocConfiguration
 	RuleConfig     *protoc.LanguageRuleConfig
-	Resolver       DepsResolver
+	Resolver       protoc.DepsResolver
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -45,7 +45,7 @@ func (s *CcLibraryRule) Srcs() []string {
 	srcs := make([]string, 0)
 	for _, output := range s.Outputs {
 		if strings.HasSuffix(output, ".cc") {
-			srcs = append(srcs, derel(s.Config.Rel, output))
+			srcs = append(srcs, protoc.StripRel(s.Config.Rel, output))
 		}
 	}
 	return srcs
@@ -56,7 +56,7 @@ func (s *CcLibraryRule) Hdrs() []string {
 	hdrs := make([]string, 0)
 	for _, output := range s.Outputs {
 		if strings.HasSuffix(output, ".h") {
-			hdrs = append(hdrs, derel(s.Config.Rel, output))
+			hdrs = append(hdrs, protoc.StripRel(s.Config.Rel, output))
 		}
 	}
 	return hdrs
@@ -105,11 +105,4 @@ func (s *CcLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw inter
 		return
 	}
 	s.Resolver(s, s.Config, c, r, importsRaw, from)
-}
-
-func derel(rel string, filename string) string {
-	if !strings.HasPrefix(filename, rel) {
-		return filename
-	}
-	return filename[len(rel)+1:] // +1 for slash separator
 }

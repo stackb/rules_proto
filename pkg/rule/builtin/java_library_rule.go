@@ -26,7 +26,7 @@ type JavaLibraryRule struct {
 	Outputs        []string
 	Config         *protoc.ProtocConfiguration
 	RuleConfig     *protoc.LanguageRuleConfig
-	Resolver       DepsResolver
+	Resolver       protoc.DepsResolver
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -44,7 +44,7 @@ func (s *JavaLibraryRule) Srcs() []string {
 	srcs := make([]string, 0)
 	for _, output := range s.Outputs {
 		if strings.HasSuffix(output, ".srcjar") {
-			srcs = append(srcs, derel(s.Config.Rel, output))
+			srcs = append(srcs, protoc.StripRel(s.Config.Rel, output))
 		}
 	}
 	return srcs
