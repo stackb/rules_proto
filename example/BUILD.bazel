@@ -1,3 +1,4 @@
+## Core ##
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
 
 ## C++ ##
@@ -27,5 +28,7 @@
 
 ## Scala ##
 # gazelle:proto_plugin scala implementation scalapb:scalapb:protoc-gen-scala
+# gazelle:proto_rule proto_scala_library implementation stackb:rules_proto:proto_scala_library
+# gazelle:proto_rule proto_scala_library deps @build_stack_rules_proto//plugin/scalapb/scalapb:scalapb_2_12
 # gazelle:proto_language scala plugin scala
 # gazelle:proto_language scala rule proto_compile

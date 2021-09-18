@@ -52,7 +52,7 @@ func (s *protoGrpcCcLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *pro
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver: func(impl DepsProvider, pc *protoc.ProtocConfiguration, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+		Resolver: func(impl protoc.DepsProvider, pc *protoc.ProtocConfiguration, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
 			deps := impl.Deps()
 			deps = append(deps, ":"+pc.Library.BaseName()+ProtoCcLibraryRuleSuffix)
 

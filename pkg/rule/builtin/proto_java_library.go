@@ -26,7 +26,13 @@ func (s *protoJavaLibrary) Name() string {
 
 // KindInfo implements part of the LanguageRule interface.
 func (s *protoJavaLibrary) KindInfo() rule.KindInfo {
-	return ccLibraryKindInfo
+	return rule.KindInfo{
+		MergeableAttrs: map[string]bool{
+			"srcs":       true,
+			"deps":       true,
+			"visibility": true,
+		},
+	}
 }
 
 // LoadInfo implements part of the LanguageRule interface.
@@ -49,6 +55,6 @@ func (s *protoJavaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *proto
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver:       ResolveWithSuffix(ProtoJavaLibraryRuleSuffix),
+		Resolver:       protoc.ResolveDepsWithSuffix(ProtoJavaLibraryRuleSuffix),
 	}
 }

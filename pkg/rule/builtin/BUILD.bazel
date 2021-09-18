@@ -8,7 +8,6 @@ go_library(
         "proto_cc_library.go",
         "proto_grpc_cc_library.go",
         "proto_java_library.go",
-        "resolver.go",
     ],
     importpath = "github.com/stackb/rules_proto/pkg/rule/builtin",
     visibility = ["//visibility:public"],
