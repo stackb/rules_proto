@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_grpc_cc_library.bzl", "proto_grpc_cc_library")
@@ -57,4 +58,19 @@ java_library(
     name = "example_routeguide_java_library",
     srcs = ["example_routeguide.srcjar"],
     deps = ["@com_google_protobuf//:protobuf_java"],
+)
+
+proto_compile(
+    name = "example_routeguide_scala_compile",
+    outs = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": "example/routeguide/example_routeguide.srcjar"},
+    outputs = ["example_routeguide_scala.srcjar"],
+    plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
+    proto = "example_routeguide_proto",
+)
+
+proto_scala_library(
+    name = "example_routeguide_scala_library",
+    srcs = ["example_routeguide_scala.srcjar"],
+    visibility = ["//visibility:public"],
+    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:scalapb_2_12"],
 )

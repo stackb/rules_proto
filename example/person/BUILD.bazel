@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -46,5 +47,23 @@ proto_java_library(
     deps = [
         "//example/place:place_java_library",
         "@com_google_protobuf//:protobuf_java",
+    ],
+)
+
+proto_compile(
+    name = "person_scala_compile",
+    outs = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": "example/person/person.srcjar"},
+    outputs = ["person_scala.srcjar"],
+    plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
+    proto = "person_proto",
+)
+
+proto_scala_library(
+    name = "person_scala_library",
+    srcs = ["person_scala.srcjar"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//example/place:place_scala_library",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:scalapb_2_12",
     ],
 )
