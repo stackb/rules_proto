@@ -23,8 +23,12 @@ func (p *ProtocGenScalaPlugin) Name() string {
 
 // Configure implements part of the Plugin interface.
 func (p *ProtocGenScalaPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	srcjar := ctx.ProtoLibrary.BaseName() + "_scala.srcjar"
+	if ctx.Rel != "" {
+		srcjar = path.Join(ctx.Rel, srcjar)
+	}
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/scalapb/scalapb", "protoc-gen-scala"),
-		Outputs: []string{path.Join(ctx.Rel, ctx.ProtoLibrary.BaseName()+"_scala.srcjar")},
+		Outputs: []string{srcjar},
 	}
 }

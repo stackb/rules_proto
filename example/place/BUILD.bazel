@@ -1,7 +1,7 @@
-load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
-load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
+load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 proto_library(
@@ -52,7 +52,7 @@ proto_java_library(
 
 proto_compile(
     name = "place_scala_compile",
-    outs = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": "example/place/place.srcjar"},
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
     outputs = ["place_scala.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
     proto = "place_proto",
@@ -64,6 +64,6 @@ proto_scala_library(
     visibility = ["//visibility:public"],
     deps = [
         "//example/thing:example_thing_scala_library",
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_deps_2_12",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
     ],
 )
