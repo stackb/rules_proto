@@ -14,7 +14,6 @@ def scala_deps():
     bazel_skylib()  # via io_bazel_rules_scala
     io_bazel_rules_scala()  # via <TOP>
 
-
 def github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip():
     _maybe(
         http_archive,
