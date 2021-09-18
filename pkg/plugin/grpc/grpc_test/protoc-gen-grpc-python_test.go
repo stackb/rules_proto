@@ -14,6 +14,7 @@ func TestProtocGenGrpcPython(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "python implementation grpc:grpc:protoc-gen-grpc-python",
 			),
+			PluginName:      "python",
 			SkipIntegration: true,
 		},
 		"only messages": {
@@ -21,6 +22,7 @@ func TestProtocGenGrpcPython(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "python implementation grpc:grpc:protoc-gen-grpc-python",
 			),
+			PluginName:      "python",
 			SkipIntegration: true,
 		},
 		"only services": {
@@ -29,9 +31,9 @@ func TestProtocGenGrpcPython(t *testing.T) {
 				"proto_plugin", "python implementation grpc:grpc:protoc-gen-grpc-python",
 			),
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("python"),
 				plugintest.WithOutputs("test_pb2_grpc.py"),
 			),
+			PluginName:      "python",
 			SkipIntegration: true,
 		},
 		"with a package": {
@@ -40,9 +42,9 @@ func TestProtocGenGrpcPython(t *testing.T) {
 				"proto_plugin", "python implementation grpc:grpc:protoc-gen-grpc-python",
 			),
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("python"),
 				plugintest.WithOutputs("test_pb2_grpc.py"),
 			),
+			PluginName:      "python",
 			SkipIntegration: true,
 		},
 	})

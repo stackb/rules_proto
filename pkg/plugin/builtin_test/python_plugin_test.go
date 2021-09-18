@@ -14,8 +14,8 @@ func TestPythonPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "python implementation builtin:python",
 			),
+			PluginName: "python",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("python"),
 				plugintest.WithOutputs("test_pb2.py"),
 			),
 		},
@@ -24,8 +24,8 @@ func TestPythonPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "python implementation builtin:python",
 			),
+			PluginName: "python",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("python"),
 				plugintest.WithOutputs("test_pb2.py"),
 			),
 		},
@@ -34,8 +34,8 @@ func TestPythonPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "python implementation builtin:python",
 			),
+			PluginName: "python",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("python"),
 				plugintest.WithOutputs("test_pb2.py"),
 			),
 		},
@@ -45,8 +45,8 @@ func TestPythonPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "python implementation builtin:python",
 			),
+			PluginName: "python",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("python"),
 				plugintest.WithOutputs("rel/test_pb2.py"),
 			),
 		},
@@ -56,8 +56,8 @@ func TestPythonPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "python implementation builtin:python",
 			),
+			PluginName: "python",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("python"),
 				plugintest.WithOutputs("a_b*c+d=e|g!h#i_pb2.py"),
 			),
 		},

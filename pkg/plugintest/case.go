@@ -28,7 +28,8 @@ type Case struct {
 	Basename string
 	// The relative package path
 	Rel string
-	// The Configuration
+	// The Configuration Name
+	PluginName string
 	// Optional directives for the package config
 	Directives []rule.Directive
 	// The input proto file source.  "syntax = proto3" will be automatically prepended.
@@ -57,11 +58,14 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 	if err := c.ParseDirectives(tc.Rel, tc.Directives); err != nil {
 		t.Fatalf("bad directives: %v", err)
 	}
-	r := rule.NewRule("proto_library", basename+"_proto")
-	var pluginConfig protoc.LanguagePluginConfig
-	if tc.Configuration != nil {
-		pluginConfig, _ = c.Plugin(tc.Configuration.Name)
+	if tc.PluginName == "" {
+		t.Fatal("test case 'PluginName' is not configured.")
 	}
+	pluginConfig, ok := c.Plugin(tc.PluginName)
+	if !ok {
+		t.Fatalf("configuration for plugin '%s' was not found", tc.PluginName)
+	}
+	r := rule.NewRule("proto_library", basename+"_proto")
 	lib := protoc.NewOtherProtoLibrary(nil, r, f) // File is nil, not needed for the test
 	ctx := &protoc.PluginContext{
 		Rel:           tc.Rel,
@@ -132,7 +136,7 @@ func (tc *Case) RunIntegration(t *testing.T, subject protoc.Plugin, got *protoc.
 
 	args := []string{
 		"--proto_path=.", // this is the default (just a reminder)  The execroot is '.'
-		fmt.Sprintf("--%s_out=%s:%s", tc.Configuration.Name, strings.Join(got.Options, ","), outDir),
+		fmt.Sprintf("--%s_out=%s:%s", tc.PluginName, strings.Join(got.Options, ","), outDir),
 		filepath.Join(tc.Rel, filename),
 	}
 

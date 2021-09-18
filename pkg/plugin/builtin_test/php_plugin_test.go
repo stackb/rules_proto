@@ -14,8 +14,8 @@ func TestPhpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "php implementation builtin:php",
 			),
+			PluginName: "php",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("php"),
 				plugintest.WithOutputs("GPBMetadata/Test.php"),
 			),
 		},
@@ -24,8 +24,8 @@ func TestPhpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "php implementation builtin:php",
 			),
+			PluginName: "php",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("php"),
 				plugintest.WithOutputs("GPBMetadata/Test.php", "E.php", "M.php"),
 			),
 		},
@@ -34,8 +34,8 @@ func TestPhpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "php implementation builtin:php",
 			),
+			PluginName: "php",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("php"),
 				plugintest.WithOutputs("GPBMetadata/Test.php", "P/E.php", "P/M.php"),
 			),
 		},
@@ -44,8 +44,8 @@ func TestPhpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "php implementation builtin:php",
 			),
+			PluginName: "php",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("php"),
 				plugintest.WithOutputs("GPBMetadata/Test.php", "foo/E.php", "foo/M.php"),
 			),
 		},
@@ -54,8 +54,8 @@ func TestPhpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "php implementation builtin:php",
 			),
+			PluginName: "php",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("php"),
 				plugintest.WithOutputs("bar/Test.php", "P/E.php", "P/M.php"),
 			),
 		},
@@ -65,8 +65,8 @@ func TestPhpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "php implementation builtin:php",
 			),
+			PluginName: "php",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("php"),
 				plugintest.WithOutputs("a/b/c/GPBMetadata/A/B/C/Test.php", "a/b/c/M.php"),
 			),
 		},

@@ -14,8 +14,8 @@ func TestRubyPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "ruby implementation builtin:ruby",
 			),
+			PluginName: "ruby",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("ruby"),
 				plugintest.WithOutputs("test_pb.rb"),
 			),
 		},
@@ -24,8 +24,8 @@ func TestRubyPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "ruby implementation builtin:ruby",
 			),
+			PluginName: "ruby",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("ruby"),
 				plugintest.WithOutputs("test_pb.rb"),
 			),
 		},
@@ -34,8 +34,8 @@ func TestRubyPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "ruby implementation builtin:ruby",
 			),
+			PluginName: "ruby",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("ruby"),
 				plugintest.WithOutputs("test_pb.rb"),
 			),
 		},
@@ -45,8 +45,8 @@ func TestRubyPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "ruby implementation builtin:ruby",
 			),
+			PluginName: "ruby",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("ruby"),
 				plugintest.WithOutputs("rel/test_pb.rb"),
 			),
 		},

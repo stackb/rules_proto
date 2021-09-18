@@ -24,21 +24,21 @@ func WithConfiguration(options ...PluginConfigurationOption) *protoc.PluginConfi
 	return c
 }
 
-// WithSkip assigns th Skip field.
-func WithName(name string) PluginConfigurationOption {
-	return func(c *protoc.PluginConfiguration) {
-		c.Name = name
-	}
-}
+// // WithSkip assigns th Skip field.
+// func WithName(name string) PluginConfigurationOption {
+// 	return func(c *protoc.PluginConfiguration) {
+// 		c.Name = name
+// 	}
+// }
 
-// WithSkip assigns th Skip field.
+// WithOutputs assigns the Outputs field.
 func WithOutputs(outputs ...string) PluginConfigurationOption {
 	return func(c *protoc.PluginConfiguration) {
 		c.Outputs = outputs
 	}
 }
 
-// WithSkip assigns th Skip field.
+// WithDirectives assigns rule Directives.
 func WithDirectives(items ...string) (d []rule.Directive) {
 	if len(items)%2 != 0 {
 		panic("directive list must be a sequence of key/value pairs")
