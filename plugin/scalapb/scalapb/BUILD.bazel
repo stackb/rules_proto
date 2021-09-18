@@ -3,6 +3,15 @@ load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "protoc-gen-scala",
     out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}_scala.srcjar",
+    options = [
+        # "flat_package",
+        # "java_conversions",  # getNumber is not a member of com.github.stackb.rules_proto.example.thing.Status
+        # "single_line_to_proto_string",
+        # "ascii_format_to_string",
+        # "no_lenses",
+        # "retain_source_code_info",
+        # "grpc",
+    ],
     tool = ":protoc-gen-scala.exe",
     use_built_in_shell_environment = True,
     visibility = ["//visibility:public"],
@@ -11,6 +20,7 @@ proto_plugin(
 genrule(
     name = "protoc-gen-scala_exe",
     srcs = select({
+        # TODO: windows support
         "@bazel_tools//src/conditions:darwin": [
             "@github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip//:exe",
         ],

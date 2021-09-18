@@ -62,7 +62,7 @@ java_library(
 
 proto_compile(
     name = "example_routeguide_scala_compile",
-    outs = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": "example/routeguide/example_routeguide.srcjar"},
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
     outputs = ["example_routeguide_scala.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
     proto = "example_routeguide_proto",
