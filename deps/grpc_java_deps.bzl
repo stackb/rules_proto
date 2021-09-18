@@ -12,6 +12,7 @@ def grpc_java_deps():
     rules_jvm_external()  # via io_grpc_grpc_java
     io_grpc_grpc_java()  # via <TOP>
 
+
 def rules_jvm_external():
     _maybe(
         http_archive,

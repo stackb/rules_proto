@@ -17,6 +17,7 @@ def grpc_core_deps():
     rules_jvm_external()  # via com_github_grpc_grpc
     com_github_grpc_grpc()  # via <TOP>
 
+
 def build_bazel_rules_swift():
     _maybe(
         http_archive,

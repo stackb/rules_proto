@@ -15,6 +15,16 @@ depsgen(
 )
 
 depsgen(
+    name = "scala",
+    deps = [
+        # ":com_github_scalapb_scalapb",
+        ":github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip",
+        ":github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip",
+        ":io_bazel_rules_scala",
+    ],
+)
+
+depsgen(
     name = "prebuilt_protoc",
     deps = [
         ":prebuilt_protoc_linux",
@@ -265,6 +275,85 @@ filegroup(
     repository_rule = "http_archive",
     sha256 = "0decc6ce5beed07f8c20361ddeb5ac7666f09cf34572cca530e16814093f9c0c",
     urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-win32.zip"],
+)
+
+# Branch: master
+# Commit: 2437e40131072cadc1628726775ff00fa3941a4a
+# Date: 2021-09-06 10:18:08 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_scala/commit/2437e40131072cadc1628726775ff00fa3941a4a
+#
+# Remove customized ijar code (#1285)
+#
+# ijar patch was upstreamed and is available since Bazek 4.1.0
+# Size: 638431 (638 kB)
+proto_dependency(
+    name = "io_bazel_rules_scala",
+    repository_rule = "http_archive",
+    sha256 = "0701ee4e1cfd59702d780acde907ac657752fbb5c7d08a0ec6f58ebea8cd0efb",
+    strip_prefix = "rules_scala-2437e40131072cadc1628726775ff00fa3941a4a",
+    urls = ["https://github.com/bazelbuild/rules_scala/archive/2437e40131072cadc1628726775ff00fa3941a4a.tar.gz"],
+    deps = [
+        ":bazel_skylib",
+    ],
+)
+
+# Branch: master
+# Commit: 741fb57675d78dac689f823902ded4f995fac929
+# Date: 2021-09-15 03:35:40 +0000 UTC
+# URL: https://github.com/scalapb/ScalaPB/commit/741fb57675d78dac689f823902ded4f995fac929
+#
+# Update silencer-lib, silencer-plugin to 1.7.6 (#1232)
+# Size: 881755 (882 kB)
+proto_dependency(
+    name = "com_github_scalapb_scalapb",
+    build_file_content = """
+java_import(
+    name = "compilerplugin",
+    jars = ["com.thesamet.scalapb.compilerplugin-0.8.0.jar"],
+    visibility = ["//visibility:public"],
+)
+java_import(
+    name = "scala-library",
+    jars = ["org.scala-lang.scala-library-2.11.12.jar"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "4ef871f0b9c3d8d6194c2f818ba99640291b23c14a8ff1554462c37692fdaee0",
+    strip_prefix = "ScalaPB-741fb57675d78dac689f823902ded4f995fac929",
+    urls = ["https://github.com/scalapb/ScalaPB/archive/741fb57675d78dac689f823902ded4f995fac929.tar.gz"],
+)
+
+# Last-Modified: Fri, 06 Aug 2021 01:06:35 GMT
+# Size: 6914350 (6.9 MB)
+proto_dependency(
+    name = "github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip",
+    build_file_content = """
+filegroup(
+    name = "exe",
+    srcs = ["protoc-gen-scala"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "1a58ae65d06e7894d7153812fc1c9ceeecab7891dcabeb33ee0b3e91e7502889",
+    urls = ["https://github.com/scalapb/ScalaPB/releases/download/v0.11.5/protoc-gen-scala-0.11.5-linux-x86_64.zip"],
+)
+
+# Last-Modified: Fri, 06 Aug 2021 01:06:34 GMT
+# Size: 6147501 (6.1 MB)
+proto_dependency(
+    name = "github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip",
+    build_file_content = """
+filegroup(
+    name = "exe",
+    srcs = ["protoc-gen-scala"],
+    visibility = ["//visibility:public"],
+)
+    """,
+    repository_rule = "http_archive",
+    sha256 = "312d802a999df87e7c046f2fef9213d0b3b8868b7771fa68ec8057ebf68397c0",
+    urls = ["https://github.com/scalapb/ScalaPB/releases/download/v0.11.5/protoc-gen-scala-0.11.5-osx-x86_64.zip"],
 )
 
 filegroup(

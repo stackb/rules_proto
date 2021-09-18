@@ -24,3 +24,8 @@
 # gazelle:proto_language java plugin java
 # gazelle:proto_language java rule proto_compile
 # gazelle:proto_language java rule proto_java_library
+
+## Scala ##
+# gazelle:proto_plugin scala implementation scalapb:scalapb:protoc-gen-scala
+# gazelle:proto_language scala plugin scala
+# gazelle:proto_language scala rule proto_compile
