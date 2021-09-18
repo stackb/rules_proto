@@ -24,13 +24,6 @@ func WithConfiguration(options ...PluginConfigurationOption) *protoc.PluginConfi
 	return c
 }
 
-// // WithSkip assigns th Skip field.
-// func WithName(name string) PluginConfigurationOption {
-// 	return func(c *protoc.PluginConfiguration) {
-// 		c.Name = name
-// 	}
-// }
-
 // WithOutputs assigns the Outputs field.
 func WithOutputs(outputs ...string) PluginConfigurationOption {
 	return func(c *protoc.PluginConfiguration) {

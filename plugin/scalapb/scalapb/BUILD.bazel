@@ -3,15 +3,6 @@ load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "protoc-gen-scala",
     out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}_scala.srcjar",
-    options = [
-        # "flat_package",
-        # "java_conversions",  # getNumber is not a member of com.github.stackb.rules_proto.example.thing.Status
-        # "single_line_to_proto_string",
-        # "ascii_format_to_string",
-        # "no_lenses",
-        # "retain_source_code_info",
-        # "grpc",
-    ],
     tool = ":protoc-gen-scala.exe",
     use_built_in_shell_environment = True,
     visibility = ["//visibility:public"],
