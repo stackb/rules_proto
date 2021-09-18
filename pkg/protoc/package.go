@@ -90,8 +90,8 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		if config == nil {
 			continue
 		}
-		config.Name = plugin.Implementation
-		config.Options = append(config.Options, plugin.GetOptions()...)
+		config.Config = plugin.clone()
+		config.Options = deduplicate(append(config.Options, plugin.GetOptions()...))
 
 		// plugin.Label overrides the default value from the implementation
 		if plugin.Label.Name != "" {
@@ -167,4 +167,16 @@ func getProvidedRules(providers []RuleProvider) []*rule.Rule {
 		rules[i] = p.Rule()
 	}
 	return rules
+}
+
+func deduplicate(in []string) (out []string) {
+	seen := make(map[string]bool)
+	for _, v := range in {
+		if seen[v] {
+			continue
+		}
+		seen[v] = true
+		out = append(out, v)
+	}
+	return
 }

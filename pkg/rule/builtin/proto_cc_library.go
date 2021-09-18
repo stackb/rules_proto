@@ -49,6 +49,6 @@ func (s *protoCcLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver:       ResolveWithSuffix(ProtoCcLibraryRuleSuffix),
+		Resolver:       protoc.ResolveDepsWithSuffix(ProtoCcLibraryRuleSuffix),
 	}
 }

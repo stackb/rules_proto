@@ -3,6 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "protoc",
     srcs = [
+        "depsresolver.go",
         "file.go",
         "intent.go",
         "language_config.go",

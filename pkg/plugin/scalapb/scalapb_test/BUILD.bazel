@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_test")
+
+go_test(
+    name = "scalapb_test",
+    srcs = [
+        "protoc_gen_scala_test.go",
+    ],
+    data = [":protoc"],
+    deps = [
+        "//pkg/plugin/scalapb/scalapb",
+        "//pkg/plugintest",
+    ],
+)
+
+genrule(
+    name = "protoc_tool",
+    outs = ["protoc"],
+    cmd = "cp $(location @com_google_protobuf//:protoc) $@",
+    executable = True,
+    tools = ["@com_google_protobuf//:protoc"],
+)

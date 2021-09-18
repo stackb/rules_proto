@@ -11,6 +11,7 @@ import (
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpc/grpcgo"
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpc/grpcjava"
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpcecosystem/grpcgateway"
+	_ "github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb"
 	_ "github.com/stackb/rules_proto/pkg/rule/builtin"
 )
 

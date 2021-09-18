@@ -27,10 +27,10 @@ autogenerates those rules for you :smile:.
 
 ## Language-Specific Rules
 
-| Rule                    | Description                                 |
-|-------------------------|---------------------------------------------|
-| `proto_cc_library`      | protobuf-specific wrapper for `cc_library`. |
-| `proto_grpc_cc_library` | gRPC-specific wrapper for `cc_library`.     |
+| Rule               | Description                                 |
+|--------------------|---------------------------------------------|
+| `proto_cc_library` | protobuf-specific wrapper for `cc_library`. |
+| `grpc_cc_library`  | gRPC-specific wrapper for `cc_library`.     |
 
 > with the capability of copying generated sources back into the workspace (for those use-cases when you need to commit generated files under source control
 

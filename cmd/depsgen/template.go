@@ -24,7 +24,7 @@ def {{ .Dep.Name }}():
     _maybe(
         {{ .Dep.RepositoryRule }},
         name = "{{ .Dep.Name }}",{{ if .Dep.Path }}
-        path = "{{ .Dep.Path }}",{{ end }}{{ if .Dep.StripPrefix }}
+        path = "{{ .Dep.Path }}",{{ end }}{{ if .Dep.Sha256 }}
         sha256 = "{{ .Dep.Sha256 }}",{{ end }}{{ if .Dep.StripPrefix }}
         strip_prefix = "{{ .Dep.StripPrefix }}",{{ end }}{{ if .Dep.Urls }}
         urls = [{{ range .Dep.Urls }}

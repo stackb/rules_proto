@@ -34,6 +34,24 @@ def _ctx_replace_arg(ctx, arg):
         arg = arg.replace("{PROTO_LIBRARY_BASENAME}", basename)
     return arg
 
+def _plugin_label_key(label):
+    """_plugin_label_key converts a label into a string.  
+
+    This is needed due to an edge case about how Labels are parsed and
+    represented. Consider the label
+    "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala". If this
+    string is the value for an attr.label in the same workspace
+    build_stack_rules_proto, the workspace name is actually ommitted and becomes
+    the empty string.  However, if is is the value for an attr.string and then
+    parsed into a label in Starlark, the workspace name is preserved.  To resolve
+    this issue, we just ignore the workspace name altogether, hoping that no-one
+    tries to use two different plugins having a different workspace_name but
+    otherwise identical package and name.
+    """
+    key = "%s:%s" % (label.package, label.name)
+
+    return key
+
 def get_protoc_executable(ctx):
     if ctx.file.protoc:
         return ctx.file.protoc
@@ -105,7 +123,7 @@ def _proto_compile_impl(ctx):
     plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
 
     # const <dict<string,string>>
-    outs = ctx.attr.outs
+    outs = {_plugin_label_key(Label(k)): v for k, v in ctx.attr.outs.items()}
 
     # const <dict<string,File>.  outputs indexed by basename.
     outputs_by_basename = {f.basename: f for f in outputs}
@@ -188,8 +206,11 @@ def _proto_compile_impl(ctx):
         # mut <string>
         out = plugin.out
 
+        # dict<key=label.package+label.name,value=list<string>>
+        options = {_plugin_label_key(Label(k)): v for k, v in ctx.attr.options.items()}
+
         # const <list<string>>
-        opts = plugin.options + [opt for opt in ctx.attr.options.get(str(plugin.label), [])]
+        opts = plugin.options + [opt for opt in options.get(_plugin_label_key(plugin.label), [])]
         if opts:
             if plugin.separate_options_flag:
                 args.append("--{}_opt={}".format(plugin_name, ",".join(opts)))
@@ -197,7 +218,7 @@ def _proto_compile_impl(ctx):
                 out = "{}:{}".format(",".join(opts), out)
 
         # override with the out configured on the rule if specified
-        plugin_out = outs.get(str(plugin.label), None)
+        plugin_out = outs.get(_plugin_label_key(plugin.label), None)
         if plugin_out:
             # bin-dir relative is implied for plugin_out overrides
             out = "/".join([ctx.bin_dir.path, plugin_out])
@@ -275,25 +296,25 @@ def _proto_compile_impl(ctx):
         tools = tools,
     )
 
-    if verbose and False:  # enable True for developer-level debugging
-        for f in inputs:
-            # buildifier: disable=print
-            print("INPUT:", f.path)
-        for f in tools:
-            # buildifier: disable=print
-            print("TOOL:", f.path)
-        for f in protos:
-            # buildifier: disable=print
-            print("PROTO:", f.path)
-        for f in outputs:
-            # buildifier: disable=print
-            print("EXPECTED OUTPUT:", f.path)
-        for a in replaced_args:
-            # buildifier: disable=print
-            print("ARG:", a)
+    if verbose:
         for c in commands:
             # buildifier: disable=print
             print("COMMAND:", c)
+        for f in tools:
+            # buildifier: disable=print
+            print("TOOL:", f.path)
+        for a in replaced_args:
+            # buildifier: disable=print
+            print("ARG:", a)
+        for f in protos:
+            # buildifier: disable=print
+            print("PROTO:", f.path)
+        for f in inputs:
+            # buildifier: disable=print
+            print("INPUT:", f.path)
+        for f in outputs:
+            # buildifier: disable=print
+            print("EXPECTED OUTPUT:", f.path)
 
     return [
         ProtoCompileInfo(label = ctx.label, outputs = outputs),

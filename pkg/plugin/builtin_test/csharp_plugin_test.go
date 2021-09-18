@@ -15,8 +15,8 @@ func TestCsharpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "csharp implementation builtin:csharp",
 			),
+			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("csharp"),
 				plugintest.WithOutputs("Test.cs"),
 			),
 		},
@@ -26,8 +26,8 @@ func TestCsharpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "csharp implementation builtin:csharp",
 			),
+			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("csharp"),
 				plugintest.WithOutputs("Test.cs"),
 			),
 		},
@@ -37,8 +37,8 @@ func TestCsharpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "csharp implementation builtin:csharp",
 			),
+			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("csharp"),
 				plugintest.WithOutputs("Test.cs"),
 			),
 		},
@@ -47,8 +47,8 @@ func TestCsharpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "csharp implementation builtin:csharp",
 			),
+			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("csharp"),
 				plugintest.WithOutputs("Test.cs"),
 			),
 		},
@@ -58,8 +58,8 @@ func TestCsharpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "csharp implementation builtin:csharp",
 			),
+			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("csharp"),
 				plugintest.WithOutputs("rel/Test.cs"),
 			),
 		},
@@ -69,8 +69,8 @@ func TestCsharpPlugin(t *testing.T) {
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "csharp implementation builtin:csharp",
 			),
+			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithName("csharp"),
 				plugintest.WithOutputs("FooBarBaz.cs"),
 			),
 		},
