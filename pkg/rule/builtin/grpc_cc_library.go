@@ -9,46 +9,46 @@ import (
 )
 
 const (
-	ProtoGrpcCcLibraryRuleName   = "proto_grpc_cc_library"
-	ProtoGrpcCcLibraryRuleSuffix = "_grpc_cc_library"
+	grpcCcLibraryRuleName   = "grpc_cc_library"
+	grpcCcLibraryRuleSuffix = "_grpc_cc_library"
 )
 
 func init() {
-	protoc.Rules().MustRegisterRule("stackb:rules_proto:proto_grpc_cc_library", &protoGrpcCcLibrary{})
+	protoc.Rules().MustRegisterRule("stackb:rules_proto:grpc_cc_library", &grpcCcLibrary{})
 }
 
-// protoGrpcCcLibrary implements LanguageRule for the 'proto_grpc_cc_library' rule from
+// grpcCcLibrary implements LanguageRule for the 'grpc_cc_library' rule from
 // @rules_proto.
-type protoGrpcCcLibrary struct{}
+type grpcCcLibrary struct{}
 
 // Name implements part of the LanguageRule interface.
-func (s *protoGrpcCcLibrary) Name() string {
-	return ProtoGrpcCcLibraryRuleName
+func (s *grpcCcLibrary) Name() string {
+	return grpcCcLibraryRuleName
 }
 
 // KindInfo implements part of the LanguageRule interface.
-func (s *protoGrpcCcLibrary) KindInfo() rule.KindInfo {
+func (s *grpcCcLibrary) KindInfo() rule.KindInfo {
 	return ccLibraryKindInfo
 }
 
 // LoadInfo implements part of the LanguageRule interface.
-func (s *protoGrpcCcLibrary) LoadInfo() rule.LoadInfo {
+func (s *grpcCcLibrary) LoadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
-		Name:    "@build_stack_rules_proto//rules/cc:proto_grpc_cc_library.bzl",
-		Symbols: []string{ProtoGrpcCcLibraryRuleName},
+		Name:    "@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl",
+		Symbols: []string{grpcCcLibraryRuleName},
 	}
 }
 
 // ProvideRule implements part of the LanguageRule interface.
-func (s *protoGrpcCcLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
+func (s *grpcCcLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
 	outputs := pc.GetPluginOutputs("grpc:grpc:cpp")
 	if len(outputs) == 0 {
 		return nil
 	}
 
 	return &CcLibraryRule{
-		KindName:       ProtoGrpcCcLibraryRuleName,
-		RuleNameSuffix: ProtoGrpcCcLibraryRuleSuffix,
+		KindName:       grpcCcLibraryRuleName,
+		RuleNameSuffix: grpcCcLibraryRuleSuffix,
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,

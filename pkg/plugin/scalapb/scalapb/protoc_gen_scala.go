@@ -7,6 +7,8 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
+const ScalaPBPluginName = "scalapb:scalapb:protoc-gen-scala"
+
 func init() {
 	protoc.Plugins().MustRegisterPlugin(&ProtocGenScalaPlugin{})
 }
@@ -16,7 +18,7 @@ type ProtocGenScalaPlugin struct{}
 
 // Name implements part of the Plugin interface.
 func (p *ProtocGenScalaPlugin) Name() string {
-	return "scalapb:scalapb:protoc-gen-scala"
+	return ScalaPBPluginName
 }
 
 // Configure implements part of the Plugin interface.

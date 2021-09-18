@@ -90,7 +90,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		if config == nil {
 			continue
 		}
-		config.Name = plugin.Implementation
+		config.Config = plugin.clone()
 		config.Options = append(config.Options, plugin.GetOptions()...)
 
 		// plugin.Label overrides the default value from the implementation

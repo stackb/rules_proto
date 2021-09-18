@@ -56,5 +56,5 @@ proto_scala_library(
     name = "example_thing_scala_library",
     srcs = ["example_thing_scala.srcjar"],
     visibility = ["//visibility:public"],
-    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:scalapb_2_12"],
+    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_deps_2_12"],
 )

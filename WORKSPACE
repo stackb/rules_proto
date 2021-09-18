@@ -137,8 +137,14 @@ scala_register_toolchains()
 maven_install(
     name = "maven_scala",
     artifacts = [
-        "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
         "com.thesamet.scalapb:lenses_2.12:0.11.5",
+        "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
+        "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
+        "io.grpc:grpc-api:1.40.1",
+        "io.grpc:grpc-core:1.40.1",
+        "io.grpc:grpc-stub:1.40.1",
+        "io.grpc:grpc-netty:1.40.1",
+        "io.grpc:grpc-protobuf:1.40.1",
     ],
     fetch_sources = True,
     maven_install_json = "//:maven_scala_install.json",

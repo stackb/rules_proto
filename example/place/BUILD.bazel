@@ -64,6 +64,6 @@ proto_scala_library(
     visibility = ["//visibility:public"],
     deps = [
         "//example/thing:example_thing_scala_library",
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:scalapb_2_12",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_deps_2_12",
     ],
 )

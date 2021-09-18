@@ -3,8 +3,8 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "scalapb",
     srcs = [
-        "proto_scala_library.go",
         "protoc_gen_scala.go",
+        "scala_library.go",
     ],
     importpath = "github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb",
     visibility = ["//visibility:public"],

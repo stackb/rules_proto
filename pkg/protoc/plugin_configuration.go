@@ -9,8 +9,8 @@ import (
 // PluginConfiguration represents the configuration of a protoc plugin
 // and the sources & source mappings that are expected to be produced.
 type PluginConfiguration struct {
-	// Name is the name of the plugin.
-	Name string
+	// Config is the associated plugin configuration
+	Config *LanguagePluginConfig
 	// Label is the bazel label for the corresponding proto_plugin rule.
 	Label label.Label
 	// Mappings is a dictionary that maps filenames listed in Outputs to
