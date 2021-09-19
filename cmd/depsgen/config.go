@@ -6,6 +6,16 @@ import (
 	"io/ioutil"
 )
 
+// knownLoads is a mapping between load symbols and their source.  Those with an
+// empty string are native and do not need a load statement.
+var knownLoads = map[string]string{
+	"bind":             "",
+	"go_repository":    "@bazel_gazelle//:deps.bzl",
+	"http_archive":     "@bazel_tools//tools/build_defs/repo:http.bzl",
+	"http_file":        "@bazel_tools//tools/build_defs/repo:http.bzl",
+	"local_repository": "",
+}
+
 type Config struct {
 	// Out is the filename to write
 	Out string
@@ -18,17 +28,26 @@ type Config struct {
 // ProtoDependencyInfo represents the starlark ProtoDependencyInfo provider.
 // The fields are a mashup of all possible fields from repository rules.
 type ProtoDependencyInfo struct {
-	BuildFile        string
-	BuildFileContent string
-	Name             string
-	Path             string
-	Label            string
-	RepositoryRule   string
-	Sha256           string
-	StripPrefix      string
-	Urls             []string
-	WorkspaceSnippet string
-	Deps             []*ProtoDependencyInfo
+	BuildFile          string
+	BuildFileContent   string
+	BuildFileProtoMode string
+	Deps               []*ProtoDependencyInfo
+	Importpath         string
+	Label              string
+	Name               string
+	Path               string
+	RepositoryRule     string
+	Sha256             string
+	StripPrefix        string
+	Sum                string
+	Urls               []string
+	Version            string
+	WorkspaceSnippet   string
+}
+
+type LoadInfo struct {
+	Label   string
+	Symbols []string
 }
 
 // fromJSON constructs a Config struct from the given filename that contains a
@@ -74,6 +93,37 @@ func collectDeps(top []*ProtoDependencyInfo) (deps []*dependency) {
 	}
 
 	return
+}
+
+// collectLoads accumulates the required load statements.
+func collectLoads(deps []*dependency) []*LoadInfo {
+	required := make(map[string][]string)
+
+	for _, item := range deps {
+		symbol := item.Dep.RepositoryRule
+		source := knownLoads[symbol]
+		if source == "" {
+			continue
+		}
+		required[source] = append(required[source], symbol)
+	}
+
+	loads := make([]*LoadInfo, 0)
+
+	for source, symbols := range required {
+		load := &LoadInfo{Label: source}
+		loads = append(loads, load)
+		seen := make(map[string]bool)
+		for _, symbol := range symbols {
+			if seen[symbol] {
+				continue
+			}
+			seen[symbol] = true
+			load.Symbols = append(load.Symbols, symbol)
+		}
+	}
+
+	return loads
 }
 
 type dependency struct {

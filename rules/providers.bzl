@@ -34,14 +34,18 @@ ProtoDependencyInfo = provider(
     fields = {
         "buildFile": "The build_file of this dependency",
         "buildFileContent": "The build_file_content of this dependency",
+        "buildFileProtoMode": "The build_file_proto_mode of this dependency",
         "deps": "The list of deps of this dependency  list<ProtoDependencyInfo>",
+        "importpath": "The proto dependency importpath string",
         "label": "The proto dependency label string",
         "name": "The proto dependency name (should correspond to the workspace name",
         "path": "The path attribute for 'local_repository'",
         "repositoryRule": "The name of the repository rule that instantiates this dependency",
         "sha256": "The sha256 attribute for 'http_archive'",
         "stripPrefix": "The strip_prefix attribute for 'http_archive'",
+        "sum": "The proto dependency sum string",
         "urls": "The urls string list",
+        "version": "The version string",
         "workspaceSnippet": "The workspaceSnippet string list",
     },
 )

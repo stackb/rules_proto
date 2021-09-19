@@ -15,9 +15,12 @@ func generate(c *Config) error {
 
 	t := template.Must(template.New(c.Name + "_deps.bzl").Option("missingkey=error").Parse(depsBzl))
 
+	deps := collectDeps(c.Deps)
+	loads := collectLoads(deps)
 	data := &templateData{
-		Name: c.Name,
-		Deps: collectDeps(c.Deps),
+		Name:  c.Name,
+		Deps:  deps,
+		Loads: loads,
 	}
 
 	if err := t.Execute(f, data); err != nil {
