@@ -1,4 +1,4 @@
-package builtin
+package rules_java
 
 import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
@@ -49,7 +49,7 @@ func (s *protoJavaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *proto
 	if len(outputs) == 0 {
 		return nil
 	}
-	return &JavaLibraryRule{
+	return &JavaLibrary{
 		KindName:       ProtoJavaLibraryRuleName,
 		RuleNameSuffix: ProtoJavaLibraryRuleSuffix,
 		Outputs:        outputs,

@@ -1,4 +1,4 @@
-package builtin
+package rules_java
 
 import (
 	"sort"
@@ -19,8 +19,8 @@ var javaLibraryKindInfo = rule.KindInfo{
 	},
 }
 
-// JavaLibraryRule implements RuleProvider for 'cc_library'-derived rules.
-type JavaLibraryRule struct {
+// JavaLibrary implements RuleProvider for 'cc_library'-derived rules.
+type JavaLibrary struct {
 	KindName       string
 	RuleNameSuffix string
 	Outputs        []string
@@ -30,17 +30,17 @@ type JavaLibraryRule struct {
 }
 
 // Kind implements part of the ruleProvider interface.
-func (s *JavaLibraryRule) Kind() string {
+func (s *JavaLibrary) Kind() string {
 	return s.KindName
 }
 
 // Name implements part of the ruleProvider interface.
-func (s *JavaLibraryRule) Name() string {
+func (s *JavaLibrary) Name() string {
 	return s.Config.Library.BaseName() + s.RuleNameSuffix
 }
 
 // Srcs computes the srcs list for the rule.
-func (s *JavaLibraryRule) Srcs() []string {
+func (s *JavaLibrary) Srcs() []string {
 	srcs := make([]string, 0)
 	for _, output := range s.Outputs {
 		if strings.HasSuffix(output, ".srcjar") {
@@ -51,12 +51,12 @@ func (s *JavaLibraryRule) Srcs() []string {
 }
 
 // Deps computes the deps list for the rule.
-func (s *JavaLibraryRule) Deps() []string {
+func (s *JavaLibrary) Deps() []string {
 	return s.RuleConfig.GetDeps()
 }
 
 // Visibility implements part of the ruleProvider interface.
-func (s *JavaLibraryRule) Visibility() []string {
+func (s *JavaLibrary) Visibility() []string {
 	visibility := make([]string, 0)
 	for k, want := range s.RuleConfig.Visibility {
 		if !want {
@@ -69,7 +69,7 @@ func (s *JavaLibraryRule) Visibility() []string {
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *JavaLibraryRule) Rule() *rule.Rule {
+func (s *JavaLibrary) Rule() *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	newRule.SetAttr("srcs", s.Srcs())
@@ -83,7 +83,7 @@ func (s *JavaLibraryRule) Rule() *rule.Rule {
 }
 
 // Resolve implements part of the RuleProvider interface.
-func (s *JavaLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func (s *JavaLibrary) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
 	if s.Resolver == nil {
 		return
 	}
