@@ -5,14 +5,14 @@ load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_sca
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 proto_library(
-    name = "example_thing_proto",
+    name = "thing_proto",
     srcs = ["thing.proto"],
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:timestamp_proto"],
 )
 
 proto_cc_library(
-    name = "example_thing_cc_library",
+    name = "thing_cc_library",
     srcs = ["thing.pb.cc"],
     hdrs = ["thing.pb.h"],
     visibility = ["//visibility:public"],
@@ -20,41 +20,49 @@ proto_cc_library(
 )
 
 proto_compile(
-    name = "example_thing_cpp_compile",
+    name = "thing_cpp_compile",
     outputs = [
         "thing.pb.cc",
         "thing.pb.h",
     ],
     plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
-    proto = "example_thing_proto",
+    proto = "thing_proto",
 )
 
 proto_compile(
-    name = "example_thing_java_compile",
-    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/thing/example_thing.srcjar"},
-    outputs = ["example_thing.srcjar"],
+    name = "thing_go_compile",
+    mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
+    outputs = ["thing.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    proto = "thing_proto",
+)
+
+proto_compile(
+    name = "thing_java_compile",
+    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/thing/thing.srcjar"},
+    outputs = ["thing.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
-    proto = "example_thing_proto",
+    proto = "thing_proto",
 )
 
 proto_java_library(
-    name = "example_thing_java_library",
-    srcs = ["example_thing.srcjar"],
+    name = "thing_java_library",
+    srcs = ["thing.srcjar"],
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:protobuf_java"],
 )
 
 proto_compile(
-    name = "example_thing_scala_compile",
+    name = "thing_scala_compile",
     options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
-    outputs = ["example_thing_scala.srcjar"],
+    outputs = ["thing_scala.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
-    proto = "example_thing_proto",
+    proto = "thing_proto",
 )
 
 proto_scala_library(
-    name = "example_thing_scala_library",
-    srcs = ["example_thing_scala.srcjar"],
+    name = "thing_scala_library",
+    srcs = ["thing_scala.srcjar"],
     visibility = ["//visibility:public"],
     deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
 )

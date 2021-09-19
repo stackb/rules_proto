@@ -37,7 +37,7 @@ load("//deps:scala_deps.bzl", "scala_deps")
 scala_deps()
 
 # ----------------------------------------------------
-# Go
+# Go Tools
 # ----------------------------------------------------
 
 load(
@@ -111,6 +111,14 @@ compat_repositories()
 grpc_java_repositories()
 
 # ----------------------------------------------------
+# golang
+# ----------------------------------------------------
+
+load("//deps:go_core_deps.bzl", "go_core_deps")
+
+go_core_deps()
+
+# ----------------------------------------------------
 # scala
 # ----------------------------------------------------
 
@@ -121,12 +129,6 @@ scala_config(scala_version = "2.12.11")
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
 
 scala_repositories()
-
-# load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
-
-# rules_proto_dependencies()
-
-# rules_proto_toolchains()
 
 load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
 

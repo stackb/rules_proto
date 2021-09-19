@@ -4,7 +4,7 @@ package example.thing;
 
 option java_multiple_files = true;
 option java_package = "com.github.stackb.rules_proto.example.thing";
-// option java_package = "example";
+option go_package = "github.com/stackb/rules_proto/example/thing;thing";
 
 import "google/protobuf/timestamp.proto";
 
