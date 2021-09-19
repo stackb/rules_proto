@@ -1,7 +1,6 @@
 package rules_go
 
 import (
-	"fmt"
 	"log"
 	"path"
 	"sort"
@@ -80,7 +79,7 @@ func (s *goLibrary) LoadInfo() rule.LoadInfo {
 	// 	Symbols: []string{s.kindName},
 	// }
 	return rule.LoadInfo{
-		Name:    fmt.Sprintf("@io_bazel_rules_go//go:def.bzl", s.kindName),
+		Name:    "@io_bazel_rules_go//go:def.bzl",
 		Symbols: []string{s.kindName},
 	}
 }
