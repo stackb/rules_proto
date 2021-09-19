@@ -19,12 +19,10 @@
 
 ## Go ##
 # gazelle:proto_plugin protoc-gen-go implementation grpc:grpc-go:protoc-gen-go
-
 # gazelle:proto_rule proto_go_library implementation stackb:rules_proto:proto_go_library
 # gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//reflect/protoreflect
 # gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//runtime/protoimpl
 # gazelle:proto_rule proto_go_library visibility //visibility:public
-
 # gazelle:proto_language go plugin protoc-gen-go
 # gazelle:proto_language go rule proto_compile
 # gazelle:proto_language go rule proto_go_library
@@ -34,9 +32,14 @@
 # gazelle:proto_rule proto_java_library implementation stackb:rules_proto:proto_java_library
 # gazelle:proto_rule proto_java_library deps @com_google_protobuf//:protobuf_java
 # gazelle:proto_rule proto_java_library visibility //visibility:public
+# gazelle:proto_rule grpc_java_library implementation stackb:rules_proto:grpc_java_library
+# gazelle:proto_rule grpc_java_library deps @com_github_grpc_grpc//:grpc++
+# gazelle:proto_rule grpc_java_library deps @com_github_grpc_grpc//:grpc++_reflection
+# gazelle:proto_rule grpc_java_library visibility //visibility:public
 # gazelle:proto_language java plugin java
 # gazelle:proto_language java rule proto_compile
 # gazelle:proto_language java rule proto_java_library
+# gazelle:proto_language java rule grpc_java_library
 
 ## Scala ##
 # gazelle:proto_plugin scala implementation scalapb:scalapb:protoc-gen-scala
