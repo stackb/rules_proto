@@ -35,7 +35,7 @@ func TestPackageConfigClone(t *testing.T) {
 
 	)
 
-	a := NewPackageConfig()
+	a := NewPackageConfig(nil)
 	if err := a.ParseDirectives("", withDirectives(
 		"proto_plugin", "fake_proto label @fake//proto/plugin",
 		"proto_rule", "fake_proto_library enabled true",
@@ -58,7 +58,7 @@ func TestPackageConfigClone(t *testing.T) {
 func testDirectives(t *testing.T, cases map[string]packageConfigTestCase) {
 	for name, tc := range cases {
 		t.Run(name, func(t *testing.T) {
-			cfg := NewPackageConfig()
+			cfg := NewPackageConfig(nil)
 			// t.Logf("test case: %+v", tc)
 			if err := cfg.ParseDirectives(tc.rel, tc.directives); err != nil {
 				if tc.err == nil {

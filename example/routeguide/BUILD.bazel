@@ -1,30 +1,31 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 proto_library(
-    name = "example_routeguide_proto",
+    name = "routeguide_proto",
     srcs = ["routeguide.proto"],
     visibility = ["//visibility:public"],
 )
 
 grpc_cc_library(
-    name = "example_routeguide_grpc_cc_library",
+    name = "routeguide_grpc_cc_library",
     srcs = ["routeguide.grpc.pb.cc"],
     hdrs = ["routeguide.grpc.pb.h"],
     visibility = ["//visibility:public"],
     deps = [
-        ":example_routeguide_cc_library",
+        ":routeguide_cc_library",
         "@com_github_grpc_grpc//:grpc++",
         "@com_github_grpc_grpc//:grpc++_reflection",
     ],
 )
 
 proto_cc_library(
-    name = "example_routeguide_cc_library",
+    name = "routeguide_cc_library",
     srcs = ["routeguide.pb.cc"],
     hdrs = ["routeguide.pb.h"],
     visibility = ["//visibility:public"],
@@ -32,7 +33,7 @@ proto_cc_library(
 )
 
 proto_compile(
-    name = "example_routeguide_cpp_compile",
+    name = "routeguide_cpp_compile",
     outputs = [
         "routeguide.grpc.pb.cc",
         "routeguide.grpc.pb.h",
@@ -43,35 +44,54 @@ proto_compile(
         "@build_stack_rules_proto//plugin/builtin:cpp",
         "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-cpp",
     ],
-    proto = "example_routeguide_proto",
+    proto = "routeguide_proto",
 )
 
 proto_compile(
-    name = "example_routeguide_java_compile",
-    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/routeguide/example_routeguide.srcjar"},
-    outputs = ["example_routeguide.srcjar"],
+    name = "routeguide_go_compile",
+    mappings = {"routeguide.pb.go": "github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go"},
+    outputs = ["routeguide.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    proto = "routeguide_proto",
+)
+
+proto_go_library(
+    name = "routeguide_go_proto",
+    srcs = ["routeguide.pb.go"],
+    importpath = "github.com/stackb/rules_proto/example/routeguide",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+    ],
+)
+
+proto_compile(
+    name = "routeguide_java_compile",
+    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/routeguide/routeguide.srcjar"},
+    outputs = ["routeguide.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
-    proto = "example_routeguide_proto",
+    proto = "routeguide_proto",
 )
 
 proto_java_library(
-    name = "example_routeguide_java_library",
-    srcs = ["example_routeguide.srcjar"],
+    name = "routeguide_java_library",
+    srcs = ["routeguide.srcjar"],
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:protobuf_java"],
 )
 
 grpc_scala_library(
-    name = "example_routeguide_scala_library",
-    srcs = ["example_routeguide_scala.srcjar"],
+    name = "routeguide_scala_library",
+    srcs = ["routeguide_scala.srcjar"],
     visibility = ["//visibility:public"],
     deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12"],
 )
 
 proto_compile(
-    name = "example_routeguide_scala_compile",
+    name = "routeguide_scala_compile",
     options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
-    outputs = ["example_routeguide_scala.srcjar"],
+    outputs = ["routeguide_scala.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
-    proto = "example_routeguide_proto",
+    proto = "routeguide_proto",
 )

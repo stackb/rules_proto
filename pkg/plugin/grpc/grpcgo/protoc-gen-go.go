@@ -8,6 +8,8 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
+const ProtocGenGoPluginName = "grpc:grpc-go:protoc-gen-go"
+
 func init() {
 	protoc.Plugins().MustRegisterPlugin(&ProtocGenGoPlugin{})
 }
@@ -17,7 +19,7 @@ type ProtocGenGoPlugin struct{}
 
 // Name implements part of the Plugin interface.
 func (p *ProtocGenGoPlugin) Name() string {
-	return "grpc:grpc-go:protoc-gen-go"
+	return ProtocGenGoPluginName
 }
 
 // Configure implements part of the Plugin interface.

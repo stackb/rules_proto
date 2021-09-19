@@ -5,6 +5,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -23,6 +24,8 @@ const (
 
 // PackageConfig represents the config extension for the rosetta language.
 type PackageConfig struct {
+	// config is the parent gazelle config.
+	config *config.Config
 	// the gazelle:prefix for golang
 	importpathPrefix string
 	// configured languages for this package
@@ -36,8 +39,9 @@ type PackageConfig struct {
 }
 
 // NewPackageConfig initializes a new PackageConfig.
-func NewPackageConfig() *PackageConfig {
+func NewPackageConfig(config *config.Config) *PackageConfig {
 	return &PackageConfig{
+		config:  config,
 		langs:   make(map[string]*LanguageConfig),
 		plugins: make(map[string]*LanguagePluginConfig),
 		rules:   make(map[string]*LanguageRuleConfig),
@@ -59,7 +63,7 @@ func (c *PackageConfig) Plugin(name string) (LanguagePluginConfig, bool) {
 
 // Clone copies this config to a new one
 func (c *PackageConfig) Clone() *PackageConfig {
-	clone := NewPackageConfig()
+	clone := NewPackageConfig(c.config)
 	clone.importpathPrefix = c.importpathPrefix
 
 	for k, v := range c.rules {
@@ -135,7 +139,7 @@ func (c *PackageConfig) parseRuleDirective(d rule.Directive) error {
 		return fmt.Errorf("invalid directive %v: expected three fields, got %d", d, len(fields))
 	}
 	name, param, value := fields[0], fields[1], fields[2]
-	r, err := c.getOrCreateLanguageRuleConfig(name)
+	r, err := c.getOrCreateLanguageRuleConfig(c.config, name)
 	if err != nil {
 		return fmt.Errorf("invalid proto_rule directive %+v: %w", d, err)
 	}
@@ -151,10 +155,10 @@ func (c *PackageConfig) getOrCreateLanguagePluginConfig(name string) (*LanguageP
 	return plugin, nil
 }
 
-func (c *PackageConfig) getOrCreateLanguageRuleConfig(name string) (*LanguageRuleConfig, error) {
+func (c *PackageConfig) getOrCreateLanguageRuleConfig(config *config.Config, name string) (*LanguageRuleConfig, error) {
 	r, ok := c.rules[name]
 	if !ok {
-		r = newLanguageRuleConfig(name)
+		r = newLanguageRuleConfig(config, name)
 		r.Implementation = name
 		c.rules[name] = r
 	}

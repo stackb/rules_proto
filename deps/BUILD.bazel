@@ -15,6 +15,14 @@ depsgen(
 )
 
 depsgen(
+    name = "go_core",
+    deps = [
+        ":com_github_golang_protobuf",
+        ":org_golang_google_grpc",
+    ],
+)
+
+depsgen(
     name = "scala",
     deps = [
         ":github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip",
@@ -326,6 +334,24 @@ filegroup(
     repository_rule = "http_archive",
     sha256 = "312d802a999df87e7c046f2fef9213d0b3b8868b7771fa68ec8057ebf68397c0",
     urls = ["https://github.com/scalapb/ScalaPB/releases/download/v0.11.5/protoc-gen-scala-0.11.5-osx-x86_64.zip"],
+)
+
+proto_dependency(
+    name = "org_golang_google_grpc",
+    build_file_proto_mode = "disable",
+    importpath = "google.golang.org/grpc",
+    repository_rule = "go_repository",
+    sum = "h1:TwIQcH3es+MojMVojxxfQ3l3OF2KzlRxML2xZq0kRo8=",
+    version = "v1.35.0",
+)
+
+proto_dependency(
+    name = "com_github_golang_protobuf",
+    build_file_proto_mode = "disable_global",
+    importpath = "github.com/golang/protobuf",
+    repository_rule = "go_repository",
+    sum = "h1:JjCZWpVbqXDqFVmTfYWEVTMIYrL/NPdPSCHPJ0T/raM=",
+    version = "v1.4.3",
 )
 
 filegroup(

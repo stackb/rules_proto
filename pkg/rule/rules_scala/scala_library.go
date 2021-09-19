@@ -1,4 +1,4 @@
-package scalapb
+package rules_scala
 
 import (
 	"fmt"
@@ -10,6 +10,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
+	"github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
@@ -81,9 +82,9 @@ func (s *scalaLibrary) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
-	plugin := pc.GetPluginConfiguration(ScalaPBPluginName)
+	plugin := pc.GetPluginConfiguration(scalapb.ScalaPBPluginName)
 	if plugin == nil {
-		log.Fatalf("expected plugin configuration for %q to be defined", ScalaPBPluginName)
+		log.Fatalf("expected plugin configuration for %q to be defined", scalapb.ScalaPBPluginName)
 	}
 	if len(plugin.Outputs) == 0 {
 		return nil

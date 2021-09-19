@@ -63,7 +63,7 @@ func (pl *ProtobufLanguage) Configure(c *config.Config, rel string, f *rule.File
 	if f == nil {
 		return
 	}
-	if err := pl.getOrCreatePackageConfig(c.Exts).ParseDirectives(rel, f.Directives); err != nil {
+	if err := pl.getOrCreatePackageConfig(c).ParseDirectives(rel, f.Directives); err != nil {
 		log.Fatalf("error while parsing rule directives in package %q: %v", rel, err)
 	}
 }
@@ -188,7 +188,7 @@ func (pl *ProtobufLanguage) Resolve(
 // Any non-fatal errors this function encounters should be logged using
 // log.Print.
 func (pl *ProtobufLanguage) GenerateRules(args language.GenerateArgs) language.GenerateResult {
-	cfg := pl.getOrCreatePackageConfig(args.Config.Exts)
+	cfg := pl.getOrCreatePackageConfig(args.Config)
 
 	files := make(map[string]*pc.File)
 	for _, f := range args.RegularFiles {
@@ -243,14 +243,14 @@ func (pl *ProtobufLanguage) GenerateRules(args language.GenerateArgs) language.G
 
 // getOrCreatePackageConfig either inserts a new config into the map under the
 // language name or replaces it with a clone.
-func (pl *ProtobufLanguage) getOrCreatePackageConfig(exts map[string]interface{}) *pc.PackageConfig {
+func (pl *ProtobufLanguage) getOrCreatePackageConfig(config *config.Config) *pc.PackageConfig {
 	var cfg *pc.PackageConfig
-	if existingExt, ok := exts[pl.name]; ok {
+	if existingExt, ok := config.Exts[pl.name]; ok {
 		cfg = existingExt.(*pc.PackageConfig).Clone()
 	} else {
-		cfg = pc.NewPackageConfig()
+		cfg = pc.NewPackageConfig(config)
 	}
-	exts[pl.name] = cfg
+	config.Exts[pl.name] = cfg
 	return cfg
 }
 
