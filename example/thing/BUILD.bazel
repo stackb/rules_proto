@@ -5,8 +5,6 @@ load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_sca
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
-# gazelle:resolve protobuf google.protobuf.Timestamp @org_golang_google_protobuf//types/known/timestamppb
-
 proto_library(
     name = "thing_proto",
     srcs = ["thing.proto"],
@@ -48,6 +46,7 @@ proto_go_library(
     deps = [
         "@org_golang_google_protobuf//reflect/protoreflect",
         "@org_golang_google_protobuf//runtime/protoimpl",
+        "@org_golang_google_protobuf//types/known/timestamppb",  # keep
     ],
 )
 
