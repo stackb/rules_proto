@@ -119,7 +119,8 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		impl, err := globalRegistry.LookupRule(ruleConfig.Implementation)
 		if err == ErrUnknownRule {
 			log.Fatalf(
-				"rule not registered: %q (available: %v)",
+				"%s: rule not registered: %q (available: %v)",
+				s.rel,
 				ruleConfig.Implementation,
 				globalRegistry.RuleNames(),
 			)

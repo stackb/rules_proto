@@ -18,7 +18,8 @@ gazelle_binary(
     name = "gazelle-protobuf",
     languages = [
         # NOTE: order matters here.  Gazelle will respect the ordering of
-        # languages which will impact the population of 'OtherGen'
+        # languages which will impact the population of 'OtherGen', so
+        # //language/protobuf MUST come after language/proto.
         "@bazel_gazelle//language/go",
         "@bazel_gazelle//language/proto",
         "//language/protobuf",

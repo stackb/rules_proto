@@ -1,6 +1,7 @@
 package rules_go
 
 import (
+	"fmt"
 	"log"
 	"path"
 	"sort"
@@ -17,7 +18,6 @@ import (
 
 const (
 	ProtoGoLibraryRuleName = "proto_go_library"
-	GoLibraryRuleName      = "go_library"
 	goLibraryRuleSuffix    = "_go_proto"
 )
 
@@ -26,11 +26,6 @@ func init() {
 		&goLibrary{
 			pluginName: grpcgo.ProtocGenGoPluginName,
 			kindName:   ProtoGoLibraryRuleName,
-		})
-	protoc.Rules().MustRegisterRule("stackb:rules_proto:"+GoLibraryRuleName,
-		&goLibrary{
-			pluginName: grpcgo.ProtocGenGoPluginName,
-			kindName:   GoLibraryRuleName,
 		})
 }
 
@@ -74,12 +69,8 @@ func (s *goLibrary) KindInfo() rule.KindInfo {
 
 // LoadInfo implements part of the LanguageRule interface.
 func (s *goLibrary) LoadInfo() rule.LoadInfo {
-	// return rule.LoadInfo{
-	// 	Name:    fmt.Sprintf("@build_stack_rules_proto//rules/go:%s.bzl", s.kindName),
-	// 	Symbols: []string{s.kindName},
-	// }
 	return rule.LoadInfo{
-		Name:    "@io_bazel_rules_go//go:def.bzl",
+		Name:    fmt.Sprintf("@build_stack_rules_proto//rules/go:%s.bzl", s.kindName),
 		Symbols: []string{s.kindName},
 	}
 }
