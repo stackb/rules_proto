@@ -67,3 +67,11 @@ proto_scala_library(
         "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
     ],
 )
+
+proto_compile(
+    name = "person_go_compile",
+    mappings = {"person.pb.go": "github.com/stackb/rules_proto/example/person/person.pb.go"},
+    outputs = ["person.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    proto = "person_proto",
+)

@@ -9,7 +9,18 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def go_core_deps():
+    com_github_golang_protobuf()  # via <TOP>
     org_golang_google_grpc()  # via <TOP>
+
+def com_github_golang_protobuf():
+    _maybe(
+        go_repository,
+        name = "com_github_golang_protobuf",
+        sum = "h1:JjCZWpVbqXDqFVmTfYWEVTMIYrL/NPdPSCHPJ0T/raM=",
+        version = "v1.4.3",
+        importpath = "github.com/golang/protobuf",
+        build_file_proto_mode = "disable_global",
+    )
 
 def org_golang_google_grpc():
     _maybe(

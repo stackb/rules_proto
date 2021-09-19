@@ -17,6 +17,7 @@ depsgen(
 depsgen(
     name = "go_core",
     deps = [
+        ":com_github_golang_protobuf",
         ":org_golang_google_grpc",
     ],
 )
@@ -342,6 +343,15 @@ proto_dependency(
     repository_rule = "go_repository",
     sum = "h1:TwIQcH3es+MojMVojxxfQ3l3OF2KzlRxML2xZq0kRo8=",
     version = "v1.35.0",
+)
+
+proto_dependency(
+    name = "com_github_golang_protobuf",
+    build_file_proto_mode = "disable_global",
+    importpath = "github.com/golang/protobuf",
+    repository_rule = "go_repository",
+    sum = "h1:JjCZWpVbqXDqFVmTfYWEVTMIYrL/NPdPSCHPJ0T/raM=",
+    version = "v1.4.3",
 )
 
 filegroup(

@@ -54,7 +54,7 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 	if err := f.ParseReader(strings.NewReader(in)); err != nil {
 		t.Fatalf("unparseable proto file: %s: %v", tc.Input, err)
 	}
-	c := protoc.NewPackageConfig()
+	c := protoc.NewPackageConfig(nil)
 	if err := c.ParseDirectives(tc.Rel, tc.Directives); err != nil {
 		t.Fatalf("bad directives: %v", err)
 	}

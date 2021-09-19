@@ -13,6 +13,8 @@ import (
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpcecosystem/grpcgateway"
 	_ "github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb"
 	_ "github.com/stackb/rules_proto/pkg/rule/builtin"
+	_ "github.com/stackb/rules_proto/pkg/rule/rules_go"
+	_ "github.com/stackb/rules_proto/pkg/rule/rules_scala"
 )
 
 // NewLanguage is called by Gazelle to install this language extension in a

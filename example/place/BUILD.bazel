@@ -8,7 +8,7 @@ proto_library(
     name = "place_proto",
     srcs = ["place.proto"],
     visibility = ["//visibility:public"],
-    deps = ["//example/thing:example_thing_proto"],
+    deps = ["//example/thing:thing_proto"],
 )
 
 proto_cc_library(
@@ -17,7 +17,7 @@ proto_cc_library(
     hdrs = ["place.pb.h"],
     visibility = ["//visibility:public"],
     deps = [
-        "//example/thing:example_thing_cc_library",
+        "//example/thing:thing_cc_library",
         "@com_google_protobuf//:protobuf",
     ],
 )
@@ -45,7 +45,7 @@ proto_java_library(
     srcs = ["place.srcjar"],
     visibility = ["//visibility:public"],
     deps = [
-        "//example/thing:example_thing_java_library",
+        "//example/thing:thing_java_library",
         "@com_google_protobuf//:protobuf_java",
     ],
 )
@@ -63,7 +63,15 @@ proto_scala_library(
     srcs = ["place_scala.srcjar"],
     visibility = ["//visibility:public"],
     deps = [
-        "//example/thing:example_thing_scala_library",
+        "//example/thing:thing_scala_library",
         "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
     ],
+)
+
+proto_compile(
+    name = "place_go_compile",
+    mappings = {"place.pb.go": "github.com/stackb/rules_proto/example/place/place.pb.go"},
+    outputs = ["place.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    proto = "place_proto",
 )

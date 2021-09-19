@@ -75,3 +75,10 @@ proto_compile(
     plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
     proto = "example_routeguide_proto",
 )
+
+proto_compile(
+    name = "example_routeguide_go_compile",
+    outputs = ["routeguide.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    proto = "example_routeguide_proto",
+)

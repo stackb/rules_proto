@@ -66,3 +66,5 @@ proto_scala_library(
     visibility = ["//visibility:public"],
     deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
 )
+
+# gazelle:resolve protobuf google.protobuf.Timestamp @org_golang_google_protobuf//types/known/timestamppb
