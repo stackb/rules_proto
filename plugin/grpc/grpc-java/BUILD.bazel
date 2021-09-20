@@ -2,6 +2,7 @@ load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 
 proto_plugin(
     name = "protoc-gen-grpc-java",
+    out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}_grpc.srcjar",
     tool = "@io_grpc_grpc_java//compiler:grpc_java_plugin",
     visibility = ["//visibility:public"],
 )
