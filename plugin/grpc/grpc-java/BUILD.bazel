@@ -5,3 +5,16 @@ proto_plugin(
     tool = "@io_grpc_grpc_java//compiler:grpc_java_plugin",
     visibility = ["//visibility:public"],
 )
+
+java_library(
+    name = "grpc_java",
+    visibility = ["//visibility:public"],
+    exports = [
+        "@com_google_guava_guava//jar",
+        "@com_google_protobuf//java/core",
+        "@io_grpc_grpc_java//api",
+        "@io_grpc_grpc_java//protobuf",
+        "@io_grpc_grpc_java//stub",
+        "@io_grpc_grpc_java//stub:javax_annotation",
+    ],
+)

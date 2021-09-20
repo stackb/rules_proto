@@ -29,14 +29,15 @@
 
 ## Java ##
 # gazelle:proto_plugin java implementation builtin:java
+# gazelle:proto_plugin protoc-gen-grpc-java implementation grpc:grpc-java:protoc-gen-grpc-java
 # gazelle:proto_rule proto_java_library implementation stackb:rules_proto:proto_java_library
 # gazelle:proto_rule proto_java_library deps @com_google_protobuf//:protobuf_java
 # gazelle:proto_rule proto_java_library visibility //visibility:public
 # gazelle:proto_rule grpc_java_library implementation stackb:rules_proto:grpc_java_library
-# gazelle:proto_rule grpc_java_library deps @com_github_grpc_grpc//:grpc++
-# gazelle:proto_rule grpc_java_library deps @com_github_grpc_grpc//:grpc++_reflection
+# gazelle:proto_rule grpc_java_library deps @build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java
 # gazelle:proto_rule grpc_java_library visibility //visibility:public
 # gazelle:proto_language java plugin java
+# gazelle:proto_language java plugin protoc-gen-grpc-java
 # gazelle:proto_language java rule proto_compile
 # gazelle:proto_language java rule proto_java_library
 # gazelle:proto_language java rule grpc_java_library

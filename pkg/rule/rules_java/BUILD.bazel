@@ -3,6 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "rules_java",
     srcs = [
+        "grpc_java_library.go",
         "java_library.go",
         "proto_java_library.go",
     ],
