@@ -36,6 +36,14 @@ load("//deps:scala_deps.bzl", "scala_deps")
 
 scala_deps()
 
+load("//deps:nodejs_deps.bzl", "nodejs_deps")
+
+nodejs_deps()
+
+load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
+
+ts_proto_deps()
+
 # ----------------------------------------------------
 # Go Tools
 # ----------------------------------------------------
@@ -156,6 +164,10 @@ maven_install(
 load("@maven_scala//:defs.bzl", pinned_maven_scala_install = "pinned_maven_install")
 
 pinned_maven_scala_install()
+
+# ----------------------------------------------------
+# nodejs
+# ----------------------------------------------------
 
 # ----------------------------------------------------
 # END

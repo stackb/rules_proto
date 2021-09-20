@@ -20,6 +20,9 @@ def _proto_dependency_impl(ctx):
             sum = ctx.attr.sum,
             urls = ctx.attr.urls,
             version = ctx.attr.version,
+            packageJson = ctx.attr.package_json,
+            packageLockJson = ctx.attr.package_lock_json,
+            yarnLock = ctx.attr.yarn_lock,
             workspaceSnippet = ctx.attr.workspace_snippet,
         ),
     ]
@@ -46,9 +49,15 @@ proto_dependency = rule(
         "path": attr.string(
             doc = "The path attribute for local_repository",
         ),
+        "package_json": attr.string(
+            doc = "The package_json attribute for npm_install",
+        ),
+        "package_lock_json": attr.string(
+            doc = "The package_lock_json attribute for npm_install",
+        ),
         "repository_rule": attr.string(
             doc = "The repository rule that instantiates this dependency",
-            values = ["http_archive", "http_file", "bind", "go_repository", "local_repository", "phony"],
+            values = ["http_archive", "http_file", "bind", "go_repository", "local_repository", "phony", "npm_install", "yarn_install"],
         ),
         "sha256": attr.string(
             doc = "The sha256 attribute for http_archive",
@@ -67,6 +76,9 @@ proto_dependency = rule(
         ),
         "urls": attr.string_list(
             doc = "The strip_prefix attribute for http_archive",
+        ),
+        "yarn_lock": attr.string(
+            doc = "The yarn_lock attribute for yarn_install",
         ),
     },
 )

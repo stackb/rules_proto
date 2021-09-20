@@ -70,3 +70,8 @@
 # gazelle:proto_language python rule proto_compile
 # gazelle:proto_language python rule proto_python_library
 # gazelle:proto_language python rule grpc_py_library
+
+## ts-proto ##
+# gazelle:proto_plugin ts_proto implementation stephenh:ts-proto:protoc-gen-ts-proto
+# gazelle:proto_language ts_proto plugin ts_proto
+# gazelle:proto_language ts_proto rule proto_compile

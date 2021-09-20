@@ -92,3 +92,11 @@ proto_py_library(
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:protobuf_python"],
 )
+
+proto_compile(
+    name = "thing_ts_proto_compile",
+    outputs = ["thing.ts"],
+    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
+    proto = "thing_proto",
+    verbose = True,
+)

@@ -1,0 +1,55 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_embed_data", "go_library")
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "protoc-gen-ts-proto",
+    data = [
+        "@build_bazel_rules_nodejs//toolchains/node:node_bin",
+        "@npm_ts_proto//:node_modules",
+    ],
+    tool = ":ts-proto",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "ts-proto_lib",
+    srcs = [
+        "protoc-gen-ts-proto.go",
+        ":assets",
+    ],
+    importpath = "github.com/stackb/rules_proto/plugin/stephenh/ts-proto",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "ts-proto",
+    embed = [":ts-proto_lib"],
+    visibility = ["//visibility:public"],
+)
+
+go_embed_data(
+    name = "assets",
+    srcs = [
+        ":ts-proto.env",
+    ],
+    package = "main",
+    var = "assets",
+)
+
+genrule(
+    name = "ts-proto_env",
+    srcs = [
+        "@build_bazel_rules_nodejs//toolchains/node:node_bin",
+    ],
+    outs = ["ts-proto.env"],
+    cmd = """
+cat << EOF > $@
+NPM_WORKSPACE_BUILD_FILE=$(location @npm_ts_proto//:BUILD.bazel)
+NODE_BIN=external/$(NODE_PATH)
+EOF
+    """,
+    toolchains = ["@build_bazel_rules_nodejs//toolchains/node:toolchain"],
+    tools = [
+        "@npm_ts_proto//:BUILD.bazel",
+    ],
+)

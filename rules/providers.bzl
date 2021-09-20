@@ -47,5 +47,8 @@ ProtoDependencyInfo = provider(
         "urls": "The urls string list",
         "version": "The version string",
         "workspaceSnippet": "The workspaceSnippet string list",
+        "yarnLock": "The yarn lock file",
+        "packageJson": "The package.json file",
+        "packageLockJson": "The package lock json file",
     },
 )
