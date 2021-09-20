@@ -79,6 +79,7 @@ grpc_java_library(
 
 proto_compile(
     name = "routeguide_java_compile",
+    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/routeguide/routeguide.srcjar"},
     outputs = [
         "routeguide.srcjar",
         "routeguide_grpc.srcjar",

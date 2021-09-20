@@ -55,6 +55,7 @@ proto_go_library(
 
 proto_compile(
     name = "person_java_compile",
+    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/person/person.srcjar"},
     outputs = ["person.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
     proto = "person_proto",

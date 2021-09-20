@@ -44,14 +44,13 @@ proto_go_library(
     importpath = "github.com/stackb/rules_proto/example/thing",
     visibility = ["//visibility:public"],
     deps = [
-        "@org_golang_google_protobuf//reflect/protoreflect",
-        "@org_golang_google_protobuf//runtime/protoimpl",
         "@org_golang_google_protobuf//types/known/timestamppb",  # keep
     ],
 )
 
 proto_compile(
     name = "thing_java_compile",
+    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/thing/thing.srcjar"},
     outputs = ["thing.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
     proto = "thing_proto",

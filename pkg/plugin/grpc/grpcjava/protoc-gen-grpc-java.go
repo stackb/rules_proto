@@ -24,9 +24,11 @@ func (p *ProtocGenGrpcJavaPlugin) Configure(ctx *protoc.PluginContext) *protoc.P
 	if !p.shouldApply(ctx.ProtoLibrary) {
 		return nil
 	}
+	srcjar := path.Join(ctx.Rel, ctx.ProtoLibrary.BaseName()+"_grpc.srcjar")
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/grpc/grpc-java", "protoc-gen-grpc-java"),
-		Outputs: []string{path.Join(ctx.Rel, ctx.ProtoLibrary.BaseName()+"_grpc.srcjar")},
+		Outputs: []string{srcjar},
+		Out:     srcjar,
 	}
 }
 
