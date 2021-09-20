@@ -36,6 +36,10 @@ load("//deps:scala_deps.bzl", "scala_deps")
 
 scala_deps()
 
+load("//deps:closure_deps.bzl", "closure_deps")
+
+closure_deps()
+
 load("//deps:nodejs_deps.bzl", "nodejs_deps")
 
 nodejs_deps()
@@ -166,8 +170,14 @@ load("@maven_scala//:defs.bzl", pinned_maven_scala_install = "pinned_maven_insta
 pinned_maven_scala_install()
 
 # ----------------------------------------------------
-# nodejs
+# closure
 # ----------------------------------------------------
+
+load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
+
+rules_closure_dependencies()
+
+rules_closure_toolchains()
 
 # ----------------------------------------------------
 # END

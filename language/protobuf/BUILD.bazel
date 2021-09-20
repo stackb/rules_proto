@@ -16,6 +16,7 @@ go_library(
         "//pkg/plugin/scalapb/scalapb",
         "//pkg/plugin/stephenh/ts-proto",
         "//pkg/rule/rules_cc",
+        "//pkg/rule/rules_closure",
         "//pkg/rule/rules_go",
         "//pkg/rule/rules_java",
         "//pkg/rule/rules_python",

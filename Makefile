@@ -17,6 +17,7 @@ deps:
 	cp -f ./bazel-bin/deps/go_core_deps.bzl deps/go_core_deps.bzl
 	cp -f ./bazel-bin/deps/nodejs_deps.bzl deps/nodejs_deps.bzl
 	cp -f ./bazel-bin/deps/ts_proto_deps.bzl deps/ts_proto_deps.bzl
+	cp -f ./bazel-bin/deps/closure_deps.bzl deps/closure_deps.bzl
 	chmod 0644 deps/*.bzl rules/nodejs/deps.bzl
 	bazel run //:buildifier -- deps/
 		

@@ -32,6 +32,13 @@ depsgen(
 )
 
 depsgen(
+    name = "closure",
+    deps = [
+        ":io_bazel_rules_closure",
+    ],
+)
+
+depsgen(
     name = "nodejs",
     deps = [
         ":build_bazel_rules_nodejs",
@@ -386,6 +393,21 @@ proto_dependency(
     package_json = "//plugin/stephenh/ts-proto:package.json",
     package_lock_json = "//plugin/stephenh/ts-proto:package-lock.json",
     repository_rule = "npm_install",
+)
+
+# Branch: master
+# Commit: 56cb92640e02fe9d354d46087211abfbd6300b06
+# Date: 2021-09-15 22:22:55 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_closure/commit/56cb92640e02fe9d354d46087211abfbd6300b06
+#
+# Bump guava to 30.1.1 (#531)
+# Size: 468715 (469 kB)
+proto_dependency(
+    name = "io_bazel_rules_closure",
+    repository_rule = "http_archive",
+    sha256 = "825da2c522405cb5fa6279b051c9f5a1b052c03938a3cf738df393aaada335aa",
+    strip_prefix = "rules_closure-56cb92640e02fe9d354d46087211abfbd6300b06",
+    urls = ["https://github.com/bazelbuild/rules_closure/archive/56cb92640e02fe9d354d46087211abfbd6300b06.tar.gz"],
 )
 
 filegroup(

@@ -14,6 +14,7 @@ import (
 	_ "github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb"
 	_ "github.com/stackb/rules_proto/pkg/plugin/stephenh/ts-proto"
 	_ "github.com/stackb/rules_proto/pkg/rule/rules_cc"
+	_ "github.com/stackb/rules_proto/pkg/rule/rules_closure"
 	_ "github.com/stackb/rules_proto/pkg/rule/rules_go"
 	_ "github.com/stackb/rules_proto/pkg/rule/rules_java"
 	_ "github.com/stackb/rules_proto/pkg/rule/rules_python"
