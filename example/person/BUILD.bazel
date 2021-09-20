@@ -88,3 +88,10 @@ proto_scala_library(
         "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
     ],
 )
+
+proto_compile(
+    name = "person_python_compile",
+    outputs = ["person_pb2.py"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
+    proto = "person_proto",
+)

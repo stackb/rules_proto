@@ -77,3 +77,10 @@ proto_scala_library(
     visibility = ["//visibility:public"],
     deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
 )
+
+proto_compile(
+    name = "thing_python_compile",
+    outputs = ["thing_pb2.py"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
+    proto = "thing_proto",
+)

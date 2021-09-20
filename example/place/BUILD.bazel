@@ -88,3 +88,10 @@ proto_scala_library(
         "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
     ],
 )
+
+proto_compile(
+    name = "place_python_compile",
+    outputs = ["place_pb2.py"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
+    proto = "place_proto",
+)

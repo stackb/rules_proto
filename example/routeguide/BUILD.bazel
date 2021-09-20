@@ -113,3 +113,16 @@ proto_compile(
     plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
     proto = "routeguide_proto",
 )
+
+proto_compile(
+    name = "routeguide_python_compile",
+    outputs = [
+        "routeguide_pb2.py",
+        "routeguide_pb2_grpc.py",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:python",
+        "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python",
+    ],
+    proto = "routeguide_proto",
+)
