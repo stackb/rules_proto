@@ -14,6 +14,7 @@ go_library(
         "//pkg/plugin/grpc/grpcjava",
         "//pkg/plugin/grpcecosystem/grpcgateway",
         "//pkg/plugin/scalapb/scalapb",
+        "//pkg/plugin/stackb/grpc_js",
         "//pkg/plugin/stephenh/ts-proto",
         "//pkg/rule/rules_cc",
         "//pkg/rule/rules_closure",

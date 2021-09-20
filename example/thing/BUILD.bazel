@@ -46,6 +46,8 @@ proto_go_library(
     importpath = "github.com/stackb/rules_proto/example/thing",
     visibility = ["//visibility:public"],
     deps = [
+        "@org_golang_google_protobuf//reflect/protoreflect",  # keep
+        "@org_golang_google_protobuf//runtime/protoimpl",  # keep
         "@org_golang_google_protobuf//types/known/timestamppb",  # keep
     ],
 )
@@ -100,7 +102,6 @@ proto_compile(
     outputs = ["thing.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "thing_proto",
-    verbose = True,
 )
 
 proto_compile(

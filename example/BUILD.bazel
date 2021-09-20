@@ -80,8 +80,15 @@
 ## closure ##
 # gazelle:proto_plugin closure_js implementation builtin:js:closure
 # gazelle:proto_rule proto_closure_js_library implementation stackb:rules_proto:proto_closure_js_library
-#### gazelle:proto_rule proto_closure_js_library deps @com_google_protobuf//:protobuf_closure_js
 # gazelle:proto_rule proto_closure_js_library visibility //visibility:public
 # gazelle:proto_language closure_js plugin closure_js
 # gazelle:proto_language closure_js rule proto_compile
 # gazelle:proto_language closure_js rule proto_closure_js_library
+
+## grpc.js ##
+# gazelle:proto_plugin grpc_js implementation stackb:grpc.js:protoc-gen-grpc-js
+## gazelle:proto_rule grpc_closure_js_library implementation stackb:rules_proto:grpc_closure_js_library
+## gazelle:proto_rule grpc_closure_js_library visibility //visibility:public
+# gazelle:proto_language grpc_js plugin grpc_js
+# gazelle:proto_language grpc_js rule proto_compile
+## gazelle:proto_language grpc_js rule proto_grpc_closure_js_library

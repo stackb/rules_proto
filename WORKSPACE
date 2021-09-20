@@ -32,13 +32,17 @@ load("//deps:grpc_java_deps.bzl", "grpc_java_deps")
 
 grpc_java_deps()
 
-load("//deps:scala_deps.bzl", "scala_deps")
-
-scala_deps()
-
 load("//deps:closure_deps.bzl", "closure_deps")
 
 closure_deps()
+
+load("//deps:grpc_js_deps.bzl", "grpc_js_deps")
+
+grpc_js_deps()
+
+load("//deps:scala_deps.bzl", "scala_deps")
+
+scala_deps()
 
 load("//deps:nodejs_deps.bzl", "nodejs_deps")
 
