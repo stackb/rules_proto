@@ -73,5 +73,6 @@
 
 ## ts-proto ##
 # gazelle:proto_plugin ts_proto implementation stephenh:ts-proto:protoc-gen-ts-proto
+# gazelle:proto_plugin ts_proto option emitImportedFiles=false
 # gazelle:proto_language ts_proto plugin ts_proto
 # gazelle:proto_language ts_proto rule proto_compile

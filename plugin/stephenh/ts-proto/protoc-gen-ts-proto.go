@@ -4,48 +4,17 @@ package main
 // nodejs plugin entrypoint.  nodejs_binary does not work as a 'tool'.
 
 import (
-	"bufio"
-	"bytes"
 	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 	"syscall"
 )
 
 func main() {
-	// environment is stamped into the binary as an .env file; first we need to parse it
-	//
-	env := make(map[string]string)
-
-	for _, data := range assets {
-		scanner := bufio.NewScanner(bytes.NewReader(data))
-		scanner.Split(bufio.ScanLines)
-
-		for scanner.Scan() {
-			line := scanner.Text()
-			if line == "" {
-				continue
-			}
-			parts := strings.SplitN(line, "=", 2)
-			env[parts[0]] = parts[1]
-		}
-
-	}
-
-	if env["NODE_BIN"] == "" {
-		log.Fatal("NODE_BIN is required")
-	}
-	if env["NPM_WORKSPACE_BUILD_FILE"] == "" {
-		log.Fatal("NPM_WORKSPACE_BUILD_FILE is required")
-	}
-
-	npmWorkspace := filepath.Dir(env["NPM_WORKSPACE_BUILD_FILE"])
-	entrypoint := filepath.Join(".", npmWorkspace, "node_modules", "ts-proto/build/plugin.js")
-
-	exitCode, err := run(env["NODE_BIN"], []string{
+	entrypoint := filepath.Join(".", filepath.Dir(npmWorkspaceFile), "node_modules", "ts-proto/build/plugin.js")
+	exitCode, err := run(nodeBin, []string{
 		"--eval",
 		fmt.Sprintf(`require("./%s")`, entrypoint),
 	}, ".", nil)

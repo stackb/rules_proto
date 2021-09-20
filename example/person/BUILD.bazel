@@ -106,3 +106,11 @@ proto_py_library(
         "@com_google_protobuf//:protobuf_python",
     ],
 )
+
+proto_compile(
+    name = "person_ts_proto_compile",
+    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": ["emitImportedFiles=false"]},
+    outputs = ["person.ts"],
+    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
+    proto = "person_proto",
+)

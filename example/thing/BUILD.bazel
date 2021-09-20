@@ -95,6 +95,7 @@ proto_py_library(
 
 proto_compile(
     name = "thing_ts_proto_compile",
+    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": ["emitImportedFiles=false"]},
     outputs = ["thing.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "thing_proto",
