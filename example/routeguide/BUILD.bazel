@@ -1,3 +1,5 @@
+load("@build_stack_rules_proto//rules/py:grpc_py_library.bzl", "grpc_py_library")
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -112,4 +114,31 @@ proto_compile(
     outputs = ["routeguide_scala.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
     proto = "routeguide_proto",
+)
+
+proto_compile(
+    name = "routeguide_python_compile",
+    outputs = [
+        "routeguide_pb2.py",
+        "routeguide_pb2_grpc.py",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:python",
+        "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python",
+    ],
+    proto = "routeguide_proto",
+)
+
+proto_py_library(
+    name = "routeguide_py_library",
+    srcs = ["routeguide_pb2.py"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf_python"],
+)
+
+grpc_py_library(
+    name = "routeguide_grpc_py_library",
+    srcs = ["routeguide_pb2_grpc.py"],
+    visibility = ["//visibility:public"],
+    deps = [":routeguide_py_library"],
 )
