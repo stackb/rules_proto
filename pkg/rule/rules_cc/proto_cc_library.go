@@ -1,4 +1,4 @@
-package builtin
+package rules_cc
 
 import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
@@ -43,7 +43,7 @@ func (s *protoCcLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.
 	if len(outputs) == 0 {
 		return nil
 	}
-	return &CcLibraryRule{
+	return &CcLibrary{
 		KindName:       ProtoCcLibraryRuleName,
 		RuleNameSuffix: ProtoCcLibraryRuleSuffix,
 		Outputs:        outputs,

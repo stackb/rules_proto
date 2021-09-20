@@ -25,6 +25,5 @@ func (p *JavaPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigur
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/builtin", "java"),
 		Outputs: []string{srcjar},
-		Out:     srcjar,
 	}
 }

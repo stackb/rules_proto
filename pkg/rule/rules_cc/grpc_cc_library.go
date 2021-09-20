@@ -1,4 +1,4 @@
-package builtin
+package rules_cc
 
 import (
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -46,7 +46,7 @@ func (s *grpcCcLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.P
 		return nil
 	}
 
-	return &CcLibraryRule{
+	return &CcLibrary{
 		KindName:       grpcCcLibraryRuleName,
 		RuleNameSuffix: grpcCcLibraryRuleSuffix,
 		Outputs:        outputs,
