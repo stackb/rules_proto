@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
 load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
@@ -94,4 +95,14 @@ proto_compile(
     outputs = ["person_pb2.py"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
     proto = "person_proto",
+)
+
+proto_py_library(
+    name = "person_py_library",
+    srcs = ["person_pb2.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//example/place:place_py_library",
+        "@com_google_protobuf//:protobuf_python",
+    ],
 )

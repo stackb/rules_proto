@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -125,4 +126,11 @@ proto_compile(
         "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python",
     ],
     proto = "routeguide_proto",
+)
+
+proto_py_library(
+    name = "routeguide_py_library",
+    srcs = ["routeguide_pb2.py"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf_python"],
 )
