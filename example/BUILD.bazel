@@ -76,3 +76,8 @@
 # gazelle:proto_plugin ts_proto option emitImportedFiles=false
 # gazelle:proto_language ts_proto plugin ts_proto
 # gazelle:proto_language ts_proto rule proto_compile
+
+## closure ##
+# gazelle:proto_plugin closure_js implementation builtin:js:closure
+# gazelle:proto_language closure_js plugin closure_js
+# gazelle:proto_language closure_js rule proto_compile

@@ -101,3 +101,14 @@ proto_compile(
     proto = "thing_proto",
     verbose = True,
 )
+
+proto_compile(
+    name = "thing_closure_js_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
+        "import_style=closure",
+        "library=example/thing/thing",
+    ]},
+    outputs = ["thing.js"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
+    proto = "thing_proto",
+)

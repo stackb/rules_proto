@@ -114,3 +114,14 @@ proto_compile(
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "place_proto",
 )
+
+proto_compile(
+    name = "place_closure_js_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
+        "import_style=closure",
+        "library=example/place/place",
+    ]},
+    outputs = ["place.js"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
+    proto = "place_proto",
+)
