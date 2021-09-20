@@ -32,6 +32,20 @@ depsgen(
 )
 
 depsgen(
+    name = "nodejs",
+    deps = [
+        ":build_bazel_rules_nodejs",
+    ],
+)
+
+depsgen(
+    name = "ts_proto",
+    deps = [
+        ":npm_ts_proto",
+    ],
+)
+
+depsgen(
     name = "prebuilt_protoc",
     deps = [
         ":prebuilt_protoc_linux",
@@ -352,6 +366,26 @@ proto_dependency(
     repository_rule = "go_repository",
     sum = "h1:JjCZWpVbqXDqFVmTfYWEVTMIYrL/NPdPSCHPJ0T/raM=",
     version = "v1.4.3",
+)
+
+# Release: 4.2.0
+# TargetCommitish: stable
+# Date: 2021-09-17 18:20:30 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_nodejs/releases/tag/4.2.0
+# Size: 5817017 (5.8 MB)
+proto_dependency(
+    name = "build_bazel_rules_nodejs",
+    repository_rule = "http_archive",
+    sha256 = "482741b49b730b4055e5bb3936b4fe97e27365e917d1e4d442d5b71a6180aaf2",
+    strip_prefix = "rules_nodejs-4.2.0",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/archive/4.2.0.tar.gz"],
+)
+
+proto_dependency(
+    name = "npm_ts_proto",
+    package_json = "//plugin/stephenh/ts-proto:package.json",
+    package_lock_json = "//plugin/stephenh/ts-proto:package-lock.json",
+    repository_rule = "npm_install",
 )
 
 filegroup(

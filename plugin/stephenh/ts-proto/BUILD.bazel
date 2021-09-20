@@ -1,0 +1,46 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "protoc-gen-ts-proto",
+    data = [
+        "@build_bazel_rules_nodejs//toolchains/node:node_bin",
+        "@npm_ts_proto//:node_modules",
+    ],
+    tool = ":ts-proto",
+    visibility = ["//visibility:public"],
+)
+
+genrule(
+    name = "config",
+    srcs = ["@build_bazel_rules_nodejs//toolchains/node:node_bin"],
+    outs = ["config.go"],
+    cmd = """
+cat << EOF > $@
+package main
+
+var (
+    nodeBin = "external/$(NODE_PATH)"
+    npmWorkspaceFile = "$(location @npm_ts_proto//:BUILD.bazel)"
+)
+EOF
+    """,
+    toolchains = ["@build_bazel_rules_nodejs//toolchains/node:toolchain"],
+    tools = ["@npm_ts_proto//:BUILD.bazel"],
+)
+
+go_library(
+    name = "ts-proto_lib",
+    srcs = [
+        "protoc-gen-ts-proto.go",
+        ":config.go",  # keep
+    ],
+    importpath = "github.com/stackb/rules_proto/plugin/stephenh/ts-proto",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "ts-proto",
+    embed = [":ts-proto_lib"],
+    visibility = ["//visibility:public"],
+)

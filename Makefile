@@ -15,7 +15,9 @@ deps:
 	cp -f ./bazel-bin/deps/prebuilt_protoc_deps.bzl deps/prebuilt_protoc_deps.bzl
 	cp -f ./bazel-bin/deps/scala_deps.bzl deps/scala_deps.bzl
 	cp -f ./bazel-bin/deps/go_core_deps.bzl deps/go_core_deps.bzl
-	chmod 0644 deps/*.bzl
+	cp -f ./bazel-bin/deps/nodejs_deps.bzl deps/nodejs_deps.bzl
+	cp -f ./bazel-bin/deps/ts_proto_deps.bzl deps/ts_proto_deps.bzl
+	chmod 0644 deps/*.bzl rules/nodejs/deps.bzl
 	bazel run //:buildifier -- deps/
 		
 .PHONY: site

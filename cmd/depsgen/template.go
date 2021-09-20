@@ -26,7 +26,10 @@ def {{ .Dep.Name }}():
     _maybe(
         {{ .Dep.RepositoryRule }},
         name = "{{ .Dep.Name }}",{{ if .Dep.Path }}
-        path = "{{ .Dep.Path }}",{{ end }}{{ if .Dep.Sha256 }}
+        path = "{{ .Dep.Path }}",{{ end }}{{ if .Dep.PackageJson }}
+        package_json = "{{ .Dep.PackageJson }}",{{ end }}{{ if .Dep.PackageLockJson }}
+        package_lock_json = "{{ .Dep.PackageLockJson }}",{{ end }}{{ if .Dep.YarnLock }}
+        yarn_lock = "{{ .Dep.YarnLock }}",{{ end }}{{ if .Dep.Sha256 }}
         sha256 = "{{ .Dep.Sha256 }}",{{ end }}{{ if .Dep.StripPrefix }}
         strip_prefix = "{{ .Dep.StripPrefix }}",{{ end }}{{ if .Dep.Sum }}
         sum = "{{ .Dep.Sum }}",{{ end }}{{ if .Dep.Version }}

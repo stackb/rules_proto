@@ -14,6 +14,8 @@ var knownLoads = map[string]string{
 	"http_archive":     "@bazel_tools//tools/build_defs/repo:http.bzl",
 	"http_file":        "@bazel_tools//tools/build_defs/repo:http.bzl",
 	"local_repository": "",
+	"npm_install":      "@build_bazel_rules_nodejs//:index.bzl",
+	"yarn_install":     "@build_bazel_rules_nodejs//:index.bzl",
 }
 
 type Config struct {
@@ -43,6 +45,9 @@ type ProtoDependencyInfo struct {
 	Urls               []string
 	Version            string
 	WorkspaceSnippet   string
+	PackageJson        string
+	PackageLockJson    string
+	YarnLock           string
 }
 
 type LoadInfo struct {
