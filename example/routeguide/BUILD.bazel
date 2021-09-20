@@ -74,16 +74,11 @@ grpc_java_library(
     deps = [
         ":routeguide_java_library",
         "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java",
-        "@com_google_protobuf//java/core",
     ],
 )
 
 proto_compile(
     name = "routeguide_java_compile",
-    outs = {
-        "@build_stack_rules_proto//plugin/builtin:java": "example/routeguide/routeguide.srcjar",
-        "@build_stack_rules_proto//plugin/grpc/grpc-java:protoc-gen-grpc-java": "example/routeguide/routeguide_grpc.srcjar",
-    },
     outputs = [
         "routeguide.srcjar",
         "routeguide_grpc.srcjar",
@@ -93,7 +88,6 @@ proto_compile(
         "@build_stack_rules_proto//plugin/grpc/grpc-java:protoc-gen-grpc-java",
     ],
     proto = "routeguide_proto",
-    verbose = False,
 )
 
 proto_java_library(
