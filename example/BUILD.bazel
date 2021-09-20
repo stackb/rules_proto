@@ -62,11 +62,11 @@
 # gazelle:proto_rule proto_python_library implementation stackb:rules_proto:proto_py_library
 # gazelle:proto_rule proto_python_library deps @com_google_protobuf//:protobuf_python
 # gazelle:proto_rule proto_python_library visibility //visibility:public
-### gazelle:proto_rule grpc_python_library implementation stackb:rules_proto:grpc_python_library
-### gazelle:proto_rule grpc_python_library deps @build_stack_rules_proto//plugin/grpc/grpc-python:grpc_python
-### gazelle:proto_rule grpc_python_library visibility //visibility:public
+# gazelle:proto_rule grpc_py_library implementation stackb:rules_proto:grpc_py_library
+## gazelle:proto_rule grpc_py_library deps @build_stack_rules_proto//plugin/grpc/grpc-python:grpc_python
+# gazelle:proto_rule grpc_py_library visibility //visibility:public
 # gazelle:proto_language python plugin python
 # gazelle:proto_language python plugin protoc-gen-grpc-python
 # gazelle:proto_language python rule proto_compile
 # gazelle:proto_language python rule proto_python_library
-### gazelle:proto_language python rule grpc_python_library
+# gazelle:proto_language python rule grpc_py_library
