@@ -1,6 +1,8 @@
 package rules_java
 
 import (
+	"github.com/bazelbuild/bazel-gazelle/config"
+	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -55,6 +57,9 @@ func (s *protoJavaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *proto
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver:       protoc.ResolveDepsWithSuffix(ProtoJavaLibraryRuleSuffix),
+		Resolver: func(impl protoc.DepsProvider, pc *protoc.ProtocConfiguration, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+			protoc.ResolveDepsWithSuffix(ProtoJavaLibraryRuleSuffix)(impl, pc, c, r, importsRaw, from)
+			r.SetAttr("exports", r.Attr("deps"))
+		},
 	}
 }

@@ -67,6 +67,10 @@ proto_java_library(
     name = "person_java_library",
     srcs = ["person.srcjar"],
     visibility = ["//visibility:public"],
+    exports = [
+        "//example/place:place_java_library",
+        "@com_google_protobuf//:protobuf_java",
+    ],
     deps = [
         "//example/place:place_java_library",
         "@com_google_protobuf//:protobuf_java",
@@ -85,6 +89,10 @@ proto_scala_library(
     name = "person_scala_library",
     srcs = ["person_scala.srcjar"],
     visibility = ["//visibility:public"],
+    exports = [
+        "//example/place:place_scala_library",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
+    ],
     deps = [
         "//example/place:place_scala_library",
         "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",

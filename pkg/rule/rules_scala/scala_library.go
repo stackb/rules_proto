@@ -101,13 +101,8 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		ruleConfig:     cfg,
 		config:         pc,
 		resolver: func(impl protoc.DepsProvider, pc *protoc.ProtocConfiguration, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
-			deps := impl.Deps()
-			deps = append(deps, ":"+pc.Library.BaseName()+scalaLibraryRuleSuffix)
-
-			if len(deps) > 0 {
-				r.SetAttr("deps", deps)
-				r.SetAttr("exports", deps)
-			}
+			protoc.ResolveDepsWithSuffix(scalaLibraryRuleSuffix)(impl, pc, c, r, importsRaw, from)
+			r.SetAttr("exports", r.Attr("deps"))
 		},
 	}
 }
