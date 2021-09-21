@@ -1,0 +1,7 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "protoc-gen-grpc-node",
+    tool = "@com_github_grpc_grpc_node_packages_grpc_tools_src//:grpc_node_plugin",
+    visibility = ["//visibility:public"],
+)

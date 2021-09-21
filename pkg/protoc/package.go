@@ -1,7 +1,6 @@
 package protoc
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/bazelbuild/bazel-gazelle/rule"
@@ -112,7 +111,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 	for _, name := range p.GetRulesByIntent(true) {
 		ruleConfig, ok := s.cfg.rules[name]
 		if !ok {
-			panic(fmt.Sprintf("proto_rule %q is not configured", name))
+			log.Fatalf("proto_rule %q is not configured", name)
 		}
 		if !ruleConfig.Enabled {
 			continue

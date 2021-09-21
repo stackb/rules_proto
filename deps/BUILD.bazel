@@ -42,6 +42,7 @@ depsgen(
     name = "nodejs",
     deps = [
         ":build_bazel_rules_nodejs",
+        ":build_bazel_rules_typescript",
     ],
 )
 
@@ -69,6 +70,11 @@ depsgen(
 depsgen(
     name = "grpc_js",
     deps = ["//deps:com_github_stackb_grpc_js"],
+)
+
+depsgen(
+    name = "grpc_node",
+    deps = ["//deps:com_github_grpc_grpc_node_packages_grpc_tools_src"],
 )
 
 depsgen(
@@ -428,6 +434,64 @@ proto_dependency(
     sha256 = "ac90cd56d28ea3841e97ad18fe50ac5dce04120e3b91116d5c3ffc21bc33c098",
     strip_prefix = "grpc.js-349d42b41fc52cb4c0a91662961b9ecff9201396",
     urls = ["https://github.com/stackb/grpc.js/archive/349d42b41fc52cb4c0a91662961b9ecff9201396.tar.gz"],
+)
+
+# Release: @grpc/proto-loader@0.6.5
+# Commit: master
+# Date: 2021-09-13 17:57:45 +0000 UTC
+# URL: https://github.com/grpc/grpc-node/releases/tag/%40grpc/proto-loader%400.6.5
+# Branch: master
+# Commit: aeb42733d861883b82323e2dc6d1aba0e3a12aa0
+# Date: 2021-09-20 20:01:10 +0000 UTC
+# URL: https://github.com/grpc/grpc-node/commit/aeb42733d861883b82323e2dc6d1aba0e3a12aa0
+#
+# Merge pull request #1909 from murgatroid99/grpc-js-xds_log_bootstrap_master
+#
+# grpc-js-xds: Log loaded bootstrap info in xDS client (master)
+# Size: 447780 (448 kB)
+proto_dependency(
+    name = "com_github_grpc_grpc_node_packages_grpc_tools_src",
+    build_file_content = """
+cc_library(
+    name = "grpc_plugin_support",
+    srcs = ["node_generator.cc"],
+    hdrs = [
+        "config.h",
+        "config_protobuf.h",
+        "generator_helpers.h",
+        "node_generator.h",
+        "node_generator_helpers.h",
+    ],
+    deps = ["//external:protobuf_clib"],
+)
+
+cc_binary(
+    name = "grpc_node_plugin",
+    srcs = ["node_plugin.cc"],
+    visibility = ["//visibility:public"],
+    deps = [":grpc_plugin_support"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "7fbe9d04e45420c3c2e02456c0275fa8716fa894c48525b9a8f7db9ac0b4acb0",
+    strip_prefix = "grpc-node-aeb42733d861883b82323e2dc6d1aba0e3a12aa0/packages/grpc-tools/src",
+    urls = ["https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz"],
+    deps = [":com_github_grpc_grpc"],
+)
+
+# Branch: master
+# Commit: 5b33837b31d5f8c26852885c689a34aa2c7c63b3
+# Date: 2020-10-23 14:43:10 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_typescript/commit/5b33837b31d5f8c26852885c689a34aa2c7c63b3
+#
+# Update README.md
+# Size: 197435 (197 kB)
+proto_dependency(
+    name = "build_bazel_rules_typescript",
+    repository_rule = "http_archive",
+    sha256 = "409fbfa4c0fc21204afdcd7bbbbc6b0137b6e0ccbbe879d971550cc039f421a9",
+    strip_prefix = "rules_typescript-5b33837b31d5f8c26852885c689a34aa2c7c63b3",
+    urls = ["https://github.com/bazelbuild/rules_typescript/archive/5b33837b31d5f8c26852885c689a34aa2c7c63b3.tar.gz"],
 )
 
 filegroup(
