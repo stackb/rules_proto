@@ -11,6 +11,12 @@ load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_librar
 load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
+filegroup(
+    name = "features",
+    srcs = ["features.json"],
+    visibility = ["//visibility:public"],
+)
+
 proto_library(
     name = "routeguide_proto",
     srcs = ["routeguide.proto"],
