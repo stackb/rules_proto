@@ -1,14 +1,3 @@
-cc_test(
-    name = "feature_test",
-    size = "small",
-    srcs = ["feature_test.cc"],
-    copts = ["-Iexternal/gtest/include"],
-    deps = [
-        ":helper",
-        "//external:gtest",
-    ],
-)
-
 cc_library(
     name = "helper",
     srcs = ["helper.cc"],
