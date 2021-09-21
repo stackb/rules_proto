@@ -67,6 +67,7 @@ func (s *scalaLibrary) KindInfo() rule.KindInfo {
 		MergeableAttrs: map[string]bool{
 			"srcs":       true,
 			"deps":       true,
+			"exports":    true,
 			"visibility": true,
 		},
 	}
@@ -99,7 +100,15 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		outputs:        plugin.Outputs,
 		ruleConfig:     cfg,
 		config:         pc,
-		resolver:       protoc.ResolveDepsWithSuffix(scalaLibraryRuleSuffix),
+		resolver: func(impl protoc.DepsProvider, pc *protoc.ProtocConfiguration, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+			deps := impl.Deps()
+			deps = append(deps, ":"+pc.Library.BaseName()+scalaLibraryRuleSuffix)
+
+			if len(deps) > 0 {
+				r.SetAttr("deps", deps)
+				r.SetAttr("exports", deps)
+			}
+		},
 	}
 }
 

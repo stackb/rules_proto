@@ -53,13 +53,13 @@ func (s *grpcClosureJsLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *p
 		Config:         pc,
 		Resolver: func(impl protoc.DepsProvider, pc *protoc.ProtocConfiguration, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
 			protoDep := ":" + pc.Library.BaseName() + ProtoClosureJsLibraryRuleSuffix
-			r.SetAttr("exports", []string{protoDep})
 
 			deps := impl.Deps()
 			deps = append(deps, protoDep)
 
 			if len(deps) > 0 {
 				r.SetAttr("deps", deps)
+				r.SetAttr("exports", deps)
 			}
 		},
 	}
