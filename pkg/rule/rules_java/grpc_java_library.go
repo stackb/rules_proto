@@ -57,6 +57,7 @@ func (s *grpcJavaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc
 
 			if len(deps) > 0 {
 				r.SetAttr("deps", deps)
+				r.SetAttr("exports", deps)
 			}
 		},
 	}

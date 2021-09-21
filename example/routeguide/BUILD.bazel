@@ -31,7 +31,10 @@ genrule(
 filegroup(
     name = "feature_db",
     srcs = ["feature_db.json"],
-    visibility = ["//example/routeguide/java:__pkg__"],
+    visibility = [
+        "//example/routeguide/java:__pkg__",
+        "//example/routeguide/scala:__pkg__",
+    ],
 )
 
 proto_library(
@@ -197,6 +200,7 @@ grpc_scala_library(
     name = "routeguide_scala_library",
     srcs = ["routeguide_scala.srcjar"],
     visibility = ["//visibility:public"],
+    exports = ["@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12"],
     deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12"],
 )
 
