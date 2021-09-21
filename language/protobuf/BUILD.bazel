@@ -12,6 +12,7 @@ go_library(
         "//pkg/plugin/grpc/grpc",
         "//pkg/plugin/grpc/grpcgo",
         "//pkg/plugin/grpc/grpcjava",
+        "//pkg/plugin/grpc/grpcnode",
         "//pkg/plugin/grpcecosystem/grpcgateway",
         "//pkg/plugin/scalapb/scalapb",
         "//pkg/plugin/stackb/grpc_js",

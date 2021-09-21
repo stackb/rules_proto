@@ -48,6 +48,10 @@ load("//deps:nodejs_deps.bzl", "nodejs_deps")
 
 nodejs_deps()
 
+load("//deps:grpc_node_deps.bzl", "grpc_node_deps")
+
+grpc_node_deps()
+
 load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 
 ts_proto_deps()
@@ -186,6 +190,16 @@ rules_closure_dependencies()
 rules_closure_toolchains()
 
 # ----------------------------------------------------
+# nodejs
+# ----------------------------------------------------
+
+load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
+
+node_repositories()
+
+register_toolchains("//toolchain:nodejs")
+
+# ----------------------------------------------------
 # END
 # ----------------------------------------------------
 
@@ -254,6 +268,11 @@ rules_closure_toolchains()
 # # =================================================================================================
 # # nodejs
 # # =================================================================================================
+
+# local_repository(
+#     name = "com_github_grpc_grpc_node",
+#     path = "/Users/i868039/go/src/github.com/grpc/grpc-node",
+# )
 
 # build_bazel_rules_nodejs()
 

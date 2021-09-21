@@ -19,6 +19,7 @@ deps:
 	cp -f ./bazel-bin/deps/ts_proto_deps.bzl deps/ts_proto_deps.bzl
 	cp -f ./bazel-bin/deps/closure_deps.bzl deps/closure_deps.bzl
 	cp -f ./bazel-bin/deps/grpc_js_deps.bzl deps/grpc_js_deps.bzl
+	cp -f ./bazel-bin/deps/grpc_node_deps.bzl deps/grpc_node_deps.bzl
 	chmod 0644 deps/*.bzl rules/nodejs/deps.bzl
 	bazel run //:buildifier -- deps/
 		
