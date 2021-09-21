@@ -77,8 +77,9 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		}
 		impl, err := globalRegistry.LookupPlugin(plugin.Implementation)
 		if err == ErrUnknownPlugin {
-			log.Panicf(
-				"plugin not registered: %q (available: %v) [%+v]",
+			log.Fatalf(
+				"%s: plugin not registered: %q (available: %v) [%+v]",
+				s.rel,
 				plugin.Implementation,
 				globalRegistry.PluginNames(),
 				plugin,

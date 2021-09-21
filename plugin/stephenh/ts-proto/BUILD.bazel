@@ -32,8 +32,8 @@ EOF
 go_library(
     name = "ts-proto_lib",
     srcs = [
+        "config.go",
         "protoc-gen-ts-proto.go",
-        ":config.go",  # keep
     ],
     importpath = "github.com/stackb/rules_proto/plugin/stephenh/ts-proto",
     visibility = ["//visibility:private"],

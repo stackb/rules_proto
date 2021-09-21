@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -45,6 +46,8 @@ proto_go_library(
     importpath = "github.com/stackb/rules_proto/example/thing",
     visibility = ["//visibility:public"],
     deps = [
+        "@org_golang_google_protobuf//reflect/protoreflect",  # keep
+        "@org_golang_google_protobuf//runtime/protoimpl",  # keep
         "@org_golang_google_protobuf//types/known/timestamppb",  # keep
     ],
 )
@@ -99,5 +102,22 @@ proto_compile(
     outputs = ["thing.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "thing_proto",
-    verbose = True,
+)
+
+proto_compile(
+    name = "thing_closure_js_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
+        "import_style=closure",
+        "library=example/thing/thing",
+    ]},
+    outputs = ["thing.js"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
+    proto = "thing_proto",
+)
+
+proto_closure_js_library(
+    name = "thing_closure_js_library",
+    srcs = ["thing.js"],
+    internal_descriptors = ["thing-descriptor-set.proto.bin"],
+    visibility = ["//visibility:public"],
 )
