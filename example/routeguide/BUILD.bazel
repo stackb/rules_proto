@@ -17,6 +17,23 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+genrule(
+    name = "feature_db_json",
+    srcs = ["features.json"],
+    outs = ["feature_db.json"],
+    cmd = """
+    echo -n '{ "feature": ' > $@
+    cat $< >> $@
+    echo '}' >> $@
+    """,
+)
+
+filegroup(
+    name = "feature_db",
+    srcs = ["feature_db.json"],
+    visibility = ["//example/routeguide/java:__pkg__"],
+)
+
 proto_library(
     name = "routeguide_proto",
     srcs = ["routeguide.proto"],
@@ -114,6 +131,10 @@ grpc_java_library(
     name = "routeguide_grpc_java_library",
     srcs = ["routeguide_grpc.srcjar"],
     visibility = ["//visibility:public"],
+    exports = [
+        ":routeguide_java_library",
+        "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java",
+    ],
     deps = [
         ":routeguide_java_library",
         "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java",
@@ -141,6 +162,7 @@ proto_java_library(
     name = "routeguide_java_library",
     srcs = ["routeguide.srcjar"],
     visibility = ["//visibility:public"],
+    exports = ["@com_google_protobuf//:protobuf_java"],
     deps = ["@com_google_protobuf//:protobuf_java"],
 )
 

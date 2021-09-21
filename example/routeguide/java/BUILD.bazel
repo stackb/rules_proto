@@ -1,0 +1,24 @@
+load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+
+java_library(
+    name = "util",
+    srcs = ["RouteGuideUtil.java"],
+    resources = ["//example/routeguide:feature_db"],
+    exports = ["//example/routeguide:routeguide_grpc_java_library"],
+    runtime_deps = ["@io_grpc_grpc_java//netty"],
+    deps = ["//example/routeguide:routeguide_grpc_java_library"],
+)
+
+java_binary(
+    name = "client",
+    srcs = ["RouteGuideClient.java"],
+    main_class = "example.routeguide.java.RouteGuideClient",
+    deps = [":util"],
+)
+
+java_binary(
+    name = "server",
+    srcs = ["RouteGuideServer.java"],
+    main_class = "example.routeguide.java.RouteGuideServer",
+    deps = [":util"],
+)
