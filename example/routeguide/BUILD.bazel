@@ -1,12 +1,13 @@
-load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
-load("@build_stack_rules_proto//rules/py:grpc_py_library.bzl", "grpc_py_library")
-load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules/closure:grpc_closure_js_library.bzl", "grpc_closure_js_library")
+load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:grpc_java_library.bzl", "grpc_java_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
+load("@build_stack_rules_proto//rules/py:grpc_py_library.bzl", "grpc_py_library")
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
@@ -14,6 +15,39 @@ proto_library(
     name = "routeguide_proto",
     srcs = ["routeguide.proto"],
     visibility = ["//visibility:public"],
+)
+
+grpc_closure_js_library(
+    name = "routeguide_grpc_closure_js_library",
+    srcs = ["routeguide.grpc.js"],
+    internal_descriptors = ["routeguide-descriptor-set.proto.bin"],
+    visibility = ["//visibility:public"],
+    exports = [":routeguide_closure_js_library"],
+    deps = [":routeguide_closure_js_library"],
+)
+
+proto_closure_js_library(
+    name = "routeguide_closure_js_library",
+    srcs = ["routeguide.js"],
+    internal_descriptors = ["routeguide-descriptor-set.proto.bin"],
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "routeguide_closure_js_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
+        "import_style=closure",
+        "library=example/routeguide/routeguide",
+    ]},
+    outputs = [
+        "routeguide.grpc.js",
+        "routeguide.js",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:closurejs",
+        "@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js",
+    ],
+    proto = "routeguide_proto",
 )
 
 grpc_cc_library(
@@ -82,7 +116,10 @@ grpc_java_library(
 
 proto_compile(
     name = "routeguide_java_compile",
-    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example/routeguide/routeguide.srcjar"},
+    outs = {
+        "@build_stack_rules_proto//plugin/builtin:java": "example/routeguide/routeguide.srcjar",
+        "@build_stack_rules_proto//plugin/grpc/grpc-java:protoc-gen-grpc-java": "example/routeguide/routeguide_grpc.srcjar",
+    },
     outputs = [
         "routeguide.srcjar",
         "routeguide_grpc.srcjar",
@@ -101,19 +138,11 @@ proto_java_library(
     deps = ["@com_google_protobuf//:protobuf_java"],
 )
 
-grpc_scala_library(
-    name = "routeguide_scala_library",
-    srcs = ["routeguide_scala.srcjar"],
+grpc_py_library(
+    name = "routeguide_grpc_py_library",
+    srcs = ["routeguide_pb2_grpc.py"],
     visibility = ["//visibility:public"],
-    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12"],
-)
-
-proto_compile(
-    name = "routeguide_scala_compile",
-    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
-    outputs = ["routeguide_scala.srcjar"],
-    plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
-    proto = "routeguide_proto",
+    deps = [":routeguide_py_library"],
 )
 
 proto_compile(
@@ -136,43 +165,18 @@ proto_py_library(
     deps = ["@com_google_protobuf//:protobuf_python"],
 )
 
-grpc_py_library(
-    name = "routeguide_grpc_py_library",
-    srcs = ["routeguide_pb2_grpc.py"],
+grpc_scala_library(
+    name = "routeguide_scala_library",
+    srcs = ["routeguide_scala.srcjar"],
     visibility = ["//visibility:public"],
-    deps = [":routeguide_py_library"],
-)
-
-# proto_compile(
-#     name = "routeguide_ts_proto_compile",
-#     options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": ["emitImportedFiles=false"]},
-#     outputs = ["routeguide.ts"],
-#     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
-#     proto = "routeguide_proto",
-# )
-
-proto_compile(
-    name = "routeguide_closure_js_compile",
-    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
-        "import_style=closure",
-        "library=example/routeguide/routeguide",
-    ]},
-    outputs = ["routeguide.js"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
-    proto = "routeguide_proto",
-)
-
-proto_closure_js_library(
-    name = "routeguide_closure_js_library",
-    srcs = ["routeguide.js"],
-    internal_descriptors = ["routeguide-descriptor-set.proto.bin"],
-    visibility = ["//visibility:public"],
+    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12"],
 )
 
 proto_compile(
-    name = "routeguide_grpc_js_compile",
-    outputs = ["routeguide.grpc.js"],
-    plugins = ["@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js"],
+    name = "routeguide_scala_compile",
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
+    outputs = ["routeguide_scala.srcjar"],
+    plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
     proto = "routeguide_proto",
 )
 

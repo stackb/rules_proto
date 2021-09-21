@@ -1,0 +1,48 @@
+load(
+    "@io_bazel_rules_closure//closure:defs.bzl",
+    "closure_js_binary",
+    "closure_js_library",
+    "closure_js_test",
+)
+
+closure_js_test(
+    name = "client_test",
+    size = "small",
+    srcs = ["client_test.js"],
+    entry_points = ["example.routeguide.closure.GrpcJsClientTest"],
+    deps = [
+        ":client",
+        "//example/routeguide:routeguide_grpc_closure_js_library",
+        "@io_bazel_rules_closure//closure/library/testing:asserts",
+        "@io_bazel_rules_closure//closure/library/testing:jsunit",
+        "@io_bazel_rules_closure//closure/library/testing:testsuite",
+    ],
+)
+
+closure_js_library(
+    name = "client",
+    srcs = ["client.js"],
+    deps = [
+        "//example/routeguide:routeguide_grpc_closure_js_library",
+        "@io_bazel_rules_closure//closure/library/promise",
+    ],
+)
+
+closure_js_library(
+    name = "main",
+    srcs = ["main.js"],
+    suppress = [
+        "closureDepMethodUsageChecks",
+        "useOfGoogProvide",
+    ],
+    deps = [":client"],
+)
+
+closure_js_binary(
+    name = "bundle",
+    compilation_level = "ADVANCED",
+    debug = False,
+    entry_points = ["goog:example.routeguide.closure.main"],
+    output_wrapper = "(function(){%output%}).call(this);",
+    deps = [":main"],
+)

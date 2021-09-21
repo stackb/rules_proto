@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	ProtoClosurejsLibraryRuleName = "proto_closure_js_library"
-	ProtoPyLibraryRuleSuffix      = "_closure_js_library"
+	ProtoClosurejsLibraryRuleName   = "proto_closure_js_library"
+	ProtoClosureJsLibraryRuleSuffix = "_closure_js_library"
 )
 
 func init() {
@@ -45,10 +45,10 @@ func (s *protoClosureJsLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *
 	}
 	return &ClosureJsLibrary{
 		KindName:       ProtoClosurejsLibraryRuleName,
-		RuleNameSuffix: ProtoPyLibraryRuleSuffix,
+		RuleNameSuffix: ProtoClosureJsLibraryRuleSuffix,
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver:       protoc.ResolveDepsWithSuffix(ProtoPyLibraryRuleSuffix),
+		Resolver:       protoc.ResolveDepsWithSuffix(ProtoClosureJsLibraryRuleSuffix),
 	}
 }

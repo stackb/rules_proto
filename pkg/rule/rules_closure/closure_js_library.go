@@ -15,6 +15,7 @@ var closureJsLibraryKindInfo = rule.KindInfo{
 	MergeableAttrs: map[string]bool{
 		"srcs":       true,
 		"deps":       true,
+		"exports":    true,
 		"visibility": true,
 	},
 }

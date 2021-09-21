@@ -4,6 +4,7 @@ go_library(
     name = "rules_closure",
     srcs = [
         "closure_js_library.go",
+        "grpc_closure_js_library.go",
         "proto_closure_js_library.go",
     ],
     importpath = "github.com/stackb/rules_proto/pkg/rule/rules_closure",
