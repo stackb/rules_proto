@@ -47,13 +47,13 @@ func phpFileName(rel string) func(f *protoc.File) []string {
 		}
 
 		// php_namespace overrides package
-		ns := protoc.GetNamedOption(f.Options(), "php_namespace")
+		ns, _ := protoc.GetNamedOption(f.Options(), "php_namespace")
 		if ns != "" {
 			dir = ns
 		}
 
 		// Add the metadata file
-		mns := protoc.GetNamedOption(f.Options(), "php_metadata_namespace")
+		mns, _ := protoc.GetNamedOption(f.Options(), "php_metadata_namespace")
 		if mns == "" {
 			mns = "GPBMetadata"
 		}

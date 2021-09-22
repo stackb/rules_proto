@@ -4,7 +4,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-// ProtoLibrary represents a proto_library targets and its associated parse
+// ProtoLibrary represents a proto_library target and its associated parsed
 // .proto files.
 type ProtoLibrary interface {
 	// Name returns the name of the rule (e.g. foo_proto)

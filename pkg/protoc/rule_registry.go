@@ -9,10 +9,11 @@ var ErrUnknownRule = errors.New("unknown rule")
 type RuleRegistry interface {
 	// RuleNames returns a sorted list of rule names.
 	RuleNames() []string
-	// LookupRule returns the implementation under the given name.
+	// LookupRule returns the implementation under the given name.  If the rule
+	// is not found, ErrUnknownRule is returned.
 	LookupRule(name string) (LanguageRule, error)
 	// MustRegisterRule installs a LanguageRule implementation under the given
-	// name in the global rule registry.  Panic will occur of the same rule is
+	// name in the global rule registry.  Panic will occur if the same rule is
 	// registered multiple times.
 	MustRegisterRule(name string, rule LanguageRule) RuleRegistry
 }

@@ -179,7 +179,7 @@ func (s *goLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw inter
 
 func getGoPackageOption(c *config.Config, rel string, files []*protoc.File) string {
 	for _, file := range files {
-		if value := protoc.GetNamedOption(file.Options(), "go_package"); value != "" {
+		if value, _ := protoc.GetNamedOption(file.Options(), "go_package"); value != "" {
 			if strings.LastIndexByte(value, '/') == -1 {
 				return langgo.InferImportPath(c, rel)
 			}

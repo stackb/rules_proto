@@ -22,7 +22,7 @@ const (
 	importpathPrefixDirective = "prefix"
 )
 
-// PackageConfig represents the config extension for the rosetta language.
+// PackageConfig represents the config extension for the protobuf language.
 type PackageConfig struct {
 	// config is the parent gazelle config.
 	config *config.Config
@@ -61,7 +61,7 @@ func (c *PackageConfig) Plugin(name string) (LanguagePluginConfig, bool) {
 	}
 }
 
-// Clone copies this config to a new one
+// Clone copies this config to a new one.
 func (c *PackageConfig) Clone() *PackageConfig {
 	clone := NewPackageConfig(c.config)
 	clone.importpathPrefix = c.importpathPrefix
