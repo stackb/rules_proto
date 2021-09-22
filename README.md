@@ -2,8 +2,6 @@
 
 Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 
-<img src="data:image/svg+xml,%3C!--%20Created%20by%20Jose%20Rivera%20--%3E%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20version%3D%221.1%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%20100%20100%22%20style%3D%22enable-background%3Anew%200%200%20100%20100%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0A%09%3Cg%3E%0A%09%09%3Cg%3E%0A%09%09%09%3Cpath%20d%3D%22M68.9%2C52.4L68.9%2C52.4l5.3%2C3.4L68.9%2C52.4z%22%20%2F%3E%0A%09%09%3C%2Fg%3E%0A%09%09%3Cpath%20d%3D%22M90.9%2C69.5l0-0.2l0%2C0.8L90.9%2C69.5z%22%20%2F%3E%0A%09%09%3Cpath%20d%3D%22M16.2%2C34.4L15.7%2C34l-0.2-0.2v0l0.2%2C0.1L16.2%2C34.4L16.2%2C34.4L16.2%2C34.4z%20M16.2%2C34.4L15.7%2C34l-0.2-0.2v0l0.2%2C0.1L16.2%2C34.4%20%20%20L16.2%2C34.4L16.2%2C34.4z%20M15.2%2C33.5L15.2%2C33.5l0.2%2C0.2L15.2%2C33.5z%20M16.2%2C34.4L15.7%2C34l-0.2-0.2v0l0.2%2C0.1L16.2%2C34.4L16.2%2C34.4%20%20%20L16.2%2C34.4z%20M16.2%2C34.4L15.7%2C34h0L16.2%2C34.4L16.2%2C34.4L16.2%2C34.4z%22%20%2F%3E%0A%09%09%3Cg%3E%0A%09%09%09%3Cpath%20d%3D%22M16.2%2C34.4L15.7%2C34l-0.2-0.2v0l0.2%2C0.1L16.2%2C34.4L16.2%2C34.4L16.2%2C34.4z%22%20%2F%3E%0A%09%09%3C%2Fg%3E%0A%09%09%3Cpath%20d%3D%22M52.4%2C31.2L52.4%2C31.2L52.4%2C31.2L52.4%2C31.2z%22%20%2F%3E%0A%09%09%3Cg%3E%0A%09%09%09%3Cpath%20d%3D%22M68%2C32.8L68%2C32.8l0.7%2C0.6L68%2C32.8z%22%20%2F%3E%0A%09%09%3C%2Fg%3E%0A%09%09%3Cg%3E%0A%09%09%09%3Cpath%20d%3D%22M94.7%2C82.9l-2.9%2C2.9l-0.9-15.8l0-0.8l-0.2-0.2l-10.1-9.1l4.6-6.4l-0.9-6.7l-9.5-8.3l-0.6-0.5l-5.5-4.7L68%2C32.8v0%20%20%20%20L56.2%2C22.5l-0.4-0.3l-22.9%2C5l-11.7%2C2.6l-0.6%2C0.1l-0.2%2C0.2l-4.2%2C2.7l0.8-10L13%2C28.7l1.3-11.2l0-0.1L13%2C9.4L12%2C19.6L8.3%2C34.4%20%20%20%20l-8%2C16.2l2.4-1.4l3.7%2C1.9l1-4.6h0l13.4-7.8l0.1-0.1l0.3%2C0.1l13.4%2C2.2L29%2C43.6l-0.3%2C0.2l0.1%2C0.7l2.9%2C14.2l0.2%2C0.8l0.7%2C0.6l8%2C6.3%20%20%20%20l-0.2-5.7l-7.8-1.6l1-15.2l9.6-1.5l1.2-0.2l0.2%2C0.8l0.2%2C0.1l0.4%2C0.2l0.4%2C0.2l0.3%2C0.1l22.2%2C9.5L72%2C63.5l12.8%2C4.4L91%2C86.7l0.1%2C0.4%20%20%20%20l0.8%2C0.3l7.8%2C3.2L94.7%2C82.9z%20M6.7%2C45.9L6.7%2C45.9l-4.5%2C2.6l5.2-10.4L9.9%2C33l0%2C0L8.6%2C38l-0.2%2C0.7L6.7%2C45.9z%20M19.7%2C38.4l-12.1%2C7%20%20%20%20l1.7-6.9l3.6-1.3L10.7%2C33l0.7-2.9l3.7%2C3.4l0%2C0l0.2%2C0.2l0.1%2C0.1l0%2C0l0.2%2C0.2l0.5%2C0.5l0.1%2C0.1l3.8%2C3.5l0.1%2C0.1L19.7%2C38.4z%20%20%20%20%20M21.3%2C37.6v-7L34%2C27.8l7.8%2C4.5L21.3%2C37.6z%20M45.6%2C42.4l-0.3-0.1l-0.1-0.4L45%2C41.1l-0.8-4l-0.2-0.8l-0.7-3.5l8.1-0.7L45.6%2C42.4z%20%20%20%20%20M52.5%2C31.2L52.5%2C31.2L52.5%2C31.2L52.5%2C31.2z%20M52.8%2C31.6L52.8%2C31.6l0.1-0.4h0l3-7.9l12%2C10.4l-1.9%2C10.7L52.8%2C31.6z%20M74.1%2C55.8%20%20%20%20l-5.3-3.4v0l0%2C0l-2.2-7l7.5-6.2l9.4%2C8.1l0.8%2C6.1l-4.4%2C6.1L74.1%2C55.8z%20M85.8%2C68.3l4.3%2C1.5l0.8%2C14L85.8%2C68.3z%22%20%2F%3E%0A%09%09%3C%2Fg%3E%0A%09%09%3Cg%3E%0A%09%09%09%3Cpath%20d%3D%22M15.2%2C33.5L15.2%2C33.5l0.2%2C0.2L15.2%2C33.5z%22%20%2F%3E%0A%09%09%3C%2Fg%3E%0A%09%09%3Cg%3E%0A%09%09%09%3Cpath%20d%3D%22M15.2%2C33.5L15.2%2C33.5l0.2%2C0.2L15.2%2C33.5z%22%20%2F%3E%0A%09%09%3C%2Fg%3E%0A%09%09%3Cg%3E%0A%09%09%09%3Cpolygon%20points%3D%2252.5%2C31.2%2052.5%2C31.2%2052.4%2C31.2%20%20%20%22%20%2F%3E%0A%09%09%09%3Cpolygon%20points%3D%2252.5%2C31.2%2052.5%2C31.2%2052.4%2C31.2%20%20%20%22%20%2F%3E%0A%09%09%3C%2Fg%3E%0A%09%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A"/>
-
 <table border="0"><tr>
 <td><img src="https://bazel.build/images/bazel-icon.svg" height="180"/></td>
 <td><img src="https://github.com/pubref/rules_protobuf/blob/master/images/wtfcat.png" height="180"/></td>
@@ -17,8 +15,8 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 `@build_stack_rules_proto` provides:
 
 1. Rules for driving the `protoc` tool within a bazel workspace.
-2. A [gazelle] extension that generates rules based on the content of your
-   `.proto` files.
+2. A [gazelle](https://github.com/bazelbuild/bazel-gazelle/) extension that
+   generates rules based on the content of your `.proto` files.
 3. Example setups for a variety of languages.
 
 # Getting Started
@@ -48,7 +46,9 @@ http_archive(
 register_toolchains("@build_stack_rules_proto//toolchain:standard")
 ```
 
-> This prepares `protoc` for the `proto_compile` rule.  For simple setups, consider `@build_stack_rules_proto//toolchain:prebuilt` to skip compilation of the tool.
+> This prepares `protoc` for the `proto_compile` rule.  For simple setups,
+> consider `@build_stack_rules_proto//toolchain:prebuilt` to skip compilation of
+> the tool.
 
 ---
 
@@ -144,9 +144,9 @@ Gazelle is configured by special comments in BUILD files called `directives`.
 
 > Gazelle works by visiting each package in your workspace; configuration is
 > done "on the way in" whereas actual rule generation is done "on the way out".
-> Therefore, gazelle configuration if a subdirectory inherits that from its
-> parents.  As such, directives placed in the root `BUILD.bazel` file apply the
-> entire workspace.
+> Therefore, gazelle configuration of a subdirectory inherits that from its
+> parents.  As such, directives placed in the root `BUILD.bazel` file apply to
+> the entire workspace.
 
 ```python
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
@@ -173,14 +173,14 @@ Let's unpack this a bit:
 
 - `gazelle:proto_plugin cpp implementation builtin:cpp` associates the name
   `cpp` with a piece of golang code that implements the `protoc.Plugin`
-  interface. The extension maintains a registry of these actors. The gazelle
+  interface. The extension maintains a registry of these actors (the gazelle
   extension ships with a number of them out of the box, but you can also write
-  your own.  The core responsibility a `protoc.Plugin` implementation is to to
+  your own).  The core responsibility a `protoc.Plugin` implementation is to to
   *predict* the files that a protoc plugin tool will generate for an individual
   `proto_library` rule.  The implemention has full read access to the
   `protoc.File`s in the `proto_library` to be able to predict *if* a file will
-  be generated and *where* it will appear in the filesystem (specifically, the
-  bazel execution root). 
+  be generated and *where* it will appear in the filesystem (specifically,
+  relative to the bazel execution root during a `proto_compile` action). 
 - `gazelle:proto_rule proto_compile implementation
   stackb:rules_proto:proto_compile` associates the name `proto_compile` with a
   piece of golang code that implements the `protoc.Rule` interface.  The
@@ -402,3 +402,52 @@ artifact identifiers that follow a GitHub org/repo/rule_name convention.
 
 Please consult the `example/` directory and unit tests for more additional
 detail.
+
+# History
+
+The original rules_proto was <https://github.com/pubref/rules_proto>.  This was
+redesigned around the `proto_library` rule and moved to
+<https://github.com/stackb/rules_proto>.  
+
+An initial aspect implementation was prototyped and considered, but not merged.
+As a result, the ruleset was forked to
+<https://github.com/rules-proto-grpc/rules_proto_grpc> and primarily used
+aspect-based compilation for quite a while before that was again deprecated and
+removed.
+
+Maintaining `stackb/rules_proto` and its polyglot set of languages in its
+original v0-v1 form became a full-time (unpaid) job.  The main issue is that the
+`{LANG}_{PROTO|GRPC}_library` rules are **tightly bound to a specific set of
+dependencies**.  As such, rules_proto users are tightly bound to the specific
+labels named by those rules.  This is a problem for the maintainer as one must
+keep the dependencies current.  It is also a problem for rule consumers: *it
+becomes increasingly difficult to upgrade as the dependencies as assumptions and
+dependencies drift*.
+
+With `stackb/rules_proto` in its `v2` gazelle-based form, it is largely
+**dependency-free**: other than gazelle and the `protoc` toolchain, there are no
+dependencies that you cannot fully control in your own workspace via the gazelle
+configuration.
+
+The gazelle based design also makes things *much* simpler and powerful, because
+the **content of the proto files is the source of truth**.  Due to the fact that
+Bazel does not permit reading/interpreting a file during the scope of an action,
+it is impossible to make a decision about what to do.  A prime example of this
+is the `go_package` option.  If the `go_package` option is present, the location
+of the output file for `protoc-gen-go` is completely different.  As a result,
+the information about the go_package metadata ultimately needs to be duplicated
+so that the build system can know about it.
+
+The gazelle-based approach moves all that messy interpretation and evaluation
+into a precompiled state; as a result, the work that needs to be done in the
+action itself is dramatically simplified.
+
+Furthermore, by parsing the proto files it is easy to support complex custom
+plugins that do things like:
+
+- Emit no files (only assert/lint).
+- Emit a file only if a specific enum constant is found.  With the previous
+  design, this was near impossible.  With the `v2` design, the `protoc.Plugin`
+  implementation can trivially perform that evaluation because it is handed the
+  complete proto AST during gazelle evaluation.
+
