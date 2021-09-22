@@ -22,9 +22,9 @@ func NewFile(dir, basename string) *File {
 	}
 }
 
-// File represents a proto file we discover in a package.
+// File represents a proto file that is discovered in a package.
 type File struct {
-	Dir      string // e.g. "rosetta/rosetta/common/"
+	Dir      string // e.g. "path/to/package/"
 	Basename string // e.g. "foo.proto"
 	Name     string // e.g. "foo"
 
@@ -45,7 +45,7 @@ func (f *File) Relname() string {
 	return filepath.Join(f.Dir, f.Basename)
 }
 
-// GetPackage returns the defined package or the empty value.
+// Package returns the defined package or the empty value.
 func (f *File) Package() proto.Package {
 	return f.pkg
 }
@@ -106,7 +106,7 @@ func (f *File) HasEnumOption(name string) bool {
 	return false
 }
 
-// Parse the source and walk the statements in the file.
+// Parse reads the proto file and parses the source.
 func (f *File) Parse() error {
 	wd, err := os.Getwd()
 	if err != nil {
@@ -127,6 +127,7 @@ func (f *File) Parse() error {
 	return f.ParseReader(reader)
 }
 
+// ParseReader parses the reader and walks statements in the file.
 func (f *File) ParseReader(in io.Reader) error {
 	parser := proto.NewParser(in)
 	definition, err := parser.Parse()
@@ -177,10 +178,9 @@ func (f *File) handleMessage(m *proto.Message) {
 	f.messages = append(f.messages, *m)
 }
 
-// PackageFileName is a utility function that returns a function that computes
-// the name of a predicted generated file having the given extension(s).  If the
-// proto package is defined, the output file will be in the corresponding
-// directory.
+// PackageFileNameWithExtensions returns a function that computes the name of a
+// predicted generated file having the given extension(s).  If the proto package
+// is defined, the output file will be in the corresponding directory.
 func PackageFileNameWithExtensions(exts ...string) func(f *File) []string {
 	return func(f *File) []string {
 		outs := make([]string, len(exts))
@@ -196,8 +196,9 @@ func PackageFileNameWithExtensions(exts ...string) func(f *File) []string {
 	}
 }
 
-// RelativeFileName returns a function that computes the name of a predicted
-// generated file having the given extension(s) relative to the given dir.
+// RelativeFileNameWithExtensions returns a function that computes the name of a
+// predicted generated file having the given extension(s) relative to the given
+// dir.
 func RelativeFileNameWithExtensions(reldir string, exts ...string) func(f *File) []string {
 	return func(f *File) []string {
 		outs := make([]string, len(exts))
@@ -236,8 +237,7 @@ func ImportPrefixRelativeFileNameWithExtensions(stripImportPrefix, reldir string
 	}
 }
 
-// HasMessagesOrEnums is a utility function that tests if any of the given files
-// has a message or an enum.
+// HasMessagesOrEnums checks if any of the given files has a message or an enum.
 func HasMessagesOrEnums(files ...*File) bool {
 	for _, f := range files {
 		if HasMessageOrEnum(f) {
@@ -247,8 +247,7 @@ func HasMessagesOrEnums(files ...*File) bool {
 	return false
 }
 
-// HasServices is a utility function that tests if any of the given files has a
-// service.
+// HasServices checks if any of the given files has a service.
 func HasServices(files ...*File) bool {
 	for _, f := range files {
 		if HasService(f) {
@@ -258,19 +257,19 @@ func HasServices(files ...*File) bool {
 	return false
 }
 
-// HasMessageOrEnum is a utility function that tests if any of the given file
+// HasMessageOrEnum is a file predicate function checks if any of the given file
 // has a message or an enum.
 func HasMessageOrEnum(file *File) bool {
 	return file.HasMessages() || file.HasEnums()
 }
 
-// Always is a utility function that always returns true.
+// Always is a file predicate function that always returns true.
 func Always(file *File) bool {
 	return true
 }
 
-// HasService is a utility function that tests if any of the given file has a
-// message or an enum.
+// HasService is a file predicate function that tests if any of the given file
+// has a message or an enum.
 func HasService(file *File) bool {
 	return file.HasServices()
 }
@@ -295,7 +294,8 @@ func GoPackagePath(pkg string) string {
 	return strings.ReplaceAll(pkg, ".", "/")
 }
 
-// IsProtoFile returns true if the file extension looks like it should contain protobuf definitions.
+// IsProtoFile returns true if the file extension looks like it should contain
+// protobuf definitions.
 func IsProtoFile(filename string) bool {
 	ext := filepath.Ext(filename)
 	return ext == ".proto" || ext == ".protodevel"
@@ -326,18 +326,19 @@ func GoPackageOption(options []proto.Option) (string, string, bool) {
 	return "", "", false
 }
 
-// GetNamedOption is a utility function to seek for the php_namespace option.
-func GetNamedOption(options []proto.Option, name string) string {
+// GetNamedOption returns the value of an option.  If the option is not found,
+// the bool return value is false.
+func GetNamedOption(options []proto.Option, name string) (string, bool) {
 	for _, opt := range options {
 		if opt.Name != name {
 			continue
 		}
-		return opt.Constant.Source
+		return opt.Constant.Source, true
 	}
-	return ""
+	return "", false
 }
 
-// ToPascalCase converts s to PascalCase.
+// ToPascalCase converts a string to PascalCase.
 //
 // Splits on '-', '_', ' ', '\t', '\n', '\r'.
 // Uppercase letters will stay uppercase,

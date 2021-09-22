@@ -6,10 +6,10 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/label"
 )
 
-// PluginConfiguration represents the configuration of a protoc plugin
-// and the sources & source mappings that are expected to be produced.
+// PluginConfiguration represents the configuration of a protoc plugin and the
+// sources & source mappings that are expected to be produced.
 type PluginConfiguration struct {
-	// Config is the associated plugin configuration
+	// Config is the associated plugin configuration.
 	Config *LanguagePluginConfig
 	// Label is the bazel label for the corresponding proto_plugin rule.
 	Label label.Label
