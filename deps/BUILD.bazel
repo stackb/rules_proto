@@ -40,16 +40,20 @@ depsgen(
 
 depsgen(
     name = "nodejs",
-    deps = [
-        ":build_bazel_rules_nodejs",
-        ":build_bazel_rules_typescript",
-    ],
+    deps = [":build_bazel_rules_nodejs"],
 )
 
 depsgen(
     name = "ts_proto",
     deps = [
         ":npm_ts_proto",
+    ],
+)
+
+depsgen(
+    name = "example_routeguide_nodejs",
+    deps = [
+        ":npm_example_routeguide_nodejs",
     ],
 )
 
@@ -394,9 +398,8 @@ proto_dependency(
 proto_dependency(
     name = "build_bazel_rules_nodejs",
     repository_rule = "http_archive",
-    sha256 = "482741b49b730b4055e5bb3936b4fe97e27365e917d1e4d442d5b71a6180aaf2",
-    strip_prefix = "rules_nodejs-4.2.0",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/archive/4.2.0.tar.gz"],
+    sha256 = "5c40083120eadec50a3497084f99bc75a85400ea727e82e0b2f422720573130f",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/4.0.0-beta.0/rules_nodejs-4.0.0-beta.0.tar.gz"],
 )
 
 proto_dependency(
@@ -404,6 +407,7 @@ proto_dependency(
     package_json = "//plugin/stephenh/ts-proto:package.json",
     package_lock_json = "//plugin/stephenh/ts-proto:package-lock.json",
     repository_rule = "npm_install",
+    symlink_node_modules = False,
 )
 
 # Branch: master
@@ -479,19 +483,13 @@ cc_binary(
     deps = [":com_github_grpc_grpc"],
 )
 
-# Branch: master
-# Commit: 5b33837b31d5f8c26852885c689a34aa2c7c63b3
-# Date: 2020-10-23 14:43:10 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_typescript/commit/5b33837b31d5f8c26852885c689a34aa2c7c63b3
-#
-# Update README.md
-# Size: 197435 (197 kB)
 proto_dependency(
-    name = "build_bazel_rules_typescript",
-    repository_rule = "http_archive",
-    sha256 = "409fbfa4c0fc21204afdcd7bbbbc6b0137b6e0ccbbe879d971550cc039f421a9",
-    strip_prefix = "rules_typescript-5b33837b31d5f8c26852885c689a34aa2c7c63b3",
-    urls = ["https://github.com/bazelbuild/rules_typescript/archive/5b33837b31d5f8c26852885c689a34aa2c7c63b3.tar.gz"],
+    name = "npm_example_routeguide_nodejs",
+    package_json = "//example/routeguide/nodejs:package.json",
+    package_lock_json = "//example/routeguide/nodejs:package-lock.json",
+    repository_rule = "npm_install",
+    symlink_node_modules = False,
+    deps = ["build_bazel_rules_nodejs"],
 )
 
 filegroup(

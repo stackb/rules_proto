@@ -3,9 +3,9 @@ load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
 nodejs_binary(
     name = "client",
     data = [
-        "client.js",
-        "//example/routeguide:feature_db",
-        "//example/routeguide:routeguide_node_js_compile",
+        "//example/routeguide:features",
+        "//example/routeguide:routeguide_grpc_nodejs_library",
+        "@npm_example_routeguide_nodejs//:node_modules",
     ],
     entry_point = "client.js",
 )
@@ -13,9 +13,9 @@ nodejs_binary(
 nodejs_binary(
     name = "server",
     data = [
-        "server.js",
-        "//example/routeguide:feature_db",
-        "//example/routeguide:routeguide_node_js_compile",
+        "//example/routeguide:features",
+        "//example/routeguide:routeguide_grpc_nodejs_library",
+        "@npm_example_routeguide_nodejs//:node_modules",
     ],
     entry_point = "server.js",
 )

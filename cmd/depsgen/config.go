@@ -41,6 +41,7 @@ type ProtoDependencyInfo struct {
 	RepositoryRule     string
 	Sha256             string
 	StripPrefix        string
+	SymlinkNodeModules bool
 	Sum                string
 	Urls               []string
 	Version            string

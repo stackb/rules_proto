@@ -43,6 +43,7 @@ ProtoDependencyInfo = provider(
         "repositoryRule": "The name of the repository rule that instantiates this dependency",
         "sha256": "The sha256 attribute for 'http_archive'",
         "stripPrefix": "The strip_prefix attribute for 'http_archive'",
+        "symlinkNodeModules": "The symlink_node_modules attribute for 'npm_install'",
         "sum": "The proto dependency sum string",
         "urls": "The urls string list",
         "version": "The version string",

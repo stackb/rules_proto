@@ -8,19 +8,8 @@ tidy: deps
 .PHONY: deps
 deps:
 	bazel build //deps:*
-	cp -f ./bazel-bin/deps/core_deps.bzl deps/core_deps.bzl
-	cp -f ./bazel-bin/deps/protobuf_core_deps.bzl deps/protobuf_core_deps.bzl
-	cp -f ./bazel-bin/deps/grpc_core_deps.bzl deps/grpc_core_deps.bzl
-	cp -f ./bazel-bin/deps/grpc_java_deps.bzl deps/grpc_java_deps.bzl
-	cp -f ./bazel-bin/deps/prebuilt_protoc_deps.bzl deps/prebuilt_protoc_deps.bzl
-	cp -f ./bazel-bin/deps/scala_deps.bzl deps/scala_deps.bzl
-	cp -f ./bazel-bin/deps/go_core_deps.bzl deps/go_core_deps.bzl
-	cp -f ./bazel-bin/deps/nodejs_deps.bzl deps/nodejs_deps.bzl
-	cp -f ./bazel-bin/deps/ts_proto_deps.bzl deps/ts_proto_deps.bzl
-	cp -f ./bazel-bin/deps/closure_deps.bzl deps/closure_deps.bzl
-	cp -f ./bazel-bin/deps/grpc_js_deps.bzl deps/grpc_js_deps.bzl
-	cp -f ./bazel-bin/deps/grpc_node_deps.bzl deps/grpc_node_deps.bzl
-	chmod 0644 deps/*.bzl rules/nodejs/deps.bzl
+	cp -f ./bazel-bin/deps/*.bzl deps/
+	chmod 0644 deps/*.bzl
 	bazel run //:buildifier -- deps/
 		
 .PHONY: site

@@ -1,0 +1,6 @@
+{
+    "dependencies": {
+        "google-protobuf": "3.17.0",
+        "@grpc/grpc-js": "1.3.7"
+    }
+}
