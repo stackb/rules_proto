@@ -1,3 +1,5 @@
+load("@build_stack_rules_proto//rules/nodejs:grpc_nodejs_library.bzl", "grpc_nodejs_library")
+load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -31,10 +33,7 @@ genrule(
 filegroup(
     name = "feature_db",
     srcs = ["feature_db.json"],
-    visibility = [
-        "//example/routeguide/java:__pkg__",
-        "//example/routeguide/scala:__pkg__",
-    ],
+    visibility = ["//visibility:public"],
 )
 
 proto_library(
@@ -220,16 +219,32 @@ proto_compile(
     proto = "routeguide_proto",
 )
 
+grpc_nodejs_library(
+    name = "routeguide_grpc_nodejs_library",
+    srcs = ["routeguide_grpc_pb.js"],
+    visibility = ["//visibility:public"],
+    deps = [":routeguide_nodejs_library"],
+)
+
 proto_compile(
     name = "routeguide_node_js_compile",
-    options = {"@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"]},
+    options = {
+        "@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"],
+        "@build_stack_rules_proto//plugin/grpc/grpc-node:protoc-gen-grpc-node": ["grpc_js"],
+    },
     outputs = [
-        "routeguide_pb.js",
         "routeguide_grpc_pb.js",
+        "routeguide_pb.js",
     ],
     plugins = [
         "@build_stack_rules_proto//plugin/builtin:commonjs",
         "@build_stack_rules_proto//plugin/grpc/grpc-node:protoc-gen-grpc-node",
     ],
     proto = "routeguide_proto",
+)
+
+proto_nodejs_library(
+    name = "routeguide_nodejs_library",
+    srcs = ["routeguide_pb.js"],
+    visibility = ["//visibility:public"],
 )

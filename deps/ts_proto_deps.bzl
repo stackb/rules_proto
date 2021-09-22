@@ -17,4 +17,5 @@ def npm_ts_proto():
         name = "npm_ts_proto",
         package_json = "//plugin/stephenh/ts-proto:package.json",
         package_lock_json = "//plugin/stephenh/ts-proto:package-lock.json",
+        symlink_node_modules = False,
     )

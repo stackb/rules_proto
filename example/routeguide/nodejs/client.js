@@ -1,11 +1,11 @@
 const util = require('util');
 const grpc = require('@grpc/grpc-js');
 
-const messages = require('example/routeguide/routeguide_pb.js')
-const services = require('example/routeguide/routeguide_grpc_pb.js')
+const features = require('../../../example/routeguide/features');
+const messages = require('../../../example/routeguide/routeguide_pb')
+const services = require('../../../example/routeguide/routeguide_grpc_pb')
 
-const featureList = require('example/routeguide/feature_db.json');
-console.log(`Loaded ${featureList.length} from feature database`);
+console.log(`Loaded ${features.length} from feature database`);
 const COORD_FACTOR = 1e7;
 
 
@@ -84,9 +84,9 @@ function runRecordRoute(client) {
         });
 
         for (let i = 0; i < 10; i++) {
-            const randIndex = ~~(Math.random() * (featureList.length - 1))
+            const randIndex = ~~(Math.random() * (features.length - 1))
             console.log("randomIndex", randIndex);
-            const randomPointJson = featureList[randIndex];
+            const randomPointJson = features[randIndex];
             const randomPoint = newPoint(
                 randomPointJson.location.latitude, randomPointJson.location.longitude
             )
@@ -130,7 +130,7 @@ function runRouteChat(client) {
 
 
 async function main() {
-    let port = '50051';
+    let port = '50055';
     if (process.env.SERVER_PORT) port = process.env.SERVER_PORT;
     const addr = 'localhost:' + port;
     const client = new services.RouteGuideClient(addr, grpc.credentials.createInsecure());

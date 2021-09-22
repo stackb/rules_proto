@@ -18,7 +18,7 @@ type ProtocGenGrpcNode struct{}
 
 // Name implements part of the Plugin interface.
 func (p *ProtocGenGrpcNode) Name() string {
-	return "grpc:grpc:protoc-gen-grpc-node"
+	return "grpc:grpc-node:protoc-gen-grpc-node"
 }
 
 // Configure implements part of the Plugin interface.

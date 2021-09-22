@@ -56,6 +56,10 @@ load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 
 ts_proto_deps()
 
+load("//deps:example_routeguide_nodejs_deps.bzl", "example_routeguide_nodejs_deps")
+
+example_routeguide_nodejs_deps()
+
 # ----------------------------------------------------
 # Go Tools
 # ----------------------------------------------------

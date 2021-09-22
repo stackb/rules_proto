@@ -24,6 +24,7 @@ def _proto_dependency_impl(ctx):
             packageLockJson = ctx.attr.package_lock_json,
             yarnLock = ctx.attr.yarn_lock,
             workspaceSnippet = ctx.attr.workspace_snippet,
+            symlinkNodeModules = ctx.attr.symlink_node_modules,
         ),
     ]
 
@@ -64,6 +65,9 @@ proto_dependency = rule(
         ),
         "strip_prefix": attr.string(
             doc = "The strip_prefix attribute for http_archive",
+        ),
+        "symlink_node_modules": attr.bool(
+            doc = "The symlink_node_modules attribute for npm_install",
         ),
         "sum": attr.string(
             doc = "The sum attribute for go_repository",
