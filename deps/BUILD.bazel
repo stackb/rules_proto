@@ -33,9 +33,7 @@ depsgen(
 
 depsgen(
     name = "closure",
-    deps = [
-        ":io_bazel_rules_closure",
-    ],
+    deps = [":io_bazel_rules_closure"],
 )
 
 depsgen(
@@ -45,16 +43,12 @@ depsgen(
 
 depsgen(
     name = "ts_proto",
-    deps = [
-        ":npm_ts_proto",
-    ],
+    deps = [":npm_ts_proto"],
 )
 
 depsgen(
     name = "example_routeguide_nodejs",
-    deps = [
-        ":npm_example_routeguide_nodejs",
-    ],
+    deps = [":npm_example_routeguide_nodejs"],
 )
 
 depsgen(
@@ -117,9 +111,7 @@ proto_dependency(
     sha256 = "7359a9a7071dff5343a52626fce1aae2a78936d3004ef89d038daaefd3fd6608",
     strip_prefix = "bazel-gazelle-e4496b956eb46bdf8c9bf95b8d1d85e3a086c4be",
     urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/e4496b956eb46bdf8c9bf95b8d1d85e3a086c4be.tar.gz"],
-    deps = [
-        ":io_bazel_rules_go",
-    ],
+    deps = [":io_bazel_rules_go"],
 )
 
 proto_dependency(
@@ -265,9 +257,7 @@ proto_dependency(
     sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
     strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
     urls = ["https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz"],
-    deps = [
-        ":rules_jvm_external",
-    ],
+    deps = [":rules_jvm_external"],
 )
 
 proto_dependency(
@@ -335,9 +325,7 @@ proto_dependency(
     sha256 = "0701ee4e1cfd59702d780acde907ac657752fbb5c7d08a0ec6f58ebea8cd0efb",
     strip_prefix = "rules_scala-2437e40131072cadc1628726775ff00fa3941a4a",
     urls = ["https://github.com/bazelbuild/rules_scala/archive/2437e40131072cadc1628726775ff00fa3941a4a.tar.gz"],
-    deps = [
-        ":bazel_skylib",
-    ],
+    deps = [":bazel_skylib"],
 )
 
 # Last-Modified: Fri, 06 Aug 2021 01:06:35 GMT
