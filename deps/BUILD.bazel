@@ -2,7 +2,7 @@ load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
 load("@build_stack_rules_proto//rules:depsgen.bzl", "depsgen")
 
 depsgen(
-    name = "core_deps",
+    name = "core",
     deps = [
         ":bazel_gazelle",
         ":rules_proto",
