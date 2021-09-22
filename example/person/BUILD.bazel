@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
 load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
@@ -141,4 +142,19 @@ proto_compile(
     outputs = ["person.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "person_proto",
+)
+
+proto_compile(
+    name = "person_node_js_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"]},
+    outputs = ["person_pb.js"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
+    proto = "person_proto",
+)
+
+proto_nodejs_library(
+    name = "person_nodejs_library",
+    srcs = ["person_pb.js"],
+    visibility = ["//visibility:public"],
+    deps = ["//example/place:place_nodejs_library"],
 )
