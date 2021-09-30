@@ -1,9 +1,14 @@
 "go_deps.bzl contains golang dependencies."
 
 load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("//rules/internal:proto_repository_tools.bzl", "proto_repository_tools")
 
 def gazelle_protobuf_extension_go_deps():
     "additional go_repository rules beyond gazelle itself needed for the gazelle-protobuf extension."
+    proto_repository_tools(
+        name = "proto_repository_tools",
+        go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
+    )
     go_repository(
         name = "com_github_emicklei_proto",
         build_file_proto_mode = "disable_global",
