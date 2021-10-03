@@ -170,6 +170,7 @@ proto_repository = repository_rule(
         "build_file_proto_mode": attr.string(
             values = [
                 "",
+                "file",
                 "default",
                 "package",
                 "disable",
