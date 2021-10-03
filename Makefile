@@ -16,9 +16,3 @@ deps:
 site:
 	bazel build //example/golden:*
 	cp -f ./bazel-bin/example/golden/*.md docs/
-
-.PHONY: vendor
-vendor:
-	go mod vendor
-	curl https://patch-diff.githubusercontent.com/raw/bazelbuild/bazel-gazelle/pull/1033.patch | \
-		git apply --directory=vendor/github.com/bazelbuild/bazel-gazelle
