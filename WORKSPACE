@@ -201,6 +201,20 @@ node_repositories()
 register_toolchains("//toolchain:nodejs")
 
 # ----------------------------------------------------
+# proto_repository dependencies
+# ----------------------------------------------------
+
+load("//rules/proto:proto_repository.bzl", "proto_repository")
+
+proto_repository(
+    name = "proto_googleapis",
+    build_file_generation = "clean",
+    strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
+    type = "zip",
+    urls = ["https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9"],
+)
+
+# ----------------------------------------------------
 # END
 # ----------------------------------------------------
 

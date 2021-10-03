@@ -19,11 +19,9 @@ _PROTO_REPOSITORY_TOOLS_BUILD_FILE = """
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "protogazelle",
-    srcs = ["bin/protogazelle{extension}"],
+    name = "gazelle",
+    srcs = ["bin/gazelle{extension}"],
 )
-
-exports_files(["ROOT"])
 """
 
 def _proto_repository_tools_impl(ctx):
@@ -32,9 +30,10 @@ def _proto_repository_tools_impl(ctx):
     extension = executable_extension(ctx)
     go_tool = env["GOROOT"] + "/bin/go" + extension
 
+    rules_proto_path = ctx.path(Label("@build_stack_rules_proto//:WORKSPACE"))
     ctx.symlink(
-        ctx.path(Label("@build_stack_rules_proto//:WORKSPACE")).dirname,
-        "src/github.com/bazelbuild/rules_proto",
+        rules_proto_path.dirname,
+        "src/github.com/stackb/rules_proto",
     )
 
     env.update({
@@ -63,7 +62,7 @@ def _proto_repository_tools_impl(ctx):
         "all=-trimpath=" + env["GOPATH"],
         "-asmflags",
         "all=-trimpath=" + env["GOPATH"],
-        "github.com/stackb/rules_proto/cmd/protogazelle",
+        "github.com/stackb/rules_proto/cmd/gazelle",
     ]
     result = env_execute(ctx, args, environment = env)
     if result.return_code:
@@ -73,11 +72,6 @@ def _proto_repository_tools_impl(ctx):
     ctx.file(
         "BUILD.bazel",
         _PROTO_REPOSITORY_TOOLS_BUILD_FILE.format(extension = executable_extension(ctx)),
-        False,
-    )
-    ctx.file(
-        "ROOT",
-        "",
         False,
     )
 
@@ -96,10 +90,4 @@ proto_repository_tools = repository_rule(
     ],
 )
 """proto_repository_tools is a synthetic repository used by proto_repository.
-
-
-proto_repository depends on one go binary: gazelle-protobuf. We can't
-build these with Bazel inside a repository rule, and we don't want to manage
-prebuilt binaries, so we build them in here with go build, using whichever
-SDK rules_go is using.
 """

@@ -24,11 +24,9 @@ def _get_auth(ctx, urls):
     return {}
 
 def _proto_repository_impl(ctx):
+    # stay
     if ctx.attr.urls:
         # HTTP mode
-        for key in ("commit", "tag", "vcs", "remote", "version", "sum", "replace"):
-            if getattr(ctx.attr, key):
-                fail("cannot specifiy both urls and %s" % key, key)
         ctx.download_and_extract(
             url = ctx.attr.urls,
             sha256 = ctx.attr.sha256,
@@ -70,7 +68,28 @@ def _proto_repository_impl(ctx):
             existing_build_file = name
             break
 
-    generate = (ctx.attr.build_file_generation == "on" or (not existing_build_file and ctx.attr.build_file_generation == "auto"))
+    generate = (ctx.attr.build_file_generation == "on" or ctx.attr.build_file_generation == "clean" or (not existing_build_file and ctx.attr.build_file_generation == "auto"))
+
+    # TODO: impleement clean, either as a find command here, or by resetting the file in the walk.Walk callback.
+    if ctx.attr.build_file_generation == "clean":
+        result = env_execute(ctx, [
+            "find",
+            ".",
+            "-type",
+            "f",
+            "-name",
+            build_file_names[0],
+            "-print",
+            "-exec",
+            "rm",
+            "{}",
+            "+",
+        ], environment = env)
+        if result.return_code:
+            fail("failed to build tools: " + result.stderr)
+        else:
+            for line in result.stdout.splitlines():
+                print("deleted build file:", line)
 
     if generate:
         # Build file generation is needed. Populate Gazelle directive at root build file
@@ -82,16 +101,13 @@ def _proto_repository_impl(ctx):
             )
 
         # Run Gazelle
-        _gazelle = "@proto_repository_tools//:bin/protogazelle{}".format(executable_extension(ctx))
+        _gazelle = "@proto_repository_tools//:bin/gazelle{}".format(executable_extension(ctx))
         gazelle = ctx.path(Label(_gazelle))
         cmd = [
             gazelle,
-            "-mode",
-            "fix",
+            # "-mode", "fix",
             "-repo_root",
             ctx.path(""),
-            "-repo_config",
-            ctx.path(ctx.attr.build_config),
         ]
         if ctx.attr.build_file_name:
             cmd.extend(["-build_file_name", ctx.attr.build_file_name])
@@ -101,14 +117,11 @@ def _proto_repository_impl(ctx):
             cmd.extend(["-external", ctx.attr.build_external])
         if ctx.attr.build_file_proto_mode:
             cmd.extend(["-proto", ctx.attr.build_file_proto_mode])
-        if ctx.attr.build_naming_convention:
-            cmd.extend(["-go_naming_convention", ctx.attr.build_naming_convention])
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
         result = env_execute(ctx, cmd, environment = env, timeout = _GO_REPOSITORY_TIMEOUT)
         if result.return_code:
-            fail("failed to generate BUILD files for %s: %s" % (
-                ctx.attr.importpath,
+            fail("failed to generate BUILD files: %s" % (
                 result.stderr,
             ))
         if result.stderr:
@@ -137,11 +150,12 @@ proto_repository = repository_rule(
         ),
         "build_file_name": attr.string(default = "BUILD.bazel,BUILD"),
         "build_file_generation": attr.string(
-            default = "auto",
+            default = "on",
             values = [
-                "on",
                 "auto",
+                "clean",
                 "off",
+                "on",
             ],
         ),
         "build_naming_convention": attr.string(
@@ -164,7 +178,7 @@ proto_repository = repository_rule(
             ],
         ),
         "build_extra_args": attr.string_list(),
-        "build_config": attr.label(default = "@bazel_gazelle_go_repository_config//:WORKSPACE"),
+        # "build_config": attr.label(default = "@bazel_gazelle_go_repository_config//:WORKSPACE"),
         "build_directives": attr.string_list(default = []),
 
         # Patches to apply after running gazelle.
