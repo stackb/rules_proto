@@ -85,12 +85,16 @@ func (c *LanguageConfig) fromYAML(y *YLanguage) error {
 	if c.Name != y.Name {
 		return fmt.Errorf("yaml language mismatch: want %q got %q", c.Name, y.Name)
 	}
-	c.Enabled = y.Enabled
 	for _, plugin := range y.Plugin {
 		c.Plugins[plugin] = true
 	}
 	for _, rule := range y.Rule {
 		c.Rules[rule] = true
+	}
+	if y.Enabled != nil {
+		c.Enabled = *y.Enabled
+	} else {
+		c.Enabled = true
 	}
 	return nil
 }

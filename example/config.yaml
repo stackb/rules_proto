@@ -4,14 +4,18 @@ plugins:
   - name: protoc-gen-grpc-cpp
     implementation: grpc:grpc:cpp
 rules:
+  - name: proto_compile
+    implementation: stackb:rules_proto:proto_compile
+    visibility:
+      -  //visibility:public
   - name: proto_cc_library
     implementation: stackb:rules_proto:proto_cc_library
     visibility:
       -  //visibility:public
     deps:
       - "@com_google_protobuf//:protobuf"
-  - name: proto_grpc_library
-    implementation: stackb:rules_proto:proto_grpc_library
+  - name: grpc_cc_library
+    implementation: stackb:rules_proto:grpc_cc_library
     visibility:
       -  //visibility:public
     deps:
@@ -23,5 +27,6 @@ languages:
       - cpp
       - protoc-gen-grpc-cpp
     rules:
+      - proto_compile
       - proto_cc_library
       - grpc_cc_library

@@ -98,12 +98,16 @@ func (c *LanguageRuleConfig) fromYAML(y *YRule) error {
 		return fmt.Errorf("yaml rule mismatch: want %q got %q", c.Name, y.Name)
 	}
 	c.Implementation = y.Implementation
-	c.Enabled = y.Enabled
 	for _, dep := range y.Deps {
 		c.Deps[dep] = true
 	}
 	for _, v := range y.Visibility {
 		c.Visibility[v] = true
+	}
+	if y.Enabled != nil {
+		c.Enabled = *y.Enabled
+	} else {
+		c.Enabled = true
 	}
 	return nil
 }

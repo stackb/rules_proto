@@ -87,7 +87,6 @@ func (c *LanguagePluginConfig) fromYAML(y *YPlugin) error {
 		return fmt.Errorf("yaml plugin mismatch: want %q got %q", c.Name, y.Name)
 	}
 	c.Implementation = y.Implementation
-	c.Enabled = y.Enabled
 	// only true intent is supported via yaml
 	for _, option := range y.Option {
 		c.Options[option] = true
@@ -98,6 +97,11 @@ func (c *LanguagePluginConfig) fromYAML(y *YPlugin) error {
 			return fmt.Errorf("%s label parse error %w", y.Name, err)
 		}
 		c.Label = l
+	}
+	if y.Enabled != nil {
+		c.Enabled = *y.Enabled
+	} else {
+		c.Enabled = true
 	}
 	return nil
 }

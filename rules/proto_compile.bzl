@@ -203,8 +203,10 @@ def _proto_compile_impl(ctx):
 
         ### Part 2.3: build --{name}_out=OPTIONS argument
 
-        # mut <string>
+        # mut <string>!
         out = plugin.out
+        if ctx.label.workspace_root:
+            out = "/".join([out, ctx.label.workspace_root])
 
         # dict<key=label.package+label.name,value=list<string>>
         options = {_plugin_label_key(Label(k)): v for k, v in ctx.attr.options.items()}
@@ -296,7 +298,7 @@ def _proto_compile_impl(ctx):
         tools = tools,
     )
 
-    if verbose:
+    if verbose and False:
         for c in commands:
             # buildifier: disable=print
             print("COMMAND:", c)
