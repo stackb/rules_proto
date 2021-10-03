@@ -9,6 +9,7 @@ require (
 	github.com/emicklei/proto v1.9.0
 	github.com/google/go-cmp v0.5.5
 	github.com/stretchr/testify v1.7.0
+	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
 
 // TODO(pcj) Remove once https://github.com/bazelbuild/bazel-gazelle/pull/1033 is merged

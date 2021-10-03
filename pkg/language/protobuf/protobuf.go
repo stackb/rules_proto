@@ -27,8 +27,9 @@ func NewProtobufLanguage(name string) *ProtobufLanguage {
 
 // ProtobufLanguage implements language.Language.
 type ProtobufLanguage struct {
-	name  string
-	rules pc.RuleRegistry
+	name       string
+	rules      pc.RuleRegistry
+	configFile string
 	// providers is a mapping from label -> the provider that produced the
 	// rule. we save this in the config such that we can retrieve the
 	// association later in the resolve step.
@@ -43,10 +44,22 @@ func (pl *ProtobufLanguage) Name() string { return pl.name }
 // The following methods are implemented to satisfy the
 // https://pkg.go.dev/github.com/bazelbuild/bazel-gazelle/resolve?tab=doc#Resolver
 // interface, but are otherwise unused.
-func (*ProtobufLanguage) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
+func (pl *ProtobufLanguage) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
+	fs.StringVar(&pl.configFile, "proto_language_config_file", "", "optional config.yaml file that preconfigures plugin, rules, and languges")
 }
 
-func (*ProtobufLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
+func (pl *ProtobufLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
+	if pl.configFile != "" {
+		config, err := pc.ParseYConfigFile(pl.configFile)
+		if err != nil {
+			return err
+		}
+		cfg := pc.NewPackageConfig(c)
+		if err := cfg.LoadYConfig(config); err != nil {
+			return err
+		}
+		c.Exts[pl.name] = cfg
+	}
 	return nil
 }
 

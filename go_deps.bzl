@@ -32,8 +32,9 @@ def go_deps():
         name = "com_github_bazelbuild_bazel_gazelle",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/bazelbuild/bazel-gazelle",
-        sum = "h1:Ks6YN+WkOv2lYWlvf7ksxUpLvrDbBHPBXXUrBFQ3BZM=",
-        version = "v0.23.0",
+        replace = "github.com/wolfd/bazel-gazelle",
+        sum = "h1:S63bLCq/N1ewqu9cEdgWLx/XXrNWo7fbVejzh/roGdY=",
+        version = "v0.0.0-20210917215910-a5bd0e0069da",
     )
     go_repository(
         name = "com_github_bazelbuild_buildtools",
@@ -248,8 +249,8 @@ def go_deps():
         name = "in_gopkg_yaml_v3",
         build_file_proto_mode = "disable_global",
         importpath = "gopkg.in/yaml.v3",
-        sum = "h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=",
-        version = "v3.0.0-20200313102051-9f266ea9e77c",
+        sum = "h1:h8qDotaEPuJATrMmW04NCwg7v22aHH28wwpauUhK9Oo=",
+        version = "v3.0.0-20210107192922-496545a6307b",
     )
     go_repository(
         name = "net_starlark_go",

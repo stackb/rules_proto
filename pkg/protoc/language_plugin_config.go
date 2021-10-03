@@ -80,3 +80,24 @@ func (c *LanguagePluginConfig) parseDirective(cfg *PackageConfig, d, param, valu
 
 	return nil
 }
+
+// fromYAML loads configuration from the yaml plugin confug.
+func (c *LanguagePluginConfig) fromYAML(y *YPlugin) error {
+	if c.Name != y.Name {
+		return fmt.Errorf("yaml plugin mismatch: want %q got %q", c.Name, y.Name)
+	}
+	c.Implementation = y.Implementation
+	c.Enabled = y.Enabled
+	// only true intent is supported via yaml
+	for _, option := range y.Option {
+		c.Options[option] = true
+	}
+	if y.Label != "" {
+		l, err := label.Parse(y.Label)
+		if err != nil {
+			return fmt.Errorf("%s label parse error %w", y.Name, err)
+		}
+		c.Label = l
+	}
+	return nil
+}
