@@ -3,6 +3,8 @@ plugins:
     implementation: builtin:cpp
   - name: protoc-gen-grpc-cpp
     implementation: grpc:grpc:cpp
+  - name: java
+    implementation: builtin:java
 rules:
   - name: proto_compile
     implementation: stackb:rules_proto:proto_compile
@@ -23,10 +25,15 @@ rules:
       - "@com_github_grpc_grpc//:grpc++_reflection"
 languages:
   - name: "cpp"
-    plugins: 
+    plugins:
       - cpp
       - protoc-gen-grpc-cpp
     rules:
       - proto_compile
       - proto_cc_library
       - grpc_cc_library
+  - name: "java"
+    plugins: 
+      - java
+    rules:
+      - proto_compile

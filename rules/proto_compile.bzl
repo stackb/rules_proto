@@ -203,7 +203,7 @@ def _proto_compile_impl(ctx):
 
         ### Part 2.3: build --{name}_out=OPTIONS argument
 
-        # mut <string>!
+        # mut <string>
         out = plugin.out
         if ctx.label.workspace_root:
             out = "/".join([out, ctx.label.workspace_root])
@@ -222,8 +222,10 @@ def _proto_compile_impl(ctx):
         # override with the out configured on the rule if specified
         plugin_out = outs.get(_plugin_label_key(plugin.label), None)
         if plugin_out:
-            # bin-dir relative is implied for plugin_out overrides
-            out = "/".join([ctx.bin_dir.path, plugin_out])
+            # bin-dir relative is implied for plugin_out overrides.  Workspace
+            # root might be empty, so filter empty strings via this list
+            # comprehension.
+            out = "/".join([e for e in [ctx.bin_dir.path, ctx.label.workspace_root, plugin_out] if e])
 
         args.append("--{}_out={}".format(plugin_name, out))
 
