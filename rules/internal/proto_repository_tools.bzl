@@ -30,6 +30,7 @@ def _proto_repository_tools_impl(ctx):
     extension = executable_extension(ctx)
     go_tool = env["GOROOT"] + "/bin/go" + extension
 
+    # symlink into GOROOT
     rules_proto_path = ctx.path(Label("@build_stack_rules_proto//:WORKSPACE"))
     ctx.symlink(
         rules_proto_path.dirname,

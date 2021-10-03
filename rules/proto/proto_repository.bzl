@@ -70,26 +70,17 @@ def _proto_repository_impl(ctx):
 
     generate = (ctx.attr.build_file_generation == "on" or ctx.attr.build_file_generation == "clean" or (not existing_build_file and ctx.attr.build_file_generation == "auto"))
 
-    # TODO: impleement clean, either as a find command here, or by resetting the file in the walk.Walk callback.
+    # remove any existing build files
     if ctx.attr.build_file_generation == "clean":
-        result = env_execute(ctx, [
-            "find",
-            ".",
-            "-type",
-            "f",
-            "-name",
-            build_file_names[0],
-            "-print",
-            "-exec",
-            "rm",
-            "{}",
-            "+",
-        ], environment = env)
+        cmd = ["find", ".", "-type", "f", "("]
+        for i, name in enumerate(build_file_names):
+            cmd += ["-name", name]
+            if i + 1 < len(build_file_names):
+                cmd.append("-o")
+        cmd += [")", "-print", "-exec", "rm", "{}", "+"]
+        result = env_execute(ctx, cmd, environment = env)
         if result.return_code:
-            fail("failed to build tools: " + result.stderr)
-        else:
-            for line in result.stdout.splitlines():
-                print("deleted build file:", line)
+            fail("failed to clean build files: " + result.stderr)
 
     if generate:
         # Build file generation is needed. Populate Gazelle directive at root build file
@@ -106,6 +97,8 @@ def _proto_repository_impl(ctx):
         cmd = [
             gazelle,
             # "-mode", "fix",
+            "-proto_language_config_file",
+            ctx.path(ctx.attr.proto_language_config_file),
             "-repo_root",
             ctx.path(""),
         ]
@@ -181,6 +174,9 @@ proto_repository = repository_rule(
         "build_extra_args": attr.string_list(),
         # "build_config": attr.label(default = "@bazel_gazelle_go_repository_config//:WORKSPACE"),
         "build_directives": attr.string_list(default = []),
+
+        # language specific configuration
+        "proto_language_config_file": attr.label(),
 
         # Patches to apply after running gazelle.
         "patches": attr.label_list(),

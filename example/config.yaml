@@ -1,0 +1,27 @@
+plugins:
+  - name: cpp
+    implementation: builtin:cpp
+  - name: protoc-gen-grpc-cpp
+    implementation: grpc:grpc:cpp
+rules:
+  - name: proto_cc_library
+    implementation: stackb:rules_proto:proto_cc_library
+    visibility:
+      -  //visibility:public
+    deps:
+      - "@com_google_protobuf//:protobuf"
+  - name: proto_grpc_library
+    implementation: stackb:rules_proto:proto_grpc_library
+    visibility:
+      -  //visibility:public
+    deps:
+      - "@com_github_grpc_grpc//:grpc++"
+      - "@com_github_grpc_grpc//:grpc++_reflection"
+languages:
+  - name: "cpp"
+    plugins: 
+      - cpp
+      - protoc-gen-grpc-cpp
+    rules:
+      - proto_cc_library
+      - grpc_cc_library
