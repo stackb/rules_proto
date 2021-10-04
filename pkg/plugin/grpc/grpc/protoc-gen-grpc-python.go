@@ -33,11 +33,6 @@ func (p *ProtocGenGrpcPython) Configure(ctx *protoc.PluginContext) *protoc.Plugi
 			protoc.HasService,
 			ctx.ProtoLibrary.Files()...,
 		),
-		Imports: protoc.FlatMapFiles(
-			grpcImports(),
-			protoc.HasService,
-			ctx.ProtoLibrary.Files()...,
-		),
 	}
 }
 
@@ -52,28 +47,4 @@ func grpcGeneratedFileName(reldir string) func(f *protoc.File) []string {
 		}
 		return []string{name + "_pb2_grpc.py"}
 	}
-}
-
-// grpcImports is a utility function that returns a function that
-// computes the name of a predicted imports for a given proto file.
-func grpcImports() func(f *protoc.File) []string {
-	return func(f *protoc.File) []string {
-		imports := make([]string, 0)
-
-		pkg := f.Name + "_grpc_pb"
-		if f.Package().Name != "" {
-			pkg = f.Package().Name + "." + pkg
-		}
-		for _, m := range f.Services() {
-			imports = append(imports, getPythonImportName(pkg, m.Name))
-		}
-		return imports
-	}
-}
-
-func getPythonImportName(pkg, name string) string {
-	if pkg == "" {
-		return name
-	}
-	return pkg + "." + name
 }

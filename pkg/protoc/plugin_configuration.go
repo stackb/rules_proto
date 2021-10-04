@@ -24,10 +24,6 @@ type PluginConfiguration struct {
 	Out string
 	// Outputs is the list of output files the plugin generates
 	Outputs []string
-	// Imports is a list of language-specific imports that are provided by the
-	// output files.  This can be used to populate the GazelleImportsKey private
-	// attr for import resolution.
-	Imports []string
 }
 
 // GetPluginLabels returns the list of labels strings for a list of plugins.

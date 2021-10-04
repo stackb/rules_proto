@@ -29,26 +29,11 @@ func init() {
 		})
 }
 
-// func hasServicesAndGrpcOption(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration) bool {
-// 	// if any of the proto_library files have grpc service definitions AND the
-// 	// grpc option is configured, emit a grpc_go_library rule instead.
-// 	if !protoc.HasServices(library.Files()...) {
-// 		return false
-// 	}
-// 	for option, want := range plugin.Config.Options {
-// 		if option == "grpc" && want {
-// 			return true
-// 		}
-// 	}
-// 	return false
-// }
-
 // goLibrary implements LanguageRule for the '{proto|grpc}_go_library' rule from
 // @rules_proto.
 type goLibrary struct {
 	pluginName string
 	kindName   string
-	// shouldProvideRule func(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration) bool
 }
 
 // Name implements part of the LanguageRule interface.
