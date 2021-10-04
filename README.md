@@ -19,6 +19,14 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
    generates rules based on the content of your `.proto` files.
 3. Example setups for a variety of languages.
 
+# Table of Contents
+  - [Getting Started](#getting-started)
+  - [Gazelle Configuration](#gazelle-configuration)
+    - [Build Directives](#build-directives)
+    - [YAML Config File](#yaml-configuration)
+  - [Core Rules](#core-rules)
+    - [proto_compile](#repository-rule)
+
 # Getting Started
 
 ## Repository rule
@@ -140,6 +148,9 @@ gazelle(
 
 ## Gazelle Configuration
 
+The gazelle extension can be configured using "build directives" and/or a YAML file.
+
+### Build Directives
 Gazelle is configured by special comments in BUILD files called *directives*.
 
 > Gazelle works by visiting each package in your workspace; configuration is
@@ -202,6 +213,61 @@ Let's unpack this a bit:
 > -grpc_cc_library` in `proto/javaapi/BUILD.bazel` (note the `-` symbol
 > preceding the name).  To suppress the language entirely, use
 > `gazelle:proto_language cpp enabled false`.
+
+### YAML Configuration
+
+You can also configure the extension using a YAML file.  This is semantically similar to adding gazelle directives to the root `BUILD` file; the YAML configuration applies to all downstream packages.  The equivalent YAML config for the above directives looks like:
+
+```yaml
+plugins:
+  - name: cpp
+    implementation: builtin:cpp
+  - name: protoc-gen-grpc-cpp
+    implementation: grpc:grpc:cpp
+rules:
+  - name: proto_compile
+    implementation: stackb:rules_proto:proto_compile
+    visibility:
+      -  //visibility:public
+  - name: proto_cc_library
+    implementation: stackb:rules_proto:proto_cc_library
+    visibility:
+      -  //visibility:public
+    deps:
+      - "@com_google_protobuf//:protobuf"
+  - name: grpc_cc_library
+    implementation: stackb:rules_proto:grpc_cc_library
+    visibility:
+      -  //visibility:public
+    deps:
+      - "@com_github_grpc_grpc//:grpc++"
+      - "@com_github_grpc_grpc//:grpc++_reflection"
+languages:
+  - name: "cpp"
+    plugins:
+      - cpp
+      - protoc-gen-grpc-cpp
+    rules:
+      - proto_compile
+      - proto_cc_library
+      - grpc_cc_library
+```
+
+> A yaml config is particularly useful in conjunction with the `proto_repository` rule, for example to apply a set of custom plugins over 
+> the googleapis/googleapis repo.
+
+To use this in a gazelle rule, specify `-proto_language_config_file` in `args`:
+
+```python
+gazelle(
+    name = "gazelle",
+    gazelle = ":gazelle-protobuf",
+    args = [
+        "-proto_language_config_file=example/config.yaml",
+    ],
+)
+```
+
 
 ## Gazelle Execution
 
@@ -287,12 +353,15 @@ potential conflicts with other possible gazelle extensions, using the name
 
 ## Core Rules
 
-The heart of `stackb/rules_proto` contains two rules:
+The heart of `stackb/rules_proto` contains two build rules and one repository rule:
 
-| Rule            | Description                                      |
-|-----------------|--------------------------------------------------|
-| `proto_compile` | Executes the `protoc` tool.                      |
-| `proto_plugin`  | Provides `protoc` plugin-specific configuration. |
+| Rule               | Description                                      |
+| ------------------ | ------------------------------------------------ |
+| `proto_compile`    | Executes the `protoc` tool.                      |
+| `proto_plugin`     | Provides `protoc` plugin-specific configuration. |
+| `proto_repository` | Generate BUILD files for an external repository. |
+
+### proto_compile
 
 Example:
 
@@ -338,13 +407,49 @@ Takeaways:
   `proto_library`.
 
 
+### proto_repository
+
+From an implementation standpoint, this is very similar to the `go_repository` rule.  Both can download external files and then run the gazelle generator over the downloaded files.  Example:
+
+```python
+proto_repository(
+    name = "proto_googleapis",
+    build_directives = [
+        "gazelle:resolve proto google/api/http.proto //google/api:http_proto",
+    ],
+    build_file_generation = "clean",
+    build_file_proto_mode = "file",
+    proto_language_config_file = "//example:config.yaml",
+    strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
+    type = "zip",
+    urls = ["https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9"],
+)
+```
+
+Takeaways: 
+
+- The `urls`, `strip_prefix` and `type` behave similarly to `http_archive`.
+- `build_file_proto_mode` is the same the `go_repository` attribute of the same name; additionally the value `file` is permitted which generates a `proto_library` for each individual proto file.
+- `build_file_generation` is the same the `go_repository` attribute of the same name; additionally the value `clean` is supported.  For example, googleapis already has a set of BUILD files; the `clean` mode will remove all the existing build files before generating new ones.
+- `build_directives` is the same as `go_repository`.  Resolve directives in this case are needed because the gazelle `language/proto` extension hardcodes a proto import like `google/api/http.proto` to resolve to the `@go_googleapis` workspace; here we want to make sure that http.proto resolves to the same external workspace.
+- `proto_language_config_file` is an optional label pointing to a valid `config.yaml` file to configure this extension.
+
+With this sample configuration, the following build command succeeds:
+
+```bash
+$ bazel build @proto_googleapis//google/api:annotations_cc_library
+Target @proto_googleapis//google/api:annotations_cc_library up-to-date:
+  bazel-bin/external/proto_googleapis/google/api/libannotations_cc_library.a
+  bazel-bin/external/proto_googleapis/google/api/libannotations_cc_library.so
+```
+
 ## Plugin Implementations
 
 The plugin name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 
 | Plugin                                                | Link     |
-|-------------------------------------------------------|----------|
+| ----------------------------------------------------- | -------- |
 | `builtin:cpp`                                         | [link]() |
 | `builtin:csharp`                                      | [link]() |
 | `builtin:java`                                        | [link]() |
@@ -379,7 +484,7 @@ The rule name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/rule_name convention.
 
 | Plugin                                        | Link     |
-|-----------------------------------------------|----------|
+| --------------------------------------------- | -------- |
 | `stackb:rules_proto:grpc_cc_library`          | [link]() |
 | `stackb:rules_proto:grpc_closure_js_library`  | [link]() |
 | `stackb:rules_proto:grpc_java_library`        | [link]() |

@@ -29,6 +29,9 @@ gazelle_binary(
 
 gazelle(
     name = "gazelle",
+    args = [
+        "-proto_language_config_file=example/config.yaml",
+    ],
     gazelle = ":gazelle-protobuf",
 )
 
