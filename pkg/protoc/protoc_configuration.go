@@ -2,7 +2,6 @@ package protoc
 
 import (
 	"path"
-	"sort"
 	"strings"
 )
 
@@ -30,7 +29,6 @@ type ProtocConfiguration struct {
 
 func newProtocConfiguration(lc *LanguageConfig, workDir, rel, prefix string, lib ProtoLibrary, plugins []*PluginConfiguration) *ProtocConfiguration {
 	srcs, mappings := mergeSources(workDir, rel, plugins)
-	imports := mergeImports(plugins)
 
 	return &ProtocConfiguration{
 		LanguageConfig: lc,
@@ -39,7 +37,6 @@ func newProtocConfiguration(lc *LanguageConfig, workDir, rel, prefix string, lib
 		Library:        lib,
 		Plugins:        plugins,
 		Outputs:        srcs,
-		Imports:        imports,
 		Mappings:       mappings,
 	}
 }
@@ -111,17 +108,4 @@ func mergeSources(workDir, rel string, plugins []*PluginConfiguration) ([]string
 	}
 
 	return srcs, mappings
-}
-
-// mergeImports computes the merged list of imports for the list of plugins.
-func mergeImports(plugins []*PluginConfiguration) []string {
-	imports := make([]string, 0)
-
-	for _, plugin := range plugins {
-		imports = append(imports, plugin.Imports...)
-	}
-
-	sort.Strings(imports)
-
-	return imports
 }
