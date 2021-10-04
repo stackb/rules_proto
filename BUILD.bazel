@@ -13,6 +13,7 @@ buildifier(
 # ----------------------------------------------------
 # gazelle:prefix github.com/stackb/rules_proto
 # gazelle:resolve go github.com/bazelbuild/buildtools/build @com_github_bazelbuild_buildtools//build:go_default_library
+# gazelle:exclude vendor
 
 gazelle_binary(
     name = "gazelle-protobuf",
