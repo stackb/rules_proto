@@ -17,15 +17,26 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 1. Rules for driving the `protoc` tool within a bazel workspace.
 2. A [gazelle](https://github.com/bazelbuild/bazel-gazelle/) extension that
    generates rules based on the content of your `.proto` files.
-3. Example setups for a variety of languages.
+3. A repository rule that runs gazelle in an external workspace.
+4. Example setups for a variety of languages.
 
 # Table of Contents
   - [Getting Started](#getting-started)
-  - [Gazelle Configuration](#gazelle-configuration)
-    - [Build Directives](#build-directives)
-    - [YAML Config File](#yaml-configuration)
+    - [Repository Rule](#repository-rule)
+    - [Workspace Boilerplate](#workspace-boilerplate)
+    - [Gazelle Setup](#gazelle-setup)
+    - [Gazelle Configuration](#gazelle-configuration)
+      - [Build Directives](#build-directives)
+      - [YAML Config File](#yaml-configuration)
+    - [Running Gazelle](#running-gazelle)
   - [Core Rules](#core-rules)
-    - [proto_compile](#repository-rule)
+    - [proto_compile](#proto_compile)
+      - [Deep dive on the mappings attribute](#the-mappings-attribute)
+    - [proto_plugin](#proto_compile)
+    - [proto_repository](#proto-repository)
+  - [Plugin Implementations](#plugin-implementations)
+  - [Rule Implementations](#rule-implementations)
+  - [History of this repository](#history)
 
 # Getting Started
 
@@ -269,7 +280,7 @@ gazelle(
 ```
 
 
-## Gazelle Execution
+## Running Gazelle
 
 Now that we have the `WORKSPACE` setup and gazelle configured, we can run
 gazelle:
@@ -361,7 +372,7 @@ The heart of `stackb/rules_proto` contains two build rules and one repository ru
 | `proto_plugin`     | Provides `protoc` plugin-specific configuration. |
 | `proto_repository` | Generate BUILD files for an external repository. |
 
-### proto_compile
+## proto_compile
 
 Example:
 
@@ -406,8 +417,84 @@ Takeaways:
   extension provided by [bazel-gazelle] is responsible for generating
   `proto_library`.
 
+### The `mappings` attribute
 
-### proto_repository
+Consider the following rule within the package `example/thing`:
+
+```python
+proto_compile(
+    name = "thing_go_compile",
+    mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
+    outputs = ["thing.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    proto = "thing_proto",
+)
+```
+
+This rule is declaring that a file `bazel-bin/example/thing/thing.pb.go` will be
+output when the action is run. When we `bazel build
+//example/thing:thing_go_compile`, the file is indeed created.
+
+Let's temporarily comment out the `mappings` attribute and rebuild:
+
+```python
+proto_compile(
+    name = "thing_go_compile",
+    # mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
+    outputs = ["thing.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    proto = "thing_proto",
+)
+```
+
+```sh
+$ bazel build //example/thing:thing_go_compile
+ERROR: /github.com/stackb/rules_proto/example/thing/BUILD.bazel:54:14: output 'example/thing/thing.pb.go' was not created
+```
+
+What happened?  Let's add a debugging attribute `verbose = True` on the rule: this will print debugging information and show the bazel sandbox before and after the `protoc` tool is invoked:
+
+```python
+proto_compile(
+    name = "thing_go_compile",
+    # mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
+    outputs = ["thing.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    proto = "thing_proto",
+    verbose = True,
+)
+```
+
+```sh
+$ bazel build //example/thing:thing_go_compile
+##### SANDBOX BEFORE RUNNING PROTOC
+./bazel-out/host/bin/external/com_google_protobuf/protoc
+./bazel-out/darwin-opt-exec-2B5CBBC6/bin/external/com_github_golang_protobuf/protoc-gen-go/protoc-gen-go_/protoc-gen-go
+./bazel-out/darwin-fastbuild/bin/example/thing/thing_proto-descriptor-set.proto.bin
+./bazel-out/darwin-fastbuild/bin/external/com_google_protobuf/timestamp_proto-descriptor-set.proto.bin
+
+##### SANDBOX AFTER RUNNING PROTOC
+./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/example/thing/thing.pb.go
+```
+
+So, the file was created, but not in the location we wanted.  In this case the
+`protoc-gen-go` plugin is not "playing nice" with Bazel.  Because this
+`thing.proto` has `option go_package =
+"github.com/stackb/rules_proto/example/thing;thing";`, the output location is no
+longer based on the `package`.  This is a problem, because Bazel semantics
+disallow declaring a File outside its package boundary.  As a result, we need to
+do a `mv
+./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/example/thing/thing.pb.go
+./bazel-out/darwin-fastbuild/bin/example/thing/thing.pb.go` to relocate the
+file into its expected location before the action terminates.
+
+Therefore, the `mappings` attribute is a dict that maps file locations `{ want:
+got }` relative to the action execution root.  It is required when the actual
+output location does not match the desired location.  This can occur if the
+proto `package` statement does not match the Bazel package path, or in special
+circumstances specific to the plugin itself (like `go_package`).
+
+## proto_repository
 
 From an implementation standpoint, this is very similar to the `go_repository` rule.  Both can download external files and then run the gazelle generator over the downloaded files.  Example:
 
@@ -505,83 +592,6 @@ artifact identifiers that follow a GitHub org/repo/rule_name convention.
 
 Please consult the `example/` directory and unit tests for more additional
 detail.
-
-## The `mappings` attribute
-
-Consider the following rule within the package `example/thing`:
-
-```python
-proto_compile(
-    name = "thing_go_compile",
-    mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
-    outputs = ["thing.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
-    proto = "thing_proto",
-)
-```
-
-This rule is declaring that a file `bazel-bin/example/thing/thing.pb.go` will be
-output when the action is run. When we `bazel build
-//example/thing:thing_go_compile`, the file is indeed created.
-
-Let's temporarily comment out the `mappings` attribute and rebuild:
-
-```python
-proto_compile(
-    name = "thing_go_compile",
-    # mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
-    outputs = ["thing.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
-    proto = "thing_proto",
-)
-```
-
-```sh
-$ bazel build //example/thing:thing_go_compile
-ERROR: /github.com/stackb/rules_proto/example/thing/BUILD.bazel:54:14: output 'example/thing/thing.pb.go' was not created
-```
-
-What happened?  Let's add a debugging attribute `verbose = True` on the rule: this will print debugging information and show the bazel sandbox before and after the `protoc` tool is invoked:
-
-```python
-proto_compile(
-    name = "thing_go_compile",
-    # mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
-    outputs = ["thing.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
-    proto = "thing_proto",
-    verbose = True,
-)
-```
-
-```sh
-$ bazel build //example/thing:thing_go_compile
-##### SANDBOX BEFORE RUNNING PROTOC
-./bazel-out/host/bin/external/com_google_protobuf/protoc
-./bazel-out/darwin-opt-exec-2B5CBBC6/bin/external/com_github_golang_protobuf/protoc-gen-go/protoc-gen-go_/protoc-gen-go
-./bazel-out/darwin-fastbuild/bin/example/thing/thing_proto-descriptor-set.proto.bin
-./bazel-out/darwin-fastbuild/bin/external/com_google_protobuf/timestamp_proto-descriptor-set.proto.bin
-
-##### SANDBOX AFTER RUNNING PROTOC
-./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/example/thing/thing.pb.go
-```
-
-So, the file was created, but not in the location we wanted.  In this case the
-`protoc-gen-go` plugin is not "playing nice" with Bazel.  Because this
-`thing.proto` has `option go_package =
-"github.com/stackb/rules_proto/example/thing;thing";`, the output location is no
-longer based on the `package`.  This is a problem, because Bazel semantics
-disallow declaring a File outside its package boundary.  As a result, we need to
-do a `mv
-./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/example/thing/thing.pb.go
-./bazel-out/darwin-fastbuild/bin/example/thing/thing.pb.go` to relocate the
-file into its expected location before the action terminates.
-
-Therefore, the `mappings` attribute is a dict that maps file locations `{ want:
-got }` relative to the action execution root.  It is required when the actual
-output location does not match the desired location.  This can occur if the
-proto `package` statement does not match the Bazel package path, or in special
-circumstances specific to the plugin itself (like `go_package`).
 
 # History
 
