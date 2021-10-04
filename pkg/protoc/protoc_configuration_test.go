@@ -4,6 +4,7 @@ import "testing"
 
 func TestMergeSources(t *testing.T) {
 	for name, tc := range map[string]struct {
+		workDir      string
 		rel          string
 		plugins      []*PluginConfiguration
 		wantOutputs  []string
@@ -41,9 +42,18 @@ func TestMergeSources(t *testing.T) {
 			wantOutputs:  withOutputs("foo.py"),
 			wantMappings: map[string]string{"foo.py": "foo.py"},
 		},
+		"external workspace, mapped case": {
+			workDir: "/path/to/external/googleapis",
+			rel:     "test/proto",
+			plugins: withPluginConfigurations(&PluginConfiguration{
+				Outputs: withOutputs("foo.py"),
+			}),
+			wantOutputs:  withOutputs("foo.py"),
+			wantMappings: map[string]string{"foo.py": "external/googleapis/foo.py"},
+		},
 	} {
 		t.Run(name, func(t *testing.T) {
-			srcs, mappings := mergeSources(tc.rel, tc.plugins)
+			srcs, mappings := mergeSources(tc.workDir, tc.rel, tc.plugins)
 			if len(tc.wantOutputs) != len(srcs) {
 				t.Fatalf("srcs: want %d, got %d", len(tc.wantOutputs), len(srcs))
 			}

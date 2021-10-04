@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/bazelbuild/bazel-gazelle/rule"
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/emicklei/proto"
 )
 
@@ -35,7 +36,8 @@ func exampleProtoLibrary() ProtoLibrary {
 }
 
 func examplePackageConfig() *PackageConfig {
-	c := NewPackageConfig(nil)
+	emptyConfig := &config.Config{}
+	c := NewPackageConfig(emptyConfig)
 	if err := c.ParseDirectives(exampleDir, withDirectives(
 		"proto_rule", "proto_compile implementation stackb:rules_proto:proto_compile",
 		"proto_plugin", "fake_proto implementation protoc:fake",
