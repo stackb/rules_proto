@@ -80,9 +80,21 @@ func (c *LanguageConfig) parseDirective(cfg *PackageConfig, d, param, value stri
 	return nil
 }
 
-// case "match":
-// 	if _, err := path.Match(value, ""); err == path.ErrBadPattern {
-// 		return fmt.Errorf("match glob: %w", err)
-// 	}
-// 	s.Pattern = value
-// 	return nil
+// fromYAML loads configuration from the yaml rule confug.
+func (c *LanguageConfig) fromYAML(y *YLanguage) error {
+	if c.Name != y.Name {
+		return fmt.Errorf("yaml language mismatch: want %q got %q", c.Name, y.Name)
+	}
+	for _, plugin := range y.Plugin {
+		c.Plugins[plugin] = true
+	}
+	for _, rule := range y.Rule {
+		c.Rules[rule] = true
+	}
+	if y.Enabled != nil {
+		c.Enabled = *y.Enabled
+	} else {
+		c.Enabled = true
+	}
+	return nil
+}

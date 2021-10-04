@@ -1,5 +1,5 @@
 __pycache__
 bazel-*
-vendor
+docs/vendor
 old-example
 node_modules
