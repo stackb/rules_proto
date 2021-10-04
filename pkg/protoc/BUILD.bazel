@@ -27,6 +27,7 @@ go_library(
         "rule_provider.go",
         "rule_registry.go",
         "syntaxutil.go",
+        "yconfig.go",
     ],
     importpath = "github.com/stackb/rules_proto/pkg/protoc",
     visibility = ["//visibility:public"],
@@ -36,6 +37,7 @@ go_library(
         "@bazel_gazelle//rule:go_default_library",
         "@com_github_bazelbuild_buildtools//build:go_default_library",
         "@com_github_emicklei_proto//:proto",
+        "@in_gopkg_yaml_v3//:yaml_v3",
     ],
 )
 

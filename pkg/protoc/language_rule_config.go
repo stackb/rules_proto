@@ -91,3 +91,23 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 
 	return nil
 }
+
+// fromYAML loads configuration from the yaml rule confug.
+func (c *LanguageRuleConfig) fromYAML(y *YRule) error {
+	if c.Name != y.Name {
+		return fmt.Errorf("yaml rule mismatch: want %q got %q", c.Name, y.Name)
+	}
+	c.Implementation = y.Implementation
+	for _, dep := range y.Deps {
+		c.Deps[dep] = true
+	}
+	for _, v := range y.Visibility {
+		c.Visibility[v] = true
+	}
+	if y.Enabled != nil {
+		c.Enabled = *y.Enabled
+	} else {
+		c.Enabled = true
+	}
+	return nil
+}

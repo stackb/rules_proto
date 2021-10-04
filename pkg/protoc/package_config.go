@@ -179,3 +179,56 @@ func (c *PackageConfig) configuredLangs() []*LanguageConfig {
 	}
 	return langs
 }
+
+func (c *PackageConfig) LoadYConfig(y *YConfig) error {
+	for _, plugin := range y.Plugin {
+		if err := c.loadYPlugin(plugin); err != nil {
+			return err
+		}
+	}
+	for _, rule := range y.Rule {
+		if err := c.loadYRule(rule); err != nil {
+			return err
+		}
+	}
+	for _, lang := range y.Language {
+		if err := c.loadYLanguage(lang); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (c *PackageConfig) loadYPlugin(y *YPlugin) error {
+	if y.Name == "" {
+		return fmt.Errorf("yaml plugin name missing in: %+v", y)
+	}
+	plugin, err := c.getOrCreateLanguagePluginConfig(y.Name)
+	if err != nil {
+		return err
+	}
+	return plugin.fromYAML(y)
+}
+
+func (c *PackageConfig) loadYRule(y *YRule) error {
+	if y.Name == "" {
+		return fmt.Errorf("yaml rule name missing in: %+v", y)
+	}
+	rule, err := c.getOrCreateLanguageRuleConfig(c.config, y.Name)
+	if err != nil {
+		return err
+	}
+	return rule.fromYAML(y)
+}
+
+func (c *PackageConfig) loadYLanguage(y *YLanguage) error {
+	if y.Name == "" {
+		return fmt.Errorf("yaml language name missing in: %+v", y)
+	}
+	lang, ok := c.langs[y.Name]
+	if !ok {
+		lang = newLanguageConfig(y.Name)
+		c.langs[y.Name] = lang
+	}
+	return lang.fromYAML(y)
+}

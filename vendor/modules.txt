@@ -1,0 +1,61 @@
+# github.com/bazelbuild/bazel-gazelle v0.23.0 => github.com/wolfd/bazel-gazelle v0.0.0-20210917215910-a5bd0e0069da
+## explicit
+github.com/bazelbuild/bazel-gazelle/config
+github.com/bazelbuild/bazel-gazelle/flag
+github.com/bazelbuild/bazel-gazelle/internal/version
+github.com/bazelbuild/bazel-gazelle/internal/wspace
+github.com/bazelbuild/bazel-gazelle/label
+github.com/bazelbuild/bazel-gazelle/language
+github.com/bazelbuild/bazel-gazelle/language/go
+github.com/bazelbuild/bazel-gazelle/language/proto
+github.com/bazelbuild/bazel-gazelle/merger
+github.com/bazelbuild/bazel-gazelle/pathtools
+github.com/bazelbuild/bazel-gazelle/repo
+github.com/bazelbuild/bazel-gazelle/resolve
+github.com/bazelbuild/bazel-gazelle/rule
+github.com/bazelbuild/bazel-gazelle/testtools
+github.com/bazelbuild/bazel-gazelle/walk
+# github.com/bazelbuild/buildtools v0.0.0-20210408102303-2b0a1af1a898
+## explicit
+github.com/bazelbuild/buildtools/build
+github.com/bazelbuild/buildtools/tables
+# github.com/bazelbuild/rules_go v0.27.0
+## explicit
+github.com/bazelbuild/rules_go/go/tools/bazel
+github.com/bazelbuild/rules_go/go/tools/bazel_testing
+github.com/bazelbuild/rules_go/go/tools/internal/txtar
+# github.com/bmatcuk/doublestar v1.2.2
+github.com/bmatcuk/doublestar
+# github.com/davecgh/go-spew v1.1.1
+github.com/davecgh/go-spew/spew
+# github.com/emicklei/proto v1.9.0
+## explicit
+github.com/emicklei/proto
+# github.com/google/go-cmp v0.5.5
+## explicit
+github.com/google/go-cmp/cmp
+github.com/google/go-cmp/cmp/internal/diff
+github.com/google/go-cmp/cmp/internal/flags
+github.com/google/go-cmp/cmp/internal/function
+github.com/google/go-cmp/cmp/internal/value
+# github.com/pelletier/go-toml v1.2.0
+github.com/pelletier/go-toml
+# github.com/pmezard/go-difflib v1.0.0
+github.com/pmezard/go-difflib/difflib
+# github.com/stretchr/testify v1.7.0
+## explicit
+github.com/stretchr/testify/assert
+# golang.org/x/mod v0.4.1
+golang.org/x/mod/module
+golang.org/x/mod/semver
+# golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
+golang.org/x/sync/errgroup
+# golang.org/x/tools v0.0.0-20191119224855-298f0cb1881e
+golang.org/x/tools/go/vcs
+# golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
+golang.org/x/xerrors
+golang.org/x/xerrors/internal
+# gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
+## explicit
+gopkg.in/yaml.v3
+# github.com/bazelbuild/bazel-gazelle => github.com/wolfd/bazel-gazelle v0.0.0-20210917215910-a5bd0e0069da

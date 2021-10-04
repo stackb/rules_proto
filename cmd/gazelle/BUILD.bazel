@@ -1,0 +1,33 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "gazelle_lib",
+    srcs = [
+        "fix.go",
+        "fix-update.go",
+        "gazelle.go",
+        "langs.go",
+        "metaresolver.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/cmd/gazelle",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//language/protobuf",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//flag:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//language:go_default_library",
+        "@bazel_gazelle//language/proto:go_default_library",
+        "@bazel_gazelle//merger:go_default_library",
+        "@bazel_gazelle//repo:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+        "@bazel_gazelle//walk:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "gazelle",
+    embed = [":gazelle_lib"],
+    visibility = ["//visibility:public"],
+)
