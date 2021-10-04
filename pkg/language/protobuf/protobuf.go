@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"path/filepath"
 	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -50,7 +51,11 @@ func (pl *ProtobufLanguage) RegisterFlags(fs *flag.FlagSet, cmd string, c *confi
 
 func (pl *ProtobufLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 	if pl.configFile != "" {
-		config, err := pc.ParseYConfigFile(pl.configFile)
+		filename := pl.configFile
+		if !filepath.IsAbs(filename) {
+			filename = filepath.Join(c.WorkDir, filename)
+		}
+		config, err := pc.ParseYConfigFile(filename)
 		if err != nil {
 			return err
 		}
