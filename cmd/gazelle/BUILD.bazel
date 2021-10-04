@@ -17,7 +17,6 @@ go_library(
         "@bazel_gazelle//flag:go_default_library",
         "@bazel_gazelle//label:go_default_library",
         "@bazel_gazelle//language:go_default_library",
-        "@bazel_gazelle//language/go:go_default_library",
         "@bazel_gazelle//language/proto:go_default_library",
         "@bazel_gazelle//merger:go_default_library",
         "@bazel_gazelle//repo:go_default_library",
