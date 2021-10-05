@@ -210,6 +210,7 @@ proto_repository(
     name = "proto_googleapis",
     build_directives = [
         "gazelle:resolve proto google/api/http.proto //google/api:http_proto",
+        #"gazelle:resolve protobuf google/api/http.proto //google/api:http_proto",
     ],
     build_file_generation = "clean",
     build_file_proto_mode = "file",

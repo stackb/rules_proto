@@ -18,6 +18,11 @@ type LanguagePluginConfig struct {
 	Label label.Label
 	// Options is a set of option strings.
 	Options map[string]bool
+	// Deps is a set of dep labels.  For example, consider a plugin config for
+	// 'protoc-gen-go'.  That plugin produces .go files.  The 'Deps' field can
+	// be used by downstream Rule implmentations to gather necessary
+	// dependencies for the .go files produced by that plugin.
+	Deps map[string]bool
 	// Enabled flag
 	Enabled bool
 }
@@ -26,6 +31,7 @@ func newLanguagePluginConfig(name string) *LanguagePluginConfig {
 	return &LanguagePluginConfig{
 		Name:    name,
 		Options: make(map[string]bool),
+		Deps:    make(map[string]bool),
 		Enabled: true,
 	}
 }
@@ -43,6 +49,19 @@ func (c *LanguagePluginConfig) GetOptions() []string {
 	return opts
 }
 
+// GetDeps returns the sorted list of deps with positive intent.
+func (c *LanguagePluginConfig) GetDeps() []string {
+	deps := make([]string, 0)
+	for dep, want := range c.Deps {
+		if !want {
+			continue
+		}
+		deps = append(deps, dep)
+	}
+	sort.Strings(deps)
+	return deps
+}
+
 func (c *LanguagePluginConfig) clone() *LanguagePluginConfig {
 	clone := newLanguagePluginConfig(c.Name)
 	clone.Label = c.Label
@@ -50,6 +69,9 @@ func (c *LanguagePluginConfig) clone() *LanguagePluginConfig {
 	clone.Enabled = c.Enabled
 	for k, v := range c.Options {
 		clone.Options[k] = v
+	}
+	for k, v := range c.Deps {
+		clone.Deps[k] = v
 	}
 	return clone
 }
@@ -74,6 +96,8 @@ func (c *LanguagePluginConfig) parseDirective(cfg *PackageConfig, d, param, valu
 		c.Implementation = value
 	case "option":
 		c.Options[value] = intent.Want
+	case "deps", "dep":
+		c.Deps[value] = intent.Want
 	default:
 		return fmt.Errorf("unknown parameter %q", intent.Value)
 	}
@@ -90,6 +114,9 @@ func (c *LanguagePluginConfig) fromYAML(y *YPlugin) error {
 	// only true intent is supported via yaml
 	for _, option := range y.Option {
 		c.Options[option] = true
+	}
+	for _, dep := range y.Dep {
+		c.Deps[dep] = true
 	}
 	if y.Label != "" {
 		l, err := label.Parse(y.Label)

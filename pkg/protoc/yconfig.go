@@ -20,8 +20,9 @@ type YConfig struct {
 type YPlugin struct {
 	Name           string   `yaml:"name"`
 	Implementation string   `yaml:"implementation"`
-	Enabled        *bool    `yaml:"enabled",omitempty`
+	Enabled        *bool    `yaml:"enabled,omitempty"`
 	Option         []string `yaml:"options"`
+	Dep            []string `yaml:"deps"`
 	Label          string   `yaml:"label"`
 }
 
@@ -29,8 +30,9 @@ type YPlugin struct {
 type YRule struct {
 	Name           string   `yaml:"name"`
 	Implementation string   `yaml:"implementation"`
-	Enabled        *bool    `yaml:"enabled",omitempty`
+	Enabled        *bool    `yaml:"enabled,omitempty"`
 	Deps           []string `yaml:"deps"`
+	Resolves       []string `yaml:"resolves"`
 	Visibility     []string `yaml:"visibility"`
 }
 
@@ -38,7 +40,7 @@ type YRule struct {
 type YLanguage struct {
 	Name           string   `yaml:"name"`
 	Implementation string   `yaml:"implementation"`
-	Enabled        *bool    `yaml:"enabled",omitempty`
+	Enabled        *bool    `yaml:"enabled,omitempty"`
 	Plugin         []string `yaml:"plugins"`
 	Rule           []string `yaml:"rules"`
 }

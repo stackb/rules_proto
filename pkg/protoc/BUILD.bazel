@@ -24,6 +24,7 @@ go_library(
         "proto_library.go",
         "protoc_configuration.go",
         "registry.go",
+        "rewrite.go",
         "rule_provider.go",
         "rule_registry.go",
         "syntaxutil.go",
@@ -54,6 +55,7 @@ go_test(
         "package_test.go",
         "proto_plugin_config_test.go",
         "protoc_configuration_test.go",
+        "rewrite_test.go",
     ],
     embed = [":protoc"],
     deps = [

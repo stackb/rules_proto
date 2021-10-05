@@ -11,6 +11,7 @@ def _maybe(repo_rule, name, **kwargs):
 def go_core_deps():
     com_github_golang_protobuf()  # via <TOP>
     org_golang_google_grpc()  # via <TOP>
+    org_golang_google_grpc_cmd_protoc_gen_go_grpc()  # via <TOP>
 
 def com_github_golang_protobuf():
     _maybe(
@@ -30,4 +31,14 @@ def org_golang_google_grpc():
         version = "v1.35.0",
         importpath = "google.golang.org/grpc",
         build_file_proto_mode = "disable",
+    )
+
+def org_golang_google_grpc_cmd_protoc_gen_go_grpc():
+    _maybe(
+        go_repository,
+        name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
+        sum = "h1:M1YKkFIboKNieVO5DLUEVzQfGwJD30Nv2jfUgzb5UcE=",
+        version = "v1.1.0",
+        importpath = "google.golang.org/grpc/cmd/protoc-gen-go-grpc",
+        build_file_proto_mode = "disable_global",
     )

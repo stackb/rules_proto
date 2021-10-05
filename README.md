@@ -548,7 +548,7 @@ artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 | `builtin:ruby`                                        | [link]() |
 | `grpc:grpc:cpp`                                       | [link]() |
 | `grpc:grpc:protoc-gen-grpc-python`                    | [link]() |
-| `grpc:grpc-go:protoc-gen-go`                          | [link]() |
+| `golang:protobuf:protoc-gen-go`                       | [link]() |
 | `grpc:grpc-go:protoc-gen-go-grpc`                     | [link]() |
 | `grpc:grpc-java:protoc-gen-grpc-java`                 | [link]() |
 | `grpc:grpc-node:protoc-gen-grpc-node`                 | [link]() |

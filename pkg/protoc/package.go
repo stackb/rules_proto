@@ -2,6 +2,7 @@ package protoc
 
 import (
 	"log"
+	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
@@ -91,7 +92,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			continue
 		}
 		config.Config = plugin.clone()
-		config.Options = deduplicate(append(config.Options, plugin.GetOptions()...))
+		config.Options = DeduplicateAndSort(append(config.Options, plugin.GetOptions()...))
 
 		// plugin.Label overrides the default value from the implementation
 		if plugin.Label.Name != "" {
@@ -111,7 +112,11 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 	for _, name := range p.GetRulesByIntent(true) {
 		ruleConfig, ok := s.cfg.rules[name]
 		if !ok {
-			log.Fatalf("proto_rule %q is not configured", name)
+			names := make([]string, 0)
+			for name := range s.cfg.rules {
+				names = append(names, name)
+			}
+			log.Fatalf("proto_rule %q is not configured (available: %v)", name, names)
 		}
 		if !ruleConfig.Enabled {
 			continue
@@ -170,7 +175,8 @@ func getProvidedRules(providers []RuleProvider) []*rule.Rule {
 	return rules
 }
 
-func deduplicate(in []string) (out []string) {
+// DeduplicateAndSort removes duplicate entries and sorts the list
+func DeduplicateAndSort(in []string) (out []string) {
 	seen := make(map[string]bool)
 	for _, v := range in {
 		if seen[v] {
@@ -179,5 +185,6 @@ func deduplicate(in []string) (out []string) {
 		seen[v] = true
 		out = append(out, v)
 	}
+	sort.Strings(out)
 	return
 }

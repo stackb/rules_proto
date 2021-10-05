@@ -46,6 +46,14 @@ func TestRuleDirectives(t *testing.T) {
 			),
 			check: withLanguageRule("fake_proto_library", withRuleDepsEquals()),
 		},
+		"proto_rule resolve": {
+			directives: withDirectives(
+				"proto_rule", "fake_proto_library resolve google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/$1pb",
+			),
+			check: withLanguageRule("fake_proto_library", withRuleResolvesEquals(
+				"google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/$1pb",
+			)),
+		},
 	})
 }
 
@@ -96,6 +104,22 @@ func withRuleDepsEquals(deps ...string) languageRuleConfigCheck {
 			actual := got[i]
 			if expected != actual {
 				t.Errorf("rule dep #%d: want %s, got %s", i, expected, actual)
+			}
+		}
+	}
+}
+
+func withRuleResolvesEquals(resolves ...string) languageRuleConfigCheck {
+	return func(t *testing.T, cfg *LanguageRuleConfig) {
+		got := cfg.GetResolves()
+		if len(resolves) != len(got) {
+			t.Fatalf("rule resolves: want %d, got %d", len(resolves), len(got))
+		}
+		for i := 0; i < len(got); i++ {
+			expected := resolves[i]
+			actual := got[i]
+			if expected != actual {
+				t.Errorf("rule resolve #%d: want %s, got %s", i, expected, actual)
 			}
 		}
 	}

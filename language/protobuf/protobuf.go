@@ -7,6 +7,7 @@ import (
 
 	_ "github.com/stackb/rules_proto/pkg/plugin/builtin"
 	_ "github.com/stackb/rules_proto/pkg/plugin/gogo/protobuf"
+	_ "github.com/stackb/rules_proto/pkg/plugin/golang/protobuf"
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpc/grpc"
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpc/grpcgo"
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpc/grpcjava"

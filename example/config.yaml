@@ -5,6 +5,10 @@ plugins:
     implementation: grpc:grpc:cpp
   - name: java
     implementation: builtin:java
+  - name: protoc-gen-go
+    implementation: golang:protobuf:protoc-gen-go
+  - name: protoc-gen-go-grpc
+    implementation: grpc:grpc-go:protoc-gen-go-grpc
 rules:
   - name: proto_compile
     implementation: stackb:rules_proto:proto_compile
@@ -23,8 +27,15 @@ rules:
     deps:
       - "@com_github_grpc_grpc//:grpc++"
       - "@com_github_grpc_grpc//:grpc++_reflection"
+  - name: proto_go_library
+    implementation: stackb:rules_proto:proto_go_library
+    visibility:
+      -  //visibility:public
+    deps:
+      - "@org_golang_google_protobuf//reflect/protoreflect"
+      - "@org_golang_google_protobuf//runtime/protoimpl"
 languages:
-  - name: "cpp"
+  - name: cpp
     plugins:
       - cpp
       - protoc-gen-grpc-cpp
@@ -32,8 +43,16 @@ languages:
       - proto_compile
       - proto_cc_library
       - grpc_cc_library
-  - name: "java"
-    plugins: 
+  - name: java
+    plugins:
       - java
     rules:
       - proto_compile
+  - name: go
+    plugins: 
+      - protoc-gen-go
+      - protoc-gen-go-grpc
+    rules:
+      - proto_compile
+      - proto_go_library
+    enabled: true
