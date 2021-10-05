@@ -1,0 +1,25 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+# gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go
+# gazelle:proto_rule proto_go_library implementation stackb:rules_proto:proto_go_library
+# gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//reflect/protoreflect
+# gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//runtime/protoimpl
+# gazelle:proto_rule proto_go_library resolve google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/${1}pb
+# gazelle:proto_rule proto_go_library visibility //visibility:public
+# gazelle:proto_language go plugin protoc-gen-go
+# gazelle:proto_language go rule proto_compile
+# gazelle:proto_language go rule proto_go_library
+
+proto_library(
+    name = "example_proto",
+    srcs = ["example.proto"],
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "example_go_compile",
+    outputs = ["example.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    proto = "example_proto",
+)
