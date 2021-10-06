@@ -5,3 +5,9 @@ proto_plugin(
     tool = "@com_github_grpc_grpc_node_packages_grpc_tools_src//:grpc_node_plugin",
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"],
+    visibility = ["//plugin:__pkg__"],
+)

@@ -426,7 +426,7 @@ proto_compile(
     name = "thing_go_compile",
     mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
     outputs = ["thing.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
 )
 ```
@@ -442,7 +442,7 @@ proto_compile(
     name = "thing_go_compile",
     # mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
     outputs = ["thing.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
 )
 ```
@@ -459,7 +459,7 @@ proto_compile(
     name = "thing_go_compile",
     # mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
     outputs = ["thing.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
     verbose = True,
 )

@@ -1,0 +1,8 @@
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "proto_go_library.bzl",
+    ],
+    visibility = ["//rules:__pkg__"],
+)

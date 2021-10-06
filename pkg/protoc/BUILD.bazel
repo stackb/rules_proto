@@ -45,6 +45,7 @@ go_library(
 go_test(
     name = "protoc_test",
     srcs = [
+        "depsresolver_test.go",
         "fake_proto_library_test.go",
         "file_test.go",
         "intent_test.go",

@@ -48,3 +48,9 @@ java_library(
         "@maven_scala//:io_grpc_grpc_stub",
     ],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"],
+    visibility = ["//plugin:__pkg__"],
+)

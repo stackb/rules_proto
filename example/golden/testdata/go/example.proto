@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = "./;pb";
+
 enum Enum{
   UNKNOWN = 0;
 }

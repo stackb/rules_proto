@@ -1,0 +1,9 @@
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "grpc_nodejs_library.bzl",
+        "proto_nodejs_library.bzl",
+    ],
+    visibility = ["//rules:__pkg__"],
+)
