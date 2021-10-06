@@ -1,0 +1,6 @@
+exports_files(
+    [
+        "list_repository_tools_srcs.go",
+    ],
+    visibility = ["//visibility:public"],
+)

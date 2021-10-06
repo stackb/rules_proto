@@ -14,6 +14,7 @@
 
 load("//rules/internal:execution.bzl", "env_execute", "executable_extension")
 load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
+load("@build_stack_rules_proto//rules/internal:proto_repository_tools_srcs.bzl", "PROTO_REPOSITORY_TOOLS_SRCS")
 
 _PROTO_REPOSITORY_TOOLS_BUILD_FILE = """
 package(default_visibility = ["//visibility:public"])
@@ -52,6 +53,28 @@ def _proto_repository_tools_impl(ctx):
     if "GOPROXY" in ctx.os.environ:
         env["GOPROXY"] = ctx.os.environ["GOPROXY"]
 
+    # Make sure the list of source is up to date.
+    # We don't want to run the script, then resolve each source file it returns.
+    # If many of the sources changed even slightly, Bazel would restart this
+    # rule each time. Compiling the script is relatively slow.
+    # Don't try this on Windows: bazel does not set up symbolic links.
+    if "windows" not in ctx.os.name:
+        result = env_execute(
+            ctx,
+            [
+                go_tool,
+                "run",
+                ctx.path(ctx.attr._list_repository_tools_srcs),
+                "-dir=src/github.com/stackb/rules_proto",
+                "-check=rules/internal/proto_repository_tools_srcs.bzl",
+                # Run it under 'generate' to recreate the list'
+                # "-generate=rules/internal/proto_repository_tools_srcs.bzl",
+            ],
+            environment = env,
+        )
+        if result.return_code:
+            fail("list_repository_tools_srcs: " + result.stderr)
+
     # Build the tools.
     args = [
         go_tool,
@@ -82,11 +105,17 @@ proto_repository_tools = repository_rule(
             mandatory = True,
             allow_single_file = True,
         ),
+        "_proto_repository_tools_srcs": attr.label_list(
+            default = PROTO_REPOSITORY_TOOLS_SRCS,
+        ),
+        "_list_repository_tools_srcs": attr.label(
+            default = "@build_stack_rules_proto//rules/internal:list_repository_tools_srcs.go",
+        ),
     },
     environ = [
         "GOCACHE",
         "GOPATH",
-        "GO_REPOSITORY_USE_HOST_CACHE",  # TODO(gravypod): Find out why this is here in rules_go
+        "GO_REPOSITORY_USE_HOST_CACHE",
     ],
 )
 """proto_repository_tools is a synthetic repository used by proto_repository.
