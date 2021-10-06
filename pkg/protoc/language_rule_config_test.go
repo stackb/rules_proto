@@ -111,15 +111,16 @@ func withRuleDepsEquals(deps ...string) languageRuleConfigCheck {
 
 func withRuleResolvesEquals(resolves ...string) languageRuleConfigCheck {
 	return func(t *testing.T, cfg *LanguageRuleConfig) {
-		got := cfg.GetResolves()
+		got := cfg.GetRewrites()
 		if len(resolves) != len(got) {
 			t.Fatalf("rule resolves: want %d, got %d", len(resolves), len(got))
 		}
 		for i := 0; i < len(got); i++ {
 			expected := resolves[i]
 			actual := got[i]
-			if expected != actual {
-				t.Errorf("rule resolve #%d: want %s, got %s", i, expected, actual)
+			original := actual.Match.String() + " " + actual.Replace
+			if expected != original {
+				t.Errorf("rule resolve #%d: want %s, got %s", i, expected, original)
 			}
 		}
 	}

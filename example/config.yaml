@@ -31,6 +31,9 @@ rules:
     implementation: stackb:rules_proto:proto_go_library
     visibility:
       -  //visibility:public
+    resolves:
+      - "google/protobuf/(descriptor|plugin).proto @org_golang_google_protobuf//types/${1}pb"
+      - "google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/${1}pb"
     deps:
       - "@org_golang_google_protobuf//reflect/protoreflect"
       - "@org_golang_google_protobuf//runtime/protoimpl"

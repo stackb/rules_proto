@@ -2,6 +2,7 @@ package rules_go
 
 import (
 	"fmt"
+	"log"
 	"path"
 	"sort"
 	"strings"
@@ -87,7 +88,6 @@ func (s *goLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Proto
 		deps:           protoc.DeduplicateAndSort(deps),
 		ruleConfig:     cfg,
 		config:         pc,
-		resolver:       protoc.ResolveDepsWithSuffix(goLibraryRuleSuffix),
 	}
 }
 
@@ -99,7 +99,6 @@ type goLibraryRule struct {
 	deps           []string
 	config         *protoc.ProtocConfiguration
 	ruleConfig     *protoc.LanguageRuleConfig
-	resolver       protoc.DepsResolver
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -125,7 +124,8 @@ func (s *goLibraryRule) Srcs() []string {
 func (s *goLibraryRule) Deps() []string {
 	deps := s.ruleConfig.GetDeps()
 	deps = append(deps, s.deps...)
-	deps = append(deps, protoc.ResolveLibraryRewrites(s.ruleConfig.GetRewrites(), s.config.Library)...)
+	resolvedDeps := protoc.ResolveLibraryRewrites(s.ruleConfig.GetRewrites(), s.config.Library)
+	deps = append(deps, resolvedDeps...)
 	return protoc.DeduplicateAndSort(deps)
 }
 
@@ -168,10 +168,41 @@ func (s *goLibraryRule) Rule() *rule.Rule {
 
 // Resolve implements part of the RuleProvider interface.
 func (s *goLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
-	if s.resolver == nil {
-		return
+
+	// collect a list of dependencies, then partition them into 'embeds' if
+	// another go library is in the same package.
+	all := s.Deps()
+
+	for _, d := range s.config.Library.Deps() {
+		if strings.HasPrefix(d, "@com_google_protobuf//") {
+			continue
+		}
+		d = strings.TrimSuffix(d, "_proto")
+		all = append(all, d+goLibraryRuleSuffix)
 	}
-	s.resolver(s, s.config, c, r, importsRaw, from)
+
+	deps := make([]string, 0)
+	embeds := make([]string, 0)
+
+	for _, dep := range all {
+		l, err := label.Parse(dep)
+		if err != nil {
+			log.Fatalf("resolve deps failed for for rule %s %s: label parse %q error: %v", r.Kind(), r.Name(), dep, err)
+		}
+
+		if l.Pkg == "" { // "this package"
+			embeds = append(embeds, dep)
+		} else {
+			deps = append(deps, dep)
+		}
+	}
+
+	if len(embeds) > 0 {
+		r.SetAttr("embed", embeds)
+	}
+	if len(deps) > 0 {
+		r.SetAttr("deps", deps)
+	}
 }
 
 func getGoPackageOption(c *config.Config, rel string, files []*protoc.File) string {

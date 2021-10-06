@@ -9,6 +9,7 @@ go_library(
         "//pkg/language/protobuf",
         "//pkg/plugin/builtin",
         "//pkg/plugin/gogo/protobuf",
+        "//pkg/plugin/golang/protobuf",
         "//pkg/plugin/grpc/grpc",
         "//pkg/plugin/grpc/grpcgo",
         "//pkg/plugin/grpc/grpcjava",

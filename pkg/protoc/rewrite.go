@@ -16,7 +16,11 @@ func (r *Rewrite) ReplaceAll(src string) string {
 	if r.Match == nil {
 		return ""
 	}
-	return r.Match.ReplaceAllString(src, r.Replace)
+	replaced := r.Match.ReplaceAllString(src, r.Replace)
+	if src == replaced {
+		return ""
+	}
+	return replaced
 }
 
 func ParseRewrite(spec string) (*Rewrite, error) {
