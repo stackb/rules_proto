@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//rules/internal:execution.bzl", "env_execute", "executable_extension")
+load("//rules/private:execution.bzl", "env_execute", "executable_extension")
 load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
-load("@build_stack_rules_proto//rules/internal:proto_repository_tools_srcs.bzl", "PROTO_REPOSITORY_TOOLS_SRCS")
+load("@build_stack_rules_proto//rules/private:proto_repository_tools_srcs.bzl", "PROTO_REPOSITORY_TOOLS_SRCS")
 
 _PROTO_REPOSITORY_TOOLS_BUILD_FILE = """
 package(default_visibility = ["//visibility:public"])
@@ -66,9 +66,9 @@ def _proto_repository_tools_impl(ctx):
                 "run",
                 ctx.path(ctx.attr._list_repository_tools_srcs),
                 "-dir=src/github.com/stackb/rules_proto",
-                "-check=rules/internal/proto_repository_tools_srcs.bzl",
+                "-check=rules/private/proto_repository_tools_srcs.bzl",
                 # Run it under 'generate' to recreate the list'
-                # "-generate=rules/internal/proto_repository_tools_srcs.bzl",
+                # "-generate=rules/private/proto_repository_tools_srcs.bzl",
             ],
             environment = env,
         )
@@ -109,7 +109,7 @@ proto_repository_tools = repository_rule(
             default = PROTO_REPOSITORY_TOOLS_SRCS,
         ),
         "_list_repository_tools_srcs": attr.label(
-            default = "@build_stack_rules_proto//rules/internal:list_repository_tools_srcs.go",
+            default = "@build_stack_rules_proto//rules/private:list_repository_tools_srcs.go",
         ),
     },
     environ = [

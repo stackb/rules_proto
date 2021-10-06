@@ -1,4 +1,4 @@
-load("//rules/internal:execution.bzl", "env_execute", "executable_extension")
+load("//rules/private:execution.bzl", "env_execute", "executable_extension")
 load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "read_netrc", "use_netrc")
 
