@@ -14,6 +14,16 @@
 
 def env_execute(ctx, arguments, environment = {}, **kwargs):
     """Executes a command in for a repository rule.
+
+    Args:
+        ctx: the context object
+        arguments: list of arguments to execute
+        environment: environment variables for the process, defaults to empty
+        **kwargs: rest
+
+    Returns:
+        the return value of ctx.execute
+
     It prepends "env -i" to "arguments" before calling "ctx.execute".
     Variables that aren't explicitly mentioned in "environment"
     are removed from the environment. This should be preferred to "ctx.execute"

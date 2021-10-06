@@ -118,5 +118,3 @@ proto_repository_tools = repository_rule(
         "GO_REPOSITORY_USE_HOST_CACHE",
     ],
 )
-"""proto_repository_tools is a synthetic repository used by proto_repository.
-"""

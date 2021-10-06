@@ -1,3 +1,5 @@
+"""proto_repostitory.bzl provides the proto_repository rule."""
+
 load("//rules/private:execution.bzl", "env_execute", "executable_extension")
 load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "read_netrc", "use_netrc")
@@ -118,6 +120,7 @@ def _proto_repository_impl(ctx):
                 result.stderr,
             ))
         if result.stderr:
+            # buildifier: disable=print
             print("%s: %s" % (ctx.name, result.stderr))
 
     # Apply patches if necessary.
@@ -185,11 +188,14 @@ proto_repository = repository_rule(
         "patch_cmds": attr.string_list(default = []),
     },
 )
-"""See repository.rst#go-repository for full documentation."""
 
 # Copied from @bazel_tools//tools/build_defs/repo:utils.bzl
 def patch(ctx):
-    """Implementation of patching an already extracted repository"""
+    """Implementation of patching an already extracted repository
+
+    Args:
+        ctx: the context object
+    """
     bash_exe = ctx.os.environ["BAZEL_SH"] if "BAZEL_SH" in ctx.os.environ else "bash"
     for patchfile in ctx.attr.patches:
         command = "{patchtool} {patch_args} < {patchfile}".format(
