@@ -1,6 +1,8 @@
 "go_deps.bzl contains golang dependencies."
 
 load("@bazel_gazelle//:deps.bzl", "go_repository")
+
+# buildifier: disable=bzl-visibility
 load("//rules/private:proto_repository_tools.bzl", "proto_repository_tools")
 
 def gazelle_protobuf_extension_go_deps():
