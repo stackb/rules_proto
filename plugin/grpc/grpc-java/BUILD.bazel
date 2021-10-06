@@ -21,3 +21,9 @@ java_library(
         "@io_grpc_grpc_java//stub:javax_annotation",
     ],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"],
+    visibility = ["//plugin:__pkg__"],
+)

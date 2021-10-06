@@ -44,3 +44,14 @@ go_binary(
     embed = [":ts-proto_lib"],
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "package.json",
+        "package-lock.json",
+        "protoc-gen-ts-proto.go",
+    ],
+    visibility = ["//plugin:__pkg__"],
+)

@@ -1,8 +1,8 @@
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 
 proto_plugin(
-    name = "protoc-gen-grpc-js",
-    tool = "@com_github_stackb_grpc_js//protoc-gen-grpc-js",
+    name = "protoc-gen-go",
+    tool = "@com_github_golang_protobuf//protoc-gen-go",
     visibility = ["//visibility:public"],
 )
 

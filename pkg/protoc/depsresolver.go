@@ -37,5 +37,6 @@ func StripRel(rel string, filename string) string {
 	if !strings.HasPrefix(filename, rel) {
 		return filename
 	}
-	return filename[len(rel)+1:] // +1 for slash separator
+	filename = filename[len(rel):]
+	return strings.TrimPrefix(filename, "/")
 }

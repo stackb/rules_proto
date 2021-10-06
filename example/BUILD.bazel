@@ -18,7 +18,7 @@
 # gazelle:proto_language cpp rule grpc_cc_library
 
 ## Go ##
-# gazelle:proto_plugin protoc-gen-go implementation grpc:grpc-go:protoc-gen-go
+# gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go
 # gazelle:proto_rule proto_go_library implementation stackb:rules_proto:proto_go_library
 # gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//reflect/protoreflect
 # gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//runtime/protoimpl

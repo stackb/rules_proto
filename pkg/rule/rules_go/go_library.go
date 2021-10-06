@@ -12,7 +12,6 @@ import (
 	langgo "github.com/bazelbuild/bazel-gazelle/language/go"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
-	"github.com/stackb/rules_proto/pkg/plugin/grpc/grpcgo"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
@@ -24,16 +23,14 @@ const (
 func init() {
 	protoc.Rules().MustRegisterRule("stackb:rules_proto:"+ProtoGoLibraryRuleName,
 		&goLibrary{
-			pluginName: grpcgo.ProtocGenGoPluginName,
-			kindName:   ProtoGoLibraryRuleName,
+			kindName: ProtoGoLibraryRuleName,
 		})
 }
 
 // goLibrary implements LanguageRule for the '{proto|grpc}_go_library' rule from
 // @rules_proto.
 type goLibrary struct {
-	pluginName string
-	kindName   string
+	kindName string
 }
 
 // Name implements part of the LanguageRule interface.
@@ -62,25 +59,35 @@ func (s *goLibrary) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *goLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
-	plugin := pc.GetPluginConfiguration(s.pluginName)
-	if plugin == nil {
-		log.Fatalf("expected plugin configuration for %q to be defined", s.pluginName)
+	// collect the outputs and the deps.  Search all the PluginConfigurations.
+	// If the produced .go files, include them and add their deps.
+	outputs := make([]string, 0)
+	deps := make([]string, 0)
+
+	for _, pluginConfig := range pc.Plugins {
+		for _, out := range pluginConfig.Outputs {
+			if path.Ext(out) == ".go" {
+				outputs = append(outputs, out)
+				deps = append(deps, pluginConfig.Config.GetDeps()...)
+			}
+		}
 	}
-	if len(plugin.Outputs) == 0 {
+
+	if len(outputs) == 0 {
 		return nil
 	}
 
-	outputs := make([]string, len(plugin.Outputs))
-	for i, output := range plugin.Outputs {
+	for i, output := range outputs {
 		outputs[i] = path.Join(pc.Rel, path.Base(output))
 	}
+
 	return &goLibraryRule{
 		kindName:       s.kindName,
 		ruleNameSuffix: goLibraryRuleSuffix,
-		outputs:        outputs,
+		outputs:        protoc.DeduplicateAndSort(outputs),
+		deps:           protoc.DeduplicateAndSort(deps),
 		ruleConfig:     cfg,
 		config:         pc,
-		resolver:       protoc.ResolveDepsWithSuffix(goLibraryRuleSuffix),
 	}
 }
 
@@ -89,9 +96,9 @@ type goLibraryRule struct {
 	kindName       string
 	ruleNameSuffix string
 	outputs        []string
+	deps           []string
 	config         *protoc.ProtocConfiguration
 	ruleConfig     *protoc.LanguageRuleConfig
-	resolver       protoc.DepsResolver
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -113,9 +120,13 @@ func (s *goLibraryRule) Srcs() []string {
 	return srcs
 }
 
-// Deps computes the deps list for the rule.
+// Deps implements the protoc.DepsProvider interface.
 func (s *goLibraryRule) Deps() []string {
-	return s.ruleConfig.GetDeps()
+	deps := s.ruleConfig.GetDeps()
+	deps = append(deps, s.deps...)
+	resolvedDeps := protoc.ResolveLibraryRewrites(s.ruleConfig.GetRewrites(), s.config.Library)
+	deps = append(deps, resolvedDeps...)
+	return protoc.DeduplicateAndSort(deps)
 }
 
 // Visibility implements part of the ruleProvider interface.
@@ -144,6 +155,7 @@ func (s *goLibraryRule) Rule() *rule.Rule {
 	if importpath != "" {
 		newRule.SetAttr("importpath", importpath)
 	}
+
 	newRule.SetAttr("srcs", s.Srcs())
 
 	visibility := s.Visibility()
@@ -156,10 +168,41 @@ func (s *goLibraryRule) Rule() *rule.Rule {
 
 // Resolve implements part of the RuleProvider interface.
 func (s *goLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
-	if s.resolver == nil {
-		return
+
+	// collect a list of dependencies, then partition them into 'embeds' if
+	// another go library is in the same package.
+	all := s.Deps()
+
+	for _, d := range s.config.Library.Deps() {
+		if strings.HasPrefix(d, "@com_google_protobuf//") {
+			continue
+		}
+		d = strings.TrimSuffix(d, "_proto")
+		all = append(all, d+goLibraryRuleSuffix)
 	}
-	s.resolver(s, s.config, c, r, importsRaw, from)
+
+	deps := make([]string, 0)
+	embeds := make([]string, 0)
+
+	for _, dep := range all {
+		l, err := label.Parse(dep)
+		if err != nil {
+			log.Fatalf("resolve deps failed for for rule %s %s: label parse %q error: %v", r.Kind(), r.Name(), dep, err)
+		}
+
+		if l.Pkg == "" { // "this package"
+			embeds = append(embeds, dep)
+		} else {
+			deps = append(deps, dep)
+		}
+	}
+
+	if len(embeds) > 0 {
+		r.SetAttr("embed", embeds)
+	}
+	if len(deps) > 0 {
+		r.SetAttr("deps", deps)
+	}
 }
 
 func getGoPackageOption(c *config.Config, rel string, files []*protoc.File) string {

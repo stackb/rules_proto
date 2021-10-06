@@ -1,4 +1,4 @@
-package grpcgo
+package protobuf
 
 import (
 	"path"
@@ -8,7 +8,7 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
-const ProtocGenGoPluginName = "grpc:grpc-go:protoc-gen-go"
+const ProtocGenGoPluginName = "golang:protobuf:protoc-gen-go"
 
 func init() {
 	protoc.Plugins().MustRegisterPlugin(&ProtocGenGoPlugin{})
@@ -28,7 +28,7 @@ func (p *ProtocGenGoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginC
 		return nil
 	}
 	return &protoc.PluginConfiguration{
-		Label:   label.New("build_stack_rules_proto", "plugin/grpc/grpc-go", "protoc-gen-go"),
+		Label:   label.New("build_stack_rules_proto", "plugin/golang/protobuf", "protoc-gen-go"),
 		Outputs: p.outputs(ctx.ProtoLibrary),
 	}
 }

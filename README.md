@@ -426,7 +426,7 @@ proto_compile(
     name = "thing_go_compile",
     mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
     outputs = ["thing.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
 )
 ```
@@ -442,7 +442,7 @@ proto_compile(
     name = "thing_go_compile",
     # mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
     outputs = ["thing.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
 )
 ```
@@ -459,7 +459,7 @@ proto_compile(
     name = "thing_go_compile",
     # mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
     outputs = ["thing.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
     verbose = True,
 )
@@ -548,7 +548,7 @@ artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 | `builtin:ruby`                                        | [link]() |
 | `grpc:grpc:cpp`                                       | [link]() |
 | `grpc:grpc:protoc-gen-grpc-python`                    | [link]() |
-| `grpc:grpc-go:protoc-gen-go`                          | [link]() |
+| `golang:protobuf:protoc-gen-go`                       | [link]() |
 | `grpc:grpc-go:protoc-gen-go-grpc`                     | [link]() |
 | `grpc:grpc-java:protoc-gen-grpc-java`                 | [link]() |
 | `grpc:grpc-node:protoc-gen-grpc-node`                 | [link]() |

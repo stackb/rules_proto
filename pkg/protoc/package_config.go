@@ -135,10 +135,10 @@ func (c *PackageConfig) parsePluginDirective(d rule.Directive) error {
 
 func (c *PackageConfig) parseRuleDirective(d rule.Directive) error {
 	fields := strings.Fields(d.Value)
-	if len(fields) != 3 {
-		return fmt.Errorf("invalid directive %v: expected three fields, got %d", d, len(fields))
+	if len(fields) < 3 {
+		return fmt.Errorf("invalid directive %v: expected three or more fields, got %d", d, len(fields))
 	}
-	name, param, value := fields[0], fields[1], fields[2]
+	name, param, value := fields[0], fields[1], strings.Join(fields[2:], " ")
 	r, err := c.getOrCreateLanguageRuleConfig(c.config, name)
 	if err != nil {
 		return fmt.Errorf("invalid proto_rule directive %+v: %w", d, err)

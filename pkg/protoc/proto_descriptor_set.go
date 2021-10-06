@@ -37,7 +37,7 @@ func (s *protoDescriptorSetRule) KindInfo() rule.KindInfo {
 // LoadInfo implements part of the LanguageRule interface.
 func (s *protoDescriptorSetRule) LoadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
-		Name:    "@rules_proto//proto:defs.bzl",
+		Name:    "@build_stack_rules_proto//rules:proto_descriptor_set.bzl",
 		Symbols: []string{"proto_descriptor_set"},
 	}
 }

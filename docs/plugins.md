@@ -53,7 +53,7 @@ dependencies are required.
 | `grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway` | Mirrors <https://github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway> |
 | `grpc-ecosystem:grpc-gateway:protoc-gen-openapiv2`    | Mirrors <https://github.com/grpc-ecosystem/grpc-gateway/protoc-gen-openapiv2>    |
 | `grpc:grpc-go:protoc-gen-go-grpc`                     | Mirrors <https://github.com/grpc/grpc-go/protoc-gen-go-grpc>                     |
-| `grpc:grpc-go:protoc-gen-go`                          | Mirrors <https://github.com/grpc/grpc-go/protoc-gen-go>                          |
+| `golang:protobuf:protoc-gen-go`                       | Mirrors <https://github.com/golang/protobuf/protoc-gen-go>                       |
 | `grpc:grpc-web:protoc-gen-grpc-web`                   | Mirrors <https://github.com/grpc/grpc-java/grpc_java_plugin>                     |
 | `grpc:grpc-java:protoc-gen-grpc-java`                 | Mirrors <https://github.com/grpc/grpc-java/grpc_java_plugin>                     |
 | `grpc:grpc:grpc_cpp_plugin`                           | Mirrors <https://github.com/grpc/grpc/grpc_cpp_plugin>                           |

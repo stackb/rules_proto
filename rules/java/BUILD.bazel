@@ -1,0 +1,9 @@
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "grpc_java_library.bzl",
+        "proto_java_library.bzl",
+    ],
+    visibility = ["//rules:__pkg__"],
+)

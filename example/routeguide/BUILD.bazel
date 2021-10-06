@@ -114,7 +114,7 @@ proto_compile(
     name = "routeguide_go_compile",
     mappings = {"routeguide.pb.go": "github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go"},
     outputs = ["routeguide.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "routeguide_proto",
 )
 

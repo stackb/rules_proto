@@ -14,6 +14,9 @@ type LanguageRuleConfig struct {
 	Config *config.Config
 	// Deps is a mapping from label to +/- intent.
 	Deps map[string]bool
+	// Resolves is a mapping from resolve mapping spec to rewrite.  Negative
+	// intent is represented by the empty rewrite value.
+	Resolves []Rewrite
 	// Enabled is a flag that marks language generation as enabled or not
 	Enabled bool
 	// Implementation is the registry identifier for the Rule
@@ -34,6 +37,7 @@ func newLanguageRuleConfig(config *config.Config, name string) *LanguageRuleConf
 		Name:       name,
 		Enabled:    true,
 		Deps:       make(map[string]bool),
+		Resolves:   make([]Rewrite, 0),
 		Visibility: make(map[string]bool),
 	}
 }
@@ -51,6 +55,11 @@ func (c *LanguageRuleConfig) GetDeps() []string {
 	return deps
 }
 
+// GetRewrites returns a copy of the resolve mappings
+func (c *LanguageRuleConfig) GetRewrites() []Rewrite {
+	return c.Resolves[:]
+}
+
 // clone copies this config to a new one
 func (c *LanguageRuleConfig) clone() *LanguageRuleConfig {
 	clone := newLanguageRuleConfig(c.Config, c.Name)
@@ -59,6 +68,7 @@ func (c *LanguageRuleConfig) clone() *LanguageRuleConfig {
 	for k, v := range c.Deps {
 		clone.Deps[k] = v
 	}
+	clone.Resolves = c.Resolves[:]
 	for k, v := range c.Visibility {
 		clone.Visibility[k] = v
 	}
@@ -75,6 +85,12 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 		} else {
 			delete(c.Deps, value)
 		}
+	case "resolve":
+		rw, err := ParseRewrite(value)
+		if err != nil {
+			return fmt.Errorf("invalid resolve rewrite %s: %w", value, err)
+		}
+		c.Resolves = append(c.Resolves, *rw)
 	case "visibility":
 		c.Visibility[value] = intent.Want
 	case "implementation":
@@ -100,6 +116,13 @@ func (c *LanguageRuleConfig) fromYAML(y *YRule) error {
 	c.Implementation = y.Implementation
 	for _, dep := range y.Deps {
 		c.Deps[dep] = true
+	}
+	for _, resolve := range y.Resolves {
+		rw, err := ParseRewrite(resolve)
+		if err != nil {
+			return fmt.Errorf("invalid resolve rewrite %s: %w", resolve, err)
+		}
+		c.Resolves = append(c.Resolves, *rw)
 	}
 	for _, v := range y.Visibility {
 		c.Visibility[v] = true
