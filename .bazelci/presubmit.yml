@@ -1,7 +1,7 @@
 ---
 buildifier:
   version: 4.0.1
-  warnings: "-function-docstring"
+  warnings: "-function-docstring,function-docstring-header"
 bazel: 4.0.0
 tasks:
   default_workspace_ubuntu1804:
