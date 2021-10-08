@@ -9,7 +9,8 @@ import (
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
-	langgo "github.com/bazelbuild/bazel-gazelle/language/go"
+
+	// langgo "github.com/bazelbuild/bazel-gazelle/language/go"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -144,7 +145,7 @@ func (s *goLibraryRule) Visibility() []string {
 
 // ImportPath computes the import path.
 func (s *goLibraryRule) ImportPath() string {
-	return getGoPackageOption(s.ruleConfig.Config, s.config.Rel, s.config.Library.Files())
+	return s.getGoPackageOption()
 }
 
 // Rule implements part of the ruleProvider interface.
@@ -205,11 +206,12 @@ func (s *goLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw inter
 	}
 }
 
-func getGoPackageOption(c *config.Config, rel string, files []*protoc.File) string {
-	for _, file := range files {
+func (s *goLibraryRule) getGoPackageOption() string {
+	for _, file := range s.config.Library.Files() {
 		if value, _ := protoc.GetNamedOption(file.Options(), "go_package"); value != "" {
 			if strings.LastIndexByte(value, '/') == -1 {
-				return langgo.InferImportPath(c, rel)
+				// return langgo.InferImportPath(c, rel)
+				continue // TODO: do more research here on if this is the correct approach
 			}
 			if i := strings.LastIndexByte(value, ';'); i != -1 {
 				return value[:i]
@@ -217,5 +219,49 @@ func getGoPackageOption(c *config.Config, rel string, files []*protoc.File) stri
 			return value
 		}
 	}
+
+	// fallback
+	return s.getPluginImportMappingOption()
+}
+
+func (s *goLibraryRule) getPluginImportMappingOption() string {
+	// first, iterate all the plugins and gather options that look like
+	// protoc-gen-go "importmapping" (M) options (e.g
+	// Mfoo.proto=github.com/example/foo).
+	mappings := make(map[string]string)
+
+	tryParseMapping := func(opt string) {
+		if !strings.HasPrefix(opt, "M") {
+			return
+		}
+		parts := strings.SplitN(opt[1:], "=", 2)
+		if len(parts) != 2 {
+			return
+		}
+		mappings[parts[0]] = parts[1]
+	}
+
+	// search all plugins
+	for _, plugin := range s.config.Plugins {
+		for _, opt := range plugin.Options {
+			tryParseMapping(opt)
+		}
+	}
+	// and all rule options
+	for _, opt := range s.ruleConfig.GetOptions() {
+		tryParseMapping(opt)
+	}
+
+	// now that we've gathered all possible options; search all library files
+	// (e.g. foo.proto) and see if we can find a match.
+	for _, file := range s.config.Library.Files() {
+		mapping := mappings[path.Join(file.Dir, file.Basename)]
+		if mapping != "" {
+			return mapping
+		}
+	}
+
+	log.Println(s.kindName, s.Name(), "unable to determine an importpath.  Try adding a go_package option to the .proto file or use an 'M' importmapping on the plugin -OR- rule (see documentation for protoc-gen-go for syntax)")
+
 	return ""
 }

@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "rules_go",
@@ -9,7 +9,16 @@ go_library(
         "//pkg/protoc",
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//label:go_default_library",
-        "@bazel_gazelle//language/go:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)
+
+go_test(
+    name = "rules_go_test",
+    srcs = ["go_library_test.go"],
+    embed = [":rules_go"],
+    deps = [
+        "//pkg/protoc",
         "@bazel_gazelle//rule:go_default_library",
     ],
 )
