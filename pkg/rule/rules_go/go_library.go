@@ -186,16 +186,19 @@ func (s *goLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw inter
 	embeds := make([]string, 0)
 
 	for _, dep := range all {
-		l, err := label.Parse(dep)
-		if err != nil {
-			log.Fatalf("resolve deps failed for for rule %s %s: label parse %q error: %v", r.Kind(), r.Name(), dep, err)
-		}
+		deps = append(deps, dep)
 
-		if l.Pkg == "" { // "this package"
-			embeds = append(embeds, dep)
-		} else {
-			deps = append(deps, dep)
-		}
+		// TOOD: do we really need to populate embeds?
+		// l, err := label.Parse(dep)
+		// if err != nil {
+		// 	log.Fatalf("resolve deps failed for for rule %s %s: label parse %q error: %v", r.Kind(), r.Name(), dep, err)
+		// }
+
+		// if l.Pkg == "" { // "this package"
+		// 	embeds = append(embeds, dep)
+		// } else {
+		// deps = append(deps, dep)
+		// }
 	}
 
 	if len(embeds) > 0 {
@@ -255,7 +258,8 @@ func (s *goLibraryRule) getPluginImportMappingOption() string {
 	// now that we've gathered all possible options; search all library files
 	// (e.g. foo.proto) and see if we can find a match.
 	for _, file := range s.config.Library.Files() {
-		mapping := mappings[path.Join(file.Dir, file.Basename)]
+		filename := path.Join(file.Dir, file.Basename)
+		mapping := mappings[filename]
 		if mapping != "" {
 			return mapping
 		}

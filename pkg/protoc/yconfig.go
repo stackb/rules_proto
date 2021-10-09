@@ -33,6 +33,7 @@ type YRule struct {
 	Enabled        *bool    `yaml:"enabled,omitempty"`
 	Deps           []string `yaml:"deps"`
 	Resolves       []string `yaml:"resolves"`
+	Option         []string `yaml:"options"`
 	Visibility     []string `yaml:"visibility"`
 }
 

@@ -98,7 +98,8 @@ def _proto_repository_impl(ctx):
         gazelle = ctx.path(Label(_gazelle))
         cmd = [
             gazelle,
-            # "-mode", "fix",
+            "-lang",
+            ",".join(ctx.attr.langs),
             "-proto_language_config_file",
             ctx.path(ctx.attr.proto_language_config_file),
             "-repo_root",
@@ -186,6 +187,7 @@ proto_repository = repository_rule(
         "patch_tool": attr.string(default = "patch"),
         "patch_args": attr.string_list(default = ["-p0"]),
         "patch_cmds": attr.string_list(default = []),
+        "langs": attr.string_list(default = ["proto", "protobuf"]),
     },
 )
 

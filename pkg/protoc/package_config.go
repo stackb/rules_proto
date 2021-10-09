@@ -158,7 +158,7 @@ func (c *PackageConfig) getOrCreateLanguagePluginConfig(name string) (*LanguageP
 func (c *PackageConfig) getOrCreateLanguageRuleConfig(config *config.Config, name string) (*LanguageRuleConfig, error) {
 	r, ok := c.rules[name]
 	if !ok {
-		r = newLanguageRuleConfig(config, name)
+		r = NewLanguageRuleConfig(config, name)
 		r.Implementation = name
 		c.rules[name] = r
 	}

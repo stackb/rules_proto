@@ -27,9 +27,10 @@ func (p *ProtocGenGoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginC
 	if !p.shouldApply(ctx.ProtoLibrary) {
 		return nil
 	}
+	mappings := GetImportMappings(ctx.PluginConfig.GetOptions())
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/golang/protobuf", "protoc-gen-go"),
-		Outputs: p.outputs(ctx.ProtoLibrary),
+		Outputs: p.outputs(mappings, ctx.ProtoLibrary),
 	}
 }
 
@@ -42,7 +43,7 @@ func (p *ProtocGenGoPlugin) shouldApply(lib protoc.ProtoLibrary) bool {
 	return false
 }
 
-func (p *ProtocGenGoPlugin) outputs(lib protoc.ProtoLibrary) []string {
+func (p *ProtocGenGoPlugin) outputs(importMappings map[string]string, lib protoc.ProtoLibrary) []string {
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
 		if !(f.HasMessages() || f.HasEnums()) {
@@ -53,10 +54,31 @@ func (p *ProtocGenGoPlugin) outputs(lib protoc.ProtoLibrary) []string {
 		// see https://github.com/gogo/protobuf/blob/master/protoc-gen-gogo/generator/generator.go#L347
 		if goPackage, _, ok := protoc.GoPackageOption(f.Options()); ok {
 			base = path.Join(goPackage, base)
+		} else if mapping := importMappings[path.Join(f.Dir, f.Basename)]; mapping != "" {
+			base = path.Join(mapping, base)
 		} else if pkg.Name != "" {
 			base = path.Join(strings.ReplaceAll(pkg.Name, ".", "/"), base)
 		}
 		srcs = append(srcs, base+".pb.go")
 	}
 	return srcs
+}
+
+func GetImportMappings(options []string) map[string]string {
+	// gather options that look like protoc-gen-go "importmapping" (M) options
+	// (e.g Mfoo.proto=github.com/example/foo).
+	mappings := make(map[string]string)
+
+	for _, opt := range options {
+		if !strings.HasPrefix(opt, "M") {
+			continue
+		}
+		parts := strings.SplitN(opt[1:], "=", 2)
+		if len(parts) != 2 {
+			continue
+		}
+		mappings[parts[0]] = parts[1]
+	}
+
+	return mappings
 }

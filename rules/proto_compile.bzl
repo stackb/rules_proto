@@ -272,15 +272,19 @@ def _proto_compile_impl(ctx):
         after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find . -type f"]
         commands = before + commands + after
 
-    # if the rule declares any mappings, setup copy file actions for them now
-    for basename, intermediate_filename in ctx.attr.mappings.items():
-        # keyname = basename + srcgen_ext
-        # basename + srcgen_ext
-        intermediate_filename = "/".join([ctx.bin_dir.path, intermediate_filename])
-        output = outputs_by_basename.get(basename, None)
-        if not output:
-            fail("the mapped file '%s' was not listed in outputs" % basename)
-        commands.append("cp '{}' '{}'".format(intermediate_filename, output.path))
+    # if the rule declares any mappings, setup copy file commands to move them into place
+    if len(ctx.attr.mappings) > 0:
+        out_dir = ctx.bin_dir.path
+        if ctx.label.workspace_root:
+            out_dir = "/".join([out_dir, ctx.label.workspace_root])
+        for basename, intermediate_filename in ctx.attr.mappings.items():
+            # keyname = basename + srcgen_ext
+            # basename + srcgen_ext
+            intermediate_filename = "/".join([out_dir, intermediate_filename])
+            output = outputs_by_basename.get(basename, None)
+            if not output:
+                fail("the mapped file '%s' was not listed in outputs" % basename)
+            commands.append("cp '{}' '{}'".format(intermediate_filename, output.path))
 
     # if there are any mods to apply, set those up now
     for suffix, action in mods.items():

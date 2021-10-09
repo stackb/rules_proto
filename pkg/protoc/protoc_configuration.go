@@ -94,18 +94,5 @@ func mergeSources(workDir, rel string, plugins []*PluginConfiguration) ([]string
 		}
 	}
 
-	// if this is being built in an external workspace the workDir will be an abs path like
-	// /private/var/tmp/_bazel_foo/452e264843978a138d8e9cb8305e394a/external/proto_googleapis.
-	// all mappings will then be of the form {BIN_DIR}/external/{WORKSPACE_NAME}/...
-	if workDir != "" {
-		parts := strings.Split(workDir, "/")
-		n := len(parts)
-		if n >= 2 && parts[n-2] == "external" {
-			for k, v := range mappings {
-				mappings[k] = path.Join("external", parts[n-1], v)
-			}
-		}
-	}
-
 	return srcs, mappings
 }
