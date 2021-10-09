@@ -213,11 +213,8 @@ def _proto_compile_impl(ctx):
 
         # const <list<string>>
         opts = plugin.options + [opt for opt in options.get(_plugin_label_key(plugin.label), [])]
-        if opts:
-            if plugin.separate_options_flag:
-                args.append("--{}_opt={}".format(plugin_name, ",".join(opts)))
-            else:
-                out = "{}:{}".format(",".join(opts), out)
+        for opt in opts:
+            args.append("--{}_opt={}".format(plugin_name, opt))
 
         # override with the out configured on the rule if specified
         plugin_out = outs.get(_plugin_label_key(plugin.label), None)
