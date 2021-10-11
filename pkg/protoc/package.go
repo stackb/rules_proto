@@ -20,19 +20,18 @@ type Package struct {
 	libs []ProtoLibrary
 	// computed providers
 	gen, empty []RuleProvider
-	// imports by ruleProvider.  This is used to the the imports privateattr
-	// when the rule is generated.
-	imports map[RuleProvider][]string
+	// ruleLibs records the ProtoLibrary a RuleProvider was built on.
+	ruleLibs map[RuleProvider]ProtoLibrary
 }
 
 // NewPackage constructs a Package given a list of proto_library rules
 // in the package.
 func NewPackage(rel string, cfg *PackageConfig, libs ...ProtoLibrary) *Package {
 	s := &Package{
-		rel:     rel,
-		cfg:     cfg,
-		libs:    libs,
-		imports: make(map[RuleProvider][]string),
+		rel:      rel,
+		cfg:      cfg,
+		libs:     libs,
+		ruleLibs: make(map[RuleProvider]ProtoLibrary),
 	}
 	s.gen = s.generateRules(true)
 	s.empty = s.generateRules(false)
@@ -149,7 +148,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			continue
 		}
 
-		s.imports[rule] = imports
+		s.ruleLibs[rule] = lib
 
 		rules = append(rules, rule)
 	}
@@ -186,11 +185,12 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 	for i, p := range providers {
 		rule := p.Rule()
 		if shouldResolve {
-			imports := s.imports[p]
-			for _, imp := range imports {
+			lib := s.ruleLibs[p]
+			srcs := lib.Srcs()
+			for _, imp := range srcs {
 				s.cfg.Provides(rule.Kind(), imp, label.New("", s.rel, rule.Name()))
 			}
-			rule.SetPrivateAttr(config.GazelleImportsKey, imports)
+			rule.SetPrivateAttr(config.GazelleImportsKey, lib.Imports())
 		}
 		rules[i] = rule
 	}

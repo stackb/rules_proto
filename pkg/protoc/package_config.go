@@ -191,12 +191,10 @@ func (c *PackageConfig) parseRuleDirective(d rule.Directive) error {
 
 // Requires implements part of the ImportResolver interface
 func (c *PackageConfig) Requires(kind, imp string) []resolve.FindResult {
-	resolves := c.resolves[kind]
-	if resolves == nil {
-		return nil
-	}
-	if got, ok := resolves[imp]; ok {
-		return []resolve.FindResult{{Label: got}}
+	if resolves, ok := c.resolves[kind]; ok {
+		if got, ok := resolves[imp]; ok {
+			return []resolve.FindResult{{Label: got}}
+		}
 	}
 	return globalImportResolver.Requires(kind, imp)
 }

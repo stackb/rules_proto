@@ -111,6 +111,7 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//pkg/protoc:proto_library.go",
     "@build_stack_rules_proto//pkg/protoc:protoc_configuration.go",
     "@build_stack_rules_proto//pkg/protoc:registry.go",
+    "@build_stack_rules_proto//pkg/protoc:resolver.go",
     "@build_stack_rules_proto//pkg/protoc:rewrite.go",
     "@build_stack_rules_proto//pkg/protoc:rule_provider.go",
     "@build_stack_rules_proto//pkg/protoc:rule_registry.go",

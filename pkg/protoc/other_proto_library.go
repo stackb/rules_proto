@@ -2,6 +2,7 @@ package protoc
 
 import (
 	"fmt"
+	"path"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -63,7 +64,11 @@ func (s *OtherProtoLibrary) Imports() []string {
 
 // Srcs returns the srcs attribute
 func (s *OtherProtoLibrary) Srcs() []string {
-	return s.rule.AttrStrings("srcs")
+	srcs := make([]string, len(s.files))
+	for _, f := range s.files {
+		srcs = append(srcs, path.Join(f.Dir, f.Basename))
+	}
+	return srcs
 }
 
 // StripImportPrefix implements part of the ProtoLibrary interface

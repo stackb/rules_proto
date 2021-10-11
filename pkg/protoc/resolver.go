@@ -1,9 +1,13 @@
 package protoc
 
 import (
+	"log"
+
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 )
+
+const debugResolver = false
 
 // ImportResolver handles dependency resolution.
 type ImportResolver interface {
@@ -58,8 +62,14 @@ func (r *resolver) Provides(kind, imp string, loc label.Label) {
 	}
 	for _, v := range known[imp] {
 		if v == loc {
+			if debugResolver {
+				log.Println(kind, imp, "PROVIDES (duplicate)", loc)
+			}
 			return
 		}
+	}
+	if debugResolver {
+		log.Println(kind, imp, "PROVIDES", loc)
 	}
 	known[imp] = append(known[imp], loc)
 }
@@ -73,6 +83,13 @@ func ResolveImports(resolver ImportResolver, kind string, imports []string) []la
 		if len(result) > 0 {
 			first := result[0]
 			deps = append(deps, first.Label)
+			if debugResolver {
+				log.Println(kind, imp, "HIT", first.Label)
+			}
+		} else {
+			if debugResolver {
+				log.Println(kind, imp, "MISS", resolver)
+			}
 		}
 	}
 	return deps
