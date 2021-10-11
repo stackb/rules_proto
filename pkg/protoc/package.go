@@ -5,6 +5,7 @@ import (
 	"path"
 	"sort"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
@@ -19,15 +20,19 @@ type Package struct {
 	libs []ProtoLibrary
 	// computed providers
 	gen, empty []RuleProvider
+	// imports by ruleProvider.  This is used to the the imports privateattr
+	// when the rule is generated.
+	imports map[RuleProvider][]string
 }
 
 // NewPackage constructs a Package given a list of proto_library rules
 // in the package.
 func NewPackage(rel string, cfg *PackageConfig, libs ...ProtoLibrary) *Package {
 	s := &Package{
-		rel:  rel,
-		cfg:  cfg,
-		libs: libs,
+		rel:     rel,
+		cfg:     cfg,
+		libs:    libs,
+		imports: make(map[RuleProvider][]string),
 	}
 	s.gen = s.generateRules(true)
 	s.empty = s.generateRules(false)
@@ -144,9 +149,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			continue
 		}
 
-		for _, imp := range imports {
-			s.cfg.Provides(rule.Kind(), imp, label.New("", s.rel, rule.Name()))
-		}
+		s.imports[rule] = imports
 
 		rules = append(rules, rule)
 	}
@@ -161,12 +164,12 @@ func (s *Package) RuleProviders() []RuleProvider {
 
 // Rules provides the aggregated rule list for the package.
 func (s *Package) Rules() []*rule.Rule {
-	return getProvidedRules(s.gen)
+	return s.getProvidedRules(s.gen, true)
 }
 
 // Empty names the rules that can be deleted.
 func (s *Package) Empty() []*rule.Rule {
-	rules := getProvidedRules(s.empty)
+	rules := s.getProvidedRules(s.empty, false)
 
 	// it's a bit sad that we construct the full rules only for their kind and
 	// name, but that's how it is right now.
@@ -178,10 +181,18 @@ func (s *Package) Empty() []*rule.Rule {
 	return empty
 }
 
-func getProvidedRules(providers []RuleProvider) []*rule.Rule {
+func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool) []*rule.Rule {
 	rules := make([]*rule.Rule, len(providers))
 	for i, p := range providers {
-		rules[i] = p.Rule()
+		rule := p.Rule()
+		if shouldResolve {
+			imports := s.imports[p]
+			for _, imp := range imports {
+				s.cfg.Provides(rule.Kind(), imp, label.New("", s.rel, rule.Name()))
+			}
+			rule.SetPrivateAttr(config.GazelleImportsKey, imports)
+		}
+		rules[i] = rule
 	}
 	return rules
 }

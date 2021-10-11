@@ -195,7 +195,7 @@ func (pl *ProtobufLanguage) Resolve(
 		if imports, ok := importsRaw.([]string); ok {
 			provider.Resolve(cfg, r, imports, from)
 		} else {
-			log.Printf("warning: resolve imports: expected []string, got %T", importsRaw)
+			log.Panicf("warning: resolve imports: expected []string, got %T", importsRaw)
 		}
 	}
 }

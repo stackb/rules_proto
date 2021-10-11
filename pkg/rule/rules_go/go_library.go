@@ -178,12 +178,12 @@ func (s *goLibraryRule) importPath() string {
 func (s *goLibraryRule) Rule() *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
+	newRule.SetAttr("srcs", s.Srcs())
+
 	importpath := s.importPath()
 	if importpath != "" {
 		newRule.SetAttr("importpath", importpath)
 	}
-
-	newRule.SetAttr("srcs", s.Srcs())
 
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
