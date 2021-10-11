@@ -1,5 +1,6 @@
 """proto_repostitory.bzl provides the proto_repository rule."""
 
+# buildifier: disable=bzl-visibility
 load("//rules/private:execution.bzl", "env_execute", "executable_extension")
 load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "read_netrc", "use_netrc")
@@ -85,13 +86,21 @@ def _proto_repository_impl(ctx):
             fail("failed to clean build files: " + result.stderr)
 
     if generate:
-        # Build file generation is needed. Populate Gazelle directive at root build file
+        # Build file generation is needed.
         build_file_name = existing_build_file or build_file_names[0]
-        if len(ctx.attr.build_directives) > 0:
-            ctx.file(
-                build_file_name,
-                "\n".join(["# " + d for d in ctx.attr.build_directives]),
-            )
+
+        # write an empty file to make sure the filegroup is satisfied
+        ctx.file(ctx.attr.proto_repository_index_output_file, "")
+
+        # Populate Gazelle directive at root build file and
+        lines = ["# " + d for d in ctx.attr.build_directives] + [
+            "",
+            'exports_files(["%s"])' % ctx.attr.proto_repository_index_output_file,
+        ]
+        ctx.file(
+            build_file_name,
+            "\n".join(lines),
+        )
 
         # Run Gazelle
         _gazelle = "@proto_repository_tools//:bin/gazelle{}".format(executable_extension(ctx))
@@ -102,6 +111,10 @@ def _proto_repository_impl(ctx):
             ",".join(ctx.attr.langs),
             "-proto_language_config_file",
             ctx.path(ctx.attr.proto_language_config_file),
+            "-proto_repository_index_output_file",
+            ctx.path(ctx.attr.proto_repository_index_output_file),
+            "-proto_repo_name",
+            ctx.name,
             "-repo_root",
             ctx.path(""),
         ]
@@ -113,6 +126,8 @@ def _proto_repository_impl(ctx):
             cmd.extend(["-external", ctx.attr.build_external])
         if ctx.attr.build_file_proto_mode:
             cmd.extend(["-proto", ctx.attr.build_file_proto_mode])
+        if ctx.attr.proto_repository_index_files:
+            cmd.extend(["-proto_repository_index", ",".join([str(ctx.path(i).realpath) for i in ctx.attr.proto_repository_index_files])])
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
         result = env_execute(ctx, cmd, environment = env, timeout = _GO_REPOSITORY_TIMEOUT)
@@ -182,12 +197,18 @@ proto_repository = repository_rule(
         # language specific configuration
         "proto_language_config_file": attr.label(),
 
+        # language specific configuration
+        "proto_repository_index_output_file": attr.string(default = "protoresolve.csv"),
+        "proto_repository_index_files": attr.label_list(
+            allow_files = True,
+        ),
+
         # Patches to apply after running gazelle.
         "patches": attr.label_list(),
         "patch_tool": attr.string(default = "patch"),
         "patch_args": attr.string_list(default = ["-p0"]),
         "patch_cmds": attr.string_list(default = []),
-        "langs": attr.string_list(default = ["proto", "protobuf"]),
+        "langs": attr.string_list(default = ["proto", "protobuf", "protoresolve"]),
     },
 )
 

@@ -63,13 +63,13 @@ func (s *goLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Proto
 	// collect the outputs and the deps.  Search all the PluginConfigurations.
 	// If the produced .go files, include them and add their deps.
 	outputs := make([]string, 0)
-	deps := make([]string, 0)
+	pluginDeps := make([]string, 0)
 
 	for _, pluginConfig := range pc.Plugins {
 		for _, out := range pluginConfig.Outputs {
 			if path.Ext(out) == ".go" {
 				outputs = append(outputs, out)
-				deps = append(deps, pluginConfig.Config.GetDeps()...)
+				pluginDeps = append(pluginDeps, pluginConfig.Config.GetDeps()...)
 			}
 		}
 	}
@@ -86,7 +86,7 @@ func (s *goLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Proto
 		kindName:       s.kindName,
 		ruleNameSuffix: goLibraryRuleSuffix,
 		outputs:        protoc.DeduplicateAndSort(outputs),
-		deps:           protoc.DeduplicateAndSort(deps),
+		deps:           protoc.DeduplicateAndSort(pluginDeps),
 		ruleConfig:     cfg,
 		config:         pc,
 	}
@@ -121,13 +121,16 @@ func (s *goLibraryRule) Srcs() []string {
 	return srcs
 }
 
-// Deps implements the protoc.DepsProvider interface.
-func (s *goLibraryRule) Deps() []string {
-	deps := s.ruleConfig.GetDeps()
-	deps = append(deps, s.deps...)
+// deps returns all known "configured" dependencies:
+// 1. Those given by the plugin implementations that contributed outputs (their 'deps' directive).
+// 2. Those given by 'deps' directive on the rule config.
+// 3. Those given by resolving "rewrite" specs against the proto file imports.
+func (s *goLibraryRule) configDeps() []string {
+	deps := s.deps
+	deps = append(deps, s.ruleConfig.GetDeps()...)
 	resolvedDeps := protoc.ResolveLibraryRewrites(s.ruleConfig.GetRewrites(), s.config.Library)
 	deps = append(deps, resolvedDeps...)
-	return protoc.DeduplicateAndSort(deps)
+	return deps
 }
 
 // Visibility implements part of the ruleProvider interface.
@@ -143,16 +146,41 @@ func (s *goLibraryRule) Visibility() []string {
 	return visibility
 }
 
-// ImportPath computes the import path.
-func (s *goLibraryRule) ImportPath() string {
-	return s.getGoPackageOption()
+// importPath computes the import path.
+func (s *goLibraryRule) importPath() string {
+	// Try 'M' options first
+	if imp := s.getPluginImportMappingOption(); imp != "" {
+		return imp
+	}
+	// Fallback to the 'go_package' option in an imported file
+	for _, file := range s.config.Library.Files() {
+		if value, _ := protoc.GetNamedOption(file.Options(), "go_package"); value != "" {
+			if strings.LastIndexByte(value, '/') == -1 {
+				// return langgo.InferImportPath(c, rel)
+				continue // TODO: do more research here on if this is the correct approach
+			}
+			if i := strings.LastIndexByte(value, ';'); i != -1 {
+				return value[:i]
+			}
+			return value
+		}
+	}
+
+	log.Printf("warning: unknown 'importpath' for %s rule //%s:%s.  Try adding the 'go_package' option to the .proto file or use an 'M' importmap option",
+		s.kindName,
+		s.config.Rel,
+		s.Name(),
+	)
+
+	// fallback
+	return ""
 }
 
 // Rule implements part of the ruleProvider interface.
 func (s *goLibraryRule) Rule() *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
-	importpath := s.ImportPath()
+	importpath := s.importPath()
 	if importpath != "" {
 		newRule.SetAttr("importpath", importpath)
 	}
@@ -171,60 +199,55 @@ func (s *goLibraryRule) Rule() *rule.Rule {
 func (s *goLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
 
 	// collect a list of dependencies, then partition them into 'embeds' if
-	// another go library is in the same package.
-	all := s.Deps()
+	// another go library has the same importpath.
+	all := s.configDeps()
 
-	for _, d := range s.config.Library.Deps() {
-		if strings.HasPrefix(d, "@com_google_protobuf//") {
-			continue
-		}
-		d = strings.TrimSuffix(d, "_proto")
-		all = append(all, d+goLibraryRuleSuffix)
+	// log.Println("proto_go_library rewrites", s.ruleConfig.GetRewrites())
+	// log.Println("proto_go_library resolve deps", all)
+	// populated a set to check for duplicates
+	// seen := make(map[string]bool)
+
+	// for _, v := range all {
+	// 	seen[v] = true
+	// }
+
+	// for _, d := range s.config.Library.Deps() {
+	// 	if strings.HasPrefix(d, "@com_google_protobuf//") {
+	// 		continue
+	// 	}
+	// 	d = strings.TrimSuffix(d, "_proto")
+	// 	name := d + goLibraryRuleSuffix
+	// 	l := label.New(c.RepoName, s.config.Rel, name)
+	// 	if !seen[l.String()] {
+	// 		all = append(all, l.String())
+	// 	}
+	// }
+
+	// deps := make([]string, 0)
+	// embeds := make([]string, 0)
+
+	// for _, dep := range all {
+	// 	deps = append(deps, dep)
+
+	// TOOD: do we really need to populate embeds?
+	// l, err := label.Parse(dep)
+	// if err != nil {
+	// 	log.Fatalf("resolve deps failed for for rule %s %s: label parse %q error: %v", r.Kind(), r.Name(), dep, err)
+	// }
+
+	// if l.Pkg == "" { // "this package"
+	// 	embeds = append(embeds, dep)
+	// } else {
+	// deps = append(deps, dep)
+	// }
+	// }
+
+	// if len(embeds) > 0 {
+	// 	r.SetAttr("embed", embeds)
+	// }
+	if len(all) > 0 {
+		r.SetAttr("deps", protoc.DeduplicateAndSort(all))
 	}
-
-	deps := make([]string, 0)
-	embeds := make([]string, 0)
-
-	for _, dep := range all {
-		deps = append(deps, dep)
-
-		// TOOD: do we really need to populate embeds?
-		// l, err := label.Parse(dep)
-		// if err != nil {
-		// 	log.Fatalf("resolve deps failed for for rule %s %s: label parse %q error: %v", r.Kind(), r.Name(), dep, err)
-		// }
-
-		// if l.Pkg == "" { // "this package"
-		// 	embeds = append(embeds, dep)
-		// } else {
-		// deps = append(deps, dep)
-		// }
-	}
-
-	if len(embeds) > 0 {
-		r.SetAttr("embed", embeds)
-	}
-	if len(deps) > 0 {
-		r.SetAttr("deps", deps)
-	}
-}
-
-func (s *goLibraryRule) getGoPackageOption() string {
-	for _, file := range s.config.Library.Files() {
-		if value, _ := protoc.GetNamedOption(file.Options(), "go_package"); value != "" {
-			if strings.LastIndexByte(value, '/') == -1 {
-				// return langgo.InferImportPath(c, rel)
-				continue // TODO: do more research here on if this is the correct approach
-			}
-			if i := strings.LastIndexByte(value, ';'); i != -1 {
-				return value[:i]
-			}
-			return value
-		}
-	}
-
-	// fallback
-	return s.getPluginImportMappingOption()
 }
 
 func (s *goLibraryRule) getPluginImportMappingOption() string {
@@ -264,8 +287,6 @@ func (s *goLibraryRule) getPluginImportMappingOption() string {
 			return mapping
 		}
 	}
-
-	log.Println(s.kindName, s.Name(), "unable to determine an importpath.  Try adding a go_package option to the .proto file or use an 'M' importmapping on the plugin -OR- rule (see documentation for protoc-gen-go for syntax)")
 
 	return ""
 }

@@ -4,8 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"path/filepath"
 	"sort"
+	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -14,27 +14,30 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
-	pc "github.com/stackb/rules_proto/pkg/protoc"
+	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
 // NewProtobufLanguage create a new ProtobufLanguage Gazelle extension implementation.
 func NewProtobufLanguage(name string) *ProtobufLanguage {
 	return &ProtobufLanguage{
 		name:      name,
-		rules:     pc.Rules(),
-		providers: make(map[label.Label]pc.RuleProvider),
+		rules:     protoc.Rules(),
+		providers: make(map[label.Label]protoc.RuleProvider),
 	}
 }
 
 // ProtobufLanguage implements language.Language.
 type ProtobufLanguage struct {
-	name       string
-	rules      pc.RuleRegistry
+	// name of the extension
+	name string
+	// the rule registry
+	rules protoc.RuleRegistry
+	// configFile contains yconfig yaml files to parse.  May be comma-separated.
 	configFile string
-	// providers is a mapping from label -> the provider that produced the
-	// rule. we save this in the config such that we can retrieve the
-	// association later in the resolve step.
-	providers map[label.Label]pc.RuleProvider
+	// providers is a mapping from label -> the provider that produced the rule.
+	// we save this in the config such that we can retrieve the association
+	// later in the resolve step.
+	providers map[label.Label]protoc.RuleProvider
 }
 
 // Name returns the name of the language. This should be a prefix of the kinds
@@ -46,33 +49,32 @@ func (pl *ProtobufLanguage) Name() string { return pl.name }
 // https://pkg.go.dev/github.com/bazelbuild/bazel-gazelle/resolve?tab=doc#Resolver
 // interface, but are otherwise unused.
 func (pl *ProtobufLanguage) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
-	fs.StringVar(&pl.configFile, "proto_language_config_file", "", "optional config.yaml file that preconfigures plugin, rules, and languges")
+	fs.StringVar(&pl.configFile,
+		"proto_language_config_file",
+		"",
+		"optional config.yaml file that preconfigures plugin, rules, and languges")
 }
 
 func (pl *ProtobufLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
+	cfg := protoc.NewPackageConfig(c)
+	c.Exts[pl.name] = cfg
+
 	if pl.configFile != "" {
-		filename := pl.configFile
-		if !filepath.IsAbs(filename) {
-			filename = filepath.Join(c.WorkDir, filename)
+		for _, filename := range strings.Split(pl.configFile, ",") {
+			if err := protoc.LoadYConfigFile(c, cfg, filename); err != nil {
+				return fmt.Errorf("loading -proto_language_config_file %s: %w", filename, err)
+			}
 		}
-		config, err := pc.ParseYConfigFile(filename)
-		if err != nil {
-			return err
-		}
-		cfg := pc.NewPackageConfig(c)
-		if err := cfg.LoadYConfig(config); err != nil {
-			return err
-		}
-		c.Exts[pl.name] = cfg
 	}
+
 	return nil
 }
 
 func (*ProtobufLanguage) KnownDirectives() []string {
 	return []string{
-		pc.LanguageDirective,
-		pc.PluginDirective,
-		pc.RuleDirective,
+		protoc.LanguageDirective,
+		protoc.PluginDirective,
+		protoc.RuleDirective,
 	}
 }
 
@@ -90,7 +92,7 @@ func (pl *ProtobufLanguage) Configure(c *config.Config, rel string, f *rule.File
 // match and merge attributes that may be found in rules of those kinds. All
 // kinds of rules generated for this language may be found here.
 func (*ProtobufLanguage) Kinds() map[string]rule.KindInfo {
-	registry := pc.Rules()
+	registry := protoc.Rules()
 
 	kinds := make(map[string]rule.KindInfo)
 	for _, name := range registry.RuleNames() {
@@ -208,19 +210,19 @@ func (pl *ProtobufLanguage) Resolve(
 func (pl *ProtobufLanguage) GenerateRules(args language.GenerateArgs) language.GenerateResult {
 	cfg := pl.getOrCreatePackageConfig(args.Config)
 
-	files := make(map[string]*pc.File)
+	files := make(map[string]*protoc.File)
 	for _, f := range args.RegularFiles {
-		if !pc.IsProtoFile(f) {
+		if !protoc.IsProtoFile(f) {
 			continue
 		}
-		file := pc.NewFile(args.Rel, f)
+		file := protoc.NewFile(args.Rel, f)
 		if err := file.Parse(); err != nil {
 			log.Fatalf("unparseable proto file dir=%s, file=%s: %v", args.Dir, file.Basename, err)
 		}
 		files[f] = file
 	}
 
-	protoLibraries := make([]pc.ProtoLibrary, 0)
+	protoLibraries := make([]protoc.ProtoLibrary, 0)
 	for _, r := range args.OtherGen {
 		if r.Kind() != "proto_library" {
 			continue
@@ -234,11 +236,11 @@ func (pl *ProtobufLanguage) GenerateRules(args language.GenerateArgs) language.G
 			}
 			srcLabels[i] = srcLabel
 		}
-		lib := pc.NewOtherProtoLibrary(args.File, r, matchingFiles(files, srcLabels)...)
+		lib := protoc.NewOtherProtoLibrary(args.File, r, matchingFiles(files, srcLabels)...)
 		protoLibraries = append(protoLibraries, lib)
 	}
 
-	pkg := pc.NewPackage(args.Rel, cfg, protoLibraries...)
+	pkg := protoc.NewPackage(args.Rel, cfg, protoLibraries...)
 
 	for _, provider := range pkg.RuleProviders() {
 		labl := label.New(args.Config.RepoName, args.Rel, provider.Name())
@@ -261,19 +263,19 @@ func (pl *ProtobufLanguage) GenerateRules(args language.GenerateArgs) language.G
 
 // getOrCreatePackageConfig either inserts a new config into the map under the
 // language name or replaces it with a clone.
-func (pl *ProtobufLanguage) getOrCreatePackageConfig(config *config.Config) *pc.PackageConfig {
-	var cfg *pc.PackageConfig
+func (pl *ProtobufLanguage) getOrCreatePackageConfig(config *config.Config) *protoc.PackageConfig {
+	var cfg *protoc.PackageConfig
 	if existingExt, ok := config.Exts[pl.name]; ok {
-		cfg = existingExt.(*pc.PackageConfig).Clone()
+		cfg = existingExt.(*protoc.PackageConfig).Clone()
 	} else {
-		cfg = pc.NewPackageConfig(config)
+		cfg = protoc.NewPackageConfig(config)
 	}
 	config.Exts[pl.name] = cfg
 	return cfg
 }
 
-func matchingFiles(files map[string]*pc.File, srcs []label.Label) []*pc.File {
-	matching := make([]*pc.File, 0)
+func matchingFiles(files map[string]*protoc.File, srcs []label.Label) []*protoc.File {
+	matching := make([]*protoc.File, 0)
 	for _, src := range srcs {
 		if file, ok := files[src.Name]; ok {
 			matching = append(matching, file)

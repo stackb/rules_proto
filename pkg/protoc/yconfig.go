@@ -3,13 +3,15 @@ package protoc
 import (
 	"fmt"
 	"io/ioutil"
+	"path/filepath"
 
 	yaml "gopkg.in/yaml.v3"
+
+	"github.com/bazelbuild/bazel-gazelle/config"
 )
 
 // YConfig is used to configure a combined set of plugins, rules, and languages
-// in a single YAML file.  This is the format of the -proto_language_config_file
-// flag.
+// in a single YAML file.  This is the format of the -proto_language_config_file flag.
 type YConfig struct {
 	Plugin   []*YPlugin   `yaml:"plugins"`
 	Rule     []*YRule     `yaml:"rules"`
@@ -58,4 +60,15 @@ func ParseYConfigFile(filename string) (*YConfig, error) {
 		return nil, fmt.Errorf("yaml parse error %s: %w", filename, err)
 	}
 	return &config, nil
+}
+
+func LoadYConfigFile(c *config.Config, cfg *PackageConfig, filename string) error {
+	if !filepath.IsAbs(filename) {
+		filename = filepath.Join(c.WorkDir, filename)
+	}
+	config, err := ParseYConfigFile(filename)
+	if err != nil {
+		return err
+	}
+	return cfg.LoadYConfig(config)
 }

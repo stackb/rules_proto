@@ -135,6 +135,10 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 	return nil
 }
 
+func (c *LanguageRuleConfig) addRewrite(r Rewrite) {
+	c.Resolves = append([]Rewrite{r}, c.Resolves...)
+}
+
 // fromYAML loads configuration from the yaml rule confug.
 func (c *LanguageRuleConfig) fromYAML(y *YRule) error {
 	if c.Name != y.Name {
@@ -152,7 +156,7 @@ func (c *LanguageRuleConfig) fromYAML(y *YRule) error {
 		if err != nil {
 			return fmt.Errorf("invalid resolve rewrite %s: %w", resolve, err)
 		}
-		c.Resolves = append(c.Resolves, *rw)
+		c.addRewrite(*rw)
 	}
 	for _, v := range y.Visibility {
 		c.Visibility[v] = true
