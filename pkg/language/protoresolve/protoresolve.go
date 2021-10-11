@@ -52,8 +52,6 @@ type protoIndexLanguage struct {
 	// indexFile is the file; it is open for writing while gazelle is running.
 	// The file is closed after the root BUILD file is visited.
 	indexFile *os.File
-	// crossResolver used for resolving proto imports to their labels.
-	crossResolver *pi.Index
 }
 
 // Name returns the name of the language. This should be a prefix of the kinds
@@ -65,8 +63,8 @@ func (pl *protoIndexLanguage) Name() string { return pl.name }
 // https://pkg.go.dev/github.com/bazelbuild/bazel-gazelle/resolve?tab=doc#Resolver
 // interface, but are otherwise unused.
 func (pl *protoIndexLanguage) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
-	fs.StringVar(&pl.indexReadFilenames, "proto_repository_index_files", "", "index files to parse")
-	fs.StringVar(&pl.indexWriteFilename, "proto_repository_index_output_file", "", "filename where index should be written")
+	fs.StringVar(&pl.indexReadFilenames, "protoimports_in", "", "index files to parse and load symbols from")
+	fs.StringVar(&pl.indexWriteFilename, "protoimports_out", "", "filename where index should be written")
 	fs.StringVar(&pl.repoName, "proto_repo_name", "", "external name of this repository")
 }
 
@@ -219,17 +217,19 @@ func (pl *protoIndexLanguage) resolveSpecialFilegroup(
 				}
 			}
 		}
-		if len(newDeps) > 0 {
-			lib.SetAttr("deps", protoc.DeduplicateAndSort(newDeps))
+		if false {
+			if len(newDeps) > 0 {
+				lib.SetAttr("deps", protoc.DeduplicateAndSort(newDeps))
+			}
 		}
 	}
 	r.Delete()
 }
 
-// CrossResolve provides dependency resolution logic for the 'proto' extension.
-func (pl *protoIndexLanguage) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, lang string) []resolve.FindResult {
-	return pi.GlobalResolver.CrossResolve(c, ix, imp, lang)
-}
+// // CrossResolve provides dependency resolution logic for the 'proto' extension.
+// func (pl *protoIndexLanguage) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, lang string) []resolve.FindResult {
+// 	return pi.GlobalResolver.CrossResolve(c, ix, imp, lang)
+// }
 
 // GenerateRules extracts build metadata from source files in a directory.
 // GenerateRules is called in each directory where an update is requested in
@@ -278,14 +278,9 @@ func (pl *protoIndexLanguage) GenerateRules(args language.GenerateArgs) language
 
 		// if this is a proto_library, add internal cross-references
 		if r.Kind() == "proto_library" {
-			libs = append(libs, r)
+			// libs = append(libs, r)
 			for _, src := range r.AttrStrings("srcs") {
-				pi.GlobalResolver.AddEntry(&pi.IndexEntry{
-					Kind:  "proto_library",
-					Label: internalLabel,
-					Attr:  "srcs",
-					Value: path.Join(args.Rel, src),
-				})
+				protoc.GlobalResolver().Provides("proto_library", path.Join(args.Rel, src), internalLabel)
 			}
 		}
 

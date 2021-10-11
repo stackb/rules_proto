@@ -13,7 +13,6 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//language/protobuf",
-        "//language/protoresolve",
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//flag:go_default_library",
         "@bazel_gazelle//label:go_default_library",

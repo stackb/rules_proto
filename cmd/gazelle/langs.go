@@ -17,15 +17,13 @@ package main
 
 import (
 	"github.com/bazelbuild/bazel-gazelle/language"
-	golang "github.com/bazelbuild/bazel-gazelle/language/go"
+	"github.com/bazelbuild/bazel-gazelle/language/go"
 	"github.com/bazelbuild/bazel-gazelle/language/proto"
 	"github.com/stackb/rules_proto/language/protobuf"
-	"github.com/stackb/rules_proto/language/protoresolve"
 )
 
 var languages = []language.Language{
 	proto.NewLanguage(),
-	protoresolve.NewLanguage(),
 	protobuf.NewLanguage(),
 	golang.NewLanguage(),
 }

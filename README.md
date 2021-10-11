@@ -267,14 +267,14 @@ languages:
 > A yaml config is particularly useful in conjunction with the `proto_repository` rule, for example to apply a set of custom plugins over 
 > the googleapis/googleapis repo.
 
-To use this in a gazelle rule, specify `-proto_language_config_file` in `args`:
+To use this in a gazelle rule, specify `-proto_config` in `args`:
 
 ```python
 gazelle(
     name = "gazelle",
     gazelle = ":gazelle-protobuf",
     args = [
-        "-proto_language_config_file=example/config.yaml",
+        "-proto_config=example/config.yaml",
     ],
 )
 ```

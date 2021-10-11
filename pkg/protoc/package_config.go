@@ -189,19 +189,19 @@ func (c *PackageConfig) parseRuleDirective(d rule.Directive) error {
 	return r.parseDirective(c, name, param, value)
 }
 
-// Requires implements part of the ImportResolver interface
+// Requires implements part of the protoc.ImportResolver interface
 func (c *PackageConfig) Requires(kind, imp string) []resolve.FindResult {
 	if resolves, ok := c.resolves[kind]; ok {
 		if got, ok := resolves[imp]; ok {
 			return []resolve.FindResult{{Label: got}}
 		}
 	}
-	return globalImportResolver.Requires(kind, imp)
+	return GlobalResolver().Requires(kind, imp)
 }
 
-// Provides implements part of the ImportResolver interface
+// Provides implements part of the protoc.ImportResolver interface
 func (c *PackageConfig) Provides(kind, imp string, loc label.Label) {
-	globalImportResolver.Provides(kind, imp, loc)
+	GlobalResolver().Provides(kind, imp, loc)
 }
 
 func (c *PackageConfig) getOrCreateLanguagePluginConfig(name string) (*LanguagePluginConfig, error) {

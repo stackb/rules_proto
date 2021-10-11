@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"strings"
 
@@ -128,7 +129,7 @@ func (idx *Index) resolveKind(c *config.Config, ix *resolve.RuleIndex, imp resol
 		return nil
 	}
 	if l, ok := known[imp.Imp]; ok {
-		// log.Println("Cross-resolved", imp.Imp, l.String())
+		log.Println("Cross-resolved kind", imp.Imp, l.String())
 		return []resolve.FindResult{{Label: l}}
 	}
 	return nil
@@ -136,7 +137,7 @@ func (idx *Index) resolveKind(c *config.Config, ix *resolve.RuleIndex, imp resol
 
 func (idx *Index) resolveGo(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec) []resolve.FindResult {
 	if l, ok := idx.knownGoImports[imp.Imp]; ok {
-		// log.Println("Cross-resolved", imp.Imp, l.String())
+		log.Println("Cross-resolved go", imp.Imp, l.String())
 		return []resolve.FindResult{{Label: l}}
 	}
 	return nil
@@ -144,7 +145,7 @@ func (idx *Index) resolveGo(c *config.Config, ix *resolve.RuleIndex, imp resolve
 
 func (idx *Index) resolveProto(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec) []resolve.FindResult {
 	if l, ok := idx.knownProtoImports[imp.Imp]; ok {
-		// log.Println("Cross-resolved", imp.Imp, l.String())
+		log.Println("Cross-resolved proto", imp.Imp, l.String())
 		return []resolve.FindResult{{Label: l}}
 	}
 	return nil

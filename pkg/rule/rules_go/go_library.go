@@ -202,19 +202,11 @@ func (s *goLibraryRule) Resolve(c *protoc.PackageConfig, r *rule.Rule, imports [
 	// another go library has the same importpath.
 	deps := s.configDeps()
 
-	deps = append(deps, protoc.ResolveImportsString(c, s.Kind(), imports)...)
-
-	// if protoresolve.GlobalResolver != nil {
-	// 	for _, imp := range s.config.Library.Imports() {
-	// 		results := protoresolve.GlobalResolver.CrossResolve(c, nil, resolve.ImportSpec{
-	// 			Imp: imp,
-	// 		}, s.kindName)
-	// 		if len(results) > 0 {
-	// 			first := results[0]
-	// 			all = append(all, first.Label.String())
-	// 		}
-	// 	}
+	// for i, d := range deps {
+	// 	deps[i] = d + "+"
 	// }
+
+	deps = append(deps, protoc.ResolveImportsString(c, from.Pkg, s.Kind(), imports)...)
 
 	// deps := make([]string, 0)
 	// embeds := make([]string, 0)

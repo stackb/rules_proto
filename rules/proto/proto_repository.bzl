@@ -96,12 +96,12 @@ def _proto_repository_impl(ctx):
         build_file_name = existing_build_file or build_file_names[0]
 
         # write an empty file to make sure the filegroup is satisfied
-        ctx.file(ctx.attr.proto_repository_index_output_file, "")
+        ctx.file(ctx.attr.imports_out, "")
 
         # Populate Gazelle directive at root build file and
         lines = ["# " + d for d in ctx.attr.build_directives] + [
             "",
-            'exports_files(["%s"])' % ctx.attr.proto_repository_index_output_file,
+            'exports_files(["%s"])' % ctx.attr.imports_out,
         ]
         ctx.file(
             build_file_name,
@@ -115,15 +115,21 @@ def _proto_repository_impl(ctx):
             gazelle,
             "-lang",
             ",".join(ctx.attr.languages),
-            "-proto_language_config_file",
-            ctx.path(ctx.attr.proto_language_config_file),
-            "-proto_repository_index_output_file",
-            ctx.path(ctx.attr.proto_repository_index_output_file),
             "-proto_repo_name",
             ctx.name,
             "-repo_root",
             ctx.path(""),
         ]
+        if ctx.attr.cfgs:
+            cfgs = ",".join([str(ctx.path(f).realpath) for f in ctx.attr.cfgs])
+            cmd.extend(["-proto_configs", cfgs])
+        if ctx.attr.imports_out:
+            cmd.extend(["-proto_imports_out", ctx.path(ctx.attr.imports_out)])
+        if ctx.attr.imports:
+            protoimports = ",".join([str(ctx.path(lbl).realpath) for lbl in ctx.attr.imports])
+            cmd.extend(["-proto_imports_in", protoimports])
+        if ctx.attr.override_go_googleapis:
+            cmd.extend(["-override_go_googleapis"])
         if ctx.attr.build_file_name:
             cmd.extend(["-build_file_name", ctx.attr.build_file_name])
         if ctx.attr.build_tags:
@@ -132,8 +138,6 @@ def _proto_repository_impl(ctx):
             cmd.extend(["-external", ctx.attr.build_external])
         if ctx.attr.build_file_proto_mode:
             cmd.extend(["-proto", ctx.attr.build_file_proto_mode])
-        if ctx.attr.proto_repository_index_files:
-            cmd.extend(["-proto_repository_index_files", ",".join([str(ctx.path(i).realpath) for i in ctx.attr.proto_repository_index_files])])
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
         result = env_execute(ctx, cmd, environment = env, timeout = _GO_REPOSITORY_TIMEOUT)
@@ -197,24 +201,23 @@ proto_repository = repository_rule(
             ],
         ),
         "build_extra_args": attr.string_list(),
-        # "build_config": attr.label(default = "@bazel_gazelle_go_repository_config//:WORKSPACE"),
         "build_directives": attr.string_list(default = []),
 
-        # language specific configuration
-        "proto_language_config_file": attr.label(),
-
-        # language specific configuration
-        "proto_repository_index_output_file": attr.string(default = "protoresolve.csv"),
-        "proto_repository_index_files": attr.label_list(
+        # protobuf extension specific configuration
+        "cfgs": attr.label_list(allow_files = True),
+        "imports": attr.label_list(
             allow_files = True,
         ),
+        "imports_out": attr.string(default = "imports.csv"),
         "deleted_files": attr.string_list(),
+        "override_go_googleapis": attr.bool(),
+
         # Patches to apply after running gazelle.
         "patches": attr.label_list(),
         "patch_tool": attr.string(default = "patch"),
         "patch_args": attr.string_list(default = ["-p0"]),
         "patch_cmds": attr.string_list(default = []),
-        "languages": attr.string_list(default = ["proto", "protobuf", "protoresolve"]),
+        "languages": attr.string_list(default = ["proto", "protobuf"]),
     },
 )
 

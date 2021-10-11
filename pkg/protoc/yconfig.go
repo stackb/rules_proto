@@ -11,7 +11,7 @@ import (
 )
 
 // YConfig is used to configure a combined set of plugins, rules, and languages
-// in a single YAML file.  This is the format of the -proto_language_config_file flag.
+// in a single YAML file.  This is the format of the -proto_config flag.
 type YConfig struct {
 	Plugin   []*YPlugin   `yaml:"plugins"`
 	Rule     []*YRule     `yaml:"rules"`
