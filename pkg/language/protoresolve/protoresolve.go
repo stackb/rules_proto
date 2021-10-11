@@ -20,6 +20,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
+	"github.com/stackb/rules_proto/pkg/protoc"
 	pi "github.com/stackb/rules_proto/pkg/protoresolve"
 )
 
@@ -218,7 +219,7 @@ func (pl *protoIndexLanguage) resolveSpecialFilegroup(
 			}
 		}
 		if len(newDeps) > 0 {
-			lib.SetAttr("deps", newDeps)
+			lib.SetAttr("deps", protoc.DeduplicateAndSort(newDeps))
 		}
 	}
 	r.Delete()

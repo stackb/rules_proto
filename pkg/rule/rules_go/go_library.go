@@ -2,7 +2,6 @@ package rules_go
 
 import (
 	"fmt"
-	"log"
 	"path"
 	"sort"
 	"strings"
@@ -166,11 +165,11 @@ func (s *goLibraryRule) importPath() string {
 		}
 	}
 
-	log.Printf("warning: unknown 'importpath' for %s rule //%s:%s.  Try adding the 'go_package' option to the .proto file or use an 'M' importmap option",
-		s.kindName,
-		s.config.Rel,
-		s.Name(),
-	)
+	// log.Printf("warning: unknown 'importpath' for %s rule //%s:%s.  Try adding the 'go_package' option to the .proto file or use an 'M' importmap option",
+	// 	s.kindName,
+	// 	s.config.Rel,
+	// 	s.Name(),
+	// )
 
 	// fallback
 	return ""

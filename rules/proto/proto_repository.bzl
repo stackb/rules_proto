@@ -85,6 +85,12 @@ def _proto_repository_impl(ctx):
         if result.return_code:
             fail("failed to clean build files: " + result.stderr)
 
+    # remove any other files
+    if ctx.attr.deleted_files:
+        result = env_execute(ctx, ["rm"] + [str(ctx.path(f)) for f in ctx.attr.deleted_files], environment = env)
+        if result.return_code:
+            fail("failed to remove deleted files: " + result.stderr)
+
     if generate:
         # Build file generation is needed.
         build_file_name = existing_build_file or build_file_names[0]
@@ -127,7 +133,7 @@ def _proto_repository_impl(ctx):
         if ctx.attr.build_file_proto_mode:
             cmd.extend(["-proto", ctx.attr.build_file_proto_mode])
         if ctx.attr.proto_repository_index_files:
-            cmd.extend(["-proto_repository_index", ",".join([str(ctx.path(i).realpath) for i in ctx.attr.proto_repository_index_files])])
+            cmd.extend(["-proto_repository_index_files", ",".join([str(ctx.path(i).realpath) for i in ctx.attr.proto_repository_index_files])])
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
         result = env_execute(ctx, cmd, environment = env, timeout = _GO_REPOSITORY_TIMEOUT)
@@ -202,7 +208,7 @@ proto_repository = repository_rule(
         "proto_repository_index_files": attr.label_list(
             allow_files = True,
         ),
-
+        "deleted_files": attr.string_list(),
         # Patches to apply after running gazelle.
         "patches": attr.label_list(),
         "patch_tool": attr.string(default = "patch"),
