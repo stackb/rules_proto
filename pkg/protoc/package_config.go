@@ -2,10 +2,13 @@ package protoc
 
 import (
 	"fmt"
+	"log"
 	"sort"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
+	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -18,8 +21,10 @@ const (
 	// PluginDirective created an association between proto_lang
 	// and the label of a proto_plugin.
 	PluginDirective = "proto_plugin"
-	// prefixDirective is the same as 'gazelle:prefix'
+	// importpathPrefixDirective is the same as 'gazelle:prefix'
 	importpathPrefixDirective = "prefix"
+	// resolveDirective is the same as 'gazelle:resolve'
+	resolveDirective = "resolve"
 )
 
 // PackageConfig represents the config extension for the protobuf language.
@@ -34,6 +39,8 @@ type PackageConfig struct {
 	plugins map[string]*LanguagePluginConfig
 	// exclude patterns for rules that should be skipped for this package.
 	rules map[string]*LanguageRuleConfig
+	// resolve directives
+	resolves map[string]map[string]label.Label
 	// IMPORTANT! Adding new fields here?  Don't forget to copy it in the Clone
 	// method!
 }
@@ -41,10 +48,11 @@ type PackageConfig struct {
 // NewPackageConfig initializes a new PackageConfig.
 func NewPackageConfig(config *config.Config) *PackageConfig {
 	return &PackageConfig{
-		config:  config,
-		langs:   make(map[string]*LanguageConfig),
-		plugins: make(map[string]*LanguagePluginConfig),
-		rules:   make(map[string]*LanguageRuleConfig),
+		config:   config,
+		langs:    make(map[string]*LanguageConfig),
+		plugins:  make(map[string]*LanguagePluginConfig),
+		rules:    make(map[string]*LanguageRuleConfig),
+		resolves: make(map[string]map[string]label.Label),
 	}
 }
 
@@ -75,6 +83,13 @@ func (c *PackageConfig) Clone() *PackageConfig {
 	for k, v := range c.plugins {
 		clone.plugins[k] = v.clone()
 	}
+	for k, v := range c.resolves {
+		copy := make(map[string]label.Label)
+		for i, l := range v {
+			copy[i] = l
+		}
+		clone.resolves[k] = copy
+	}
 
 	return clone
 }
@@ -87,6 +102,8 @@ func (c *PackageConfig) ParseDirectives(rel string, directives []rule.Directive)
 		switch d.Key {
 		case importpathPrefixDirective:
 			err = c.parsePrefixDirective(d)
+		case resolveDirective:
+			err = c.parseResolveDirective(d)
 		case PluginDirective:
 			err = c.parsePluginDirective(d)
 		case RuleDirective:
@@ -103,6 +120,32 @@ func (c *PackageConfig) ParseDirectives(rel string, directives []rule.Directive)
 
 func (c *PackageConfig) parsePrefixDirective(d rule.Directive) error {
 	c.importpathPrefix = strings.TrimSpace(d.Value)
+	return nil
+}
+
+func (c *PackageConfig) parseResolveDirective(d rule.Directive) error {
+	// gazelle:resolve protobuf proto_cc_library google/protobuf/any.proto @protobuf//google/protobuf:any_cc_proto
+	parts := strings.Fields(d.Value)
+	if len(parts) != 4 {
+		return nil
+	}
+	if parts[0] != "protobuf" {
+		return nil
+	}
+	kind := parts[1]
+	imp := parts[2]
+	lbl := parts[3]
+	loc, err := label.Parse(lbl)
+	if err != nil {
+		log.Printf("gazelle:resolve %s: %v", d.Value, err)
+		return nil
+	}
+	known := c.resolves[kind]
+	if known == nil {
+		known = make(map[string]label.Label)
+		c.resolves[kind] = known
+	}
+	known[imp] = loc
 	return nil
 }
 
@@ -144,6 +187,23 @@ func (c *PackageConfig) parseRuleDirective(d rule.Directive) error {
 		return fmt.Errorf("invalid proto_rule directive %+v: %w", d, err)
 	}
 	return r.parseDirective(c, name, param, value)
+}
+
+// Requires implements part of the ImportResolver interface
+func (c *PackageConfig) Requires(kind, imp string) []resolve.FindResult {
+	resolves := c.resolves[kind]
+	if resolves == nil {
+		return nil
+	}
+	if got, ok := resolves[imp]; ok {
+		return []resolve.FindResult{{Label: got}}
+	}
+	return globalImportResolver.Requires(kind, imp)
+}
+
+// Provides implements part of the ImportResolver interface
+func (c *PackageConfig) Provides(kind, imp string, loc label.Label) {
+	globalImportResolver.Provides(kind, imp, loc)
 }
 
 func (c *PackageConfig) getOrCreateLanguagePluginConfig(name string) (*LanguagePluginConfig, error) {

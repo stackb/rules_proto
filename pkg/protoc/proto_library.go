@@ -16,6 +16,8 @@ type ProtoLibrary interface {
 	Rule() *rule.Rule
 	// Deps lists all direct library dependencies.
 	Deps() []string
+	// Imports lists all direct library proto import filenames.
+	Imports() []string
 	// StripImportPrefix returns the strip_import_prefix or the empty string.
 	StripImportPrefix() string
 	// Files returns the list of proto files in the rule.

@@ -65,7 +65,7 @@ func TestGoLibraryRuleImportPath(t *testing.T) {
 				},
 				ruleConfig: ruleConfig,
 			}
-			got := goRule.getGoPackageOption()
+			got := goRule.importPath()
 			if tc.want != got {
 				t.Errorf("want %q, got %q", tc.want, got)
 			}

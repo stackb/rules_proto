@@ -9,6 +9,7 @@ go_library(
         "//pkg/protoc",
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
     ],
 )

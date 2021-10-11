@@ -1,7 +1,6 @@
 package protoc
 
 import (
-	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
@@ -17,8 +16,10 @@ type RuleProvider interface {
 	Rule() *rule.Rule
 	// Visibility provides the visibility list for the rule.
 	Visibility() []string
-	// Resolve performs deps resolution, similar to the gazelle Resolver interface.
-	Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label)
+	// Resolve performs deps resolution, similar to the gazelle Resolver
+	// interface.  Imports here are always the proto_library file .proto
+	// imports.
+	Resolve(c *PackageConfig, r *rule.Rule, imports []string, from label.Label)
 }
 
 // FileVisitor is an optional interface for RuleProvider implementations.  It

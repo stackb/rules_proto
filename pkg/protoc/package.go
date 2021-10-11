@@ -2,8 +2,10 @@ package protoc
 
 import (
 	"log"
+	"path"
 	"sort"
 
+	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -106,6 +108,11 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		return nil
 	}
 
+	imports := make([]string, len(lib.Files()))
+	for i, file := range lib.Files() {
+		imports[i] = path.Join(file.Dir, file.Basename)
+	}
+
 	rules := make([]RuleProvider, 0)
 
 	pc := newProtocConfiguration(p, s.cfg.config.WorkDir, s.rel, p.Name, lib, configs)
@@ -135,6 +142,10 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		rule := impl.ProvideRule(ruleConfig, pc)
 		if rule == nil {
 			continue
+		}
+
+		for _, imp := range imports {
+			s.cfg.Provides(rule.Kind(), imp, label.New("", s.rel, rule.Name()))
 		}
 
 		rules = append(rules, rule)

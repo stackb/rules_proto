@@ -4,7 +4,6 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
@@ -100,9 +99,9 @@ func (s *CcLibrary) Rule() *rule.Rule {
 }
 
 // Resolve implements part of the RuleProvider interface.
-func (s *CcLibrary) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func (s *CcLibrary) Resolve(c *protoc.PackageConfig, r *rule.Rule, imports []string, from label.Label) {
 	if s.Resolver == nil {
 		return
 	}
-	s.Resolver(s, s.Config, c, r, importsRaw, from)
+	s.Resolver(s, s.Config, c, r, imports, from)
 }

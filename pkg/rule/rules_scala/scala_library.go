@@ -6,7 +6,6 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
@@ -100,8 +99,8 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		outputs:        plugin.Outputs,
 		ruleConfig:     cfg,
 		config:         pc,
-		resolver: func(impl protoc.DepsProvider, pc *protoc.ProtocConfiguration, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
-			protoc.ResolveDepsWithSuffix(scalaLibraryRuleSuffix)(impl, pc, c, r, importsRaw, from)
+		resolver: func(impl protoc.DepsProvider, pc *protoc.ProtocConfiguration, c *protoc.PackageConfig, r *rule.Rule, imports []string, from label.Label) {
+			protoc.ResolveDepsExcludingWellKnownTypes()(impl, pc, c, r, imports, from)
 			r.SetAttr("exports", r.Attr("deps"))
 		},
 	}
@@ -171,9 +170,9 @@ func (s *scalaLibraryRule) Rule() *rule.Rule {
 }
 
 // Resolve implements part of the RuleProvider interface.
-func (s *scalaLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func (s *scalaLibraryRule) Resolve(c *protoc.PackageConfig, r *rule.Rule, imports []string, from label.Label) {
 	if s.resolver == nil {
 		return
 	}
-	s.resolver(s, s.config, c, r, importsRaw, from)
+	s.resolver(s, s.config, c, r, imports, from)
 }

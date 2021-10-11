@@ -12,16 +12,35 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 )
 
+const (
+	// ProtoResolve should be used by private attrs
+	// private attr for later deps resolution.
+	ProtoResolveKey = "_proto_resolve"
+)
+
+var GlobalResolver *Index
+
 // Index knows how to read a protoresolve file and can perform proto import cross
 // resolution.
 type Index struct {
+	// knownProtoImports stores a mapping like
+	// 'github.com/protocolbuffers/protobuf/google/protobuf/any' ->
+	// @com_google_protobuf//:any_go_proto
+	knownGoImports map[string]label.Label
+	// knownProtoImports stores a mapping like 'google/protobuf/any.proto' ->
+	// @com_google_protobuf//:any_proto
 	knownProtoImports map[string]label.Label
-	entries           []*IndexEntry
+	// known imports is a mapping such that the top-level key is a ruleKind
+	// name, and the second key is a proto import statement.
+	knownImports map[string]map[string]label.Label
+	entries      []*IndexEntry
 }
 
 func NewIndex() *Index {
 	return &Index{
 		entries:           make([]*IndexEntry, 0),
+		knownImports:      make(map[string]map[string]label.Label),
+		knownGoImports:    make(map[string]label.Label),
 		knownProtoImports: make(map[string]label.Label),
 	}
 }
@@ -73,13 +92,52 @@ func (idx *Index) AddEntry(e *IndexEntry) {
 	if e.Kind == "proto_library" && e.Attr == "srcs" {
 		idx.knownProtoImports[e.Value] = e.Label
 	}
+	if e.Attr == "importpath" {
+		idx.knownGoImports[e.Value] = e.Label
+	}
+	if e.Attr == "kind" {
+		idx.knownGoImports[e.Value] = e.Label
+	}
+}
+
+func (idx *Index) AddKind(kind, imp string, l label.Label) {
+	known, ok := idx.knownImports[kind]
+	if !ok {
+		known = make(map[string]label.Label)
+		idx.knownImports[kind] = known
+	}
+	known[imp] = l
 }
 
 // CrossResolve provides dependency resolution logic for the proto language extension.
 func (idx *Index) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, lang string) []resolve.FindResult {
 	switch lang {
+	case "go":
+		return idx.resolveGo(c, ix, imp)
 	case "proto":
 		return idx.resolveProto(c, ix, imp)
+	default:
+		return idx.resolveKind(c, ix, imp, lang)
+	}
+	return nil
+}
+
+func (idx *Index) resolveKind(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, kind string) []resolve.FindResult {
+	known := idx.knownImports[kind]
+	if known == nil {
+		return nil
+	}
+	if l, ok := known[imp.Imp]; ok {
+		// log.Println("Cross-resolved", imp.Imp, l.String())
+		return []resolve.FindResult{{Label: l}}
+	}
+	return nil
+}
+
+func (idx *Index) resolveGo(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec) []resolve.FindResult {
+	if l, ok := idx.knownGoImports[imp.Imp]; ok {
+		// log.Println("Cross-resolved", imp.Imp, l.String())
+		return []resolve.FindResult{{Label: l}}
 	}
 	return nil
 }

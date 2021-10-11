@@ -4,7 +4,7 @@ go_library(
     name = "protoresolve",
     srcs = ["protoresolve.go"],
     importpath = "github.com/stackb/rules_proto/pkg/protoresolve",
-    visibility = ["//pkg/language/protobuf:__pkg__"],
+    visibility = ["//visibility:public"],
     deps = [
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//label:go_default_library",

@@ -25,16 +25,17 @@ import (
 )
 
 const (
-	// protoResolveRulesAttr is used to stash a list of proto_library rules in a
+	// protoResolveRulesKey is used to stash a list of proto_library rules in a
 	// private attr for later deps resolution.
-	protoResolveRulesAttr = "_proto_resolve"
+	protoResolveRulesKey = "_proto_resolve_rules"
 )
 
 // NewProtoIndexLanguage create a new protoIndexLanguage Gazelle extension implementation.
 func NewProtoIndexLanguage(name string) *protoIndexLanguage {
+	// assign the global resolver here
+	pi.GlobalResolver = pi.NewIndex()
 	return &protoIndexLanguage{
-		name:          name,
-		crossResolver: pi.NewIndex(),
+		name: name,
 	}
 }
 
@@ -71,7 +72,7 @@ func (pl *protoIndexLanguage) RegisterFlags(fs *flag.FlagSet, cmd string, c *con
 
 func (pl *protoIndexLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 	// Populate the cross resolver with these well known labels
-	if err := pl.crossResolver.ParseCSVReader(strings.NewReader(`
+	if err := pi.GlobalResolver.ParseCSVReader(strings.NewReader(`
 @com_google_protobuf//:any_proto,proto_library,srcs,google/protobuf/any.proto
 @com_google_protobuf//:api_proto,proto_library,srcs,google/protobuf/api.proto
 @com_google_protobuf//:compiler_plugin_proto,proto_library,srcs,google/protobuf/compiler/plugin.proto
@@ -90,7 +91,7 @@ func (pl *protoIndexLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) err
 
 	if pl.indexReadFilenames != "" {
 		for _, filename := range strings.Split(pl.indexReadFilenames, ",") {
-			if err := pl.crossResolver.ParseCSVFile(filename); err != nil {
+			if err := pi.GlobalResolver.ParseCSVFile(filename); err != nil {
 				return fmt.Errorf("loading -proto_repository_index %s: %w", filename, err)
 			}
 		}
@@ -121,7 +122,7 @@ func (pl *protoIndexLanguage) Configure(c *config.Config, rel string, f *rule.Fi
 	// no public API. Take somewhat extreme measures to augment it's internal
 	// override list via unsafe memory reallocation.
 	overrides := make([]overrideSpec, 0)
-	for _, e := range pl.crossResolver.GetEntriesByKind("proto_library") {
+	for _, e := range pi.GlobalResolver.GetEntriesByKind("proto_library") {
 		if e.Attr != "srcs" {
 			continue
 		}
@@ -205,12 +206,12 @@ func (pl *protoIndexLanguage) resolveSpecialFilegroup(
 	importsRaw interface{},
 	from label.Label,
 ) {
-	libs := r.PrivateAttr(protoResolveRulesAttr).([]*rule.Rule)
+	libs := r.PrivateAttr(protoResolveRulesKey).([]*rule.Rule)
 	for _, lib := range libs {
 		newDeps := make([]string, 0)
 		imports := lib.PrivateAttr(config.GazelleImportsKey).([]string)
 		for _, v := range imports {
-			result := pl.crossResolver.CrossResolve(c, ix, resolve.ImportSpec{Lang: "proto", Imp: v}, "proto")
+			result := pi.GlobalResolver.CrossResolve(c, ix, resolve.ImportSpec{Lang: "proto", Imp: v}, "proto")
 			if len(result) > 0 {
 				first := result[0]
 				if first.Label != from {
@@ -227,7 +228,7 @@ func (pl *protoIndexLanguage) resolveSpecialFilegroup(
 
 // CrossResolve provides dependency resolution logic for the 'proto' extension.
 func (pl *protoIndexLanguage) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, lang string) []resolve.FindResult {
-	return pl.crossResolver.CrossResolve(c, ix, imp, lang)
+	return pi.GlobalResolver.CrossResolve(c, ix, imp, lang)
 }
 
 // GenerateRules extracts build metadata from source files in a directory.
@@ -248,6 +249,8 @@ func (pl *protoIndexLanguage) GenerateRules(args language.GenerateArgs) language
 	for _, r := range args.OtherGen {
 		// fully-qualified label
 		l := label.New(pl.repoName, args.Rel, r.Name())
+		internalLabel := label.New("", l.Pkg, l.Name)
+
 		// write srcs entries
 		srcs := r.AttrStrings("srcs")
 		for _, v := range srcs {
@@ -262,14 +265,22 @@ func (pl *protoIndexLanguage) GenerateRules(args language.GenerateArgs) language
 		importpath := r.AttrString("importpath")
 		if importpath != "" {
 			fmt.Fprintf(pl.indexFile, "%s,%s,%s,%s\n", l.String(), r.Kind(), "importpath", importpath)
+
+			// also include cross reference
+			pi.GlobalResolver.AddEntry(&pi.IndexEntry{
+				Kind:  r.Kind(),
+				Label: internalLabel,
+				Attr:  "importpath",
+				Value: importpath,
+			})
+
 		}
 
 		// if this is a proto_library, add internal cross-references
 		if r.Kind() == "proto_library" {
 			libs = append(libs, r)
-			internalLabel := label.New("", l.Pkg, l.Name)
 			for _, src := range r.AttrStrings("srcs") {
-				pl.crossResolver.AddEntry(&pi.IndexEntry{
+				pi.GlobalResolver.AddEntry(&pi.IndexEntry{
 					Kind:  "proto_library",
 					Label: internalLabel,
 					Attr:  "srcs",
@@ -277,6 +288,7 @@ func (pl *protoIndexLanguage) GenerateRules(args language.GenerateArgs) language
 				})
 			}
 		}
+
 	}
 
 	// once we are at the root of the repo close the index file
@@ -295,7 +307,7 @@ func (pl *protoIndexLanguage) GenerateRules(args language.GenerateArgs) language
 		// can process the proto_library rules we've captured here; the rule
 		// itself is always deleted from the file.
 		resolveRule := rule.NewRule("proto_resolve", "proto_libraries")
-		resolveRule.SetPrivateAttr(protoResolveRulesAttr, libs)
+		resolveRule.SetPrivateAttr(protoResolveRulesKey, libs)
 
 		result.Gen = append(result.Gen, resolveRule)
 	}

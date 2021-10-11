@@ -49,6 +49,6 @@ func (s *protoNodeJsLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *pro
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver:       protoc.ResolveDepsWithSuffix(ProtoNodeJsLibraryRuleSuffix),
+		Resolver:       protoc.ResolveDepsExcludingWellKnownTypes(),
 	}
 }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
@@ -109,5 +108,5 @@ func (s *protoCompileRule) Rule() *rule.Rule {
 }
 
 // Resolve implements part of the RuleProvider interface.
-func (s *protoCompileRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func (s *protoCompileRule) Resolve(c *PackageConfig, r *rule.Rule, imports []string, from label.Label) {
 }

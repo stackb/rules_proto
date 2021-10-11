@@ -6,7 +6,6 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 
 	// langgo "github.com/bazelbuild/bazel-gazelle/language/go"
@@ -195,30 +194,25 @@ func (s *goLibraryRule) Rule() *rule.Rule {
 }
 
 // Resolve implements part of the RuleProvider interface.
-func (s *goLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func (s *goLibraryRule) Resolve(c *protoc.PackageConfig, r *rule.Rule, imports []string, from label.Label) {
+
+	r.DelAttr("deps")
 
 	// collect a list of dependencies, then partition them into 'embeds' if
 	// another go library has the same importpath.
-	all := s.configDeps()
+	deps := s.configDeps()
 
-	// log.Println("proto_go_library rewrites", s.ruleConfig.GetRewrites())
-	// log.Println("proto_go_library resolve deps", all)
-	// populated a set to check for duplicates
-	// seen := make(map[string]bool)
+	deps = append(deps, protoc.ResolveImportsString(c, s.Kind(), imports)...)
 
-	// for _, v := range all {
-	// 	seen[v] = true
-	// }
-
-	// for _, d := range s.config.Library.Deps() {
-	// 	if strings.HasPrefix(d, "@com_google_protobuf//") {
-	// 		continue
-	// 	}
-	// 	d = strings.TrimSuffix(d, "_proto")
-	// 	name := d + goLibraryRuleSuffix
-	// 	l := label.New(c.RepoName, s.config.Rel, name)
-	// 	if !seen[l.String()] {
-	// 		all = append(all, l.String())
+	// if protoresolve.GlobalResolver != nil {
+	// 	for _, imp := range s.config.Library.Imports() {
+	// 		results := protoresolve.GlobalResolver.CrossResolve(c, nil, resolve.ImportSpec{
+	// 			Imp: imp,
+	// 		}, s.kindName)
+	// 		if len(results) > 0 {
+	// 			first := results[0]
+	// 			all = append(all, first.Label.String())
+	// 		}
 	// 	}
 	// }
 
@@ -244,8 +238,9 @@ func (s *goLibraryRule) Resolve(c *config.Config, r *rule.Rule, importsRaw inter
 	// if len(embeds) > 0 {
 	// 	r.SetAttr("embed", embeds)
 	// }
-	if len(all) > 0 {
-		r.SetAttr("deps", protoc.DeduplicateAndSort(all))
+
+	if len(deps) > 0 {
+		r.SetAttr("deps", protoc.DeduplicateAndSort(deps))
 	}
 }
 

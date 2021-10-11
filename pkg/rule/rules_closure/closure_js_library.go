@@ -4,7 +4,6 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
@@ -91,9 +90,6 @@ func (s *ClosureJsLibrary) Rule() *rule.Rule {
 }
 
 // Resolve implements part of the RuleProvider interface.
-func (s *ClosureJsLibrary) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
-	if s.Resolver == nil {
-		return
-	}
-	s.Resolver(s, s.Config, c, r, importsRaw, from)
+func (s *ClosureJsLibrary) Resolve(c *protoc.PackageConfig, r *rule.Rule, imports []string, from label.Label) {
+	s.Resolver(s, s.Config, c, r, imports, from)
 }

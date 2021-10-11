@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -48,6 +49,16 @@ func (s *OtherProtoLibrary) Files() []*File {
 // Deps implements part of the ProtoLibrary interface
 func (s *OtherProtoLibrary) Deps() []string {
 	return s.rule.AttrStrings("deps")
+}
+
+// Imports implements part of the ProtoLibrary interface
+func (s *OtherProtoLibrary) Imports() []string {
+	// Not supposed to be using this private attr, but...
+	importRaw := s.rule.PrivateAttr(config.GazelleImportsKey)
+	if v, ok := importRaw.([]string); ok {
+		return v
+	}
+	return nil
 }
 
 // Srcs returns the srcs attribute

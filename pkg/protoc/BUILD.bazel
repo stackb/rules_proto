@@ -24,6 +24,7 @@ go_library(
         "proto_library.go",
         "protoc_configuration.go",
         "registry.go",
+        "resolver.go",
         "rewrite.go",
         "rule_provider.go",
         "rule_registry.go",
@@ -35,6 +36,7 @@ go_library(
     deps = [
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
         "@com_github_bazelbuild_buildtools//build:go_default_library",
         "@com_github_emicklei_proto//:proto",

@@ -49,7 +49,7 @@ func TestMergeSources(t *testing.T) {
 				Outputs: withOutputs("foo.py"),
 			}),
 			wantOutputs:  withOutputs("foo.py"),
-			wantMappings: map[string]string{"foo.py": "external/googleapis/foo.py"},
+			wantMappings: map[string]string{"foo.py": "foo.py"},
 		},
 	} {
 		t.Run(name, func(t *testing.T) {

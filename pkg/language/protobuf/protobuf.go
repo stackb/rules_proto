@@ -191,7 +191,12 @@ func (pl *ProtobufLanguage) Resolve(
 	from label.Label,
 ) {
 	if provider, ok := pl.providers[from]; ok {
-		provider.Resolve(c, r, importsRaw, from)
+		cfg := pl.getOrCreatePackageConfig(c)
+		if imports, ok := importsRaw.([]string); ok {
+			provider.Resolve(cfg, r, imports, from)
+		} else {
+			log.Printf("warning: resolve imports: expected []string, got %T", importsRaw)
+		}
 	}
 }
 
