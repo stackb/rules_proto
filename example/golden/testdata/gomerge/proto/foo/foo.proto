@@ -5,6 +5,7 @@ package proto.foo;
 option go_package = "github.com/example/foo";
 
 import "proto/foo/body.proto";
+import "google/protobuf/any.proto";
 
 enum Enum{
   UNKNOWN = 0;
@@ -13,4 +14,5 @@ enum Enum{
 message Message{
     string id = 1;
     proto.foo.Body body = 2;
+    google.protobuf.Any any = 3;
 }

@@ -3,5 +3,8 @@ syntax = "proto3";
 package proto.foo;
 
 option go_package = "github.com/example/foo";
+import "google/protobuf/struct.proto";
 
-message Body{}
+message Body{
+    google.protobuf.Struct payload = 1;
+}

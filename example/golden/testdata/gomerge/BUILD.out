@@ -1,4 +1,4 @@
-# gazelle:proto package
+# gazelle:proto file
 
 # gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
