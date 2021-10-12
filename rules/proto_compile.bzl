@@ -135,7 +135,7 @@ def _proto_compile_impl(ctx):
     tools = [protoc]
 
     # mut <list<string>> argument list for protoc execution
-    args = ["--experimental_allow_proto3_optional"] + ctx.attr.args
+    args = [] + ctx.attr.args
 
     # mut <list<File>> inputs for the compile action
     inputs = []
