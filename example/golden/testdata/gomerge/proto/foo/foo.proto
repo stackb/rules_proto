@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package proto.foo;
+
+option go_package = "github.com/example/foo";
+
+import "proto/foo/body.proto";
+
+enum Enum{
+  UNKNOWN = 0;
+}
+
+message Message{
+    string id = 1;
+    proto.foo.Body body = 2;
+}

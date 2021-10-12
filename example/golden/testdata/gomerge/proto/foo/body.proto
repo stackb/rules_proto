@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package proto.foo;
+
+option go_package = "github.com/example/foo";
+
+message Body{}

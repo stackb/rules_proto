@@ -1,0 +1,40 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+proto_library(
+    name = "foo_proto",
+    srcs = [
+        "body.proto",
+        "foo.proto",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "foo_go_compile",
+    mappings = {
+        "body.pb.go": "github.com/example/foo/body.pb.go",
+        "foo.pb.go": "github.com/example/foo/foo.pb.go",
+    },
+    outputs = [
+        "body.pb.go",
+        "foo.pb.go",
+    ],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    proto = "foo_proto",
+)
+
+proto_go_library(
+    name = "foo_go_proto",
+    srcs = [
+        "body.pb.go",
+        "foo.pb.go",
+    ],
+    importpath = "github.com/example/foo",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+    ],
+)
