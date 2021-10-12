@@ -31,5 +31,5 @@ import (
 // implementations in the repo whereas the other is the "pure" language
 // implementation, with no pre-population of the registries.
 func NewLanguage() language.Language {
-	return protobuf.NewProtobufLanguage("protobuf")
+	return protobuf.NewprotobufLang("protobuf")
 }

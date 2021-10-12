@@ -45,6 +45,14 @@ type PackageConfig struct {
 	// method!
 }
 
+// GetPackageConfig returns the associated package config.
+func GetPackageConfig(config *config.Config) *PackageConfig {
+	if cfg, ok := config.Exts["protobuf"].(*PackageConfig); ok {
+		return cfg
+	}
+	return nil
+}
+
 // NewPackageConfig initializes a new PackageConfig.
 func NewPackageConfig(config *config.Config) *PackageConfig {
 	return &PackageConfig{
@@ -189,19 +197,19 @@ func (c *PackageConfig) parseRuleDirective(d rule.Directive) error {
 	return r.parseDirective(c, name, param, value)
 }
 
-// Requires implements part of the protoc.ImportResolver interface
-func (c *PackageConfig) Requires(kind, imp string) []resolve.FindResult {
+// Resolve implements part of the protoc.ImportResolver interface
+func (c *PackageConfig) Resolve(kind, attr, imp string) []resolve.FindResult {
 	if resolves, ok := c.resolves[kind]; ok {
 		if got, ok := resolves[imp]; ok {
 			return []resolve.FindResult{{Label: got}}
 		}
 	}
-	return GlobalResolver().Requires(kind, imp)
+	return GlobalResolver().Resolve(kind, attr, imp)
 }
 
-// Provides implements part of the protoc.ImportResolver interface
-func (c *PackageConfig) Provides(kind, imp string, loc label.Label) {
-	GlobalResolver().Provides(kind, imp, loc)
+// Provide implements part of the protoc.ImportResolver interface
+func (c *PackageConfig) Provide(kind, attr, imp string, loc label.Label) {
+	GlobalResolver().Provide(kind, attr, imp, loc)
 }
 
 func (c *PackageConfig) getOrCreateLanguagePluginConfig(name string) (*LanguagePluginConfig, error) {

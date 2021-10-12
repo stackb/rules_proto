@@ -280,7 +280,7 @@ func (pl *protoIndexLanguage) GenerateRules(args language.GenerateArgs) language
 		if r.Kind() == "proto_library" {
 			// libs = append(libs, r)
 			for _, src := range r.AttrStrings("srcs") {
-				protoc.GlobalResolver().Provides("proto_library", path.Join(args.Rel, src), internalLabel)
+				protoc.GlobalResolver().Provide("proto_library", path.Join(args.Rel, src), internalLabel)
 			}
 		}
 

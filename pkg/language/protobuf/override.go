@@ -1,8 +1,6 @@
 package protobuf
 
 import (
-	"log"
-
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
@@ -22,22 +20,22 @@ var overrideKind = rule.KindInfo{
 	ResolveAttrs: map[string]bool{"deps": true},
 }
 
-func makeProtoOverrideRule(libs []*rule.Rule) *rule.Rule {
-	// This rule is *only* used to trigger a Resolve() callback such that we
-	// can process the proto_library rules we've captured here; the rule
-	// itself is always deleted from the file.
+func makeProtoOverrideRule(libs []protoc.ProtoLibrary) *rule.Rule {
+	// This rule is *only* used to trigger a Resolve() callback such that we can
+	// process the proto_library rules we've captured here; the rule itself is
+	// always deleted from the file.
 	overrideRule := rule.NewRule(overrideKindName, protoLibrariesRuleKey)
 	overrideRule.SetPrivateAttr(protoLibrariesRuleKey, libs)
 	return overrideRule
 }
 
 func resolveOverrideRule(rel string, r *rule.Rule) {
-	libs := r.PrivateAttr(protoLibrariesRuleKey).([]*rule.Rule)
+	libs := r.PrivateAttr(protoLibrariesRuleKey).([]protoc.ProtoLibrary)
 	for _, lib := range libs {
-		log.Println("processing", lib.Name())
+		r := lib.Rule()
 		deps := make([]label.Label, 0)
 		var hasGoGoogleapisDep bool
-		for _, dep := range lib.AttrStrings("deps") {
+		for _, dep := range r.AttrStrings("deps") {
 			lbl, _ := label.Parse(dep)
 			if lbl.Repo == "go_googleapis" {
 				hasGoGoogleapisDep = true
@@ -54,19 +52,16 @@ func resolveOverrideRule(rel string, r *rule.Rule) {
 			continue
 		}
 
-		imports := lib.PrivateAttr(config.GazelleImportsKey)
+		imports := r.PrivateAttr(config.GazelleImportsKey)
 		if imps, ok := imports.([]string); ok {
 			for _, imp := range imps {
-				log.Println("resolve imports", imp)
-
-				result := protoc.GlobalResolver().Requires("proto_library", imp)
+				result := protoc.GlobalResolver().Resolve("proto_library", "srcs", imp)
 				if len(result) > 0 {
 					first := result[0]
 					deps = append(deps, first.Label)
-					log.Println("resolve imports HIT", first.Label)
-
+					// log.Println("resolve imports HIT", first.Label)
 				} else {
-					log.Println("resolve imports MISS", imp)
+					// log.Println("resolve imports MISS", imp)
 				}
 			}
 		}
@@ -76,7 +71,7 @@ func resolveOverrideRule(rel string, r *rule.Rule) {
 			for i, lbl := range deps {
 				ss[i] = lbl.Rel("", rel).String()
 			}
-			lib.SetAttr("deps", protoc.DeduplicateAndSort(ss))
+			r.SetAttr("deps", protoc.DeduplicateAndSort(ss))
 		}
 	}
 

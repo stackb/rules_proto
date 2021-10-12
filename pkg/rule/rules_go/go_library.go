@@ -2,13 +2,14 @@ package rules_go
 
 import (
 	"fmt"
+	"log"
 	"path"
 	"sort"
 	"strings"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
-
-	// langgo "github.com/bazelbuild/bazel-gazelle/language/go"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -17,6 +18,7 @@ import (
 const (
 	ProtoGoLibraryRuleName = "proto_go_library"
 	goLibraryRuleSuffix    = "_go_proto"
+	protoLibsKey           = "_proto_libs"
 )
 
 func init() {
@@ -131,7 +133,7 @@ func (s *goLibraryRule) configDeps() []string {
 	return deps
 }
 
-// Visibility implements part of the ruleProvider interface.
+// Visibility provides visibility labels.
 func (s *goLibraryRule) Visibility() []string {
 	visibility := make([]string, 0)
 	for k, want := range s.ruleConfig.Visibility {
@@ -175,14 +177,21 @@ func (s *goLibraryRule) importPath() string {
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *goLibraryRule) Rule() *rule.Rule {
+func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	newRule.SetAttr("srcs", s.Srcs())
+	newRule.SetPrivateAttr(config.GazelleImportsKey, s.config.Library.Imports())
+	newRule.SetPrivateAttr(protoLibsKey, []protoc.ProtoLibrary{s.config.Library})
 
 	importpath := s.importPath()
 	if importpath != "" {
 		newRule.SetAttr("importpath", importpath)
+	}
+
+	deps := s.configDeps()
+	if len(deps) > 0 {
+		newRule.SetAttr("deps", deps)
 	}
 
 	visibility := s.Visibility()
@@ -190,50 +199,177 @@ func (s *goLibraryRule) Rule() *rule.Rule {
 		newRule.SetAttr("visibility", visibility)
 	}
 
+	// func MergeRules(src, dst *Rule, mergeable map[string]bool, filename string) {
+	for _, other := range otherGen {
+		if other.Kind() == ProtoGoLibraryRuleName && other.AttrString("importpath") == importpath {
+			log.Println("MERGE RULES", importpath, other.Name(), "<-", newRule.Name())
+
+			// rename the rule to reflect the importpath if merged
+			other.SetName(path.Base(importpath) + goLibraryRuleSuffix)
+			// merge attributes
+			otherSrcs := other.AttrStrings("srcs")
+			otherDeps := other.AttrStrings("deps")
+			otherImports := other.PrivateAttr(config.GazelleImportsKey).([]string)
+			otherLibs := other.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary)
+			otherVis := other.AttrStrings("visibility")
+
+			other.DelAttr("srcs")
+			other.DelAttr("deps")
+			other.DelAttr("visibility")
+			other.DelAttr(protoLibsKey)
+			other.DelAttr(config.GazelleImportsKey)
+
+			other.SetAttr("srcs", protoc.DeduplicateAndSort(append(otherSrcs, s.Srcs()...)))
+			other.SetAttr("deps", protoc.DeduplicateAndSort(append(otherDeps, deps...)))
+			other.SetAttr("visibility", protoc.DeduplicateAndSort(append(otherVis, s.Visibility()...)))
+			other.SetPrivateAttr(config.GazelleImportsKey, append(otherImports, s.config.Library.Imports()...))
+			other.SetPrivateAttr(protoLibsKey, append(otherLibs, s.config.Library))
+
+			log.Println("MERGE RULES imports", other.PrivateAttr(config.GazelleImportsKey))
+
+			// rule.MergeRules(newRule, other, map[string]bool{
+			// 	"srcs":                   true,
+			// 	"deps":                   true,
+			// 	"visibility":             true,
+			// 	config.GazelleImportsKey: true,
+			// }, "<merge-file>")
+			return nil
+		}
+	}
+
 	return newRule
 }
 
-// Resolve implements part of the RuleProvider interface.
-func (s *goLibraryRule) Resolve(c *protoc.PackageConfig, r *rule.Rule, imports []string, from label.Label) {
+// Imports implements part of the RuleProvider interface.
+func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	libs := r.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary)
+	log.Printf("//%s:%s importspecs:", file.Pkg, r.Name())
+	specs := protoc.ProtoLibraryImportSpecsForKind(r.Kind(), libs...)
+	for _, spec := range specs {
+		log.Printf(" -- %s: %s", spec.Lang, spec.Imp)
+	}
+	return specs
+}
 
+// Resolve implements part of the RuleProvider interface.
+func (s *goLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+
+	log.Println("Resolve!", from)
+
+	// var debug bool
+	// if from.Pkg == "google/actions/sdk/v2/conversation" {
+	// 	log.Panicln("OK!")
+	// 	debug = true
+	// }
+
+	debug := from.Name == "serviceconfig_go_proto"
+
+	// r.DelAttr("deps")
+
+	// // collect a list of dependencies, then partition them into 'embeds' if
+	// // another go library has the same importpath.
+	// all := append(s.configDeps(), protoc.ResolveImportsString(c, from.Pkg, s.Kind(), "srcs", imports)...)
+
+	protoc.ResolveDepsAttrDebug("deps", debug)(c, ix, r, imports, from)
+
+	// need to make one more pass to possibly move deps into embeds.  There may
+	// be dependencies *IN OTHER PACKAGES* that have the same importpath; in
+	// that case we need to embed, not depend.
+	all := r.AttrStrings("deps")
 	r.DelAttr("deps")
 
-	// collect a list of dependencies, then partition them into 'embeds' if
-	// another go library has the same importpath.
-	deps := s.configDeps()
+	deps := make([]string, 0)
+	embeds := make([]string, 0)
+	importpath := r.AttrString("importpath")
 
-	// for i, d := range deps {
-	// 	deps[i] = d + "+"
-	// }
+	for _, dep := range all {
+		dl, err := label.Parse(dep)
+		if err != nil {
+			log.Printf("resolve deps failed for for rule %s %s: label parse %q error: %v", r.Kind(), r.Name(), dep, err)
+			deps = append(deps, dep)
+			continue
+		}
+		if debug {
+			log.Printf("dl! %+v (%q, %q, %q)", dl, dl.Repo, dl.Pkg, dl.Name)
+		}
 
-	deps = append(deps, protoc.ResolveImportsString(c, from.Pkg, s.Kind(), imports)...)
+		// If this is a relative label, make it absolute
+		if dl.Repo == "" && dl.Pkg == "" {
+			dl = label.Label{Pkg: s.config.Rel, Name: dl.Name}
+		}
 
-	// deps := make([]string, 0)
-	// embeds := make([]string, 0)
+		// retrieve the rule for this label
+		if dr := protoc.GlobalRuleIndex().Get(dl); dr != nil {
+			depImportpath := dr.AttrString("importpath")
+			// if it has the same importpath, need to embed this
+			if debug {
+				log.Println("depimportpath", depImportpath)
+			}
+			if depImportpath == importpath {
+				embeds = append(embeds, dep)
+				continue
+			}
+		}
 
-	// for _, dep := range all {
-	// 	deps = append(deps, dep)
+		deps = append(deps, dep)
+	}
 
-	// TOOD: do we really need to populate embeds?
-	// l, err := label.Parse(dep)
-	// if err != nil {
-	// 	log.Fatalf("resolve deps failed for for rule %s %s: label parse %q error: %v", r.Kind(), r.Name(), dep, err)
-	// }
-
-	// if l.Pkg == "" { // "this package"
-	// 	embeds = append(embeds, dep)
-	// } else {
-	// deps = append(deps, dep)
-	// }
-	// }
-
-	// if len(embeds) > 0 {
-	// 	r.SetAttr("embed", embeds)
-	// }
-
+	if len(embeds) > 0 {
+		r.SetAttr("embed", protoc.DeduplicateAndSort(embeds))
+	}
 	if len(deps) > 0 {
 		r.SetAttr("deps", protoc.DeduplicateAndSort(deps))
 	}
+
+	// // attempt to partition deps into embeds if the dep rule has the same
+	// // importpath
+	// importpath := r.AttrString("importpath")
+	// deps := make([]string, 0)
+	// embeds := make([]string, 0)
+
+	// if debug {
+	// 	log.Println("resolving deps for", from)
+	// }
+
+	// for _, dep := range all {
+	// 	deps = append(deps, dep)
+	// 	depLabel, err := label.Parse(dep)
+	// 	if err != nil {
+	// 		log.Printf("resolve deps failed for for rule %s %s: label parse %q error: %v", r.Kind(), r.Name(), dep, err)
+	// 		continue
+	// 	}
+	// 	if debug {
+	// 		log.Printf("depLabel! %+v (%q, %q, %q)", depLabel, depLabel.Repo, depLabel.Pkg, depLabel.Name)
+	// 	}
+
+	// 	// If this is a relative label, make it absolute
+	// 	if depLabel.Repo == "" && depLabel.Pkg == "" {
+	// 		depLabel = label.Label{Pkg: s.config.Rel, Name: depLabel.Name}
+	// 	}
+
+	// 	// retrieve the rule for this label
+	// 	if depRule := protoc.GlobalRuleIndex().Get(depLabel); depRule != nil {
+	// 		depImportpath := depRule.AttrString("importpath")
+	// 		// if it has the same importpath, need to embed this
+	// 		if debug {
+	// 			log.Println("depimportpath", depImportpath)
+	// 		}
+	// 		if depImportpath == importpath {
+	// 			embeds = append(embeds, dep)
+	// 			continue
+	// 		}
+	// 	}
+
+	// 	// fallback to putting it back in the deps list
+	// 	deps = append(deps, dep)
+	// }
+
+	// if len(embeds) > 0 {
+	// 	r.SetAttr("embed", protoc.DeduplicateAndSort(embeds))
+	// }
+	// if len(deps) > 0 {
+	// 	r.SetAttr("deps", protoc.DeduplicateAndSort(deps))
+	// }
 }
 
 func (s *goLibraryRule) getPluginImportMappingOption() string {

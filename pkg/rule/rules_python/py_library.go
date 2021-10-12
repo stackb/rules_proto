@@ -4,7 +4,9 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -54,7 +56,7 @@ func (s *PyLibrary) Deps() []string {
 	return s.RuleConfig.GetDeps()
 }
 
-// Visibility implements part of the ruleProvider interface.
+// Visibility provides visibility labels.
 func (s *PyLibrary) Visibility() []string {
 	visibility := make([]string, 0)
 	for k, want := range s.RuleConfig.Visibility {
@@ -68,11 +70,15 @@ func (s *PyLibrary) Visibility() []string {
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *PyLibrary) Rule() *rule.Rule {
+func (s *PyLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	newRule.SetAttr("srcs", s.Srcs())
 
+	deps := s.Deps()
+	if len(deps) > 0 {
+		newRule.SetAttr("deps", deps)
+	}
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)
@@ -81,7 +87,12 @@ func (s *PyLibrary) Rule() *rule.Rule {
 	return newRule
 }
 
+// Imports implements part of the RuleProvider interface.
+func (s *PyLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	return nil
+}
+
 // Resolve implements part of the RuleProvider interface.
-func (s *PyLibrary) Resolve(c *protoc.PackageConfig, r *rule.Rule, imports []string, from label.Label) {
-	s.Resolver(s, s.Config, c, r, imports, from)
+func (s *PyLibrary) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+	s.Resolver(c, ix, r, imports, from)
 }

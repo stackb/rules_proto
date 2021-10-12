@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -70,13 +72,13 @@ func (s *protoCompileRule) Name() string {
 	return fmt.Sprintf("%s_%s_compile", s.config.Library.BaseName(), s.config.Prefix)
 }
 
-// Visibility implements part of the ruleProvider interface.
+// Visibility provides visibility labels.
 func (s *protoCompileRule) Visibility() []string {
 	return nil // TODO: visibility feature?
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *protoCompileRule) Rule() *rule.Rule {
+func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	outputs := s.config.Outputs
@@ -107,6 +109,11 @@ func (s *protoCompileRule) Rule() *rule.Rule {
 	return newRule
 }
 
+// Imports implements part of the RuleProvider interface.
+func (s *protoCompileRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	return nil
+}
+
 // Resolve implements part of the RuleProvider interface.
-func (s *protoCompileRule) Resolve(c *PackageConfig, r *rule.Rule, imports []string, from label.Label) {
+func (s *protoCompileRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 }

@@ -6,7 +6,9 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb"
@@ -99,8 +101,8 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		outputs:        plugin.Outputs,
 		ruleConfig:     cfg,
 		config:         pc,
-		resolver: func(impl protoc.DepsProvider, pc *protoc.ProtocConfiguration, c *protoc.PackageConfig, r *rule.Rule, imports []string, from label.Label) {
-			protoc.ResolveDepsExcludingWellKnownTypes()(impl, pc, c, r, imports, from)
+		resolver: func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+			protoc.ResolveDepsAttr("deps")(c, ix, r, imports, from)
 			r.SetAttr("exports", r.Attr("deps"))
 		},
 	}
@@ -142,7 +144,7 @@ func (s *scalaLibraryRule) Deps() []string {
 	return s.ruleConfig.GetDeps()
 }
 
-// Visibility implements part of the ruleProvider interface.
+// Visibility provides visibility labels.
 func (s *scalaLibraryRule) Visibility() []string {
 	visibility := make([]string, 0)
 	for k, want := range s.ruleConfig.Visibility {
@@ -156,10 +158,15 @@ func (s *scalaLibraryRule) Visibility() []string {
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *scalaLibraryRule) Rule() *rule.Rule {
+func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	newRule.SetAttr("srcs", s.Srcs())
+
+	deps := s.Deps()
+	if len(deps) > 0 {
+		newRule.SetAttr("deps", deps)
+	}
 
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
@@ -169,10 +176,15 @@ func (s *scalaLibraryRule) Rule() *rule.Rule {
 	return newRule
 }
 
+// Imports implements part of the RuleProvider interface.
+func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	return nil
+}
+
 // Resolve implements part of the RuleProvider interface.
-func (s *scalaLibraryRule) Resolve(c *protoc.PackageConfig, r *rule.Rule, imports []string, from label.Label) {
+func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 	if s.resolver == nil {
 		return
 	}
-	s.resolver(s, s.config, c, r, imports, from)
+	s.resolver(c, ix, r, imports, from)
 }

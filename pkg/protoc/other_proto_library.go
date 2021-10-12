@@ -2,7 +2,6 @@ package protoc
 
 import (
 	"fmt"
-	"path"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -18,7 +17,7 @@ type OtherProtoLibrary struct {
 	files  []*File
 }
 
-// NewOtherProtoLibrary returns a pointer to a new struct.
+// NewOtherProtoLibrary constructs a new ProtoLibrary implementation.
 func NewOtherProtoLibrary(source *rule.File, rule *rule.Rule, files ...*File) *OtherProtoLibrary {
 	return &OtherProtoLibrary{source, rule, files}
 }
@@ -64,11 +63,12 @@ func (s *OtherProtoLibrary) Imports() []string {
 
 // Srcs returns the srcs attribute
 func (s *OtherProtoLibrary) Srcs() []string {
-	srcs := make([]string, len(s.files))
-	for _, f := range s.files {
-		srcs = append(srcs, path.Join(f.Dir, f.Basename))
-	}
-	return srcs
+	return s.rule.AttrStrings("srcs")
+	// srcs := make([]string, len(s.files))
+	// for _, f := range s.files {
+	// 	srcs = append(srcs, path.Join(f.Dir, f.Basename))
+	// }
+	// return srcs
 }
 
 // StripImportPrefix implements part of the ProtoLibrary interface

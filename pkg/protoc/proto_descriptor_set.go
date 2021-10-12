@@ -5,7 +5,9 @@ import (
 	"path"
 	"sort"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -62,7 +64,7 @@ func (s *protoDescriptorSetRuleRule) Name() string {
 	return fmt.Sprintf("%s_descriptor", s.config.Library.BaseName())
 }
 
-// Visibility implements part of the ruleProvider interface.
+// Visibility provides visibility labels.
 func (s *protoDescriptorSetRuleRule) Visibility() []string {
 	visibility := make([]string, 0)
 	for k, want := range s.ruleConfig.Visibility {
@@ -76,7 +78,7 @@ func (s *protoDescriptorSetRuleRule) Visibility() []string {
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *protoDescriptorSetRuleRule) Rule() *rule.Rule {
+func (s *protoDescriptorSetRuleRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	newRule.SetAttr("deps", []string{s.config.Library.Name()})
@@ -89,8 +91,13 @@ func (s *protoDescriptorSetRuleRule) Rule() *rule.Rule {
 	return newRule
 }
 
+// Imports implements part of the RuleProvider interface.
+func (s *protoDescriptorSetRuleRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	return nil
+}
+
 // Resolve implements part of the RuleProvider interface.
-func (s *protoDescriptorSetRuleRule) Resolve(c *PackageConfig, r *rule.Rule, imports []string, from label.Label) {
+func (s *protoDescriptorSetRuleRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 }
 
 type protoDescriptorSetPlugin struct{}

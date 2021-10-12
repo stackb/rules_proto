@@ -3,7 +3,9 @@ package rules_scala
 import (
 	"sort"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -68,7 +70,7 @@ func (s *scalaProtoLibraryRule) Name() string {
 	return s.config.Library.BaseName() + "_scala_proto"
 }
 
-// Visibility implements part of the ruleProvider interface.
+// Visibility provides visibility labels.
 func (s *scalaProtoLibraryRule) Visibility() []string {
 	visibility := make([]string, 0)
 	for k, want := range s.ruleConfig.Visibility {
@@ -82,7 +84,7 @@ func (s *scalaProtoLibraryRule) Visibility() []string {
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *scalaProtoLibraryRule) Rule() *rule.Rule {
+func (s *scalaProtoLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	visibility := s.Visibility()
@@ -93,7 +95,12 @@ func (s *scalaProtoLibraryRule) Rule() *rule.Rule {
 	return newRule
 }
 
+// Imports implements part of the RuleProvider interface.
+func (s *scalaProtoLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	return nil
+}
+
 // Resolve implements part of the RuleProvider interface.
-func (s *scalaProtoLibraryRule) Resolve(c *protoc.PackageConfig, r *rule.Rule, imports []string, from label.Label) {
+func (s *scalaProtoLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 	r.SetAttr("deps", []string{":" + s.config.Library.Name()})
 }

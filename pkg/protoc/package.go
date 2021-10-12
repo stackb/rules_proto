@@ -6,7 +6,6 @@ import (
 	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
-	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -163,12 +162,12 @@ func (s *Package) RuleProviders() []RuleProvider {
 
 // Rules provides the aggregated rule list for the package.
 func (s *Package) Rules() []*rule.Rule {
-	return s.getProvidedRules(s.gen, true)
+	return s.getProvidedRules(s.gen)
 }
 
 // Empty names the rules that can be deleted.
 func (s *Package) Empty() []*rule.Rule {
-	rules := s.getProvidedRules(s.empty, false)
+	rules := s.getProvidedRules(s.empty)
 
 	// it's a bit sad that we construct the full rules only for their kind and
 	// name, but that's how it is right now.
@@ -180,19 +179,19 @@ func (s *Package) Empty() []*rule.Rule {
 	return empty
 }
 
-func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool) []*rule.Rule {
-	rules := make([]*rule.Rule, len(providers))
-	for i, p := range providers {
-		rule := p.Rule()
-		if shouldResolve {
+func (s *Package) getProvidedRules(providers []RuleProvider) []*rule.Rule {
+	rules := make([]*rule.Rule, 0)
+	for _, p := range providers {
+		rule := p.Rule(rules...)
+		if rule == nil {
+			continue
+		}
+		imports := rule.PrivateAttr(config.GazelleImportsKey)
+		if imports == nil {
 			lib := s.ruleLibs[p]
-			srcs := lib.Srcs()
-			for _, imp := range srcs {
-				s.cfg.Provides(rule.Kind(), imp, label.New("", s.rel, rule.Name()))
-			}
 			rule.SetPrivateAttr(config.GazelleImportsKey, lib.Imports())
 		}
-		rules[i] = rule
+		rules = append(rules, rule)
 	}
 	return rules
 }

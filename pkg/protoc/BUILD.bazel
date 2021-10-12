@@ -28,6 +28,7 @@ go_library(
         "rewrite.go",
         "rule_provider.go",
         "rule_registry.go",
+        "ruleindex.go",
         "syntaxutil.go",
         "yconfig.go",
     ],

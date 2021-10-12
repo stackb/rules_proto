@@ -85,6 +85,12 @@ gazelle_testdata_example(
     workspace_template = "prebuilt.WORKSPACE",
 )
 
+gazelle_testdata_example(
+    name = "gomerge",
+    srcs = glob(["testdata/gomerge/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
 filegroup(
     name = "all_files",
     srcs = ["BUILD.bazel"] + glob(["*.go"]),
