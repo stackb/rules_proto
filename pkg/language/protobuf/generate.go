@@ -56,8 +56,8 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 			srcLabels[i] = srcLabel
 
 			protoc.GlobalResolver().Provide(
-				"proto_library",
-				"srcs",
+				"proto",
+				"proto",
 				path.Join(args.Rel, src),
 				internalLabel,
 			)
@@ -84,7 +84,7 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 	// special case if this is the root BUILD file and the user requested to
 	// write the imports file.
 	if args.Rel == "" && pl.importsOutFile != "" {
-		if err := protoc.GlobalResolver().SaveImportsFile(pl.importsOutFile, pl.repoName); err != nil {
+		if err := protoc.GlobalResolver().SaveFile(pl.importsOutFile, pl.repoName); err != nil {
 			log.Printf("error saving import file: %s: %v", pl.importsOutFile, err)
 		}
 	}

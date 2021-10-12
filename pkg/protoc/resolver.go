@@ -29,10 +29,10 @@ const (
 type ImportResolver interface {
 	// Resolve returns any previously provided labels associated with the given
 	// kind and import.
-	Resolve(kind, attr, imp string) []resolve.FindResult
+	Resolve(lang, impLang, imp string) []resolve.FindResult
 	// Provide records the association between a rule kind+attr, the value of
 	// the attr, and the label that provides the value.
-	Provide(kind string, attr, val string, location label.Label)
+	Provide(lang string, impLang, val string, location label.Label)
 }
 
 // ImportCrossResolver handles dependency resolution.
@@ -40,12 +40,12 @@ type ImportCrossResolver interface {
 	resolve.CrossResolver
 	ImportResolver
 
-	// LoadImportsFile loads csv file to populate the resolver
-	LoadImportsFile(filename string) error
-	// SaveImportsFile write a csv file
-	SaveImportsFile(repoName, filename string) error
-	// InstallResolveOverrides adds configured resolve entries into the resolve config.
-	InstallResolveOverrides(c *config.Config)
+	// LoadFile loads csv file to populate the resolver
+	LoadFile(filename string) error
+	// SaveResolverFile write a csv file
+	SaveFile(repoName, filename string) error
+	// Install adds configured resolve entries into the resolve config.
+	Install(c *config.Config)
 }
 
 // GlobalResolver returns a reference to the global ImportResolver
@@ -59,7 +59,7 @@ type importLabels map[string][]label.Label
 
 // globalImportResolver is the default resolver singleton.
 var globalImportResolver = &resolver{
-	// known is a mapping between kind and importLabel map
+	// known is a mapping between lang and importLabel map
 	known: make(map[string]importLabels),
 }
 
@@ -68,41 +68,43 @@ type resolver struct {
 	known map[string]importLabels
 }
 
-// LoadImportsFile reads a protoresolve csv file.
-func (r *resolver) LoadImportsFile(filename string) error {
+// LoadFile reads a protoresolve csv file.
+func (r *resolver) LoadFile(filename string) error {
 	f, err := os.Open(filename)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
-	return r.LoadReader(f)
+	return r.Load(f)
 }
 
-// LoadImportsFile reads input and returns a list of items.  Comment lines beginning
+// Load reads input and returns a list of items.  Comment lines beginning
 // with '#' are ignored.
-func (r *resolver) LoadReader(in io.Reader) error {
+func (r *resolver) Load(in io.Reader) error {
 	scanner := bufio.NewScanner(in)
 	for scanner.Scan() {
 		line := scanner.Text()
 		if strings.HasPrefix(line, "#") {
 			continue
 		}
-		parts := strings.SplitN(line, ",", 3)
-		if len(parts) == 4 {
-			lbl, err := label.Parse(parts[0])
-			if err != nil {
-				return fmt.Errorf("malformed label at position 4 in %s: %v", line, err)
-			}
-			kind := parts[1]
-			attr := parts[2]
-			imp := parts[3]
-			r.Provide(kind, attr, imp, lbl)
+		parts := strings.SplitN(line, ",", 4)
+		if len(parts) != 4 {
+			log.Printf("warn: parse %q, expected 4 items, got %d", line, len(parts))
+			continue
 		}
+		lang := parts[0]
+		impLang := parts[1]
+		imp := parts[2]
+		lbl, err := label.Parse(parts[3])
+		if err != nil {
+			return fmt.Errorf("malformed label at position 4 in %s: %v", line, err)
+		}
+		r.Provide(lang, impLang, imp, lbl)
 	}
 	return nil
 }
 
-func (r *resolver) SaveImports(out io.Writer, repoName string) {
+func (r *resolver) Save(out io.Writer, repoName string) {
 	keys := make([]string, 0)
 	for k := range r.known {
 		keys = append(keys, k)
@@ -115,7 +117,7 @@ func (r *resolver) SaveImports(out io.Writer, repoName string) {
 			imps = append(imps, imp)
 		}
 		sort.Strings(imps)
-		kind, attr := keyKind(key)
+		lang, impLang := keyLang(key)
 		for _, imp := range imps {
 			labels := imports[imp]
 			for _, lbl := range labels {
@@ -123,13 +125,13 @@ func (r *resolver) SaveImports(out io.Writer, repoName string) {
 				if l.Repo == "" {
 					l.Repo = repoName
 				}
-				fmt.Fprintf(out, "%s,%s,%s,%s\n", l, kind, attr, imp)
+				fmt.Fprintf(out, "%s,%s,%s,%s\n", lang, impLang, imp, l)
 			}
 		}
 	}
 }
 
-func (r *resolver) SaveImportsFile(repoName, filename string) error {
+func (r *resolver) SaveFile(repoName, filename string) error {
 	f, err := os.Create(filename)
 	if err != nil {
 		return fmt.Errorf("save imports file: %w", err)
@@ -138,25 +140,23 @@ func (r *resolver) SaveImportsFile(repoName, filename string) error {
 
 	fmt.Fprintf(f, "# GENERATED FILE, DO NOT EDIT (created by gazelle)\n")
 	fmt.Fprintf(f, "# lang,imp.lang,imp,label\n")
-	r.SaveImports(f, repoName)
+	r.Save(f, repoName)
+
+	log.Println("Wrote:", filename)
 	return nil
 }
 
 // CrossResolve provides dependency resolution logic for the proto language extension.
 func (r *resolver) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, lang string) []resolve.FindResult {
-	switch lang {
-	case "go":
-		return r.Resolve("go_library", "importpath", imp.Imp)
-	case "proto":
-		return r.Resolve("proto_library", "srcs", imp.Imp)
-	default:
-		return r.Resolve(lang, "", imp.Imp)
-	}
+	return r.Resolve(lang, imp.Lang, imp.Imp)
 }
 
-func (r *resolver) Resolve(kind, attr, imp string) []resolve.FindResult {
-	key := kindKey(kind, attr)
+func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
+	key := langKey(lang, impLang)
 	known := r.known[key]
+	if known == nil {
+		known = r.known[lang]
+	}
 	if known == nil {
 		return nil
 	}
@@ -170,8 +170,8 @@ func (r *resolver) Resolve(kind, attr, imp string) []resolve.FindResult {
 	return nil
 }
 
-func (r *resolver) Provide(kind, attr, imp string, loc label.Label) {
-	key := kindKey(kind, attr)
+func (r *resolver) Provide(lang, impLang, imp string, loc label.Label) {
+	key := langKey(lang, impLang)
 	known, ok := r.known[key]
 	if !ok {
 		known = make(map[string][]label.Label)
@@ -191,45 +191,50 @@ func (r *resolver) Provide(kind, attr, imp string, loc label.Label) {
 	known[imp] = append(known[imp], loc)
 }
 
-func (r *resolver) InstallResolveOverrides(c *config.Config) {
+func (r *resolver) Install(c *config.Config) {
 	// The resolve config has already processed resolve directives, and there's
 	// no public API. Take somewhat extreme measures to augment it's internal
 	// override list via unsafe memory reallocation.
 	overrides := make([]overrideSpec, 0)
 
-	for imp, labels := range r.known["proto_library"] {
-		for _, lbl := range labels {
-			overrides = append(overrides, overrideSpec{
-				imp: resolve.ImportSpec{
-					Lang: "proto",
-					Imp:  imp,
-				},
-				lang: "proto",
-				dep:  lbl,
-			})
+	for key, known := range r.known {
+		lang, impLang := keyLang(key)
+		for imp, lbls := range known {
+			for _, lbl := range lbls {
+				overrides = append(overrides, overrideSpec{
+					imp: resolve.ImportSpec{
+						Lang: impLang,
+						Imp:  imp,
+					},
+					lang: lang,
+					dep:  lbl,
+				})
+			}
 		}
 	}
 
-	if len(overrides) > 0 {
-		rewriteResolveConfigOverrides(getResolveConfig(c), overrides)
+	if len(overrides) == 0 {
+		return
 	}
+
+	rewriteResolveConfigOverrides(getResolveConfig(c), overrides)
 }
 
 // ResolveImports is a utility function that returns a matching list of labels
 // for the given import list.
-func ResolveImports(resolver ImportResolver, kind, attr string, imports []string) []label.Label {
+func ResolveImports(resolver ImportResolver, lang, impLang string, imports []string) []label.Label {
 	deps := make([]label.Label, 0)
 	for _, imp := range imports {
-		result := resolver.Resolve(kind, attr, imp)
+		result := resolver.Resolve(lang, impLang, imp)
 		if len(result) > 0 {
 			first := result[0]
 			deps = append(deps, first.Label)
 			if debugResolver {
-				log.Println(kind, imp, "HIT", first.Label)
+				log.Println(lang, imp, "HIT", first.Label)
 			}
 		} else {
 			if debugResolver {
-				log.Println(kind, imp, "MISS", resolver)
+				log.Println(lang, imp, "MISS", resolver)
 			}
 		}
 	}
@@ -238,8 +243,8 @@ func ResolveImports(resolver ImportResolver, kind, attr string, imports []string
 
 // ResolveImportsString is a utility function that returns a matching list of labels
 // for the given import list.
-func ResolveImportsString(resolver ImportResolver, rel, kind, attr string, imports []string) []string {
-	match := ResolveImports(resolver, kind, attr, imports)
+func ResolveImportsString(resolver ImportResolver, rel, kind, impLang string, imports []string) []string {
+	match := ResolveImports(resolver, kind, impLang, imports)
 	deps := make([]string, len(match))
 	for i, l := range match {
 		deps[i] = l.Rel("", rel).String()
@@ -280,11 +285,11 @@ type overrideSpec struct {
 	dep  label.Label
 }
 
-func kindKey(kind, attr string) string {
-	return kind + "//" + attr
+func langKey(lang, impLang string) string {
+	return lang + " " + impLang
 }
 
-func keyKind(key string) (string, string) {
-	parts := strings.SplitN(key, "//", 2)
+func keyLang(key string) (string, string) {
+	parts := strings.SplitN(key, " ", 2)
 	return parts[0], parts[1]
 }

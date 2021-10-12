@@ -37,7 +37,7 @@ func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 
 	if pl.importsInFiles != "" {
 		for _, filename := range strings.Split(pl.importsInFiles, ",") {
-			if err := protoc.GlobalResolver().LoadImportsFile(filename); err != nil {
+			if err := protoc.GlobalResolver().LoadFile(filename); err != nil {
 				return fmt.Errorf("loading %s: %w", filename, err)
 			}
 		}
@@ -60,7 +60,7 @@ func (pl *protobufLang) Configure(c *config.Config, rel string, f *rule.File) {
 		// if this is the root BUILD file, we are beginning the configuration
 		// sequence.  Perform the equivalent of writing relevant
 		// 'gazelle:resolve proto IMP LABEL` entries.
-		protoc.GlobalResolver().InstallResolveOverrides(c)
+		protoc.GlobalResolver().Install(c)
 	}
 
 	if f == nil {

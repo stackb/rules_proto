@@ -140,6 +140,7 @@ def _proto_repository_impl(ctx):
             cmd.extend(["-proto", ctx.attr.build_file_proto_mode])
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
+        print("gazelle cmd", cmd)
         result = env_execute(ctx, cmd, environment = env, timeout = _GO_REPOSITORY_TIMEOUT)
         if result.return_code:
             fail("failed to generate BUILD files: %s" % (

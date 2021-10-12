@@ -85,13 +85,6 @@ func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp s
 	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: r.Kind(), Imp: imp}, ResolverLangName); ok {
 		return l, nil
 	}
-	// if match := GlobalResolver().Resolve(r.Kind(), "imports", imp); len(match) > 0 {
-	// 	if l.Equal(from) {
-	// 		return label.NoLabel, errSkipImport
-	// 	} else {
-	// 		return l, nil
-	// 	}
-	// }
 	if l, err := resolveWithIndex(c, ix, r.Kind(), imp, from); err == nil || err == errSkipImport {
 		return l, err
 	} else if err != errNotFound {

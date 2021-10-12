@@ -59,6 +59,7 @@ go_test(
         "package_test.go",
         "proto_plugin_config_test.go",
         "protoc_configuration_test.go",
+        "resolver_test.go",
         "rewrite_test.go",
     ],
     embed = [":protoc"],
@@ -67,6 +68,7 @@ go_test(
         "@bazel_gazelle//label:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
         "@com_github_emicklei_proto//:proto",
+        "@com_github_google_go_cmp//cmp",
         "@com_github_stretchr_testify//assert",
     ],
 )

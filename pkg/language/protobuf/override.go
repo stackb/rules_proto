@@ -55,7 +55,7 @@ func resolveOverrideRule(rel string, r *rule.Rule) {
 		imports := r.PrivateAttr(config.GazelleImportsKey)
 		if imps, ok := imports.([]string); ok {
 			for _, imp := range imps {
-				result := protoc.GlobalResolver().Resolve("proto_library", "srcs", imp)
+				result := protoc.GlobalResolver().Resolve("proto", "proto", imp)
 				if len(result) > 0 {
 					first := result[0]
 					deps = append(deps, first.Label)

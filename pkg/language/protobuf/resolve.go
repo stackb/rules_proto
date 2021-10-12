@@ -22,51 +22,8 @@ func (pl *protobufLang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []
 		return resolver.Imports(c, r, f)
 	}
 	return nil
-	// // if provides, ok := rule.PrivateAttr(ResolveProvidesKey).([]string); ok {
-	// // }
 
-	// srcs := r.AttrStrings("srcs")
-	// imports := make([]resolve.ImportSpec, len(srcs))
-
-	// for i, src := range srcs {
-	// 	imports[i] = resolve.ImportSpec{
-	// 		// Lang is the language in which the import string appears (this
-	// 		// should match Resolver.Name).
-	// 		Lang: pl.Name(),
-	// 		// Imp is an import string for the library.
-	// 		Imp: fmt.Sprintf("//%s:%s", f.Pkg, src),
-	// 	}
-	// 	// protoc.GlobalResolver().Provide(r.Kind(), "srcs", path.Join(f.Pkg, src), resolveLabel)
-	// }
-
-	// return imports
 }
-
-// OK, ok. think.  What we want is to be able to populate a deps for any language.  Is it possible?
-// 1. given an import statement like google/protobuf/any.proto:
-// A. try override with:
-//
-// if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: "go", Imp: imp}, "go"); ok {
-// 	return l, nil
-// }
-//
-// Then, if nothing there, use:
-//
-// if l, err := resolveWithIndexGo(c, ix, imp, from); err == nil || err == skipImportError {
-// 	return l, err
-// } else if err != notFoundError {
-// 	return label.NoLabel, err
-// }
-//
-// which is:
-//
-// matches := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{Lang: "go", Imp: imp}, "go")
-// var bestMatch resolve.FindResult
-// var bestMatchIsVendored bool
-// var bestMatchVendorRoot string
-// var matchError error
-
-// for _, m := range matches {
 
 // Embeds returns a list of labels of rules that the given rule embeds. If a
 // rule is embedded by another importable rule of the same language, only the
