@@ -22,6 +22,8 @@ const (
 	// ResolveProvidesKey is the key expected to store a string slice that
 	// informs what imports a rule provides.
 	ResolveProvidesKey = "_resolve_provides"
+	// RuleProviderKey stores the rule provider implementation for a given rule.
+	RuleProviderKey = "_rule_provider"
 )
 
 type ImportResolver interface {

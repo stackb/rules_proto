@@ -18,14 +18,10 @@ import (
 // If nil is returned, the rule will not be indexed. If any non-nil slice is
 // returned, including an empty slice, the rule will be indexed.
 func (pl *protobufLang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
-	from := label.New("", f.Pkg, r.Name())
-	provider := pl.providers[from]
-
-	if provider == nil {
-		return nil
+	if resolver, ok := r.PrivateAttr(protoc.RuleProviderKey).(protoc.RuleProvider); ok {
+		return resolver.Imports(c, r, f)
 	}
-
-	return provider.Imports(c, r, f)
+	return nil
 	// // if provides, ok := rule.PrivateAttr(ResolveProvidesKey).([]string); ok {
 	// // }
 
@@ -98,9 +94,9 @@ func (pl *protobufLang) Resolve(
 		return
 	}
 
-	if provider, ok := pl.providers[from]; ok {
+	if resolver, ok := r.PrivateAttr(protoc.RuleProviderKey).(protoc.RuleProvider); ok {
 		if imports, ok := importsRaw.([]string); ok {
-			provider.Resolve(c, ix, r, imports, from)
+			resolver.Resolve(c, ix, r, imports, from)
 		} else {
 			log.Panicf("warning: resolve imports: expected []string, got %T", importsRaw)
 		}

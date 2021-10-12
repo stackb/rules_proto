@@ -67,13 +67,6 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 	}
 
 	pkg := protoc.NewPackage(args.Rel, cfg, protoLibraries...)
-
-	for _, provider := range pkg.RuleProviders() {
-		labl := label.New(args.Config.RepoName, args.Rel, provider.Name())
-		pl.providers[labl] = provider
-		// TODO: if needed allow FileVisitor to mutate the rule.File here.
-	}
-
 	rules := pkg.Rules()
 
 	// special case if we want to override go_googleapis deps.
@@ -84,7 +77,6 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 	imports := make([]interface{}, len(rules))
 	for i, r := range rules {
 		imports[i] = r.PrivateAttr(config.GazelleImportsKey)
-
 		internalLabel := label.New("", args.Rel, r.Name())
 		protoc.GlobalRuleIndex().Put(internalLabel, r)
 	}

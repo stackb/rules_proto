@@ -26,14 +26,10 @@ var (
 type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label)
 
 func ResolveDepsAttr(attrName string) DepsResolver {
-	return ResolveDepsAttrDebug(attrName, false)
-}
-
-func ResolveDepsAttrDebug(attrName string, debug bool) DepsResolver {
 	return func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 		existing := r.AttrStrings(attrName)
 		r.DelAttr(attrName)
-		debug = true
+		// debug = true
 
 		depSet := make(map[string]bool)
 		for _, d := range existing {
@@ -41,26 +37,26 @@ func ResolveDepsAttrDebug(attrName string, debug bool) DepsResolver {
 		}
 
 		for _, imp := range imports {
-			if debug {
-				log.Println(from, "resolving:", imp)
-			}
+			// if debug {
+			// 	log.Println(from, "resolving:", imp)
+			// }
 			if strings.HasPrefix(imp, "google/protobuf/") {
 				continue
 			}
-			l, err := resolveAnyKind(c, ix, r, imp, from, debug)
+			l, err := resolveAnyKind(c, ix, r, imp, from)
 			if err == errSkipImport {
-				if debug {
-					log.Println(from, "skipped:", imp)
-				}
+				// if debug {
+				// 	log.Println(from, "skipped:", imp)
+				// }
 				continue
 			} else if err != nil {
 				log.Print(err)
 			} else {
 				if l != label.NoLabel {
 					l = l.Rel(from.Repo, from.Pkg)
-					if debug {
-						log.Println(from, "resolved:", imp, l)
-					}
+					// if debug {
+					// 	log.Println(from, "resolved:", imp, l)
+					// }
 					depSet[l.String()] = true
 				} else {
 					// log.Println(from, "no label:", imp)
@@ -85,7 +81,7 @@ func ResolveDepsAttrDebug(attrName string, debug bool) DepsResolver {
 	}
 }
 
-func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp string, from label.Label, debug bool) (label.Label, error) {
+func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp string, from label.Label) (label.Label, error) {
 	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: r.Kind(), Imp: imp}, ResolverLangName); ok {
 		return l, nil
 	}
@@ -99,14 +95,14 @@ func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp s
 	if l, err := resolveWithIndex(c, ix, r.Kind(), imp, from); err == nil || err == errSkipImport {
 		return l, err
 	} else if err != errNotFound {
-		if debug {
-			log.Println(from, "error:", imp, err)
-		}
+		// if debug {
+		// 	log.Println(from, "error:", imp, err)
+		// }
 		return label.NoLabel, err
 	}
-	if debug {
-		log.Println(from, "fallback miss:", imp)
-	}
+	// if debug {
+	// 	log.Println(from, "fallback miss:", imp)
+	// }
 	return label.NoLabel, nil
 }
 

@@ -186,6 +186,9 @@ func (s *Package) getProvidedRules(providers []RuleProvider) []*rule.Rule {
 		if rule == nil {
 			continue
 		}
+		// record the association of the rule provider here for the resolver.
+		rule.SetPrivateAttr(RuleProviderKey, p)
+
 		imports := rule.PrivateAttr(config.GazelleImportsKey)
 		if imports == nil {
 			lib := s.ruleLibs[p]

@@ -95,7 +95,7 @@ gazelle_testdata_example(
     name = "goembed",
     srcs = glob(["testdata/goembed/**/*"]),
     strip_prefix = "example/golden/testdata/goembed",
-    workspace_template = "prebuilt.WORKSPACE",
+    workspace_template = "builtin.WORKSPACE",
 )
 
 filegroup(

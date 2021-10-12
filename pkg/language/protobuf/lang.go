@@ -1,17 +1,14 @@
 package protobuf
 
 import (
-	"github.com/bazelbuild/bazel-gazelle/label"
-
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
 // NewprotobufLang create a new protobufLang Gazelle extension implementation.
 func NewprotobufLang(name string) *protobufLang {
 	return &protobufLang{
-		name:      name,
-		rules:     protoc.Rules(),
-		providers: make(map[label.Label]protoc.RuleProvider),
+		name:  name,
+		rules: protoc.Rules(),
 	}
 }
 
@@ -23,10 +20,6 @@ type protobufLang struct {
 	rules protoc.RuleRegistry
 	// configFiles contains yconfig yaml files to parse.  May be comma-separated.
 	configFiles string
-	// providers is a mapping from label -> the provider that produced the rule.
-	// we save this in the config such that we can retrieve the association
-	// later in the resolve step.
-	providers map[label.Label]protoc.RuleProvider
 	// repoName is the name (if this an external repository)
 	repoName string
 	// importsOutFile is the name of the file to create.  If "", skip writing
