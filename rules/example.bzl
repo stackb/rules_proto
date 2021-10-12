@@ -13,6 +13,7 @@ def _examplegen_impl(ctx):
         testOut = output_test.path,
         markdownOut = output_markdown.path,
         workspaceIn = ctx.file.workspace_template.path,
+        stripPrefix = ctx.attr.strip_prefix,
         files = [f.path for f in ctx.files.srcs],
     )
 
@@ -40,6 +41,9 @@ _examplegen = rule(
         "srcs": attr.label_list(
             doc = "Sources for the test txtar file",
             allow_files = True,
+        ),
+        "strip_prefix": attr.string(
+            doc = "path prefix to remove from test files in the txtar",
         ),
         "workspace_template": attr.label(
             doc = "Template for the test WORKSPACE",
@@ -70,11 +74,14 @@ def gazelle_testdata_example(**kwargs):
     """
     name = kwargs.pop("name")
     srcs = kwargs.pop("srcs", [])
+    strip_prefix = kwargs.pop("strip_prefix", "")
+
     rule_files = kwargs.pop("rule_files", ["//:all_files"])
 
     _examplegen(
         name = name,
         srcs = srcs,
+        strip_prefix = strip_prefix,
         workspace_template = kwargs.pop("workspace_template", ""),
     )
 
