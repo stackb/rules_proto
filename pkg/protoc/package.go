@@ -97,7 +97,8 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			continue
 		}
 		config.Config = plugin.clone()
-		config.Options = DeduplicateAndSort(append(config.Options, plugin.GetOptions()...))
+		// config.Options = DeduplicateAndSort(append(config.Options, plugin.GetOptions()...))
+		config.Options = DeduplicateAndSort(config.Options)
 
 		// plugin.Label overrides the default value from the implementation
 		if plugin.Label.Name != "" {

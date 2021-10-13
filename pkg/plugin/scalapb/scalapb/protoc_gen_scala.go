@@ -30,5 +30,6 @@ func (p *ProtocGenScalaPlugin) Configure(ctx *protoc.PluginContext) *protoc.Plug
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/scalapb/scalapb", "protoc-gen-scala"),
 		Outputs: []string{srcjar},
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }

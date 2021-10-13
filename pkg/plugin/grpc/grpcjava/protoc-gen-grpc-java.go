@@ -29,6 +29,7 @@ func (p *ProtocGenGrpcJavaPlugin) Configure(ctx *protoc.PluginContext) *protoc.P
 		Label:   label.New("build_stack_rules_proto", "plugin/grpc/grpc-java", "protoc-gen-grpc-java"),
 		Outputs: []string{srcjar},
 		Out:     srcjar,
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }
 

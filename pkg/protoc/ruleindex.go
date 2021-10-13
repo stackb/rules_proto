@@ -1,8 +1,6 @@
 package protoc
 
 import (
-	"log"
-
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
@@ -30,10 +28,6 @@ type ruleIndex struct {
 }
 
 func (r *ruleIndex) Put(from label.Label, rule *rule.Rule) {
-	if from.Pkg == "google/api" {
-		log.Println("PUT", from, rule.Kind())
-	}
-
 	r.rules[from] = rule
 }
 

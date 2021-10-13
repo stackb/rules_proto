@@ -33,6 +33,7 @@ func (p *ProtocGenGrpcPython) Configure(ctx *protoc.PluginContext) *protoc.Plugi
 			protoc.HasService,
 			ctx.ProtoLibrary.Files()...,
 		),
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }
 

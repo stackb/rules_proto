@@ -33,6 +33,6 @@ func (p *JsCommonPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConf
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/builtin", "commonjs"),
 		Outputs: []string{library},
-		Options: []string{"import_style=commonjs"},
+		Options: append(ctx.PluginConfig.GetOptions(), "import_style=commonjs"),
 	}
 }

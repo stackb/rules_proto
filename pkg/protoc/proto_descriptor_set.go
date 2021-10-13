@@ -115,5 +115,6 @@ func (p *protoDescriptorSetPlugin) Configure(ctx *PluginContext) *PluginConfigur
 		Label:   label.New("build_stack_rules_proto", "bazelbuild/rules_proto", "proto_descriptor_set"),
 		Outputs: []string{descriptorSetOut},
 		Out:     ctx.Rel,
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }

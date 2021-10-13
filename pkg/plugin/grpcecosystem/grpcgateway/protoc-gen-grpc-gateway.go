@@ -27,6 +27,7 @@ func (p *protocGenGrpcGatewayPlugin) Configure(ctx *protoc.PluginContext) *proto
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/grpc-ecosystem/grpc-gateway", "protoc-gen-grpc-gateway"),
 		Outputs: p.outputs(ctx.Rel, ctx.ProtoLibrary),
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }
 

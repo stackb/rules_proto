@@ -26,5 +26,6 @@ func (p *RubyPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigur
 			protoc.Always,
 			ctx.ProtoLibrary.Files()...,
 		),
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }

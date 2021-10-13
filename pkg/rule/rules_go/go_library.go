@@ -166,12 +166,6 @@ func (s *goLibraryRule) importPath() string {
 		}
 	}
 
-	// log.Printf("warning: unknown 'importpath' for %s rule //%s:%s.  Try adding the 'go_package' option to the .proto file or use an 'M' importmap option",
-	// 	s.kindName,
-	// 	s.config.Rel,
-	// 	s.Name(),
-	// )
-
 	// fallback
 	return ""
 }
@@ -202,40 +196,9 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	// func MergeRules(src, dst *Rule, mergeable map[string]bool, filename string) {
 	for _, other := range otherGen {
 		if other.Kind() == ProtoGoLibraryRuleName && other.AttrString("importpath") == importpath {
-			log.Println("MERGE RULES", importpath, other.Name(), "<-", newRule.Name())
-
 			// rename the rule to reflect the importpath if merged
 			other.SetName(path.Base(importpath) + goLibraryRuleSuffix)
-			// merge attributes
-			otherSrcs := other.AttrStrings("srcs")
-			otherDeps := other.AttrStrings("deps")
-			otherImports := other.PrivateAttr(config.GazelleImportsKey).([]string)
-			otherLibs := other.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary)
-			otherVis := other.AttrStrings("visibility")
-
-			other.DelAttr("srcs")
-			other.DelAttr("deps")
-			other.DelAttr("visibility")
-			// other.DelAttr("preimports")
-			other.DelAttr(protoLibsKey)
-			other.DelAttr(config.GazelleImportsKey)
-
-			other.SetAttr("srcs", protoc.DeduplicateAndSort(append(otherSrcs, s.Srcs()...)))
-			other.SetAttr("deps", protoc.DeduplicateAndSort(append(otherDeps, deps...)))
-			other.SetAttr("visibility", protoc.DeduplicateAndSort(append(otherVis, s.Visibility()...)))
-			other.SetPrivateAttr(config.GazelleImportsKey, protoc.DeduplicateAndSort(append(otherImports, s.config.Library.Imports()...)))
-			other.SetPrivateAttr(protoLibsKey, append(otherLibs, s.config.Library))
-			// other.SetAttr("preimports", other.PrivateAttr(config.GazelleImportsKey))
-			// other.SetAttr("merged", true)
-
-			log.Println("MERGE RULES imports", other.PrivateAttr(config.GazelleImportsKey))
-
-			// rule.MergeRules(newRule, other, map[string]bool{
-			// 	"srcs":                   true,
-			// 	"deps":                   true,
-			// 	"visibility":             true,
-			// 	config.GazelleImportsKey: true,
-			// }, "<merge-file>")
+			s.mergeRules(newRule, other)
 			return nil
 		}
 	}
@@ -243,15 +206,33 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	return newRule
 }
 
+func (s *goLibraryRule) mergeRules(src, dst *rule.Rule) {
+	// TODO: clean this up.  Created when I was struggling with some other bug.
+
+	// merge attributes
+	dstSrcs := dst.AttrStrings("srcs")
+	dstDeps := dst.AttrStrings("deps")
+	dstImports := dst.PrivateAttr(config.GazelleImportsKey).([]string)
+	dstLibs := dst.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary)
+	dstVis := dst.AttrStrings("visibility")
+
+	dst.DelAttr("srcs")
+	dst.DelAttr("deps")
+	dst.DelAttr("visibility")
+	dst.DelAttr(protoLibsKey)
+	dst.DelAttr(config.GazelleImportsKey)
+
+	dst.SetAttr("srcs", protoc.DeduplicateAndSort(append(dstSrcs, s.Srcs()...)))
+	dst.SetAttr("deps", protoc.DeduplicateAndSort(append(dstDeps, s.configDeps()...)))
+	dst.SetAttr("visibility", protoc.DeduplicateAndSort(append(dstVis, s.Visibility()...)))
+	dst.SetPrivateAttr(config.GazelleImportsKey, protoc.DeduplicateAndSort(append(dstImports, s.config.Library.Imports()...)))
+	dst.SetPrivateAttr(protoLibsKey, append(dstLibs, s.config.Library))
+}
+
 // Imports implements part of the RuleProvider interface.
 func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
 	libs := r.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary)
-	log.Printf("//%s:%s importspecs:", file.Pkg, r.Name())
-	specs := protoc.ProtoLibraryImportSpecsForKind(r.Kind(), libs...)
-	for _, spec := range specs {
-		log.Printf(" -- %s: %s", spec.Lang, spec.Imp)
-	}
-	return specs
+	return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), libs...)
 }
 
 // Resolve implements part of the RuleProvider interface.

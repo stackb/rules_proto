@@ -19,10 +19,18 @@ import (
 // returned, including an empty slice, the rule will be indexed.
 func (pl *protobufLang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
 	if resolver, ok := r.PrivateAttr(protoc.RuleProviderKey).(protoc.RuleProvider); ok {
-		return resolver.Imports(c, r, f)
+		imports := resolver.Imports(c, r, f)
+		from := label.New("", f.Pkg, r.Name())
+		for _, imp := range imports {
+			protoc.GlobalResolver().Provide(
+				pl.name,
+				imp.Lang,
+				imp.Imp,
+				from,
+			)
+		}
 	}
 	return nil
-
 }
 
 // Embeds returns a list of labels of rules that the given rule embeds. If a

@@ -23,10 +23,12 @@ func (p *ProtocGenGoGrpcPlugin) Configure(ctx *protoc.PluginContext) *protoc.Plu
 	if !p.shouldApply(ctx.ProtoLibrary) {
 		return nil
 	}
-	mappings := protobuf.GetImportMappings(ctx.PluginConfig.GetOptions())
+	options := ctx.PluginConfig.GetOptions()
+	mappings := protobuf.GetImportMappings(options)
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/grpc/grpc-go", "protoc-gen-go-grpc"),
 		Outputs: p.outputs(ctx.ProtoLibrary, mappings),
+		Options: protobuf.FilterImportMappingOptions(options, mappings, ctx.ProtoLibrary.Imports()),
 	}
 }
 

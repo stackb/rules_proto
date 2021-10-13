@@ -42,8 +42,8 @@ type ImportCrossResolver interface {
 
 	// LoadFile loads csv file to populate the resolver
 	LoadFile(filename string) error
-	// SaveResolverFile write a csv file
-	SaveFile(repoName, filename string) error
+	// SaveFile writes a csv file
+	SaveFile(filename, repoName string) error
 	// Install adds configured resolve entries into the resolve config.
 	Install(c *config.Config)
 }
@@ -121,17 +121,20 @@ func (r *resolver) Save(out io.Writer, repoName string) {
 		for _, imp := range imps {
 			labels := imports[imp]
 			for _, lbl := range labels {
+				// skip external labels, these represent externally loaded entries and
+				// we don't write transitive resolves
 				l := label.New(lbl.Repo, lbl.Pkg, lbl.Name)
-				if l.Repo == "" {
-					l.Repo = repoName
+				if l.Repo != "" {
+					continue
 				}
+				l.Repo = repoName
 				fmt.Fprintf(out, "%s,%s,%s,%s\n", lang, impLang, imp, l)
 			}
 		}
 	}
 }
 
-func (r *resolver) SaveFile(repoName, filename string) error {
+func (r *resolver) SaveFile(filename, repoName string) error {
 	f, err := os.Create(filename)
 	if err != nil {
 		return fmt.Errorf("save imports file: %w", err)
@@ -142,7 +145,7 @@ func (r *resolver) SaveFile(repoName, filename string) error {
 	fmt.Fprintf(f, "# lang,imp.lang,imp,label\n")
 	r.Save(f, repoName)
 
-	log.Println("Wrote:", filename)
+	// log.Panicln("Wrote:", filename)
 	return nil
 }
 

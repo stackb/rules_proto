@@ -30,6 +30,6 @@ func (p *ProtocGenTsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginCo
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/stephenh/ts-proto", "protoc-gen-ts-proto"),
 		Outputs: []string{jsFile},
-		// Options: []string{"import_style=commonjs"},
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }

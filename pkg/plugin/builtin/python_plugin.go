@@ -29,6 +29,7 @@ func (p *PythonPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfig
 			protoc.Always,
 			ctx.ProtoLibrary.Files()...,
 		),
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }
 

@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/stackb/rules_proto/pkg/plugin/golang/protobuf"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
@@ -39,10 +40,13 @@ func (p *GogoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigur
 	if !p.shouldApply(ctx.ProtoLibrary) {
 		return nil
 	}
+	mappings := protobuf.GetImportMappings(ctx.PluginConfig.GetOptions())
+	grpcOptions := p.grpcOptions(ctx.Rel, ctx.PluginConfig, ctx.ProtoLibrary)
+	filteredOptions := protobuf.FilterImportMappingOptions(ctx.PluginConfig.GetOptions(), mappings, ctx.ProtoLibrary.Imports())
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/gogo/protobuf", "protoc-gen-"+p.variant),
 		Outputs: p.outputs(ctx.ProtoLibrary),
-		Options: p.options(ctx.Rel, ctx.PluginConfig, ctx.ProtoLibrary),
+		Options: append(grpcOptions, filteredOptions...),
 	}
 }
 
@@ -71,7 +75,7 @@ func (p *GogoPlugin) outputs(lib protoc.ProtoLibrary) []string {
 	return srcs
 }
 
-func (p *GogoPlugin) options(rel string, cfg protoc.LanguagePluginConfig, lib protoc.ProtoLibrary) []string {
+func (p *GogoPlugin) grpcOptions(rel string, cfg protoc.LanguagePluginConfig, lib protoc.ProtoLibrary) []string {
 	// if the configuration specifically states that we don't want grpc, return
 	// early
 	if want, ok := cfg.Options[gogoGrpcPluginOption]; ok && !want {

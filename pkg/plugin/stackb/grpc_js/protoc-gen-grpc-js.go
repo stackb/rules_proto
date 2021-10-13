@@ -33,5 +33,6 @@ func (p *ProtocGenGrpcJs) Configure(ctx *protoc.PluginContext) *protoc.PluginCon
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/stackb/grpc_js", "protoc-gen-grpc-js"),
 		Outputs: []string{jsFile},
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }

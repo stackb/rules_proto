@@ -1,6 +1,7 @@
 package protobuf
 
 import (
+	"fmt"
 	"path"
 	"strings"
 
@@ -31,6 +32,7 @@ func (p *ProtocGenGoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginC
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/golang/protobuf", "protoc-gen-go"),
 		Outputs: p.outputs(ctx.ProtoLibrary, mappings),
+		Options: FilterImportMappingOptions(ctx.PluginConfig.GetOptions(), mappings, ctx.ProtoLibrary.Imports()),
 	}
 }
 
@@ -66,6 +68,26 @@ func GetGoOutputBaseName(f *protoc.File, importMappings map[string]string) strin
 		base = path.Join(strings.ReplaceAll(pkg.Name, ".", "/"), base)
 	}
 	return base
+}
+
+func FilterImportMappingOptions(in []string, mappings map[string]string, imports []string) []string {
+	// gather all non-'M' options, then augment it with matching ones from imports.
+	out := make([]string, 0)
+
+	for _, opt := range in {
+		if strings.HasPrefix(opt, "M") {
+			continue
+		}
+		out = append(out, opt)
+	}
+
+	for _, imp := range imports {
+		if v, ok := mappings[imp]; ok {
+			out = append(out, fmt.Sprintf("M%s=%s", imp, v))
+		}
+	}
+
+	return out
 }
 
 func GetImportMappings(options []string) map[string]string {
