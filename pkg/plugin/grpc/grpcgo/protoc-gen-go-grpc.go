@@ -2,6 +2,7 @@ package grpcgo
 
 import (
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/stackb/rules_proto/pkg/plugin/golang/protobuf"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
@@ -50,4 +51,8 @@ func (p *ProtocGenGoGrpcPlugin) outputs(lib protoc.ProtoLibrary, importMappings 
 		srcs = append(srcs, protobuf.GetGoOutputBaseName(f, importMappings)+"_grpc.pb.go")
 	}
 	return srcs
+}
+
+func (p *ProtocGenGoGrpcPlugin) ResolvePluginOptions(cfg *protoc.PluginConfiguration, r *rule.Rule, from label.Label) []string {
+	return protobuf.ResolvePluginOptionsTransitive(cfg, r, from)
 }

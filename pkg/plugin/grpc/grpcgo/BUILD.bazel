@@ -9,5 +9,6 @@ go_library(
         "//pkg/plugin/golang/protobuf",
         "//pkg/protoc",
         "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
     ],
 )

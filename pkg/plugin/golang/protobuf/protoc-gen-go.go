@@ -54,6 +54,10 @@ func (p *ProtocGenGoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginC
 }
 
 func (p *ProtocGenGoPlugin) ResolvePluginOptions(cfg *protoc.PluginConfiguration, r *rule.Rule, from label.Label) []string {
+	return ResolvePluginOptionsTransitive(cfg, r, from)
+}
+
+func ResolvePluginOptionsTransitive(cfg *protoc.PluginConfiguration, r *rule.Rule, from label.Label) []string {
 	transitiveMappings := ResolveTransitiveImportMappings(r, from)
 
 	options := make([]string, 0)

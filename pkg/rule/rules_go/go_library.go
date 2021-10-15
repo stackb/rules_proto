@@ -274,7 +274,6 @@ func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, f *rule.File) []
 
 // Resolve implements part of the RuleProvider interface.
 func (s *goLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-
 	protoc.ResolveDepsAttr("deps")(c, ix, r, imports, from)
 
 	// need to make one more pass to possibly move deps into embeds.  There may
