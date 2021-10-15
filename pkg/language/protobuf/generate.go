@@ -24,7 +24,9 @@ import (
 // Any non-fatal errors this function encounters should be logged using
 // log.Print.
 func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
+
 	cfg := pl.getOrCreatePackageConfig(args.Config)
+	resolver := protoc.GlobalResolver()
 
 	files := make(map[string]*protoc.File)
 	for _, f := range args.RegularFiles {
@@ -36,6 +38,22 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 			log.Fatalf("unparseable proto file dir=%s, file=%s: %v", args.Dir, file.Basename, err)
 		}
 		files[f] = file
+
+		// Record the list of dependencies for this proto file.  Dependents are
+		// encoded as labels as a matter of practicality given the API of the
+		// resolver.
+		for _, imp := range file.Imports() {
+			dir := path.Dir(imp.Filename)
+			if dir == "." {
+				dir = ""
+			}
+			resolver.Provide(
+				"proto",
+				"depends",
+				path.Join(file.Dir, file.Basename),
+				label.New("", dir, path.Base(imp.Filename)),
+			)
+		}
 	}
 
 	protoLibraries := make([]protoc.ProtoLibrary, 0)
@@ -46,6 +64,7 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		if r.Kind() != "proto_library" {
 			continue
 		}
+
 		srcs := r.AttrStrings("srcs")
 		srcLabels := make([]label.Label, len(srcs))
 		for i, src := range srcs {
@@ -55,18 +74,22 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 			}
 			srcLabels[i] = srcLabel
 
-			protoc.GlobalResolver().Provide(
+			// record the label that "provides" each proto file.
+			resolver.Provide(
 				"proto",
 				"proto",
 				path.Join(args.Rel, src),
 				internalLabel,
 			)
 		}
+
 		lib := protoc.NewOtherProtoLibrary(args.File, r, matchingFiles(files, srcLabels)...)
 		protoLibraries = append(protoLibraries, lib)
 	}
 
 	pkg := protoc.NewPackage(args.Rel, cfg, protoLibraries...)
+	pl.packages[args.Rel] = pkg
+
 	rules := pkg.Rules()
 
 	// special case if we want to override go_googleapis deps.

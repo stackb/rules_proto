@@ -253,6 +253,7 @@ def _proto_compile_impl(ctx):
 
     replaced_args = _ctx_replace_args(ctx, _uniq(args))
     final_args = ctx.actions.args()
+    final_args.use_param_file("@%s")
     final_args.add_all(replaced_args)
 
     ###

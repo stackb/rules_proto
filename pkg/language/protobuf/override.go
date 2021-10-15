@@ -60,7 +60,7 @@ func resolveOverrideRule(rel string, r *rule.Rule) {
 					first := result[0]
 					deps = append(deps, first.Label)
 					// log.Println("resolve imports HIT", first.Label)
-				} else {
+					// } else {
 					// log.Println("resolve imports MISS", imp)
 				}
 			}

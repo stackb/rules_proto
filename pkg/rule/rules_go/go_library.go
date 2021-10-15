@@ -42,11 +42,17 @@ func (s *goLibrary) Name() string {
 // KindInfo implements part of the LanguageRule interface.
 func (s *goLibrary) KindInfo() rule.KindInfo {
 	return rule.KindInfo{
-		MergeableAttrs: map[string]bool{
-			"srcs":       true,
-			"deps":       true,
-			"visibility": true,
+		MatchAttrs: []string{"importpath"},
+		NonEmptyAttrs: map[string]bool{
+			"deps":  true,
+			"embed": true,
+			"srcs":  true,
 		},
+		MergeableAttrs: map[string]bool{
+			"embed": true,
+			"srcs":  true,
+		},
+		ResolveAttrs: map[string]bool{"deps": true},
 	}
 }
 
@@ -146,13 +152,22 @@ func (s *goLibraryRule) Visibility() []string {
 	return visibility
 }
 
+func (s *goLibraryRule) goPrefix() string {
+	res := protoc.GlobalResolver().Resolve("gazelle", "directive", "prefix")
+	if len(res) == 0 {
+		return ""
+	}
+	return res[0].Label.Pkg
+}
+
 // importPath computes the import path.
 func (s *goLibraryRule) importPath() string {
 	// Try 'M' options first
 	if imp := s.getPluginImportMappingOption(); imp != "" {
 		return imp
 	}
-	// Fallback to the 'go_package' option in an imported file
+
+	// Next try the 'go_package' option in an imported file
 	for _, file := range s.config.Library.Files() {
 		if value, _ := protoc.GetNamedOption(file.Options(), "go_package"); value != "" {
 			if strings.LastIndexByte(value, '/') == -1 {
@@ -166,8 +181,16 @@ func (s *goLibraryRule) importPath() string {
 		}
 	}
 
-	// fallback
-	return ""
+	// fallback to 'gazelle:prefix + rel'
+	prefix := s.goPrefix()
+	if prefix == "" {
+		return ""
+	}
+
+	pkg := s.config.Rel
+	name := s.config.Library.BaseName()
+
+	return path.Join(prefix, pkg, name)
 }
 
 // Rule implements part of the ruleProvider interface.
@@ -193,17 +216,24 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		newRule.SetAttr("visibility", visibility)
 	}
 
-	// func MergeRules(src, dst *Rule, mergeable map[string]bool, filename string) {
 	for _, other := range otherGen {
 		if other.Kind() == ProtoGoLibraryRuleName && other.AttrString("importpath") == importpath {
 			// rename the rule to reflect the importpath if merged
-			other.SetName(path.Base(importpath) + goLibraryRuleSuffix)
+			// s.mergeRuleName(importpath, other, otherGen)
 			s.mergeRules(newRule, other)
 			return nil
 		}
 	}
 
 	return newRule
+}
+
+func (s *goLibraryRule) mergeRuleName(importpath string, r *rule.Rule, other []*rule.Rule) {
+	base := path.Base(importpath)
+	if base == "." {
+		base = "_"
+	}
+	r.SetName(base + goLibraryRuleSuffix)
 }
 
 func (s *goLibraryRule) mergeRules(src, dst *rule.Rule) {
@@ -230,9 +260,11 @@ func (s *goLibraryRule) mergeRules(src, dst *rule.Rule) {
 }
 
 // Imports implements part of the RuleProvider interface.
-func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
-	libs := r.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary)
-	return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), libs...)
+func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
+	if libs, ok := r.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary); ok {
+		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), libs...)
+	}
+	return nil
 }
 
 // Resolve implements part of the RuleProvider interface.
@@ -244,7 +276,6 @@ func (s *goLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule
 	// be dependencies *IN OTHER PACKAGES* that have the same importpath; in
 	// that case we need to embed, not depend.
 	all := r.AttrStrings("deps")
-	r.DelAttr("deps")
 
 	deps := make([]string, 0)
 	embeds := make([]string, 0)
@@ -276,11 +307,11 @@ func (s *goLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule
 		deps = append(deps, dep)
 	}
 
-	if len(embeds) > 0 {
-		r.SetAttr("embed", protoc.DeduplicateAndSort(embeds))
-	}
 	if len(deps) > 0 {
 		r.SetAttr("deps", protoc.DeduplicateAndSort(deps))
+	}
+	if len(embeds) > 0 {
+		r.SetAttr("embed", protoc.DeduplicateAndSort(embeds))
 	}
 }
 

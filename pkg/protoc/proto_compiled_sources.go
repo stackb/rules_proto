@@ -102,11 +102,6 @@ func (s *protoCompiledSourcesRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		newRule.SetAttr("mappings", MakeStringDict(s.config.Mappings))
 	}
 
-	options := GetPluginOptions(s.config.Plugins)
-	if len(options) > 0 {
-		newRule.SetAttr("options", MakeStringListDict(options))
-	}
-
 	outs := GetPluginOuts(s.config.Plugins)
 	if len(outs) > 0 {
 		newRule.SetAttr("outs", MakeStringDict(outs))
@@ -127,4 +122,8 @@ func (s *protoCompiledSourcesRule) Imports(c *config.Config, r *rule.Rule, file 
 
 // Resolve implements part of the RuleProvider interface.
 func (s *protoCompiledSourcesRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+	options := GetPluginOptions(s.config.Plugins, r, from)
+	if len(options) > 0 {
+		r.SetAttr("options", MakeStringListDict(options))
+	}
 }

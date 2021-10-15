@@ -8,6 +8,7 @@ go_library(
     deps = [
         "//pkg/protoc",
         "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
     ],
 )
 

@@ -21,25 +21,40 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			SkipIntegration: true,
 		},
 		"option go_package": {
-			Input: "option go_package=\"github.com/example.com/foo\";\nmessage M{}",
+			Input: "option go_package=\"github.com/example.com/test\";\nmessage M{}",
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "protoc-gen-go implementation golang:protobuf:protoc-gen-go",
 			),
 			PluginName: "protoc-gen-go",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithOutputs("github.com/example.com/foo/test.pb.go"),
+				plugintest.WithOutputs("github.com/example.com/test/test.pb.go"),
 			),
 			SkipIntegration: true,
 		},
-		"impport mapping": {
+		"import mapping": {
 			Input: "message M{}",
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "protoc-gen-go implementation golang:protobuf:protoc-gen-go",
-				"proto_plugin", "protoc-gen-go option Mtest.proto=github.com/example.com/foo",
+				"proto_plugin", "protoc-gen-go option Mtest.proto=github.com/example.com/test",
 			),
 			PluginName: "protoc-gen-go",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithOutputs("github.com/example.com/foo/test.pb.go"),
+				plugintest.WithOptions("Mtest.proto=github.com/example.com/test"),
+				plugintest.WithOutputs("github.com/example.com/test/test.pb.go"),
+			),
+			SkipIntegration: true,
+		},
+		"filters non-relevant options": {
+			Input: "message M{}",
+			Directives: plugintest.WithDirectives(
+				"proto_plugin", "protoc-gen-go implementation golang:protobuf:protoc-gen-go",
+				"proto_plugin", "protoc-gen-go option Mtest.proto=github.com/example.com/test",
+				"proto_plugin", "protoc-gen-go option Mfoo.proto=github.com/example.com/foo",
+			),
+			PluginName: "protoc-gen-go",
+			Configuration: plugintest.WithConfiguration(
+				plugintest.WithOptions("Mtest.proto=github.com/example.com/test"),
+				plugintest.WithOutputs("github.com/example.com/test/test.pb.go"),
 			),
 			SkipIntegration: true,
 		},

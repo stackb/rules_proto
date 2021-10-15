@@ -219,18 +219,18 @@ register_toolchains("//toolchain:nodejs")
 # proto_repository dependencies
 # ----------------------------------------------------
 
-load("//rules/proto:proto_repository.bzl", "proto_repository")
+# load("//rules/proto:proto_repository.bzl", "proto_repository")
 
-proto_repository(
-    name = "proto_googleapis",
-    build_directives = [
-        "gazelle:resolve proto google/api/http.proto //google/api:http_proto",
-        #"gazelle:resolve protobuf google/api/http.proto //google/api:http_proto",
-    ],
-    build_file_generation = "clean",
-    build_file_proto_mode = "file",
-    cfgs = ["//example:config.yaml"],
-    strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
-    type = "zip",
-    urls = ["https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9"],
-)
+# proto_repository(
+#     name = "proto_googleapis",
+#     build_directives = [
+#         "gazelle:resolve proto google/api/http.proto //google/api:http_proto",
+#         #"gazelle:resolve protobuf google/api/http.proto //google/api:http_proto",
+#     ],
+#     build_file_generation = "clean",
+#     build_file_proto_mode = "file",
+#     cfgs = ["//example:config.yaml"],
+#     strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
+#     type = "zip",
+#     urls = ["https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9"],
+# )

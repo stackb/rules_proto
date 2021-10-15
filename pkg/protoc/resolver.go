@@ -22,8 +22,6 @@ const (
 	// ResolveProvidesKey is the key expected to store a string slice that
 	// informs what imports a rule provides.
 	ResolveProvidesKey = "_resolve_provides"
-	// RuleProviderKey stores the rule provider implementation for a given rule.
-	RuleProviderKey = "_rule_provider"
 )
 
 type ImportResolver interface {
@@ -121,13 +119,12 @@ func (r *resolver) Save(out io.Writer, repoName string) {
 		for _, imp := range imps {
 			labels := imports[imp]
 			for _, lbl := range labels {
-				// skip external labels, these represent externally loaded entries and
-				// we don't write transitive resolves
-				l := label.New(lbl.Repo, lbl.Pkg, lbl.Name)
-				if l.Repo != "" {
+				// skip external labels, these represent externally loaded
+				// entries and we don't write transitive resolves
+				if lbl.Repo != "" {
 					continue
 				}
-				l.Repo = repoName
+				l := label.New(repoName, lbl.Pkg, lbl.Name)
 				fmt.Fprintf(out, "%s,%s,%s,%s\n", lang, impLang, imp, l)
 			}
 		}
@@ -149,7 +146,7 @@ func (r *resolver) SaveFile(filename, repoName string) error {
 	return nil
 }
 
-// CrossResolve provides dependency resolution logic for the proto language extension.
+// CrossResolve provides dependency resolution logic for the protobuf language extension.
 func (r *resolver) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, lang string) []resolve.FindResult {
 	return r.Resolve(lang, imp.Lang, imp.Imp)
 }
@@ -173,25 +170,26 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 	return nil
 }
 
-func (r *resolver) Provide(lang, impLang, imp string, loc label.Label) {
+func (r *resolver) Provide(lang, impLang, imp string, from label.Label) {
 	key := langKey(lang, impLang)
+
 	known, ok := r.known[key]
 	if !ok {
 		known = make(map[string][]label.Label)
 		r.known[key] = known
 	}
 	for _, v := range known[imp] {
-		if v == loc {
+		if v == from {
 			if debugResolver {
-				log.Println(key, imp, "PROVIDES (duplicate)", loc)
+				log.Println(key, imp, "PROVIDES (duplicate)", from)
 			}
 			return
 		}
 	}
 	if debugResolver {
-		log.Println(key, imp, "PROVIDES", loc)
+		log.Println(key, imp, "PROVIDES", from)
 	}
-	known[imp] = append(known[imp], loc)
+	known[imp] = append(known[imp], from)
 }
 
 func (r *resolver) Install(c *config.Config) {

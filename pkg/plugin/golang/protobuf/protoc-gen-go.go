@@ -1,13 +1,18 @@
 package protobuf
 
 import (
-	"fmt"
+	"container/list"
 	"path"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/rule"
+
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
+
+// TransitiveImportMappingsKey stores a map[string]string on the library
+const TransitiveImportMappingsKey = "_transitive_importmappings"
 
 const ProtocGenGoPluginName = "golang:protobuf:protoc-gen-go"
 
@@ -28,12 +33,111 @@ func (p *ProtocGenGoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginC
 	if !p.shouldApply(ctx.ProtoLibrary) {
 		return nil
 	}
-	mappings := GetImportMappings(ctx.PluginConfig.GetOptions())
+	mappings, _ := GetImportMappings(ctx.PluginConfig.GetOptions())
+
+	// record M associations now.
+	//
+	// TODO(pcj): where and when is the optimal time to do this?  protoc-gen-go,
+	// protoc-gen-gogo, and protoc-gen-go-grpc all use this.  Perhaps they
+	// should *all* perform it, just to be sure?
+	for k, v := range mappings {
+		// "option" is used as the name since we cannot leave that part of the
+		// label empty.
+		protoc.GlobalResolver().Provide("proto", "M", k, label.New("", v, "option"))
+	}
+
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/golang/protobuf", "protoc-gen-go"),
 		Outputs: p.outputs(ctx.ProtoLibrary, mappings),
-		Options: FilterImportMappingOptions(ctx.PluginConfig.GetOptions(), mappings, ctx.ProtoLibrary.Imports()),
+		Options: ctx.PluginConfig.GetOptions(),
 	}
+}
+
+func (p *ProtocGenGoPlugin) ResolvePluginOptions(cfg *protoc.PluginConfiguration, r *rule.Rule, from label.Label) []string {
+	transitiveMappings := ResolveTransitiveImportMappings(r, from)
+
+	options := make([]string, 0)
+
+	for _, opt := range cfg.Options {
+		if !strings.HasPrefix(opt, "M") {
+			options = append(options, opt)
+			continue
+		}
+
+		parts := strings.SplitN(opt[1:], "=", 2)
+		if len(parts) != 2 {
+			options = append(options, opt)
+			continue
+		}
+
+		imp := parts[0]
+		if _, ok := transitiveMappings[imp]; ok {
+			options = append(options, opt)
+			continue
+		}
+
+		// if we get here, the M option is not in the set of transitives for
+		// this rule, so leave it out.
+	}
+
+	return options
+}
+
+func ResolveTransitiveImportMappings(r *rule.Rule, from label.Label) map[string]string {
+
+	lib := r.PrivateAttr(protoc.ProtoLibraryKey)
+	if lib == nil {
+		return nil
+	}
+	library := lib.(protoc.ProtoLibrary)
+	libRule := library.Rule()
+
+	// already created?
+	if transitiveMappings, ok := libRule.PrivateAttr(TransitiveImportMappingsKey).(map[string]string); ok {
+		return transitiveMappings
+	}
+
+	// nope.
+	transitiveMappings := make(map[string]string)
+	resolver := protoc.GlobalResolver()
+
+	seen := make(map[string]bool)
+	stack := list.New()
+	for _, src := range library.Srcs() {
+		stack.PushBack(path.Join(from.Pkg, src))
+	}
+	// for every source file in the proto library, gather the list of source
+	// files on which it depends, until there are no more unprocessed sources.
+	// Foreach one check if there is an importmapping for it and record the
+	// association.
+	for {
+		if stack.Len() == 0 {
+			break
+		}
+		current := stack.Front()
+		stack.Remove(current)
+
+		protofile := current.Value.(string)
+		if seen[protofile] {
+			continue
+		}
+		seen[protofile] = true
+
+		depends := resolver.Resolve("proto", "depends", protofile)
+		for _, dep := range depends {
+			stack.PushBack(path.Join(dep.Label.Pkg, dep.Label.Name))
+		}
+
+		mappings := resolver.Resolve("proto", "M", protofile)
+		if len(mappings) > 0 {
+			first := mappings[0]
+			transitiveMappings[protofile] = path.Join(first.Label.Pkg)
+		}
+	}
+
+	libRule.SetPrivateAttr(TransitiveImportMappingsKey, transitiveMappings)
+
+	return transitiveMappings
 }
 
 func (p *ProtocGenGoPlugin) shouldApply(lib protoc.ProtoLibrary) bool {
@@ -70,41 +174,24 @@ func GetGoOutputBaseName(f *protoc.File, importMappings map[string]string) strin
 	return base
 }
 
-func FilterImportMappingOptions(in []string, mappings map[string]string, imports []string) []string {
-	// gather all non-'M' options, then augment it with matching ones from imports.
-	out := make([]string, 0)
-
-	for _, opt := range in {
-		if strings.HasPrefix(opt, "M") {
-			continue
-		}
-		out = append(out, opt)
-	}
-
-	for _, imp := range imports {
-		if v, ok := mappings[imp]; ok {
-			out = append(out, fmt.Sprintf("M%s=%s", imp, v))
-		}
-	}
-
-	return out
-}
-
-func GetImportMappings(options []string) map[string]string {
+func GetImportMappings(options []string) (map[string]string, []string) {
 	// gather options that look like protoc-gen-go "importmapping" (M) options
 	// (e.g Mfoo.proto=github.com/example/foo).
 	mappings := make(map[string]string)
+	rest := make([]string, 0)
 
 	for _, opt := range options {
 		if !strings.HasPrefix(opt, "M") {
+			rest = append(rest, opt)
 			continue
 		}
 		parts := strings.SplitN(opt[1:], "=", 2)
 		if len(parts) != 2 {
+			rest = append(rest, opt)
 			continue
 		}
 		mappings[parts[0]] = parts[1]
 	}
 
-	return mappings
+	return mappings, rest
 }

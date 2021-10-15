@@ -4,6 +4,7 @@ import (
 	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
 // PluginConfiguration represents the configuration of a protoc plugin and the
@@ -24,6 +25,8 @@ type PluginConfiguration struct {
 	Out string
 	// Outputs is the list of output files the plugin generates
 	Outputs []string
+	// Plugin the Plugin implementation that created the configuration.
+	Plugin Plugin
 }
 
 // GetPluginLabels returns the list of labels strings for a list of plugins.
@@ -37,15 +40,18 @@ func GetPluginLabels(plugins []*PluginConfiguration) []string {
 }
 
 // GetPluginOptions returns the list of options by plugin.
-func GetPluginOptions(plugins []*PluginConfiguration) map[string][]string {
+func GetPluginOptions(plugins []*PluginConfiguration, r *rule.Rule, from label.Label) map[string][]string {
 	options := make(map[string][]string)
-	for _, plugin := range plugins {
-		if len(plugin.Options) == 0 {
+	for _, cfg := range plugins {
+		opts := cfg.Options
+		if resolver, ok := cfg.Plugin.(PluginOptionsResolver); ok {
+			opts = resolver.ResolvePluginOptions(cfg, r, from)
+		}
+		if len(opts) == 0 {
 			continue
 		}
-		opts := plugin.Options
 		sort.Strings(opts)
-		options[plugin.Label.String()] = opts
+		options[cfg.Label.String()] = opts
 	}
 	return options
 }

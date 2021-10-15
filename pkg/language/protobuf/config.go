@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
+	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -61,11 +62,22 @@ func (pl *protobufLang) Configure(c *config.Config, rel string, f *rule.File) {
 		// sequence.  Perform the equivalent of writing relevant
 		// 'gazelle:resolve proto IMP LABEL` entries.
 		protoc.GlobalResolver().Install(c)
+
+		// some special handling for certain directives
+		for _, d := range f.Directives {
+			switch d.Key {
+			case "prefix":
+				// encode the prefix in the resolver.  The name is not used, but
+				// the string 'go' is used to reflect the language of origin.
+				protoc.GlobalResolver().Provide("gazelle", "directive", "prefix", label.New("", d.Value, "go"))
+			}
+		}
 	}
 
 	if f == nil {
 		return
 	}
+
 	if err := pl.getOrCreatePackageConfig(c).ParseDirectives(rel, f.Directives); err != nil {
 		log.Fatalf("error while parsing rule directives in package %q: %v", rel, err)
 	}

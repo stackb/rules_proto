@@ -7,8 +7,9 @@ import (
 // NewprotobufLang create a new protobufLang Gazelle extension implementation.
 func NewprotobufLang(name string) *protobufLang {
 	return &protobufLang{
-		name:  name,
-		rules: protoc.Rules(),
+		name:     name,
+		rules:    protoc.Rules(),
+		packages: make(map[string]*protoc.Package),
 	}
 }
 
@@ -18,6 +19,8 @@ type protobufLang struct {
 	name string
 	// the rule registry
 	rules protoc.RuleRegistry
+	// the packages that we've generated
+	packages map[string]*protoc.Package
 	// configFiles contains yconfig yaml files to parse.  May be comma-separated.
 	configFiles string
 	// repoName is the name (if this an external repository)

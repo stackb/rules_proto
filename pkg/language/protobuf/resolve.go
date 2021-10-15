@@ -18,19 +18,21 @@ import (
 // If nil is returned, the rule will not be indexed. If any non-nil slice is
 // returned, including an empty slice, the rule will be indexed.
 func (pl *protobufLang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
-	if resolver, ok := r.PrivateAttr(protoc.RuleProviderKey).(protoc.RuleProvider); ok {
-		imports := resolver.Imports(c, r, f)
-		from := label.New("", f.Pkg, r.Name())
-		for _, imp := range imports {
-			protoc.GlobalResolver().Provide(
-				pl.name,
-				imp.Lang,
-				imp.Imp,
-				from,
-			)
-		}
+	from := label.New("", f.Pkg, r.Name())
+
+	pkg, ok := pl.packages[from.Pkg]
+	if !ok {
+		log.Println("Unknown package", from.Pkg)
+		return nil
 	}
-	return nil
+
+	provider := pkg.RuleProvider(r)
+	if provider == nil {
+		// log.Printf("Unknown rule provider for //%s:%s %p", f.Pkg, r.Name(), r)
+		return nil
+	}
+
+	return provider.Imports(c, r, f)
 }
 
 // Embeds returns a list of labels of rules that the given rule embeds. If a
@@ -59,12 +61,18 @@ func (pl *protobufLang) Resolve(
 		return
 	}
 
-	if resolver, ok := r.PrivateAttr(protoc.RuleProviderKey).(protoc.RuleProvider); ok {
+	if pkg, ok := pl.packages[from.Pkg]; ok {
+		provider := pkg.RuleProvider(r)
+		if provider == nil {
+			log.Printf("no known rule provider for %v", from)
+		}
 		if imports, ok := importsRaw.([]string); ok {
-			resolver.Resolve(c, ix, r, imports, from)
+			provider.Resolve(c, ix, r, imports, from)
 		} else {
 			log.Panicf("warning: resolve imports: expected []string, got %T", importsRaw)
 		}
+	} else {
+		log.Printf("no known rule package for %v", from.Pkg)
 	}
 }
 

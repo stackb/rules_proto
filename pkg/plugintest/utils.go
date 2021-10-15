@@ -31,6 +31,13 @@ func WithOutputs(outputs ...string) PluginConfigurationOption {
 	}
 }
 
+// WithOptions assigns the Options field.
+func WithOptions(options ...string) PluginConfigurationOption {
+	return func(c *protoc.PluginConfiguration) {
+		c.Options = options
+	}
+}
+
 // WithDirectives assigns rule Directives.
 func WithDirectives(items ...string) (d []rule.Directive) {
 	if len(items)%2 != 0 {

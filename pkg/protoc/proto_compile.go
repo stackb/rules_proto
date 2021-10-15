@@ -10,6 +10,11 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
+const (
+	// ProtoLibraryKey stores the ProtoLibrary implementation for a rule.
+	ProtoLibraryKey = "_proto_library"
+)
+
 func init() {
 	Rules().MustRegisterRule("stackb:rules_proto:proto_compile", &protoCompile{})
 }
@@ -96,11 +101,6 @@ func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		newRule.SetAttr("mappings", MakeStringDict(s.config.Mappings))
 	}
 
-	options := GetPluginOptions(s.config.Plugins)
-	if len(options) > 0 {
-		newRule.SetAttr("options", MakeStringListDict(options))
-	}
-
 	outs := GetPluginOuts(s.config.Plugins)
 	if len(outs) > 0 {
 		newRule.SetAttr("outs", MakeStringDict(outs))
@@ -116,4 +116,8 @@ func (s *protoCompileRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 
 // Resolve implements part of the RuleProvider interface.
 func (s *protoCompileRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+	options := GetPluginOptions(s.config.Plugins, r, from)
+	if len(options) > 0 {
+		r.SetAttr("options", MakeStringListDict(options))
+	}
 }

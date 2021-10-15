@@ -27,9 +27,10 @@ type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, im
 
 func ResolveDepsAttr(attrName string) DepsResolver {
 	return func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+		debug := false
+
 		existing := r.AttrStrings(attrName)
 		r.DelAttr(attrName)
-		// debug = true
 
 		depSet := make(map[string]bool)
 		for _, d := range existing {
@@ -37,37 +38,33 @@ func ResolveDepsAttr(attrName string) DepsResolver {
 		}
 
 		for _, imp := range imports {
-			// if debug {
-			// 	log.Println(from, "resolving:", imp)
-			// }
+			if debug {
+				log.Println(from, "resolving:", imp)
+			}
 			if strings.HasPrefix(imp, "google/protobuf/") {
 				continue
 			}
 			l, err := resolveAnyKind(c, ix, r, imp, from)
 			if err == errSkipImport {
-				// if debug {
-				// 	log.Println(from, "skipped:", imp)
-				// }
+				if debug {
+					log.Println(from, "skipped:", imp)
+				}
 				continue
 			} else if err != nil {
 				log.Print(err)
 			} else {
 				if l != label.NoLabel {
 					l = l.Rel(from.Repo, from.Pkg)
-					// if debug {
-					// 	log.Println(from, "resolved:", imp, l)
-					// }
+					if debug {
+						log.Println(from, "resolved:", imp, l)
+					}
 					depSet[l.String()] = true
 				} else {
-					// log.Println(from, "no label:", imp)
+					if debug {
+						log.Println(from, "no label", imp)
+					}
 				}
 			}
-
-			// result := cfg.Resolve(r.Kind(), "srcs", imp)
-			// if len(result) > 0 {
-			// 	first := result[0]
-			// 	deps = append(deps, first.Label.String())
-			// }
 		}
 
 		if len(depSet) > 0 {
@@ -83,33 +80,34 @@ func ResolveDepsAttr(attrName string) DepsResolver {
 
 func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp string, from label.Label) (label.Label, error) {
 	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: r.Kind(), Imp: imp}, ResolverLangName); ok {
+		// log.Println(from, "override hit:", l)
 		return l, nil
 	}
 	if l, err := resolveWithIndex(c, ix, r.Kind(), imp, from); err == nil || err == errSkipImport {
 		return l, err
 	} else if err != errNotFound {
-		// if debug {
-		// 	log.Println(from, "error:", imp, err)
-		// }
 		return label.NoLabel, err
 	}
-	// if debug {
-	// 	log.Println(from, "fallback miss:", imp)
-	// }
+	// // if debug {
+	// log.Println(from, "fallback miss:", imp)
+	// // }
 	return label.NoLabel, nil
 }
 
 func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, kind, imp string, from label.Label) (label.Label, error) {
 	matches := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{Lang: kind, Imp: imp}, ResolverLangName)
 	if len(matches) == 0 {
+		// log.Println(from, "no matches:", imp)
 		return label.NoLabel, errNotFound
 	}
 	if len(matches) > 1 {
 		return label.NoLabel, fmt.Errorf("multiple rules (%s and %s) may be imported with %q from %s", matches[0].Label, matches[1].Label, imp, from)
 	}
 	if matches[0].IsSelfImport(from) {
+		// log.Println(from, "self import:", imp)
 		return label.NoLabel, errSkipImport
 	}
+	// log.Println(from, "FindRulesByImportWithConfig: first match:", imp, matches[0].Label)
 	return matches[0].Label, nil
 }
 

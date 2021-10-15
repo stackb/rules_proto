@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
-	"github.com/stackb/rules_proto/pkg/plugin/golang/protobuf"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
@@ -40,13 +39,12 @@ func (p *GogoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigur
 	if !p.shouldApply(ctx.ProtoLibrary) {
 		return nil
 	}
-	mappings := protobuf.GetImportMappings(ctx.PluginConfig.GetOptions())
+
 	grpcOptions := p.grpcOptions(ctx.Rel, ctx.PluginConfig, ctx.ProtoLibrary)
-	filteredOptions := protobuf.FilterImportMappingOptions(ctx.PluginConfig.GetOptions(), mappings, ctx.ProtoLibrary.Imports())
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/gogo/protobuf", "protoc-gen-"+p.variant),
 		Outputs: p.outputs(ctx.ProtoLibrary),
-		Options: append(grpcOptions, filteredOptions...),
+		Options: append(grpcOptions, ctx.PluginConfig.GetOptions()...),
 	}
 }
 
