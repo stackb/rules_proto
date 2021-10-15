@@ -261,6 +261,11 @@ func (s *goLibraryRule) mergeRules(src, dst *rule.Rule) {
 
 // Imports implements part of the RuleProvider interface.
 func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
+	// for the cross-resolver such that go can cross-resolve this library
+	from := label.New("", f.Pkg, r.Name())
+	// log.Println("provide for cross-resolver", r.AttrString("importpath"), from)
+	protoc.GlobalResolver().Provide("go", "go", r.AttrString("importpath"), from)
+
 	if libs, ok := r.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary); ok {
 		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), libs...)
 	}

@@ -148,7 +148,9 @@ func (r *resolver) SaveFile(filename, repoName string) error {
 
 // CrossResolve provides dependency resolution logic for the protobuf language extension.
 func (r *resolver) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, lang string) []resolve.FindResult {
-	return r.Resolve(lang, imp.Lang, imp.Imp)
+	res := r.Resolve(lang, imp.Lang, imp.Imp)
+	log.Println("cross-resolve", lang, imp.Lang, imp.Imp, len(res), "results")
+	return res
 }
 
 func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
