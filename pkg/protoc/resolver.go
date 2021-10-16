@@ -16,7 +16,8 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 )
 
-const debugResolver = false
+// globalImportResolver is the default resolver singleton.
+var globalImportResolver = NewImportResolver(nil).(*resolver)
 
 const (
 	// ResolveProvidesKey is the key expected to store a string slice that
@@ -51,18 +52,26 @@ func GlobalResolver() ImportCrossResolver {
 	return globalImportResolver
 }
 
+type ImportResolverOptions struct {
+	Printf func(format string, args ...interface{})
+	Debug  bool
+}
+
+func NewImportResolver(options *ImportResolverOptions) ImportResolver {
+	return &resolver{
+		known:   make(map[string]importLabels),
+		options: options,
+	}
+}
+
 // importLabels records which labels are associated with a given proto import
 // statement.
 type importLabels map[string][]label.Label
 
-// globalImportResolver is the default resolver singleton.
-var globalImportResolver = &resolver{
-	// known is a mapping between lang and importLabel map
-	known: make(map[string]importLabels),
-}
-
 // resolver implements ImportResolver.
 type resolver struct {
+	options *ImportResolverOptions
+	// known is a mapping between lang and importLabel map
 	known map[string]importLabels
 }
 
@@ -149,8 +158,8 @@ func (r *resolver) SaveFile(filename, repoName string) error {
 // CrossResolve provides dependency resolution logic for the protobuf language extension.
 func (r *resolver) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, lang string) []resolve.FindResult {
 	res := r.Resolve(lang, imp.Lang, imp.Imp)
-	if debugResolver {
-		log.Println("cross-resolve", lang, imp.Lang, imp.Imp, len(res), "results")
+	if r.options.Debug {
+		r.options.Printf("cross-resolve", lang, imp.Lang, imp.Imp, len(res), "results")
 	}
 	return res
 }
@@ -159,6 +168,9 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 	key := langKey(lang, impLang)
 	known := r.known[key]
 	if known == nil {
+		if r.options.Debug {
+			r.options.Printf("resolve key %q miss: %+v", key, known)
+		}
 		known = r.known[lang]
 	}
 	if known == nil {
@@ -176,7 +188,6 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 
 func (r *resolver) Provide(lang, impLang, imp string, from label.Label) {
 	key := langKey(lang, impLang)
-
 	known, ok := r.known[key]
 	if !ok {
 		known = make(map[string][]label.Label)
@@ -187,8 +198,8 @@ func (r *resolver) Provide(lang, impLang, imp string, from label.Label) {
 			return
 		}
 	}
-	if debugResolver {
-		log.Println(from, "global provides", key, imp)
+	if r.options.Debug {
+		r.options.Printf("resolver %v provides %s %s", from, key, imp)
 	}
 	known[imp] = append(known[imp], from)
 }
@@ -231,13 +242,13 @@ func ResolveImports(resolver ImportResolver, lang, impLang string, imports []str
 		if len(result) > 0 {
 			first := result[0]
 			deps = append(deps, first.Label)
-			if debugResolver {
-				log.Println(lang, imp, "HIT", first.Label)
-			}
-		} else {
-			if debugResolver {
-				log.Println(lang, imp, "MISS", resolver)
-			}
+			// if r.options.Debug {
+			// 	r.options.Printf(lang, imp, "HIT", first.Label)
+			// }
+			// } else {
+			// 	if r.options.Debug {
+			// 		r.options.Printf(lang, imp, "MISS", resolver)
+			// 	}
 		}
 	}
 	return deps

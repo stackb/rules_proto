@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -82,6 +83,85 @@ func TestSaveResolver(t *testing.T) {
 			resolver.Save(&out, tc.repoName)
 			if diff := cmp.Diff(tc.out, out.String()); diff != "" {
 				t.Error("unexpected diff:", diff)
+			}
+		})
+	}
+}
+
+func TestProvide(t *testing.T) {
+	for name, tc := range map[string]struct {
+		lang, impLang, imp string
+		from               label.Label
+		known              map[string]importLabels
+	}{
+		"empty case": {
+			known: map[string]importLabels{
+				" ": map[string][]label.Label{
+					"": []label.Label{label.NoLabel},
+				},
+			},
+		},
+		"typical usage": {
+			lang:    "proto",
+			impLang: "proto",
+			imp:     "google/protobuf/any.proto",
+			from:    label.New("com_google_protobuf", "", "any_proto"),
+			known: map[string]importLabels{
+				"proto proto": map[string][]label.Label{
+					"google/protobuf/any.proto": []label.Label{label.New("com_google_protobuf", "", "any_proto")},
+				},
+			},
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			resolver := &resolver{
+				known: make(map[string]importLabels),
+			}
+			resolver.Provide(tc.lang, tc.impLang, tc.imp, tc.from)
+			if diff := cmp.Diff(tc.known, resolver.known); diff != "" {
+				t.Error("unexpected diff:", diff)
+			}
+		})
+	}
+}
+
+func TestResolve(t *testing.T) {
+	for name, tc := range map[string]struct {
+		lang, impLang, imp string
+		want               []resolve.FindResult
+		known              map[string]importLabels
+	}{
+		"empty case - matches a single empty result": {
+			known: map[string]importLabels{
+				" ": map[string][]label.Label{
+					"": []label.Label{label.NoLabel},
+				},
+			},
+			want: []resolve.FindResult{{}},
+		},
+		"typical usage": {
+			lang:    "proto",
+			impLang: "proto",
+			imp:     "google/protobuf/any.proto",
+			want: []resolve.FindResult{
+				{
+					Label: label.New("com_google_protobuf", "", "any_proto"),
+				},
+			},
+			known: map[string]importLabels{
+				"proto proto": map[string][]label.Label{
+					"google/protobuf/any.proto": []label.Label{label.New("com_google_protobuf", "", "any_proto")},
+				},
+			},
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			resolver := &resolver{
+				known: tc.known,
+			}
+			got := resolver.Resolve(tc.lang, tc.impLang, tc.imp)
+			if diff := cmp.Diff(tc.want, got); diff != "" {
+				t.Errorf("Resolve() mismatch (-want +got):\n%s", diff)
 			}
 		})
 	}
