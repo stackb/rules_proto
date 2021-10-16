@@ -1,6 +1,8 @@
 package protobuf
 
 import (
+	"log"
+
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
@@ -29,30 +31,27 @@ func makeProtoOverrideRule(libs []protoc.ProtoLibrary) *rule.Rule {
 	return overrideRule
 }
 
-func resolveOverrideRule(rel string, r *rule.Rule) {
-	libs := r.PrivateAttr(protoLibrariesRuleKey).([]protoc.ProtoLibrary)
+func resolveOverrideRule(rel string, overrideRule *rule.Rule) {
+	log.Printf("override resolve rule //%s:%s", rel, overrideRule.Name())
+
+	libs := overrideRule.PrivateAttr(protoLibrariesRuleKey).([]protoc.ProtoLibrary)
 	for _, lib := range libs {
 		r := lib.Rule()
-		deps := make([]label.Label, 0)
 
 		// filter out go_googleapis dependencies and re-resolve them anew.
-		goGoogleapisDeps := make([]string, 0)
+		keep := make([]label.Label, 0)
+
 		for _, dep := range r.AttrStrings("deps") {
 			lbl, _ := label.Parse(dep)
+			// log.Printf("override resolve //%s:%s dep %v", rel, r.Name(), lbl)
 			if lbl.Repo == "go_googleapis" {
-				goGoogleapisDeps = append(goGoogleapisDeps, dep)
 				continue
 			}
 			if lbl.Relative {
 				// relative labels will be repopulated via resolution (below)
-				goGoogleapisDeps = append(goGoogleapisDeps, dep)
 				continue
 			}
-			deps = append(deps, lbl)
-		}
-
-		if len(goGoogleapisDeps) == 0 {
-			continue
+			keep = append(keep, lbl)
 		}
 
 		imports := r.PrivateAttr(config.GazelleImportsKey)
@@ -61,7 +60,7 @@ func resolveOverrideRule(rel string, r *rule.Rule) {
 				result := protoc.GlobalResolver().Resolve("proto", "proto", imp)
 				if len(result) > 0 {
 					first := result[0]
-					deps = append(deps, first.Label)
+					keep = append(keep, first.Label)
 					// 	log.Println("go_googleapis resolve imports HIT", first.Label)
 					// } else {
 					// 	log.Println("go_googleapis resolve imports MISS", imp)
@@ -69,14 +68,14 @@ func resolveOverrideRule(rel string, r *rule.Rule) {
 			}
 		}
 
-		if len(deps) > 0 {
-			ss := make([]string, len(deps))
-			for i, lbl := range deps {
+		if len(keep) > 0 {
+			ss := make([]string, len(keep))
+			for i, lbl := range keep {
 				ss[i] = lbl.Rel("", rel).String()
 			}
 			r.SetAttr("deps", protoc.DeduplicateAndSort(ss))
 		}
 	}
 
-	r.Delete()
+	overrideRule.Delete()
 }
