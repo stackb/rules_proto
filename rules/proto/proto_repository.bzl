@@ -1,41 +1,41 @@
 """proto_repostitory.bzl provides the proto_repository rule."""
 
+# Copyright 2014 The Bazel Authors. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # buildifier: disable=bzl-visibility
 load("//rules/private:execution.bzl", "env_execute", "executable_extension")
 load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
-load("@bazel_tools//tools/build_defs/repo:utils.bzl", "read_netrc", "use_netrc")
 
 # We can't disable timeouts on Bazel, but we can set them to large values.
 _GO_REPOSITORY_TIMEOUT = 86400
 
-# Inspired by @bazel_tools//tools/build_defs/repo:http.bzl
-def _get_auth(ctx, urls):
-    """Given the list of URLs obtain the correct auth dict."""
-    netrcfile = ""
-    if "NETRC" in ctx.os.environ:
-        netrcfile = ctx.os.environ["NETRC"]
-    elif ctx.os.name.startswith("windows"):
-        if "USERPROFILE" in ctx.os.environ:
-            netrcfile = "%s/_netrc" % (ctx.os.environ["USERPROFILE"])
-    elif "HOME" in ctx.os.environ:
-        netrcfile = "%s/.netrc" % (ctx.os.environ["HOME"])
-
-    if netrcfile and ctx.path(netrcfile).exists:
-        netrc = read_netrc(ctx, netrcfile)
-        return use_netrc(netrc, urls, {})
-
-    return {}
-
 def _proto_repository_impl(ctx):
-    # stay
+    # TODO(#549): vcs repositories are not cached and still need to be fetched.
+    # Download the repository or module.
+    fetch_repo_args = None
+
     if ctx.attr.urls:
         # HTTP mode
+        for key in ("commit", "tag", "vcs", "remote", "version", "sum", "replace"):
+            if getattr(ctx.attr, key):
+                fail("cannot specifiy both urls and %s" % key, key)
         ctx.download_and_extract(
             url = ctx.attr.urls,
             sha256 = ctx.attr.sha256,
             stripPrefix = ctx.attr.strip_prefix,
             type = ctx.attr.type,
-            auth = _get_auth(ctx, ctx.attr.urls),
         )
 
     env = read_cache_env(ctx, str(ctx.path(Label("@bazel_gazelle_go_repository_cache//:go.env"))))
@@ -62,6 +62,27 @@ def _proto_repository_impl(ctx):
     ]
     env.update({k: ctx.os.environ[k] for k in env_keys if k in ctx.os.environ})
 
+    if fetch_repo_args:
+        # Disable sumdb in fetch_repo. In module mode, the sum is a mandatory
+        # attribute of go_repository, so we don't need to look it up.
+        fetch_repo_env = dict(env)
+        fetch_repo_env["GOSUMDB"] = "off"
+
+        # Override external GO111MODULE, because it is needed by module mode, no-op in repository mode
+        fetch_repo_env["GO111MODULE"] = "on"
+
+        fetch_repo = str(ctx.path(Label("@bazel_gazelle_go_repository_tools//:bin/fetch_repo{}".format(executable_extension(ctx)))))
+        result = env_execute(
+            ctx,
+            [fetch_repo] + fetch_repo_args,
+            environment = fetch_repo_env,
+            timeout = _GO_REPOSITORY_TIMEOUT,
+        )
+        if result.return_code:
+            fail("failed to fetch %s: %s" % (ctx.name, result.stderr))
+        if result.stderr:
+            print("fetch_repo: " + result.stderr)
+
     # Repositories are fetched. Determine if build file generation is needed.
     build_file_names = ctx.attr.build_file_name.split(",")
     existing_build_file = ""
@@ -71,10 +92,10 @@ def _proto_repository_impl(ctx):
             existing_build_file = name
             break
 
-    generate = (ctx.attr.build_file_generation == "on" or ctx.attr.build_file_generation == "clean" or (not existing_build_file and ctx.attr.build_file_generation == "auto"))
+    generate = (ctx.attr.build_file_generation == "on" or (not existing_build_file and ctx.attr.build_file_generation == "auto"))
 
     # remove any existing build files
-    if ctx.attr.build_file_generation == "clean":
+    if ctx.attr.build_file_expunge:
         cmd = ["find", ".", "-type", "f", "("]
         for i, name in enumerate(build_file_names):
             cmd += ["-name", name]
@@ -83,7 +104,7 @@ def _proto_repository_impl(ctx):
         cmd += [")", "-print", "-exec", "rm", "{}", "+"]
         result = env_execute(ctx, cmd, environment = env)
         if result.return_code:
-            fail("failed to clean build files: " + result.stderr)
+            fail("failed to expunge build files: " + result.stderr)
 
     # remove any other files
     if ctx.attr.deleted_files:
@@ -113,13 +134,34 @@ def _proto_repository_impl(ctx):
         gazelle = ctx.path(Label(_gazelle))
         cmd = [
             gazelle,
-            "-lang",
-            ",".join(ctx.attr.languages),
-            "-proto_repo_name",
-            ctx.name,
+            "-go_repository_mode",
+            "-mode",
+            "fix",
             "-repo_root",
             ctx.path(""),
+            "-repo_config",
+            ctx.path(ctx.attr.build_config),
+            "-proto_repo_name",
+            ctx.name,
         ]
+        if ctx.attr.languages:
+            cmd.extend(["-lang", ",".join(ctx.attr.languages)])
+        if ctx.attr.version:
+            cmd.append("-go_repository_module_mode")
+        if ctx.attr.importpath:
+            cmd.extend(["-go_prefix", ctx.attr.importpath])
+        if ctx.attr.build_file_name:
+            cmd.extend(["-build_file_name", ctx.attr.build_file_name])
+        if ctx.attr.build_tags:
+            cmd.extend(["-build_tags", ",".join(ctx.attr.build_tags)])
+        if ctx.attr.build_external:
+            cmd.extend(["-external", ctx.attr.build_external])
+        if ctx.attr.build_file_proto_mode:
+            cmd.extend(["-proto", ctx.attr.build_file_proto_mode])
+        if ctx.attr.build_naming_convention:
+            cmd.extend(["-go_naming_convention", ctx.attr.build_naming_convention])
+
+        # protobuf extension
         if ctx.attr.cfgs:
             cfgs = ",".join([str(ctx.path(f).realpath) for f in ctx.attr.cfgs])
             cmd.extend(["-proto_configs", cfgs])
@@ -130,14 +172,7 @@ def _proto_repository_impl(ctx):
             cmd.extend(["-proto_imports_in", protoimports])
         if ctx.attr.override_go_googleapis:
             cmd.extend(["-override_go_googleapis"])
-        if ctx.attr.build_file_name:
-            cmd.extend(["-build_file_name", ctx.attr.build_file_name])
-        if ctx.attr.build_tags:
-            cmd.extend(["-build_tags", ",".join(ctx.attr.build_tags)])
-        if ctx.attr.build_external:
-            cmd.extend(["-external", ctx.attr.build_external])
-        if ctx.attr.build_file_proto_mode:
-            cmd.extend(["-proto", ctx.attr.build_file_proto_mode])
+
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
         print("gazelle cmd", cmd)
@@ -153,15 +188,37 @@ def _proto_repository_impl(ctx):
     # Apply patches if necessary.
     patch(ctx)
 
-proto_repository = repository_rule(
+go_repository = repository_rule(
     implementation = _proto_repository_impl,
     attrs = {
+        # Fundamental attributes of a go repository
+        "importpath": attr.string(mandatory = False),  # True in go_repository
+
+        # Attributes for a repository that should be checked out from VCS
+        "commit": attr.string(),
+        "tag": attr.string(),
+        "vcs": attr.string(
+            default = "",
+            values = [
+                "",
+                "git",
+                "hg",
+                "svn",
+                "bzr",
+            ],
+        ),
+        "remote": attr.string(),
 
         # Attributes for a repository that should be downloaded via HTTP.
         "urls": attr.string_list(),
         "strip_prefix": attr.string(),
         "type": attr.string(),
         "sha256": attr.string(),
+
+        # Attributes for a module that should be downloaded with the Go toolchain.
+        "version": attr.string(),
+        "sum": attr.string(),
+        "replace": attr.string(),
 
         # Attributes for a repository that needs automatic build file generation
         "build_external": attr.string(
@@ -173,10 +230,9 @@ proto_repository = repository_rule(
         ),
         "build_file_name": attr.string(default = "BUILD.bazel,BUILD"),
         "build_file_generation": attr.string(
-            default = "on",
+            default = "auto",
             values = [
                 "auto",
-                "clean",
                 "off",
                 "on",
             ],
@@ -202,9 +258,18 @@ proto_repository = repository_rule(
             ],
         ),
         "build_extra_args": attr.string_list(),
+        "build_config": attr.label(default = "@bazel_gazelle_go_repository_config//:WORKSPACE"),
         "build_directives": attr.string_list(default = []),
 
+        # Patches to apply after running gazelle.
+        "patches": attr.label_list(),
+        "patch_tool": attr.string(default = "patch"),
+        "patch_args": attr.string_list(default = ["-p0"]),
+        "patch_cmds": attr.string_list(default = []),
+
         # protobuf extension specific configuration
+        "build_file_expunge": attr.bool(),
+        "languages": attr.string_list(default = ["proto", "go"]),
         "cfgs": attr.label_list(allow_files = True),
         "imports": attr.label_list(
             allow_files = True,
@@ -212,15 +277,14 @@ proto_repository = repository_rule(
         "imports_out": attr.string(default = "imports.csv"),
         "deleted_files": attr.string_list(),
         "override_go_googleapis": attr.bool(),
-
-        # Patches to apply after running gazelle.
-        "patches": attr.label_list(),
-        "patch_tool": attr.string(default = "patch"),
-        "patch_args": attr.string_list(default = ["-p0"]),
-        "patch_cmds": attr.string_list(default = []),
-        "languages": attr.string_list(default = ["proto", "protobuf"]),
     },
 )
+
+def proto_repository(**kwargs):
+    kwargs.setdefault("languages", ["proto", "protobuf"])
+    kwargs.setdefault("build_file_expunge", True)
+    kwargs.setdefault("build_file_generation", "on")
+    go_repository(**kwargs)
 
 # Copied from @bazel_tools//tools/build_defs/repo:utils.bzl
 def patch(ctx):

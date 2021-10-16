@@ -34,21 +34,24 @@ func resolveOverrideRule(rel string, r *rule.Rule) {
 	for _, lib := range libs {
 		r := lib.Rule()
 		deps := make([]label.Label, 0)
-		var hasGoGoogleapisDep bool
+
+		// filter out go_googleapis dependencies and re-resolve them anew.
+		goGoogleapisDeps := make([]string, 0)
 		for _, dep := range r.AttrStrings("deps") {
 			lbl, _ := label.Parse(dep)
 			if lbl.Repo == "go_googleapis" {
-				hasGoGoogleapisDep = true
+				goGoogleapisDeps = append(goGoogleapisDeps, dep)
 				continue
 			}
 			if lbl.Relative {
 				// relative labels will be repopulated via resolution (below)
+				goGoogleapisDeps = append(goGoogleapisDeps, dep)
 				continue
 			}
 			deps = append(deps, lbl)
 		}
 
-		if !hasGoGoogleapisDep {
+		if len(goGoogleapisDeps) == 0 {
 			continue
 		}
 
@@ -59,9 +62,9 @@ func resolveOverrideRule(rel string, r *rule.Rule) {
 				if len(result) > 0 {
 					first := result[0]
 					deps = append(deps, first.Label)
-					// log.Println("resolve imports HIT", first.Label)
+					// 	log.Println("go_googleapis resolve imports HIT", first.Label)
 					// } else {
-					// log.Println("resolve imports MISS", imp)
+					// 	log.Println("go_googleapis resolve imports MISS", imp)
 				}
 			}
 		}

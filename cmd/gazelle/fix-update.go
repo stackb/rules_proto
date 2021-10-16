@@ -16,12 +16,14 @@ limitations under the License.
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -39,13 +41,22 @@ import (
 // update commands. This includes everything in config.Config, but it also
 // includes some additional fields that aren't relevant to other packages.
 type updateConfig struct {
-	dirs     []string
-	emit     emitFunc
-	repos    []repo.Repo
-	walkMode walk.Mode
+	dirs           []string
+	emit           emitFunc
+	repos          []repo.Repo
+	workspaceFiles []*rule.File
+	walkMode       walk.Mode
+	patchPath      string
+	patchBuffer    bytes.Buffer
 }
 
 type emitFunc func(c *config.Config, f *rule.File) error
+
+var modeFromName = map[string]emitFunc{
+	"print": printFile,
+	"fix":   fixFile,
+	"diff":  diffFile,
+}
 
 const updateName = "_update"
 
@@ -54,8 +65,10 @@ func getUpdateConfig(c *config.Config) *updateConfig {
 }
 
 type updateConfigurer struct {
-	recursive    bool
-	knownImports []string
+	mode           string
+	recursive      bool
+	knownImports   []string
+	repoConfigPath string
 }
 
 func (ucr *updateConfigurer) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
@@ -64,13 +77,27 @@ func (ucr *updateConfigurer) RegisterFlags(fs *flag.FlagSet, cmd string, c *conf
 
 	c.ShouldFix = cmd == "fix"
 
+	fs.StringVar(&ucr.mode, "mode", "fix", "print: prints all of the updated BUILD files\n\tfix: rewrites all of the BUILD files in place\n\tdiff: computes the rewrite but then just does a diff")
 	fs.BoolVar(&ucr.recursive, "r", true, "when true, gazelle will update subdirectories recursively")
+	fs.StringVar(&uc.patchPath, "patch", "", "when set with -mode=diff, gazelle will write to a file instead of stdout")
 	fs.Var(&gzflag.MultiFlag{Values: &ucr.knownImports}, "known_import", "import path for which external resolution is skipped (can specify multiple times)")
+	fs.StringVar(&ucr.repoConfigPath, "repo_config", "", "file where Gazelle should load repository configuration. Defaults to WORKSPACE.")
 }
 
 func (ucr *updateConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 	uc := getUpdateConfig(c)
-	uc.emit = fixFile
+
+	var ok bool
+	uc.emit, ok = modeFromName[ucr.mode]
+	if !ok {
+		return fmt.Errorf("unrecognized emit mode: %q", ucr.mode)
+	}
+	if uc.patchPath != "" && ucr.mode != "diff" {
+		return fmt.Errorf("-patch set but -mode is %s, not diff", ucr.mode)
+	}
+	if uc.patchPath != "" && !filepath.IsAbs(uc.patchPath) {
+		uc.patchPath = filepath.Join(c.WorkDir, uc.patchPath)
+	}
 
 	dirs := fs.Args()
 	if len(dirs) == 0 {
@@ -100,6 +127,67 @@ func (ucr *updateConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) erro
 		uc.walkMode = walk.UpdateSubdirsMode
 	} else {
 		uc.walkMode = walk.UpdateDirsMode
+	}
+
+	// Load the repo configuration file (WORKSPACE by default) to find out
+	// names and prefixes of other go_repositories. This affects external
+	// dependency resolution for Go.
+	// TODO(jayconrod): Go-specific code should be moved to language/go.
+	if ucr.repoConfigPath == "" {
+		ucr.repoConfigPath = FindWORKSPACEFile(c.RepoRoot)
+	}
+	repoConfigFile, err := rule.LoadWorkspaceFile(ucr.repoConfigPath, "")
+	if err != nil && !os.IsNotExist(err) {
+		return err
+	} else if err == nil {
+		c.Repos, _, err = repo.ListRepositories(repoConfigFile)
+		if err != nil {
+			return err
+		}
+	}
+	for _, imp := range ucr.knownImports {
+		uc.repos = append(uc.repos, repo.Repo{
+			Name:     label.ImportPathToBazelRepoName(imp),
+			GoPrefix: imp,
+		})
+	}
+	for _, r := range c.Repos {
+		if r.Kind() == "go_repository" {
+			uc.repos = append(uc.repos, repo.Repo{
+				Name:     r.Name(),
+				GoPrefix: r.AttrString("importpath"),
+			})
+		}
+	}
+
+	// If the repo configuration file is not WORKSPACE, also load WORKSPACE
+	// and any declared macro files so we can apply fixes.
+	workspacePath := FindWORKSPACEFile(c.RepoRoot)
+	var workspace *rule.File
+	if ucr.repoConfigPath == workspacePath {
+		workspace = repoConfigFile
+	} else {
+		workspace, err = rule.LoadWorkspaceFile(workspacePath, "")
+		if err != nil && !os.IsNotExist(err) {
+			return err
+		}
+	}
+	if workspace != nil {
+		c.RepoName = findWorkspaceName(workspace)
+		_, repoFileMap, err := repo.ListRepositories(workspace)
+		if err != nil {
+			return err
+		}
+		seen := make(map[*rule.File]bool)
+		for _, f := range repoFileMap {
+			if !seen[f] {
+				uc.workspaceFiles = append(uc.workspaceFiles, f)
+				seen[f] = true
+			}
+		}
+		sort.Slice(uc.workspaceFiles, func(i, j int) bool {
+			return uc.workspaceFiles[i].Path < uc.workspaceFiles[j].Path
+		})
 	}
 
 	return nil
@@ -136,6 +224,12 @@ type visitRecord struct {
 	mappedKindInfo map[string]rule.KindInfo
 }
 
+type byPkgRel []visitRecord
+
+func (vs byPkgRel) Len() int           { return len(vs) }
+func (vs byPkgRel) Less(i, j int) bool { return vs[i].pkgRel < vs[j].pkgRel }
+func (vs byPkgRel) Swap(i, j int)      { vs[i], vs[j] = vs[j], vs[i] }
+
 var genericLoads = []rule.LoadInfo{
 	{
 		Name:    "@bazel_gazelle//:def.bzl",
@@ -170,10 +264,13 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 		return err
 	}
 
+	if err := fixRepoFiles(c, loads); err != nil {
+		return err
+	}
+
 	// Visit all directories in the repository.
 	var visits []visitRecord
 	uc := getUpdateConfig(c)
-
 	walk.Walk(c, cexts, uc.dirs, uc.walkMode, func(dir, rel string, c *config.Config, update bool, f *rule.File, subdirs, regularFiles, genFiles []string) {
 		// If this file is ignored or if Gazelle was not asked to update this
 		// directory, just index the build file and move on.
@@ -294,6 +391,11 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 			}
 		}
 	}
+	if uc.patchPath != "" {
+		if err := ioutil.WriteFile(uc.patchPath, uc.patchBuffer.Bytes(), 0666); err != nil {
+			return err
+		}
+	}
 
 	return exit
 }
@@ -343,6 +445,8 @@ There are several output modes which can be selected with the -mode flag. The
 output mode determines what Gazelle does with updated BUILD files.
 
   fix (default) - write updated BUILD files back to disk.
+  print - print updated BUILD files to stdout.
+  diff - diff updated BUILD files against existing files in unified format.
 
 Gazelle accepts a list of paths to Go package directories to process (defaults
 to the working directory if none are given). It recursively traverses
@@ -354,6 +458,69 @@ FLAGS:
 
 `)
 	fs.PrintDefaults()
+}
+
+func fixRepoFiles(c *config.Config, loads []rule.LoadInfo) error {
+	uc := getUpdateConfig(c)
+	if !c.ShouldFix {
+		return nil
+	}
+	shouldFix := false
+	for _, d := range uc.dirs {
+		if d == c.RepoRoot {
+			shouldFix = true
+		}
+	}
+	if !shouldFix {
+		return nil
+	}
+
+	for _, f := range uc.workspaceFiles {
+		merger.FixLoads(f, loads)
+		workspaceFile := FindWORKSPACEFile(c.RepoRoot)
+
+		if f.Path == workspaceFile {
+			removeLegacyGoRepository(f)
+			if err := merger.CheckGazelleLoaded(f); err != nil {
+				return err
+			}
+		}
+		if err := uc.emit(c, f); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// removeLegacyGoRepository removes loads of go_repository from
+// @io_bazel_rules_go. FixLoads should be called after this; it will load from
+// @bazel_gazelle.
+func removeLegacyGoRepository(f *rule.File) {
+	for _, l := range f.Loads {
+		if l.Name() == "@io_bazel_rules_go//go:def.bzl" {
+			l.Remove("go_repository")
+			if l.IsEmpty() {
+				l.Delete()
+			}
+		}
+	}
+}
+
+func findWorkspaceName(f *rule.File) string {
+	var name string
+	for _, r := range f.Rules {
+		if r.Kind() == "workspace" {
+			name = r.Name()
+			break
+		}
+	}
+	// HACK(bazelbuild/rules_go#2355, bazelbuild/rules_go#2387):
+	// We can't patch the WORKSPACE file with the correct name because Bazel
+	// writes it first; our patches won't apply.
+	if name == "com_google_googleapis" {
+		return "go_googleapis"
+	}
+	return name
 }
 
 func isDescendingDir(dir, root string) bool {

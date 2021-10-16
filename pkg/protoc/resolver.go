@@ -149,7 +149,9 @@ func (r *resolver) SaveFile(filename, repoName string) error {
 // CrossResolve provides dependency resolution logic for the protobuf language extension.
 func (r *resolver) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, lang string) []resolve.FindResult {
 	res := r.Resolve(lang, imp.Lang, imp.Imp)
-	log.Println("cross-resolve", lang, imp.Lang, imp.Imp, len(res), "results")
+	if debugResolver {
+		log.Println("cross-resolve", lang, imp.Lang, imp.Imp, len(res), "results")
+	}
 	return res
 }
 
@@ -182,14 +184,11 @@ func (r *resolver) Provide(lang, impLang, imp string, from label.Label) {
 	}
 	for _, v := range known[imp] {
 		if v == from {
-			if debugResolver {
-				log.Println(key, imp, "PROVIDES (duplicate)", from)
-			}
 			return
 		}
 	}
 	if debugResolver {
-		log.Println(key, imp, "PROVIDES", from)
+		log.Println(from, "global provides", key, imp)
 	}
 	known[imp] = append(known[imp], from)
 }
