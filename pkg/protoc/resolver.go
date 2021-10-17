@@ -17,7 +17,10 @@ import (
 )
 
 // globalImportResolver is the default resolver singleton.
-var globalImportResolver = NewImportResolver(nil).(*resolver)
+var globalImportResolver = NewImportResolver(&ImportResolverOptions{
+	Debug:  false,
+	Printf: log.Printf,
+}).(*resolver)
 
 const (
 	// ResolveProvidesKey is the key expected to store a string slice that

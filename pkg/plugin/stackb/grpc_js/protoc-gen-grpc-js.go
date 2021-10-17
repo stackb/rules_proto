@@ -30,9 +30,10 @@ func (p *ProtocGenGrpcJs) Configure(ctx *protoc.PluginContext) *protoc.PluginCon
 	if ctx.Rel != "" {
 		jsFile = path.Join(ctx.Rel, jsFile)
 	}
+	out := "out=" + jsFile
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/stackb/grpc_js", "protoc-gen-grpc-js"),
 		Outputs: []string{jsFile},
-		Options: ctx.PluginConfig.GetOptions(),
+		Options: append(ctx.PluginConfig.GetOptions(), out),
 	}
 }

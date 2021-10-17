@@ -17,9 +17,28 @@
 # buildifier: disable=bzl-visibility
 load("//rules/private:execution.bzl", "env_execute", "executable_extension")
 load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
+load("@bazel_tools//tools/build_defs/repo:utils.bzl", "read_netrc", "use_netrc")
 
 # We can't disable timeouts on Bazel, but we can set them to large values.
 _GO_REPOSITORY_TIMEOUT = 86400
+
+# Inspired by @bazel_tools//tools/build_defs/repo:http.bzl
+def _get_auth(ctx, urls):
+    """Given the list of URLs obtain the correct auth dict."""
+    netrcfile = ""
+    if "NETRC" in ctx.os.environ:
+        netrcfile = ctx.os.environ["NETRC"]
+    elif ctx.os.name.startswith("windows"):
+        if "USERPROFILE" in ctx.os.environ:
+            netrcfile = "%s/_netrc" % (ctx.os.environ["USERPROFILE"])
+    elif "HOME" in ctx.os.environ:
+        netrcfile = "%s/.netrc" % (ctx.os.environ["HOME"])
+
+    if netrcfile and ctx.path(netrcfile).exists:
+        netrc = read_netrc(ctx, netrcfile)
+        return use_netrc(netrc, urls, {})
+
+    return {}
 
 def _proto_repository_impl(ctx):
     # TODO(#549): vcs repositories are not cached and still need to be fetched.
@@ -36,10 +55,61 @@ def _proto_repository_impl(ctx):
             sha256 = ctx.attr.sha256,
             stripPrefix = ctx.attr.strip_prefix,
             type = ctx.attr.type,
+            auth = _get_auth(ctx, ctx.attr.urls),
         )
+    elif ctx.attr.commit or ctx.attr.tag:
+        # repository mode
+        if ctx.attr.commit:
+            rev = ctx.attr.commit
+            rev_key = "commit"
+        elif ctx.attr.tag:
+            rev = ctx.attr.tag
+            rev_key = "tag"
+        for key in ("urls", "strip_prefix", "type", "sha256", "version", "sum", "replace"):
+            if getattr(ctx.attr, key):
+                fail("cannot specify both %s and %s" % (rev_key, key), key)
+
+        if ctx.attr.vcs and not ctx.attr.remote:
+            fail("if vcs is specified, remote must also be")
+
+        fetch_repo_args = ["-dest", ctx.path(""), "-importpath", ctx.attr.importpath]
+        if ctx.attr.remote:
+            fetch_repo_args.extend(["--remote", ctx.attr.remote])
+        if rev:
+            fetch_repo_args.extend(["--rev", rev])
+        if ctx.attr.vcs:
+            fetch_repo_args.extend(["--vcs", ctx.attr.vcs])
+    elif ctx.attr.version:
+        # module mode
+        for key in ("urls", "strip_prefix", "type", "sha256", "commit", "tag", "vcs", "remote"):
+            if getattr(ctx.attr, key):
+                fail("cannot specify both version and %s" % key)
+        if not ctx.attr.sum:
+            fail("if version is specified, sum must also be")
+
+        fetch_path = ctx.attr.replace if ctx.attr.replace else ctx.attr.importpath
+        fetch_repo_args = [
+            "-dest=" + str(ctx.path("")),
+            "-importpath=" + fetch_path,
+            "-version=" + ctx.attr.version,
+            "-sum=" + ctx.attr.sum,
+        ]
+    else:
+        fail("one of urls, commit, tag, or importpath must be specified")
 
     env = read_cache_env(ctx, str(ctx.path(Label("@bazel_gazelle_go_repository_cache//:go.env"))))
     env_keys = [
+        # Respect user proxy and sumdb settings for privacy.
+        # TODO(jayconrod): gazelle in go_repository mode should probably
+        # not go out to the network at all. This means *the build*
+        # goes out to the network. We tolerate this for downloading
+        # archives, but finding module roots is a bit much.
+        "GOPROXY",
+        "GONOPROXY",
+        "GOPRIVATE",
+        "GOSUMDB",
+        "GONOSUMDB",
+
         # PATH is needed to locate git and other vcs tools.
         "PATH",
 
@@ -144,8 +214,6 @@ def _proto_repository_impl(ctx):
             "-proto_repo_name",
             ctx.name,
         ]
-        if ctx.attr.languages:
-            cmd.extend(["-lang", ",".join(ctx.attr.languages)])
         if ctx.attr.version:
             cmd.append("-go_repository_module_mode")
         if ctx.attr.importpath:
@@ -162,6 +230,8 @@ def _proto_repository_impl(ctx):
             cmd.extend(["-go_naming_convention", ctx.attr.build_naming_convention])
 
         # protobuf extension
+        if ctx.attr.languages:
+            cmd.extend(["-lang", ",".join(ctx.attr.languages)])
         if ctx.attr.cfgs:
             cfgs = ",".join([str(ctx.path(f).realpath) for f in ctx.attr.cfgs])
             cmd.extend(["-proto_configs", cfgs])
@@ -175,7 +245,8 @@ def _proto_repository_impl(ctx):
 
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
-        print("gazelle cmd", cmd)
+
+        # print("gazelle cmd", cmd)
         result = env_execute(ctx, cmd, environment = env, timeout = _GO_REPOSITORY_TIMEOUT)
         if result.return_code:
             fail("failed to generate BUILD files: %s" % (
@@ -269,7 +340,7 @@ go_repository = repository_rule(
 
         # protobuf extension specific configuration
         "build_file_expunge": attr.bool(),
-        "languages": attr.string_list(default = ["proto", "go"]),
+        "languages": attr.string_list(),
         "cfgs": attr.label_list(allow_files = True),
         "imports": attr.label_list(
             allow_files = True,
