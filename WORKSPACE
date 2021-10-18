@@ -201,9 +201,9 @@ pinned_maven_scala_install()
 
 load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
 
-rules_closure_dependencies()
-
 rules_closure_toolchains()
+
+rules_closure_dependencies()
 
 # ----------------------------------------------------
 # nodejs

@@ -13,9 +13,9 @@ closure_js_test(
     deps = [
         ":client",
         "//example/routeguide:routeguide_grpc_closure_js_library",
-        "@io_bazel_rules_closure//closure/library/testing:asserts",
-        "@io_bazel_rules_closure//closure/library/testing:jsunit",
-        "@io_bazel_rules_closure//closure/library/testing:testsuite",
+        "@com_google_javascript_closure_library//closure/goog/testing:asserts",
+        "@com_google_javascript_closure_library//closure/goog/testing:jsunit",
+        "@com_google_javascript_closure_library//closure/goog/testing:testsuite",
     ],
 )
 
@@ -24,7 +24,7 @@ closure_js_library(
     srcs = ["client.js"],
     deps = [
         "//example/routeguide:routeguide_grpc_closure_js_library",
-        "@io_bazel_rules_closure//closure/library/promise",
+        "@com_google_javascript_closure_library//closure/goog/promise",
     ],
 )
 
@@ -44,5 +44,11 @@ closure_js_binary(
     debug = False,
     entry_points = ["goog:example.routeguide.closure.main"],
     output_wrapper = "(function(){%output%}).call(this);",
+    suppress_on_all_sources_in_transitive_closure = [
+        "JSC_MISSING_REQUIRE_TYPE_IN_PROVIDES_FILE",
+        "JSC_MISSING_REQUIRE_IN_PROVIDES_FILE",
+        "JSC_USE_OF_GOOG_PROVIDE",
+        "JSC_DEPRECATED_PROP_REASON",
+    ],
     deps = [":main"],
 )

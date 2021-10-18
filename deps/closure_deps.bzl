@@ -15,9 +15,9 @@ def io_bazel_rules_closure():
     _maybe(
         http_archive,
         name = "io_bazel_rules_closure",
-        sha256 = "825da2c522405cb5fa6279b051c9f5a1b052c03938a3cf738df393aaada335aa",
-        strip_prefix = "rules_closure-56cb92640e02fe9d354d46087211abfbd6300b06",
+        sha256 = "50096b6be0052055ba4f0577d8aa3d82adf077377ffa86e2b7a67a335442f01b",
+        strip_prefix = "rules_closure-2c59208867759800a37d0f008c3a4398af4c0cb2",
         urls = [
-            "https://github.com/bazelbuild/rules_closure/archive/56cb92640e02fe9d354d46087211abfbd6300b06.tar.gz",
+            "https://github.com/bazelbuild/rules_closure/archive/2c59208867759800a37d0f008c3a4398af4c0cb2.tar.gz",
         ],
     )

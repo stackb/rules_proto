@@ -183,6 +183,7 @@ def _proto_compile_impl(ctx):
 
         # const <?File> Add plugin executable if not a built-in plugin
         plugin_tool = plugin.tool if plugin.tool else None
+        is_builtin = plugin.tool == None
 
         # Add plugin runfiles if plugin has a tool
         if plugin_tool:
@@ -213,8 +214,12 @@ def _proto_compile_impl(ctx):
 
         # const <list<string>>
         opts = plugin.options + [opt for opt in options.get(_plugin_label_key(plugin.label), [])]
-        for opt in opts:
-            args.append("--{}_opt={}".format(plugin_name, opt))
+        if is_builtin:
+            # builtins can't use the --opt flags
+            out = "{}:{}".format(",".join(opts), out)
+        else:
+            for opt in opts:
+                args.append("--{}_opt={}".format(plugin_name, opt))
 
         # override with the out configured on the rule if specified
         plugin_out = outs.get(_plugin_label_key(plugin.label), None)
