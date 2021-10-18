@@ -66,12 +66,14 @@ func (pl *protobufLang) Configure(c *config.Config, rel string, f *rule.File) {
 		protoc.GlobalResolver().Install(c)
 
 		// some special handling for certain directives
-		for _, d := range f.Directives {
-			switch d.Key {
-			case "prefix":
-				// encode the prefix in the resolver.  The name is not used, but
-				// the string 'go' is used to reflect the language of origin.
-				protoc.GlobalResolver().Provide("gazelle", "directive", "prefix", label.New("", d.Value, "go"))
+		if f != nil {
+			for _, d := range f.Directives {
+				switch d.Key {
+				case "prefix":
+					// encode the prefix in the resolver.  The name is not used, but
+					// the string 'go' is used to reflect the language of origin.
+					protoc.GlobalResolver().Provide("gazelle", "directive", "prefix", label.New("", d.Value, "go"))
+				}
 			}
 		}
 	}
