@@ -148,13 +148,16 @@ func (r *resolver) SaveFile(filename, repoName string) error {
 	if err != nil {
 		return fmt.Errorf("save imports file: %w", err)
 	}
-	defer f.Close()
 
 	fmt.Fprintf(f, "# GENERATED FILE, DO NOT EDIT (created by gazelle)\n")
 	fmt.Fprintf(f, "# lang,imp.lang,imp,label\n")
-	r.Save(f, repoName)
 
-	// log.Panicln("Wrote:", filename)
+	r.Save(f, repoName)
+	if err := f.Close(); err != nil {
+		return err
+	}
+
+	// log.Println("Wrote resolve file:", filename)
 	return nil
 }
 

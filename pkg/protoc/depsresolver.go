@@ -25,7 +25,7 @@ var (
 
 type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label)
 
-func ResolveDepsAttr(attrName string) DepsResolver {
+func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 	return func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 		debug := false
 
@@ -41,7 +41,7 @@ func ResolveDepsAttr(attrName string) DepsResolver {
 			if debug {
 				log.Println(from, "resolving:", imp)
 			}
-			if strings.HasPrefix(imp, "google/protobuf/") {
+			if excludeWkt && strings.HasPrefix(imp, "google/protobuf/") {
 				continue
 			}
 			l, err := resolveAnyKind(c, ix, r, imp, from)

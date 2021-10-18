@@ -49,6 +49,6 @@ func (s *protoPyLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver:       protoc.ResolveDepsAttr("deps"),
+		Resolver:       protoc.ResolveDepsAttr("deps", true),
 	}
 }

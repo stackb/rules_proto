@@ -49,6 +49,5 @@ func (s *protoClosureJsLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver:       protoc.ResolveDepsAttr("deps"),
 	}
 }

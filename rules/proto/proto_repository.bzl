@@ -186,9 +186,6 @@ def _proto_repository_impl(ctx):
         # Build file generation is needed.
         build_file_name = existing_build_file or build_file_names[0]
 
-        # write an empty file to make sure the filegroup is satisfied
-        ctx.file(ctx.attr.imports_out, "")
-
         # Populate Gazelle directive at root build file and
         lines = ["# " + d for d in ctx.attr.build_directives] + [
             "",
@@ -246,7 +243,8 @@ def _proto_repository_impl(ctx):
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
 
-        # print("gazelle cmd", cmd)
+        # for arg in cmd:
+        #     print("gazelle cmd arg", arg)
         result = env_execute(ctx, cmd, environment = env, timeout = _GO_REPOSITORY_TIMEOUT)
         if result.return_code:
             fail("failed to generate BUILD files: %s" % (

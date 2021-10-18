@@ -22,6 +22,8 @@ func (pl *protobufLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Co
 	fs.StringVar(&pl.importsOutFile, "proto_imports_out", "", "filename where index should be written")
 	fs.StringVar(&pl.repoName, "proto_repo_name", "", "external name of this repository")
 	fs.BoolVar(&pl.overrideGoGooleapis, "override_go_googleapis", false, "if true, remove hardcoded proto_library deps on go_googleapis")
+
+	registerWellKnownProtos(protoc.GlobalResolver())
 }
 
 func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
@@ -94,4 +96,23 @@ func (pl *protobufLang) getOrCreatePackageConfig(config *config.Config) *protoc.
 	}
 	config.Exts[pl.name] = cfg
 	return cfg
+}
+
+func registerWellKnownProtos(resolver protoc.ImportResolver) {
+	for k, v := range map[string]label.Label{
+		"google/protobuf/any.proto":             label.New("com_google_protobuf", "", "any_proto"),
+		"google/protobuf/api.proto":             label.New("com_google_protobuf", "", "api_proto"),
+		"google/protobuf/compiler/plugin.proto": label.New("com_google_protobuf", "", "compiler_plugin_proto"),
+		"google/protobuf/descriptor.proto":      label.New("com_google_protobuf", "", "descriptor_proto"),
+		"google/protobuf/duration.proto":        label.New("com_google_protobuf", "", "duration_proto"),
+		"google/protobuf/empty.proto":           label.New("com_google_protobuf", "", "empty_proto"),
+		"google/protobuf/field_mask.proto":      label.New("com_google_protobuf", "", "field_mask_proto"),
+		"google/protobuf/source_context.proto":  label.New("com_google_protobuf", "", "source_context_proto"),
+		"google/protobuf/struct.proto":          label.New("com_google_protobuf", "", "struct_proto"),
+		"google/protobuf/timestamp.proto":       label.New("com_google_protobuf", "", "timestamp_proto"),
+		"google/protobuf/type.proto":            label.New("com_google_protobuf", "", "type_proto"),
+		"google/protobuf/wrappers.proto":        label.New("com_google_protobuf", "", "wrappers_proto"),
+	} {
+		resolver.Provide("proto", "proto", k, v)
+	}
 }

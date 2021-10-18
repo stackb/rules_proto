@@ -4,14 +4,13 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def grpc_closure_js_library(**kwargs):
     suppress = kwargs.pop("suppress", [])
-    suppress += [
+    suppress.append(
         "JSC_MISSING_REQUIRE_TYPE",
-        "reportUnknownTypes",  # TODO: external/com_github_stackb_grpc_js/js/grpc/transport/fetch/observer.js:181
-    ]
+    )
 
     deps = kwargs.pop("deps", [])
     deps += [
-        "@io_bazel_rules_closure//closure/library/promise",
+        "@com_google_javascript_closure_library//closure/goog/promise",
         "@com_github_stackb_grpc_js//js/grpc/stream/observer:call",
         "@com_github_stackb_grpc_js//js/grpc",
         "@com_github_stackb_grpc_js//js/grpc:api",
