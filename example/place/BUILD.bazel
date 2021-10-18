@@ -18,8 +18,17 @@ proto_library(
 proto_closure_js_library(
     name = "place_closure_js_library",
     srcs = ["place.js"],
-    internal_descriptors = ["place-descriptor-set.proto.bin"],
+    internal_descriptors = [
+        "//example/place:place_proto",
+        "//example/thing:thing_proto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+    suppress = [
+        "JSC_IMPLICITLY_NONNULL_JSDOC",
+        "JSC_UNUSED_LOCAL_ASSIGNMENT",
+    ],
     visibility = ["//visibility:public"],
+    exports = ["//example/thing:thing_closure_js_library"],
     deps = ["//example/thing:thing_closure_js_library"],
 )
 
@@ -39,10 +48,7 @@ proto_cc_library(
     srcs = ["place.pb.cc"],
     hdrs = ["place.pb.h"],
     visibility = ["//visibility:public"],
-    deps = [
-        "//example/thing:thing_cc_library",
-        "@com_google_protobuf//:protobuf",
-    ],
+    deps = ["@com_google_protobuf//:protobuf"],
 )
 
 proto_compile(
@@ -91,10 +97,7 @@ proto_java_library(
         "//example/thing:thing_java_library",
         "@com_google_protobuf//:protobuf_java",
     ],
-    deps = [
-        "//example/thing:thing_java_library",
-        "@com_google_protobuf//:protobuf_java",
-    ],
+    deps = ["@com_google_protobuf//:protobuf_java"],
 )
 
 proto_compile(
@@ -108,10 +111,7 @@ proto_py_library(
     name = "place_py_library",
     srcs = ["place_pb2.py"],
     visibility = ["//visibility:public"],
-    deps = [
-        "//example/thing:thing_py_library",
-        "@com_google_protobuf//:protobuf_python",
-    ],
+    deps = ["@com_google_protobuf//:protobuf_python"],
 )
 
 proto_compile(
@@ -126,14 +126,8 @@ proto_scala_library(
     name = "place_scala_library",
     srcs = ["place_scala.srcjar"],
     visibility = ["//visibility:public"],
-    exports = [
-        "//example/thing:thing_scala_library",
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
-    ],
-    deps = [
-        "//example/thing:thing_scala_library",
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
-    ],
+    exports = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
+    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
 )
 
 proto_compile(
@@ -156,5 +150,4 @@ proto_nodejs_library(
     name = "place_nodejs_library",
     srcs = ["place_pb.js"],
     visibility = ["//visibility:public"],
-    deps = ["//example/thing:thing_nodejs_library"],
 )

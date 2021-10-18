@@ -18,8 +18,16 @@ proto_library(
 proto_closure_js_library(
     name = "thing_closure_js_library",
     srcs = ["thing.js"],
-    internal_descriptors = ["thing-descriptor-set.proto.bin"],
+    internal_descriptors = [
+        "//example/thing:thing_proto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+    suppress = [
+        "JSC_IMPLICITLY_NONNULL_JSDOC",
+        "JSC_UNUSED_LOCAL_ASSIGNMENT",
+    ],
     visibility = ["//visibility:public"],
+    exports = [],
 )
 
 proto_compile(

@@ -4,8 +4,8 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
-// NewprotobufLang create a new protobufLang Gazelle extension implementation.
-func NewprotobufLang(name string) *protobufLang {
+// NewProtobufLang create a new protobufLang Gazelle extension implementation.
+func NewProtobufLang(name string) *protobufLang {
 	return &protobufLang{
 		name:     name,
 		rules:    protoc.Rules(),

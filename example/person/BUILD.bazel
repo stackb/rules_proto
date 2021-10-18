@@ -18,8 +18,18 @@ proto_library(
 proto_closure_js_library(
     name = "person_closure_js_library",
     srcs = ["person.js"],
-    internal_descriptors = ["person-descriptor-set.proto.bin"],
+    internal_descriptors = [
+        "//example/person:person_proto",
+        "//example/place:place_proto",
+        "//example/thing:thing_proto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+    suppress = [
+        "JSC_IMPLICITLY_NONNULL_JSDOC",
+        "JSC_UNUSED_LOCAL_ASSIGNMENT",
+    ],
     visibility = ["//visibility:public"],
+    exports = ["//example/place:place_closure_js_library"],
     deps = ["//example/place:place_closure_js_library"],
 )
 
@@ -39,10 +49,7 @@ proto_cc_library(
     srcs = ["person.pb.cc"],
     hdrs = ["person.pb.h"],
     visibility = ["//visibility:public"],
-    deps = [
-        "//example/place:place_cc_library",
-        "@com_google_protobuf//:protobuf",
-    ],
+    deps = ["@com_google_protobuf//:protobuf"],
 )
 
 proto_compile(
@@ -91,10 +98,7 @@ proto_java_library(
         "//example/place:place_java_library",
         "@com_google_protobuf//:protobuf_java",
     ],
-    deps = [
-        "//example/place:place_java_library",
-        "@com_google_protobuf//:protobuf_java",
-    ],
+    deps = ["@com_google_protobuf//:protobuf_java"],
 )
 
 proto_compile(
@@ -108,10 +112,7 @@ proto_py_library(
     name = "person_py_library",
     srcs = ["person_pb2.py"],
     visibility = ["//visibility:public"],
-    deps = [
-        "//example/place:place_py_library",
-        "@com_google_protobuf//:protobuf_python",
-    ],
+    deps = ["@com_google_protobuf//:protobuf_python"],
 )
 
 proto_compile(
@@ -126,14 +127,8 @@ proto_scala_library(
     name = "person_scala_library",
     srcs = ["person_scala.srcjar"],
     visibility = ["//visibility:public"],
-    exports = [
-        "//example/place:place_scala_library",
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
-    ],
-    deps = [
-        "//example/place:place_scala_library",
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
-    ],
+    exports = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
+    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
 )
 
 proto_compile(
@@ -156,5 +151,4 @@ proto_nodejs_library(
     name = "person_nodejs_library",
     srcs = ["person_pb.js"],
     visibility = ["//visibility:public"],
-    deps = ["//example/place:place_nodejs_library"],
 )

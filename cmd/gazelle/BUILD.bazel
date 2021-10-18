@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
 
 go_library(
     name = "gazelle_lib",
@@ -13,22 +13,22 @@ go_library(
         "update-repos.go",
         "wspace.go",
     ],
-    importpath = "github.com/bazelbuild/bazel-gazelle/cmd/gazelle",
+    importpath = "github.com/stackb/rules_proto/cmd/gazelle",
     tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
         "//language/protobuf",
-        "@bazel_gazelle//config",
-        "@bazel_gazelle//flag",
-        "@bazel_gazelle//label",
-        "@bazel_gazelle//language",
-        "@bazel_gazelle//language/go",
-        "@bazel_gazelle//language/proto",
-        "@bazel_gazelle//merger",
-        "@bazel_gazelle//repo",
-        "@bazel_gazelle//resolve",
-        "@bazel_gazelle//rule",
-        "@bazel_gazelle//walk",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//flag:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//language:go_default_library",
+        "@bazel_gazelle//language/go:go_default_library",
+        "@bazel_gazelle//language/proto:go_default_library",
+        "@bazel_gazelle//merger:go_default_library",
+        "@bazel_gazelle//repo:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+        "@bazel_gazelle//walk:go_default_library",
         "@com_github_pmezard_go_difflib//difflib",
     ],
 )
@@ -37,4 +37,19 @@ go_binary(
     name = "gazelle",
     embed = [":gazelle_lib"],
     visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "gazelle_test",
+    srcs = [
+        "diff_test.go",
+        "fix_test.go",
+        "integration_test.go",
+    ],
+    embed = [":gazelle_lib"],
+    deps = [
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//testtools:go_default_library",
+        "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+    ],
 )
