@@ -88,8 +88,6 @@ func (s *ClosureJsLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		newRule.SetAttr("visibility", visibility)
 	}
 
-	// newRule.SetAttr("lenient", true)
-
 	newRule.SetAttr("suppress", []string{
 		"JSC_IMPLICITLY_NONNULL_JSDOC",
 		"JSC_UNUSED_LOCAL_ASSIGNMENT",

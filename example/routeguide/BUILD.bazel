@@ -149,7 +149,10 @@ grpc_java_library(
         ":routeguide_java_library",
         "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java",
     ],
-    deps = ["@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java"],
+    deps = [
+        ":routeguide_java_library",
+        "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java",
+    ],
 )
 
 proto_compile(

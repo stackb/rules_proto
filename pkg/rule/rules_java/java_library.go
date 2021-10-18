@@ -14,10 +14,10 @@ import (
 
 var javaLibraryKindInfo = rule.KindInfo{
 	MergeableAttrs: map[string]bool{
-		"srcs":       true,
-		"deps":       true,
-		"visibility": true,
+		"srcs":    true,
+		"exports": true,
 	},
+	ResolveAttrs: map[string]bool{"deps": true},
 }
 
 // JavaLibrary implements RuleProvider for 'cc_library'-derived rules.
@@ -90,6 +90,9 @@ func (s *JavaLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 
 // Imports implements part of the RuleProvider interface.
 func (s *JavaLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
+		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+	}
 	return nil
 }
 

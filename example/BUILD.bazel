@@ -25,7 +25,8 @@
 # gazelle:proto_rule proto_go_library visibility //visibility:public
 # gazelle:proto_language go plugin protoc-gen-go
 # gazelle:proto_language go rule proto_compile
-# gazelle:proto_language go rule proto_go_library
+## Hold off on proto_go_library until we upgrade the deps of this repo
+## gazelle:proto_language go rule proto_go_library
 
 ## Java ##
 # gazelle:proto_plugin java implementation builtin:java

@@ -165,7 +165,7 @@ func (r *resolver) SaveFile(filename, repoName string) error {
 func (r *resolver) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp resolve.ImportSpec, lang string) []resolve.FindResult {
 	res := r.Resolve(lang, imp.Lang, imp.Imp)
 	if r.options.Debug {
-		r.options.Printf("cross-resolve", lang, imp.Lang, imp.Imp, len(res), "results")
+		r.options.Printf("cross-resolve %s %s %s (%d results)", lang, imp.Lang, imp.Imp, len(res))
 	}
 	return res
 }
@@ -174,12 +174,12 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 	key := langKey(lang, impLang)
 	known := r.known[key]
 	if known == nil {
-		if r.options.Debug {
-			r.options.Printf("resolve key %q miss: %+v", key, known)
-		}
 		known = r.known[lang]
 	}
 	if known == nil {
+		if r.options.Debug {
+			r.options.Printf("resolve miss %s: no records under language %q", imp, key)
+		}
 		return nil
 	}
 	if got, ok := known[imp]; ok {
