@@ -13,6 +13,7 @@ type Config struct {
 	TestOut     string
 	MarkdownOut string
 	WorkspaceIn string
+	StripPrefix string
 	Files       []string
 }
 

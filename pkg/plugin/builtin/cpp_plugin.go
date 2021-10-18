@@ -26,5 +26,6 @@ func (p *CppPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigura
 			protoc.Always,
 			ctx.ProtoLibrary.Files()...,
 		),
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }

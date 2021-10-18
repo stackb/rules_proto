@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func generateMarkdown(c *Config) error {
@@ -103,7 +104,11 @@ func generateTest(c *Config) error {
 			continue
 		}
 
-		fmt.Fprintf(f, "-- %s --\n", filepath.Base(dst))
+		dstFilename := filepath.Base(dst)
+		if c.StripPrefix != "" {
+			dstFilename = stripRel(c.StripPrefix, dst)
+		}
+		fmt.Fprintf(f, "-- %s --\n", dstFilename)
 		// if dst == "WORKSPACE" {
 		// 	fmt.Fprintln(f, workspace)
 		// 	continue
@@ -151,4 +156,13 @@ func printFileBlock(name, syntax, filename string, out io.Writer) error {
 	fmt.Fprintf(out, "~~~\n\n")
 
 	return nil
+}
+
+// stripRel removes the rel prefix from a filename (if has matching prefix)
+func stripRel(rel string, filename string) string {
+	if !strings.HasPrefix(filename, rel) {
+		return filename
+	}
+	filename = filename[len(rel):]
+	return strings.TrimPrefix(filename, "/")
 }

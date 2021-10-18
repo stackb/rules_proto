@@ -6,7 +6,9 @@ go_library(
     importpath = "github.com/stackb/rules_proto/pkg/plugin/grpc/grpcgo",
     visibility = ["//visibility:public"],
     deps = [
+        "//pkg/plugin/golang/protobuf",
         "//pkg/protoc",
         "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
     ],
 )

@@ -6,7 +6,13 @@ import (
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
+)
+
+const (
+	// ProtoLibraryKey stores the ProtoLibrary implementation for a rule.
+	ProtoLibraryKey = "_proto_library"
 )
 
 func init() {
@@ -71,13 +77,13 @@ func (s *protoCompileRule) Name() string {
 	return fmt.Sprintf("%s_%s_compile", s.config.Library.BaseName(), s.config.Prefix)
 }
 
-// Visibility implements part of the ruleProvider interface.
+// Visibility provides visibility labels.
 func (s *protoCompileRule) Visibility() []string {
 	return nil // TODO: visibility feature?
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *protoCompileRule) Rule() *rule.Rule {
+func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	outputs := s.config.Outputs
@@ -95,11 +101,6 @@ func (s *protoCompileRule) Rule() *rule.Rule {
 		newRule.SetAttr("mappings", MakeStringDict(s.config.Mappings))
 	}
 
-	options := GetPluginOptions(s.config.Plugins)
-	if len(options) > 0 {
-		newRule.SetAttr("options", MakeStringListDict(options))
-	}
-
 	outs := GetPluginOuts(s.config.Plugins)
 	if len(outs) > 0 {
 		newRule.SetAttr("outs", MakeStringDict(outs))
@@ -108,6 +109,15 @@ func (s *protoCompileRule) Rule() *rule.Rule {
 	return newRule
 }
 
+// Imports implements part of the RuleProvider interface.
+func (s *protoCompileRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	return nil
+}
+
 // Resolve implements part of the RuleProvider interface.
-func (s *protoCompileRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func (s *protoCompileRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+	options := GetPluginOptions(s.config.Plugins, r, from)
+	if len(options) > 0 {
+		r.SetAttr("options", MakeStringListDict(options))
+	}
 }

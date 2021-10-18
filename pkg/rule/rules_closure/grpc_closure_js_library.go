@@ -3,6 +3,7 @@ package rules_closure
 import (
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -51,11 +52,10 @@ func (s *grpcClosureJsLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *p
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver: func(impl protoc.DepsProvider, pc *protoc.ProtocConfiguration, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+		Resolver: func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 			protoDep := ":" + pc.Library.BaseName() + ProtoClosureJsLibraryRuleSuffix
 
-			deps := impl.Deps()
-			deps = append(deps, protoDep)
+			deps := append(r.AttrStrings("deps"), protoDep)
 
 			if len(deps) > 0 {
 				r.SetAttr("deps", deps)

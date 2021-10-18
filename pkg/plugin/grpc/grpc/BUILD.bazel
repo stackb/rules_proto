@@ -15,6 +15,7 @@ go_library(
 go_test(
     name = "grpc_test",
     srcs = [
+        "grpc_test.go",
         "protoc-gen-grpc-python_test.go",
     ],
     data = [

@@ -14,42 +14,42 @@ func TestMergeSources(t *testing.T) {
 		"root package, simple case": {
 			rel: "",
 			plugins: withPluginConfigurations(&PluginConfiguration{
-				Outputs: withOutputs("foo.py"),
+				Outputs: listOf("foo.py"),
 			}),
-			wantOutputs: withOutputs("foo.py"),
+			wantOutputs: listOf("foo.py"),
 		},
 		"root package, go_package case": {
 			rel: "",
 			plugins: withPluginConfigurations(&PluginConfiguration{
-				Outputs:  withOutputs("foo.py"),
+				Outputs:  listOf("foo.py"),
 				Mappings: map[string]string{"foo.py": "com/github/example/foo.py"},
 			}),
-			wantOutputs:  withOutputs("foo.py"),
+			wantOutputs:  listOf("foo.py"),
 			wantMappings: map[string]string{"foo.py": "com/github/example/foo.py"},
 		},
 		"child package, simple case": {
 			rel: "test/proto",
 			plugins: withPluginConfigurations(&PluginConfiguration{
-				Outputs: withOutputs("test/proto/foo.py"),
+				Outputs: listOf("test/proto/foo.py"),
 			}),
-			wantOutputs: withOutputs("foo.py"),
+			wantOutputs: listOf("foo.py"),
 		},
 		"child package, mapped case": {
 			rel: "test/proto",
 			plugins: withPluginConfigurations(&PluginConfiguration{
-				Outputs: withOutputs("foo.py"),
+				Outputs: listOf("foo.py"),
 			}),
-			wantOutputs:  withOutputs("foo.py"),
+			wantOutputs:  listOf("foo.py"),
 			wantMappings: map[string]string{"foo.py": "foo.py"},
 		},
 		"external workspace, mapped case": {
 			workDir: "/path/to/external/googleapis",
 			rel:     "test/proto",
 			plugins: withPluginConfigurations(&PluginConfiguration{
-				Outputs: withOutputs("foo.py"),
+				Outputs: listOf("foo.py"),
 			}),
-			wantOutputs:  withOutputs("foo.py"),
-			wantMappings: map[string]string{"foo.py": "external/googleapis/foo.py"},
+			wantOutputs:  listOf("foo.py"),
+			wantMappings: map[string]string{"foo.py": "foo.py"},
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
@@ -80,6 +80,6 @@ func withPluginConfigurations(cc ...*PluginConfiguration) []*PluginConfiguration
 	return cc
 }
 
-func withOutputs(ss ...string) []string {
+func listOf(ss ...string) []string {
 	return ss
 }

@@ -16,6 +16,9 @@ limitations under the License.
 */
 
 import (
+	"bufio"
+	"bytes"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -29,18 +32,33 @@ import (
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 
+var doCleanup = true
+
 // GoldenTests is a helper for running glob(["testdata/**"]) style test setups.
 type GoldenTests struct {
 	extensionDir string
 	testDataPath string
+	extraArgs    []string
+}
+
+type GoldenTestOption func(*GoldenTests)
+
+func WithExtraArgs(args ...string) GoldenTestOption {
+	return func(g *GoldenTests) {
+		g.extraArgs = args
+	}
 }
 
 // FromDir construct a GoldenTests tester that searches the given directory.
-func FromDir(extensionDir string) *GoldenTests {
-	return &GoldenTests{
+func FromDir(extensionDir string, options ...GoldenTestOption) *GoldenTests {
+	test := &GoldenTests{
 		extensionDir: extensionDir,
 		testDataPath: path.Join(extensionDir, "testdata") + "/",
 	}
+	for _, opt := range options {
+		opt(test)
+	}
+	return test
 }
 
 func (g *GoldenTests) Run(t *testing.T, gazelleName string) {
@@ -86,6 +104,7 @@ func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []b
 	t.Run(name, func(t *testing.T) {
 		var inputs []testtools.FileSpec
 		var goldens []testtools.FileSpec
+		extraArgs := g.extraArgs
 
 		for _, f := range files {
 			path := f.Path
@@ -104,6 +123,11 @@ func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []b
 			content, err := ioutil.ReadFile(path)
 			if err != nil {
 				t.Errorf("ioutil.ReadFile(%q) error: %v", path, err)
+			}
+
+			if shortPath == ".gazelle.args" {
+				extraArgs = append(extraArgs, parseArgsFile(bytes.NewReader(content))...)
+				continue
 			}
 
 			// Now trim the common prefix off.
@@ -130,12 +154,13 @@ func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []b
 		}
 
 		dir, cleanup := testtools.CreateFiles(t, inputs)
-		// if false {
-		defer cleanup()
-		// }
+		if doCleanup {
+			defer cleanup()
+		}
 
 		t.Log("running test dir:", dir)
-		cmd := exec.Command(gazellePath, "-build_file_name=BUILD")
+		args := append([]string{"-build_file_name=BUILD"}, extraArgs...)
+		cmd := exec.Command(gazellePath, args...)
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		cmd.Dir = dir
@@ -152,7 +177,7 @@ func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []b
 				if err != nil {
 					return err
 				}
-				t.Log("failed file list>", path)
+				t.Log("file:", path)
 				return nil
 			})
 		}
@@ -178,4 +203,17 @@ func listFiles(dir string) error {
 		log.Println(path)
 		return nil
 	})
+}
+
+func parseArgsFile(in io.Reader) []string {
+	args := make([]string, 0)
+	scanner := bufio.NewScanner(in)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.HasPrefix(line, "#") {
+			continue
+		}
+		args = append(args, line)
+	}
+	return args
 }

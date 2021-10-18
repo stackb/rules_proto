@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -16,7 +17,7 @@ type OtherProtoLibrary struct {
 	files  []*File
 }
 
-// NewOtherProtoLibrary returns a pointer to a new struct.
+// NewOtherProtoLibrary constructs a new ProtoLibrary implementation.
 func NewOtherProtoLibrary(source *rule.File, rule *rule.Rule, files ...*File) *OtherProtoLibrary {
 	return &OtherProtoLibrary{source, rule, files}
 }
@@ -50,9 +51,24 @@ func (s *OtherProtoLibrary) Deps() []string {
 	return s.rule.AttrStrings("deps")
 }
 
+// Imports implements part of the ProtoLibrary interface
+func (s *OtherProtoLibrary) Imports() []string {
+	// Not supposed to be using this private attr, but...
+	importRaw := s.rule.PrivateAttr(config.GazelleImportsKey)
+	if v, ok := importRaw.([]string); ok {
+		return v
+	}
+	return nil
+}
+
 // Srcs returns the srcs attribute
 func (s *OtherProtoLibrary) Srcs() []string {
 	return s.rule.AttrStrings("srcs")
+	// srcs := make([]string, len(s.files))
+	// for _, f := range s.files {
+	// 	srcs = append(srcs, path.Join(f.Dir, f.Basename))
+	// }
+	// return srcs
 }
 
 // StripImportPrefix implements part of the ProtoLibrary interface

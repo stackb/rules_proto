@@ -7,8 +7,15 @@ plugins:
     implementation: builtin:java
   - name: protoc-gen-go
     implementation: golang:protobuf:protoc-gen-go
+    deps:
+      - "@org_golang_google_protobuf//reflect/protoreflect"
+      - "@org_golang_google_protobuf//runtime/protoimpl"
   - name: protoc-gen-go-grpc
     implementation: grpc:grpc-go:protoc-gen-go-grpc
+    deps:
+      - "@org_golang_google_grpc//:go_default_library",
+      - "@org_golang_google_grpc//codes",
+      - "@org_golang_google_grpc//status",
 rules:
   - name: proto_compile
     implementation: stackb:rules_proto:proto_compile
@@ -32,11 +39,8 @@ rules:
     visibility:
       -  //visibility:public
     resolves:
-      - "google/protobuf/(descriptor|plugin).proto @org_golang_google_protobuf//types/${1}pb"
       - "google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/${1}pb"
-    deps:
-      - "@org_golang_google_protobuf//reflect/protoreflect"
-      - "@org_golang_google_protobuf//runtime/protoimpl"
+      - "google/protobuf/(descriptor|plugin).proto @org_golang_google_protobuf//types/${1}pb"
 languages:
   - name: cpp
     plugins:

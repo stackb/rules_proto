@@ -2,6 +2,7 @@ package protoc
 
 import (
 	"fmt"
+	// "log"
 	"regexp"
 	"strings"
 )
@@ -43,8 +44,10 @@ func ResolveRewrites(rewrites []Rewrite, in string) string {
 	}
 	for _, rw := range rewrites {
 		if match := rw.ReplaceAll(in); match != "" {
+			// log.Printf("SUCCESS match rewrite %q for %v", in, rw)
 			return match
 		}
+		// log.Printf("failed to match rewrite %q for %v", in, rw)
 	}
 	return ""
 }

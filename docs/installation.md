@@ -76,9 +76,9 @@ gazelle_binary(
     name = "gazelle",
     languages = [
         # NOTE: order matters here
-        "@bazel_gazelle//language/go",
         "@bazel_gazelle//language/proto",
         "@build_stack_rules_proto//language/protobuf",
+        "@bazel_gazelle//language/go",
         "//gazelle/language/foo",
     ],
 )

@@ -408,34 +408,33 @@ proto_dependency(
     symlink_node_modules = False,
 )
 
-# Branch: master
-# Commit: 56cb92640e02fe9d354d46087211abfbd6300b06
-# Date: 2021-09-15 22:22:55 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_closure/commit/56cb92640e02fe9d354d46087211abfbd6300b06
+# Commit: 42195b5ca136f78d28819ef486e3a7b02ad45146
+# Date: 2021-10-18 20:50:52 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_closure/commit/42195b5ca136f78d28819ef486e3a7b02ad45146
 #
-# Bump guava to 30.1.1 (#531)
-# Size: 468715 (469 kB)
+# additional suppressions for closure_js_test
+# Size: 454706 (455 kB)
 proto_dependency(
     name = "io_bazel_rules_closure",
     repository_rule = "http_archive",
-    sha256 = "825da2c522405cb5fa6279b051c9f5a1b052c03938a3cf738df393aaada335aa",
-    strip_prefix = "rules_closure-56cb92640e02fe9d354d46087211abfbd6300b06",
-    urls = ["https://github.com/bazelbuild/rules_closure/archive/56cb92640e02fe9d354d46087211abfbd6300b06.tar.gz"],
+    sha256 = "00d492551233d7548ca2a983f4e19d6aabb0bc716957ade62d691baf1dcef374",
+    strip_prefix = "rules_closure-42195b5ca136f78d28819ef486e3a7b02ad45146",
+    urls = ["https://github.com/bazelbuild/rules_closure/archive/42195b5ca136f78d28819ef486e3a7b02ad45146.tar.gz"],
 )
 
 # Branch: master
-# Commit: 349d42b41fc52cb4c0a91662961b9ecff9201396
-# Date: 2021-09-20 23:52:25 +0000 UTC
-# URL: https://github.com/stackb/grpc.js/commit/349d42b41fc52cb4c0a91662961b9ecff9201396
+# Commit: c938ee76ee462abf4f83d758f63d52f03fa24c7c
+# Date: 2021-10-18 20:45:40 +0000 UTC
+# URL: https://github.com/stackb/grpc.js/commit/c938ee76ee462abf4f83d758f63d52f03fa24c7c
 #
-# Update suppress for stricter compiler
-# Size: 30616 (31 kB)
+# Remove deprecated goog.bind (#13)
+# Size: 30644 (31 kB)
 proto_dependency(
     name = "com_github_stackb_grpc_js",
     repository_rule = "http_archive",
-    sha256 = "ac90cd56d28ea3841e97ad18fe50ac5dce04120e3b91116d5c3ffc21bc33c098",
-    strip_prefix = "grpc.js-349d42b41fc52cb4c0a91662961b9ecff9201396",
-    urls = ["https://github.com/stackb/grpc.js/archive/349d42b41fc52cb4c0a91662961b9ecff9201396.tar.gz"],
+    sha256 = "33042aa893625ec5bf6d59bf38b3954e5558b7e549b1cb2eeee66cd2ccf8ab29",
+    strip_prefix = "grpc.js-c938ee76ee462abf4f83d758f63d52f03fa24c7c",
+    urls = ["https://github.com/stackb/grpc.js/archive/c938ee76ee462abf4f83d758f63d52f03fa24c7c.tar.gz"],
 )
 
 # Release: @grpc/proto-loader@0.6.5

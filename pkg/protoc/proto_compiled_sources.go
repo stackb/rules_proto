@@ -6,6 +6,7 @@ import (
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -69,7 +70,7 @@ func (s *protoCompiledSourcesRule) Name() string {
 	return fmt.Sprintf("%s_%s_compiled_sources", s.config.Library.BaseName(), s.config.Prefix)
 }
 
-// Visibility implements part of the ruleProvider interface.
+// Visibility provides visibility labels.
 func (s *protoCompiledSourcesRule) Visibility() []string {
 	visibility := make([]string, 0)
 	for k, want := range s.ruleConfig.Visibility {
@@ -83,7 +84,7 @@ func (s *protoCompiledSourcesRule) Visibility() []string {
 }
 
 // Rule implements part of the ruleProvider interface.
-func (s *protoCompiledSourcesRule) Rule() *rule.Rule {
+func (s *protoCompiledSourcesRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	outputs := s.config.Outputs
@@ -101,11 +102,6 @@ func (s *protoCompiledSourcesRule) Rule() *rule.Rule {
 		newRule.SetAttr("mappings", MakeStringDict(s.config.Mappings))
 	}
 
-	options := GetPluginOptions(s.config.Plugins)
-	if len(options) > 0 {
-		newRule.SetAttr("options", MakeStringListDict(options))
-	}
-
 	outs := GetPluginOuts(s.config.Plugins)
 	if len(outs) > 0 {
 		newRule.SetAttr("outs", MakeStringDict(outs))
@@ -119,6 +115,15 @@ func (s *protoCompiledSourcesRule) Rule() *rule.Rule {
 	return newRule
 }
 
+// Imports implements part of the RuleProvider interface.
+func (s *protoCompiledSourcesRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	return nil
+}
+
 // Resolve implements part of the RuleProvider interface.
-func (s *protoCompiledSourcesRule) Resolve(c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func (s *protoCompiledSourcesRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+	options := GetPluginOptions(s.config.Plugins, r, from)
+	if len(options) > 0 {
+		r.SetAttr("options", MakeStringListDict(options))
+	}
 }

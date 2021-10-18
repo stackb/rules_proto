@@ -30,5 +30,6 @@ func (p *GrpcGrpcCppPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginC
 			protoc.HasService,
 			ctx.ProtoLibrary.Files()...,
 		),
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }

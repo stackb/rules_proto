@@ -76,7 +76,7 @@ def _proto_repository_tools_impl(ctx):
         if result.return_code:
             fail("list_repository_tools_srcs: " + result.stderr)
 
-    # Build the tools.
+    # Build the tools
     args = [
         go_tool,
         "install",

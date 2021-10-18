@@ -11,17 +11,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-""""""
+
+"""definitions for go_bazel_test
+"""
 
 load("//go:def.bzl", "go_test")
 
 def go_bazel_test(rule_files = None, **kwargs):
-    """go_bazel_test is a wrapper for go_test that simplifies the use of //go/tools/bazel_testing:go_default_library.
+    """go_bazel_test is a wrapper for go_test
+
+    This simplifies the use of //go/tools/bazel_testing:go_default_library. Tests may be written
+    that don't explicitly depend on bazel_testing or rules_go files.
 
     Args:
-        rule_files: all the files to be copied to the output base
-        **kwargs: rest
-
+        rule_files: label pointing to all rules that should be gathered for the test
+        **kwargs: arguments for go_test
     """
 
     if not rule_files:

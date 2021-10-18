@@ -30,8 +30,6 @@ gazelle_binary(
 
 gazelle(
     name = "gazelle",
-    # example usage of -proto_language_config_file:
-    # args = [ "-proto_language_config_file=example/config.yaml", ],
     gazelle = ":gazelle-protobuf",
 )
 

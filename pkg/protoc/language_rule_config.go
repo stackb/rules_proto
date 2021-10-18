@@ -14,6 +14,10 @@ type LanguageRuleConfig struct {
 	Config *config.Config
 	// Deps is a mapping from label to +/- intent.
 	Deps map[string]bool
+	// Options is a generic key -> value string mapping.  Various rule
+	// implementations are free to document/interpret options in an
+	// implementation-dependenct manner.
+	Options map[string]bool
 	// Resolves is a mapping from resolve mapping spec to rewrite.  Negative
 	// intent is represented by the empty rewrite value.
 	Resolves []Rewrite
@@ -29,14 +33,15 @@ type LanguageRuleConfig struct {
 	Visibility map[string]bool
 }
 
-// newLanguageRuleConfig returns a pointer to a new LanguageRule config with the
+// NewLanguageRuleConfig returns a pointer to a new LanguageRule config with the
 // 'Enabled' bit set to true.
-func newLanguageRuleConfig(config *config.Config, name string) *LanguageRuleConfig {
+func NewLanguageRuleConfig(config *config.Config, name string) *LanguageRuleConfig {
 	return &LanguageRuleConfig{
 		Config:     config,
 		Name:       name,
 		Enabled:    true,
 		Deps:       make(map[string]bool),
+		Options:    make(map[string]bool),
 		Resolves:   make([]Rewrite, 0),
 		Visibility: make(map[string]bool),
 	}
@@ -55,6 +60,19 @@ func (c *LanguageRuleConfig) GetDeps() []string {
 	return deps
 }
 
+// GetOptions returns the rule options.
+func (c *LanguageRuleConfig) GetOptions() []string {
+	opts := make([]string, 0)
+	for opt, want := range c.Options {
+		if !want {
+			continue
+		}
+		opts = append(opts, opt)
+	}
+	sort.Strings(opts)
+	return opts
+}
+
 // GetRewrites returns a copy of the resolve mappings
 func (c *LanguageRuleConfig) GetRewrites() []Rewrite {
 	return c.Resolves[:]
@@ -62,11 +80,14 @@ func (c *LanguageRuleConfig) GetRewrites() []Rewrite {
 
 // clone copies this config to a new one
 func (c *LanguageRuleConfig) clone() *LanguageRuleConfig {
-	clone := newLanguageRuleConfig(c.Config, c.Name)
+	clone := NewLanguageRuleConfig(c.Config, c.Name)
 	clone.Enabled = c.Enabled
 	clone.Implementation = c.Implementation
 	for k, v := range c.Deps {
 		clone.Deps[k] = v
+	}
+	for k, v := range c.Options {
+		clone.Options[k] = v
 	}
 	clone.Resolves = c.Resolves[:]
 	for k, v := range c.Visibility {
@@ -91,6 +112,12 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 			return fmt.Errorf("invalid resolve rewrite %s: %w", value, err)
 		}
 		c.Resolves = append(c.Resolves, *rw)
+	case "option":
+		if intent.Want {
+			c.Options[value] = true
+		} else {
+			delete(c.Options, value)
+		}
 	case "visibility":
 		c.Visibility[value] = intent.Want
 	case "implementation":
@@ -108,6 +135,10 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 	return nil
 }
 
+func (c *LanguageRuleConfig) addRewrite(r Rewrite) {
+	c.Resolves = append([]Rewrite{r}, c.Resolves...)
+}
+
 // fromYAML loads configuration from the yaml rule confug.
 func (c *LanguageRuleConfig) fromYAML(y *YRule) error {
 	if c.Name != y.Name {
@@ -117,20 +148,21 @@ func (c *LanguageRuleConfig) fromYAML(y *YRule) error {
 	for _, dep := range y.Deps {
 		c.Deps[dep] = true
 	}
+	for _, opt := range y.Option {
+		c.Options[opt] = true
+	}
 	for _, resolve := range y.Resolves {
 		rw, err := ParseRewrite(resolve)
 		if err != nil {
 			return fmt.Errorf("invalid resolve rewrite %s: %w", resolve, err)
 		}
-		c.Resolves = append(c.Resolves, *rw)
+		c.addRewrite(*rw)
 	}
 	for _, v := range y.Visibility {
 		c.Visibility[v] = true
 	}
 	if y.Enabled != nil {
 		c.Enabled = *y.Enabled
-	} else {
-		c.Enabled = true
 	}
 	return nil
 }

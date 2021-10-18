@@ -5,7 +5,7 @@ import "testing"
 type languageRuleConfigCheck func(t *testing.T, cfg *LanguageRuleConfig)
 
 func TestLanguageRuleConfigClone(t *testing.T) {
-	a := newLanguageRuleConfig(nil, "proto_compile")
+	a := NewLanguageRuleConfig(nil, "proto_compile")
 	a.Deps = map[string]bool{
 		"d1": true,
 		"d2": true,

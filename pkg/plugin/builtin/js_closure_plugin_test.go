@@ -17,6 +17,7 @@ func TestJsClosurePlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithOutputs("test.js"),
+				plugintest.WithOptions("import_style=closure", "library=test"),
 			),
 		},
 		"only services": {
@@ -27,6 +28,7 @@ func TestJsClosurePlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithOutputs("test.js"),
+				plugintest.WithOptions("import_style=closure", "library=test"),
 			),
 		},
 		"single message & enum": {
@@ -37,6 +39,7 @@ func TestJsClosurePlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithOutputs("test.js"),
+				plugintest.WithOptions("import_style=closure", "library=test"),
 			),
 		},
 		"with a package": {
@@ -47,6 +50,7 @@ func TestJsClosurePlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithOutputs("test.js"),
+				plugintest.WithOptions("import_style=closure", "library=test"),
 			),
 		},
 		"relative directory": {
@@ -58,6 +62,7 @@ func TestJsClosurePlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithOutputs("rel/test.js"),
+				plugintest.WithOptions("import_style=closure", "library=rel/test"),
 			),
 		},
 	})

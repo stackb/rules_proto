@@ -183,6 +183,7 @@ def _proto_compile_impl(ctx):
 
         # const <?File> Add plugin executable if not a built-in plugin
         plugin_tool = plugin.tool if plugin.tool else None
+        is_builtin = plugin.tool == None
 
         # Add plugin runfiles if plugin has a tool
         if plugin_tool:
@@ -213,11 +214,12 @@ def _proto_compile_impl(ctx):
 
         # const <list<string>>
         opts = plugin.options + [opt for opt in options.get(_plugin_label_key(plugin.label), [])]
-        if opts:
-            if plugin.separate_options_flag:
-                args.append("--{}_opt={}".format(plugin_name, ",".join(opts)))
-            else:
-                out = "{}:{}".format(",".join(opts), out)
+        if is_builtin:
+            # builtins can't use the --opt flags
+            out = "{}:{}".format(",".join(opts), out)
+        else:
+            for opt in opts:
+                args.append("--{}_opt={}".format(plugin_name, opt))
 
         # override with the out configured on the rule if specified
         plugin_out = outs.get(_plugin_label_key(plugin.label), None)
@@ -256,6 +258,7 @@ def _proto_compile_impl(ctx):
 
     replaced_args = _ctx_replace_args(ctx, _uniq(args))
     final_args = ctx.actions.args()
+    final_args.use_param_file("@%s")
     final_args.add_all(replaced_args)
 
     ###
@@ -272,15 +275,19 @@ def _proto_compile_impl(ctx):
         after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find . -type f"]
         commands = before + commands + after
 
-    # if the rule declares any mappings, setup copy file actions for them now
-    for basename, intermediate_filename in ctx.attr.mappings.items():
-        # keyname = basename + srcgen_ext
-        # basename + srcgen_ext
-        intermediate_filename = "/".join([ctx.bin_dir.path, intermediate_filename])
-        output = outputs_by_basename.get(basename, None)
-        if not output:
-            fail("the mapped file '%s' was not listed in outputs" % basename)
-        commands.append("cp '{}' '{}'".format(intermediate_filename, output.path))
+    # if the rule declares any mappings, setup copy file commands to move them into place
+    if len(ctx.attr.mappings) > 0:
+        out_dir = ctx.bin_dir.path
+        if ctx.label.workspace_root:
+            out_dir = "/".join([out_dir, ctx.label.workspace_root])
+        for basename, intermediate_filename in ctx.attr.mappings.items():
+            # keyname = basename + srcgen_ext
+            # basename + srcgen_ext
+            intermediate_filename = "/".join([out_dir, intermediate_filename])
+            output = outputs_by_basename.get(basename, None)
+            if not output:
+                fail("the mapped file '%s' was not listed in outputs" % basename)
+            commands.append("cp '{}' '{}'".format(intermediate_filename, output.path))
 
     # if there are any mods to apply, set those up now
     for suffix, action in mods.items():

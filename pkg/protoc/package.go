@@ -2,9 +2,16 @@ package protoc
 
 import (
 	"log"
+	"path"
 	"sort"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
+	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
+)
+
+const (
+	ruleProviderKey = "_x_rule_provider"
 )
 
 // Package provides a set of proto_library derived rules for the package.
@@ -17,15 +24,18 @@ type Package struct {
 	libs []ProtoLibrary
 	// computed providers
 	gen, empty []RuleProvider
+	// ruleLibs records the ProtoLibrary a RuleProvider was built on.
+	ruleLibs map[RuleProvider]ProtoLibrary
 }
 
 // NewPackage constructs a Package given a list of proto_library rules
 // in the package.
 func NewPackage(rel string, cfg *PackageConfig, libs ...ProtoLibrary) *Package {
 	s := &Package{
-		rel:  rel,
-		cfg:  cfg,
-		libs: libs,
+		rel:      rel,
+		cfg:      cfg,
+		libs:     libs,
+		ruleLibs: make(map[RuleProvider]ProtoLibrary),
 	}
 	s.gen = s.generateRules(true)
 	s.empty = s.generateRules(false)
@@ -85,14 +95,16 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 				plugin,
 			)
 		}
+		ctx.Plugin = impl
 
 		// Delegate to the implementation for configuration
 		config := impl.Configure(ctx)
 		if config == nil {
 			continue
 		}
+		config.Plugin = impl
 		config.Config = plugin.clone()
-		config.Options = DeduplicateAndSort(append(config.Options, plugin.GetOptions()...))
+		config.Options = DeduplicateAndSort(config.Options)
 
 		// plugin.Label overrides the default value from the implementation
 		if plugin.Label.Name != "" {
@@ -104,6 +116,11 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 
 	if len(configs) == 0 {
 		return nil
+	}
+
+	imports := make([]string, len(lib.Files()))
+	for i, file := range lib.Files() {
+		imports[i] = path.Join(file.Dir, file.Basename)
 	}
 
 	rules := make([]RuleProvider, 0)
@@ -137,28 +154,33 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			continue
 		}
 
+		s.ruleLibs[rule] = lib
+
 		rules = append(rules, rule)
 	}
 
 	return rules
 }
 
-// RuleProviders returns the list of generated rules.
-func (s *Package) RuleProviders() []RuleProvider {
-	return s.gen
+// RuleProvider returns the provider of a rule or nil if not known.
+func (s *Package) RuleProvider(r *rule.Rule) RuleProvider {
+	if provider, ok := r.PrivateAttr(ruleProviderKey).(RuleProvider); ok {
+		return provider
+	}
+	return nil
 }
 
 // Rules provides the aggregated rule list for the package.
 func (s *Package) Rules() []*rule.Rule {
-	return getProvidedRules(s.gen)
+	return s.getProvidedRules(s.gen, true)
 }
 
 // Empty names the rules that can be deleted.
 func (s *Package) Empty() []*rule.Rule {
-	rules := getProvidedRules(s.empty)
-
 	// it's a bit sad that we construct the full rules only for their kind and
 	// name, but that's how it is right now.
+	rules := s.getProvidedRules(s.empty, false)
+
 	empty := make([]*rule.Rule, len(rules))
 	for i, r := range rules {
 		empty[i] = rule.NewRule(r.Kind(), r.Name())
@@ -167,12 +189,51 @@ func (s *Package) Empty() []*rule.Rule {
 	return empty
 }
 
-func getProvidedRules(providers []RuleProvider) []*rule.Rule {
-	rules := make([]*rule.Rule, len(providers))
-	for i, p := range providers {
-		rules[i] = p.Rule()
+func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool) []*rule.Rule {
+	rules := make([]*rule.Rule, 0)
+	for _, p := range providers {
+		r := p.Rule(rules...)
+		if r == nil {
+			continue
+		}
+
+		if shouldResolve {
+			// record the association of the rule provider here for the resolver.
+			r.SetPrivateAttr(ruleProviderKey, p)
+
+			imports := r.PrivateAttr(config.GazelleImportsKey)
+			if imports == nil {
+				lib := s.ruleLibs[p]
+				r.SetPrivateAttr(ProtoLibraryKey, lib)
+				r.SetPrivateAttr(config.GazelleImportsKey, lib.Imports())
+			}
+
+			// NOTE: this is a bit of a hack: it would be preferable to populate
+			// the global resolver with import specs during the .Imports()
+			// function.  One would think that the RuleProvider could be set as
+			// a PrivateAttr to be retrieved in the Imports() function. However,
+			// the rule ref seems to have changed by that time, the PrivateAttr
+			// is removed.  Maybe this is due to rule merges?  Very difficult to
+			// track down bug that cost me days.
+			from := label.New("", s.rel, r.Name())
+			file := rule.EmptyFile("", s.rel)
+			provideResolverImportSpecs(s.cfg.config, p, r, file, from)
+		}
+
+		rules = append(rules, r)
 	}
 	return rules
+}
+
+func provideResolverImportSpecs(c *config.Config, provider RuleProvider, r *rule.Rule, f *rule.File, from label.Label) {
+	for _, imp := range provider.Imports(c, r, f) {
+		GlobalResolver().Provide(
+			"protobuf",
+			imp.Lang,
+			imp.Imp,
+			from,
+		)
+	}
 }
 
 // DeduplicateAndSort removes duplicate entries and sorts the list

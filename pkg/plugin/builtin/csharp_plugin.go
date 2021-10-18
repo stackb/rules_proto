@@ -29,7 +29,8 @@ func (p *CsharpPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfig
 			protoc.Always,
 			ctx.ProtoLibrary.Files()...,
 		),
-		Out: ctx.Rel,
+		Out:     ctx.Rel,
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }
 

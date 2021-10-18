@@ -16,7 +16,6 @@ ProtoPluginInfo = provider(
         "data": "Additional files required for running the plugin",
         "out": "The format for the --x_out argument.  Defaults to to {BIN_DIR}",
         "supplementary_proto_deps": "Additional proto dependencies whose descriptors/files should be included in all protoc invocations",
-        "separate_options_flag": "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",
         "deps": "The list of workspace dependencies for this plugin",
     },
 )

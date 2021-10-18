@@ -3,6 +3,7 @@ package rules_cc
 import (
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -52,9 +53,8 @@ func (s *grpcCcLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.P
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver: func(impl protoc.DepsProvider, pc *protoc.ProtocConfiguration, c *config.Config, r *rule.Rule, importsRaw interface{}, from label.Label) {
-			deps := impl.Deps()
-			deps = append(deps, ":"+pc.Library.BaseName()+ProtoCcLibraryRuleSuffix)
+		Resolver: func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+			deps := append(r.AttrStrings("deps"), ":"+pc.Library.BaseName()+ProtoCcLibraryRuleSuffix)
 
 			if len(deps) > 0 {
 				r.SetAttr("deps", deps)

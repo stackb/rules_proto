@@ -18,7 +18,7 @@ const (
 	// PluginDirective created an association between proto_lang
 	// and the label of a proto_plugin.
 	PluginDirective = "proto_plugin"
-	// prefixDirective is the same as 'gazelle:prefix'
+	// importpathPrefixDirective is the same as 'gazelle:prefix'
 	importpathPrefixDirective = "prefix"
 )
 
@@ -36,6 +36,14 @@ type PackageConfig struct {
 	rules map[string]*LanguageRuleConfig
 	// IMPORTANT! Adding new fields here?  Don't forget to copy it in the Clone
 	// method!
+}
+
+// GetPackageConfig returns the associated package config.
+func GetPackageConfig(config *config.Config) *PackageConfig {
+	if cfg, ok := config.Exts["protobuf"].(*PackageConfig); ok {
+		return cfg
+	}
+	return nil
 }
 
 // NewPackageConfig initializes a new PackageConfig.
@@ -158,7 +166,7 @@ func (c *PackageConfig) getOrCreateLanguagePluginConfig(name string) (*LanguageP
 func (c *PackageConfig) getOrCreateLanguageRuleConfig(config *config.Config, name string) (*LanguageRuleConfig, error) {
 	r, ok := c.rules[name]
 	if !ok {
-		r = newLanguageRuleConfig(config, name)
+		r = NewLanguageRuleConfig(config, name)
 		r.Implementation = name
 		c.rules[name] = r
 	}

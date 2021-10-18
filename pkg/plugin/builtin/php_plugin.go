@@ -29,7 +29,8 @@ func (p *PhpPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigura
 			protoc.Always,
 			ctx.ProtoLibrary.Files()...,
 		),
-		Out: ctx.Rel,
+		Out:     ctx.Rel,
+		Options: ctx.PluginConfig.GetOptions(),
 	}
 }
 

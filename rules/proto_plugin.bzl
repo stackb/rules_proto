@@ -21,7 +21,6 @@ def _proto_plugin_impl(ctx):
             mods = ctx.attr.mods,
             data = ctx.files.data,
             supplementary_proto_deps = [dep[ProtoInfo] for dep in ctx.attr.supplementary_proto_deps],
-            separate_options_flag = ctx.attr.separate_options_flag,
             deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
         ),
     ]
@@ -60,10 +59,6 @@ proto_plugin = rule(
             doc = "Additional proto files/descriptors to be placed on the argument list",
             allow_files = True,
             providers = [ProtoInfo],
-        ),
-        "separate_options_flag": attr.bool(
-            doc = "Flag to indicate if plugin options should be sent via the --{lang}_opts flag",
-            default = False,
         ),
         "deps": attr.label_list(
             doc = "Workspace dependencies the plugin tool requires",

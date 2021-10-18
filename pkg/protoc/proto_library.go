@@ -14,8 +14,12 @@ type ProtoLibrary interface {
 	BaseName() string
 	// Rule returns the underlying rule
 	Rule() *rule.Rule
+	// Srcs() returns the relative path of srcs, including args.Rel
+	Srcs() []string
 	// Deps lists all direct library dependencies.
 	Deps() []string
+	// Imports lists all direct library proto import filenames.
+	Imports() []string
 	// StripImportPrefix returns the strip_import_prefix or the empty string.
 	StripImportPrefix() string
 	// Files returns the list of proto files in the rule.

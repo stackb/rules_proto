@@ -11,4 +11,8 @@ type PluginContext struct {
 	PackageConfig PackageConfig
 	// PluginConfig is the configuration object associated with the plugin.
 	PluginConfig LanguagePluginConfig
+	// Plugin is a reference to the plugin implementation
+	Plugin Plugin
 }
+
+// type PluginContextResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label)

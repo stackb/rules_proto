@@ -1,10 +1,9 @@
 package grpcgo
 
 import (
-	"path"
-	"strings"
-
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/rule"
+	"github.com/stackb/rules_proto/pkg/plugin/golang/protobuf"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
@@ -25,9 +24,12 @@ func (p *ProtocGenGoGrpcPlugin) Configure(ctx *protoc.PluginContext) *protoc.Plu
 	if !p.shouldApply(ctx.ProtoLibrary) {
 		return nil
 	}
+	options := ctx.PluginConfig.GetOptions()
+	mappings, _ := protobuf.GetImportMappings(options)
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/grpc/grpc-go", "protoc-gen-go-grpc"),
-		Outputs: p.outputs(ctx.ProtoLibrary),
+		Outputs: p.outputs(ctx.ProtoLibrary, mappings),
+		Options: options,
 	}
 }
 
@@ -40,22 +42,17 @@ func (p *ProtocGenGoGrpcPlugin) shouldApply(lib protoc.ProtoLibrary) bool {
 	return false
 }
 
-func (p *ProtocGenGoGrpcPlugin) outputs(lib protoc.ProtoLibrary) []string {
+func (p *ProtocGenGoGrpcPlugin) outputs(lib protoc.ProtoLibrary, importMappings map[string]string) []string {
 	srcs := make([]string, 0)
 	for _, f := range lib.Files() {
 		if !f.HasServices() {
 			continue
 		}
-
-		base := f.Name
-		pkg := f.Package()
-		// see https://github.com/gogo/protobuf/blob/master/protoc-gen-gogo/generator/generator.go#L347
-		if goPackage, _, ok := protoc.GoPackageOption(f.Options()); ok {
-			base = path.Join(goPackage, base)
-		} else if pkg.Name != "" {
-			base = path.Join(strings.ReplaceAll(pkg.Name, ".", "/"), base)
-		}
-		srcs = append(srcs, base+"_grpc.pb.go")
+		srcs = append(srcs, protobuf.GetGoOutputBaseName(f, importMappings)+"_grpc.pb.go")
 	}
 	return srcs
+}
+
+func (p *ProtocGenGoGrpcPlugin) ResolvePluginOptions(cfg *protoc.PluginConfiguration, r *rule.Rule, from label.Label) []string {
+	return protobuf.ResolvePluginOptionsTransitive(cfg, r, from)
 }

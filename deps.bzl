@@ -84,24 +84,19 @@ def build_bazel_rules_swift():
     )
 
 def io_bazel_rules_closure():
-    # Branch: master
-    # Commit: 4c99be33856ce1b7b80f55a0e9a8345f559b6ef3
-    # Date: 2021-01-29 00:11:54 +0000 UTC
-    # URL: https://github.com/bazelbuild/rules_closure/commit/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3
+    # Commit: 2c59208867759800a37d0f008c3a4398af4c0cb2
+    # Date: 2021-10-18 15:15:18 +0000 UTC
+    # URL: https://github.com/bazelbuild/rules_closure/commit/2c59208867759800a37d0f008c3a4398af4c0cb2
     #
-    # CheckStrictDeps: resolve module paths against js module roots (#510)
-    #
-    # Added "es6_relative_imports_gen_srcs_bin" test case
-    #
-    # Tested against existing cases and compiling an external
-    # codebase with the change applied
-    # Size: 468337 (468 kB)
+    # Upgrade com_google_template_soy_jssrc to a1c02e60ae88ed1b7db92722ea25ac7d396514fc
+    # https://github.com/bazelbuild/rules_closure/pull/536
+    # Size: 453381 (453 kB)
     maybe(
         http_archive,
         name = "io_bazel_rules_closure",
-        sha256 = "4c98a6b8d2d81210f3e291b1c7c5034ab2e22e7870ab3e9603599c79833f7da3",
-        strip_prefix = "rules_closure-4c99be33856ce1b7b80f55a0e9a8345f559b6ef3",
-        urls = ["https://github.com/bazelbuild/rules_closure/archive/4c99be33856ce1b7b80f55a0e9a8345f559b6ef3.tar.gz"],
+        sha256 = "50096b6be0052055ba4f0577d8aa3d82adf077377ffa86e2b7a67a335442f01b",
+        strip_prefix = "rules_closure-2c59208867759800a37d0f008c3a4398af4c0cb2",
+        urls = ["https://github.com/bazelbuild/rules_closure/archive/2c59208867759800a37d0f008c3a4398af4c0cb2.tar.gz"],
     )
 
 def com_github_stackb_grpc_js():

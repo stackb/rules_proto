@@ -28,7 +28,7 @@ type Case struct {
 	Basename string
 	// The relative package path
 	Rel string
-	// The Configuration Name
+	// The configuration Name
 	PluginName string
 	// Optional directives for the package config
 	Directives []rule.Directive
@@ -93,6 +93,17 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 		want := tc.Configuration.Outputs[i]
 		if want != got {
 			t.Errorf("%T.Outputs[%d]: want %q, got %q", subject, i, want, got)
+		}
+	}
+
+	options := got.Options
+	if len(tc.Configuration.Options) != len(options) {
+		t.Fatalf("%T.Options: want %d, got %d (%v)", subject, len(tc.Configuration.Options), len(options), options)
+	}
+	for i, got := range options {
+		want := tc.Configuration.Options[i]
+		if want != got {
+			t.Errorf("%T.Options[%d]: want %q, got %q", subject, i, want, got)
 		}
 	}
 
