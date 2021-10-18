@@ -94,7 +94,6 @@ grpc_cc_library(
     hdrs = ["routeguide.grpc.pb.h"],
     visibility = ["//visibility:public"],
     deps = [
-        ":routeguide_cc_library",
         "@com_github_grpc_grpc//:grpc++",
         "@com_github_grpc_grpc//:grpc++_reflection",
     ],
@@ -150,10 +149,7 @@ grpc_java_library(
         ":routeguide_java_library",
         "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java",
     ],
-    deps = [
-        ":routeguide_java_library",
-        "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java",
-    ],
+    deps = ["@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java"],
 )
 
 proto_compile(
