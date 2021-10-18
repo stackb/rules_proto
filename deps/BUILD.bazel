@@ -408,19 +408,18 @@ proto_dependency(
     symlink_node_modules = False,
 )
 
-# Commit: 2c59208867759800a37d0f008c3a4398af4c0cb2
-# Date: 2021-10-18 15:15:18 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_closure/commit/2c59208867759800a37d0f008c3a4398af4c0cb2
+# Commit: 42195b5ca136f78d28819ef486e3a7b02ad45146
+# Date: 2021-10-18 20:50:52 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_closure/commit/42195b5ca136f78d28819ef486e3a7b02ad45146
 #
-# Upgrade com_google_template_soy_jssrc to a1c02e60ae88ed1b7db92722ea25ac7d396514fc
-# https://github.com/bazelbuild/rules_closure/pull/536
-# Size: 453381 (453 kB)
+# additional suppressions for closure_js_test
+# Size: 454706 (455 kB)
 proto_dependency(
     name = "io_bazel_rules_closure",
     repository_rule = "http_archive",
-    sha256 = "50096b6be0052055ba4f0577d8aa3d82adf077377ffa86e2b7a67a335442f01b",
-    strip_prefix = "rules_closure-2c59208867759800a37d0f008c3a4398af4c0cb2",
-    urls = ["https://github.com/bazelbuild/rules_closure/archive/2c59208867759800a37d0f008c3a4398af4c0cb2.tar.gz"],
+    sha256 = "00d492551233d7548ca2a983f4e19d6aabb0bc716957ade62d691baf1dcef374",
+    strip_prefix = "rules_closure-42195b5ca136f78d28819ef486e3a7b02ad45146",
+    urls = ["https://github.com/bazelbuild/rules_closure/archive/42195b5ca136f78d28819ef486e3a7b02ad45146.tar.gz"],
 )
 
 # Branch: master
