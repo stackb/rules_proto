@@ -408,19 +408,19 @@ proto_dependency(
     symlink_node_modules = False,
 )
 
-# Branch: master
-# Commit: 56cb92640e02fe9d354d46087211abfbd6300b06
-# Date: 2021-09-15 22:22:55 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_closure/commit/56cb92640e02fe9d354d46087211abfbd6300b06
+# Commit: 2c59208867759800a37d0f008c3a4398af4c0cb2
+# Date: 2021-10-18 15:15:18 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_closure/commit/2c59208867759800a37d0f008c3a4398af4c0cb2
 #
-# Bump guava to 30.1.1 (#531)
-# Size: 468715 (469 kB)
+# Upgrade com_google_template_soy_jssrc to a1c02e60ae88ed1b7db92722ea25ac7d396514fc
+# https://github.com/bazelbuild/rules_closure/pull/536
+# Size: 453381 (453 kB)
 proto_dependency(
     name = "io_bazel_rules_closure",
     repository_rule = "http_archive",
-    sha256 = "825da2c522405cb5fa6279b051c9f5a1b052c03938a3cf738df393aaada335aa",
-    strip_prefix = "rules_closure-56cb92640e02fe9d354d46087211abfbd6300b06",
-    urls = ["https://github.com/bazelbuild/rules_closure/archive/56cb92640e02fe9d354d46087211abfbd6300b06.tar.gz"],
+    sha256 = "50096b6be0052055ba4f0577d8aa3d82adf077377ffa86e2b7a67a335442f01b",
+    strip_prefix = "rules_closure-2c59208867759800a37d0f008c3a4398af4c0cb2",
+    urls = ["https://github.com/bazelbuild/rules_closure/archive/2c59208867759800a37d0f008c3a4398af4c0cb2.tar.gz"],
 )
 
 # Branch: master
