@@ -17,6 +17,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithOutputs("test_pb.js"),
+				plugintest.WithOptions("import_style=commonjs"),
 			),
 		},
 		"only services": {
@@ -27,6 +28,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithOutputs("test_pb.js"),
+				plugintest.WithOptions("import_style=commonjs"),
 			),
 		},
 		"single message & enum": {
@@ -37,6 +39,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithOutputs("test_pb.js"),
+				plugintest.WithOptions("import_style=commonjs"),
 			),
 		},
 		"with a package": {
@@ -47,6 +50,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithOutputs("test_pb.js"),
+				plugintest.WithOptions("import_style=commonjs"),
 			),
 		},
 		"relative directory": {
@@ -58,6 +62,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithOutputs("rel/test_pb.js"),
+				plugintest.WithOptions("import_style=commonjs"),
 			),
 		},
 	})

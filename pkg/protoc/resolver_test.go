@@ -34,6 +34,10 @@ func TestLoadResolver(t *testing.T) {
 	} {
 		t.Run(name, func(t *testing.T) {
 			resolver := &resolver{
+				options: &ImportResolverOptions{
+					Debug:  false,
+					Printf: t.Logf,
+				},
 				known: make(map[string]importLabels),
 			}
 			if err := resolver.Load(strings.NewReader(tc.in)); err != nil {
@@ -78,7 +82,13 @@ func TestSaveResolver(t *testing.T) {
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
-			resolver := &resolver{tc.known}
+			resolver := &resolver{
+				options: &ImportResolverOptions{
+					Debug:  false,
+					Printf: t.Logf,
+				},
+				known: tc.known,
+			}
 			var out bytes.Buffer
 			resolver.Save(&out, tc.repoName)
 			if diff := cmp.Diff(tc.out, out.String()); diff != "" {
@@ -115,6 +125,10 @@ func TestProvide(t *testing.T) {
 	} {
 		t.Run(name, func(t *testing.T) {
 			resolver := &resolver{
+				options: &ImportResolverOptions{
+					Debug:  false,
+					Printf: t.Logf,
+				},
 				known: make(map[string]importLabels),
 			}
 			resolver.Provide(tc.lang, tc.impLang, tc.imp, tc.from)
@@ -157,6 +171,10 @@ func TestResolve(t *testing.T) {
 	} {
 		t.Run(name, func(t *testing.T) {
 			resolver := &resolver{
+				options: &ImportResolverOptions{
+					Debug:  false,
+					Printf: t.Logf,
+				},
 				known: tc.known,
 			}
 			got := resolver.Resolve(tc.lang, tc.impLang, tc.imp)
