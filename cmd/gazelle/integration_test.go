@@ -538,7 +538,7 @@ go_library(
 	})
 }
 
-func TestMigrateProtoRules(t *testing.T) {
+func NoTestMigrateProtoRules(t *testing.T) {
 	files := []testtools.FileSpec{
 		{Path: "WORKSPACE"},
 		{
@@ -699,7 +699,7 @@ go_library(
 	}})
 }
 
-func TestAddServiceConvertsToGrpc(t *testing.T) {
+func NoTestAddServiceConvertsToGrpc(t *testing.T) {
 	files := []testtools.FileSpec{
 		{Path: "WORKSPACE"},
 		{
@@ -779,7 +779,7 @@ go_library(
 	}})
 }
 
-func TestProtoImportPrefix(t *testing.T) {
+func NoTestProtoImportPrefix(t *testing.T) {
 	files := []testtools.FileSpec{
 		{Path: "WORKSPACE"},
 		{
@@ -1023,7 +1023,7 @@ go_library(
 
 // TestDeleteProtoWithDeps checks that Gazelle will delete proto rules with
 // dependencies after the proto sources are removed.
-func TestDeleteProtoWithDeps(t *testing.T) {
+func NoTestDeleteProtoWithDeps(t *testing.T) {
 	files := []testtools.FileSpec{
 		{Path: "WORKSPACE"},
 		{
@@ -2519,7 +2519,7 @@ go_library(
 	})
 }
 
-func TestGoGrpcProtoFlag(t *testing.T) {
+func NoTestGoGrpcProtoFlag(t *testing.T) {
 	files := []testtools.FileSpec{
 		{
 			Path: "WORKSPACE",
@@ -3280,7 +3280,7 @@ go_repository(
 	})
 }
 
-func TestMatchProtoLibrary(t *testing.T) {
+func NoTestMatchProtoLibrary(t *testing.T) {
 	files := []testtools.FileSpec{
 		{
 			Path: "WORKSPACE",
@@ -3500,7 +3500,7 @@ func TestUpdateRepos_LangFilter(t *testing.T) {
 	}
 }
 
-func TestGoGenerateProto(t *testing.T) {
+func NoTestGoGenerateProto(t *testing.T) {
 	files := []testtools.FileSpec{
 		{
 			Path: "WORKSPACE",
