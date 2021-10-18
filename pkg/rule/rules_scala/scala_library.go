@@ -66,11 +66,10 @@ func (s *scalaLibrary) Name() string {
 func (s *scalaLibrary) KindInfo() rule.KindInfo {
 	return rule.KindInfo{
 		MergeableAttrs: map[string]bool{
-			"srcs":       true,
-			"deps":       true,
-			"exports":    true,
-			"visibility": true,
+			"srcs":    true,
+			"exports": true,
 		},
+		ResolveAttrs: map[string]bool{"deps": true},
 	}
 }
 
@@ -178,6 +177,9 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 
 // Imports implements part of the RuleProvider interface.
 func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
+		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+	}
 	return nil
 }
 

@@ -47,7 +47,10 @@ proto_cc_library(
     srcs = ["place.pb.cc"],
     hdrs = ["place.pb.h"],
     visibility = ["//visibility:public"],
-    deps = ["@com_google_protobuf//:protobuf"],
+    deps = [
+        "//example/thing:thing_cc_library",
+        "@com_google_protobuf//:protobuf",
+    ],
 )
 
 proto_compile(
@@ -84,7 +87,10 @@ proto_java_library(
         "//example/thing:thing_java_library",
         "@com_google_protobuf//:protobuf_java",
     ],
-    deps = ["@com_google_protobuf//:protobuf_java"],
+    deps = [
+        "//example/thing:thing_java_library",
+        "@com_google_protobuf//:protobuf_java",
+    ],
 )
 
 proto_compile(
@@ -127,8 +133,14 @@ proto_scala_library(
     name = "place_scala_library",
     srcs = ["place_scala.srcjar"],
     visibility = ["//visibility:public"],
-    exports = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
-    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
+    exports = [
+        "//example/thing:thing_scala_library",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
+    ],
+    deps = [
+        "//example/thing:thing_scala_library",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
+    ],
 )
 
 proto_compile(

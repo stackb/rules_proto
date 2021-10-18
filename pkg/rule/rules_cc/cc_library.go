@@ -14,11 +14,10 @@ import (
 
 var ccLibraryKindInfo = rule.KindInfo{
 	MergeableAttrs: map[string]bool{
-		"srcs":       true,
-		"hdrs":       true,
-		"deps":       true,
-		"visibility": true,
+		"srcs": true,
+		"hdrs": true,
 	},
+	ResolveAttrs: map[string]bool{"deps": true},
 }
 
 // CcLibrary implements RuleProvider for 'cc_library'-derived rules.
@@ -108,6 +107,9 @@ func (s *CcLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 
 // Imports implements part of the RuleProvider interface.
 func (s *CcLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
+		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+	}
 	return nil
 }
 

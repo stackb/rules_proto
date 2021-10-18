@@ -48,7 +48,10 @@ proto_cc_library(
     srcs = ["person.pb.cc"],
     hdrs = ["person.pb.h"],
     visibility = ["//visibility:public"],
-    deps = ["@com_google_protobuf//:protobuf"],
+    deps = [
+        "//example/place:place_cc_library",
+        "@com_google_protobuf//:protobuf",
+    ],
 )
 
 proto_compile(
@@ -131,8 +134,14 @@ proto_scala_library(
     name = "person_scala_library",
     srcs = ["person_scala.srcjar"],
     visibility = ["//visibility:public"],
-    exports = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
-    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
+    exports = [
+        "//example/place:place_scala_library",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
+    ],
+    deps = [
+        "//example/place:place_scala_library",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12",
+    ],
 )
 
 proto_compile(
