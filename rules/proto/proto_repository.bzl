@@ -59,6 +59,7 @@ def _proto_repository_impl(ctx):
         )
     elif ctx.attr.commit or ctx.attr.tag:
         # repository mode
+        rev = None
         if ctx.attr.commit:
             rev = ctx.attr.commit
             rev_key = "commit"
@@ -151,6 +152,7 @@ def _proto_repository_impl(ctx):
         if result.return_code:
             fail("failed to fetch %s: %s" % (ctx.name, result.stderr))
         if result.stderr:
+            # buildifier: disable=print
             print("fetch_repo: " + result.stderr)
 
     # Repositories are fetched. Determine if build file generation is needed.

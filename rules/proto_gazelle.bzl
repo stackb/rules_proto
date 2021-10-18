@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""proto_gazelle.bzl provides the proto_gazelle rule.
+"""
+
 load(
     "@bazel_skylib//lib:shell.bzl",
     "shell",
@@ -109,6 +112,12 @@ _gazelle_runner = rule(
 )
 
 def proto_gazelle(name, **kwargs):
+    """proto_gazelle is the macro that calls the gazelle runner
+
+    Args:
+        name: the name of the rule
+        **kwargs: arguments to gazelle_runner
+    """
     if "args" in kwargs:
         # The args attribute has special meaning for executable rules, but we
         # always want extra_args here instead.

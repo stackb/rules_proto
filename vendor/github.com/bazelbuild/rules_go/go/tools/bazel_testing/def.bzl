@@ -12,12 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""definitions for go_bazel_test
+"""
+
 load("//go:def.bzl", "go_test")
 
 def go_bazel_test(rule_files = None, **kwargs):
-    """go_bazel_test is a wrapper for go_test that simplifies the use of
-    //go/tools/bazel_testing:go_default_library. Tests may be written
+    """go_bazel_test is a wrapper for go_test
+
+    This simplifies the use of //go/tools/bazel_testing:go_default_library. Tests may be written
     that don't explicitly depend on bazel_testing or rules_go files.
+
+    Args:
+        rule_files: label pointing to all rules that should be gathered for the test
+        **kwargs: arguments for go_test
     """
 
     if not rule_files:
@@ -28,7 +36,7 @@ def go_bazel_test(rule_files = None, **kwargs):
 
     bazel_testing_library = "@io_bazel_rules_go//go/tools/bazel_testing:go_default_library"
     if bazel_testing_library not in kwargs["deps"]:
-        kwargs["deps"] += [bazel_testing_library]
+        kwargs["deps"].append(bazel_testing_library)
 
     # Add data dependency on rules_go files. bazel_testing will copy or link
     # these files in an external repo.
@@ -55,8 +63,8 @@ def go_bazel_test(rule_files = None, **kwargs):
     #   much slower.
     kwargs.setdefault("tags", [])
     if "local" not in kwargs["tags"]:
-        kwargs["tags"] += ["local"]
+        kwargs["tags"].append("local")
     if "exclusive" not in kwargs["tags"]:
-        kwargs["tags"] += ["exclusive"]
+        kwargs["tags"].append("exclusive")
 
     go_test(**kwargs)
