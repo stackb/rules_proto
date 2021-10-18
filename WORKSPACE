@@ -2,6 +2,16 @@ workspace(name = "build_stack_rules_proto")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+local_repository(
+    name = "com_google_javascript_closure_library",
+    path = "/Users/paul.johnston/go/src/github.com/google/closure-library",
+)
+
+local_repository(
+    name = "io_bazel_rules_closure",
+    path = "/Users/paul.johnston/go/src/github.com/bazelbuild/rules_closure",
+)
+
 # gazelle:repo bazel_gazelle
 
 # Commit: a5bd0e0069da3a0b1c6cf704d8bf12f848756989

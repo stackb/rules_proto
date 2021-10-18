@@ -15,9 +15,9 @@ def com_github_stackb_grpc_js():
     _maybe(
         http_archive,
         name = "com_github_stackb_grpc_js",
-        sha256 = "a3944abe45f51c04ab3f567d26d6b7c15f9726349a8bb801b26d6b8495637bb9",
-        strip_prefix = "grpc.js-84d000d03910220625e6c7c0ad434d598e0b6cd9",
+        sha256 = "33042aa893625ec5bf6d59bf38b3954e5558b7e549b1cb2eeee66cd2ccf8ab29",
+        strip_prefix = "grpc.js-c938ee76ee462abf4f83d758f63d52f03fa24c7c",
         urls = [
-            "https://github.com/stackb/grpc.js/archive/84d000d03910220625e6c7c0ad434d598e0b6cd9.tar.gz",
+            "https://github.com/stackb/grpc.js/archive/c938ee76ee462abf4f83d758f63d52f03fa24c7c.tar.gz",
         ],
     )

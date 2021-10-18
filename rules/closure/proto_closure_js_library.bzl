@@ -11,6 +11,8 @@ def proto_closure_js_library(**kwargs):
         "JSC_STRICT_INEXISTENT_PROPERTY",
         "JSC_POSSIBLE_INEXISTENT_PROPERTY",
         "JSC_UNRECOGNIZED_TYPE_ERROR",
+        "JSC_DEPRECATED_PROP_REASON",
+        "JSC_MISSING_REQUIRE_TYPE_IN_PROVIDES_FILE",
     ]
 
     deps = kwargs.pop("deps", [])
