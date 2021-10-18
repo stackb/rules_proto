@@ -44,7 +44,7 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			),
 			SkipIntegration: true,
 		},
-		"filters non-relevant options": {
+		"does not filter non-relevant options (this is done in the resolve phase)": {
 			Input: "message M{}",
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "protoc-gen-go implementation golang:protobuf:protoc-gen-go",
@@ -53,7 +53,10 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			),
 			PluginName: "protoc-gen-go",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithOptions("Mtest.proto=github.com/example.com/test"),
+				plugintest.WithOptions(
+					"Mfoo.proto=github.com/example.com/foo",
+					"Mtest.proto=github.com/example.com/test",
+				),
 				plugintest.WithOutputs("github.com/example.com/test/test.pb.go"),
 			),
 			SkipIntegration: true,
