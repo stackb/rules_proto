@@ -35,7 +35,8 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		}
 		file := protoc.NewFile(args.Rel, f)
 		if err := file.Parse(); err != nil {
-			log.Fatalf("unparseable proto file dir=%s, file=%s: %v", args.Dir, file.Basename, err)
+			log.Printf("warning: unparseable proto file dir=%s, file=%s: %v", args.Dir, file.Basename, err)
+			continue
 		}
 		files[f] = file
 
