@@ -28,7 +28,7 @@ proto_compile(
 )
 
 proto_go_library(
-    name = "foo_go_proto",
+    name = "body_go_proto",
     srcs = [
         "body.pb.go",
         "foo.pb.go",
