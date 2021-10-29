@@ -402,8 +402,8 @@ proto_dependency(
 
 proto_dependency(
     name = "npm_ts_proto",
-    package_json = "//plugin/stephenh/ts-proto:package.json",
-    package_lock_json = "//plugin/stephenh/ts-proto:package-lock.json",
+    package_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package.json",
+    package_lock_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package-lock.json",
     repository_rule = "npm_install",
     symlink_node_modules = False,
 )

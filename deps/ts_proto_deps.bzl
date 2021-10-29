@@ -15,7 +15,7 @@ def npm_ts_proto():
     _maybe(
         npm_install,
         name = "npm_ts_proto",
-        package_json = "//plugin/stephenh/ts-proto:package.json",
-        package_lock_json = "//plugin/stephenh/ts-proto:package-lock.json",
+        package_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package.json",
+        package_lock_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package-lock.json",
         symlink_node_modules = False,
     )

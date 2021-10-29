@@ -3,6 +3,11 @@
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
 
 def grpc_closure_js_library(**kwargs):
+    """grpc_closure_js_library is a thin wrapper over closure_js_library.
+
+    Args:
+        **kwargs: keyword arguments passed to the closure_js_library.  Additional supressions and dependencies are added.
+    """
     suppress = kwargs.pop("suppress", [])
     suppress.append(
         "JSC_MISSING_REQUIRE_TYPE",

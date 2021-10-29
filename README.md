@@ -69,6 +69,12 @@ register_toolchains("@build_stack_rules_proto//toolchain:standard")
 > consider `@build_stack_rules_proto//toolchain:prebuilt` to skip compilation of
 > the tool.
 
+> **NOTE**: if you are planning on hand-writing your `BUILD.bazel` rules
+> yourself (not using the gazelle build file generator), **STOP HERE**.  You'll
+> need to provide typical proto dependencies such as `@rules_proto` and
+> `@com_google_protobuf` (use macros below if desired), but no additional core
+> dependencies are needed at this point.
+
 ---
 
 ```python
@@ -113,7 +119,7 @@ gazelle_dependencies()
 ---
 
 ```python
-load("//:go_deps.bzl", "gazelle_protobuf_extension_go_deps")
+load("@build_stack_rules_proto//:go_deps.bzl", "gazelle_protobuf_extension_go_deps")
 
 gazelle_protobuf_extension_go_deps()
 ```
@@ -125,7 +131,7 @@ gazelle_protobuf_extension_go_deps()
 ---
 
 ```python
-load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
+load("@build_stack_rules_proto//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
 protobuf_core_deps()
 ```

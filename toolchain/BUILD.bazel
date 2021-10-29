@@ -1,4 +1,4 @@
-load(":toolchain.bzl", "protoc")
+load("//toolchain:toolchain.bzl", "protoc")
 
 toolchain_type(
     name = "stackb_rules_proto",
