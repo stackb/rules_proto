@@ -18,6 +18,20 @@ def gazelle_protobuf_extension_go_deps():
         sum = "h1:l0QiNT6Qs7Yj0Mb4X6dnWBQer4ebei2BFcgQLbGqUDc=",
         version = "v1.9.0",
     )
+    go_repository(
+        name = "in_gopkg_yaml_v3",
+        build_file_proto_mode = "disable_global",
+        importpath = "gopkg.in/yaml.v3",
+        sum = "h1:h8qDotaEPuJATrMmW04NCwg7v22aHH28wwpauUhK9Oo=",
+        version = "v3.0.0-20210107192922-496545a6307b",
+    )
+    go_repository(
+        name = "in_gopkg_check_v1",
+        build_file_proto_mode = "disable_global",
+        importpath = "gopkg.in/check.v1",
+        sum = "h1:qIbj1fsPNlZgppZ+VLlY7N33q108Sa+fhmuc+sWQYwY=",
+        version = "v1.0.0-20180628173108-788fd7840127",
+    )
 
 def go_deps():
     "go_repository rules derived from the go.mod file."
