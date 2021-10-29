@@ -45,17 +45,18 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# Commit: 5bbf4640487c6f3167b79c9277a377d80ec7ba3d
-# Date: 2021-09-22 03:32:09 +0000 UTC
-# URL: https://github.com/stackb/rules_proto/commit/5bbf4640487c6f3167b79c9277a377d80ec7ba3d
+
+# Commit: df8f82e4fb806e07362aa37f7eb23b2e18cca5ae
+# Date: 2021-10-29 16:18:29 +0000 UTC
+# URL: https://github.com/stackb/rules_proto/commit/df8f82e4fb806e07362aa37f7eb23b2e18cca5ae
 #
-# Bump npm google-protobuf back up to 3.18.0 (#179)
-# Size: 306266 (306 kB)
+# Update README; use canonical labels
+# Size: 877766 (878 kB)
 http_archive(
     name = "build_stack_rules_proto",
-    sha256 = "50bc1d9c5b8436d75ee09fb1386621835c04ca26f8a0020946d672e4427d7eba",
-    strip_prefix = "rules_proto-5bbf4640487c6f3167b79c9277a377d80ec7ba3d",
-    urls = ["https://github.com/stackb/rules_proto/archive/5bbf4640487c6f3167b79c9277a377d80ec7ba3d.tar.gz"],
+    sha256 = "e707173400a15982ccc1147ea58ef81f65d414e5c33b45b505110b53d4d23a76",
+    strip_prefix = "rules_proto-df8f82e4fb806e07362aa37f7eb23b2e18cca5ae",
+    urls = ["https://github.com/stackb/rules_proto/archive/df8f82e4fb806e07362aa37f7eb23b2e18cca5ae.tar.gz"],
 )
 ```
 
