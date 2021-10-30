@@ -44,7 +44,10 @@ depsgen(
 
 depsgen(
     name = "ts_proto",
-    deps = [":npm_ts_proto"],
+    deps = [
+        ":npm_ts_proto",
+        ":npm_tsc",
+    ],
 )
 
 depsgen(
@@ -388,16 +391,11 @@ proto_dependency(
     version = "v1.1.0",
 )
 
-# Release: 4.2.0
-# TargetCommitish: stable
-# Date: 2021-09-17 18:20:30 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_nodejs/releases/tag/4.2.0
-# Size: 5817017 (5.8 MB)
 proto_dependency(
     name = "build_bazel_rules_nodejs",
     repository_rule = "http_archive",
-    sha256 = "5c40083120eadec50a3497084f99bc75a85400ea727e82e0b2f422720573130f",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/4.0.0-beta.0/rules_nodejs-4.0.0-beta.0.tar.gz"],
+    sha256 = "4501158976b9da216295ac65d872b1be51e3eeb805273e68c516d2eb36ae1fbb",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/4.4.1/rules_nodejs-4.4.1.tar.gz"],
 )
 
 proto_dependency(
@@ -406,6 +404,14 @@ proto_dependency(
     package_lock_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package-lock.json",
     repository_rule = "npm_install",
     symlink_node_modules = False,
+)
+
+proto_dependency(
+    name = "npm_tsc",
+    frozen_lockfile = True,
+    package_json = "@build_stack_rules_proto//rules/ts:package.json",
+    repository_rule = "yarn_install",
+    yarn_lock = "@build_stack_rules_proto//rules/ts:yarn.lock",
 )
 
 # Commit: 42195b5ca136f78d28819ef486e3a7b02ad45146
@@ -484,6 +490,15 @@ proto_dependency(
     name = "npm_example_routeguide_nodejs",
     package_json = "//example/routeguide/nodejs:package.json",
     package_lock_json = "//example/routeguide/nodejs:package-lock.json",
+    repository_rule = "npm_install",
+    symlink_node_modules = False,
+    deps = ["build_bazel_rules_nodejs"],
+)
+
+proto_dependency(
+    name = "npm_ts",
+    package_json = "//example/routeguide/ts:package.json",
+    package_lock_json = "//example/routeguide/ts:package-lock.json",
     repository_rule = "npm_install",
     symlink_node_modules = False,
     deps = ["build_bazel_rules_nodejs"],

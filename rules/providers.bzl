@@ -43,6 +43,7 @@ ProtoDependencyInfo = provider(
         "sha256": "The sha256 attribute for 'http_archive'",
         "stripPrefix": "The strip_prefix attribute for 'http_archive'",
         "symlinkNodeModules": "The symlink_node_modules attribute for 'npm_install'",
+        "frozenLockfile": "The frozed_lockfile attribute for 'yarn_install'",
         "sum": "The proto dependency sum string",
         "urls": "The urls string list",
         "version": "The version string",

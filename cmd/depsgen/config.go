@@ -42,6 +42,7 @@ type ProtoDependencyInfo struct {
 	Sha256             string
 	StripPrefix        string
 	SymlinkNodeModules bool
+	FrozenLockfile     bool
 	Sum                string
 	Urls               []string
 	Version            string

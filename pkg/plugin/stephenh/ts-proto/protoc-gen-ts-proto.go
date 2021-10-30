@@ -23,13 +23,13 @@ func (p *ProtocGenTsProto) Name() string {
 // Configure implements part of the Plugin interface.
 func (p *ProtocGenTsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	basename := strings.ToLower(ctx.ProtoLibrary.BaseName())
-	jsFile := basename + ".ts"
+	tsFile := basename + ".ts"
 	if ctx.Rel != "" {
-		jsFile = path.Join(ctx.Rel, jsFile)
+		tsFile = path.Join(ctx.Rel, tsFile)
 	}
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/stephenh/ts-proto", "protoc-gen-ts-proto"),
-		Outputs: []string{jsFile},
+		Outputs: []string{tsFile},
 		Options: ctx.PluginConfig.GetOptions(),
 	}
 }

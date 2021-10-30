@@ -31,7 +31,8 @@ def {{ .Dep.Name }}():
         package_lock_json = "{{ .Dep.PackageLockJson }}",{{ end }}{{ if .Dep.YarnLock }}
         yarn_lock = "{{ .Dep.YarnLock }}",{{ end }}{{ if .Dep.Sha256 }}
         sha256 = "{{ .Dep.Sha256 }}",{{ end }}{{ if .Dep.StripPrefix }}
-        strip_prefix = "{{ .Dep.StripPrefix }}",{{ end }}{{ if .Dep.PackageJson }}
+        strip_prefix = "{{ .Dep.StripPrefix }}",{{ end }}{{ if .Dep.YarnLock }}
+        frozen_lockfile = {{ if .Dep.FrozenLockfile }}True{{ else }}False{{ end }},{{ end }}{{ if .Dep.PackageLockJson }}
         symlink_node_modules = {{ if .Dep.SymlinkNodeModules }}True{{ else }}False{{ end }},{{ end }}{{ if .Dep.Sum }}
         sum = "{{ .Dep.Sum }}",{{ end }}{{ if .Dep.Version }}
         version = "{{ .Dep.Version }}",{{ end }}{{ if .Dep.Importpath }}

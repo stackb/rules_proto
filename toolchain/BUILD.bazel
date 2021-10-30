@@ -1,20 +1,20 @@
 load("//toolchain:toolchain.bzl", "protoc")
 
 toolchain_type(
-    name = "stackb_rules_proto",
+    name = "protoc",
     visibility = ["//visibility:public"],
 )
 
 toolchain(
     name = "standard",
     toolchain = ":compiled",
-    toolchain_type = ":stackb_rules_proto",
+    toolchain_type = "//toolchain:protoc",
 )
 
 toolchain(
     name = "prebuilt",
     toolchain = ":precompiled",
-    toolchain_type = ":stackb_rules_proto",
+    toolchain_type = "//toolchain:protoc",
 )
 
 protoc(
@@ -24,11 +24,11 @@ protoc(
 
 protoc(
     name = "precompiled",
-    tool = ":protoc",
+    tool = ":protoc.exe",
 )
 
 genrule(
-    name = "protoc",
+    name = "protoc_exe",
     srcs = select({
         "@bazel_tools//src/conditions:darwin": [
             "@prebuilt_protoc_osx//:protoc",

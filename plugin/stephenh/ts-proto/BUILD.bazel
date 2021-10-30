@@ -20,11 +20,11 @@ genrule(
     cmd = """
     cat << EOF > $@
 #!/bin/bash
-set -euox pipefail
-$(execpath @build_bazel_rules_nodejs//toolchains/node:node_bin) \
-    --eval "require('./$$(dirname $(execpath @npm_ts_proto//:BUILD.bazel))/node_modules/ts-proto/build/plugin.js')"
+set -euo pipefail
+$(location @build_bazel_rules_nodejs//toolchains/node:node_bin) \
+    --eval "require('./$$(dirname $(location @npm_ts_proto//:BUILD.bazel))/node_modules/ts-proto/build/plugin.js')"
 EOF
-    """,
+""",
     executable = True,
     tools = ["@build_bazel_rules_nodejs//toolchains/node:node_bin"],
 )

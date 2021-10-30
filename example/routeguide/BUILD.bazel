@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -260,4 +261,15 @@ proto_compile(
     outputs = ["routeguide.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "routeguide_proto",
+)
+
+proto_ts_library(
+    name = "routeguide_ts_proto",
+    srcs = ["routeguide.ts"],
+    tsc = "@npm_tsc//typescript/bin:tsc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@npm_tsc//long",
+        "@npm_tsc//protobufjs",
+    ],
 )

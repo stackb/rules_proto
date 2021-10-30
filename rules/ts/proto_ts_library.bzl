@@ -13,11 +13,17 @@ def _proto_ts_library_impl(ctx):
     """
 
     # list<depset<File>>
-    transitive_dts = [depset(ctx.files.npm_deps)]
+    transitive_dts = [depset(ctx.files.deps)]
+
+    # list<depset<File>>>
+    transitive_js_modules = []
 
     # gather transitive .d.ts files
-    for info in [dep[DeclarationInfo] for dep in ctx.attr.deps]:
-        transitive_dts.append(info.transitive_declarations)
+    for dep in ctx.attr.deps:
+        if DeclarationInfo in dep:
+            transitive_dts.append(dep[DeclarationInfo].transitive_declarations)
+        if JSModuleInfo in dep:
+            transitive_js_modules.append(dep[JSModuleInfo].sources)
 
     # list<File>: .d.ts files that will be created by the tsc action
     dts_outputs = []
@@ -37,6 +43,10 @@ def _proto_ts_library_impl(ctx):
 
     # all outputs (.d.ts + .js)
     outputs = js_outputs + dts_outputs
+
+    # for the JSModuleInfo provider
+    js_module = depset(js_outputs)
+    transitive_js_modules.append(js_module)
 
     # build the tsc command
     command = [ctx.executable.tsc.path, " --declaration"]
@@ -70,8 +80,8 @@ def _proto_ts_library_impl(ctx):
         DefaultInfo(files = depset(direct = outputs)),
         # js files, in the event someone would like this for js_library etc.
         JSModuleInfo(
-            direct_sources = depset(js_outputs),
-            sources = depset(js_outputs),
+            direct_sources = js_module,
+            sources = depset(transitive = transitive_js_modules),
         ),
     ]
 
@@ -82,14 +92,6 @@ proto_ts_library = rule(
             doc = "dependencies that provide .d.ts files (typically other proto_ts_library rules)",
             providers = [DeclarationInfo],
         ),
-        "npm_deps": attr.label_list(
-            allow_files = True,
-            default = [
-                "@npm//long",
-                "@npm//protobufjs",
-            ],
-            doc = "additional npm library dependencies (recommend just use deps)",
-        ),
         "srcs": attr.label_list(
             allow_files = True,
             doc = "source .ts files",
@@ -97,7 +99,7 @@ proto_ts_library = rule(
         "tsc": attr.label(
             allow_files = True,
             cfg = "host",
-            default = Label("@npm//typescript/bin:tsc"),
+            mandatory = True,
             doc = "typescript compiler executable",
             executable = True,
         ),
@@ -107,4 +109,5 @@ proto_ts_library = rule(
             doc = "additional options for the tsc compile action",
         ),
     },
+    # toolchains = ["@build_stack_rules_proto//rules/ts:ts_compiler"],
 )

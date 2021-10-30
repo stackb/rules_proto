@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 )
@@ -14,6 +15,8 @@ type LanguageRuleConfig struct {
 	Config *config.Config
 	// Deps is a mapping from label to +/- intent.
 	Deps map[string]bool
+	// Attr is a mapping from string to intent map.
+	Attrs map[string]map[string]bool
 	// Options is a generic key -> value string mapping.  Various rule
 	// implementations are free to document/interpret options in an
 	// implementation-dependenct manner.
@@ -40,6 +43,7 @@ func NewLanguageRuleConfig(config *config.Config, name string) *LanguageRuleConf
 		Config:     config,
 		Name:       name,
 		Enabled:    true,
+		Attrs:      make(map[string]map[string]bool),
 		Deps:       make(map[string]bool),
 		Options:    make(map[string]bool),
 		Resolves:   make([]Rewrite, 0),
@@ -73,6 +77,19 @@ func (c *LanguageRuleConfig) GetOptions() []string {
 	return opts
 }
 
+// GetAttr returns the positive-intent attr values under the given key.
+func (c *LanguageRuleConfig) GetAttr(name string) []string {
+	vals := make([]string, 0)
+	for val, want := range c.Attrs[name] {
+		if !want {
+			continue
+		}
+		vals = append(vals, val)
+	}
+	sort.Strings(vals)
+	return vals
+}
+
 // GetRewrites returns a copy of the resolve mappings
 func (c *LanguageRuleConfig) GetRewrites() []Rewrite {
 	return c.Resolves[:]
@@ -83,6 +100,12 @@ func (c *LanguageRuleConfig) clone() *LanguageRuleConfig {
 	clone := NewLanguageRuleConfig(c.Config, c.Name)
 	clone.Enabled = c.Enabled
 	clone.Implementation = c.Implementation
+	for name, vals := range c.Attrs {
+		clone.Attrs[name] = make(map[string]bool)
+		for k, v := range vals {
+			clone.Attrs[name][k] = v
+		}
+	}
 	for k, v := range c.Deps {
 		clone.Deps[k] = v
 	}
@@ -117,6 +140,24 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 			c.Options[value] = true
 		} else {
 			delete(c.Options, value)
+		}
+	case "attr":
+		kv := strings.Fields(value)
+		if len(kv) != 2 {
+			return fmt.Errorf("malformed attr %q: expected form is 'gazelle:proto_rule {RULE_NAME} attr {ATTR_NAME} [+/-]{VALUE}'", value)
+		}
+		key := parseIntent(kv[0])
+		val := kv[1]
+
+		if intent.Want {
+			values, ok := c.Attrs[key.Value]
+			if !ok {
+				values = make(map[string]bool)
+				c.Attrs[key.Value] = values
+			}
+			values[val] = key.Want
+		} else {
+			delete(c.Attrs, key.Value)
 		}
 	case "visibility":
 		c.Visibility[value] = intent.Want
