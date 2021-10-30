@@ -15,7 +15,6 @@ load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 # gazelle:proto_plugin ts_proto option nestJs=true
-# gazelle:proto_rule proto_ts_library deps @npm_tsc//rxjs
 # gazelle:proto_rule proto_ts_library deps @npm_tsc//@nestjs/microservices
 
 filegroup(
@@ -277,9 +276,8 @@ proto_ts_library(
     tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],
     deps = [
-        "@npm_tsc//@nestjs/core",
+        "@npm_tsc//@nestjs/microservices",
         "@npm_tsc//long",
         "@npm_tsc//protobufjs",
-        "@npm_tsc//rxjs",
     ],
 )

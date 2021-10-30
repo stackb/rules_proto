@@ -411,6 +411,7 @@ proto_dependency(
     frozen_lockfile = True,
     package_json = "@build_stack_rules_proto//rules/ts:package.json",
     repository_rule = "yarn_install",
+    symlink_node_modules = False,
     yarn_lock = "@build_stack_rules_proto//rules/ts:yarn.lock",
 )
 
