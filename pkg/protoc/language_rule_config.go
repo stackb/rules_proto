@@ -143,11 +143,21 @@ func (c *LanguageRuleConfig) parseDirective(cfg *PackageConfig, d, param, value 
 		}
 	case "attr":
 		kv := strings.Fields(value)
-		if len(kv) != 2 {
-			return fmt.Errorf("malformed attr %q: expected form is 'gazelle:proto_rule {RULE_NAME} attr {ATTR_NAME} [+/-]{VALUE}'", value)
+		if len(kv) == 0 {
+			return fmt.Errorf("malformed attr (missing attr name and value) %q: expected form is 'gazelle:proto_rule {RULE_NAME} attr {ATTR_NAME} [+/-]{VALUE}'", value)
 		}
 		key := parseIntent(kv[0])
-		val := kv[1]
+
+		if len(kv) == 1 {
+			if intent.Want {
+				return fmt.Errorf("malformed attr %q (missing named attr value): expected form is 'gazelle:proto_rule {RULE_NAME} attr {ATTR_NAME} [+/-]{VALUE}'", value)
+			} else {
+				delete(c.Attrs, key.Value)
+				return nil
+			}
+		}
+
+		val := strings.Join(kv[1:], " ")
 
 		if intent.Want {
 			values, ok := c.Attrs[key.Value]

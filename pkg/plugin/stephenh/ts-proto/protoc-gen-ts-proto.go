@@ -2,7 +2,6 @@ package ts_proto
 
 import (
 	"path"
-	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -22,14 +21,18 @@ func (p *ProtocGenTsProto) Name() string {
 
 // Configure implements part of the Plugin interface.
 func (p *ProtocGenTsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
-	basename := strings.ToLower(ctx.ProtoLibrary.BaseName())
-	tsFile := basename + ".ts"
-	if ctx.Rel != "" {
-		tsFile = path.Join(ctx.Rel, tsFile)
+	tsFiles := make([]string, 0)
+	for _, file := range ctx.ProtoLibrary.Files() {
+		tsFile := file.Name + ".ts"
+		if ctx.Rel != "" {
+			tsFile = path.Join(ctx.Rel, tsFile)
+		}
+		tsFiles = append(tsFiles, tsFile)
 	}
+
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/stephenh/ts-proto", "protoc-gen-ts-proto"),
-		Outputs: []string{tsFile},
+		Outputs: tsFiles,
 		Options: ctx.PluginConfig.GetOptions(),
 	}
 }

@@ -89,10 +89,18 @@ func TestRuleDirectives(t *testing.T) {
 			directives: withDirectives(
 				"proto_rule", "fake_proto_library attr count 1",
 				"proto_rule", "fake_proto_library attr count 2",
-				"proto_rule", "fake_proto_library -attr count *",
+				"proto_rule", "fake_proto_library -attr count",
 			),
 			check: withLanguageRule("fake_proto_library", withRuleAttrEquals(
 				"count",
+			)),
+		},
+		"proto_rule attr with space": {
+			directives: withDirectives(
+				"proto_rule", "fake_proto_library attr args --lib ES2015",
+			),
+			check: withLanguageRule("fake_proto_library", withRuleAttrEquals(
+				"--lib ES2015",
 			)),
 		},
 	})
