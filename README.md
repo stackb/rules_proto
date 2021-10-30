@@ -647,31 +647,3 @@ plugins that do things like:
   design, this was near impossible.  With the `v2` design, the `protoc.Plugin`
   implementation can trivially perform that evaluation because it is handed the
   complete proto AST during gazelle evaluation.
-
-```
-FATAL: bazel crashed due to an internal error. Printing stack trace:
-java.lang.RuntimeException: Unrecoverable error while evaluating node 'ConfiguredTargetKey{label=//proto/thing:thing_ts_proto, config=BuildConfigurationValue.Key[51eca898bf06b62dddc4e4762e2e193fc5c16e384d78bdf88fb0dd0f0af3120c]}' (requested by nodes )
-	at com.google.devtools.build.skyframe.AbstractParallelEvaluator$Evaluate.run(AbstractParallelEvaluator.java:563)
-	at com.google.devtools.build.lib.concurrent.AbstractQueueVisitor$WrappedRunnable.run(AbstractQueueVisitor.java:398)
-	at java.base/java.util.concurrent.ForkJoinTask$AdaptedRunnableAction.exec(Unknown Source)
-	at java.base/java.util.concurrent.ForkJoinTask.doExec(Unknown Source)
-	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(Unknown Source)
-	at java.base/java.util.concurrent.ForkJoinPool.scan(Unknown Source)
-	at java.base/java.util.concurrent.ForkJoinPool.runWorker(Unknown Source)
-	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(Unknown Source)
-Caused by: java.lang.IllegalStateException: Mismatched lookup keys? File:[[<execution_root>]bazel-out/darwin-fastbuild/bin]proto/thing/thing.ts ActionLookupData{actionLookupKey=ConfiguredTargetKey{label=//proto/thing:thing_ts_proto_compile, config=BuildConfigurationValue.Key[51eca898bf06b62dddc4e4762e2e193fc5c16e384d78bdf88fb0dd0f0af3120c]}, actionIndex=0} ActionLookupData{actionLookupKey=ConfiguredTargetKey{label=//proto/thing:thing_ts_proto, config=BuildConfigurationValue.Key[51eca898bf06b62dddc4e4762e2e193fc5c16e384d78bdf88fb0dd0f0af3120c]}, actionIndex=0}
-	at com.google.common.base.Preconditions.checkState(Preconditions.java:843)
-	at com.google.devtools.build.lib.actions.Actions.verifyGeneratingActionKeys(Actions.java:229)
-	at com.google.devtools.build.lib.actions.Actions.assignOwnersAndMaybeFilterSharedActionsAndThrowIfConflict(Actions.java:327)
-	at com.google.devtools.build.lib.actions.Actions.assignOwnersAndFilterSharedActionsAndThrowActionConflict(Actions.java:213)
-	at com.google.devtools.build.lib.analysis.RuleConfiguredTargetBuilder.build(RuleConfiguredTargetBuilder.java:256)
-	at com.google.devtools.build.lib.analysis.starlark.StarlarkRuleConfiguredTargetUtil.createTarget(StarlarkRuleConfiguredTargetUtil.java:233)
-	at com.google.devtools.build.lib.analysis.starlark.StarlarkRuleConfiguredTargetUtil.buildRule(StarlarkRuleConfiguredTargetUtil.java:149)
-	at com.google.devtools.build.lib.analysis.ConfiguredTargetFactory.createRule(ConfiguredTargetFactory.java:369)
-	at com.google.devtools.build.lib.analysis.ConfiguredTargetFactory.createConfiguredTarget(ConfiguredTargetFactory.java:195)
-	at com.google.devtools.build.lib.skyframe.SkyframeBuildView.createConfiguredTarget(SkyframeBuildView.java:940)
-	at com.google.devtools.build.lib.skyframe.ConfiguredTargetFunction.createConfiguredTarget(ConfiguredTargetFunction.java:1031)
-	at com.google.devtools.build.lib.skyframe.ConfiguredTargetFunction.compute(ConfiguredTargetFunction.java:371)
-	at com.google.devtools.build.skyframe.AbstractParallelEvaluator$Evaluate.run(AbstractParallelEvaluator.java:477)
-	... 7 more
-  ```

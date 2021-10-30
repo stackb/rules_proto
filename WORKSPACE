@@ -216,12 +216,6 @@ node_repositories()
 register_toolchains("//toolchain:nodejs")
 
 # ----------------------------------------------------
-# typescript
-# ----------------------------------------------------
-
-# register_toolchains("//rules/ts:tsc")
-
-# ----------------------------------------------------
 # proto_repository dependencies
 # ----------------------------------------------------
 
