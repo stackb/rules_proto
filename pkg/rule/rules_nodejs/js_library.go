@@ -14,13 +14,14 @@ import (
 
 var jsLibraryKindInfo = rule.KindInfo{
 	MergeableAttrs: map[string]bool{
-		"srcs":       true,
-		"deps":       true,
-		"visibility": true,
+		"srcs": true,
+	},
+	ResolveAttrs: map[string]bool{
+		"deps": true,
 	},
 }
 
-// JsLibrary implements RuleProvider for 'cc_library'-derived rules.
+// JsLibrary implements RuleProvider for 'js_library'-derived rules.
 type JsLibrary struct {
 	KindName       string
 	RuleNameSuffix string
