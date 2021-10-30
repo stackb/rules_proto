@@ -136,6 +136,11 @@ func (s *tsLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		newRule.SetAttr("tsc", tsc[len(tsc)-1])
 	}
 
+	args := s.RuleConfig.GetAttr("args")
+	if len(args) > 0 {
+		newRule.SetAttr("args", args[len(args)-1])
+	}
+
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)

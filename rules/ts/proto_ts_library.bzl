@@ -50,7 +50,7 @@ def _proto_ts_library_impl(ctx):
 
     # build the tsc command
     command = [ctx.executable.tsc.path, " --declaration"]
-    command += ctx.attr.tsc_options
+    command += ctx.attr.args
     command += [f.path for f in ctx.files.srcs]
 
     ctx.actions.run_shell(
@@ -103,11 +103,8 @@ proto_ts_library = rule(
             doc = "typescript compiler executable",
             executable = True,
         ),
-        # TODO(pcj): just use args here
-        "tsc_options": attr.string_list(
-            default = ["--esModuleInterop"],
-            doc = "additional options for the tsc compile action",
+        "args": attr.string_list(
+            doc = "additional arguments for the tsc compile action",
         ),
     },
-    # toolchains = ["@build_stack_rules_proto//rules/ts:ts_compiler"],
 )
