@@ -138,7 +138,7 @@ func (s *tsLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 
 	args := s.RuleConfig.GetAttr("args")
 	if len(args) > 0 {
-		newRule.SetAttr("args", args[len(args)-1])
+		newRule.SetAttr("args", args)
 	}
 
 	visibility := s.Visibility()
