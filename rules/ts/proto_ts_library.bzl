@@ -1,10 +1,10 @@
-"ts_proto_library.bzl provides the ts_proto_library rule"
+"proto_ts_library.bzl provides the proto_ts_library rule"
 
 load("@build_bazel_rules_nodejs//:providers.bzl", "DeclarationInfo", "JSModuleInfo")
 
-def _ts_proto_library_impl(ctx):
+def _proto_ts_library_impl(ctx):
     """
-    Implementation for ts_proto_library rule
+    Implementation for proto_ts_library rule
 
     Args:
         ctx: the rule context object
@@ -75,11 +75,11 @@ def _ts_proto_library_impl(ctx):
         ),
     ]
 
-ts_proto_library = rule(
-    implementation = _ts_proto_library_impl,
+proto_ts_library = rule(
+    implementation = _proto_ts_library_impl,
     attrs = {
         "deps": attr.label_list(
-            doc = "dependencies that provide .d.ts files (typically other ts_proto_library rules)",
+            doc = "dependencies that provide .d.ts files (typically other proto_ts_library rules)",
             providers = [DeclarationInfo],
         ),
         "npm_deps": attr.label_list(
@@ -88,7 +88,7 @@ ts_proto_library = rule(
                 "@npm//long",
                 "@npm//protobufjs",
             ],
-            doc = "additional npm library dependencies",
+            doc = "additional npm library dependencies (recommend just use deps)",
         ),
         "srcs": attr.label_list(
             allow_files = True,
@@ -101,6 +101,7 @@ ts_proto_library = rule(
             doc = "typescript compiler executable",
             executable = True,
         ),
+        # TODO(pcj): just use args here
         "tsc_options": attr.string_list(
             default = ["--esModuleInterop"],
             doc = "additional options for the tsc compile action",
