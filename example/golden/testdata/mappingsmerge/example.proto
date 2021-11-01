@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "github.com/stackb/rules_proto/example/golden/mappingsmerge";
+
+enum Enum{
+  UNKNOWN = 0;
+}
+
+message Message{}
+
+service Service{}
