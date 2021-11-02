@@ -54,7 +54,6 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "WORKSPACE",
-        "deps.bzl",
         "go_deps.bzl",
         "//deps:all_files",
         "//pkg:all_files",

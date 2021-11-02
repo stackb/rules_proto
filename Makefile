@@ -16,3 +16,8 @@ deps:
 site:
 	bazel build //example/golden:*
 	cp -f ./bazel-bin/example/golden/*.md docs/
+
+.PHONY: test
+test:
+	bazel test //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
+		--deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
