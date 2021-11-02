@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -12,6 +13,9 @@ load("@build_stack_rules_proto//rules/py:grpc_py_library.bzl", "grpc_py_library"
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+# gazelle:proto_plugin ts_proto option nestJs=true
+# gazelle:proto_rule proto_ts_library deps @npm_tsc//@nestjs/microservices
 
 filegroup(
     name = "features",
@@ -125,7 +129,7 @@ proto_compile(
 
 proto_compile(
     name = "routeguide_go_compile",
-    mappings = {"routeguide.pb.go": "github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go"},
+    output_mappings = ["routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go"],
     outputs = ["routeguide.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "routeguide_proto",
@@ -256,8 +260,26 @@ proto_compile(
 
 proto_compile(
     name = "routeguide_ts_proto_compile",
-    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": ["emitImportedFiles=false"]},
+    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
+        "emitImportedFiles=false",
+        "esModuleInterop=true",
+        "nestJs=true",
+    ]},
     outputs = ["routeguide.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "routeguide_proto",
+)
+
+proto_ts_library(
+    name = "routeguide_ts_proto",
+    srcs = ["routeguide.ts"],
+    args = ["--lib ES2015"],
+    tags = ["manual"],
+    tsc = "@npm_tsc//typescript/bin:tsc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@npm_tsc//@nestjs/microservices",
+        "@npm_tsc//long",
+        "@npm_tsc//protobufjs",
+    ],
 )

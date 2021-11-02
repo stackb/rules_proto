@@ -60,10 +60,10 @@ proto_compiled_sources(
         "message.pb.go",
         "service.pb.go",
     ],
-    mappings = {
-        "message.pb.go": "github.com/example/repo/api/v1/message.pb.go",
-        "service.pb.go": "github.com/example/repo/api/v1/service.pb.go",
-    },
+    output_mappings = [
+        "message.pb.go=github.com/example/repo/api/v1/message.pb.go",
+        "service.pb.go=github.com/example/repo/api/v1/service.pb.go",
+    ],
     options = {"@build_stack_rules_proto//plugin/gogo/protobuf:protoc-gen-gogofast": ["plugins=grpc"]},
     plugins = ["@build_stack_rules_proto//plugin/gogo/protobuf:protoc-gen-gogofast"],
     proto = "v1_proto",

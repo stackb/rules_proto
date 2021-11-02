@@ -14,6 +14,7 @@ buildifier(
 # gazelle:prefix github.com/stackb/rules_proto
 # gazelle:resolve go github.com/bazelbuild/buildtools/build @com_github_bazelbuild_buildtools//build:go_default_library
 # gazelle:exclude vendor
+# gazelle:exclude node_modules
 
 gazelle_binary(
     name = "gazelle-protobuf",
@@ -53,7 +54,6 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "WORKSPACE",
-        "deps.bzl",
         "go_deps.bzl",
         "//deps:all_files",
         "//pkg:all_files",

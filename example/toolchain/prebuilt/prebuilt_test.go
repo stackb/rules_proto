@@ -28,7 +28,7 @@ prebuilt_protoc_deps()
 }
 
 func TestRun(t *testing.T) {
-	if err := bazel_testing.RunBazel("run", "@build_stack_rules_proto//toolchain:protoc"); err != nil {
+	if err := bazel_testing.RunBazel("run", "@build_stack_rules_proto//toolchain:protoc.exe"); err != nil {
 		t.Fatal(err)
 	}
 }

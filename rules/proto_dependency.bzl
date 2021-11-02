@@ -24,6 +24,7 @@ def _proto_dependency_impl(ctx):
             packageLockJson = ctx.attr.package_lock_json,
             yarnLock = ctx.attr.yarn_lock,
             workspaceSnippet = ctx.attr.workspace_snippet,
+            frozenLockfile = ctx.attr.frozen_lockfile,
             symlinkNodeModules = ctx.attr.symlink_node_modules,
         ),
     ]
@@ -55,6 +56,9 @@ proto_dependency = rule(
         ),
         "package_lock_json": attr.string(
             doc = "The package_lock_json attribute for npm_install",
+        ),
+        "frozen_lockfile": attr.bool(
+            doc = "The frozen_lockfile attribute for yarn_install",
         ),
         "repository_rule": attr.string(
             doc = "The repository rule that instantiates this dependency",

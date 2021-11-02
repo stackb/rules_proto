@@ -1,21 +1,6 @@
 workspace(name = "build_stack_rules_proto")
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
 # gazelle:repo bazel_gazelle
-
-# Commit: a5bd0e0069da3a0b1c6cf704d8bf12f848756989
-# Date: 2021-09-17 21:59:10 +0000 UTC
-# URL: https://github.com/wolfd/bazel-gazelle/commit/a5bd0e0069da3a0b1c6cf704d8bf12f848756989
-#
-# Remove confusing aspects of tests
-# Size: 1666209 (1.7 MB)
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "11b518474e745c6613253208f0e19261d186c7f1c2a12ab8a314f184a762b27d",
-    strip_prefix = "bazel-gazelle-a5bd0e0069da3a0b1c6cf704d8bf12f848756989",
-    urls = ["https://github.com/wolfd/bazel-gazelle/archive/a5bd0e0069da3a0b1c6cf704d8bf12f848756989.tar.gz"],
-)
 
 # ----------------------------------------------------
 # Toolchain-Related

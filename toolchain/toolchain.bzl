@@ -11,6 +11,7 @@ protoc = rule(
     attrs = {
         "tool": attr.label(
             doc = "The protocol compiler tool",
+            allow_single_file = True,
             executable = True,
             cfg = "exec",
         ),

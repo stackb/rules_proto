@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+option go_package = "github.com/stackb/rules_proto/example/golden/mappingsmerge";
+
+message M{}
+
+service S{}

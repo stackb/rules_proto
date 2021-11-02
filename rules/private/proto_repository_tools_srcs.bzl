@@ -142,6 +142,7 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//pkg/rule/rules_nodejs:grpc_nodejs_library.go",
     "@build_stack_rules_proto//pkg/rule/rules_nodejs:js_library.go",
     "@build_stack_rules_proto//pkg/rule/rules_nodejs:proto_nodejs_library.go",
+    "@build_stack_rules_proto//pkg/rule/rules_nodejs:proto_ts_library.go",
     "@build_stack_rules_proto//pkg/rule/rules_python:BUILD.bazel",
     "@build_stack_rules_proto//pkg/rule/rules_python:grpc_py_library.go",
     "@build_stack_rules_proto//pkg/rule/rules_python:proto_py_library.go",
@@ -161,7 +162,6 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//plugin/scalapb/scalapb:BUILD.bazel",
     "@build_stack_rules_proto//plugin/stackb/grpc_js:BUILD.bazel",
     "@build_stack_rules_proto//plugin/stephenh/ts-proto:BUILD.bazel",
-    "@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto.go",
     "@build_stack_rules_proto//rules:BUILD.bazel",
     "@build_stack_rules_proto//rules/cc:BUILD.bazel",
     "@build_stack_rules_proto//rules/closure:BUILD.bazel",
@@ -173,5 +173,6 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//rules/proto:BUILD.bazel",
     "@build_stack_rules_proto//rules/py:BUILD.bazel",
     "@build_stack_rules_proto//rules/scala:BUILD.bazel",
+    "@build_stack_rules_proto//rules/ts:BUILD.bazel",
     "@build_stack_rules_proto//toolchain:BUILD.bazel",
 ]

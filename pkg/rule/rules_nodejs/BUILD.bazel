@@ -6,6 +6,7 @@ go_library(
         "grpc_nodejs_library.go",
         "js_library.go",
         "proto_nodejs_library.go",
+        "proto_ts_library.go",
     ],
     importpath = "github.com/stackb/rules_proto/pkg/rule/rules_nodejs",
     visibility = ["//visibility:public"],

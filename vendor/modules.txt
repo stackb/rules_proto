@@ -1,4 +1,4 @@
-# github.com/bazelbuild/bazel-gazelle v0.24.0 => github.com/wolfd/bazel-gazelle v0.0.0-20210917215910-a5bd0e0069da
+# github.com/bazelbuild/bazel-gazelle v0.28.0 => github.com/wolfd/bazel-gazelle v0.0.0-20210917215910-a5bd0e0069da
 ## explicit
 github.com/bazelbuild/bazel-gazelle/config
 github.com/bazelbuild/bazel-gazelle/flag

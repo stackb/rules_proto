@@ -17,9 +17,9 @@ def build_bazel_rules_nodejs():
     _maybe(
         http_archive,
         name = "build_bazel_rules_nodejs",
-        sha256 = "5c40083120eadec50a3497084f99bc75a85400ea727e82e0b2f422720573130f",
+        sha256 = "4501158976b9da216295ac65d872b1be51e3eeb805273e68c516d2eb36ae1fbb",
         urls = [
-            "https://github.com/bazelbuild/rules_nodejs/releases/download/4.0.0-beta.0/rules_nodejs-4.0.0-beta.0.tar.gz",
+            "https://github.com/bazelbuild/rules_nodejs/releases/download/4.4.1/rules_nodejs-4.4.1.tar.gz",
         ],
     )
 

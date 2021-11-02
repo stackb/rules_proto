@@ -20,7 +20,7 @@ var javaLibraryKindInfo = rule.KindInfo{
 	ResolveAttrs: map[string]bool{"deps": true},
 }
 
-// JavaLibrary implements RuleProvider for 'cc_library'-derived rules.
+// JavaLibrary implements RuleProvider for 'java_library'-derived rules.
 type JavaLibrary struct {
 	KindName       string
 	RuleNameSuffix string

@@ -54,6 +54,55 @@ func TestRuleDirectives(t *testing.T) {
 				"google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/$1pb",
 			)),
 		},
+		"proto_rule attr 1": {
+			directives: withDirectives(
+				"proto_rule", "fake_proto_library attr count 1",
+			),
+			check: withLanguageRule("fake_proto_library", withRuleAttrEquals(
+				"count",
+				"1",
+			)),
+		},
+		"proto_rule attr 2": {
+			directives: withDirectives(
+				"proto_rule", "fake_proto_library attr count 1",
+				"proto_rule", "fake_proto_library attr count 2",
+			),
+			check: withLanguageRule("fake_proto_library", withRuleAttrEquals(
+				"count",
+				"1",
+				"2",
+			)),
+		},
+		"proto_rule attr -count": {
+			directives: withDirectives(
+				"proto_rule", "fake_proto_library attr count 1",
+				"proto_rule", "fake_proto_library attr count 2",
+				"proto_rule", "fake_proto_library attr -count 1",
+			),
+			check: withLanguageRule("fake_proto_library", withRuleAttrEquals(
+				"count",
+				"2",
+			)),
+		},
+		"proto_rule -attr count": {
+			directives: withDirectives(
+				"proto_rule", "fake_proto_library attr count 1",
+				"proto_rule", "fake_proto_library attr count 2",
+				"proto_rule", "fake_proto_library -attr count",
+			),
+			check: withLanguageRule("fake_proto_library", withRuleAttrEquals(
+				"count",
+			)),
+		},
+		"proto_rule attr with space": {
+			directives: withDirectives(
+				"proto_rule", "fake_proto_library attr args --lib ES2015",
+			),
+			check: withLanguageRule("fake_proto_library", withRuleAttrEquals(
+				"--lib ES2015",
+			)),
+		},
 	})
 }
 
@@ -121,6 +170,22 @@ func withRuleResolvesEquals(resolves ...string) languageRuleConfigCheck {
 			original := actual.Match.String() + " " + actual.Replace
 			if expected != original {
 				t.Errorf("rule resolve #%d: want %s, got %s", i, expected, original)
+			}
+		}
+	}
+}
+
+func withRuleAttrEquals(name string, want ...string) languageRuleConfigCheck {
+	return func(t *testing.T, cfg *LanguageRuleConfig) {
+		got := cfg.GetAttr(name)
+		if len(want) != len(got) {
+			t.Fatalf("rule attr %s: want %d, got %d", name, len(want), len(got))
+		}
+		for i := 0; i < len(got); i++ {
+			expected := want[i]
+			actual := got[i]
+			if expected != actual {
+				t.Errorf("rule attr %s #%d: want %s, got %s", name, i, expected, actual)
 			}
 		}
 	}

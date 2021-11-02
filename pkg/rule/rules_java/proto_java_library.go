@@ -31,10 +31,10 @@ func (s *protoJavaLibrary) Name() string {
 func (s *protoJavaLibrary) KindInfo() rule.KindInfo {
 	return rule.KindInfo{
 		MergeableAttrs: map[string]bool{
-			"srcs":       true,
-			"deps":       true,
-			"visibility": true,
+			"srcs":    true,
+			"exports": true,
 		},
+		ResolveAttrs: map[string]bool{"deps": true},
 	}
 }
 

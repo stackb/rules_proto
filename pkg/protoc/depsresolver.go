@@ -74,6 +74,9 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 			}
 			sort.Strings(deps)
 			r.SetAttr(attrName, deps)
+			if debug {
+				log.Println(from, "resolved deps:", deps)
+			}
 		}
 	}
 }
