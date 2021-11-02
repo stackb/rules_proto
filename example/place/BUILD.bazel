@@ -66,7 +66,7 @@ proto_compile(
 
 proto_compile(
     name = "place_go_compile",
-    mappings = {"place.pb.go": "github.com/stackb/rules_proto/example/place/place.pb.go"},
+    output_mappings = ["place.pb.go=github.com/stackb/rules_proto/example/place/place.pb.go"],
     outputs = ["place.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "place_proto",
@@ -88,7 +88,10 @@ proto_java_library(
         "//example/thing:thing_java_library",
         "@com_google_protobuf//:protobuf_java",
     ],
-    deps = ["@com_google_protobuf//:protobuf_java"],
+    deps = [
+        "//example/thing:thing_java_library",
+        "@com_google_protobuf//:protobuf_java",
+    ],
 )
 
 proto_compile(
@@ -155,6 +158,8 @@ proto_compile(
 proto_ts_library(
     name = "place_ts_proto",
     srcs = ["place.ts"],
+    args = ["--lib ES2015"],
+    tags = ["manual"],
     tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],
     deps = [

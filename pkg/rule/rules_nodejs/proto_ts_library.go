@@ -37,6 +37,7 @@ func (s *protoTsLibrary) KindInfo() rule.KindInfo {
 		MergeableAttrs: map[string]bool{
 			"srcs": true,
 			"tsc":  true,
+			"args": true,
 		},
 		ResolveAttrs: map[string]bool{
 			"deps": true,

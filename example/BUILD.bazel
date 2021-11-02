@@ -79,6 +79,7 @@
 # gazelle:proto_rule proto_ts_library implementation stackb:rules_proto:proto_ts_library
 # gazelle:proto_rule proto_ts_library visibility //visibility:public
 # gazelle:proto_rule proto_ts_library attr tsc @npm_tsc//typescript/bin:tsc
+# gazelle:proto_rule proto_ts_library attr args --lib ES2015
 # gazelle:proto_rule proto_ts_library deps @npm_tsc//protobufjs
 # gazelle:proto_rule proto_ts_library deps @npm_tsc//long
 

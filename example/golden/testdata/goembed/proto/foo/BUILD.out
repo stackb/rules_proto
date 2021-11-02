@@ -14,7 +14,7 @@ proto_library(
 
 proto_compile(
     name = "foo_go_compile",
-    mappings = {"foo.pb.go": "github.com/example/foo/foo.pb.go"},
+    output_mappings = ["foo.pb.go=github.com/example/foo/foo.pb.go"],
     outputs = ["foo.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "foo_proto",

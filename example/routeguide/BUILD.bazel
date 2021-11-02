@@ -129,7 +129,7 @@ proto_compile(
 
 proto_compile(
     name = "routeguide_go_compile",
-    mappings = {"routeguide.pb.go": "github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go"},
+    output_mappings = ["routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go"],
     outputs = ["routeguide.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "routeguide_proto",
@@ -273,6 +273,8 @@ proto_compile(
 proto_ts_library(
     name = "routeguide_ts_proto",
     srcs = ["routeguide.ts"],
+    args = ["--lib ES2015"],
+    tags = ["manual"],
     tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],
     deps = [

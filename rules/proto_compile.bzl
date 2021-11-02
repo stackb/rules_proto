@@ -275,14 +275,14 @@ def _proto_compile_impl(ctx):
         after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find . -type f"]
         commands = before + commands + after
 
-    # if the rule declares any mappings, setup copy file commands to move them into place
-    if len(ctx.attr.mappings) > 0:
+    # if the rule declares any mappings, setup copy file commands to move them
+    # into place
+    if len(ctx.attr.output_mappings) > 0:
         out_dir = ctx.bin_dir.path
         if ctx.label.workspace_root:
             out_dir = "/".join([out_dir, ctx.label.workspace_root])
-        for basename, intermediate_filename in ctx.attr.mappings.items():
-            # keyname = basename + srcgen_ext
-            # basename + srcgen_ext
+        for mapping in ctx.attr.output_mappings:
+            basename, _, intermediate_filename = mapping.partition("=")
             intermediate_filename = "/".join([out_dir, intermediate_filename])
             output = outputs_by_basename.get(basename, None)
             if not output:
@@ -355,8 +355,8 @@ proto_compile = rule(
         "outs": attr.string_dict(
             doc = "Output location, keyed by proto_plugin label",
         ),
-        "mappings": attr.string_dict(
-            doc = "Mapping of which plugins generate which files",
+        "output_mappings": attr.string_list(
+            doc = "strings of the form A=B where A is a file named in attr.outputs and B is the actual file generated in the execroot",
         ),
         "proto": attr.label(
             doc = "The single ProtoInfo provider",

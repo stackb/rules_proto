@@ -21,7 +21,7 @@ proto_library(
 
 proto_compile(
     name = "mappingsmerge_go_compile",
-    mappings = {"example.pb.go": "github.com/stackb/rules_proto/example/golden/mappingsmerge/example.pb.go"},
+    output_mappings = ["example.pb.go=github.com/stackb/rules_proto/example/golden/mappingsmerge/example.pb.go"],
     outputs = ["example.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "mappingsmerge_proto",

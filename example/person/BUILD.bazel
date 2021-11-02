@@ -67,7 +67,7 @@ proto_compile(
 
 proto_compile(
     name = "person_go_compile",
-    mappings = {"person.pb.go": "github.com/stackb/rules_proto/example/person/person.pb.go"},
+    output_mappings = ["person.pb.go=github.com/stackb/rules_proto/example/person/person.pb.go"],
     outputs = ["person.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "person_proto",
@@ -89,7 +89,10 @@ proto_java_library(
         "//example/place:place_java_library",
         "@com_google_protobuf//:protobuf_java",
     ],
-    deps = ["@com_google_protobuf//:protobuf_java"],
+    deps = [
+        "//example/place:place_java_library",
+        "@com_google_protobuf//:protobuf_java",
+    ],
 )
 
 proto_compile(
@@ -156,6 +159,8 @@ proto_compile(
 proto_ts_library(
     name = "person_ts_proto",
     srcs = ["person.ts"],
+    args = ["--lib ES2015"],
+    tags = ["manual"],
     tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],
     deps = [

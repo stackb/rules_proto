@@ -424,14 +424,14 @@ Takeaways:
   extension provided by [bazel-gazelle] is responsible for generating
   `proto_library`.
 
-### The `mappings` attribute
+### The `output_mappings` attribute
 
 Consider the following rule within the package `example/thing`:
 
 ```python
 proto_compile(
     name = "thing_go_compile",
-    mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
+    output_mappings = ["thing.pb.go=github.com/stackb/rules_proto/example/thing/thing.pb.go"],
     outputs = ["thing.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
@@ -442,12 +442,12 @@ This rule is declaring that a file `bazel-bin/example/thing/thing.pb.go` will be
 output when the action is run. When we `bazel build
 //example/thing:thing_go_compile`, the file is indeed created.
 
-Let's temporarily comment out the `mappings` attribute and rebuild:
+Let's temporarily comment out the `output_mappings` attribute and rebuild:
 
 ```python
 proto_compile(
     name = "thing_go_compile",
-    # mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
+    # output_mappings = ["thing.pb.go=github.com/stackb/rules_proto/example/thing/thing.pb.go"],
     outputs = ["thing.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
@@ -459,12 +459,14 @@ $ bazel build //example/thing:thing_go_compile
 ERROR: /github.com/stackb/rules_proto/example/thing/BUILD.bazel:54:14: output 'example/thing/thing.pb.go' was not created
 ```
 
-What happened?  Let's add a debugging attribute `verbose = True` on the rule: this will print debugging information and show the bazel sandbox before and after the `protoc` tool is invoked:
+What happened?  Let's add a debugging attribute `verbose = True` on the rule:
+this will print debugging information and show the bazel sandbox before and
+after the `protoc` tool is invoked:
 
 ```python
 proto_compile(
     name = "thing_go_compile",
-    # mappings = {"thing.pb.go": "github.com/stackb/rules_proto/example/thing/thing.pb.go"},
+    # output_mappings = ["thing.pb.go=github.com/stackb/rules_proto/example/thing/thing.pb.go"],
     outputs = ["thing.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
@@ -495,15 +497,17 @@ do a `mv
 ./bazel-out/darwin-fastbuild/bin/example/thing/thing.pb.go` to relocate the
 file into its expected location before the action terminates.
 
-Therefore, the `mappings` attribute is a dict that maps file locations `{ want:
-got }` relative to the action execution root.  It is required when the actual
-output location does not match the desired location.  This can occur if the
-proto `package` statement does not match the Bazel package path, or in special
-circumstances specific to the plugin itself (like `go_package`).
+Therefore, the `output_mappings` attribute is a list of entries that map file
+locations `want=got` relative to the action execution root.  It is required when
+the actual output location does not match the desired location.  This can occur
+if the proto `package` statement does not match the Bazel package path, or in
+special circumstances specific to the plugin itself (like `go_package`).
 
 ## proto_repository
 
-From an implementation standpoint, this is very similar to the `go_repository` rule.  Both can download external files and then run the gazelle generator over the downloaded files.  Example:
+From an implementation standpoint, this is very similar to the `go_repository`
+rule.  Both can download external files and then run the gazelle generator over
+the downloaded files.  Example:
 
 ```python
 proto_repository(
