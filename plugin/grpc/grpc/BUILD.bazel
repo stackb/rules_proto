@@ -1,0 +1,19 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "protoc-gen-grpc-cpp",
+    tool = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "protoc-gen-grpc-python",
+    tool = "@com_github_grpc_grpc//src/compiler:grpc_python_plugin",
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"],
+    visibility = ["//plugin:__pkg__"],
+)

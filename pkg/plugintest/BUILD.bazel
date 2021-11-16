@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "plugintest",
+    testonly = True,
+    srcs = [
+        "case.go",
+        "doc.go",
+        "utils.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/plugintest",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)

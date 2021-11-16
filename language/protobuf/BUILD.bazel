@@ -1,0 +1,36 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "protobuf",
+    srcs = ["protobuf.go"],
+    importpath = "github.com/stackb/rules_proto/language/protobuf",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/language/protobuf",
+        "//pkg/plugin/builtin",
+        "//pkg/plugin/gogo/protobuf",
+        "//pkg/plugin/golang/protobuf",
+        "//pkg/plugin/grpc/grpc",
+        "//pkg/plugin/grpc/grpcgo",
+        "//pkg/plugin/grpc/grpcjava",
+        "//pkg/plugin/grpc/grpcnode",
+        "//pkg/plugin/grpcecosystem/grpcgateway",
+        "//pkg/plugin/scalapb/scalapb",
+        "//pkg/plugin/stackb/grpc_js",
+        "//pkg/plugin/stephenh/ts-proto",
+        "//pkg/rule/rules_cc",
+        "//pkg/rule/rules_closure",
+        "//pkg/rule/rules_go",
+        "//pkg/rule/rules_java",
+        "//pkg/rule/rules_nodejs",
+        "//pkg/rule/rules_python",
+        "//pkg/rule/rules_scala",
+        "@bazel_gazelle//language:go_default_library",
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"] + glob(["*.go"]),
+    visibility = ["//:__pkg__"],
+)

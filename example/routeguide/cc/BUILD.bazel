@@ -1,0 +1,20 @@
+cc_library(
+    name = "helper",
+    srcs = ["helper.cc"],
+    hdrs = ["helper.h"],
+    deps = ["//example/routeguide:routeguide_grpc_cc_library"],
+)
+
+cc_binary(
+    name = "client",
+    srcs = ["client.cc"],
+    data = ["//example/routeguide:features"],
+    deps = [":helper"],
+)
+
+cc_binary(
+    name = "server",
+    srcs = ["server.cc"],
+    data = ["//example/routeguide:features"],
+    deps = [":helper"],
+)

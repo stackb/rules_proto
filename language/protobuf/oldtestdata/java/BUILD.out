@@ -1,0 +1,19 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+# gazelle:proto_language java plugin java_proto
+# gazelle:proto_language java plugin java_grpc
+# gazelle:proto_language java rule proto_compile
+
+proto_library(
+    name = "test_proto",
+    srcs = ["test.proto"],
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "test_java_compile",
+    outputs = ["test.srcjar"],
+    plugins = ["@build_stack_rules_proto//protocolbuffers/protobuf:java_plugin"],
+    proto = "test_proto",
+)

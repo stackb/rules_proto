@@ -1,0 +1,524 @@
+load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
+load("@build_stack_rules_proto//rules:depsgen.bzl", "depsgen")
+
+depsgen(
+    name = "core",
+    deps = [
+        ":bazel_gazelle",
+        ":rules_proto",
+    ],
+)
+
+depsgen(
+    name = "protobuf_core",
+    deps = ["//deps:com_google_protobuf"],
+)
+
+depsgen(
+    name = "go_core",
+    deps = [
+        ":com_github_golang_protobuf",
+        ":org_golang_google_grpc",
+        ":org_golang_google_grpc_cmd_protoc_gen_go_grpc",
+    ],
+)
+
+depsgen(
+    name = "scala",
+    deps = [
+        ":github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip",
+        ":github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip",
+        ":io_bazel_rules_scala",
+    ],
+)
+
+depsgen(
+    name = "closure",
+    deps = [":io_bazel_rules_closure"],
+)
+
+depsgen(
+    name = "nodejs",
+    deps = [":build_bazel_rules_nodejs"],
+)
+
+depsgen(
+    name = "ts_proto",
+    deps = [
+        ":npm_ts_proto",
+        ":npm_tsc",
+    ],
+)
+
+depsgen(
+    name = "example_routeguide_nodejs",
+    deps = [":npm_example_routeguide_nodejs"],
+)
+
+depsgen(
+    name = "prebuilt_protoc",
+    deps = [
+        ":prebuilt_protoc_linux",
+        ":prebuilt_protoc_osx",
+        ":prebuilt_protoc_windows",
+    ],
+)
+
+depsgen(
+    name = "grpc_core",
+    deps = ["//deps:com_github_grpc_grpc"],
+)
+
+depsgen(
+    name = "grpc_js",
+    deps = ["//deps:com_github_stackb_grpc_js"],
+)
+
+depsgen(
+    name = "grpc_node",
+    deps = ["//deps:com_github_grpc_grpc_node_packages_grpc_tools_src"],
+)
+
+depsgen(
+    name = "grpc_java",
+    deps = ["//deps:io_grpc_grpc_java"],
+)
+
+# Release: v0.28.0
+# TargetCommitish: release-0.28
+# Date: 2021-07-06 23:21:45 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.28.0
+# Size: 687092 (687 kB)
+proto_dependency(
+    name = "io_bazel_rules_go",
+    repository_rule = "http_archive",
+    sha256 = "38171ce619b2695fa095427815d52c2a115c716b15f4cd0525a88c376113f584",
+    strip_prefix = "rules_go-0.28.0",
+    urls = ["https://github.com/bazelbuild/rules_go/archive/v0.28.0.tar.gz"],
+    visibility = ["//visibility:public"],
+)
+
+# Branch: master
+# Commit: 425d85daecb9aeffa1ae24b83df7b97b534dcf05
+# Date: 2021-10-29 00:25:25 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-gazelle/commit/425d85daecb9aeffa1ae24b83df7b97b534dcf05
+#
+# Stardoc generates repository.md (#1123)
+#
+# * Stardoc generates repository.md
+#
+# This is a mirror of the content in repository.rst, allowing us to manually inspect the delta between them.
+# As soon as we are satisfied that the generated content is correct, we'll delete repository.rst and update any links to it.
+#
+# Technique: copied doc strings out of existing rst file into the starlark files. Transcribed rst syntax to markdown.
+#
+# * Replace repository.rst content with link to markdown version
+# Size: 1416940 (1.4 MB)
+proto_dependency(
+    name = "bazel_gazelle",
+    repository_rule = "http_archive",
+    sha256 = "cb05501bd37e2cbfdea8e23b28e5a7fe4ff4f12cef30eeb1924a0b8c3c0cea61",
+    strip_prefix = "bazel-gazelle-425d85daecb9aeffa1ae24b83df7b97b534dcf05",
+    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/425d85daecb9aeffa1ae24b83df7b97b534dcf05.tar.gz"],
+    deps = [":io_bazel_rules_go"],
+)
+
+proto_dependency(
+    name = "com_google_protobuf",
+    repository_rule = "http_archive",
+    sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
+    strip_prefix = "protobuf-3.14.0",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":bazel_skylib",
+        ":rules_python",
+        ":zlib",
+    ],
+)
+
+# Branch: master
+# Commit: c7e068d38e2fec1d899e1c150e372f205c220e27
+# Date: 2021-02-02 22:16:45 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_python/commit/c7e068d38e2fec1d899e1c150e372f205c220e27
+#
+# pip: 20.3.3 -> 20.3.4 (#405)
+# Size: 2563550 (2.6 MB)
+proto_dependency(
+    name = "rules_python",
+    repository_rule = "http_archive",
+    sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
+    strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
+    urls = ["https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz"],
+    visibility = ["//visibility:public"],
+)
+
+# Branch: master
+# Commit: f7a30f6f80006b591fa7c437fe5a951eb10bcbcf
+# Date: 2021-02-09 14:25:06 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_proto/commit/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf
+#
+# Merge pull request #77 from Yannic/proto_descriptor_set_rule
+#
+# Create proto_descriptor_set
+# Size: 14397 (14 kB)
+proto_dependency(
+    name = "rules_proto",
+    repository_rule = "http_archive",
+    sha256 = "9fc210a34f0f9e7cc31598d109b5d069ef44911a82f507d5a88716db171615a8",
+    strip_prefix = "rules_proto-f7a30f6f80006b591fa7c437fe5a951eb10bcbcf",
+    urls = ["https://github.com/bazelbuild/rules_proto/archive/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf.tar.gz"],
+)
+
+proto_dependency(
+    name = "bazel_skylib",
+    repository_rule = "http_archive",
+    sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
+    strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
+    urls = ["https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz"],
+    visibility = ["//visibility:public"],
+)
+
+proto_dependency(
+    name = "zlib",
+    build_file = "@build_stack_rules_proto//third_party:zlib.BUILD",
+    repository_rule = "http_archive",
+    sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
+    strip_prefix = "zlib-1.2.11",
+    urls = [
+        "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
+        "https://zlib.net/zlib-1.2.11.tar.gz",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_dependency(
+    name = "build_stack_rules_proto",
+    path = "../build_stack_rules_proto",
+    repository_rule = "local_repository",
+    visibility = ["//visibility:public"],
+)
+
+# Release: v1.35.0
+# Commit: v1.35.x
+# Date: 2021-01-19 18:07:57 +0000 UTC
+# URL: https://github.com/grpc/grpc/releases/tag/v1.35.0
+# Branch: master
+# Commit: 5f759fcd1f602b38004b948b071f8b5726a9a4b1
+# Date: 2021-02-09 05:46:27 +0000 UTC
+# URL: https://github.com/grpc/grpc/commit/5f759fcd1f602b38004b948b071f8b5726a9a4b1
+#
+# Merge pull request #25384 from gnossen/fix_interop_typo
+#
+# Fix Interop Client Typo
+# Size: 7899154 (7.9 MB)
+proto_dependency(
+    name = "com_github_grpc_grpc",
+    repository_rule = "http_archive",
+    sha256 = "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b",
+    strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
+    urls = ["https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz"],
+    deps = [
+        ":build_bazel_rules_swift",
+        ":com_google_protobuf",
+        ":rules_jvm_external",
+    ],
+)
+
+# Release: 0.18.0
+# Commit: master
+# Date: 2021-01-04 23:36:38 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_swift/releases/tag/0.18.0
+# Branch: master
+# Commit: dadd12190182530cf6f91ca7f9e70391644ce502
+# Date: 2021-02-08 21:24:10 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_swift/commit/dadd12190182530cf6f91ca7f9e70391644ce502
+#
+# Don't re-export the modules imported by a Swift generated header.
+#
+# This was an unintentional change in behavior from https://github.com/bazelbuild/rules_swift/commit/5f51ca9c5149122f41cada6122c61788d880fee9; this puts us back to the original behavior, but leaves an API in place for finer-grained control over re-exporting modules in the future. (But the BUILD rules today don't really have the flexibility to support it yet.)
+#
+# PiperOrigin-RevId: 356338982
+# (cherry picked from commit f45eea8c02a87c3077e5209f471fe4a193b5b0ba)
+# Size: 157518 (158 kB)
+proto_dependency(
+    name = "build_bazel_rules_swift",
+    repository_rule = "http_archive",
+    sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
+    strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
+    urls = ["https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"],
+)
+
+# Release: v1.35.0
+# Commit: master
+# Date: 2021-01-12 23:05:49 +0000 UTC
+# URL: https://github.com/grpc/grpc-java/releases/tag/v1.35.0
+# Branch: master
+# Commit: 7f7821c616598ce4e33d2045c5641b2348728cb8
+# Date: 2021-02-10 00:56:26 +0000 UTC
+# URL: https://github.com/grpc/grpc-java/commit/7f7821c616598ce4e33d2045c5641b2348728cb8
+#
+# interop-testing: add fake altsHandshakerService for test (#7847)
+# Size: 2337953 (2.3 MB)
+proto_dependency(
+    name = "io_grpc_grpc_java",
+    repository_rule = "http_archive",
+    sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
+    strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
+    urls = ["https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz"],
+    deps = [":rules_jvm_external"],
+)
+
+proto_dependency(
+    name = "rules_jvm_external",
+    repository_rule = "http_archive",
+    sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
+    strip_prefix = "rules_jvm_external-4.0",
+    urls = ["https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip"],
+)
+
+proto_dependency(
+    name = "prebuilt_protoc_linux",
+    build_file_content = """
+filegroup(
+    name = "protoc",
+    srcs = ["bin/protoc"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "6003de742ea3fcf703cfec1cd4a3380fd143081a2eb0e559065563496af27807",
+    urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip"],
+)
+
+proto_dependency(
+    name = "prebuilt_protoc_osx",
+    build_file_content = """
+filegroup(
+    name = "protoc",
+    srcs = ["bin/protoc"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "0decc6ce5beed07f8c20361ddeb5ac7666f09cf34572cca530e16814093f9c0c",
+    urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-osx-x86_64.zip"],
+)
+
+proto_dependency(
+    name = "prebuilt_protoc_windows",
+    build_file_content = """
+filegroup(
+    name = "protoc",
+    srcs = ["bin/protoc.exe"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "0decc6ce5beed07f8c20361ddeb5ac7666f09cf34572cca530e16814093f9c0c",
+    urls = ["https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-win32.zip"],
+)
+
+# Branch: master
+# Commit: 2437e40131072cadc1628726775ff00fa3941a4a
+# Date: 2021-09-06 10:18:08 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_scala/commit/2437e40131072cadc1628726775ff00fa3941a4a
+#
+# Remove customized ijar code (#1285)
+#
+# ijar patch was upstreamed and is available since Bazek 4.1.0
+# Size: 638431 (638 kB)
+proto_dependency(
+    name = "io_bazel_rules_scala",
+    repository_rule = "http_archive",
+    sha256 = "0701ee4e1cfd59702d780acde907ac657752fbb5c7d08a0ec6f58ebea8cd0efb",
+    strip_prefix = "rules_scala-2437e40131072cadc1628726775ff00fa3941a4a",
+    urls = ["https://github.com/bazelbuild/rules_scala/archive/2437e40131072cadc1628726775ff00fa3941a4a.tar.gz"],
+    deps = [":bazel_skylib"],
+)
+
+# Last-Modified: Fri, 06 Aug 2021 01:06:35 GMT
+# Size: 6914350 (6.9 MB)
+proto_dependency(
+    name = "github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip",
+    build_file_content = """
+filegroup(
+    name = "exe",
+    srcs = ["protoc-gen-scala"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "1a58ae65d06e7894d7153812fc1c9ceeecab7891dcabeb33ee0b3e91e7502889",
+    urls = ["https://github.com/scalapb/ScalaPB/releases/download/v0.11.5/protoc-gen-scala-0.11.5-linux-x86_64.zip"],
+)
+
+# Last-Modified: Fri, 06 Aug 2021 01:06:34 GMT
+# Size: 6147501 (6.1 MB)
+proto_dependency(
+    name = "github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip",
+    build_file_content = """
+filegroup(
+    name = "exe",
+    srcs = ["protoc-gen-scala"],
+    visibility = ["//visibility:public"],
+)
+    """,
+    repository_rule = "http_archive",
+    sha256 = "312d802a999df87e7c046f2fef9213d0b3b8868b7771fa68ec8057ebf68397c0",
+    urls = ["https://github.com/scalapb/ScalaPB/releases/download/v0.11.5/protoc-gen-scala-0.11.5-osx-x86_64.zip"],
+)
+
+proto_dependency(
+    name = "org_golang_google_grpc",
+    build_file_proto_mode = "disable",
+    importpath = "google.golang.org/grpc",
+    repository_rule = "go_repository",
+    sum = "h1:TwIQcH3es+MojMVojxxfQ3l3OF2KzlRxML2xZq0kRo8=",
+    version = "v1.35.0",
+)
+
+proto_dependency(
+    name = "com_github_golang_protobuf",
+    build_file_proto_mode = "disable_global",
+    importpath = "github.com/golang/protobuf",
+    repository_rule = "go_repository",
+    sum = "h1:JjCZWpVbqXDqFVmTfYWEVTMIYrL/NPdPSCHPJ0T/raM=",
+    version = "v1.4.3",
+)
+
+proto_dependency(
+    name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
+    build_file_proto_mode = "disable_global",
+    importpath = "google.golang.org/grpc/cmd/protoc-gen-go-grpc",
+    repository_rule = "go_repository",
+    sum = "h1:M1YKkFIboKNieVO5DLUEVzQfGwJD30Nv2jfUgzb5UcE=",
+    version = "v1.1.0",
+)
+
+proto_dependency(
+    name = "build_bazel_rules_nodejs",
+    repository_rule = "http_archive",
+    sha256 = "4501158976b9da216295ac65d872b1be51e3eeb805273e68c516d2eb36ae1fbb",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/4.4.1/rules_nodejs-4.4.1.tar.gz"],
+)
+
+proto_dependency(
+    name = "npm_ts_proto",
+    package_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package.json",
+    package_lock_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package-lock.json",
+    repository_rule = "npm_install",
+    symlink_node_modules = False,
+)
+
+proto_dependency(
+    name = "npm_tsc",
+    frozen_lockfile = True,
+    package_json = "@build_stack_rules_proto//rules/ts:package.json",
+    repository_rule = "yarn_install",
+    symlink_node_modules = False,
+    yarn_lock = "@build_stack_rules_proto//rules/ts:yarn.lock",
+)
+
+# Commit: 42195b5ca136f78d28819ef486e3a7b02ad45146
+# Date: 2021-10-18 20:50:52 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_closure/commit/42195b5ca136f78d28819ef486e3a7b02ad45146
+#
+# additional suppressions for closure_js_test
+# Size: 454706 (455 kB)
+proto_dependency(
+    name = "io_bazel_rules_closure",
+    repository_rule = "http_archive",
+    sha256 = "00d492551233d7548ca2a983f4e19d6aabb0bc716957ade62d691baf1dcef374",
+    strip_prefix = "rules_closure-42195b5ca136f78d28819ef486e3a7b02ad45146",
+    urls = ["https://github.com/bazelbuild/rules_closure/archive/42195b5ca136f78d28819ef486e3a7b02ad45146.tar.gz"],
+)
+
+# Branch: master
+# Commit: c938ee76ee462abf4f83d758f63d52f03fa24c7c
+# Date: 2021-10-18 20:45:40 +0000 UTC
+# URL: https://github.com/stackb/grpc.js/commit/c938ee76ee462abf4f83d758f63d52f03fa24c7c
+#
+# Remove deprecated goog.bind (#13)
+# Size: 30644 (31 kB)
+proto_dependency(
+    name = "com_github_stackb_grpc_js",
+    repository_rule = "http_archive",
+    sha256 = "33042aa893625ec5bf6d59bf38b3954e5558b7e549b1cb2eeee66cd2ccf8ab29",
+    strip_prefix = "grpc.js-c938ee76ee462abf4f83d758f63d52f03fa24c7c",
+    urls = ["https://github.com/stackb/grpc.js/archive/c938ee76ee462abf4f83d758f63d52f03fa24c7c.tar.gz"],
+)
+
+# Release: @grpc/proto-loader@0.6.5
+# Commit: master
+# Date: 2021-09-13 17:57:45 +0000 UTC
+# URL: https://github.com/grpc/grpc-node/releases/tag/%40grpc/proto-loader%400.6.5
+# Branch: master
+# Commit: aeb42733d861883b82323e2dc6d1aba0e3a12aa0
+# Date: 2021-09-20 20:01:10 +0000 UTC
+# URL: https://github.com/grpc/grpc-node/commit/aeb42733d861883b82323e2dc6d1aba0e3a12aa0
+#
+# Merge pull request #1909 from murgatroid99/grpc-js-xds_log_bootstrap_master
+#
+# grpc-js-xds: Log loaded bootstrap info in xDS client (master)
+# Size: 447780 (448 kB)
+proto_dependency(
+    name = "com_github_grpc_grpc_node_packages_grpc_tools_src",
+    build_file_content = """
+cc_library(
+    name = "grpc_plugin_support",
+    srcs = ["node_generator.cc"],
+    hdrs = [
+        "config.h",
+        "config_protobuf.h",
+        "generator_helpers.h",
+        "node_generator.h",
+        "node_generator_helpers.h",
+    ],
+    deps = ["//external:protobuf_clib"],
+)
+
+cc_binary(
+    name = "grpc_node_plugin",
+    srcs = ["node_plugin.cc"],
+    visibility = ["//visibility:public"],
+    deps = [":grpc_plugin_support"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "7fbe9d04e45420c3c2e02456c0275fa8716fa894c48525b9a8f7db9ac0b4acb0",
+    strip_prefix = "grpc-node-aeb42733d861883b82323e2dc6d1aba0e3a12aa0/packages/grpc-tools/src",
+    urls = ["https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz"],
+    deps = [":com_github_grpc_grpc"],
+)
+
+proto_dependency(
+    name = "npm_example_routeguide_nodejs",
+    package_json = "//example/routeguide/nodejs:package.json",
+    package_lock_json = "//example/routeguide/nodejs:package-lock.json",
+    repository_rule = "npm_install",
+    symlink_node_modules = False,
+    deps = ["build_bazel_rules_nodejs"],
+)
+
+proto_dependency(
+    name = "npm_ts",
+    package_json = "//example/routeguide/ts:package.json",
+    package_lock_json = "//example/routeguide/ts:package-lock.json",
+    repository_rule = "npm_install",
+    symlink_node_modules = False,
+    deps = ["build_bazel_rules_nodejs"],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "core_deps.bzl",
+        "grpc_core_deps.bzl",
+        "grpc_java_deps.bzl",
+        "prebuilt_protoc_deps.bzl",
+        "protobuf_core_deps.bzl",
+    ],
+    visibility = ["//:__pkg__"],
+)

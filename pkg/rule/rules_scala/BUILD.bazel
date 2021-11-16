@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "rules_scala",
+    srcs = [
+        "scala_library.go",
+        "scala_proto_library.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/rule/rules_scala",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/plugin/scalapb/scalapb",
+        "//pkg/protoc",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)

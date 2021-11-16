@@ -1,5 +1,66 @@
+load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 
+# ----------------------------------------------------
+# Buildifier
+# ----------------------------------------------------
 buildifier(
     name = "buildifier",
+)
+
+# ----------------------------------------------------
+# Gazelle
+# ----------------------------------------------------
+# gazelle:prefix github.com/stackb/rules_proto
+# gazelle:resolve go github.com/bazelbuild/buildtools/build @com_github_bazelbuild_buildtools//build:go_default_library
+# gazelle:exclude vendor
+# gazelle:exclude node_modules
+
+gazelle_binary(
+    name = "gazelle-protobuf",
+    languages = [
+        # NOTE: order matters here.  Gazelle will respect the ordering of
+        # languages which will impact the population of 'OtherGen', so
+        # //language/protobuf MUST come after language/proto.
+        "@bazel_gazelle//language/go",
+        "@bazel_gazelle//language/proto",
+        "//language/protobuf",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+gazelle(
+    name = "gazelle",
+    gazelle = ":gazelle-protobuf",
+)
+
+gazelle(
+    name = "update_go_deps",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=go_deps.bzl%go_deps",
+        "-build_file_proto_mode=disable_global",
+        "-prune=true",
+    ],
+    command = "update-repos",
+)
+
+# ----------------------------------------------------
+# Test-Related
+# ----------------------------------------------------
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "WORKSPACE",
+        "go_deps.bzl",
+        "//deps:all_files",
+        "//pkg:all_files",
+        "//plugin:all_files",
+        "//rules:all_files",
+        "//third_party:all_files",
+        "//toolchain:all_files",
+    ],
+    visibility = ["//visibility:public"],
 )

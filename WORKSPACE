@@ -1,211 +1,151 @@
 workspace(name = "build_stack_rules_proto")
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
+# gazelle:repo bazel_gazelle
 
-# local_repository(
-#     name = "org_pubref_rules_node",
-#     path = "/home/pcj/github/pubref/rules_node",
-# )
+# ----------------------------------------------------
+# Toolchain-Related
+# ----------------------------------------------------
 
-# local_repository(
-#     name = "com_github_yugui_rules_ruby",
-#     path = "/home/pcj/github/yugui/rules_ruby",
-# )
+register_toolchains("//toolchain:standard")
 
-# **************************************************************
-#
-#
-# cpp
-#
-# **************************************************************
+# ----------------------------------------------------
+# Top-Level Dependency Trees
+# ----------------------------------------------------
 
-load("@build_stack_rules_proto//cpp:deps.bzl", "cpp_grpc_library")
+load("//deps:core_deps.bzl", "core_deps")
 
-cpp_grpc_library()
+core_deps()
 
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
-grpc_deps()
+protobuf_core_deps()
 
-# **************************************************************
-#
-#
-# closure
-#
-# **************************************************************
+load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
-load("@build_stack_rules_proto//closure:deps.bzl", "closure_proto_library")
+prebuilt_protoc_deps()
 
-closure_proto_library()
+load("//deps:grpc_core_deps.bzl", "grpc_core_deps")
 
-load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
+grpc_core_deps()
 
-closure_repositories()
+load("//deps:grpc_java_deps.bzl", "grpc_java_deps")
 
-# **************************************************************
-#
-#
-# csharp
-#
-# **************************************************************
+grpc_java_deps()
 
-load("@build_stack_rules_proto//csharp:deps.bzl", "csharp_grpc_library")
+load("//deps:closure_deps.bzl", "closure_deps")
 
-csharp_grpc_library()
+closure_deps()
+
+load("//deps:grpc_js_deps.bzl", "grpc_js_deps")
+
+grpc_js_deps()
+
+load("//deps:scala_deps.bzl", "scala_deps")
+
+scala_deps()
+
+load("//deps:nodejs_deps.bzl", "nodejs_deps")
+
+nodejs_deps()
+
+load("//deps:grpc_node_deps.bzl", "grpc_node_deps")
+
+grpc_node_deps()
+
+load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
+
+ts_proto_deps()
+
+load("//deps:example_routeguide_nodejs_deps.bzl", "example_routeguide_nodejs_deps")
+
+example_routeguide_nodejs_deps()
+
+# ----------------------------------------------------
+# Go Tools
+# ----------------------------------------------------
 
 load(
-    "@io_bazel_rules_dotnet//dotnet:defs.bzl",
-    "core_register_sdk",
-    "dotnet_register_toolchains",
-    "dotnet_repositories",
+    "@io_bazel_rules_go//go:deps.bzl",
+    "go_register_toolchains",
+    "go_rules_dependencies",
 )
-
-core_version = "v2.1.503"
-
-dotnet_register_toolchains(
-    core_version = core_version,
-)
-
-dotnet_register_toolchains(
-    core_version = core_version,
-)
-
-core_register_sdk(
-    name = "core_sdk",
-    core_version = core_version,
-)
-
-dotnet_repositories()
-
-load("@build_stack_rules_proto//csharp/nuget:packages.bzl", nuget_packages = "packages")
-
-nuget_packages()
-
-load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_protobuf_packages")
-
-nuget_protobuf_packages()
-
-load("@build_stack_rules_proto//csharp/nuget:nuget.bzl", "nuget_grpc_packages")
-
-nuget_grpc_packages()
-
-# **************************************************************
-#
-#
-# go
-#
-# **************************************************************
-
-load("@build_stack_rules_proto//go:deps.bzl", "go_grpc_library")
-
-go_grpc_library()
-
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
-go_register_toolchains()
+go_register_toolchains(version = "1.16.2")
 
-# **************************************************************
-#
-#
-# java
-#
-# **************************************************************
+# ----------------------------------------------------
+# Gazelle
+# ----------------------------------------------------
 
-load("@build_stack_rules_proto//:deps.bzl", "io_grpc_grpc_java")
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
-io_grpc_grpc_java()
+gazelle_dependencies()
 
-load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+load("//:go_deps.bzl", "go_deps")
 
-grpc_java_repositories(omit_com_google_protobuf = True)
+# gazelle:repository_macro go_deps.bzl%go_deps
+go_deps()
 
-load("@build_stack_rules_proto//java:deps.bzl", "java_grpc_library")
+# ----------------------------------------------------
+# Core gRPC
+# ----------------------------------------------------
 
-java_grpc_library()
-
-# **************************************************************
-#
-#
-# node
-#
-# **************************************************************
-
-load("@build_stack_rules_proto//node:deps.bzl", "node_grpc_library")
-
-node_grpc_library()
-
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+load(
+    "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
+    "grpc_deps",
+)
 
 grpc_deps()
 
-load("@org_pubref_rules_node//node:rules.bzl", "node_repositories", "yarn_modules")
+# ----------------------------------------------------
+# Java
+# ----------------------------------------------------
 
-node_repositories()
-
-yarn_modules(
-    name = "proto_node_modules",
-    deps = {
-        "google-protobuf": "3.6.1",
-    },
+load(
+    "@rules_jvm_external//:defs.bzl",
+    "maven_install",
+)
+load(
+    "@io_grpc_grpc_java//:repositories.bzl",
+    "IO_GRPC_GRPC_JAVA_ARTIFACTS",
+    "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS",
+    "grpc_java_repositories",
 )
 
-yarn_modules(
-    name = "grpc_node_modules",
-    deps = {
-        "grpc": "1.15.1",
-        "async": "2.6.1",
-    },
+maven_install(
+    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
+    generate_compat_repositories = True,
+    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
+    repositories = [
+        "https://repo.maven.apache.org/maven2/",
+    ],
 )
 
-# **************************************************************
-#
-#
-# python
-#
-# **************************************************************
-
-load("@build_stack_rules_proto//python:deps.bzl", "python_grpc_library")
-
-python_grpc_library()
-
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-
-grpc_deps()
-
-load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
-
-pip_repositories()
-
-pip_import(
-    name = "protobuf_py_deps",
-    requirements = "@build_stack_rules_proto//python/requirements:protobuf.txt",
+load(
+    "@maven//:compat.bzl",
+    "compat_repositories",
 )
 
-load("@protobuf_py_deps//:requirements.bzl", protobuf_pip_install = "pip_install")
+compat_repositories()
 
-protobuf_pip_install()
+grpc_java_repositories()
 
-pip_import(
-    name = "grpc_py_deps",
-    requirements = "@build_stack_rules_proto//python:requirements.txt",
-)
+# ----------------------------------------------------
+# golang
+# ----------------------------------------------------
 
-load("@grpc_py_deps//:requirements.bzl", grpc_pip_install = "pip_install")
+load("//deps:go_core_deps.bzl", "go_core_deps")
 
-grpc_pip_install()
+go_core_deps()
 
-# **************************************************************
-#
-#
+# ----------------------------------------------------
 # scala
-#
-# **************************************************************
+# ----------------------------------------------------
 
-load("@build_stack_rules_proto//scala:deps.bzl", "scala_grpc_library")
+load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
 
-scala_grpc_library()
+scala_config(scala_version = "2.12.11")
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
 
@@ -215,218 +155,67 @@ load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
 
 scala_register_toolchains()
 
-load("@io_bazel_rules_scala//scala_proto:scala_proto.bzl", "scala_proto_repositories")
-
-scala_proto_repositories()
-
-# **************************************************************
-#
-#
-# swift
-#
-# **************************************************************
-
-load("@build_stack_rules_proto//swift:deps.bzl", "swift_grpc_library")
-
-swift_grpc_library()
-
-load(
-    "@build_bazel_rules_swift//swift:repositories.bzl",
-    "swift_rules_dependencies",
-)
-
-swift_rules_dependencies()
-
-load(
-    "@build_bazel_apple_support//lib:repositories.bzl",
-    "apple_support_dependencies",
-)
-
-apple_support_dependencies()
-
-# **************************************************************
-#
-#
-# ruby
-#
-# **************************************************************
-
-# load("//ruby:deps.bzl", "ruby_grpc_library")
-
-# ruby_grpc_library()
-
-# load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
-
-# ruby_register_toolchains()
-
-# load("@com_github_yugui_rules_ruby//ruby/private:bundle.bzl", "bundle_install")
-
-# bundle_install(
-#     name = "routeguide_gems_bundle",
-#     gemfile = "//ruby:Gemfile",
-#     gemfile_lock = "//ruby:Gemfile.lock",
-# )
-
-# **************************************************************
-#
-#
-# dart
-#
-# **************************************************************
-
-load("//dart:deps.bzl", "dart_grpc_library")
-
-dart_grpc_library()
-
-load("@io_bazel_rules_dart//dart/build_rules:repositories.bzl", "dart_repositories")
-
-dart_repositories()
-
-load("@dart_pub_deps_protoc_plugin//:deps.bzl", dart_protoc_plugin_deps = "pub_deps")
-
-dart_protoc_plugin_deps()
-
-load("@dart_pub_deps_grpc//:deps.bzl", dart_grpc_deps = "pub_deps")
-
-dart_grpc_deps()
-
-# **************************************************************
-#
-#
-# d-lang
-#
-# **************************************************************
-
-load("//d:deps.bzl", "d_proto_library")
-
-d_proto_library()
-
-load("@io_bazel_rules_d//d:d.bzl", "d_repositories")
-
-d_repositories()
-
-# **************************************************************
-#
-#
-# gazelle & buildifier
-#
-# **************************************************************
-
-load("//:deps.bzl", "bazel_gazelle", "com_github_bazelbuild_buildtools")
-
-com_github_bazelbuild_buildtools()
-
-load("@com_github_bazelbuild_buildtools//buildifier:deps.bzl", "buildifier_dependencies")
-
-buildifier_dependencies()
-
-bazel_gazelle()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
-
-gazelle_dependencies()
-
-# gazelle:repo bazel_gazelle
-
-# **************************************************************
-#
-#
-# rust
-#
-# **************************************************************
-
-load("//rust:deps.bzl", "rust_grpc_library")
-
-rust_grpc_library()
-
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
-
-rust_repositories()
-
-load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
-
-bazel_version(name = "bazel_version")
-
-load("@io_bazel_rules_rust//proto/raze:crates.bzl", "raze_fetch_remote_crates")
-
-raze_fetch_remote_crates()
-
-# **************************************************************
-#
-#
-# android
-#
-# **************************************************************
-
-load("@build_stack_rules_proto//:deps.bzl", "rules_jvm_external")
-
-rules_jvm_external()
-
-load("@rules_jvm_external//:defs.bzl", "maven_install")
-
-load("//:deps.bzl", "MAVEN_SERVER_URLS")
-
+# bazel run @maven_scala//:pin, but first comment out the "maven_install_json"
+# (put it back once pinned again)
 maven_install(
-    name = "maven_android",
+    name = "maven_scala",
     artifacts = [
-        "com.android.support:appcompat-v7:28.0.0",
+        "com.thesamet.scalapb:lenses_2.12:0.11.5",
+        "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
+        "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
+        "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
+        "io.grpc:grpc-api:1.40.1",
+        "io.grpc:grpc-core:1.40.1",
+        "io.grpc:grpc-netty:1.40.1",
+        "io.grpc:grpc-protobuf:1.40.1",
+        "io.grpc:grpc-stub:1.40.1",
+        "org.json4s:json4s-core_2.12:4.0.3",
     ],
-    # Fail if a checksum file for the artifact is missing in the repository.
-    # Falls through "SHA-1" and "MD5". Defaults to True.
-    fail_on_missing_checksum = False,
-    repositories = MAVEN_SERVER_URLS,
+    fetch_sources = True,
+    maven_install_json = "//:maven_scala_install.json",
+    repositories = ["https://repo1.maven.org/maven2"],
 )
 
-load("@build_stack_rules_proto//android:deps.bzl", "android_grpc_library")
+load("@maven_scala//:defs.bzl", pinned_maven_scala_install = "pinned_maven_install")
 
-android_grpc_library()
+pinned_maven_scala_install()
 
-load("@build_bazel_rules_android//android:sdk_repository.bzl", "android_sdk_repository")
+# ----------------------------------------------------
+# closure
+# ----------------------------------------------------
 
-android_sdk_repository(name = "androidsdk")
+load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
 
-# **************************************************************
-#
-#
-# grpc.js
-#
-# **************************************************************
+rules_closure_toolchains()
 
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:deps.bzl", "closure_grpc_library")
+rules_closure_dependencies()
 
-closure_grpc_library()
+# ----------------------------------------------------
+# nodejs
+# ----------------------------------------------------
 
-# **************************************************************
-#
-#
-# grpc-web
-#
-# **************************************************************
+load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 
-load("@build_stack_rules_proto//github.com/grpc/grpc-web:deps.bzl", grpcweb_closure_grpc_library = "closure_grpc_library")
+node_repositories()
 
-grpcweb_closure_grpc_library()
+register_toolchains("//toolchain:nodejs")
 
-# **************************************************************
-#
-#
-# grpc-gateway
-#
-# **************************************************************
+# ----------------------------------------------------
+# proto_repository dependencies
+# ----------------------------------------------------
 
-load("//github.com/grpc-ecosystem/grpc-gateway:deps.bzl", "gateway_grpc_library")
+# load("//rules/proto:proto_repository.bzl", "proto_repository")
 
-gateway_grpc_library()
-
-# **************************************************************
-#
-#
-# tools & other misc support (not language specific)
-#
-# **************************************************************
-
-go_repository(
-    name = "com_github_urfave_cli",
-    commit = "44cb242eeb4d76cc813fdc69ba5c4b224677e799",
-    importpath = "github.com/urfave/cli",
-)
+# proto_repository(
+#     name = "proto_googleapis",
+#     build_directives = [
+#         "gazelle:resolve proto google/api/http.proto //google/api:http_proto",
+#         #"gazelle:resolve protobuf google/api/http.proto //google/api:http_proto",
+#     ],
+#     build_file_generation = "clean",
+#     build_file_proto_mode = "file",
+#     cfgs = ["//example:config.yaml"],
+#     strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
+#     type = "zip",
+#     urls = ["https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9"],
+# )

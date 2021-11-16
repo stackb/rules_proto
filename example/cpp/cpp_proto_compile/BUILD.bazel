@@ -1,6 +1,0 @@
-load("@build_stack_rules_proto//cpp:cpp_proto_compile.bzl", "cpp_proto_compile")
-
-cpp_proto_compile(
-    name = "person_cpp_proto",
-    deps = ["@build_stack_rules_proto//example/proto:person_proto"],
-)

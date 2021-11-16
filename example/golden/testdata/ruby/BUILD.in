@@ -1,0 +1,9 @@
+# "proto_rule" instantiates the proto_compile rule
+# gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
+
+# "proto_plugin" instantiates the builtin ruby plugin
+# gazelle:proto_plugin ruby implementation builtin:ruby
+
+# "proto_language" binds the rule(s) and plugin(s) together
+# gazelle:proto_language ruby rule proto_compile
+# gazelle:proto_language ruby plugin ruby

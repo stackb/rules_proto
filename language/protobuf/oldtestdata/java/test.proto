@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message BoolValue {
+  bool value = 1;
+}
+
+enum PayloadType {
+  COMPRESSABLE = 0;
+}
+
+message Payload {
+  PayloadType type = 1;
+  bytes body = 2;
+}
+
+message EchoStatus {
+  int32 code = 1;
+  string message = 2;
+}

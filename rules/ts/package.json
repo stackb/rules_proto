@@ -1,0 +1,14 @@
+{
+    "name": "tsc_deps",
+    "version": "0.0.0",
+    "devDependencies": {
+        "protobufjs": "6.11.2",
+        "long": "5.0.1",
+        "typescript": "4.4.4",
+        "rxjs": "7.4.0",
+        "reflect-metadata": "0.1.13",
+        "@nestjs/core": "8.1.2",
+        "@nestjs/microservices": "8.1.2",
+        "@nestjs/common": "8.1.2"
+    }
+}

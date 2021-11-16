@@ -1,0 +1,52 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@io_bazel_rules_go//go/tools/bazel_testing:def.bzl", "go_bazel_test")
+
+go_library(
+    name = "grpc",
+    srcs = ["protoc-gen-grpc-python.go"],
+    importpath = "github.com/stackb/rules_proto/pkg/plugin/grpc/grpc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+    ],
+)
+
+go_test(
+    name = "grpc_test",
+    srcs = [
+        "grpc_test.go",
+        "protoc-gen-grpc-python_test.go",
+    ],
+    data = [
+        ":protoc",
+        ":protoc-gen-grpc-python",
+    ],
+    deps = [
+        ":grpc",
+        "//pkg/plugintest",
+        "@io_bazel_rules_go//go/tools/bazel_testing:go_default_library",
+    ],
+)
+
+genrule(
+    name = "protoc_tool",
+    outs = ["protoc"],
+    cmd = "cp $(location @com_google_protobuf//:protoc) $@",
+    executable = True,
+    tools = ["@com_google_protobuf//:protoc"],
+)
+
+genrule(
+    name = "protoc-gen-grpc-python_tool",
+    outs = ["protoc-gen-grpc-python"],
+    cmd = "cp $(location @com_github_grpc_grpc//src/compiler:grpc_python_plugin) $@",
+    executable = True,
+    tools = ["@com_github_grpc_grpc//src/compiler:grpc_python_plugin"],
+)
+
+go_bazel_test(
+    name = "bazel_test",
+    srcs = ["grpc_test.go"],
+    rule_files = [],
+)

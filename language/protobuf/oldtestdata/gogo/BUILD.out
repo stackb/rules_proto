@@ -1,0 +1,18 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules:proto_compiled_sources.bzl", "proto_compiled_sources")
+
+# gazelle:proto_language gogofast plugin gogofast
+# gazelle:proto_language gogofast rule proto_compiled_sources
+
+proto_library(
+    name = "test_proto",
+    srcs = ["test.proto"],
+    visibility = ["//visibility:public"],
+)
+
+proto_compiled_sources(
+    name = "test_gogofast_compiled_sources",
+    srcs = ["test.pb.go"],
+    plugins = ["@build_stack_rules_proto//gogo/protobuf:gogofast_plugin"],
+    proto = "test_proto",
+)

@@ -1,6 +1,0 @@
-load("@build_stack_rules_proto//github.com/stackb/grpc.js:closure_grpc_library.bzl", "closure_grpc_library")
-
-closure_grpc_library(
-    name = "greeter_grpc.js_library",
-    deps = ["@build_stack_rules_proto//example/proto:greeter_grpc"],
-)

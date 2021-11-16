@@ -1,0 +1,52 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "builtin",
+    srcs = [
+        "cpp_plugin.go",
+        "csharp_plugin.go",
+        "doc.go",
+        "grpc_grpc_cpp.go",
+        "java_plugin.go",
+        "js_closure_plugin.go",
+        "js_common_plugin.go",
+        "objc_plugin.go",
+        "php_plugin.go",
+        "python_plugin.go",
+        "ruby_plugin.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/plugin/builtin",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+    ],
+)
+
+go_test(
+    name = "builtin_test",
+    srcs = [
+        "cpp_plugin_test.go",
+        "csharp_plugin_test.go",
+        "java_plugin_test.go",
+        "js_closure_plugin_test.go",
+        "js_common_plugin_test.go",
+        "objc_plugin_test.go",
+        "php_plugin_test.go",
+        "python_plugin_test.go",
+        "ruby_plugin_test.go",
+    ],
+    data = [":protoc"],
+    deps = [
+        ":builtin",
+        "//pkg/plugintest",
+    ],
+)
+
+genrule(
+    name = "protoc_tool",
+    outs = ["protoc"],
+    cmd = "cp $(location @com_google_protobuf//:protoc) $@",
+    executable = True,
+    tools = ["@com_google_protobuf//:protoc"],
+)

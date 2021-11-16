@@ -1,0 +1,42 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "protobuf",
+    srcs = ["protoc-gen-go.go"],
+    importpath = "github.com/stackb/rules_proto/pkg/plugin/golang/protobuf",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)
+
+go_test(
+    name = "protobuf_test",
+    srcs = ["protoc-gen-go_test.go"],
+    data = [
+        ":protoc",
+        ":protoc-gen-go",
+    ],
+    deps = [
+        ":protobuf",
+        "//pkg/plugintest",
+    ],
+)
+
+genrule(
+    name = "protoc_tool",
+    outs = ["protoc"],
+    cmd = "cp $(location @com_google_protobuf//:protoc) $@",
+    executable = True,
+    tools = ["@com_google_protobuf//:protoc"],
+)
+
+genrule(
+    name = "protoc-gen-go_tool",
+    outs = ["protoc-gen-go"],
+    cmd = "cp $(location @org_golang_google_protobuf//cmd/protoc-gen-go) $@",
+    executable = True,
+    tools = ["@org_golang_google_protobuf//cmd/protoc-gen-go"],
+)

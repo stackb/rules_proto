@@ -1,0 +1,105 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_test")
+load("//rules:example.bzl", "gazelle_testdata_example")
+
+# gazelle:exclude testdata
+
+genrule(
+    name = "gazelle_tool",
+    outs = ["gazelle"],
+    cmd = "cp $(location //:gazelle-protobuf) $@",
+    executable = True,
+    tools = ["//:gazelle-protobuf"],
+)
+
+go_test(
+    name = "golden_test",
+    srcs = ["golden_test.go"],
+    data = [":gazelle"] + glob(["testdata/**"]),
+    deps = ["//pkg/goldentest"],
+)
+
+# gazelle_testdata_example(
+#     name = "builtins",
+#     srcs = glob(["testdata/builtins/*"]),
+# )
+
+gazelle_testdata_example(
+    name = "cpp",
+    srcs = glob(["testdata/cpp/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "java",
+    srcs = glob(["testdata/java/*"]),
+    # TODO: investigate java does not PASS with the prebuilt toolchain protoc.
+    # Perhaps the version is too old?
+    workspace_template = "builtin.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "python",
+    srcs = glob(["testdata/python/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "ruby",
+    srcs = glob(["testdata/ruby/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "csharp",
+    srcs = glob(["testdata/csharp/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "objc",
+    srcs = glob(["testdata/objc/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "commonjs",
+    srcs = glob(["testdata/commonjs/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "closurejs",
+    srcs = glob(["testdata/closurejs/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "gogo",
+    srcs = glob(["testdata/gogo/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "go",
+    srcs = glob(["testdata/go/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "gomerge",
+    srcs = glob(["testdata/gomerge/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "goembed",
+    srcs = glob(["testdata/goembed/**/*"]),
+    strip_prefix = "example/golden/testdata/goembed",
+    workspace_template = "builtin.WORKSPACE",
+)
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"] + glob(["*.go"]),
+    visibility = ["//:__pkg__"],
+)

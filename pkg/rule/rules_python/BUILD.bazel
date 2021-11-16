@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "rules_python",
+    srcs = [
+        "grpc_py_library.go",
+        "proto_py_library.go",
+        "py_library.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/rule/rules_python",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)

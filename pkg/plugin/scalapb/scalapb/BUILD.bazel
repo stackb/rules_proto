@@ -1,0 +1,30 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "scalapb",
+    srcs = ["protoc_gen_scala.go"],
+    importpath = "github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+    ],
+)
+
+go_test(
+    name = "scalapb_test",
+    srcs = ["protoc_gen_scala_test.go"],
+    data = [":protoc"],
+    deps = [
+        ":scalapb",
+        "//pkg/plugintest",
+    ],
+)
+
+genrule(
+    name = "protoc_tool",
+    outs = ["protoc"],
+    cmd = "cp $(location @com_google_protobuf//:protoc) $@",
+    executable = True,
+    tools = ["@com_google_protobuf//:protoc"],
+)

@@ -1,0 +1,22 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+load(
+    "@io_bazel_rules_go//proto/wkt:well_known_types.bzl",
+    "GOGO_WELL_KNOWN_TYPE_REMAPS",
+)
+load(":variants.bzl", "GOGO_VARIANTS")
+
+[proto_plugin(
+    name = "protoc-gen-" + variant,
+    options = GOGO_WELL_KNOWN_TYPE_REMAPS,
+    tool = "@com_github_gogo_protobuf//protoc-gen-" + variant,
+    visibility = ["//visibility:public"],
+) for variant in GOGO_VARIANTS]
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "variants.bzl",
+    ],
+    visibility = ["//plugin:__pkg__"],
+)

@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ts-proto",
+    srcs = ["protoc-gen-ts-proto.go"],
+    importpath = "github.com/stackb/rules_proto/pkg/plugin/stephenh/ts-proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+    ],
+)

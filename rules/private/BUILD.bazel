@@ -1,0 +1,16 @@
+exports_files(
+    ["list_repository_tools_srcs.go"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+        "execution.bzl",
+        "list_repository_tools_srcs.go",
+        "proto_repository_tools.bzl",
+        "proto_repository_tools_srcs.bzl",
+    ],
+    visibility = ["//rules:__pkg__"],
+)

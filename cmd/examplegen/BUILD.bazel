@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "examplegen_lib",
+    srcs = [
+        "config.go",
+        "examplegen.go",
+        "generator.go",
+        "linewriter.go",
+        "template.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/cmd/examplegen",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "examplegen",
+    embed = [":examplegen_lib"],
+    visibility = ["//visibility:public"],
+)

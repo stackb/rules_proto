@@ -1,7 +1,0 @@
-load("@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway:gateway_grpc_library.bzl", "gateway_grpc_library")
-
-gateway_grpc_library(
-    name = "api_gateway_library",
-    importpath = "github.com/stackb/rules_proto/github.com/grpc-ecosystem/grpc-gateway/examples/api",
-    deps = ["@build_stack_rules_proto//github.com/grpc-ecosystem/grpc-gateway/example/api:api_proto"],
-)

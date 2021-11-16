@@ -1,0 +1,51 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+# gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go
+# gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
+# gazelle:proto_rule proto_go_library implementation stackb:rules_proto:proto_go_library
+# gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//reflect/protoreflect
+# gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//runtime/protoimpl
+# gazelle:proto_rule proto_go_library resolve google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/${1}pb
+# gazelle:proto_rule proto_go_library visibility //visibility:public
+# gazelle:proto_language go plugin protoc-gen-go
+# gazelle:proto_language go rule proto_compile
+# gazelle:proto_language go rule proto_go_library
+
+proto_library(
+    name = "mappingsmerge_proto",
+    srcs = [
+        "example.proto",
+        "support.proto",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "mappingsmerge_go_compile",
+    output_mappings = [
+        "example.pb.go=github.com/stackb/rules_proto/example/golden/mappingsmerge/example.pb.go",
+        "support.pb.go=github.com/stackb/rules_proto/example/golden/mappingsmerge/support.pb.go",
+    ],
+    outputs = [
+        "example.pb.go",
+        "support.pb.go",
+    ],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    proto = "mappingsmerge_proto",
+)
+
+proto_go_library(
+    name = "mappingsmerge_go_proto",
+    srcs = [
+        "example.pb.go",
+        "support.pb.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/example/golden/mappingsmerge",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+    ],
+)

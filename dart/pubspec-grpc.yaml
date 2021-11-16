@@ -1,4 +1,0 @@
-name: protoc_plugin_deps
-
-dependencies:
-  grpc: '1.0.2'

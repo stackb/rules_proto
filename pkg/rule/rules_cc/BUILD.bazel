@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "rules_cc",
+    srcs = [
+        "cc_library.go",
+        "grpc_cc_library.go",
+        "proto_cc_library.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/rule/rules_cc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)
