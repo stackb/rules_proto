@@ -1,5 +1,9 @@
 # `rules_proto`
 
+[![Bazel CI](https://badge.buildkite.com/af1a592b39b11923ef0f523cbb223dd3dbd61629f8bc813c07.svg?branch=stable)](https://buildkite.com/bazel/stackb-rules-proto-postsubmit)
+[![Go Reference](https://pkg.go.dev/badge/github.com/stackb/rules_proto.svg)](https://pkg.go.dev/github.com/stackb/rules_proto)
+
+
 Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 
 <table border="0"><tr>
