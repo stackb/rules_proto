@@ -1,8 +1,7 @@
-# `rules_proto`
+# `rules_proto (v2)`
 
 [![Bazel CI](https://badge.buildkite.com/af1a592b39b11923ef0f523cbb223dd3dbd61629f8bc813c07.svg?branch=stable)](https://buildkite.com/bazel/stackb-rules-proto-postsubmit)
 [![Go Reference](https://pkg.go.dev/badge/github.com/stackb/rules_proto.svg)](https://pkg.go.dev/github.com/stackb/rules_proto)
-
 
 Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 
@@ -52,18 +51,18 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-
-# Commit: df8f82e4fb806e07362aa37f7eb23b2e18cca5ae
-# Date: 2021-10-29 16:18:29 +0000 UTC
-# URL: https://github.com/stackb/rules_proto/commit/df8f82e4fb806e07362aa37f7eb23b2e18cca5ae
+# Branch: master
+# Commit: 7c95feba87ae269d09690fcebb18c77d8b8bcf6a
+# Date: 2021-11-16 02:17:58 +0000 UTC
+# URL: https://github.com/stackb/rules_proto/commit/7c95feba87ae269d09690fcebb18c77d8b8bcf6a
 #
-# Update README; use canonical labels
-# Size: 877766 (878 kB)
+# V2 (#193)
+# Size: 885598 (886 kB)
 http_archive(
     name = "build_stack_rules_proto",
-    sha256 = "e707173400a15982ccc1147ea58ef81f65d414e5c33b45b505110b53d4d23a76",
-    strip_prefix = "rules_proto-df8f82e4fb806e07362aa37f7eb23b2e18cca5ae",
-    urls = ["https://github.com/stackb/rules_proto/archive/df8f82e4fb806e07362aa37f7eb23b2e18cca5ae.tar.gz"],
+    sha256 = "1190c296a9f931343f70e58e5f6f9ee2331709be4e17001bb570e41237a6c497",
+    strip_prefix = "rules_proto-7c95feba87ae269d09690fcebb18c77d8b8bcf6a",
+    urls = ["https://github.com/stackb/rules_proto/archive/7c95feba87ae269d09690fcebb18c77d8b8bcf6a.tar.gz"],
 )
 ```
 
