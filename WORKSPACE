@@ -132,7 +132,7 @@ compat_repositories()
 grpc_java_repositories()
 
 # ----------------------------------------------------
-# golang
+# Golang
 # ----------------------------------------------------
 
 load("//deps:go_core_deps.bzl", "go_core_deps")
@@ -140,7 +140,7 @@ load("//deps:go_core_deps.bzl", "go_core_deps")
 go_core_deps()
 
 # ----------------------------------------------------
-# scala
+# Scala
 # ----------------------------------------------------
 
 load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
@@ -181,7 +181,7 @@ load("@maven_scala//:defs.bzl", pinned_maven_scala_install = "pinned_maven_insta
 pinned_maven_scala_install()
 
 # ----------------------------------------------------
-# closure
+# Closure
 # ----------------------------------------------------
 
 load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
@@ -191,7 +191,7 @@ rules_closure_toolchains()
 rules_closure_dependencies()
 
 # ----------------------------------------------------
-# nodejs
+# NodeJS
 # ----------------------------------------------------
 
 load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
@@ -199,23 +199,3 @@ load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 node_repositories()
 
 register_toolchains("//toolchain:nodejs")
-
-# ----------------------------------------------------
-# proto_repository dependencies
-# ----------------------------------------------------
-
-# load("//rules/proto:proto_repository.bzl", "proto_repository")
-
-# proto_repository(
-#     name = "proto_googleapis",
-#     build_directives = [
-#         "gazelle:resolve proto google/api/http.proto //google/api:http_proto",
-#         #"gazelle:resolve protobuf google/api/http.proto //google/api:http_proto",
-#     ],
-#     build_file_generation = "clean",
-#     build_file_proto_mode = "file",
-#     cfgs = ["//example:config.yaml"],
-#     strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
-#     type = "zip",
-#     urls = ["https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9"],
-# )
