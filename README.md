@@ -1,8 +1,6 @@
 # `rules_proto (v2)`
 
-[![Bazel CI](https://badge.buildkite.com/af1a592b39b11923ef0f523cbb223dd3dbd61629f8bc813c07.svg?branch=stable)](https://buildkite.com/bazel/stackb-rules-proto/builds?branch=master)
-
-[![Go Reference](https://pkg.go.dev/badge/github.com/stackb/rules_proto.svg)](https://pkg.go.dev/github.com/stackb/rules_proto)
+[![Bazel CI](https://badge.buildkite.com/af1a592b39b11923ef0f523cbb223dd3dbd61629f8bc813c07.svg?branch=stable)](https://buildkite.com/bazel/stackb-rules-proto/builds?branch=master)  [![Go Reference](https://pkg.go.dev/badge/github.com/stackb/rules_proto.svg)](https://pkg.go.dev/github.com/stackb/rules_proto)
 
 Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 
@@ -31,25 +29,27 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 
 # Table of Contents
   - [Getting Started](#getting-started)
-    - [Repository Rule](#repository-rule)
     - [Workspace Boilerplate](#workspace-boilerplate)
     - [Gazelle Setup](#gazelle-setup)
     - [Gazelle Configuration](#gazelle-configuration)
       - [Build Directives](#build-directives)
       - [YAML Config File](#yaml-configuration)
     - [Running Gazelle](#running-gazelle)
-  - [Core Rules](#core-rules)
+  - [Build Rules](#build-rules)
     - [proto_compile](#proto_compile)
-      - [Deep dive on the mappings attribute](#the-mappings-attribute)
-    - [proto_plugin](#proto_compile)
-    - [proto_repository](#proto-repository)
+    - [proto_plugin](#proto_plugin)
+    - [proto_compiled_sources](#proto_compiled_sources)
+    - [Deep dive on the mappings attribute](#the-output_mappings-attribute)
+  - [Repository Rules](#repository-rules)
+    - [proto_repository](#proto_repository)
+    - [proto_gazelle](#proto_gazelle)
   - [Plugin Implementations](#plugin-implementations)
   - [Rule Implementations](#rule-implementations)
   - [History of this repository](#history)
 
 # Getting Started
 
-## Repository rule
+## `WORKSPACE` Boilerplate
 
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
@@ -68,8 +68,6 @@ http_archive(
     urls = ["https://github.com/stackb/rules_proto/archive/7c95feba87ae269d09690fcebb18c77d8b8bcf6a.tar.gz"],
 )
 ```
-
-## `WORKSPACE` Boilerplate
 
 ```python
 register_toolchains("@build_stack_rules_proto//toolchain:standard")
@@ -97,8 +95,8 @@ core_deps()
 > you don't already have them.
 
 > The gazelle extension and associated golang dependencies are optional; you can
-> write `proto_compile` and other rules by hand (but but why would you not want
-> to?).
+> write `proto_compile` and other derived rules by hand.  For gazelle support,
+> carry on.
 
 ---
 
@@ -243,7 +241,10 @@ Let's unpack this a bit:
 
 ### YAML Configuration
 
-You can also configure the extension using a YAML file.  This is semantically similar to adding gazelle directives to the root `BUILD` file; the YAML configuration applies to all downstream packages.  The equivalent YAML config for the above directives looks like:
+You can also configure the extension using a YAML file.  This is semantically
+similar to adding gazelle directives to the root `BUILD` file; the YAML
+configuration applies to all downstream packages.  The equivalent YAML config
+for the above directives looks like:
 
 ```yaml
 plugins:
@@ -280,10 +281,12 @@ languages:
       - grpc_cc_library
 ```
 
-> A yaml config is particularly useful in conjunction with the `proto_repository` rule, for example to apply a set of custom plugins over 
-> the googleapis/googleapis repo.
+> A yaml config is particularly useful in conjunction with the
+> `proto_repository` rule, for example to apply a set of custom plugins over the
+> googleapis/googleapis repo.
 
-To use this in a gazelle rule, specify `-proto_configs` in `args` (comma-separated list):
+To use this in a gazelle rule, specify `-proto_configs` in `args`
+(comma-separated list):
 
 ```python
 gazelle(
@@ -378,17 +381,16 @@ extensions should not *claim* the same load namespace, so in order to prevent
 potential conflicts with other possible gazelle extensions, using the name
 `@rules_cc//cc:defs.bzl%cc_library` is undesirable.
 
-## Core Rules
+## Build Rules
 
-The heart of `stackb/rules_proto` contains two build rules and one repository rule:
+The heart of `stackb/rules_proto` contains two build rules:
 
-| Rule               | Description                                      |
-| ------------------ | ------------------------------------------------ |
-| `proto_compile`    | Executes the `protoc` tool.                      |
-| `proto_plugin`     | Provides `protoc` plugin-specific configuration. |
-| `proto_repository` | Generate BUILD files for an external repository. |
+| Rule            | Description                                             |
+| --------------- | ------------------------------------------------------- |
+| `proto_compile` | Executes the `protoc` tool.                             |
+| `proto_plugin`  | Provides static `protoc` plugin-specific configuration. |
 
-## proto_compile
+### proto_compile
 
 Example:
 
@@ -421,9 +423,6 @@ Takeaways:
   rules.
 - `proto_library` is provided by
   [bazelbuild/rules_proto](https://github.com/bazelbuild/rules_proto).
-- `proto_plugin` provides the plugin tool and other options and configuration.
-  This example is the simplest case where the plugin is builtin to `protoc`
-  itself; no separate plugin tool is required.
 - A `proto_compile` rule references a single `proto_library` target. 
 - The `plugins` attribute is a list of labels to `proto_plugin` targets.
 - The `outputs` attribute names the files that will be generated by the protoc
@@ -432,6 +431,43 @@ Takeaways:
   [proto](https://github.com/bazelbuild/bazel-gazelle/blob/master/language/proto/lang.go)
   extension provided by [bazel-gazelle] is responsible for generating
   `proto_library`.
+
+### proto_plugin
+
+`proto_plugin` primarily provides the plugin tool executable. The example seen
+above is the simplest case where the plugin is builtin to `protoc` itself; no
+separate plugin tool is required.  In this case the `proto_plugin` rule
+degenerates into just a `name`.
+
+It is possible to add additional plugin-specific `name = "foo", options =
+["bar"]` on the `proto_plugin` rule, but the use-case for this is narrow.
+Generally it is preferred to say `# gazelle:proto_plugin foo option bar` such
+that the option can be interpreted during a gazelle run.
+
+### proto_compiled_sources
+
+`proto_compiled_sources` is used when you prefer to check the generated files
+into source control.  This may be necessary for legacy reasons, during an
+initial Bazel migration, or to support better IDE integration.
+
+The shape of a `proto_compiled_sources` rule is essentially identical to
+`proto_compile` with one exception: generated source are named in the `srcs`
+attribute rather than `outputs`.
+
+For example, a `proto_compiled_sources` named `//example/thing:proto_go_sources`
+is a macro that generates three rules:
+
+1. `bazel build //example/thing:proto_go_sources` emits the generated files.
+2. `bazel run //example/thing:proto_go_sources.update` copies the generated
+   files back into the source package.
+3. `bazel test //example/thing:proto_go_sources_test` asserts the source files
+   are identical to generated files.
+
+In this scenario, `2.` is used to build the generated files (in the `bazel-bin/`
+output tree) and copy the `example/thing/thing.pb.go` back into place where it
+will be committed under source control.  `3.` is used to prevent drift: if a
+developer modifies `thing.proto` and neglects to run the `.update` the test will
+fail in CI.
 
 ### The `output_mappings` attribute
 
@@ -512,6 +548,8 @@ the actual output location does not match the desired location.  This can occur
 if the proto `package` statement does not match the Bazel package path, or in
 special circumstances specific to the plugin itself (like `go_package`).
 
+## Repository Rules
+
 ## proto_repository
 
 From an implementation standpoint, this is very similar to the `go_repository`
@@ -520,7 +558,7 @@ the downloaded files.  Example:
 
 ```python
 proto_repository(
-    name = "proto_googleapis",
+    name = "googleapis",
     build_directives = [
         "gazelle:resolve proto google/api/http.proto //google/api:http_proto",
     ],
@@ -536,79 +574,184 @@ proto_repository(
 Takeaways: 
 
 - The `urls`, `strip_prefix` and `type` behave similarly to `http_archive`.
-- `build_file_proto_mode` is the same the `go_repository` attribute of the same name; additionally the value `file` is permitted which generates a `proto_library` for each individual proto file.
-- `build_file_generation` is the same the `go_repository` attribute of the same name; additionally the value `clean` is supported.  For example, googleapis already has a set of BUILD files; the `clean` mode will remove all the existing build files before generating new ones.
-- `build_directives` is the same as `go_repository`.  Resolve directives in this case are needed because the gazelle `language/proto` extension hardcodes a proto import like `google/api/http.proto` to resolve to the `@go_googleapis` workspace; here we want to make sure that http.proto resolves to the same external workspace.
-- `proto_language_config_file` is an optional label pointing to a valid `config.yaml` file to configure this extension.
+- `build_file_proto_mode` is the same the `go_repository` attribute of the same
+  name; additionally the value `file` is permitted which generates a
+  `proto_library` for each individual proto file.
+- `build_file_generation` is the same the `go_repository` attribute of the same
+  name; additionally the value `clean` is supported.  For example, googleapis
+  already has a set of BUILD files; the `clean` mode will remove all the
+  existing build files before generating new ones.
+- `build_directives` is the same as `go_repository`.  Resolve directives in this
+  case are needed because the gazelle `language/proto` extension hardcodes a
+  proto import like `google/api/http.proto` to resolve to the `@go_googleapis`
+  workspace; here we want to make sure that http.proto resolves to the same
+  external workspace.
+- `proto_language_config_file` is an optional label pointing to a valid
+  `config.yaml` file to configure this extension.
 
 With this sample configuration, the following build command succeeds:
 
 ```bash
-$ bazel build @proto_googleapis//google/api:annotations_cc_library
-Target @proto_googleapis//google/api:annotations_cc_library up-to-date:
-  bazel-bin/external/proto_googleapis/google/api/libannotations_cc_library.a
-  bazel-bin/external/proto_googleapis/google/api/libannotations_cc_library.so
+$ bazel build @googleapis//google/api:annotations_cc_library
+Target @googleapis//google/api:annotations_cc_library up-to-date:
+  bazel-bin/external/googleapis/google/api/libannotations_cc_library.a
+  bazel-bin/external/googleapis/google/api/libannotations_cc_library.so
 ```
+
+Another example using the Bazel repository:
+
+```python
+load("@build_stack_rules_proto//rules/proto:proto_repository.bzl", "proto_repository")
+
+proto_repository(
+    name = "bazelapis",
+    build_directives = [
+        "gazelle:exclude third_party",
+        "gazelle:proto_language go enable true",
+        "gazelle:proto_language closure enabled true",
+        "gazelle:prefix github.com/bazelbuild/bazelapis",
+    ],
+    build_file_expunge = True,
+    build_file_proto_mode = "file",
+    cfgs = ["//proto:config.yaml"],
+    imports = [
+        "@googleapis//:imports.csv",
+        "@protoapis//:imports.csv",
+        "@remoteapis//:imports.csv",
+    ],
+    strip_prefix = "bazel-02ad3e3bc6970db11fe80f966da5707a6c389fdd",
+    type = "zip",
+    urls = ["https://codeload.github.com/bazelbuild/bazel/zip/02ad3e3bc6970db11fe80f966da5707a6c389fdd"],
+)
+```
+
+Takeaways:
+
+- The `build_directives` are setting the `gazelle:prefix` for the `language/go`
+  plugin; two `proto_language` configs named in the `proto/config.yaml` are
+  being enabled.
+- `build_file_expunge` means *remove all existing BUILD files before generating
+  new ones*.
+- `build_file_proto_mode = "file"` means *make a separate `proto_library` rule
+  for every `.proto` file*.
+- `cfgs = ["//proto:config.yaml"]` means *use the configuration in this YAML
+  file as a base set of gazelle directives*.  It is easier/more consistent to
+  share the same `config.yaml` file across multiple `proto_repository` rules.
+
+The last one `imports = ["@googleapis//:imports.csv", ...]` requires extra
+explanation.  When the `proto_repository` gazelle process finishes, it writes a
+file named `imports.csv` in the root of the external workspace.  This file
+records the association between import statements and bazel labels, much like a
+`gazelle:resolve` directive:
+
+```csv
+# GENERATED FILE, DO NOT EDIT (created by gazelle)
+# lang,imp.lang,imp,label
+go,go,github.com/googleapis/gapic-showcase/server/genproto,@googleapis//google/example/showcase/v1:compliance_go_proto
+go,go,google.golang.org/genproto/firestore/bundle,@googleapis//google/firestore/bundle:bundle_go_proto
+go,go,google.golang.org/genproto/googleapis/actions/sdk/v2,@googleapis//google/actions/sdk/v2:account_linking_go_proto
+```
+
+Therefore, the `imports` attribute assists gazelle in figuring how to resolve
+imports. Therefore, when gazelle is preparing a `go_library` rule and finds a
+`main.go` file having an import on
+`google.golang.org/genproto/firestore/bundle`, it knows to put
+`@googleapis//google/firestore/bundle:bundle_go_proto` in the rule `deps`.
+
+To take advantage of this mechanism in the default workspace, use the
+`proto_gazelle` rule.
+
+## proto_gazelle
+
+`proto_gazelle` is not a repository rule: it's just like the typical `gazelle`
+rule, but with extra deps resolution superpowers.  But, we discuss it here since
+it works in conjunction with `proto_repository`:
+
+```python
+load("@build_stack_rules_proto//rules:proto_gazelle.bzl", "DEFAULT_LANGUAGES", "proto_gazelle")
+
+proto_gazelle(
+    name = "gazelle",
+    cfgs = ["//proto:config.yaml"],
+    command = "update",
+    gazelle = ":gazelle-protobuf",
+    imports = [
+        "@bazelapis//:imports.csv",
+        "@googleapis//:imports.csv",
+        "@protoapis//:imports.csv",
+        "@remoteapis//:imports.csv",
+    ],
+)
+```
+
+In this example, we are again setting the base gazelle config using the YAML
+file (the same one used in for the `proto_repository` rules).  We are also now
+importing resolve information from four external sources.
+
+With this setup, we can simply place an import statement like `import
+"src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto";`
+in a `foo.proto` file in the default workspace, and gazelle will automagically
+figure out the import dependency tree spanning `@bazelapis`, `@remoteapis`,
+`@googleapis`, and the well-known types from `@protoapis`.  
+
+This works for any `proto_language`, with any set of custom protoc plugins.
 
 ## Plugin Implementations
 
 The plugin name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 
-| Plugin                                                | Link     |
-| ----------------------------------------------------- | -------- |
-| `builtin:cpp`                                         | [link]() |
-| `builtin:csharp`                                      | [link]() |
-| `builtin:java`                                        | [link]() |
-| `builtin:js:closure`                                  | [link]() |
-| `builtin:js:common`                                   | [link]() |
-| `builtin:objc`                                        | [link]() |
-| `builtin:php`                                         | [link]() |
-| `builtin:python`                                      | [link]() |
-| `builtin:ruby`                                        | [link]() |
-| `grpc:grpc:cpp`                                       | [link]() |
-| `grpc:grpc:protoc-gen-grpc-python`                    | [link]() |
-| `golang:protobuf:protoc-gen-go`                       | [link]() |
-| `grpc:grpc-go:protoc-gen-go-grpc`                     | [link]() |
-| `grpc:grpc-java:protoc-gen-grpc-java`                 | [link]() |
-| `grpc:grpc-node:protoc-gen-grpc-node`                 | [link]() |
-| `gogo:protobuf:protoc-gen-combo`                      | [link]() |
-| `gogo:protobuf:protoc-gen-gogo`                       | [link]() |
-| `gogo:protobuf:protoc-gen-gogofast`                   | [link]() |
-| `gogo:protobuf:protoc-gen-gogofaster`                 | [link]() |
-| `gogo:protobuf:protoc-gen-gogoslick`                  | [link]() |
-| `gogo:protobuf:protoc-gen-gogotypes`                  | [link]() |
-| `gogo:protobuf:protoc-gen-gostring`                   | [link]() |
-| `grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway` | [link]() |
-| `scalapb:scalapb:protoc-gen-scala`                    | [link]() |
-| `stackb:grpc.js:protoc-gen-grpc-js`                   | [link]() |
-| `stephenh:ts-proto:protoc-gen-ts-proto`               | [link]() |
-| `bazelbuild:rules_proto:proto_descriptor_set`         | [repo]() |
+| Plugin                                                                                                                 |
+| ---------------------------------------------------------------------------------------------------------------------- |
+| [builtin:cpp](pkg/plugin/builtin/cpp_plugin.go)                                                                        |
+| [builtin:csharp](pkg/plugin/builtin/csharp_plugin.go)                                                                  |
+| [builtin:java](pkg/plugin/builtin/java_plugin.go)                                                                      |
+| [builtin:js:closure](pkg/plugin/builtin/js_closure_plugin.go)                                                          |
+| [builtin:js:common](pkg/plugin/builtin/js_common_plugin.go)                                                            |
+| [builtin:objc](pkg/plugin/builtin/objc_plugin.go)                                                                      |
+| [builtin:php](pkg/plugin/builtin/php_plugin.go)                                                                        |
+| [builtin:python](pkg/plugin/builtin/python_plugin.go)                                                                  |
+| [builtin:ruby](pkg/plugin/builtin/ruby_plugin.go)                                                                      |
+| [grpc:grpc:cpp](pkg/plugin/builtin/grpc_grpc_cpp.go)                                                                   |
+| [grpc:grpc:protoc-gen-grpc-python](pkg/plugin/grpc/grpc/protoc-gen-grpc-python.go)                                     |
+| [golang:protobuf:protoc-gen-go](pkg/plugin/golang/protobuf/protoc-gen-go.go)                                           |
+| [grpc:grpc-go:protoc-gen-go-grpc](pkg/plugin/grpc/grpcgo/protoc-gen-go-grpc.go)                                        |
+| [grpc:grpc-java:protoc-gen-grpc-java](pkg/plugin/grpc/grpcjava/protoc-gen-grpc-java.go)                                |
+| [grpc:grpc-node:protoc-gen-grpc-node](pkg/plugin/grpc/grpcnode/protoc-gen-grpc-node.go)                                |
+| [gogo:protobuf:protoc-gen-combo](pkg/plugin/gogo/protobuf/protoc-gen-gogo.go)                                          |
+| [gogo:protobuf:protoc-gen-gogo](pkg/plugin/gogo/protobuf/protoc-gen-gogo.go)                                           |
+| [gogo:protobuf:protoc-gen-gogofast](pkg/plugin/gogo/protobuf/protoc-gen-gogo.go)                                       |
+| [gogo:protobuf:protoc-gen-gogofaster](pkg/plugin/gogo/protobuf/protoc-gen-gogo.go)                                     |
+| [gogo:protobuf:protoc-gen-gogoslick](pkg/plugin/gogo/protobuf/protoc-gen-gogo.go)                                      |
+| [gogo:protobuf:protoc-gen-gogotypes](pkg/plugin/gogo/protobuf/protoc-gen-gogo.go)                                      |
+| [gogo:protobuf:protoc-gen-gostring](pkg/plugin/gogo/protobuf/protoc-gen-gogo.go)                                       |
+| [grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway](pkg/plugin/grpcecosystem/grpcgateway/protoc-gen-grpc-gateway.go) |
+| [scalapb:scalapb:protoc-gen-scala](pkg/plugin/scalapb/scalapb/protoc_gen_scala.go)                                     |
+| [stackb:grpc.js:protoc-gen-grpc-js](pkg/plugin/stackb/grpc_js/protoc-gen-grpc-js.go)                                   |
+| [stephenh:ts-proto:protoc-gen-ts-proto](pkg/plugin/stephenh/ts-proto/protoc-gen-ts-proto.go)                           |
 
 ## Rule Implementations
 
 The rule name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/rule_name convention.
 
-| Plugin                                        | Link     |
-| --------------------------------------------- | -------- |
-| `stackb:rules_proto:grpc_cc_library`          | [link]() |
-| `stackb:rules_proto:grpc_closure_js_library`  | [link]() |
-| `stackb:rules_proto:grpc_java_library`        | [link]() |
-| `stackb:rules_proto:grpc_nodejs_library`      | [link]() |
-| `stackb:rules_proto:grpc_py_library`          | [link]() |
-| `stackb:rules_proto:grpc_scala_library`       | [link]() |
-| `stackb:rules_proto:proto_cc_library`         | [link]() |
-| `stackb:rules_proto:proto_closure_js_library` | [link]() |
-| `stackb:rules_proto:proto_compile`            | [link]() |
-| `stackb:rules_proto:proto_compiled_sources`   | [link]() |
-| `stackb:rules_proto:proto_descriptor_set`     | [link]() |
-| `stackb:rules_proto:proto_go_library`         | [link]() |
-| `stackb:rules_proto:proto_java_library`       | [link]() |
-| `stackb:rules_proto:proto_nodejs_library`     | [link]() |
-| `stackb:rules_proto:proto_py_library`         | [link]() |
-| `stackb:rules_proto:proto_scala_library`      | [link]() |
-| `bazelbuild:rules_scala:scala_proto_library`  | [link]() |
+| Plugin                                                                                            |
+| ------------------------------------------------------------------------------------------------- |
+| [stackb:rules_proto:grpc_cc_library](pkg/rule/rules_cc/grpc_cc_library.go)                        |
+| [stackb:rules_proto:grpc_closure_js_library](pkg/rule/rules_closure/grpc_closure_js_library.go)   |
+| [stackb:rules_proto:grpc_java_library](pkg/rule/rules_java/grpc_java_library.go)                  |
+| [stackb:rules_proto:grpc_nodejs_library](pkg/rule/rules_nodejs/grpc_nodejs_library.go)            |
+| [stackb:rules_proto:grpc_py_library](pkg/rule/rules_python/grpc_py_library.go)                    |
+| [stackb:rules_proto:proto_cc_library](pkg/rule/rules_cc/proto_cc_library.go)                      |
+| [stackb:rules_proto:proto_closure_js_library](pkg/rule/rules_closure/proto_closure_js_library.go) |
+| [stackb:rules_proto:proto_compile](pkg/protoc/proto_compile.go)                                   |
+| [stackb:rules_proto:proto_compiled_sources](pkg/protoc/proto_compiled_sources.go)                 |
+| [stackb:rules_proto:proto_descriptor_set](pkg/protoc/proto_descriptor_set.go)                     |
+| [stackb:rules_proto:proto_go_library](pkg/rule/rules_go/go_library.go)                            |
+| [stackb:rules_proto:proto_java_library](pkg/rule/rules_java/proto_java_library.go)                |
+| [stackb:rules_proto:proto_nodejs_library](pkg/rule/rules_nodejs/proto_nodejs_library.go)          |
+| [stackb:rules_proto:proto_py_library](pkg/rule/rules_python/proto_py_library.go)                  |
+| [bazelbuild:rules_scala:scala_proto_library](pkg/rule/rules_scala/scala_proto_library.go)         |
 
 Please consult the `example/` directory and unit tests for more additional
 detail.
@@ -619,11 +762,9 @@ The original rules_proto was <https://github.com/pubref/rules_proto>.  This was
 redesigned around the `proto_library` rule and moved to
 <https://github.com/stackb/rules_proto>.  
 
-An initial aspect implementation was prototyped and considered, but not merged.
-As a result, the ruleset was forked to
-<https://github.com/rules-proto-grpc/rules_proto_grpc> and primarily used
-aspect-based compilation for quite a while before that was again deprecated and
-removed.
+Following earlier experiments with aspects, this ruleset was forked to
+<https://github.com/rules-proto-grpc/rules_proto_grpc>. Aspect-based compilation
+was featured for quite a while there but has recently been deprecated.
 
 Maintaining `stackb/rules_proto` and its polyglot set of languages in its
 original v0-v1 form became a full-time (unpaid) job.  The main issue is that the
