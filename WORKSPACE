@@ -132,7 +132,7 @@ compat_repositories()
 grpc_java_repositories()
 
 # ----------------------------------------------------
-# golang
+# Golang
 # ----------------------------------------------------
 
 load("//deps:go_core_deps.bzl", "go_core_deps")
@@ -140,7 +140,7 @@ load("//deps:go_core_deps.bzl", "go_core_deps")
 go_core_deps()
 
 # ----------------------------------------------------
-# scala
+# Scala
 # ----------------------------------------------------
 
 load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
@@ -181,7 +181,7 @@ load("@maven_scala//:defs.bzl", pinned_maven_scala_install = "pinned_maven_insta
 pinned_maven_scala_install()
 
 # ----------------------------------------------------
-# closure
+# Closure
 # ----------------------------------------------------
 
 load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
@@ -191,7 +191,7 @@ rules_closure_toolchains()
 rules_closure_dependencies()
 
 # ----------------------------------------------------
-# nodejs
+# NodeJS
 # ----------------------------------------------------
 
 load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
