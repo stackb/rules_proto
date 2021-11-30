@@ -29,8 +29,7 @@ func (s *protoDescriptorSetRule) Name() string {
 func (s *protoDescriptorSetRule) KindInfo() rule.KindInfo {
 	return rule.KindInfo{
 		MergeableAttrs: map[string]bool{
-			"deps":       true,
-			"visibility": true,
+			"deps": true,
 		},
 	}
 }
