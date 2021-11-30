@@ -283,8 +283,6 @@ def _proto_compile_impl(ctx):
             out_dir = "/".join([out_dir, ctx.label.workspace_root])
         for mapping in ctx.attr.output_mappings:
             basename, _, intermediate_filename = mapping.partition("=")
-            print("basename '%s" % basename)
-            print("intermediate_filename '%s'" % intermediate_filename)
             intermediate_filename = "/".join([out_dir, intermediate_filename])
             output = outputs_by_basename.get(basename, None)
             if not output:
