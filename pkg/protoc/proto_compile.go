@@ -27,11 +27,9 @@ func (s *protoCompile) KindInfo() rule.KindInfo {
 	return rule.KindInfo{
 		NonEmptyAttrs: map[string]bool{
 			"outputs": true,
-			"srcs":    true,
 		},
 		MergeableAttrs: map[string]bool{
 			"outputs":         true,
-			"srcs":            true,
 			"plugins":         true,
 			"protoc":          true,
 			"output_mappings": true,
