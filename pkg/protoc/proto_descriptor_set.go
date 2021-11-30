@@ -22,7 +22,7 @@ type protoDescriptorSetRule struct{}
 
 // Name implements part of the LanguageRule interface.
 func (s *protoDescriptorSetRule) Name() string {
-	return "proto_descriptor_set"
+	return "rules_proto_descriptor_set"
 }
 
 // KindInfo implements part of the LanguageRule interface.
@@ -39,7 +39,7 @@ func (s *protoDescriptorSetRule) KindInfo() rule.KindInfo {
 func (s *protoDescriptorSetRule) LoadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
 		Name:    "@build_stack_rules_proto//rules:proto_descriptor_set.bzl",
-		Symbols: []string{"proto_descriptor_set"},
+		Symbols: []string{"rules_proto_descriptor_set"},
 	}
 }
 
@@ -56,7 +56,7 @@ type protoDescriptorSetRuleRule struct {
 
 // Kind implements part of the ruleProvider interface.
 func (s *protoDescriptorSetRuleRule) Kind() string {
-	return "proto_descriptor_set"
+	return "rules_proto_descriptor_set"
 }
 
 // Name implements part of the ruleProvider interface.

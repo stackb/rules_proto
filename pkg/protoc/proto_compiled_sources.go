@@ -1,12 +1,6 @@
 package protoc
 
 import (
-	"fmt"
-	"sort"
-
-	"github.com/bazelbuild/bazel-gazelle/config"
-	"github.com/bazelbuild/bazel-gazelle/label"
-	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
