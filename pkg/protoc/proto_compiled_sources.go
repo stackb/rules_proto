@@ -24,14 +24,13 @@ func (s *protoCompiledSources) KindInfo() rule.KindInfo {
 			"srcs": true,
 		},
 		MergeableAttrs: map[string]bool{
-			"srcs":       true,
-			"plugins":    true,
-			"visibility": true,
-		},
-		SubstituteAttrs: map[string]bool{
-			"options":  true,
-			"out":      true,
-			"mappings": true,
+			"srcs":            true,
+			"plugins":         true,
+			"visibility":      true,
+			"output_mappings": true,
+			"options":         true,
+			"out":             true,
+			"protoc":          true,
 		},
 	}
 }
@@ -99,7 +98,7 @@ func (s *protoCompiledSourcesRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	}
 
 	if len(s.config.Mappings) > 0 {
-		newRule.SetAttr("mappings", MakeStringDict(s.config.Mappings))
+		newRule.SetAttr("output_mappings", MakeStringDict(s.config.Mappings))
 	}
 
 	outs := GetPluginOuts(s.config.Plugins)
