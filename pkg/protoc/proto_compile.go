@@ -128,6 +128,11 @@ func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		newRule.SetAttr("outs", MakeStringDict(outs))
 	}
 
+	visibility := s.Visibility()
+	if len(visibility) > 0 {
+		newRule.SetAttr("visibility", visibility)
+	}
+
 	return newRule
 }
 
