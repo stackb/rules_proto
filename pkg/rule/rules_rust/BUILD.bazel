@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "rules_rust",
+    srcs = [
+        "proto_rust_library.go",
+        "rust_library.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/rule/rules_rust",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)

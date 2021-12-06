@@ -23,6 +23,7 @@ import (
 	_ "github.com/stackb/rules_proto/pkg/rule/rules_java"
 	_ "github.com/stackb/rules_proto/pkg/rule/rules_nodejs"
 	_ "github.com/stackb/rules_proto/pkg/rule/rules_python"
+	_ "github.com/stackb/rules_proto/pkg/rule/rules_rust"
 	_ "github.com/stackb/rules_proto/pkg/rule/rules_scala"
 )
 

@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/rust:proto_rust_library.bzl", "proto_rust_library")
 load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
@@ -282,4 +283,18 @@ proto_ts_library(
         "@npm_tsc//long",
         "@npm_tsc//protobufjs",
     ],
+)
+
+proto_compile(
+    name = "routeguide_rust_compile",
+    outs = {"@build_stack_rules_proto//plugin/stepancheg/rust-protobuf:protoc-gen-rust": "example/routeguide"},
+    outputs = ["routeguide.rs"],
+    plugins = ["@build_stack_rules_proto//plugin/stepancheg/rust-protobuf:protoc-gen-rust"],
+    proto = "routeguide_proto",
+)
+
+proto_rust_library(
+    name = "routeguide_rust_library",
+    srcs = ["routeguide.rs"],
+    deps = ["@rules_rust//proto/raze:protobuf"],
 )
