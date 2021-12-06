@@ -27,7 +27,7 @@ type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, im
 
 func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 	return func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-		debug := false
+		debug := true
 
 		existing := r.AttrStrings(attrName)
 		r.DelAttr(attrName)

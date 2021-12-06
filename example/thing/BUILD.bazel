@@ -1,4 +1,4 @@
-load("@build_stack_rules_proto//rules/rust:proto_rust_library.bzl", "proto_rust_library")
+load("@rules_rust//proto:proto.bzl", "rust_proto_library")
 load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -152,17 +152,8 @@ proto_ts_library(
     ],
 )
 
-proto_compile(
-    name = "thing_rust_compile",
-    outs = {"@build_stack_rules_proto//plugin/stepancheg/rust-protobuf:protoc-gen-rust": "example/thing"},
-    outputs = ["thing.rs"],
-    plugins = ["@build_stack_rules_proto//plugin/stepancheg/rust-protobuf:protoc-gen-rust"],
-    proto = "thing_proto",
-    verbose = True,
-)
-
-proto_rust_library(
-    name = "thing_rust_library",
-    srcs = ["thing.rs"],
-    deps = ["@rules_rust//proto/raze:protobuf"],
+rust_proto_library(
+    name = "thing_rust_proto",
+    visibility = ["//visibility:public"],
+    deps = ["thing_proto"],
 )

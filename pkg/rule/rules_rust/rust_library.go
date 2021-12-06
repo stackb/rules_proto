@@ -14,9 +14,10 @@ import (
 
 var rustLibraryKindInfo = rule.KindInfo{
 	MergeableAttrs: map[string]bool{
-		"srcs":       true,
-		"deps":       true,
-		"visibility": true,
+		"srcs":         true,
+		"deps":         true,
+		"compilations": true,
+		"visibility":   true,
 	},
 }
 
@@ -73,12 +74,14 @@ func (s *rustLibrary) Visibility() []string {
 func (s *rustLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 
+	newRule.SetAttr("compilations", []string{":" + s.Config.Library.BaseName() + "_rust_compile"})
 	newRule.SetAttr("srcs", s.Srcs())
 
 	deps := s.Deps()
 	if len(deps) > 0 {
 		newRule.SetAttr("deps", deps)
 	}
+
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)
@@ -89,6 +92,9 @@ func (s *rustLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 
 // Imports implements part of the RuleProvider interface.
 func (s *rustLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
+		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+	}
 	return nil
 }
 

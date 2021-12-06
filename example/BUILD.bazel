@@ -116,8 +116,11 @@
 
 ## Rust ##
 # gazelle:proto_plugin protoc-gen-rust implementation stepancheg:rust-protobuf:protoc-gen-rust
-# gazelle:proto_rule proto_rust_library implementation stackb:rules_proto:proto_rust_library
-# gazelle:proto_rule proto_rust_library deps @rules_rust//proto/raze:protobuf
+# gazelle:proto_rule rust_proto_library implementation stackb:rules_proto:rust_proto_library
+# gazelle:proto_rule rust_proto_library visibility //visibility:public
+# gazelle:proto_rule rust_grpc_library implementation stackb:rules_proto:rust_grpc_library
+# gazelle:proto_rule rust_grpc_library visibility //visibility:public
+
 # gazelle:proto_language rust plugin protoc-gen-rust
-# gazelle:proto_language rust rule proto_compile
-# gazelle:proto_language rust rule proto_rust_library
+# gazelle:proto_language rust rule rust_proto_library
+# gazelle:proto_language rust rule rust_grpc_library
