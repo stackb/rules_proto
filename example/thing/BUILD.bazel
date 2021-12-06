@@ -8,6 +8,8 @@ load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_librar
 load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
+# gazelle:proto_language rust enabled true
+
 proto_library(
     name = "thing_proto",
     srcs = ["thing.proto"],
@@ -149,4 +151,13 @@ proto_ts_library(
         "@npm_tsc//long",
         "@npm_tsc//protobufjs",
     ],
+)
+
+proto_compile(
+    name = "thing_rust_compile",
+    outs = {"@build_stack_rules_proto//plugin/stepancheg/rust-protobuf:protoc-gen-rust": "example/thing"},
+    outputs = ["thing.rs"],
+    plugins = ["@build_stack_rules_proto//plugin/stepancheg/rust-protobuf:protoc-gen-rust"],
+    proto = "thing_proto",
+    verbose = True,
 )

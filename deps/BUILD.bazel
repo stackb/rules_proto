@@ -522,3 +522,24 @@ filegroup(
     ],
     visibility = ["//:__pkg__"],
 )
+
+depsgen(
+    name = "rust",
+    deps = [":rules_rust"],
+)
+
+# Commit: 20f4ff5ef691de251da7253dc3fafc2ab9add550
+# Date: 2021-12-02 13:21:46 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_rust/commit/20f4ff5ef691de251da7253dc3fafc2ab9add550
+#
+# Add `DepInfo.transitive_crate_outputs` field (#1053)
+#
+# In preparation for https://github.com/bazelbuild/rules_rust/issues/1051
+# Size: 509332 (509 kB)
+proto_dependency(
+    name = "rules_rust",
+    repository_rule = "http_archive",
+    sha256 = "608ac74a2892af88cd2ddbf51a8c5d9586641479deda3397ba7bf35743b6d0b7",
+    strip_prefix = "rules_rust-20f4ff5ef691de251da7253dc3fafc2ab9add550",
+    urls = ["https://github.com/bazelbuild/rules_rust/archive/20f4ff5ef691de251da7253dc3fafc2ab9add550.tar.gz"],
+)

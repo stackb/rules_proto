@@ -56,6 +56,10 @@ load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 
 ts_proto_deps()
 
+load("//deps:rust_deps.bzl", "rust_deps")
+
+rust_deps()
+
 load("//deps:example_routeguide_nodejs_deps.bzl", "example_routeguide_nodejs_deps")
 
 example_routeguide_nodejs_deps()
@@ -199,3 +203,19 @@ load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 node_repositories()
 
 register_toolchains("//toolchain:nodejs")
+
+# ----------------------------------------------------
+# Rust
+# ----------------------------------------------------
+
+load("@rules_rust//rust:repositories.bzl", "rust_repositories")
+
+rust_repositories(include_rustc_srcs = True)
+
+load("@rules_rust//proto:repositories.bzl", "rust_proto_repositories")
+
+rust_proto_repositories()
+
+load("@rules_rust//proto:transitive_repositories.bzl", "rust_proto_transitive_repositories")
+
+rust_proto_transitive_repositories()

@@ -15,6 +15,7 @@ import (
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpcecosystem/grpcgateway"
 	_ "github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb"
 	_ "github.com/stackb/rules_proto/pkg/plugin/stackb/grpc_js"
+	_ "github.com/stackb/rules_proto/pkg/plugin/stepancheg/rust_protobuf"
 	_ "github.com/stackb/rules_proto/pkg/plugin/stephenh/ts-proto"
 	_ "github.com/stackb/rules_proto/pkg/rule/rules_cc"
 	_ "github.com/stackb/rules_proto/pkg/rule/rules_closure"
