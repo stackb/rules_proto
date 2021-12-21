@@ -20,13 +20,11 @@ func (s *protoCompiledSources) KindInfo() rule.KindInfo {
 		MergeableAttrs: map[string]bool{
 			"srcs":            true,
 			"plugins":         true,
-			"protoc":          true,
 			"output_mappings": true,
 			"options":         true,
 		},
 		SubstituteAttrs: map[string]bool{
-			"out":    true,
-			"protoc": true,
+			"out": true,
 		},
 	}
 }
