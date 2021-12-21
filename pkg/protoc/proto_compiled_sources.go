@@ -1,12 +1,6 @@
 package protoc
 
 import (
-	"fmt"
-	"sort"
-
-	"github.com/bazelbuild/bazel-gazelle/config"
-	"github.com/bazelbuild/bazel-gazelle/label"
-	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -24,14 +18,15 @@ func (s *protoCompiledSources) KindInfo() rule.KindInfo {
 			"srcs": true,
 		},
 		MergeableAttrs: map[string]bool{
-			"srcs":       true,
-			"plugins":    true,
-			"visibility": true,
+			"srcs":            true,
+			"plugins":         true,
+			"protoc":          true,
+			"output_mappings": true,
+			"options":         true,
 		},
 		SubstituteAttrs: map[string]bool{
-			"options":  true,
-			"out":      true,
-			"mappings": true,
+			"out":    true,
+			"protoc": true,
 		},
 	}
 }
@@ -51,79 +46,11 @@ func (s *protoCompiledSources) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *protoCompiledSources) ProvideRule(cfg *LanguageRuleConfig, config *ProtocConfiguration) RuleProvider {
-	return &protoCompiledSourcesRule{ruleConfig: cfg, config: config}
-}
-
-// protoCompiledSources implements RuleProvider for the 'proto_compile' rule.
-type protoCompiledSourcesRule struct {
-	config     *ProtocConfiguration
-	ruleConfig *LanguageRuleConfig
-}
-
-// Kind implements part of the ruleProvider interface.
-func (s *protoCompiledSourcesRule) Kind() string {
-	return "proto_compiled_sources"
-}
-
-// Name implements part of the ruleProvider interface.
-func (s *protoCompiledSourcesRule) Name() string {
-	return fmt.Sprintf("%s_%s_compiled_sources", s.config.Library.BaseName(), s.config.Prefix)
-}
-
-// Visibility provides visibility labels.
-func (s *protoCompiledSourcesRule) Visibility() []string {
-	visibility := make([]string, 0)
-	for k, want := range s.ruleConfig.Visibility {
-		if !want {
-			continue
-		}
-		visibility = append(visibility, k)
-	}
-	sort.Strings(visibility)
-	return visibility
-}
-
-// Rule implements part of the ruleProvider interface.
-func (s *protoCompiledSourcesRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
-	newRule := rule.NewRule(s.Kind(), s.Name())
-
-	outputs := s.config.Outputs
-	sort.Strings(outputs)
-
-	newRule.SetAttr("srcs", outputs)
-	newRule.SetAttr("plugins", GetPluginLabels(s.config.Plugins))
-	newRule.SetAttr("proto", s.config.Library.Name())
-
-	if s.config.LanguageConfig.Protoc != "" {
-		newRule.SetAttr("protoc", s.config.LanguageConfig.Protoc)
-	}
-
-	if len(s.config.Mappings) > 0 {
-		newRule.SetAttr("mappings", MakeStringDict(s.config.Mappings))
-	}
-
-	outs := GetPluginOuts(s.config.Plugins)
-	if len(outs) > 0 {
-		newRule.SetAttr("outs", MakeStringDict(outs))
-	}
-
-	visibility := s.Visibility()
-	if len(visibility) > 0 {
-		newRule.SetAttr("visibility", visibility)
-	}
-
-	return newRule
-}
-
-// Imports implements part of the RuleProvider interface.
-func (s *protoCompiledSourcesRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
-	return nil
-}
-
-// Resolve implements part of the RuleProvider interface.
-func (s *protoCompiledSourcesRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-	options := GetPluginOptions(s.config.Plugins, r, from)
-	if len(options) > 0 {
-		r.SetAttr("options", MakeStringListDict(options))
+	return &protoCompileRule{
+		kind:            "proto_compiled_sources",
+		nameSuffix:      "compiled_sources",
+		outputsAttrName: "srcs",
+		config:          config,
+		ruleConfig:      cfg,
 	}
 }

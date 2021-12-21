@@ -214,7 +214,7 @@ def _proto_compile_impl(ctx):
 
         # const <list<string>>
         opts = plugin.options + [opt for opt in options.get(_plugin_label_key(plugin.label), [])]
-        if is_builtin:
+        if is_builtin and opts:
             # builtins can't use the --opt flags
             out = "{}:{}".format(",".join(opts), out)
         else:
@@ -307,7 +307,7 @@ def _proto_compile_impl(ctx):
         tools = tools,
     )
 
-    if verbose and False:
+    if verbose:
         for c in commands:
             # buildifier: disable=print
             print("COMMAND:", c)
