@@ -278,6 +278,7 @@ def _proto_compile_impl(ctx):
     # if the rule declares any mappings, setup copy file commands to move them
     # into place
     if len(ctx.attr.output_mappings) > 0:
+        copy_commands = []
         out_dir = ctx.bin_dir.path
         if ctx.label.workspace_root:
             out_dir = "/".join([out_dir, ctx.label.workspace_root])
@@ -287,20 +288,29 @@ def _proto_compile_impl(ctx):
             output = outputs_by_basename.get(basename, None)
             if not output:
                 fail("the mapped file '%s' was not listed in outputs" % basename)
-            commands.append("cp '{}' '{}'".format(intermediate_filename, output.path))
+            copy_commands.append("cp '{}' '{}'".format(intermediate_filename, output.path))
+        copy_script = ctx.actions.declare_file(ctx.label.name + "_copy.sh")
+        ctx.actions.write(copy_script, "\n".join(copy_commands), is_executable = True)
+        inputs.append(copy_script)
+        commands.append(copy_script.path)
 
     # if there are any mods to apply, set those up now
-    for suffix, action in mods.items():
-        for f in outputs:
-            if f.short_path.endswith(suffix):
-                commands.append("awk '%s' %s > %s.tmp" % (action, f.path, f.path))
-                commands.append("mv %s.tmp %s" % (f.path, f.path))
+    if len(mods):
+        mv_commands = []
+        for suffix, action in mods.items():
+            for f in outputs:
+                if f.short_path.endswith(suffix):
+                    mv_commands.append("awk '%s' %s > %s.tmp" % (action, f.path, f.path))
+                    mv_commands.append("mv %s.tmp %s" % (f.path, f.path))
+        mv_script = ctx.actions.declare_file(ctx.label.name + "_mv.sh")
+        ctx.actions.write(mv_script, "\n".join(mv_commands), is_executable = True)
+        inputs.append(mv_script)
+        commands.append(mv_script.path)
 
     ctx.actions.run_shell(
         arguments = [final_args],
         command = "\n".join(commands),
         inputs = inputs,
-        # input_manifests = input_manifests, TODO
         mnemonic = "Protoc",
         outputs = outputs,
         progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
