@@ -69,7 +69,7 @@ func (pl *protobufLang) Resolve(
 		if imports, ok := importsRaw.([]string); ok {
 			provider.Resolve(c, ix, r, imports, from)
 		} else {
-			log.Panicf("warning: resolve imports: expected []string, got %T", importsRaw)
+			log.Printf("warning: resolve imports: expected []string, got %T", importsRaw)
 		}
 	} else {
 		log.Printf("no known rule package for %v", from.Pkg)
