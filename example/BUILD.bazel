@@ -79,10 +79,12 @@
 # gazelle:proto_rule proto_ts_library implementation stackb:rules_proto:proto_ts_library
 # gazelle:proto_rule proto_ts_library visibility //visibility:public
 # gazelle:proto_rule proto_ts_library attr tsc @npm_tsc//typescript/bin:tsc
+# gazelle:proto_rule proto_ts_library attr args --allowSyntheticDefaultImports
+# gazelle:proto_rule proto_ts_library attr args --downlevelIteration
 # gazelle:proto_rule proto_ts_library attr args --lib ES2015
 # gazelle:proto_rule proto_ts_library deps @npm_tsc//protobufjs
 # gazelle:proto_rule proto_ts_library deps @npm_tsc//long
-
+# gazelle:proto_rule proto_ts_library resolve google/protobuf/([a-z]+).proto //:wkt_${1}_ts_proto
 # gazelle:proto_language ts_proto plugin ts_proto
 # gazelle:proto_language ts_proto rule proto_compile
 # gazelle:proto_language ts_proto rule proto_ts_library

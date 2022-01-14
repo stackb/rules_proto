@@ -141,11 +141,16 @@ proto_compile(
 proto_ts_library(
     name = "thing_ts_proto",
     srcs = ["thing.ts"],
-    args = ["--lib ES2015"],
+    args = [
+        "--lib ES2015",
+        "--allowSyntheticDefaultImports",
+        "--downlevelIteration",
+    ],
     tags = ["manual"],
     tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],
     deps = [
+        "//:wkt_timestamp_ts_proto",
         "@npm_tsc//long",
         "@npm_tsc//protobufjs",
     ],
