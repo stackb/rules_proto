@@ -98,6 +98,12 @@ func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp s
 }
 
 func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, kind, imp string, from label.Label) (label.Label, error) {
+	// Strip off from's repo name if it's the local repo.
+	// The index doesn't use an explicit repo name for the local repo, so this
+	// is required for the IsSelfImport check to work.
+	if from.Repo == c.RepoName {
+		from.Repo = ""
+	}
 	matches := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{Lang: kind, Imp: imp}, ResolverLangName)
 	if len(matches) == 0 {
 		// log.Println(from, "no matches:", imp)
