@@ -24,7 +24,6 @@ import (
 // Any non-fatal errors this function encounters should be logged using
 // log.Print.
 func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
-
 	cfg := pl.getOrCreatePackageConfig(args.Config)
 	resolver := protoc.GlobalResolver()
 
@@ -52,14 +51,14 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 				"proto",
 				"depends",
 				path.Join(file.Dir, file.Basename),
-				label.New("", dir, path.Base(imp.Filename)),
+				label.New(args.Config.RepoName, dir, path.Base(imp.Filename)),
 			)
 		}
 	}
 
 	protoLibraries := make([]protoc.ProtoLibrary, 0)
 	for _, r := range args.OtherGen {
-		internalLabel := label.New("", args.Rel, r.Name())
+		internalLabel := label.New(args.Config.RepoName, args.Rel, r.Name())
 		protoc.GlobalRuleIndex().Put(internalLabel, r)
 
 		if r.Kind() != "proto_library" {

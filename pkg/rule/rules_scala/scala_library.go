@@ -102,7 +102,10 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		config:         pc,
 		resolver: func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 			protoc.ResolveDepsAttr("deps", true)(c, ix, r, imports, from)
-			r.SetAttr("exports", r.Attr("deps"))
+			deps := r.AttrStrings("deps")
+			if len(deps) > 0 {
+				r.SetAttr("exports", deps)
+			}
 		},
 	}
 }
@@ -178,7 +181,13 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 // Imports implements part of the RuleProvider interface.
 func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
 	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
-		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+		imports := protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+		for _, imp := range imports {
+			log.Printf("scalaLibraryRule %v imports: %v", r.Name(), imp)
+		}
+		return imports
+	} else {
+		log.Printf("scalaLibraryRule %v imports: (no privateattr for the lib)", r.Name())
 	}
 	return nil
 }
