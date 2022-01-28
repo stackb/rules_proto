@@ -26,7 +26,10 @@ go_library(
 
 go_test(
     name = "protobuf_test",
-    srcs = ["override_test.go"],
+    srcs = [
+        "generate_test.go",
+        "override_test.go",
+    ],
     embed = [":protobuf"],
     deps = [
         "//pkg/protoc",
