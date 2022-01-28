@@ -181,13 +181,7 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 // Imports implements part of the RuleProvider interface.
 func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
 	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
-		imports := protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
-		for _, imp := range imports {
-			log.Printf("scalaLibraryRule %v imports: %v", r.Name(), imp)
-		}
-		return imports
-	} else {
-		log.Printf("scalaLibraryRule %v imports: (no privateattr for the lib)", r.Name())
+		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
 	}
 	return nil
 }

@@ -39,7 +39,7 @@ type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, im
 // an individual import is delegated to the `resolveAnyKind` function.
 func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 	return func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-		debug := true
+		debug := false
 		if debug {
 			log.Printf("ResolveDepsAttr %q for %s rule %v", attrName, r.Kind(), from)
 		}
@@ -77,7 +77,6 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 				}
 				continue
 			}
-			log.Printf("match! from=%+v resolved=%+v", from, l)
 
 			l = l.Rel(from.Repo, from.Pkg)
 			if debug {
@@ -132,7 +131,7 @@ func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, kind, imp string,
 		return label.NoLabel, fmt.Errorf("multiple rules (%s and %s) may be imported with %q from %s", matches[0].Label, matches[1].Label, imp, from)
 	}
 	if matches[0].IsSelfImport(from) {
-		log.Println(from, "self import:", imp)
+		// log.Println(from, "self import:", imp)
 		return label.NoLabel, errSkipImport
 	}
 	// log.Println(from, "FindRulesByImportWithConfig first match:", imp, matches[0].Label)
@@ -161,11 +160,4 @@ func ProtoLibraryImportSpecsForKind(kind string, libs ...ProtoLibrary) []resolve
 	}
 
 	return specs
-}
-
-// isSamePackageImport returns true if the result's label matches the given
-// label package. SamePackage imports can cause cause cyclic dependencies, so
-// the caller may want to omit the dependency or report an error.
-func isSamePackageImport(from, to label.Label) bool {
-	return from.Pkg == to.Pkg
 }

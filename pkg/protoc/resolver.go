@@ -18,7 +18,7 @@ import (
 
 // globalImportResolver is the default resolver singleton.
 var globalImportResolver = NewImportResolver(&ImportResolverOptions{
-	Debug:  true,
+	Debug:  false,
 	Printf: log.Printf,
 }).(*resolver)
 
