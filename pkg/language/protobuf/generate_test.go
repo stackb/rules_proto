@@ -2,7 +2,6 @@ package protobuf
 
 import (
 	"os"
-	"path/filepath"
 	"testing"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -82,8 +81,6 @@ import "google/protobuf/any.proto";
 				t.Fatal(err)
 			}
 
-			mustListFiles(t, dir)
-
 			ext := NewProtobufLang("test")
 			tc.args.Rel = tc.rel
 			tc.args.Config.WorkDir = dir
@@ -119,6 +116,12 @@ type testGenerateRulesState struct {
 	resolver *mockImportResolver
 }
 
+func makeTestProtoLibraryRule() *rule.Rule {
+	r := rule.NewRule("proto_library", "foo_library")
+	r.SetAttr("srcs", []string{"messages.proto"})
+	return r
+}
+
 func makeTestConfig(repoName string) *config.Config {
 	return &config.Config{
 		RepoName: repoName,
@@ -142,32 +145,4 @@ func (m *mockImportResolver) Resolve(lang, impLang, imp string) []resolve.FindRe
 
 func (m *mockImportResolver) Provide(lang string, impLang, val string, location label.Label) {
 	m.provided = append(m.provided, importResolverProvide{lang, impLang, val, location})
-}
-
-func makeTestProtoLibraryRule() *rule.Rule {
-	r := rule.NewRule("proto_library", "foo_library")
-	r.SetAttr("srcs", []string{"messages.proto"})
-	return r
-}
-
-// mustListFiles - convenience debugging function to log the files under a given
-// dir, excluding proto files and the extra binaries here.
-func mustListFiles(t *testing.T, dir string) {
-	t.Log("listing files in:", dir)
-
-	if err := filepath.Walk(dir, func(relname string, info os.FileInfo, err error) error {
-		if err != nil {
-			t.Fatal(err)
-		}
-		if info.IsDir() {
-			return nil
-		}
-		t.Log("file:", relname)
-		if filepath.Ext(relname) == ".proto" {
-			return nil
-		}
-		return nil
-	}); err != nil {
-		t.Fatal(err)
-	}
 }
