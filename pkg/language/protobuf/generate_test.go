@@ -72,6 +72,48 @@ import "google/protobuf/any.proto";
 				}
 			},
 		},
+		"registers labels qualified with the extension.repoName if set": {
+			files: []testtools.FileSpec{
+				{
+					Path: "foo.proto",
+					Content: `syntax = "proto3";
+import "google/protobuf/any.proto";
+					`,
+				},
+			},
+			args: language.GenerateArgs{
+				Config:       makeTestConfig("contoso"),
+				RegularFiles: []string{"foo.proto"},
+				OtherGen:     []*rule.Rule{makeTestProtoLibraryRule()},
+			},
+			want: language.GenerateResult{
+				Gen:     []*rule.Rule{},
+				Empty:   []*rule.Rule{},
+				Imports: []interface{}{},
+			},
+			pre: func(state *testGenerateRulesState) {
+				state.ext.repoName = "override"
+			},
+			post: func(state *testGenerateRulesState) {
+				wantProvided := []importResolverProvide{
+					{
+						lang:    "proto",
+						impLang: "depends",
+						imp:     "foo.proto",
+						label:   label.New("", "google/protobuf", "any.proto"),
+					},
+					{
+						lang:    "proto",
+						impLang: "proto",
+						imp:     "messages.proto",
+						label:   label.New("override", "", "foo_library"),
+					},
+				}
+				if diff := cmp.Diff(wantProvided, state.resolver.provided, cmp.AllowUnexported(importResolverProvide{})); diff != "" {
+					t.Error("unexpected diff:", diff)
+				}
+			},
+		},
 	} {
 		t.Run(name, func(t *testing.T) {
 			dir, cleanup := testtools.CreateFiles(t, tc.files)
