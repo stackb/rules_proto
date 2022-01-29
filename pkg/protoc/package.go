@@ -215,7 +215,7 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 			// the rule ref seems to have changed by that time, the PrivateAttr
 			// is removed.  Maybe this is due to rule merges?  Very difficult to
 			// track down bug that cost me days.
-			from := label.New("", s.rel, r.Name())
+			from := label.New(s.cfg.config.RepoName, s.rel, r.Name())
 			file := rule.EmptyFile("", s.rel)
 			provideResolverImportSpecs(s.cfg.config, p, r, file, from)
 		}

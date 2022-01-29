@@ -25,9 +25,24 @@ var (
 
 type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label)
 
+// ResolveDepsAttr returns a function that implements the DepsResolver
+// interface.  This function resolves dependencies for a given rule attribute
+// name (typically "deps"); if there is a non-empty list of resolved
+// dependencies, the rule attribute will be overrwritten/modified by this
+// function (excluding duplicates, sorting applied).  The "from" argument
+// represents the rule being resolved (whose state is the *rule.Rule argument).
+// The "imports" list represents the list of imports that was originally
+// returned by the `Imports()` function, and holds the values of all the import
+// statements (e.g. "google/protobuf/descriptor.proto") of the ProtoLibrary used
+// to generate the rule.  Special handling is provided for well-known types,
+// which can be excluded using the `excludeWkt` argument.  Actual resolution for
+// an individual import is delegated to the `resolveAnyKind` function.
 func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 	return func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 		debug := false
+		if debug {
+			log.Printf("ResolveDepsAttr %q for %s rule %v", attrName, r.Kind(), from)
+		}
 
 		existing := r.AttrStrings(attrName)
 		r.DelAttr(attrName)
@@ -44,27 +59,30 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 			if excludeWkt && strings.HasPrefix(imp, "google/protobuf/") {
 				continue
 			}
+
 			l, err := resolveAnyKind(c, ix, r, imp, from)
 			if err == errSkipImport {
 				if debug {
 					log.Println(from, "skipped:", imp)
 				}
 				continue
-			} else if err != nil {
-				log.Print(err)
-			} else {
-				if l != label.NoLabel {
-					l = l.Rel(from.Repo, from.Pkg)
-					if debug {
-						log.Println(from, "resolved:", imp, l)
-					}
-					depSet[l.String()] = true
-				} else {
-					if debug {
-						log.Println(from, "no label", imp)
-					}
-				}
 			}
+			if err != nil {
+				log.Println(from, "ResolveDepsAttr error:", err)
+				continue
+			}
+			if l == label.NoLabel {
+				if debug {
+					log.Println(from, "no label", imp)
+				}
+				continue
+			}
+
+			l = l.Rel(from.Repo, from.Pkg)
+			if debug {
+				log.Println(from, "resolved:", imp, "is provided by", l)
+			}
+			depSet[l.String()] = true
 		}
 
 		if len(depSet) > 0 {
@@ -81,6 +99,12 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 	}
 }
 
+// resolveAnyKind answers the question "what bazel label provides a rule for the
+// given import?" (having the same rule kind as the given rule argument).  The
+// algorithm first consults the override list (configured either via gazelle
+// resolve directives, or via a YAML config).  If no override is found, the
+// RuleIndex is consulted, which contains all rules indexed by gazelle in the
+// generation phase.   If no match is found, return label.NoLabel.
 func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp string, from label.Label) (label.Label, error) {
 	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: r.Kind(), Imp: imp}, ResolverLangName); ok {
 		// log.Println(from, "override hit:", l)
@@ -110,7 +134,7 @@ func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, kind, imp string,
 		// log.Println(from, "self import:", imp)
 		return label.NoLabel, errSkipImport
 	}
-	// log.Println(from, "FindRulesByImportWithConfig: first match:", imp, matches[0].Label)
+	// log.Println(from, "FindRulesByImportWithConfig first match:", imp, matches[0].Label)
 	return matches[0].Label, nil
 }
 
@@ -123,6 +147,8 @@ func StripRel(rel string, filename string) string {
 	return strings.TrimPrefix(filename, "/")
 }
 
+// ProtoLibraryImportSpecsForKind generates an ImportSpec for each file in the
+// set of given proto_library.
 func ProtoLibraryImportSpecsForKind(kind string, libs ...ProtoLibrary) []resolve.ImportSpec {
 	specs := make([]resolve.ImportSpec, 0)
 
