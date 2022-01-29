@@ -25,7 +25,6 @@ import (
 // log.Print.
 func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
 	cfg := pl.getOrCreatePackageConfig(args.Config)
-	resolver := protoc.GlobalResolver()
 
 	files := make(map[string]*protoc.File)
 	for _, f := range args.RegularFiles {
@@ -47,11 +46,11 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 			if dir == "." {
 				dir = ""
 			}
-			resolver.Provide(
+			pl.resolver.Provide(
 				"proto",
 				"depends",
 				path.Join(file.Dir, file.Basename),
-				label.New(args.Config.RepoName, dir, path.Base(imp.Filename)),
+				label.New("", dir, path.Base(imp.Filename)),
 			)
 		}
 	}
@@ -75,7 +74,7 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 			srcLabels[i] = srcLabel
 
 			// record the label that "provides" each proto file.
-			resolver.Provide(
+			pl.resolver.Provide(
 				"proto",
 				"proto",
 				path.Join(args.Rel, src),

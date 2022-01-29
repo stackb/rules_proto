@@ -1,5 +1,5 @@
 build:bazelci --deleted_packages=docs
-
+build --noexperimental_convenience_symlinks
 # build --strategy=CoreCompile=standalone
 # build --strategy=SwiftCompile=standalone
 
