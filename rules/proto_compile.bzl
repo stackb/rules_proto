@@ -3,6 +3,7 @@
 This runs the protoc tool and generates output source files.
 """
 
+load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
 load(":providers.bzl", "ProtoCompileInfo", "ProtoPluginInfo")
 
@@ -126,7 +127,7 @@ def _proto_compile_impl(ctx):
     outs = {_plugin_label_key(Label(k)): v for k, v in ctx.attr.outs.items()}
 
     # const <dict<string,File>.  outputs indexed by basename.
-    outputs_by_basename = {f.basename: f for f in outputs}
+    outputs_by_basename = {paths.relativize(f.short_path, ctx.label.package): f for f in outputs}
 
     # mut <list<File>> set of descriptors for the compile action
     descriptors = proto_info.transitive_descriptor_sets.to_list()
@@ -313,7 +314,7 @@ def _proto_compile_impl(ctx):
         inputs = inputs,
         mnemonic = "Protoc",
         outputs = outputs,
-        progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
+        progress_message = "Compiling protoc outputs for %r" % [paths.relativize(f.short_path, ctx.label.package) for f in protos],
         tools = tools,
     )
 
