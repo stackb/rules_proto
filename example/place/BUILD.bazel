@@ -119,7 +119,10 @@ proto_py_library(
     name = "place_py_library",
     srcs = ["place_pb2.py"],
     visibility = ["//visibility:public"],
-    deps = ["@com_google_protobuf//:protobuf_python"],
+    deps = [
+        "//example/thing:thing_py_library",
+        "@com_google_protobuf//:protobuf_python",
+    ],
 )
 
 proto_compile(
