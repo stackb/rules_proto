@@ -130,12 +130,26 @@ func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, kind, imp string,
 	if len(matches) > 1 {
 		return label.NoLabel, fmt.Errorf("multiple rules (%s and %s) may be imported with %q from %s", matches[0].Label, matches[1].Label, imp, from)
 	}
-	if matches[0].IsSelfImport(from) {
+	if matches[0].IsSelfImport(from) || isSameImport(c, from, matches[0].Label) {
 		// log.Println(from, "self import:", imp)
 		return label.NoLabel, errSkipImport
 	}
 	// log.Println(from, "FindRulesByImportWithConfig first match:", imp, matches[0].Label)
 	return matches[0].Label, nil
+}
+
+// isSameImport returns true if the "from" and "to" labels are the same.  If the
+// "to" label is not a canonical label (having a fully-qualified repo name), a
+// canonical label is constructed for comparison using the config.RepoName.
+func isSameImport(c *config.Config, from, to label.Label) bool {
+	if from == to {
+		return true
+	}
+	if to.Repo != "" {
+		return false
+	}
+	canonical := label.New(c.RepoName, to.Pkg, to.Name)
+	return from == canonical
 }
 
 // StripRel removes the rel prefix from a filename (if has matching prefix)
