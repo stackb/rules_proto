@@ -162,8 +162,6 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//plugin/scalapb/scalapb:BUILD.bazel",
     "@build_stack_rules_proto//plugin/stackb/grpc_js:BUILD.bazel",
     "@build_stack_rules_proto//plugin/stephenh/ts-proto:BUILD.bazel",
-    "@build_stack_rules_proto//plugin/stephenh/ts-proto/node_modules/protobufjs/google/api:BUILD.bazel",
-    "@build_stack_rules_proto//plugin/stephenh/ts-proto/node_modules/protobufjs/google/protobuf:BUILD.bazel",
     "@build_stack_rules_proto//rules:BUILD.bazel",
     "@build_stack_rules_proto//rules/cc:BUILD.bazel",
     "@build_stack_rules_proto//rules/closure:BUILD.bazel",

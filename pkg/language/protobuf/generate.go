@@ -24,7 +24,9 @@ import (
 // Any non-fatal errors this function encounters should be logged using
 // log.Print.
 func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
+
 	cfg := pl.getOrCreatePackageConfig(args.Config)
+	resolver := protoc.GlobalResolver()
 
 	files := make(map[string]*protoc.File)
 	for _, f := range args.RegularFiles {
@@ -46,7 +48,7 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 			if dir == "." {
 				dir = ""
 			}
-			pl.resolver.Provide(
+			resolver.Provide(
 				"proto",
 				"depends",
 				path.Join(file.Dir, file.Basename),
@@ -57,7 +59,7 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 
 	protoLibraries := make([]protoc.ProtoLibrary, 0)
 	for _, r := range args.OtherGen {
-		internalLabel := label.New(args.Config.RepoName, args.Rel, r.Name())
+		internalLabel := label.New("", args.Rel, r.Name())
 		protoc.GlobalRuleIndex().Put(internalLabel, r)
 
 		if r.Kind() != "proto_library" {
@@ -74,7 +76,7 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 			srcLabels[i] = srcLabel
 
 			// record the label that "provides" each proto file.
-			pl.resolver.Provide(
+			resolver.Provide(
 				"proto",
 				"proto",
 				path.Join(args.Rel, src),

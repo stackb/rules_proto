@@ -10,7 +10,6 @@ func NewProtobufLang(name string) *protobufLang {
 		name:     name,
 		rules:    protoc.Rules(),
 		packages: make(map[string]*protoc.Package),
-		resolver: protoc.GlobalResolver(),
 	}
 }
 
@@ -34,8 +33,6 @@ type protobufLang struct {
 	importsInFiles string
 	// overrideGoGooleapis performs special processing for go_googleapis deps
 	overrideGoGooleapis bool
-	// the resolver instance used for cross-resolution
-	resolver protoc.ImportResolver
 }
 
 // Name implements part of the language.Language interface.

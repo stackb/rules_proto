@@ -43,7 +43,7 @@ func (p *ProtocGenGoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginC
 	for k, v := range mappings {
 		// "option" is used as the name since we cannot leave that part of the
 		// label empty.
-		protoc.GlobalResolver().Provide("proto", "M", k, label.New("", v, "option")) // FIXME(pcj): should this not be config.RepoName?
+		protoc.GlobalResolver().Provide("proto", "M", k, label.New("", v, "option"))
 	}
 
 	return &protoc.PluginConfiguration{
@@ -88,6 +88,7 @@ func ResolvePluginOptionsTransitive(cfg *protoc.PluginConfiguration, r *rule.Rul
 }
 
 func ResolveTransitiveImportMappings(r *rule.Rule, from label.Label) map[string]string {
+
 	lib := r.PrivateAttr(protoc.ProtoLibraryKey)
 	if lib == nil {
 		return nil
