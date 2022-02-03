@@ -207,7 +207,13 @@ def _proto_compile_impl(ctx):
         # mut <string>
         out = plugin.out
         if ctx.label.workspace_root:
-            out = "/".join([out, ctx.label.workspace_root])
+            # special handling for "{BIN_DIR}".  If we are dealing with a
+            # formatted output string (like for a .srcjar), cannot just append
+            # "external/repo" to the string.
+            if out.find("{BIN_DIR}") != -1:
+                out = out.replace("{BIN_DIR}", "{BIN_DIR}/" + ctx.label.workspace_root)
+            else:
+                out = "/".join([out, ctx.label.workspace_root])
 
         # dict<key=label.package+label.name,value=list<string>>
         options = {_plugin_label_key(Label(k)): v for k, v in ctx.attr.options.items()}
@@ -228,7 +234,6 @@ def _proto_compile_impl(ctx):
             # root might be empty, so filter empty strings via this list
             # comprehension.
             out = "/".join([e for e in [ctx.bin_dir.path, ctx.label.workspace_root, plugin_out] if e])
-
         args.append("--{}_out={}".format(plugin_name, out))
 
         ### Part 2.4: setup awk modifications if any
