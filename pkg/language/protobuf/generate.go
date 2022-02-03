@@ -57,12 +57,7 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 
 	protoLibraries := make([]protoc.ProtoLibrary, 0)
 	for _, r := range args.OtherGen {
-		// if the repoName has been overridden by a flag (proto_repository rule) use that.
-		repoName := args.Config.RepoName
-		if pl.repoName != "" {
-			repoName = pl.repoName
-		}
-		internalLabel := label.New(repoName, args.Rel, r.Name())
+		internalLabel := label.New("", args.Rel, r.Name())
 		protoc.GlobalRuleIndex().Put(internalLabel, r)
 
 		if r.Kind() != "proto_library" {
