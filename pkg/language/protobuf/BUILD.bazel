@@ -35,6 +35,7 @@ go_test(
         "//pkg/protoc",
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//language:go_default_library",
         "@bazel_gazelle//resolve:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
         "@bazel_gazelle//testtools:go_default_library",
