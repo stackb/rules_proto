@@ -31,7 +31,7 @@ func TestGenerateRules(t *testing.T) {
 				Imports: []interface{}{},
 			},
 		},
-		"registers labels qualified with the config.RepoName": {
+		"does not register labels qualified with the config.RepoName": {
 			files: []testtools.FileSpec{
 				{
 					Path: "foo.proto",
@@ -64,7 +64,7 @@ import "google/protobuf/any.proto";
 						lang:    "proto",
 						impLang: "proto",
 						imp:     "messages.proto",
-						label:   label.New("contoso", "", "foo_library"),
+						label:   label.New("", "", "foo_library"),
 					},
 				}
 				if diff := cmp.Diff(wantProvided, state.resolver.provided, cmp.AllowUnexported(importResolverProvide{})); diff != "" {
@@ -72,7 +72,7 @@ import "google/protobuf/any.proto";
 				}
 			},
 		},
-		"registers labels qualified with the extension.repoName if set": {
+		"does not register labels qualified with the extension.repoName if set": {
 			files: []testtools.FileSpec{
 				{
 					Path: "foo.proto",
@@ -106,7 +106,7 @@ import "google/protobuf/any.proto";
 						lang:    "proto",
 						impLang: "proto",
 						imp:     "messages.proto",
-						label:   label.New("override", "", "foo_library"),
+						label:   label.New("", "", "foo_library"),
 					},
 				}
 				if diff := cmp.Diff(wantProvided, state.resolver.provided, cmp.AllowUnexported(importResolverProvide{})); diff != "" {
