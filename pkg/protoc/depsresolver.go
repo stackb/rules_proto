@@ -16,6 +16,8 @@ import (
 
 const (
 	ResolverLangName = "protobuf"
+	// ResolverImpLangPrivateKey stores the implementation language override.
+	ResolverImpLangPrivateKey = "_protobuf_imp_lang"
 )
 
 var (
@@ -60,7 +62,13 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 				continue
 			}
 
-			l, err := resolveAnyKind(c, ix, r, imp, from)
+			// determine the resolve kind
+			impLang := r.Kind()
+			if overrideImpLang, ok := r.PrivateAttr(ResolverImpLangPrivateKey).(string); ok {
+				impLang = overrideImpLang
+			}
+
+			l, err := resolveAnyKind(c, ix, impLang, imp, from)
 			if err == errSkipImport {
 				if debug {
 					log.Println(from, "skipped:", imp)
@@ -105,12 +113,12 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 // resolve directives, or via a YAML config).  If no override is found, the
 // RuleIndex is consulted, which contains all rules indexed by gazelle in the
 // generation phase.   If no match is found, return label.NoLabel.
-func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp string, from label.Label) (label.Label, error) {
-	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: r.Kind(), Imp: imp}, ResolverLangName); ok {
+func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, lang string, imp string, from label.Label) (label.Label, error) {
+	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: lang, Imp: imp}, ResolverLangName); ok {
 		// log.Println(from, "override hit:", l)
 		return l, nil
 	}
-	if l, err := resolveWithIndex(c, ix, r.Kind(), imp, from); err == nil || err == errSkipImport {
+	if l, err := resolveWithIndex(c, ix, lang, imp, from); err == nil || err == errSkipImport {
 		return l, err
 	} else if err != errNotFound {
 		return label.NoLabel, err

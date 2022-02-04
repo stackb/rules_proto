@@ -50,7 +50,7 @@ func hasServicesAndGrpcOption(library protoc.ProtoLibrary, plugin *protoc.Plugin
 	return false
 }
 
-// scalaLibrary implements LanguageRule for the '{proto|grpc}_scala_library' rule from
+// scalaLibrary implements LanguageRule for the 'proto_scala_library' rule from
 // @rules_proto.
 type scalaLibrary struct {
 	kindName          string
@@ -143,7 +143,13 @@ func (s *scalaLibraryRule) Srcs() []string {
 
 // Deps computes the deps list for the rule.
 func (s *scalaLibraryRule) Deps() []string {
-	return s.ruleConfig.GetDeps()
+	deps := s.ruleConfig.GetDeps()
+
+	for _, pluginConfig := range s.config.Plugins {
+		deps = append(deps, pluginConfig.Config.GetDeps()...)
+	}
+
+	return protoc.DeduplicateAndSort(deps)
 }
 
 // Visibility provides visibility labels.
@@ -175,13 +181,18 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		newRule.SetAttr("visibility", visibility)
 	}
 
+	// set the override language such that deps of 'proto_scala_library' and
+	// 'grpc_scala_library' can resolve together (matches the value used by
+	// "Imports").
+	newRule.SetPrivateAttr(protoc.ResolverImpLangPrivateKey, scalaLibraryRuleSuffix)
+
 	return newRule
 }
 
 // Imports implements part of the RuleProvider interface.
 func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
 	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
-		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+		return protoc.ProtoLibraryImportSpecsForKind(scalaLibraryRuleSuffix, lib)
 	}
 	return nil
 }
