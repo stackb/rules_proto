@@ -181,6 +181,26 @@ load("@maven_scala//:defs.bzl", pinned_maven_scala_install = "pinned_maven_insta
 pinned_maven_scala_install()
 
 # ----------------------------------------------------
+# Scala/Akka
+# ----------------------------------------------------
+
+# bazel run @maven_akka//:pin, but first comment out the "maven_install_json"
+# (put it back once pinned again)
+maven_install(
+    name = "maven_akka",
+    artifacts = [
+        "com.lightbend.akka.grpc:akka-grpc-codegen_2.12:2.1.3",
+    ],
+    fetch_sources = True,
+    maven_install_json = "//:maven_akka_install.json",
+    repositories = ["https://repo1.maven.org/maven2"],
+)
+
+load("@maven_akka//:defs.bzl", pinned_maven_akka_install = "pinned_maven_install")
+
+pinned_maven_akka_install()
+
+# ----------------------------------------------------
 # Closure
 # ----------------------------------------------------
 
