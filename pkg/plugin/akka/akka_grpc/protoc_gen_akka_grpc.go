@@ -1,4 +1,4 @@
-package scalapb
+package akka_grpc
 
 import (
 	"path"

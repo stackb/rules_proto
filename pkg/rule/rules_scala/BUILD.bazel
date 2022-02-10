@@ -9,6 +9,7 @@ go_library(
     importpath = "github.com/stackb/rules_proto/pkg/rule/rules_scala",
     visibility = ["//visibility:public"],
     deps = [
+        "//pkg/plugin/akka/akka_grpc",
         "//pkg/plugin/scalapb/scalapb",
         "//pkg/protoc",
         "@bazel_gazelle//config:go_default_library",
