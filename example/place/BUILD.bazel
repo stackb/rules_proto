@@ -127,7 +127,6 @@ proto_py_library(
 
 proto_compile(
     name = "place_scala_compile",
-    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
     outputs = ["place_scala.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
     proto = "place_proto",
