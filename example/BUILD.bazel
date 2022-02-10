@@ -46,6 +46,7 @@
 ## Scala ##
 # gazelle:proto_plugin scala implementation scalapb:scalapb:protoc-gen-scala
 # gazelle:proto_plugin scala option grpc
+# gazelle:proto_plugin akka-grpc implementation akka:akka-grpc:protoc-gen-akka-grpc
 # gazelle:proto_rule proto_scala_library implementation stackb:rules_proto:proto_scala_library
 # gazelle:proto_rule proto_scala_library deps @build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12
 # gazelle:proto_rule proto_scala_library visibility //visibility:public
@@ -53,6 +54,7 @@
 # gazelle:proto_rule grpc_scala_library deps @build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12
 # gazelle:proto_rule grpc_scala_library visibility //visibility:public
 # gazelle:proto_language scala plugin scala
+# gazelle:proto_language scala plugin akka-grpc
 # gazelle:proto_language scala rule proto_compile
 # gazelle:proto_language scala rule proto_scala_library
 # gazelle:proto_language scala rule grpc_scala_library
