@@ -1,0 +1,30 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "akka_grpc",
+    srcs = ["protoc_gen_akka_grpc.go"],
+    importpath = "github.com/stackb/rules_proto/pkg/plugin/akka/akka_grpc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+    ],
+)
+
+# go_test(
+#     name = "akka_grpc_test",
+#     srcs = ["protoc_gen_scala_test.go"],
+#     data = [":protoc"],
+#     deps = [
+#         ":akka_grpc",
+#         "//pkg/plugintest",
+#     ],
+# )
+
+# genrule(
+#     name = "protoc_tool",
+#     outs = ["protoc"],
+#     cmd = "cp $(location @com_google_protobuf//:protoc) $@",
+#     executable = True,
+#     tools = ["@com_google_protobuf//:protoc"],
+# )

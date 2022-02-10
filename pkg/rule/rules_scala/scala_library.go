@@ -11,6 +11,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
+	"github.com/stackb/rules_proto/pkg/plugin/akka/akka_grpc"
 	"github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
@@ -93,11 +94,15 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 	if !s.shouldProvideRule(pc.Library, plugin) {
 		return nil
 	}
+	outputs := plugin.Outputs
+
+	// include akka outputs here as well: TODO, gather all srcjars
+	outputs = append(outputs, pc.GetPluginOutputs(akka_grpc.AkkaGrpcPluginName)...)
 
 	return &scalaLibraryRule{
 		kindName:       s.kindName,
 		ruleNameSuffix: scalaLibraryRuleSuffix,
-		outputs:        plugin.Outputs,
+		outputs:        outputs,
 		ruleConfig:     cfg,
 		config:         pc,
 		resolver: func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {

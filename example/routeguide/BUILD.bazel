@@ -244,7 +244,10 @@ proto_py_library(
 
 grpc_scala_library(
     name = "routeguide_scala_library",
-    srcs = ["routeguide_scala.srcjar"],
+    srcs = [
+        "routeguide_akka_grpc.srcjar",
+        "routeguide_scala.srcjar",
+    ],
     visibility = ["//visibility:public"],
     exports = ["@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12"],
     deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12"],
