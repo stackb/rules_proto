@@ -3,6 +3,10 @@ load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "protoc-gen-scala",
     out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}_scala.srcjar",
+    options = [
+        "flat_package",
+        "grpc",
+    ],
     tool = ":protoc-gen-scala.exe",
     use_built_in_shell_environment = True,
     visibility = ["//visibility:public"],

@@ -3,6 +3,10 @@ load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "protoc-gen-akka-grpc",
     out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}_akka_grpc.srcjar",
+    options = [
+        "flat_package",
+        "grpc",
+    ],
     tool = ":akka_grpc_codegen",
     use_built_in_shell_environment = True,
     visibility = ["//visibility:public"],
