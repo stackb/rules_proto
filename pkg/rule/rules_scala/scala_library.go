@@ -10,6 +10,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
+	"github.com/emicklei/proto"
 
 	"github.com/stackb/rules_proto/pkg/plugin/akka/akka_grpc"
 	"github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb"
@@ -196,9 +197,17 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 
 // Imports implements part of the RuleProvider interface.
 func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	// 1. provide generated scala class names for message and services for
+	// 'scala scala' deps.  This will allow a scala extension to resolve proto
+	// deps when they import scala proto class names.
+	provideScalaImports(s.config.Library, protoc.GlobalResolver(), label.New("", file.Pkg, r.Name()))
+
+	// 2. create import specs for 'protobuf _scala_library'.  This allows
+	// proto_scala_library and grpc_scala_library to resolve deps.
 	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
 		return protoc.ProtoLibraryImportSpecsForKind(scalaLibraryRuleSuffix, lib)
 	}
+
 	return nil
 }
 
@@ -208,4 +217,56 @@ func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *r
 		return
 	}
 	s.resolver(c, ix, r, imports, from)
+}
+
+// javaPackageOption is a utility function to seek for the java_package option.
+func javaPackageOption(options []proto.Option) (string, bool) {
+	for _, opt := range options {
+		if opt.Name != "java_package" {
+			continue
+		}
+		return opt.Constant.Source, true
+	}
+
+	return "", false
+}
+
+func provideScalaImports(lib protoc.ProtoLibrary, resolver protoc.ImportResolver, from label.Label) {
+	lang := "scala"
+
+	for _, file := range lib.Files() {
+		pkgName := file.Package().Name
+		if javaPackageName, ok := javaPackageOption(file.Options()); ok {
+			pkgName = javaPackageName
+		}
+		if pkgName != "" {
+			resolver.Provide(lang, lang, pkgName+"._", from)
+		}
+		for _, e := range file.Enums() {
+			mName := e.Name
+			if pkgName != "" {
+				mName = pkgName + "." + eName
+			}
+			resolver.Provide(lang, lang, eName, from)
+		}
+		for _, m := range file.Messages() {
+			mName := m.Name
+			if pkgName != "" {
+				mName = pkgName + "." + mName
+			}
+			resolver.Provide(lang, lang, mName, from)
+		}
+		for _, s := range file.Services() {
+			sName := s.Name
+			if pkgName != "" {
+				sName = pkgName + "." + sName
+			}
+			resolver.Provide(lang, lang, sName+"Client", from)
+			resolver.Provide(lang, lang, sName+"Server", from)
+		}
+	}
+}
+
+func scalaImportSpec(imp string) resolve.ImportSpec {
+	return resolve.ImportSpec{Lang: "scala", Imp: imp}
 }
