@@ -34,11 +34,12 @@ type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, im
 // function (excluding duplicates, sorting applied).  The "from" argument
 // represents the rule being resolved (whose state is the *rule.Rule argument).
 // The "imports" list represents the list of imports that was originally
-// returned by the `Imports()` function, and holds the values of all the import
-// statements (e.g. "google/protobuf/descriptor.proto") of the ProtoLibrary used
-// to generate the rule.  Special handling is provided for well-known types,
-// which can be excluded using the `excludeWkt` argument.  Actual resolution for
-// an individual import is delegated to the `resolveAnyKind` function.
+// returned by the GenerateResponse.Imports (typically in via a private attr
+// GazelleImportsKey), and holds the values of all the import statements (e.g.
+// "google/protobuf/descriptor.proto") of the ProtoLibrary used to generate the
+// rule.  Special handling is provided for well-known types, which can be
+// excluded using the `excludeWkt` argument.  Actual resolution for an
+// individual import is delegated to the `resolveAnyKind` function.
 func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 	return func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 		debug := false
