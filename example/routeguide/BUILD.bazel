@@ -250,7 +250,13 @@ grpc_scala_library(
     ],
     visibility = ["//visibility:public"],
     exports = ["@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12"],
-    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12"],
+    deps = [
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:grpc_scala_library_2_12",
+        "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12",
+        "@maven_akka//:com_typesafe_akka_akka_actor_2_12",
+        "@maven_akka//:com_typesafe_akka_akka_http_core_2_12",
+        "@maven_akka//:com_typesafe_akka_akka_stream_2_12",
+    ],
 )
 
 proto_compile(
