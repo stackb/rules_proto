@@ -190,6 +190,7 @@ maven_install(
     name = "maven_akka",
     artifacts = [
         "com.lightbend.akka.grpc:akka-grpc-codegen_2.12:2.1.3",
+        "com.lightbend.akka.grpc:akka-grpc-runtime_2.12:2.1.3",
     ],
     fetch_sources = True,
     maven_install_json = "//:maven_akka_install.json",
