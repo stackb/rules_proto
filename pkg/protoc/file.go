@@ -221,10 +221,7 @@ func ImportPrefixRelativeFileNameWithExtensions(stripImportPrefix, reldir string
 	// if the stripImportPrefix is defined and "absolute" (starting with a
 	// slash), this means it is relative to the repository root.
 	// https://github.com/bazelbuild/bazel/issues/3867#issuecomment-441971525
-	prefix := stripImportPrefix
-	if strings.HasPrefix(prefix, "/") {
-		prefix = prefix[1:]
-	}
+	prefix := strings.TrimPrefix(stripImportPrefix, "/")
 	relfunc := RelativeFileNameWithExtensions(reldir, exts...)
 	return func(f *File) []string {
 		outs := relfunc(f)
