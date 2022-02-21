@@ -22,7 +22,7 @@ func (pl *protobufLang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []
 
 	pkg, ok := pl.packages[from.Pkg]
 	if !ok {
-		log.Println("Unknown package", from.Pkg)
+		// log.Println("protobuf.Imports(): Unknown package", from.Pkg)
 		return nil
 	}
 

@@ -243,26 +243,32 @@ func provideScalaImports(lib protoc.ProtoLibrary, resolver protoc.ImportResolver
 			resolver.Provide(lang, lang, pkgName+"._", from)
 		}
 		for _, e := range file.Enums() {
-			mName := e.Name
+			name := e.Name
 			if pkgName != "" {
-				mName = pkgName + "." + eName
+				name = pkgName + "." + name
 			}
-			resolver.Provide(lang, lang, eName, from)
+			resolver.Provide(lang, lang, name, from)
+			for _, value := range e.Elements {
+				if field, ok := value.(*proto.EnumField); ok {
+					fieldName := name + "." + field.Name
+					resolver.Provide(lang, lang, fieldName, from)
+				}
+			}
 		}
 		for _, m := range file.Messages() {
-			mName := m.Name
+			name := m.Name
 			if pkgName != "" {
-				mName = pkgName + "." + mName
+				name = pkgName + "." + name
 			}
-			resolver.Provide(lang, lang, mName, from)
+			resolver.Provide(lang, lang, name, from)
 		}
 		for _, s := range file.Services() {
-			sName := s.Name
+			name := s.Name
 			if pkgName != "" {
-				sName = pkgName + "." + sName
+				name = pkgName + "." + name
 			}
-			resolver.Provide(lang, lang, sName+"Client", from)
-			resolver.Provide(lang, lang, sName+"Server", from)
+			resolver.Provide(lang, lang, name+"Client", from)
+			resolver.Provide(lang, lang, name+"Server", from)
 		}
 	}
 }
