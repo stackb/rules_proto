@@ -299,10 +299,12 @@ func provideScalaImports(lib protoc.ProtoLibrary, resolver protoc.ImportResolver
 			resolver.Provide(lang, lang, name+"Client", from)
 			resolver.Provide(lang, lang, name+"Handler", from)
 			resolver.Provide(lang, lang, name+"Server", from)
-			if options["server_power_apis"] {
-				resolver.Provide(lang, lang, name+"PowerApi", from)
-				resolver.Provide(lang, lang, name+"PowerApiHandler", from)
-			}
+			// TOOD: if this is configured on the proto_plugin, we won't know
+			// about the plugin option.  Advertise them anyway.
+			// if options["server_power_apis"] {
+			resolver.Provide(lang, lang, name+"PowerApi", from)
+			resolver.Provide(lang, lang, name+"PowerApiHandler", from)
+			// }
 		}
 	}
 }
