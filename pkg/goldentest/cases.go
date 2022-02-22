@@ -39,6 +39,7 @@ type GoldenTests struct {
 	extensionDir string
 	testDataPath string
 	extraArgs    []string
+	dataFiles    []bazel.RunfileEntry
 }
 
 type GoldenTestOption func(*GoldenTests)
@@ -46,6 +47,12 @@ type GoldenTestOption func(*GoldenTests)
 func WithExtraArgs(args ...string) GoldenTestOption {
 	return func(g *GoldenTests) {
 		g.extraArgs = args
+	}
+}
+
+func WithDataFiles(files ...bazel.RunfileEntry) GoldenTestOption {
+	return func(g *GoldenTests) {
+		g.dataFiles = files
 	}
 }
 
@@ -156,6 +163,17 @@ func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []b
 		dir, cleanup := testtools.CreateFiles(t, inputs)
 		if doCleanup {
 			defer cleanup()
+		}
+
+		for _, f := range g.dataFiles {
+			newName := filepath.Join(dir, f.ShortPath)
+			newDir := filepath.Dir(newName)
+			if err := os.MkdirAll(newDir, os.ModePerm); err != nil {
+				t.Fatal("data file symlink setup error:", f, err)
+			}
+			if err := os.Symlink(f.Path, newName); err != nil {
+				t.Fatal("data file symlink setup error:", f, err)
+			}
 		}
 
 		t.Log("running test dir:", dir)
