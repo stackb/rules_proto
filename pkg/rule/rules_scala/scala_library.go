@@ -18,9 +18,11 @@ import (
 )
 
 const (
-	GrpcscalaLibraryRuleName  = "grpc_scala_library"
-	ProtoscalaLibraryRuleName = "proto_scala_library"
-	scalaLibraryRuleSuffix    = "_scala_library"
+	GrpcscalaLibraryRuleName        = "grpc_scala_library"
+	ProtoscalaLibraryRuleName       = "proto_scala_library"
+	scalaLibraryRuleSuffix          = "_scala_library"
+	scalaPbPluginOptionsPrivateKey  = "_scalapb_plugin"
+	akkaGrpcPluginOptionsPrivateKey = "_akka_grpc_plugin"
 )
 
 func init() {
@@ -192,6 +194,18 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	// "Imports").
 	newRule.SetPrivateAttr(protoc.ResolverImpLangPrivateKey, scalaLibraryRuleSuffix)
 
+	// add the scalapb plugin options as a private attr so we can inspect them
+	// during the .Imports() phase.  For example, akka 'server_power_apis'
+	// generates additional classes.
+	scalaPbPlugin := s.config.GetPluginConfiguration(scalapb.ScalaPBPluginName)
+	if scalaPbPlugin != nil {
+		newRule.SetPrivateAttr(scalaPbPluginOptionsPrivateKey, scalaPbPlugin.Options)
+	}
+	akkaGrpcPlugin := s.config.GetPluginConfiguration(akka_grpc.AkkaGrpcPluginName)
+	if akkaGrpcPlugin != nil {
+		newRule.SetPrivateAttr(akkaGrpcPluginOptionsPrivateKey, akkaGrpcPlugin.Options)
+	}
+
 	return newRule
 }
 
@@ -200,7 +214,18 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 	// 1. provide generated scala class names for message and services for
 	// 'scala scala' deps.  This will allow a scala extension to resolve proto
 	// deps when they import scala proto class names.
-	provideScalaImports(s.config.Library, protoc.GlobalResolver(), label.New("", file.Pkg, r.Name()))
+	pluginOptions := make(map[string]bool)
+	if scalaPbPluginOptions, ok := r.PrivateAttr(scalaPbPluginOptionsPrivateKey).([]string); ok {
+		for _, opt := range scalaPbPluginOptions {
+			pluginOptions[opt] = true
+		}
+	}
+	if akkaGrpcPluginOptions, ok := r.PrivateAttr(akkaGrpcPluginOptionsPrivateKey).([]string); ok {
+		for _, opt := range akkaGrpcPluginOptions {
+			pluginOptions[opt] = true
+		}
+	}
+	provideScalaImports(s.config.Library, protoc.GlobalResolver(), label.New("", file.Pkg, r.Name()), pluginOptions)
 
 	// 2. create import specs for 'protobuf _scala_library'.  This allows
 	// proto_scala_library and grpc_scala_library to resolve deps.
@@ -231,7 +256,7 @@ func javaPackageOption(options []proto.Option) (string, bool) {
 	return "", false
 }
 
-func provideScalaImports(lib protoc.ProtoLibrary, resolver protoc.ImportResolver, from label.Label) {
+func provideScalaImports(lib protoc.ProtoLibrary, resolver protoc.ImportResolver, from label.Label, options map[string]bool) {
 	lang := "scala"
 
 	for _, file := range lib.Files() {
@@ -261,14 +286,23 @@ func provideScalaImports(lib protoc.ProtoLibrary, resolver protoc.ImportResolver
 				name = pkgName + "." + name
 			}
 			resolver.Provide(lang, lang, name, from)
+			resolver.Provide(lang, lang, name+"Proto", from)
 		}
 		for _, s := range file.Services() {
 			name := s.Name
 			if pkgName != "" {
 				name = pkgName + "." + name
 			}
+			resolver.Provide(lang, lang, name, from)
+			resolver.Provide(lang, lang, name+"Grpc", from)
+			resolver.Provide(lang, lang, name+"Proto", from)
 			resolver.Provide(lang, lang, name+"Client", from)
+			resolver.Provide(lang, lang, name+"Handler", from)
 			resolver.Provide(lang, lang, name+"Server", from)
+			if options["server_power_apis"] {
+				resolver.Provide(lang, lang, name+"PowerApi", from)
+				resolver.Provide(lang, lang, name+"PowerApiHandler", from)
+			}
 		}
 	}
 }
