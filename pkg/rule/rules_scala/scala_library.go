@@ -265,7 +265,7 @@ func provideScalaImports(lib protoc.ProtoLibrary, resolver protoc.ImportResolver
 			pkgName = javaPackageName
 		}
 		if pkgName != "" {
-			resolver.Provide(lang, lang, pkgName+"._", from)
+			resolver.Provide(lang, lang, pkgName, from)
 		}
 		for _, e := range file.Enums() {
 			name := e.Name
@@ -304,6 +304,7 @@ func provideScalaImports(lib protoc.ProtoLibrary, resolver protoc.ImportResolver
 			// if options["server_power_apis"] {
 			resolver.Provide(lang, lang, name+"PowerApi", from)
 			resolver.Provide(lang, lang, name+"PowerApiHandler", from)
+			resolver.Provide(lang, lang, name+"ClientPowerApi", from)
 			// }
 		}
 	}
