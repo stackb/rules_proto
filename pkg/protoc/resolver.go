@@ -225,6 +225,9 @@ func (r *resolver) Provide(lang, impLang, imp string, from label.Label) {
 
 // Provided implements the ImportProvider interface.
 func (r *resolver) Provided(lang, impLang string) map[label.Label][]string {
+	if len(r.known) == 0 {
+		return nil
+	}
 	result := make(map[label.Label][]string)
 	key := langKey(lang, impLang)
 	known := r.known[key]

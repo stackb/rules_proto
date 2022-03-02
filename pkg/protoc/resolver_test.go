@@ -184,3 +184,47 @@ func TestResolve(t *testing.T) {
 		})
 	}
 }
+
+func TestProvided(t *testing.T) {
+	for name, tc := range map[string]struct {
+		lang, impLang string
+		want          map[label.Label][]string
+		known         map[string]importLabels
+	}{
+		"empty case - nothing known": {},
+		"typical usage": {
+			lang:    "proto",
+			impLang: "proto",
+			known: map[string]importLabels{
+				"proto proto": map[string][]label.Label{
+					"google/protobuf/any.proto":        {label.New("com_google_protobuf", "", "any_proto")},
+					"google/protobuf/any_helper.proto": {label.New("com_google_protobuf", "", "any_proto")},
+					"google/protobuf/duration.proto":   {label.New("com_google_protobuf", "", "duration_proto")},
+				},
+			},
+			want: map[label.Label][]string{
+				label.New("com_google_protobuf", "", "any_proto"): {
+					"google/protobuf/any.proto",
+					"google/protobuf/any_helper.proto",
+				},
+				label.New("com_google_protobuf", "", "duration_proto"): {
+					"google/protobuf/duration.proto",
+				},
+			},
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			resolver := &resolver{
+				options: &ImportResolverOptions{
+					Debug:  false,
+					Printf: t.Logf,
+				},
+				known: tc.known,
+			}
+			got := resolver.Provided(tc.lang, tc.impLang)
+			if diff := cmp.Diff(tc.want, got); diff != "" {
+				t.Errorf("Resolve() mismatch (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
