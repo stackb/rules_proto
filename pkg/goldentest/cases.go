@@ -40,6 +40,7 @@ type GoldenTests struct {
 	testDataPath string
 	extraArgs    []string
 	dataFiles    []bazel.RunfileEntry
+	onlyTests    []string
 }
 
 type GoldenTestOption func(*GoldenTests)
@@ -53,6 +54,12 @@ func WithExtraArgs(args ...string) GoldenTestOption {
 func WithDataFiles(files ...bazel.RunfileEntry) GoldenTestOption {
 	return func(g *GoldenTests) {
 		g.dataFiles = files
+	}
+}
+
+func WithOnlyTests(tests ...string) GoldenTestOption {
+	return func(g *GoldenTests) {
+		g.onlyTests = tests
 	}
 }
 
@@ -103,7 +110,21 @@ func (g *GoldenTests) Run(t *testing.T, gazelleName string) {
 	}
 
 	for testName, files := range tests {
-		g.testPath(t, gazellePath, testName, files)
+		shouldTest := true
+		if len(g.onlyTests) > 0 {
+			shouldTest = false
+			for _, name := range g.onlyTests {
+				if name == testName {
+					shouldTest = true
+					break
+				}
+			}
+		}
+		if shouldTest {
+			g.testPath(t, gazellePath, testName, files)
+		} else {
+			log.Println("skipped test:", testName)
+		}
 	}
 }
 

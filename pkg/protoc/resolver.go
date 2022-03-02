@@ -34,13 +34,24 @@ type ImportResolver interface {
 	Resolve(lang, impLang, imp string) []resolve.FindResult
 	// Provide records the association between a rule kind+attr, the value of
 	// the attr, and the label that provides the value.
-	Provide(lang string, impLang, val string, location label.Label)
+	Provide(lang string, impLang, imp string, location label.Label)
+	// Imports takes a callback and iterates all known imports for the given
+	// lang/impLang. True should be returned to continue iteration.
+	Imports(lang, impLang string, visitor func(imp string, location []label.Label) bool)
+}
+
+// ImportProvider is an entity that can be queried for imported symbols by
+// language name.
+type ImportProvider interface {
+	// Provided returns all known provided symbols, by label
+	Provided(lang, impLang string) map[label.Label][]string
 }
 
 // ImportCrossResolver handles dependency resolution.
 type ImportCrossResolver interface {
 	resolve.CrossResolver
 	ImportResolver
+	ImportProvider
 
 	// LoadFile loads csv file to populate the resolver
 	LoadFile(filename string) error
@@ -170,6 +181,7 @@ func (r *resolver) CrossResolve(c *config.Config, ix *resolve.RuleIndex, imp res
 	return res
 }
 
+// Resolve implements part of the ImportResolver interface.
 func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 	key := langKey(lang, impLang)
 	known := r.known[key]
@@ -192,6 +204,7 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 	return nil
 }
 
+// Provide implements part of the ImportResolver interface.
 func (r *resolver) Provide(lang, impLang, imp string, from label.Label) {
 	key := langKey(lang, impLang)
 	known, ok := r.known[key]
@@ -208,6 +221,42 @@ func (r *resolver) Provide(lang, impLang, imp string, from label.Label) {
 		r.options.Printf("resolver %v provides %s %s", from, key, imp)
 	}
 	known[imp] = append(known[imp], from)
+}
+
+// Provided implements the ImportProvider interface.
+func (r *resolver) Provided(lang, impLang string) map[label.Label][]string {
+	result := make(map[label.Label][]string)
+	key := langKey(lang, impLang)
+	known := r.known[key]
+	if known == nil {
+		known = r.known[lang]
+	}
+	if known == nil {
+		return nil
+	}
+	for imp, ll := range known {
+		for _, l := range ll {
+			result[l] = append(result[l], imp)
+		}
+	}
+	return result
+}
+
+// Imports implements part of the ImportResolver interface.
+func (r *resolver) Imports(lang, impLang string, visitor func(imp string, location []label.Label) bool) {
+	key := langKey(lang, impLang)
+	known := r.known[key]
+	if known == nil {
+		known = r.known[lang]
+	}
+	if known == nil {
+		return
+	}
+	for k, v := range known {
+		if !visitor(k, v) {
+			break
+		}
+	}
 }
 
 func (r *resolver) Install(c *config.Config) {

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 )
 
 type Config struct {
@@ -30,6 +29,5 @@ func fromJSON(filename string) (*Config, error) {
 		return nil, fmt.Errorf("unmarshal: %w", err)
 	}
 
-	log.Printf("config: %+v", config)
 	return &config, nil
 }

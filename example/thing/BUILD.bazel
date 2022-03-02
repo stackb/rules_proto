@@ -122,7 +122,6 @@ proto_scala_library(
     name = "thing_scala_library",
     srcs = ["thing_scala.srcjar"],
     visibility = ["//visibility:public"],
-    exports = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
     deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
 )
 
