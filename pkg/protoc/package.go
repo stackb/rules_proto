@@ -247,6 +247,9 @@ func provideResolverImportSpecs(c *config.Config, provider RuleProvider, r *rule
 
 // DeduplicateAndSort removes duplicate entries and sorts the list
 func DeduplicateAndSort(in []string) (out []string) {
+	if len(in) == 0 {
+		return in
+	}
 	seen := make(map[string]bool)
 	for _, v := range in {
 		if seen[v] {

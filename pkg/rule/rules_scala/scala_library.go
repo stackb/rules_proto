@@ -23,6 +23,7 @@ const (
 	scalaLibraryRuleSuffix          = "_scala_library"
 	scalaPbPluginOptionsPrivateKey  = "_scalapb_plugin"
 	akkaGrpcPluginOptionsPrivateKey = "_akka_grpc_plugin"
+	scalapbOptionsName              = "(scalapb.options)"
 )
 
 func init() {
@@ -110,10 +111,10 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		config:         pc,
 		resolver: func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 			protoc.ResolveDepsAttr("deps", true)(c, ix, r, imports, from)
-			deps := r.AttrStrings("deps")
-			if len(deps) > 0 {
-				r.SetAttr("exports", deps)
-			}
+			// deps := r.AttrStrings("deps")
+			// if len(deps) > 0 {
+			// 	r.SetAttr("exports", deps)
+			// }
 		},
 	}
 }
@@ -189,6 +190,15 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		newRule.SetAttr("visibility", visibility)
 	}
 
+	// add any imports from proto options.  Example:
+	// option (scalapb.options) = {
+	// 	import: "com.foo.Bar"
+	// };
+	scalaImports := getScalaImports(s.config.Library.Files())
+	if len(scalaImports) > 0 {
+		newRule.SetPrivateAttr(config.GazelleImportsKey, scalaImports)
+	}
+
 	// set the override language such that deps of 'proto_scala_library' and
 	// 'grpc_scala_library' can resolve together (matches the value used by
 	// "Imports").
@@ -242,6 +252,28 @@ func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *r
 		return
 	}
 	s.resolver(c, ix, r, imports, from)
+}
+
+func getScalaImports(files []*protoc.File) []string {
+	imps := make([]string, 0)
+
+	for _, file := range files {
+		for _, option := range file.Options() {
+			if option.Name != scalapbOptionsName {
+				continue
+			}
+			for _, constant := range option.AggregatedConstants {
+				switch constant.Name {
+				case "import":
+					if constant.Source != "" {
+						imps = append(imps, constant.Source)
+					}
+				}
+			}
+		}
+	}
+
+	return protoc.DeduplicateAndSort(imps)
 }
 
 // javaPackageOption is a utility function to seek for the java_package option.
