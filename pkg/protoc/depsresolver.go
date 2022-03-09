@@ -18,11 +18,13 @@ const (
 	ResolverLangName = "protobuf"
 	// ResolverImpLangPrivateKey stores the implementation language override.
 	ResolverImpLangPrivateKey = "_protobuf_imp_lang"
+	UnresolvedDepsPrivateKey  = "_unresolved_deps"
 )
 
 var (
 	errSkipImport = errors.New("self import")
 	errNotFound   = errors.New("rule not found")
+	ErrNoLabel    = errors.New("no label")
 )
 
 type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label)
@@ -43,6 +45,7 @@ type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, im
 func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 	return func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 		debug := false
+
 		if debug {
 			log.Printf("ResolveDepsAttr %q for %s rule %v", attrName, r.Kind(), from)
 		}
@@ -54,6 +57,12 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 		for _, d := range existing {
 			depSet[d] = true
 		}
+
+		// unresolvedDeps is a mapping from the import string to the reason it
+		// was unresolved.  It is saved under 'UnresolvedDepsPrivateKey' if
+		// there were unresolved deps.  The value 'ErrNoLabel' is the most
+		// common case.
+		unresolvedDeps := make(map[string]error)
 
 		for _, imp := range imports {
 			if debug {
@@ -78,12 +87,15 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 			}
 			if err != nil {
 				log.Println(from, "ResolveDepsAttr error:", err)
+				unresolvedDeps[imp] = err
 				continue
 			}
 			if l == label.NoLabel {
 				if debug {
 					log.Println(from, "no label", imp)
 				}
+				// log.Panicf("import %q failed to resolve (from=%v)", imp, from)
+				unresolvedDeps[imp] = ErrNoLabel
 				continue
 			}
 
@@ -104,6 +116,10 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 			if debug {
 				log.Println(from, "resolved deps:", deps)
 			}
+		}
+
+		if len(unresolvedDeps) > 0 {
+			r.SetPrivateAttr(UnresolvedDepsPrivateKey, unresolvedDeps)
 		}
 	}
 }

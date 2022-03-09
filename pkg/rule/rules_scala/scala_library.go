@@ -24,6 +24,8 @@ const (
 	scalaPbPluginOptionsPrivateKey  = "_scalapb_plugin"
 	akkaGrpcPluginOptionsPrivateKey = "_akka_grpc_plugin"
 	scalapbOptionsName              = "(scalapb.options)"
+	scalapbFieldTypeName            = "(scalapb.field).type"
+	scalaLangName                   = "scala"
 )
 
 func init() {
@@ -109,13 +111,6 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		outputs:        outputs,
 		ruleConfig:     cfg,
 		config:         pc,
-		resolver: func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-			protoc.ResolveDepsAttr("deps", true)(c, ix, r, imports, from)
-			// deps := r.AttrStrings("deps")
-			// if len(deps) > 0 {
-			// 	r.SetAttr("exports", deps)
-			// }
-		},
 	}
 }
 
@@ -126,7 +121,6 @@ type scalaLibraryRule struct {
 	outputs        []string
 	config         *protoc.ProtocConfiguration
 	ruleConfig     *protoc.LanguageRuleConfig
-	resolver       protoc.DepsResolver
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -194,7 +188,7 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	// option (scalapb.options) = {
 	// 	import: "com.foo.Bar"
 	// };
-	scalaImports := getScalaImports(s.config.Library.Files())
+	scalaImports := getScalapbImports(s.config.Library.Files())
 	if len(scalaImports) > 0 {
 		newRule.SetPrivateAttr(config.GazelleImportsKey, scalaImports)
 	}
@@ -235,26 +229,49 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 			pluginOptions[opt] = true
 		}
 	}
-	provideScalaImports(s.config.Library, protoc.GlobalResolver(), label.New("", file.Pkg, r.Name()), pluginOptions)
+	from := label.New("", file.Pkg, r.Name())
+	provideScalaImports(s.config.Library.Files(), protoc.GlobalResolver(), from, pluginOptions)
 
 	// 2. create import specs for 'protobuf _scala_library'.  This allows
 	// proto_scala_library and grpc_scala_library to resolve deps.
-	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
-		return protoc.ProtoLibraryImportSpecsForKind(scalaLibraryRuleSuffix, lib)
-	}
-
-	return nil
+	return protoc.ProtoLibraryImportSpecsForKind(scalaLibraryRuleSuffix, s.config.Library)
 }
 
 // Resolve implements part of the RuleProvider interface.
 func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-	if s.resolver == nil {
-		return
+	resolveFn := protoc.ResolveDepsAttr("deps", true)
+	resolveFn(c, ix, r, imports, from)
+
+	if unresolvedDeps, ok := r.PrivateAttr(protoc.UnresolvedDepsPrivateKey).(map[string]error); ok {
+		resolveScalaDeps(c, ix, r, unresolvedDeps, from)
 	}
-	s.resolver(c, ix, r, imports, from)
 }
 
-func getScalaImports(files []*protoc.File) []string {
+// resolveScalaDeps attempts to resolve labels for the given deps under the
+// "scala" language.  Only unresolved deps of type ErrNoLabel are considered.
+// Typically these unresolved dependencies arise from (scalapb.options) imports.
+func resolveScalaDeps(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, unresolvedDeps map[string]error, from label.Label) {
+	resolvedDeps := make([]string, 0)
+	for imp, err := range unresolvedDeps {
+		if err != protoc.ErrNoLabel {
+			continue
+		}
+		result := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{Lang: "scala", Imp: imp}, "scala")
+		if len(result) == 0 {
+			continue
+		}
+		if len(result) > 1 {
+			log.Println(from, "multiple rules matched for scala import %q: %v", imp, result)
+			continue
+		}
+		resolvedDeps = append(resolvedDeps, result[0].Label.String())
+	}
+	if len(resolvedDeps) > 0 {
+		r.SetAttr("deps", protoc.DeduplicateAndSort(append(r.AttrStrings("deps"), resolvedDeps...)))
+	}
+}
+
+func getScalapbImports(files []*protoc.File) []string {
 	imps := make([]string, 0)
 
 	for _, file := range files {
@@ -267,6 +284,20 @@ func getScalaImports(files []*protoc.File) []string {
 				case "import":
 					if constant.Source != "" {
 						imps = append(imps, constant.Source)
+					}
+				}
+			}
+		}
+		for _, msg := range file.Messages() {
+			for _, child := range msg.Elements {
+				if field, ok := child.(*proto.NormalField); ok {
+					for _, option := range field.Options {
+						if option.Name != scalapbFieldTypeName {
+							continue
+						}
+						if option.Constant.Source != "" {
+							imps = append(imps, option.Constant.Source)
+						}
 					}
 				}
 			}
@@ -288,10 +319,10 @@ func javaPackageOption(options []proto.Option) (string, bool) {
 	return "", false
 }
 
-func provideScalaImports(lib protoc.ProtoLibrary, resolver protoc.ImportResolver, from label.Label, options map[string]bool) {
+func provideScalaImports(files []*protoc.File, resolver protoc.ImportResolver, from label.Label, options map[string]bool) {
 	lang := "scala"
 
-	for _, file := range lib.Files() {
+	for _, file := range files {
 		pkgName := file.Package().Name
 		if javaPackageName, ok := javaPackageOption(file.Options()); ok {
 			pkgName = javaPackageName
@@ -340,8 +371,4 @@ func provideScalaImports(lib protoc.ProtoLibrary, resolver protoc.ImportResolver
 			// }
 		}
 	}
-}
-
-func scalaImportSpec(imp string) resolve.ImportSpec {
-	return resolve.ImportSpec{Lang: "scala", Imp: imp}
 }

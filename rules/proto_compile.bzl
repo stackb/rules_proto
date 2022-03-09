@@ -263,7 +263,7 @@ def _proto_compile_impl(ctx):
 
     replaced_args = _ctx_replace_args(ctx, _uniq(args))
     final_args = ctx.actions.args()
-    final_args.use_param_file("@%s")
+    final_args.use_param_file("@%s", use_always = False)
     final_args.add_all(replaced_args)
 
     ###
@@ -274,11 +274,6 @@ def _proto_compile_impl(ctx):
         "mkdir -p ./" + ctx.label.package,
         protoc.path + " $@",  # $@ is replaced with args list
     ]
-
-    if verbose:
-        before = ["env", "pwd", "ls -al .", "echo '\n##### SANDBOX BEFORE RUNNING PROTOC'", "find . -type l"]
-        after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find . -type f"]
-        commands = before + commands + after
 
     # if the rule declares any mappings, setup copy file commands to move them
     # into place
@@ -312,17 +307,11 @@ def _proto_compile_impl(ctx):
         inputs.append(mv_script)
         commands.append(mv_script.path)
 
-    ctx.actions.run_shell(
-        arguments = [final_args],
-        command = "\n".join(commands),
-        inputs = inputs,
-        mnemonic = "Protoc",
-        outputs = outputs,
-        progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
-        tools = tools,
-    )
-
     if verbose:
+        before = ["env", "pwd", "ls -al .", "echo '\n##### SANDBOX BEFORE RUNNING PROTOC'", "find * -type l"]
+        after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find * -type f"]
+        commands = before + commands + after
+
         for c in commands:
             # buildifier: disable=print
             print("COMMAND:", c)
@@ -341,6 +330,16 @@ def _proto_compile_impl(ctx):
         for f in outputs:
             # buildifier: disable=print
             print("EXPECTED OUTPUT:", f.path)
+
+    ctx.actions.run_shell(
+        arguments = [final_args],
+        command = "\n".join(commands),
+        inputs = inputs,
+        mnemonic = "Protoc",
+        outputs = outputs,
+        progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
+        tools = tools,
+    )
 
     return [
         ProtoCompileInfo(label = ctx.label, outputs = outputs),
