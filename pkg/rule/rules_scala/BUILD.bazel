@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "rules_scala",
@@ -16,6 +16,22 @@ go_library(
         "@bazel_gazelle//label:go_default_library",
         "@bazel_gazelle//resolve:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
+        "@com_github_davecgh_go_spew//spew",
         "@com_github_emicklei_proto//:proto",
+    ],
+)
+
+go_test(
+    name = "rules_scala_test",
+    srcs = ["scala_library_test.go"],
+    embed = [":rules_scala"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+        "@com_github_emicklei_proto//:proto",
+        "@com_github_google_go_cmp//cmp",
     ],
 )

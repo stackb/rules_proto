@@ -10,10 +10,6 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-const (
-	ruleProviderKey = "_x_rule_provider"
-)
-
 // Package provides a set of proto_library derived rules for the package.
 type Package struct {
 	// relative path of build file
@@ -26,16 +22,19 @@ type Package struct {
 	gen, empty []RuleProvider
 	// ruleLibs records the ProtoLibrary a RuleProvider was built on.
 	ruleLibs map[RuleProvider]ProtoLibrary
+	// providers record the provider of a rule, by rule name.
+	providers map[string]RuleProvider
 }
 
 // NewPackage constructs a Package given a list of proto_library rules
 // in the package.
 func NewPackage(rel string, cfg *PackageConfig, libs ...ProtoLibrary) *Package {
 	s := &Package{
-		rel:      rel,
-		cfg:      cfg,
-		libs:     libs,
-		ruleLibs: make(map[RuleProvider]ProtoLibrary),
+		rel:       rel,
+		cfg:       cfg,
+		libs:      libs,
+		ruleLibs:  make(map[RuleProvider]ProtoLibrary),
+		providers: make(map[string]RuleProvider),
 	}
 	s.gen = s.generateRules(true)
 	s.empty = s.generateRules(false)
@@ -164,7 +163,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 
 // RuleProvider returns the provider of a rule or nil if not known.
 func (s *Package) RuleProvider(r *rule.Rule) RuleProvider {
-	if provider, ok := r.PrivateAttr(ruleProviderKey).(RuleProvider); ok {
+	if provider, ok := s.providers[r.Name()]; ok {
 		return provider
 	}
 	return nil
@@ -199,14 +198,15 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 
 		if shouldResolve {
 			// record the association of the rule provider here for the resolver.
-			r.SetPrivateAttr(ruleProviderKey, p)
+			s.providers[r.Name()] = p
 
-			imports := r.PrivateAttr(config.GazelleImportsKey)
-			if imports == nil {
-				lib := s.ruleLibs[p]
-				r.SetPrivateAttr(ProtoLibraryKey, lib)
-				r.SetPrivateAttr(config.GazelleImportsKey, lib.Imports())
+			lib := s.ruleLibs[p]
+			r.SetPrivateAttr(ProtoLibraryKey, lib)
+			imports := lib.Imports()
+			if existingImports, ok := r.PrivateAttr(config.GazelleImportsKey).([]string); ok {
+				imports = append(imports, existingImports...)
 			}
+			r.SetPrivateAttr(config.GazelleImportsKey, imports)
 
 			// NOTE: this is a bit of a hack: it would be preferable to populate
 			// the global resolver with import specs during the .Imports()

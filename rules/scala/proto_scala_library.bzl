@@ -3,6 +3,5 @@
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library")
 
 def proto_scala_library(**kwargs):
-    deps = kwargs.get("deps", [])
-    kwargs.setdefault("exports", deps)
-    scala_library(deps = deps, exports = exports, **kwargs)
+    kwargs.setdefault("exports", kwargs.get("deps", []))
+    scala_library(**kwargs)

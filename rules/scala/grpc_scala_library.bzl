@@ -3,6 +3,5 @@
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library")
 
 def grpc_scala_library(**kwargs):
-    deps = kwargs.get("deps", [])
-    kwargs.setdefault("exports", deps)
+    kwargs.setdefault("exports", kwargs.get("deps", []))
     scala_library(**kwargs)
