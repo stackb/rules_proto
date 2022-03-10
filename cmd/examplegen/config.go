@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 )
 
 type Config struct {
 	Name        string
 	Label       string
 	TestOut     string
+	TestHeader  string
 	MarkdownOut string
 	WorkspaceIn string
 	StripPrefix string
@@ -30,6 +30,5 @@ func fromJSON(filename string) (*Config, error) {
 		return nil, fmt.Errorf("unmarshal: %w", err)
 	}
 
-	log.Printf("config: %+v", config)
 	return &config, nil
 }

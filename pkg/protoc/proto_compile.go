@@ -118,6 +118,7 @@ func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 			mappings[i] = k + "=" + v
 			i++
 		}
+		sort.Strings(mappings)
 		newRule.SetAttr("output_mappings", mappings)
 	}
 

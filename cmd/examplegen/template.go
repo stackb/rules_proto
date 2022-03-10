@@ -20,5 +20,4 @@ func TestBuild(t *testing.T) {
 		t.Fatal(err)
 	}
 }
-
 `

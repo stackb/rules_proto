@@ -109,6 +109,7 @@ func ResolveTransitiveImportMappings(r *rule.Rule, from label.Label) map[string]
 	for _, src := range library.Srcs() {
 		stack.PushBack(path.Join(from.Pkg, src))
 	}
+
 	// for every source file in the proto library, gather the list of source
 	// files on which it depends, until there are no more unprocessed sources.
 	// Foreach one check if there is an importmapping for it and record the

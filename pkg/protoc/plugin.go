@@ -17,7 +17,7 @@ type Plugin interface {
 
 // PluginOptionsResolver is an optional interface that a plugin can implement.
 // This works in conjunction with proto_compile for plugins that need to do late
-// deterimation of options.  Rule is the rule being generated, and from is the
+// determination of options.  Rule is the rule being generated, and from is the
 // label for that rule.
 type PluginOptionsResolver interface {
 	ResolvePluginOptions(ctx *PluginConfiguration, r *rule.Rule, from label.Label) []string

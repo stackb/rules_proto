@@ -42,3 +42,11 @@ go_test(
         "@com_github_google_go_cmp//cmp",
     ],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+    ] + glob(["*.go"]),
+    visibility = ["//pkg:__pkg__"],
+)

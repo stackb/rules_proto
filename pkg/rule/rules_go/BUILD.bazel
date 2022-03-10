@@ -23,3 +23,11 @@ go_test(
         "@bazel_gazelle//rule:go_default_library",
     ],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+    ] + glob(["*.go"]),
+    visibility = ["//pkg:__pkg__"],
+)

@@ -1,6 +1,8 @@
 .PHONY: tidy
 tidy: deps
 	bazel run @go_sdk//:bin/go -- mod tidy
+	bazel run @go_sdk//:bin/go -- mod vendor
+	find vendor -name 'BUILD.bazel' | xargs rm
 	bazel run //:update_go_deps
 	bazel run //:buildifier
 	bazel run //:gazelle

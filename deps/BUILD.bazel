@@ -514,11 +514,6 @@ filegroup(
     name = "all_files",
     srcs = [
         "BUILD.bazel",
-        "core_deps.bzl",
-        "grpc_core_deps.bzl",
-        "grpc_java_deps.bzl",
-        "prebuilt_protoc_deps.bzl",
-        "protobuf_core_deps.bzl",
-    ],
+    ] + glob(["*.bzl"]),
     visibility = ["//:__pkg__"],
 )
