@@ -5,6 +5,14 @@ A few notes about the test:
 
 - The files are used in both "//example/golden:golden_test" (a golden test) and
   "//example/golden:proto_repository_test" (go_bazel_test).
+- The proto mode is "file", so the proto_library rule for "app.proto" has two
+  dependencies: one for annotations.proto and another for field_behavior.proto.
+  Yet, the proto_go_library has only a single dependency on
+  annotations_go_proto.  This is because go sources that share the same
+  "importpath" must be compiled together under a single go_library rule.
+  Therefore, there is logic that merges proto_go_library rules when they share
+  the same importpath.  The relationship of annotations.proto and
+  field_behavior.proto tests this merge behavior.
 
 ## //example/golden:golden_test (golden test)
 
