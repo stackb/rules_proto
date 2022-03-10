@@ -4,14 +4,6 @@ import (
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
 
-const debugLogger = true
-
-func init() {
-	if debugLogger {
-		debugStdLogger("protobuf")
-	}
-}
-
 // NewProtobufLang create a new protobufLang Gazelle extension implementation.
 func NewProtobufLang(name string) *protobufLang {
 	return &protobufLang{

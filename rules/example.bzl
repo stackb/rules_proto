@@ -80,19 +80,8 @@ def gazelle_testdata_example(**kwargs):
     srcs = kwargs.pop("srcs", [])
     strip_prefix = kwargs.pop("strip_prefix", "")
 
-    extra_test_helper = kwargs.pop("extra_test_helper", "")
     extra_test_content = kwargs.pop("extra_test_content", "")
     rule_files = kwargs.pop("rule_files", ["//:all_files"])
-
-    native.genrule(
-        name = name + "_helper",
-        outs = [name + "_helper.go"],
-        cmd = """cat << EOF > $@
-package main
-%s
-EOF
-""" % extra_test_helper,
-    )
 
     _examplegen(
         name = name,
@@ -104,7 +93,7 @@ EOF
 
     go_bazel_test(
         name = name + "_test",
-        srcs = [name + "_test.go", name + "_helper.go"],
+        srcs = [name + "_test.go"],
         rule_files = rule_files,
         **kwargs
     )

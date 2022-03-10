@@ -8,7 +8,6 @@ go_library(
         "generate.go",
         "kinds.go",
         "lang.go",
-        "logger.go",
         "override.go",
         "resolve.go",
     ],

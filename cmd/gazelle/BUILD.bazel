@@ -42,12 +42,11 @@ go_binary(
 go_test(
     name = "gazelle_test",
     srcs = [
-        # "diff_test.go",
-        # "fix_test.go",
-        # "integration_test.go",
-        "proto_repository_integration_test.go",
+        "diff_test.go",
+        "fix_test.go",
+        "integration_test.go",
     ],
-    # args = ["-go_sdk=go_sdk"],
+    args = ["-go_sdk=go_sdk"],
     data = ["@go_sdk//:files"],
     embed = [":gazelle_lib"],
     deps = [
