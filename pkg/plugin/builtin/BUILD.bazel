@@ -50,3 +50,11 @@ genrule(
     executable = True,
     tools = ["@com_google_protobuf//:protoc"],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+    ] + glob(["*.go"]),
+    visibility = ["//pkg:__pkg__"],
+)

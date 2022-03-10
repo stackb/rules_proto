@@ -73,3 +73,11 @@ go_test(
         "@com_github_stretchr_testify//assert",
     ],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+    ] + glob(["*.go"]),
+    visibility = ["//pkg:__pkg__"],
+)

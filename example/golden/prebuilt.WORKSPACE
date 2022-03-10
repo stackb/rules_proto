@@ -25,8 +25,16 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 
+load("@build_stack_rules_proto//:go_deps.bzl", "gazelle_protobuf_extension_go_deps")
+
+gazelle_protobuf_extension_go_deps()
+
 # == Protobuf ==
 
 load("@build_stack_rules_proto//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
 prebuilt_protoc_deps()
+
+load("@build_stack_rules_proto//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
+
+protobuf_core_deps()

@@ -42,16 +42,24 @@ go_binary(
 go_test(
     name = "gazelle_test",
     srcs = [
-        "diff_test.go",
-        "fix_test.go",
-        "integration_test.go",
+        # "diff_test.go",
+        # "fix_test.go",
+        # "integration_test.go",
+        "proto_repository_integration_test.go",
     ],
-    args = ["-go_sdk=go_sdk"],
+    # args = ["-go_sdk=go_sdk"],
     data = ["@go_sdk//:files"],
     embed = [":gazelle_lib"],
     deps = [
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//testtools:go_default_library",
+        "@com_github_google_go_cmp//cmp",
         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
     ],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"] + glob(["*.go"]),
+    visibility = ["//:__pkg__"],
 )

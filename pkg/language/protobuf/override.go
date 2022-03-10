@@ -1,6 +1,8 @@
 package protobuf
 
 import (
+	"log"
+
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
@@ -30,10 +32,10 @@ func makeProtoOverrideRule(libs []protoc.ProtoLibrary) *rule.Rule {
 }
 
 func resolveOverrideRule(rel string, overrideRule *rule.Rule, resolver protoc.ImportResolver) {
-
+	log.Println("resolveOverrideRule", rel)
 	libs := overrideRule.PrivateAttr(protoLibrariesRuleKey).([]protoc.ProtoLibrary)
 	if len(libs) == 0 {
-		// printf("skipping resolve (no private libs)")
+		log.Printf("skipping resolve (no private libs)")
 		return
 	}
 
@@ -45,7 +47,7 @@ func resolveOverrideRule(rel string, overrideRule *rule.Rule, resolver protoc.Im
 
 		for _, dep := range r.AttrStrings("deps") {
 			lbl, _ := label.Parse(dep)
-			// printf("override resolve //%s:%s dep %v", rel, r.Name(), lbl)
+			log.Printf("override resolve //%s:%s dep %v", rel, r.Name(), lbl)
 			if lbl.Repo == "go_googleapis" {
 				continue
 			}
@@ -60,13 +62,13 @@ func resolveOverrideRule(rel string, overrideRule *rule.Rule, resolver protoc.Im
 		if imps, ok := imports.([]string); ok {
 			for _, imp := range imps {
 				result := resolver.Resolve("proto", "proto", imp)
-				// printf("go_googleapis resolve imports result: %+v", result)
+				log.Printf("go_googleapis resolve imports result: %+v", result)
 				if len(result) > 0 {
 					first := result[0]
 					keep = append(keep, first.Label)
-					// printf("go_googleapis resolve imports HIT", first.Label)
+					log.Println("go_googleapis resolve imports HIT", first.Label)
 				} else {
-					// printf("go_googleapis resolve imports MISS %s: %+v", imp, resolver)
+					log.Printf("go_googleapis resolve imports MISS %s: %+v", imp, resolver)
 				}
 			}
 		}

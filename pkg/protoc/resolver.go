@@ -18,7 +18,7 @@ import (
 
 // globalImportResolver is the default resolver singleton.
 var globalImportResolver = NewImportResolver(&ImportResolverOptions{
-	Debug:  false,
+	Debug:  true,
 	Printf: log.Printf,
 }).(*resolver)
 
@@ -177,7 +177,7 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 		known = r.known[lang]
 	}
 	if known == nil {
-		if r.options.Debug {
+		if r.options.Debug && impLang != "M" {
 			r.options.Printf("resolve miss %s: no records under language %q", imp, key)
 		}
 		return nil

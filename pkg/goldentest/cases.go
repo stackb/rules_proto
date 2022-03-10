@@ -32,7 +32,7 @@ import (
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 
-var doCleanup = true
+var doCleanup = false
 
 // GoldenTests is a helper for running glob(["testdata/**"]) style test setups.
 type GoldenTests struct {
@@ -156,6 +156,8 @@ func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []b
 		dir, cleanup := testtools.CreateFiles(t, inputs)
 		if doCleanup {
 			defer cleanup()
+		} else {
+			t.Log("skipping test cleanup:", dir)
 		}
 
 		t.Log("running test dir:", dir)

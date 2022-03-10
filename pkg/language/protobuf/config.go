@@ -46,6 +46,12 @@ func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 		}
 	}
 
+	log.Println("CheckFlags: -proto_configs=", pl.configFiles)
+	log.Println("CheckFlags: -proto_imports_in=", pl.importsInFiles)
+	log.Println("CheckFlags: -proto_imports_out=", pl.importsOutFile)
+	log.Println("CheckFlags: -proto_repo_name=", pl.repoName)
+	log.Println("CheckFlags: -override_go_googleapis=", pl.overrideGoGooleapis)
+
 	return nil
 }
 

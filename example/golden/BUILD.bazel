@@ -2,6 +2,34 @@ load("@io_bazel_rules_go//go:def.bzl", "go_test")
 load("//rules:example.bzl", "gazelle_testdata_example")
 
 # gazelle:exclude testdata
+# gazelle:ignore gazelle_testdata_example_test_helper.go
+
+HELPER_UTILS = """
+import (
+    "os"
+    "log"
+    "path/filepath"
+    "io/ioutil"
+)
+
+func listBuildFiles(dir string) error {
+	return filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+        if filepath.Base(path) != "BUILD" {
+            return nil
+        } 
+		log.Println("---", path, "---")
+        data, err := ioutil.ReadFile(filepath.Join(dir, path))
+        if err != nil {
+            log.Fatal(err)
+        }
+        log.Println(string(data))
+        return nil
+	})
+}
+"""
 
 genrule(
     name = "gazelle_tool",
@@ -101,6 +129,18 @@ gazelle_testdata_example(
 gazelle_testdata_example(
     name = "proto_repository",
     srcs = glob(["testdata/proto_repository/**/*"]),
+    extra_test_content = """
+func TestRunGazelle(t *testing.T) {
+	if err := bazel_testing.RunBazel("run", "//:gazelle"); err != nil {
+		t.Fatal(err)
+	}
+    listBuildFiles(".")
+	if err := bazel_testing.RunBazel("build", "..."); err != nil {
+		t.Fatal(err)
+	}
+}
+""",
+    extra_test_helper = HELPER_UTILS,
     strip_prefix = "example/golden/testdata/proto_repository",
     workspace_template = "prebuilt.WORKSPACE",
 )
