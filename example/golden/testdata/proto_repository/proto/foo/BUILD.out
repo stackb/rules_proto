@@ -6,7 +6,10 @@ proto_library(
     name = "app_proto",
     srcs = ["app.proto"],
     visibility = ["//visibility:public"],
-    deps = ["@googleapis//google/api:annotations_proto"],
+    deps = [
+        "@googleapis//google/api:annotations_proto",
+        "@googleapis//google/api:field_behavior_proto",
+    ],
 )
 
 proto_compile(

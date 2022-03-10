@@ -191,37 +191,46 @@ func (s *Package) Empty() []*rule.Rule {
 
 func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool) []*rule.Rule {
 	rules := make([]*rule.Rule, 0)
+	ruleIndexes := make(map[label.Label]int)
+
 	for _, p := range providers {
 		r := p.Rule(rules...)
 		if r == nil {
 			continue
 		}
+		// record the association of the rule provider here for the resolver.
+		r.SetPrivateAttr(ruleProviderKey, p)
 
 		if shouldResolve {
-			// record the association of the rule provider here for the resolver.
-			r.SetPrivateAttr(ruleProviderKey, p)
-
+			// package up imports if not already created.
 			imports := r.PrivateAttr(config.GazelleImportsKey)
 			if imports == nil {
 				lib := s.ruleLibs[p]
 				r.SetPrivateAttr(ProtoLibraryKey, lib)
 				r.SetPrivateAttr(config.GazelleImportsKey, lib.Imports())
 			}
-
-			// NOTE: this is a bit of a hack: it would be preferable to populate
-			// the global resolver with import specs during the .Imports()
-			// function.  One would think that the RuleProvider could be set as
-			// a PrivateAttr to be retrieved in the Imports() function. However,
-			// the rule ref seems to have changed by that time, the PrivateAttr
-			// is removed.  Maybe this is due to rule merges?  Very difficult to
-			// track down bug that cost me days.
-			from := label.New("", s.rel, r.Name())
-			file := rule.EmptyFile("", s.rel)
-			provideResolverImportSpecs(s.cfg.config, p, r, file, from)
 		}
 
-		rules = append(rules, r)
+		// if this is a duplicate (e.g. the rule provider returned an "other"
+		// rule), update the slice position, otherwise extend the rules slice.
+		from := label.New("", s.rel, r.Name())
+		if index, ok := ruleIndexes[from]; ok {
+			rules[index] = r
+		} else {
+			ruleIndexes[from] = len(rules)
+			rules = append(rules, r)
+		}
 	}
+
+	if shouldResolve {
+		file := rule.EmptyFile("", s.rel)
+		for _, r := range rules {
+			provider := r.PrivateAttr(ruleProviderKey).(RuleProvider)
+			from := label.New("", s.rel, r.Name())
+			provideResolverImportSpecs(s.cfg.config, provider, r, file, from)
+		}
+	}
+
 	return rules
 }
 
