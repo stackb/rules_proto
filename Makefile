@@ -21,3 +21,8 @@ site:
 test:
 	bazel test //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
 		--deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
+
+.PHONY: go_mod_vendor
+go_mod_vendor:
+	bazel run @go_sdk//:bin/go -- mod vendor
+	find vendor -name 'BUILD.bazel' | xargs rm
