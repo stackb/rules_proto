@@ -1,0 +1,97 @@
+plugins:
+  - name: protoc-gen-go
+    implementation: golang:protobuf:protoc-gen-go
+    deps:
+      - "@org_golang_google_protobuf//reflect/protoreflect"
+      - "@org_golang_google_protobuf//runtime/protoimpl"
+
+  - name: protoc-gen-go-grpc
+    implementation: grpc:grpc-go:protoc-gen-go-grpc
+    deps:
+      - "@org_golang_google_grpc//:go_default_library"
+      - "@org_golang_google_grpc//codes"
+      - "@org_golang_google_grpc//status"
+
+  - name: java
+    implementation: builtin:java
+
+  - name: protoc-gen-grpc-java
+    implementation: grpc:grpc-java:protoc-gen-grpc-java
+
+  - name: python
+    implementation: builtin:python
+
+  - name: protoc-gen-grpc-python
+    implementation: grpc:grpc:protoc-gen-grpc-python
+
+rules:
+  - name: proto_compile
+    implementation: stackb:rules_proto:proto_compile
+    visibility:
+      - //visibility:public
+
+  - name: proto_go_library
+    implementation: stackb:rules_proto:proto_go_library
+    visibility:
+      - //visibility:public
+    resolves:
+      - "google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/${1}pb"
+      - "google/protobuf/(descriptor|plugin).proto @org_golang_google_protobuf//types/${1}pb"
+
+  - name: proto_java_library
+    implementation: stackb:rules_proto:proto_java_library
+    visibility:
+      - "//visibility:public"
+    deps:
+      - "@com_google_protobuf//:protobuf_java"
+
+  - name: grpc_java_library
+    implementation: stackb:rules_proto:grpc_java_library
+    visibility:
+      - "//visibility:public"
+    deps:
+      - "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java"
+
+  - name: proto_py_library
+    implementation: stackb:rules_proto:proto_py_library
+    visibility:
+      - "//visibility:public"
+    deps:
+      - "@tms_py_deps_protobuf//:pkg"
+
+  - name: grpc_py_library
+    implementation: stackb:rules_proto:grpc_py_library
+    visibility:
+      - "//visibility:public"
+    deps:
+      - "@tms_py_deps_grpcio//:pkg"
+
+languages:
+  - name: go
+    enabled: false
+    plugins:
+      - protoc-gen-go
+      - protoc-gen-go-grpc
+    rules:
+      - proto_compile
+      - proto_go_library
+
+  - name: java
+    enabled: false
+    plugins:
+      - java
+      - protoc-gen-grpc-java
+    rules:
+      - proto_compile
+      - proto_java_library
+      - grpc_java_library
+
+  - name: python
+    enabled: false
+    plugins:
+      - python
+      - protoc-gen-grpc-python
+    rules:
+      - proto_compile
+      - proto_py_library
+      - grpc_py_library

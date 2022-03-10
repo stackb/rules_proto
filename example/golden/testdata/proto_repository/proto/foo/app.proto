@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "github.com/example/app";
+
+import "google/api/annotations.proto";
+
+message Order {
+    string id = 1;
+}

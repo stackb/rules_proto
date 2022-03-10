@@ -1,0 +1,26 @@
+
+load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@build_stack_rules_proto//rules:proto_gazelle.bzl", "DEFAULT_LANGUAGES", "proto_gazelle")
+
+# gazelle:prefix github.com/corp/repo
+# gazelle:proto_language go enabled true
+
+gazelle_binary(
+    name = "gazelle-protobuf",
+    languages = DEFAULT_LANGUAGES,
+)
+
+proto_gazelle(
+    name = "gazelle",
+    cfgs = ["//:config.yaml"],
+    command = "update",
+    gazelle = ":gazelle-protobuf",
+    imports = [
+        "@bazelapis//:imports.csv",
+        "@googleapis//:imports.csv",
+        "@protoapis//:imports.csv",
+        "@remoteapis//:imports.csv",
+    ],
+)
+
+exports_files(["config.yaml"])
