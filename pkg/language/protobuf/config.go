@@ -17,11 +17,21 @@ import (
 // https://pkg.go.dev/github.com/bazelbuild/bazel-gazelle/resolve?tab=doc#Resolver
 // interface, but are otherwise unused.
 func (pl *protobufLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
-	fs.StringVar(&pl.configFiles, "proto_configs", "", "optional config.yaml file(s) that provide preconfiguration")
-	fs.StringVar(&pl.importsInFiles, "proto_imports_in", "", "index files to parse and load symbols from")
-	fs.StringVar(&pl.importsOutFile, "proto_imports_out", "", "filename where index should be written")
-	fs.StringVar(&pl.repoName, "proto_repo_name", "", "external name of this repository")
-	fs.BoolVar(&pl.overrideGoGooleapis, "override_go_googleapis", false, "if true, remove hardcoded proto_library deps on go_googleapis")
+	fs.StringVar(&pl.configFiles,
+		"proto_configs", "",
+		"optional config.yaml file(s) that provide preconfiguration")
+	fs.StringVar(&pl.importsInFiles,
+		"proto_imports_in", "",
+		"index files to parse and load symbols from")
+	fs.StringVar(&pl.importsOutFile,
+		"proto_imports_out", "",
+		"filename where index should be written")
+	fs.StringVar(&pl.repoName,
+		"proto_repo_name", "",
+		"external name of this repository")
+	fs.BoolVar(&pl.overrideGoGooleapis,
+		"override_go_googleapis", false,
+		"if true, remove hardcoded proto_library deps on go_googleapis")
 
 	registerWellKnownProtos(protoc.GlobalResolver())
 }
@@ -45,12 +55,6 @@ func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 			}
 		}
 	}
-
-	log.Println("CheckFlags: -proto_configs=", pl.configFiles)
-	log.Println("CheckFlags: -proto_imports_in=", pl.importsInFiles)
-	log.Println("CheckFlags: -proto_imports_out=", pl.importsOutFile)
-	log.Println("CheckFlags: -proto_repo_name=", pl.repoName)
-	log.Println("CheckFlags: -override_go_googleapis=", pl.overrideGoGooleapis)
 
 	return nil
 }
