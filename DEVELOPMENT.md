@@ -53,9 +53,9 @@ scala deps, for example.
 
 The `vendor/` tree is used by the standard go build toolchain when constructing
 the binary for the `proto_repository` rule.  If new dependencies are added to
-the tool, they may need to be also added to `vendor/`.  Use `make go_mod_vendor`
-for this.  That target will run the vendor command and then remove any
-`BUILD.bazel` files.  This is needed because the `//:all_files` target attempts
-to glob up everything in the `vendor/` directory.  This does not work correctly
-if there are `BUILD.bazel` files in vendor.  These files are also listed in the
+the tool, they may need to be also added to `vendor/`.  Use `make tidy` for
+this.  That target will run the vendor command and then remove any `BUILD.bazel`
+files.  This is needed because the `//:all_files` target attempts to glob up
+everything in the `vendor/` directory.  This does not work correctly if there
+are `BUILD.bazel` files in vendor.  These files are also listed in the
 `.gitignore` file.

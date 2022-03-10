@@ -16,6 +16,8 @@ const (
 	protoLibrariesRuleKey = "_proto_library_rules"
 	// overrideKindName is the name of the kind
 	overrideKindName = "proto_library_override"
+	// debugOverrides is a developer-flag.
+	debugOverrides = false
 )
 
 var overrideKind = rule.KindInfo{
@@ -32,10 +34,8 @@ func makeProtoOverrideRule(libs []protoc.ProtoLibrary) *rule.Rule {
 }
 
 func resolveOverrideRule(rel string, overrideRule *rule.Rule, resolver protoc.ImportResolver) {
-	log.Println("resolveOverrideRule", rel)
 	libs := overrideRule.PrivateAttr(protoLibrariesRuleKey).([]protoc.ProtoLibrary)
 	if len(libs) == 0 {
-		log.Printf("skipping resolve (no private libs)")
 		return
 	}
 
@@ -47,7 +47,7 @@ func resolveOverrideRule(rel string, overrideRule *rule.Rule, resolver protoc.Im
 
 		for _, dep := range r.AttrStrings("deps") {
 			lbl, _ := label.Parse(dep)
-			log.Printf("override resolve //%s:%s dep %v", rel, r.Name(), lbl)
+			// log.Printf("override resolve //%s:%s dep %v", rel, r.Name(), lbl)
 			if lbl.Repo == "go_googleapis" {
 				continue
 			}
@@ -62,13 +62,16 @@ func resolveOverrideRule(rel string, overrideRule *rule.Rule, resolver protoc.Im
 		if imps, ok := imports.([]string); ok {
 			for _, imp := range imps {
 				result := resolver.Resolve("proto", "proto", imp)
-				log.Printf("go_googleapis resolve imports result: %+v", result)
 				if len(result) > 0 {
 					first := result[0]
 					keep = append(keep, first.Label)
-					log.Println("go_googleapis resolve imports HIT", first.Label)
+					if debugOverrides {
+						log.Println("go_googleapis resolve imports HIT", first.Label)
+					}
 				} else {
-					log.Printf("go_googleapis resolve imports MISS %s: %+v", imp, resolver)
+					if debugOverrides {
+						log.Printf("go_googleapis resolve imports MISS %s: %+v", imp, resolver)
+					}
 				}
 			}
 		}

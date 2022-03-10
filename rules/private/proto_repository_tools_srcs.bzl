@@ -20,7 +20,6 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//pkg/language/protobuf:generate.go",
     "@build_stack_rules_proto//pkg/language/protobuf:kinds.go",
     "@build_stack_rules_proto//pkg/language/protobuf:lang.go",
-    "@build_stack_rules_proto//pkg/language/protobuf:logger.go",
     "@build_stack_rules_proto//pkg/language/protobuf:override.go",
     "@build_stack_rules_proto//pkg/language/protobuf:resolve.go",
     "@build_stack_rules_proto//pkg/plugin/builtin:BUILD.bazel",

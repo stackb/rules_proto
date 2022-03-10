@@ -56,8 +56,6 @@ func (pl *protobufLang) Resolve(
 	importsRaw interface{},
 	from label.Label,
 ) {
-	log.Printf("Resolve %s %v", r.Kind(), from)
-
 	if r.Kind() == overrideKindName {
 		resolveOverrideRule(from.Pkg, r, protoc.GlobalResolver())
 		return
