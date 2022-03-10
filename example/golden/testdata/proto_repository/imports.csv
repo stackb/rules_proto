@@ -1,1 +1,2 @@
 proto,proto,google/api/annotations.proto,@googleapis//google/api:annotations_proto
+protobuf,proto_go_library,google/api/annotations.proto,@googleapis//google/api:annotations_go_proto

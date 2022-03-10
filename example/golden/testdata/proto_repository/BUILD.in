@@ -16,9 +16,7 @@ proto_gazelle(
     cfgs = ["//:config.yaml"],
     command = "update",
     gazelle = ":gazelle-protobuf",
-    imports = [
-        "@googleapis//:imports.csv",
-    ],
+    imports = ["@googleapis//:imports.csv"],
 )
 
 exports_files(["config.yaml"])
