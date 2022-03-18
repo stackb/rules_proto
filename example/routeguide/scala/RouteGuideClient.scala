@@ -12,7 +12,7 @@ import io.grpc.stub.StreamObserver
 import scala.io.StdIn
 import scala.util.{Random, Try, Success, Failure}
 
-import example.routeguide.routeguide.{Feature, Point, RouteNote, RouteSummary, Rectangle, RouteGuideGrpc}
+import example.routeguide.{Feature, Point, RouteNote, RouteSummary, Rectangle, RouteGuideGrpc}
 
 class RouteGuideClient(host: String, port: Int) {
 

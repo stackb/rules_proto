@@ -27,7 +27,7 @@ func (p *protocGenAkkaGrpcPlugin) Configure(ctx *protoc.PluginContext) *protoc.P
 		return nil
 	}
 
-	srcjar := ctx.ProtoLibrary.BaseName() + "_akka.srcjar"
+	srcjar := ctx.ProtoLibrary.BaseName() + "_akka_grpc.srcjar"
 	if ctx.Rel != "" {
 		srcjar = path.Join(ctx.Rel, srcjar)
 	}

@@ -4,7 +4,7 @@ import java.util.logging.Logger
 
 import io.grpc.{Server, ServerBuilder}
 
-import example.routeguide.routeguide.{RouteGuideGrpc}
+import example.routeguide.{RouteGuideGrpc}
 
 class RouteGuideServer(server: Server) {
 

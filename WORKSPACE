@@ -164,6 +164,7 @@ maven_install(
         "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
         "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
         "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
+        "com.thesamet.scalapb:scalapbc_2.12:0.11.5",
         "io.grpc:grpc-api:1.40.1",
         "io.grpc:grpc-core:1.40.1",
         "io.grpc:grpc-netty:1.40.1",

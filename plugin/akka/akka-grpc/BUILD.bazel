@@ -5,7 +5,10 @@ proto_plugin(
     out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}_akka_grpc.srcjar",
     options = [
         "flat_package",
-        "grpc",
+        "generate_client=true",
+        "generate_server=true",
+        "language=scala",
+        "server_power_apis",
     ],
     tool = ":akka_grpc_codegen",
     use_built_in_shell_environment = True,

@@ -26,9 +26,10 @@ depsgen(
 depsgen(
     name = "scala",
     deps = [
-        ":github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip",
-        ":github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip",
         ":io_bazel_rules_scala",
+        # TODO(pcj): add depsgen support for maven_install.
+        # ":maven_akka",
+        # ":maven_scala",
     ],
 )
 
@@ -335,38 +336,6 @@ proto_dependency(
     strip_prefix = "rules_scala-2437e40131072cadc1628726775ff00fa3941a4a",
     urls = ["https://github.com/bazelbuild/rules_scala/archive/2437e40131072cadc1628726775ff00fa3941a4a.tar.gz"],
     deps = [":bazel_skylib"],
-)
-
-# Last-Modified: Fri, 06 Aug 2021 01:06:35 GMT
-# Size: 6914350 (6.9 MB)
-proto_dependency(
-    name = "github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip",
-    build_file_content = """
-filegroup(
-    name = "exe",
-    srcs = ["protoc-gen-scala"],
-    visibility = ["//visibility:public"],
-)
-""",
-    repository_rule = "http_archive",
-    sha256 = "1a58ae65d06e7894d7153812fc1c9ceeecab7891dcabeb33ee0b3e91e7502889",
-    urls = ["https://github.com/scalapb/ScalaPB/releases/download/v0.11.5/protoc-gen-scala-0.11.5-linux-x86_64.zip"],
-)
-
-# Last-Modified: Fri, 06 Aug 2021 01:06:34 GMT
-# Size: 6147501 (6.1 MB)
-proto_dependency(
-    name = "github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip",
-    build_file_content = """
-filegroup(
-    name = "exe",
-    srcs = ["protoc-gen-scala"],
-    visibility = ["//visibility:public"],
-)
-    """,
-    repository_rule = "http_archive",
-    sha256 = "312d802a999df87e7c046f2fef9213d0b3b8868b7771fa68ec8057ebf68397c0",
-    urls = ["https://github.com/scalapb/ScalaPB/releases/download/v0.11.5/protoc-gen-scala-0.11.5-osx-x86_64.zip"],
 )
 
 proto_dependency(
