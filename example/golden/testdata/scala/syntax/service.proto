@@ -15,4 +15,3 @@ message SpellCheckResponse {
 service SpellChecker {
     rpc SpellCheck(stream SpellCheckRequest) returns (stream SpellCheckResponse);
 }
-  

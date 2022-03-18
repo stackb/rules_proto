@@ -10,19 +10,19 @@ import (
 const AkkaGrpcPluginName = "akka:akka-grpc:protoc-gen-akka-grpc"
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&protocGenAkkaGrpcPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&ProtocGenAkkaGrpcPlugin{})
 }
 
-// protocGenAkkaGrpcPlugin implements Plugin for the akka-grpc plugin.
-type protocGenAkkaGrpcPlugin struct{}
+// ProtocGenAkkaGrpcPlugin implements Plugin for the akka-grpc plugin.
+type ProtocGenAkkaGrpcPlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *protocGenAkkaGrpcPlugin) Name() string {
+func (p *ProtocGenAkkaGrpcPlugin) Name() string {
 	return AkkaGrpcPluginName
 }
 
 // Configure implements part of the Plugin interface.
-func (p *protocGenAkkaGrpcPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+func (p *ProtocGenAkkaGrpcPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	if !protoc.HasServices(ctx.ProtoLibrary.Files()...) {
 		return nil
 	}

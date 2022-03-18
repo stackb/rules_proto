@@ -189,7 +189,5 @@ func (m *mockImportResolver) Provide(lang string, impLang, val string, location 
 	m.provided = append(m.provided, importResolverProvide{lang, impLang, val, location})
 }
 
-// Imports takes a callback and iterates all known imports for the given
-// lang/impLang. True should be returned to continue iteration.
 func (m *mockImportResolver) Imports(lang, impLang string, visitor func(imp string, location []label.Label) bool) {
 }

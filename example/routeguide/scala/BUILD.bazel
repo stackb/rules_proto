@@ -15,7 +15,6 @@ scala_binary(
     name = "client",
     srcs = ["RouteGuideClient.scala"],
     main_class = "example.routeguide.scala.RouteGuideClient",
-    runtime_deps = ["@maven_akka//:io_grpc_grpc_netty_shaded"],
     deps = [":util"],
 )
 
