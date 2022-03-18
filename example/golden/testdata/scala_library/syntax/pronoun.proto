@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package syntax;
+
+message Pronoun {
+    string name = 1;
+}
