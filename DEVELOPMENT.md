@@ -59,3 +59,33 @@ files.  This is needed because the `//:all_files` target attempts to glob up
 everything in the `vendor/` directory.  This does not work correctly if there
 are `BUILD.bazel` files in vendor.  These files are also listed in the
 `.gitignore` file.
+
+## Debugging `gazelle_testdata_example` tests.
+
+The target `//example/golden:golden_test` runs a test foreach subdirectory of
+`example/golden/testdata/`.  These tests stage all the `BUILD.in` files,
+optionally using a `.gazelle.args` file to run gazelle.  It then compares the
+actual BUILD files produced to the `BUILD.out` files.  These are generally
+straightforward to debug as a diff is printed out if the test fails.
+
+Use `bazel query //example/golden:all` to see all the actual tests in this package.
+
+The tests defined by `gazelle_testdata_example` glob up one of the
+`testdata/scala/` directories and generates a `_test.go` file.  Use `bazel build
+//example/golden:scala` to print out the generated test file (`cat
+bazel-bin/example/golden/scala_test.go`).
+
+This type of test packages up the `BUILD.out` files and uses `go_bazel_test` to
+actually run `bazel build ...` on it.  So, the `:golden_test` target is used to
+assert that the correct gazelle output is generated, while `:scala_test` is used
+to assert that the outbut actually builds.
+
+The effective `WORKSPACE` file is a concatenation of the `workspace_template`
+(e.g. `prebuilt.WORKSPACE`) and the one in the testdata example dir.
+
+One way to debug these kinds of tests is to open an editor in the effective
+directory where the test is constructed (this will be printed out if it fails).
+For example `(cd
+/private/var/tmp/_bazel_i868039/7b08591af2b3d71f45f2e4029050db37/bazel_testing/bazel_go_test/main
+&& code .)`.  You can then use `bazel build` directly in this space to explore
+what's going on.

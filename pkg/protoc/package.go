@@ -197,10 +197,10 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 		if r == nil {
 			continue
 		}
+		// record the association of the rule provider here for the resolver.
+		s.providers[r.Name()] = p
 
 		if shouldResolve {
-			s.providers[r.Name()] = p
-
 			// package up imports if not already created.
 			imports := r.PrivateAttr(config.GazelleImportsKey)
 			if imports == nil {
@@ -224,8 +224,8 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 	if shouldResolve {
 		file := rule.EmptyFile("", s.rel)
 		for _, r := range rules {
-			from := label.New("", s.rel, r.Name())
 			provider := s.providers[r.Name()]
+			from := label.New("", s.rel, r.Name())
 			provideResolverImportSpecs(s.cfg.Config, provider, r, file, from)
 		}
 	}

@@ -18,7 +18,6 @@ import (
 const (
 	ProtoGoLibraryRuleName = "proto_go_library"
 	goLibraryRuleSuffix    = "_go_proto"
-	// protoLibsKey           = "_proto_libs"
 )
 
 func init() {
@@ -213,6 +212,7 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	// create a new rule.
 	for _, other := range otherGen {
 		if other.Kind() == ProtoGoLibraryRuleName && other.AttrString("importpath") == importpath {
+			otherLabel := label.New(s.pc.PackageConfig.Config.RepoName, s.pc.Rel, other.Name())
 			otherSrcs := other.AttrStrings("srcs")
 			otherDeps := other.AttrStrings("deps")
 			otherVis := other.AttrStrings("visibility")
@@ -223,7 +223,8 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 			other.SetAttr("visibility", protoc.DeduplicateAndSort(append(otherVis, visibility...)))
 			other.SetPrivateAttr(config.GazelleImportsKey, protoc.DeduplicateAndSort(append(otherImports, imports...)))
 
-			s.protoLibrariesByRule[s.id] = append(s.protoLibrariesByRule[s.id], s.pc.Library)
+			s.protoLibrariesByRule[otherLabel] = append(s.protoLibrariesByRule[otherLabel], s.pc.Library)
+			log.Println("appended", otherLabel, s.pc.Library.BaseName())
 
 			return other
 		}
@@ -232,7 +233,7 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 	newRule.SetAttr("srcs", srcs)
 	newRule.SetPrivateAttr(config.GazelleImportsKey, imports)
-	// newRule.SetPrivateAttr(protoLibsKey, protoLibs)
+	log.Println("cached", s.id, s.pc.Library.BaseName())
 	s.protoLibrariesByRule[s.id] = []protoc.ProtoLibrary{s.pc.Library}
 
 	if importpath != "" {
@@ -255,10 +256,16 @@ func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, f *rule.File) []
 	// log.Println("provide for cross-resolver", r.AttrString("importpath"), from)
 	protoc.GlobalResolver().Provide("go", "go", r.AttrString("importpath"), from)
 
-	// libs, ok := r.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary)
 	libs, ok := s.protoLibrariesByRule[s.id]
 	if !ok {
-		log.Panicln("cached list of proto_library used to generated the rule not found:", from)
+		if s.id.String() == "@go_googleapis//google/api:annotations_go_proto" {
+			log.Panicln("cached list of []protoc.ProtoLibrary not found:", s.id)
+		}
+		return nil
+	}
+
+	for i, lib := range libs {
+		log.Println("import", s.id, i, lib.BaseName())
 	}
 
 	return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), libs...)
