@@ -5,7 +5,7 @@ import java.util.logging.Logger
 import scalapb.json4s.JsonFormat
 import scala.io.Source
 
-import example.routeguide.routeguide.{Feature, FeatureDatabase, Point}
+import example.routeguide.{Feature, FeatureDatabase, Point}
 
 object RouteGuideUtil {
   val logger: Logger = Logger.getLogger(getClass.getName)
