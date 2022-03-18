@@ -64,6 +64,7 @@ func (*protobufLang) KnownDirectives() []string {
 		protoc.LanguageDirective,
 		protoc.PluginDirective,
 		protoc.RuleDirective,
+		protoc.IncludePathsDirective,
 	}
 }
 

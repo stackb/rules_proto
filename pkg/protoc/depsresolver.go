@@ -106,15 +106,23 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 // RuleIndex is consulted, which contains all rules indexed by gazelle in the
 // generation phase.   If no match is found, return label.NoLabel.
 func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp string, from label.Label) (label.Label, error) {
+	pc := GetPackageConfig(c)
 	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: r.Kind(), Imp: imp}, ResolverLangName); ok {
 		// log.Println(from, "override hit:", l)
 		return l, nil
 	}
-	if l, err := resolveWithIndex(c, ix, r.Kind(), imp, from); err == nil || err == errSkipImport {
-		return l, err
-	} else if err != errNotFound {
-		return label.NoLabel, err
+	lookups := []string{imp}
+	for _, includePath := range pc.includePaths {
+		lookups = append(lookups, path.Join(includePath, imp))
 	}
+	for _, lookup := range lookups {
+		if l, err := resolveWithIndex(c, ix, r.Kind(), lookup, from); err == nil || err == errSkipImport {
+			return l, err
+		} else if err != errNotFound {
+			return label.NoLabel, err
+		}
+	}
+
 	// // if debug {
 	// log.Println(from, "fallback miss:", imp)
 	// // }

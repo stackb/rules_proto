@@ -18,6 +18,8 @@ const (
 	// PluginDirective created an association between proto_lang
 	// and the label of a proto_plugin.
 	PluginDirective = "proto_plugin"
+	// IncludePathsDirective tells gazelle additional paths to look for dependencies.
+	IncludePathsDirective = "proto_include_paths"
 	// importpathPrefixDirective is the same as 'gazelle:prefix'
 	importpathPrefixDirective = "prefix"
 )
@@ -34,6 +36,13 @@ type PackageConfig struct {
 	plugins map[string]*LanguagePluginConfig
 	// exclude patterns for rules that should be skipped for this package.
 	rules map[string]*LanguageRuleConfig
+	// includePaths A list of paths to prepend to imports to check if they
+	// are in the index. For example, if IncludePaths contains "path/to/root_1",
+	// and the import in the .proto file is "actual/path/to/myProto.proto",
+	// gazelle will find the dependency at path/to/root1/actual/path/to/myProto.proto.
+	// IncludePaths are checked in order.
+	includePaths []string
+
 	// IMPORTANT! Adding new fields here?  Don't forget to copy it in the Clone
 	// method!
 }
@@ -49,10 +58,11 @@ func GetPackageConfig(config *config.Config) *PackageConfig {
 // NewPackageConfig initializes a new PackageConfig.
 func NewPackageConfig(config *config.Config) *PackageConfig {
 	return &PackageConfig{
-		config:  config,
-		langs:   make(map[string]*LanguageConfig),
-		plugins: make(map[string]*LanguagePluginConfig),
-		rules:   make(map[string]*LanguageRuleConfig),
+		config:       config,
+		langs:        make(map[string]*LanguageConfig),
+		plugins:      make(map[string]*LanguagePluginConfig),
+		rules:        make(map[string]*LanguageRuleConfig),
+		includePaths: make([]string, 0),
 	}
 }
 
@@ -83,6 +93,7 @@ func (c *PackageConfig) Clone() *PackageConfig {
 	for k, v := range c.plugins {
 		clone.plugins[k] = v.clone()
 	}
+	clone.includePaths = append(clone.includePaths, c.includePaths...)
 
 	return clone
 }
@@ -101,6 +112,8 @@ func (c *PackageConfig) ParseDirectives(rel string, directives []rule.Directive)
 			err = c.parseRuleDirective(d)
 		case LanguageDirective:
 			err = c.parseLanguageDirective(d)
+		case IncludePathsDirective:
+			err = c.parseIncludePathsDirective(d)
 		}
 		if err != nil {
 			return fmt.Errorf("parse %v: %w", d, err)
@@ -152,6 +165,11 @@ func (c *PackageConfig) parseRuleDirective(d rule.Directive) error {
 		return fmt.Errorf("invalid proto_rule directive %+v: %w", d, err)
 	}
 	return r.parseDirective(c, name, param, value)
+}
+
+func (c *PackageConfig) parseIncludePathsDirective(d rule.Directive) error {
+	c.includePaths = append(c.includePaths, strings.Split(strings.TrimSpace(d.Value), ",")...)
+	return nil
 }
 
 func (c *PackageConfig) getOrCreateLanguagePluginConfig(name string) (*LanguagePluginConfig, error) {
