@@ -124,7 +124,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 
 	rules := make([]RuleProvider, 0)
 
-	pc := newProtocConfiguration(p, s.cfg.config.WorkDir, s.rel, p.Name, lib, configs)
+	pc := newProtocConfiguration(s.cfg, p, s.cfg.Config.WorkDir, s.rel, p.Name, lib, configs)
 	for _, name := range p.GetRulesByIntent(true) {
 		ruleConfig, ok := s.cfg.rules[name]
 		if !ok {
@@ -197,10 +197,10 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 		if r == nil {
 			continue
 		}
-		// record the association of the rule provider here for the resolver.
-		r.SetPrivateAttr(ruleProviderKey, p)
 
 		if shouldResolve {
+			s.providers[r.Name()] = p
+
 			// package up imports if not already created.
 			imports := r.PrivateAttr(config.GazelleImportsKey)
 			if imports == nil {
@@ -224,9 +224,9 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 	if shouldResolve {
 		file := rule.EmptyFile("", s.rel)
 		for _, r := range rules {
-			provider := r.PrivateAttr(ruleProviderKey).(RuleProvider)
 			from := label.New("", s.rel, r.Name())
-			provideResolverImportSpecs(s.cfg.config, provider, r, file, from)
+			provider := s.providers[r.Name()]
+			provideResolverImportSpecs(s.cfg.Config, provider, r, file, from)
 		}
 	}
 

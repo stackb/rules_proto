@@ -112,6 +112,7 @@ func TestRunGazelle(t *testing.T) {
 }
 """,
     strip_prefix = "example/golden/testdata/proto_repository",
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(

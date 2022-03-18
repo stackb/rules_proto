@@ -1,0 +1,2 @@
+proto,proto,scalapb/scalapb.proto,@scalaapis//scalapb:scalapb_proto
+protobuf,_scala_library,scalapb/scalapb.proto,@scalaapis//scalapb:scalapb_scala_library

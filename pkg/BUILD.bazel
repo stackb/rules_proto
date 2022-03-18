@@ -2,6 +2,7 @@ filegroup(
     name = "all_files",
     srcs = [
         "//pkg/language/protobuf:all_files",
+        "//pkg/plugin/akka/akka_grpc:all_files",
         "//pkg/plugin/builtin:all_files",
         "//pkg/plugin/gogo/protobuf:all_files",
         "//pkg/plugin/golang/protobuf:all_files",

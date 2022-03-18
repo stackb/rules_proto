@@ -11,7 +11,7 @@ proto_library(
         "service.proto",
     ],
     visibility = ["//visibility:public"],
-    deps = ["//scalapb:scalapb_proto"],
+    deps = ["@scalaapis//scalapb:scalapb_proto"],
 )
 
 grpc_scala_library(
@@ -33,6 +33,7 @@ grpc_scala_library(
         "@maven_scala//:io_grpc_grpc_api",
         "@maven_scala//:io_grpc_grpc_protobuf",
         "@maven_scala//:io_grpc_grpc_stub",
+        "@scalaapis//scalapb:scalapb_scala_library",
     ],
 )
 

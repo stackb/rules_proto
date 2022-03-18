@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package syntax;
 
+import "syntax/noun.proto";
+
 message SpellCheckRequest {
     Noun noun = 1; // contrived, I know
 }

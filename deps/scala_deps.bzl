@@ -9,8 +9,20 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def scala_deps():
+    rules_jvm_external()  # via <TOP>
     bazel_skylib()  # via io_bazel_rules_scala
     io_bazel_rules_scala()  # via <TOP>
+
+def rules_jvm_external():
+    _maybe(
+        http_archive,
+        name = "rules_jvm_external",
+        sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
+        strip_prefix = "rules_jvm_external-4.0",
+        urls = [
+            "https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip",
+        ],
+    )
 
 def bazel_skylib():
     _maybe(
