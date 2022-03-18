@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package syntax;
+
+message SpellCheckRequest {
+    Noun noun = 1; // contrived, I know
+}
+
+message SpellCheckResponse {
+    Noun noun = 1; // contrived, I know
+}
+
+service SpellChecker {
+    rpc SpellCheck(stream SpellCheckRequest) returns (stream SpellCheckResponse);
+}
+  
