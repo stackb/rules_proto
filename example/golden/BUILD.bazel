@@ -117,8 +117,8 @@ func TestRunGazelle(t *testing.T) {
 
 gazelle_testdata_example(
     name = "scala",
-    srcs = glob(["testdata/scala_library/**/*"]),
-    strip_prefix = "example/golden/testdata/scala_library",
+    srcs = glob(["testdata/scala/**/*"]),
+    strip_prefix = "example/golden/testdata/scala",
     workspace_template = "prebuilt.WORKSPACE",
 )
 
