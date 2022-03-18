@@ -1,0 +1,15 @@
+# "proto_rule" instantiates the proto_compile rule
+# gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
+# gazelle:proto_rule proto_cc_library implementation stackb:rules_proto:proto_cc_library
+# gazelle:proto_rule proto_cc_library deps @com_google_protobuf//:protobuf
+# gazelle:proto_rule proto_cc_library visibility //visibility:public
+
+# "proto_plugin" instantiates the builtin cpp plugins
+# gazelle:proto_plugin cpp implementation builtin:cpp
+
+# "proto_language" binds the rule(s) and plugin(s) together
+# gazelle:proto_language cpp plugin cpp
+# gazelle:proto_language cpp rule proto_compile
+# gazelle:proto_language cpp rule proto_cc_library
+
+# gazelle:proto_strip_import_prefix /path/to

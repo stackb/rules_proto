@@ -30,6 +30,13 @@ gazelle_testdata_example(
 )
 
 gazelle_testdata_example(
+    name = "cpp_strip_prefix",
+    srcs = glob(["testdata/cpp_strip_prefix/**/*"]),
+    strip_prefix = "example/golden/testdata/cpp_strip_prefix",
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
     name = "java",
     srcs = glob(["testdata/java/*"]),
     # TODO: investigate java does not PASS with the prebuilt toolchain protoc.
@@ -40,6 +47,13 @@ gazelle_testdata_example(
 gazelle_testdata_example(
     name = "python",
     srcs = glob(["testdata/python/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "python_strip_prefix",
+    srcs = glob(["testdata/python_strip_prefix/**/*"]),
+    strip_prefix = "example/golden/testdata/python_strip_prefix",
     workspace_template = "prebuilt.WORKSPACE",
 )
 

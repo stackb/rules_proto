@@ -1,0 +1,33 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+proto_library(
+    name = "example_proto",
+    srcs = ["example.proto"],
+    strip_import_prefix = "/path/to",
+    visibility = ["//visibility:public"],
+)
+
+proto_cc_library(
+    name = "example_cc_library",
+    srcs = ["myproto/example.pb.cc"],
+    hdrs = ["myproto/example.pb.h"],
+    strip_include_prefix = "/path/to",
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf"],
+)
+
+proto_compile(
+    name = "example_cpp_compile",
+    output_mappings = [
+        "example.pb.cc=myproto/example.pb.cc",
+        "example.pb.h=myproto/example.pb.h",
+    ],
+    outputs = [
+        "example.pb.cc",
+        "example.pb.h",
+    ],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
+    proto = "example_proto",
+)
