@@ -1,0 +1,31 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "protoc-gen-akka-grpc",
+    out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}_akka_grpc.srcjar",
+    options = [
+        "flat_package",
+        "generate_client=true",
+        "generate_server=true",
+        "language=scala",
+        "server_power_apis",
+    ],
+    tool = ":akka_grpc_codegen",
+    use_built_in_shell_environment = True,
+    visibility = ["//visibility:public"],
+)
+
+java_binary(
+    name = "akka_grpc_codegen",
+    main_class = "akka.grpc.gen.Main",
+    visibility = ["//visibility:public"],
+    runtime_deps = [
+        "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_codegen_2_12_2_1_3",
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"],
+    visibility = ["//plugin:__pkg__"],
+)

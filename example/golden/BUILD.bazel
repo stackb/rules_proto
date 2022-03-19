@@ -115,6 +115,13 @@ func TestRunGazelle(t *testing.T) {
     workspace_template = "prebuilt.WORKSPACE",
 )
 
+gazelle_testdata_example(
+    name = "scala",
+    srcs = glob(["testdata/scala/**/*"]),
+    strip_prefix = "example/golden/testdata/scala",
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
 filegroup(
     name = "all_files",
     srcs = ["BUILD.bazel"] + glob(["*.go"]),

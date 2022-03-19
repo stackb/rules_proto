@@ -113,7 +113,6 @@ proto_py_library(
 
 proto_compile(
     name = "thing_scala_compile",
-    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
     outputs = ["thing_scala.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
     proto = "thing_proto",
@@ -123,8 +122,15 @@ proto_scala_library(
     name = "thing_scala_library",
     srcs = ["thing_scala.srcjar"],
     visibility = ["//visibility:public"],
-    exports = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
-    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_2_12"],
+    deps = [
+        "@com_google_protobuf//:protobuf_java",
+        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
+        "@maven_scala//:io_grpc_grpc_api",
+        "@maven_scala//:io_grpc_grpc_protobuf",
+        "@maven_scala//:io_grpc_grpc_stub",
+    ],
 )
 
 proto_compile(

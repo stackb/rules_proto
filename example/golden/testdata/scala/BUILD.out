@@ -1,0 +1,3 @@
+exports_files(["config.yaml"])
+
+# gazelle:proto_language scala enabled true

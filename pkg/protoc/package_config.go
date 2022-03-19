@@ -25,7 +25,7 @@ const (
 // PackageConfig represents the config extension for the protobuf language.
 type PackageConfig struct {
 	// config is the parent gazelle config.
-	config *config.Config
+	Config *config.Config
 	// the gazelle:prefix for golang
 	importpathPrefix string
 	// configured languages for this package
@@ -49,7 +49,7 @@ func GetPackageConfig(config *config.Config) *PackageConfig {
 // NewPackageConfig initializes a new PackageConfig.
 func NewPackageConfig(config *config.Config) *PackageConfig {
 	return &PackageConfig{
-		config:  config,
+		Config:  config,
 		langs:   make(map[string]*LanguageConfig),
 		plugins: make(map[string]*LanguagePluginConfig),
 		rules:   make(map[string]*LanguageRuleConfig),
@@ -71,7 +71,7 @@ func (c *PackageConfig) Plugin(name string) (LanguagePluginConfig, bool) {
 
 // Clone copies this config to a new one.
 func (c *PackageConfig) Clone() *PackageConfig {
-	clone := NewPackageConfig(c.config)
+	clone := NewPackageConfig(c.Config)
 	clone.importpathPrefix = c.importpathPrefix
 
 	for k, v := range c.rules {
@@ -147,7 +147,7 @@ func (c *PackageConfig) parseRuleDirective(d rule.Directive) error {
 		return fmt.Errorf("invalid directive %v: expected three or more fields, got %d", d, len(fields))
 	}
 	name, param, value := fields[0], fields[1], strings.Join(fields[2:], " ")
-	r, err := c.getOrCreateLanguageRuleConfig(c.config, name)
+	r, err := c.getOrCreateLanguageRuleConfig(c.Config, name)
 	if err != nil {
 		return fmt.Errorf("invalid proto_rule directive %+v: %w", d, err)
 	}
@@ -222,7 +222,7 @@ func (c *PackageConfig) loadYRule(y *YRule) error {
 	if y.Name == "" {
 		return fmt.Errorf("yaml rule name missing in: %+v", y)
 	}
-	rule, err := c.getOrCreateLanguageRuleConfig(c.config, y.Name)
+	rule, err := c.getOrCreateLanguageRuleConfig(c.Config, y.Name)
 	if err != nil {
 		return err
 	}

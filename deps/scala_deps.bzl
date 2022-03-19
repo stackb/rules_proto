@@ -9,43 +9,19 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def scala_deps():
-    github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip()  # via <TOP>
-    github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip()  # via <TOP>
+    rules_jvm_external()  # via <TOP>
     bazel_skylib()  # via io_bazel_rules_scala
     io_bazel_rules_scala()  # via <TOP>
 
-def github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip():
+def rules_jvm_external():
     _maybe(
         http_archive,
-        name = "github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip",
-        sha256 = "1a58ae65d06e7894d7153812fc1c9ceeecab7891dcabeb33ee0b3e91e7502889",
+        name = "rules_jvm_external",
+        sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
+        strip_prefix = "rules_jvm_external-4.0",
         urls = [
-            "https://github.com/scalapb/ScalaPB/releases/download/v0.11.5/protoc-gen-scala-0.11.5-linux-x86_64.zip",
+            "https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip",
         ],
-        build_file_content = """
-filegroup(
-    name = "exe",
-    srcs = ["protoc-gen-scala"],
-    visibility = ["//visibility:public"],
-)
-""",
-    )
-
-def github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip():
-    _maybe(
-        http_archive,
-        name = "github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip",
-        sha256 = "312d802a999df87e7c046f2fef9213d0b3b8868b7771fa68ec8057ebf68397c0",
-        urls = [
-            "https://github.com/scalapb/ScalaPB/releases/download/v0.11.5/protoc-gen-scala-0.11.5-osx-x86_64.zip",
-        ],
-        build_file_content = """
-filegroup(
-    name = "exe",
-    srcs = ["protoc-gen-scala"],
-    visibility = ["//visibility:public"],
-)
-    """,
     )
 
 def bazel_skylib():

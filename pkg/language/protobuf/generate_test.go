@@ -188,3 +188,6 @@ func (m *mockImportResolver) Resolve(lang, impLang, imp string) []resolve.FindRe
 func (m *mockImportResolver) Provide(lang string, impLang, val string, location label.Label) {
 	m.provided = append(m.provided, importResolverProvide{lang, impLang, val, location})
 }
+
+func (m *mockImportResolver) Imports(lang, impLang string, visitor func(imp string, location []label.Label) bool) {
+}

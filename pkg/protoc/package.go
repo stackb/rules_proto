@@ -10,10 +10,6 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-const (
-	ruleProviderKey = "_x_rule_provider"
-)
-
 // Package provides a set of proto_library derived rules for the package.
 type Package struct {
 	// relative path of build file
@@ -26,16 +22,19 @@ type Package struct {
 	gen, empty []RuleProvider
 	// ruleLibs records the ProtoLibrary a RuleProvider was built on.
 	ruleLibs map[RuleProvider]ProtoLibrary
+	// providers record the provider of a rule, by rule name.
+	providers map[string]RuleProvider
 }
 
 // NewPackage constructs a Package given a list of proto_library rules
 // in the package.
 func NewPackage(rel string, cfg *PackageConfig, libs ...ProtoLibrary) *Package {
 	s := &Package{
-		rel:      rel,
-		cfg:      cfg,
-		libs:     libs,
-		ruleLibs: make(map[RuleProvider]ProtoLibrary),
+		rel:       rel,
+		cfg:       cfg,
+		libs:      libs,
+		ruleLibs:  make(map[RuleProvider]ProtoLibrary),
+		providers: make(map[string]RuleProvider),
 	}
 	s.gen = s.generateRules(true)
 	s.empty = s.generateRules(false)
@@ -125,7 +124,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 
 	rules := make([]RuleProvider, 0)
 
-	pc := newProtocConfiguration(p, s.cfg.config.WorkDir, s.rel, p.Name, lib, configs)
+	pc := newProtocConfiguration(s.cfg, p, s.cfg.Config.WorkDir, s.rel, p.Name, lib, configs)
 	for _, name := range p.GetRulesByIntent(true) {
 		ruleConfig, ok := s.cfg.rules[name]
 		if !ok {
@@ -164,7 +163,7 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 
 // RuleProvider returns the provider of a rule or nil if not known.
 func (s *Package) RuleProvider(r *rule.Rule) RuleProvider {
-	if provider, ok := r.PrivateAttr(ruleProviderKey).(RuleProvider); ok {
+	if provider, ok := s.providers[r.Name()]; ok {
 		return provider
 	}
 	return nil
@@ -198,8 +197,6 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 		if r == nil {
 			continue
 		}
-		// record the association of the rule provider here for the resolver.
-		r.SetPrivateAttr(ruleProviderKey, p)
 
 		if shouldResolve {
 			// package up imports if not already created.
@@ -217,6 +214,12 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 		if index, ok := ruleIndexes[from]; ok {
 			rules[index] = r
 		} else {
+			// record the association of the rule provider here for the
+			// resolver.  Only the first occurrence of this rule name gets
+			// associated with the provider.  The `go_library.go` file relies on
+			// this behavior when merging rules.
+			s.providers[r.Name()] = p
+
 			ruleIndexes[from] = len(rules)
 			rules = append(rules, r)
 		}
@@ -225,9 +228,9 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 	if shouldResolve {
 		file := rule.EmptyFile("", s.rel)
 		for _, r := range rules {
-			provider := r.PrivateAttr(ruleProviderKey).(RuleProvider)
+			provider := s.providers[r.Name()]
 			from := label.New("", s.rel, r.Name())
-			provideResolverImportSpecs(s.cfg.config, provider, r, file, from)
+			provideResolverImportSpecs(s.cfg.Config, provider, r, file, from)
 		}
 	}
 
@@ -247,6 +250,9 @@ func provideResolverImportSpecs(c *config.Config, provider RuleProvider, r *rule
 
 // DeduplicateAndSort removes duplicate entries and sorts the list
 func DeduplicateAndSort(in []string) (out []string) {
+	if len(in) == 0 {
+		return in
+	}
 	seen := make(map[string]bool)
 	for _, v := range in {
 		if seen[v] {

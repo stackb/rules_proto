@@ -19,16 +19,15 @@ import (
 // returned, including an empty slice, the rule will be indexed.
 func (pl *protobufLang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
 	from := label.New("", f.Pkg, r.Name())
-
 	pkg, ok := pl.packages[from.Pkg]
 	if !ok {
-		log.Println("Unknown package", from.Pkg)
+		// log.Println("protobuf.Imports(): Unknown package", from)
 		return nil
 	}
 
 	provider := pkg.RuleProvider(r)
 	if provider == nil {
-		// log.Printf("Unknown rule provider for //%s:%s %p", f.Pkg, r.Name(), r)
+		// log.Printf("Unknown rule provider for %v (rule=%p)", from, r)
 		return nil
 	}
 

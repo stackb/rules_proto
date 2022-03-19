@@ -16,11 +16,15 @@ import (
 
 const (
 	ResolverLangName = "protobuf"
+	// ResolverImpLangPrivateKey stores the implementation language override.
+	ResolverImpLangPrivateKey = "_protobuf_imp_lang"
+	UnresolvedDepsPrivateKey  = "_unresolved_deps"
 )
 
 var (
 	errSkipImport = errors.New("self import")
 	errNotFound   = errors.New("rule not found")
+	ErrNoLabel    = errors.New("no label")
 )
 
 type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label)
@@ -32,14 +36,16 @@ type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, im
 // function (excluding duplicates, sorting applied).  The "from" argument
 // represents the rule being resolved (whose state is the *rule.Rule argument).
 // The "imports" list represents the list of imports that was originally
-// returned by the `Imports()` function, and holds the values of all the import
-// statements (e.g. "google/protobuf/descriptor.proto") of the ProtoLibrary used
-// to generate the rule.  Special handling is provided for well-known types,
-// which can be excluded using the `excludeWkt` argument.  Actual resolution for
-// an individual import is delegated to the `resolveAnyKind` function.
+// returned by the GenerateResponse.Imports (typically in via a private attr
+// GazelleImportsKey), and holds the values of all the import statements (e.g.
+// "google/protobuf/descriptor.proto") of the ProtoLibrary used to generate the
+// rule.  Special handling is provided for well-known types, which can be
+// excluded using the `excludeWkt` argument.  Actual resolution for an
+// individual import is delegated to the `resolveAnyKind` function.
 func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 	return func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 		debug := false
+
 		if debug {
 			log.Printf("ResolveDepsAttr %q for %s rule %v", attrName, r.Kind(), from)
 		}
@@ -52,6 +58,12 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 			depSet[d] = true
 		}
 
+		// unresolvedDeps is a mapping from the import string to the reason it
+		// was unresolved.  It is saved under 'UnresolvedDepsPrivateKey' if
+		// there were unresolved deps.  The value 'ErrNoLabel' is the most
+		// common case.
+		unresolvedDeps := make(map[string]error)
+
 		for _, imp := range imports {
 			if debug {
 				log.Println(from, "resolving:", imp)
@@ -60,7 +72,13 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 				continue
 			}
 
-			l, err := resolveAnyKind(c, ix, r, imp, from)
+			// determine the resolve kind
+			impLang := r.Kind()
+			if overrideImpLang, ok := r.PrivateAttr(ResolverImpLangPrivateKey).(string); ok {
+				impLang = overrideImpLang
+			}
+
+			l, err := resolveAnyKind(c, ix, impLang, imp, from)
 			if err == errSkipImport {
 				if debug {
 					log.Println(from, "skipped:", imp)
@@ -69,12 +87,15 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 			}
 			if err != nil {
 				log.Println(from, "ResolveDepsAttr error:", err)
+				unresolvedDeps[imp] = err
 				continue
 			}
 			if l == label.NoLabel {
 				if debug {
 					log.Println(from, "no label", imp)
 				}
+				// log.Panicf("import %q failed to resolve (from=%v)", imp, from)
+				unresolvedDeps[imp] = ErrNoLabel
 				continue
 			}
 
@@ -96,6 +117,10 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 				log.Println(from, "resolved deps:", deps)
 			}
 		}
+
+		if len(unresolvedDeps) > 0 {
+			r.SetPrivateAttr(UnresolvedDepsPrivateKey, unresolvedDeps)
+		}
 	}
 }
 
@@ -105,12 +130,12 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 // resolve directives, or via a YAML config).  If no override is found, the
 // RuleIndex is consulted, which contains all rules indexed by gazelle in the
 // generation phase.   If no match is found, return label.NoLabel.
-func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp string, from label.Label) (label.Label, error) {
-	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: r.Kind(), Imp: imp}, ResolverLangName); ok {
+func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, lang string, imp string, from label.Label) (label.Label, error) {
+	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: lang, Imp: imp}, ResolverLangName); ok {
 		// log.Println(from, "override hit:", l)
 		return l, nil
 	}
-	if l, err := resolveWithIndex(c, ix, r.Kind(), imp, from); err == nil || err == errSkipImport {
+	if l, err := resolveWithIndex(c, ix, lang, imp, from); err == nil || err == errSkipImport {
 		return l, err
 	} else if err != errNotFound {
 		return label.NoLabel, err
@@ -130,12 +155,26 @@ func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, kind, imp string,
 	if len(matches) > 1 {
 		return label.NoLabel, fmt.Errorf("multiple rules (%s and %s) may be imported with %q from %s", matches[0].Label, matches[1].Label, imp, from)
 	}
-	if matches[0].IsSelfImport(from) {
+	if matches[0].IsSelfImport(from) || isSameImport(c, from, matches[0].Label) {
 		// log.Println(from, "self import:", imp)
 		return label.NoLabel, errSkipImport
 	}
 	// log.Println(from, "FindRulesByImportWithConfig first match:", imp, matches[0].Label)
 	return matches[0].Label, nil
+}
+
+// isSameImport returns true if the "from" and "to" labels are the same.  If the
+// "to" label is not a canonical label (having a fully-qualified repo name), a
+// canonical label is constructed for comparison using the config.RepoName.
+func isSameImport(c *config.Config, from, to label.Label) bool {
+	if from == to {
+		return true
+	}
+	if to.Repo != "" {
+		return false
+	}
+	canonical := label.New(c.RepoName, to.Pkg, to.Name)
+	return from == canonical
 }
 
 // StripRel removes the rel prefix from a filename (if has matching prefix)
