@@ -216,8 +216,8 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 		} else {
 			// record the association of the rule provider here for the
 			// resolver.  Only the first occurrence of this rule name gets
-			// associated with the provider to keep the semantics of
-			// go_library.go "other".
+			// associated with the provider.  The `go_library.go` file relies on
+			// this behavior when merging rules.
 			s.providers[r.Name()] = p
 
 			ruleIndexes[from] = len(rules)

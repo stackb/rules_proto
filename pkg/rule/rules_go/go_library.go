@@ -224,7 +224,6 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 			other.SetPrivateAttr(config.GazelleImportsKey, protoc.DeduplicateAndSort(append(otherImports, imports...)))
 
 			s.protoLibrariesByRule[otherLabel] = append(s.protoLibrariesByRule[otherLabel], s.pc.Library)
-			log.Println("appended", otherLabel, s.pc.Library.BaseName(), "from", s.id, "currently-has", printProtoLibraryNames(s.protoLibrariesByRule[otherLabel]))
 
 			return other
 		}
@@ -233,7 +232,6 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
 	newRule.SetAttr("srcs", srcs)
 	newRule.SetPrivateAttr(config.GazelleImportsKey, imports)
-	log.Println("cached", s.id, s.pc.Library.BaseName())
 	s.protoLibrariesByRule[s.id] = []protoc.ProtoLibrary{s.pc.Library}
 
 	if importpath != "" {
@@ -265,16 +263,8 @@ func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, f *rule.File) []
 	protoc.GlobalResolver().Provide("go", "go", r.AttrString("importpath"), from)
 
 	libs, ok := s.protoLibrariesByRule[s.id]
-	log.Printf("imports-of %p %v %v", s, s.id, printProtoLibraryNames(libs))
 	if !ok {
-		if s.id.String() == "@go_googleapis//google/api:annotations_go_proto" {
-			log.Panicln("cached list of []protoc.ProtoLibrary not found:", s.id)
-		}
 		return nil
-	}
-
-	for i, lib := range libs {
-		log.Println("import", s.id, i, lib.BaseName())
 	}
 
 	return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), libs...)

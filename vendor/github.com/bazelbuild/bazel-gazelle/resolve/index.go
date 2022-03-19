@@ -139,8 +139,6 @@ func (ix *RuleIndex) AddRule(c *config.Config, r *rule.Rule, f *rule.File) {
 		lang = rslv.Name()
 		if passesLanguageFilter(c.Langs, lang) {
 			imps = rslv.Imports(c, r, f)
-		} else {
-			log.Println("failed language filter!", lang, f.Pkg, r.Name())
 		}
 	}
 	// If imps == nil, the rule is not importable. If imps is the empty slice,

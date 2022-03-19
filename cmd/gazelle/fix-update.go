@@ -355,7 +355,6 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 		if c.IndexLibraries {
 			for _, r := range f.Rules {
 				ruleIndex.AddRule(c, r, f)
-				log.Printf("ruleIndex.AddRule %s @%s//%s:%s", r.Kind(), c.RepoName, rel, r.Name())
 			}
 		}
 	})

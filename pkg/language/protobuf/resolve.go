@@ -21,14 +21,13 @@ func (pl *protobufLang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []
 	from := label.New("", f.Pkg, r.Name())
 	pkg, ok := pl.packages[from.Pkg]
 	if !ok {
-		log.Println("protobuf.Imports(): Unknown package", from)
+		// log.Println("protobuf.Imports(): Unknown package", from)
 		return nil
 	}
 
 	provider := pkg.RuleProvider(r)
-	log.Printf("pl.Imports %v %T %p", from, provider, provider)
 	if provider == nil {
-		log.Printf("Unknown rule provider for %v (rule=%p)", from, r)
+		// log.Printf("Unknown rule provider for %v (rule=%p)", from, r)
 		return nil
 	}
 
