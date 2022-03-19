@@ -98,7 +98,7 @@ func (s *goLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Proto
 		pc:                   pc,
 		protoLibrariesByRule: s.protoLibrariesByRule,
 	}
-	rule.id = label.New(pc.PackageConfig.Config.RepoName, pc.Rel, rule.Name())
+	rule.id = label.New("", pc.Rel, rule.Name())
 	return rule
 }
 
@@ -212,7 +212,7 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	// create a new rule.
 	for _, other := range otherGen {
 		if other.Kind() == ProtoGoLibraryRuleName && other.AttrString("importpath") == importpath {
-			otherLabel := label.New(s.pc.PackageConfig.Config.RepoName, s.pc.Rel, other.Name())
+			otherLabel := label.New("", s.pc.Rel, other.Name())
 			otherSrcs := other.AttrStrings("srcs")
 			otherDeps := other.AttrStrings("deps")
 			otherVis := other.AttrStrings("visibility")
@@ -224,7 +224,7 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 			other.SetPrivateAttr(config.GazelleImportsKey, protoc.DeduplicateAndSort(append(otherImports, imports...)))
 
 			s.protoLibrariesByRule[otherLabel] = append(s.protoLibrariesByRule[otherLabel], s.pc.Library)
-			log.Println("appended", otherLabel, s.pc.Library.BaseName())
+			log.Println("appended", otherLabel, s.pc.Library.BaseName(), "from", s.id, "currently-has", printProtoLibraryNames(s.protoLibrariesByRule[otherLabel]))
 
 			return other
 		}
@@ -248,6 +248,14 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	return newRule
 }
 
+func printProtoLibraryNames(libs []protoc.ProtoLibrary) string {
+	names := make([]string, len(libs))
+	for i, lib := range libs {
+		names[i] = lib.BaseName()
+	}
+	return strings.Join(names, ",")
+}
+
 // Imports implements part of the RuleProvider interface.
 func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
 	// for the cross-resolver such that go can cross-resolve this library
@@ -257,6 +265,7 @@ func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, f *rule.File) []
 	protoc.GlobalResolver().Provide("go", "go", r.AttrString("importpath"), from)
 
 	libs, ok := s.protoLibrariesByRule[s.id]
+	log.Printf("imports-of %p %v %v", s, s.id, printProtoLibraryNames(libs))
 	if !ok {
 		if s.id.String() == "@go_googleapis//google/api:annotations_go_proto" {
 			log.Panicln("cached list of []protoc.ProtoLibrary not found:", s.id)

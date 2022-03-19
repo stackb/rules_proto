@@ -100,6 +100,11 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 	for i, r := range rules {
 		imports[i] = r.PrivateAttr(config.GazelleImportsKey)
 		internalLabel := label.New("", args.Rel, r.Name())
+		if imports[i] != nil {
+			log.Println("!imports of", internalLabel, len(imports[i].([]string)))
+		} else {
+			log.Println("!imports of", internalLabel, "nil!")
+		}
 		protoc.GlobalRuleIndex().Put(internalLabel, r)
 	}
 

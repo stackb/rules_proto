@@ -197,8 +197,6 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 		if r == nil {
 			continue
 		}
-		// record the association of the rule provider here for the resolver.
-		s.providers[r.Name()] = p
 
 		if shouldResolve {
 			// package up imports if not already created.
@@ -216,6 +214,12 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 		if index, ok := ruleIndexes[from]; ok {
 			rules[index] = r
 		} else {
+			// record the association of the rule provider here for the
+			// resolver.  Only the first occurrence of this rule name gets
+			// associated with the provider to keep the semantics of
+			// go_library.go "other".
+			s.providers[r.Name()] = p
+
 			ruleIndexes[from] = len(rules)
 			rules = append(rules, r)
 		}
