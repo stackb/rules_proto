@@ -64,8 +64,8 @@ type (
 		SourceFiles []string
 	}
 
-	srcDst struct {
-		src, dst string
+	SrcDst struct {
+		Src, Dst string
 	}
 )
 
@@ -118,76 +118,81 @@ $ bazel test %[1]s
 `, pkg.TargetLabel, cfg.UpdateTargetLabelName)
 }
 
-func check(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
+func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 	for _, pair := range pairs {
-		expected, err := readFileAsString(pair.src)
+		expected, err := readFileAsString(pair.Src)
 		if err != nil {
-			return fmt.Errorf("check failed while reading src %s: %v", pair.src, err)
+			return fmt.Errorf("check failed while reading src %s: %v", pair.Src, err)
 		}
-		actual, err := readFileAsString(pair.dst)
+		actual, err := readFileAsString(pair.Dst)
 		if err != nil {
-			return fmt.Errorf("check failed while reading dst %s: %v", pair.dst, err)
+			return fmt.Errorf("check failed while reading dst %s: %v", pair.Dst, err)
 		}
 		if diff := cmp.Diff(expected, actual); diff != "" {
-			return fmt.Errorf("gencopy mismatch %q vs. %q (-want +got):\n%s", pair.src, pair.dst, diff)
+			return fmt.Errorf("gencopy mismatch %q vs. %q (-want +got):\n%s", pair.Src, pair.Dst, diff)
 		}
 	}
 
 	fmt.Printf("Target %s: generated files are up-to-date:\n", pkg.TargetLabel)
 	for _, pair := range pairs {
-		fmt.Printf("  %s\n", pair.dst)
+		fmt.Printf("  %s\n", pair.Dst)
 	}
 
 	return nil
 }
 
-func update(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
-	if false {
-		for _, f := range mustListFiles(".") {
-			log.Println("FILE:", f)
-		}
-	}
-
+func update(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 	mode, err := parseFileMode(cfg.FileMode)
 	if err != nil {
 		return fmt.Errorf("update: %v", err)
 	}
 	for _, pair := range pairs {
-		if err := os.MkdirAll(filepath.Base(pair.dst), os.ModePerm); err != nil {
+		if err := os.MkdirAll(filepath.Base(pair.Dst), os.ModePerm); err != nil {
 			return fmt.Errorf("could not copy file (directory create error): %w", err)
 		}
-		if err := copyFile(pair.src, pair.dst, mode); err != nil {
+		if err := copyFile(pair.Src, pair.Dst, mode); err != nil {
 			return fmt.Errorf("could not copy file pair (%+v): %w", pair, err)
 		}
 	}
 
 	fmt.Printf("Target %s: output files copied to source tree:\n", pkg.TargetLabel)
 	for _, pair := range pairs {
-		fmt.Printf("  %s\n", pair.dst[len(cfg.WorkspaceRootDirectory)+1:])
+		fmt.Printf("  %s\n", pair.Dst[len(cfg.WorkspaceRootDirectory)+1:])
 	}
 
 	return nil
 }
 
-func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
+func makePkgSrcDstPairs(cfg *Config, pkg *PackageConfig) []*SrcDst {
 	// Prepare the src -> dst pairs
-	pairs := make([]*srcDst, len(pkg.GeneratedFiles))
+	pairs := make([]*SrcDst, len(pkg.GeneratedFiles))
 
 	// we are copying/comparing generated files to their source file
 	// equivalents.  So here 'src' is the generated file and 'dst' is the
 	// source file target. So yeah.
 	for i, src := range pkg.GeneratedFiles {
-		if !fileExists(src) {
-			return fmt.Errorf("could not prepare (generated file not found): %q", src)
+		pairs[i] = makePkgSrcDstPair(cfg, pkg, src, pkg.SourceFiles[i])
+	}
+
+	return pairs
+}
+
+func makePkgSrcDstPair(cfg *Config, pkg *PackageConfig, src, dst string) *SrcDst {
+	if pkg.TargetWorkspaceRoot != "" {
+		src = filepath.Join("external", strings.TrimPrefix(src, ".."))
+		dst = filepath.Join(pkg.TargetWorkspaceRoot, dst)
+	}
+	dst = filepath.Join(cfg.WorkspaceRootDirectory, dst)
+	return &SrcDst{src, dst}
+}
+
+func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
+	pairs := makePkgSrcDstPairs(cfg, pkg)
+
+	for _, pair := range pairs {
+		if !fileExists(pair.Src) {
+			return fmt.Errorf("could not prepare (generated file not found): %q", pair.Src)
 		}
-		dst := pkg.SourceFiles[i]
-		if pkg.TargetWorkspaceRoot != "" {
-			src = strings.Replace(src, "../", "external/", 1)
-			dst = filepath.Join(pkg.TargetWorkspaceRoot, dst)
-		}
-		dst = filepath.Join(cfg.WorkspaceRootDirectory, dst)
-		pair := &srcDst{src, dst}
-		pairs[i] = pair
 	}
 
 	switch cfg.Mode {
@@ -261,28 +266,4 @@ func parseFileMode(s string) (os.FileMode, error) {
 		return 0, err
 	}
 	return os.FileMode(value), nil
-}
-
-// mustListFiles - convenience debugging function to log the files under a given
-// dir, excluding proto files and the extra binaries here.
-func mustListFiles(dir string) []string {
-	files := make([]string, 0)
-
-	if err := filepath.Walk(dir, func(relname string, info os.FileInfo, err error) error {
-		if err != nil {
-			log.Fatal(err)
-		}
-		if info.IsDir() {
-			return nil
-		}
-		if filepath.Ext(relname) == ".proto" {
-			return nil
-		}
-		files = append(files, relname)
-		return nil
-	}); err != nil {
-		log.Fatal(err)
-	}
-
-	return files
 }
