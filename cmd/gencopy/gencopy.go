@@ -13,6 +13,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -53,6 +54,8 @@ type (
 		TargetLabel string
 		// The directory name where the files were generated
 		TargetPackage string
+		// TargetWorkspaceRoot is the value of Label.workspace_root.
+		TargetWorkspaceRoot string
 		// The list of files that were generated in the bazel output tree.  These
 		// should be absolute paths.
 		GeneratedFiles []string
@@ -86,6 +89,10 @@ func copyFile(src, dst string, mode os.FileMode) error {
 
 	data, err := ioutil.ReadFile(src)
 	if err != nil {
+		return err
+	}
+
+	if err := os.MkdirAll(filepath.Dir(dst), 0o755); err != nil {
 		return err
 	}
 
@@ -135,6 +142,12 @@ func check(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
 }
 
 func update(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
+	if false {
+		for _, f := range mustListFiles(".") {
+			log.Println("FILE:", f)
+		}
+	}
+
 	mode, err := parseFileMode(cfg.FileMode)
 	if err != nil {
 		return fmt.Errorf("update: %v", err)
@@ -167,7 +180,12 @@ func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
 		if !fileExists(src) {
 			return fmt.Errorf("could not prepare (generated file not found): %q", src)
 		}
-		dst := filepath.Join(cfg.WorkspaceRootDirectory, pkg.SourceFiles[i])
+		dst := pkg.SourceFiles[i]
+		if pkg.TargetWorkspaceRoot != "" {
+			src = strings.Replace(src, "../", "external/", 1)
+			dst = filepath.Join(pkg.TargetWorkspaceRoot, dst)
+		}
+		dst = filepath.Join(cfg.WorkspaceRootDirectory, dst)
 		pair := &srcDst{src, dst}
 		pairs[i] = pair
 	}
@@ -243,4 +261,28 @@ func parseFileMode(s string) (os.FileMode, error) {
 		return 0, err
 	}
 	return os.FileMode(value), nil
+}
+
+// mustListFiles - convenience debugging function to log the files under a given
+// dir, excluding proto files and the extra binaries here.
+func mustListFiles(dir string) []string {
+	files := make([]string, 0)
+
+	if err := filepath.Walk(dir, func(relname string, info os.FileInfo, err error) error {
+		if err != nil {
+			log.Fatal(err)
+		}
+		if info.IsDir() {
+			return nil
+		}
+		if filepath.Ext(relname) == ".proto" {
+			return nil
+		}
+		files = append(files, relname)
+		return nil
+	}); err != nil {
+		log.Fatal(err)
+	}
+
+	return files
 }
