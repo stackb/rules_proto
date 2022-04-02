@@ -20,4 +20,5 @@ go_test(
     name = "gencopy_test",
     srcs = ["gencopy_test.go"],
     embed = [":gencopy_lib"],
+    deps = ["@com_github_google_go_cmp//cmp"],
 )

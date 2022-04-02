@@ -57,6 +57,7 @@ def _proto_compile_gencopy_impl(ctx):
             struct(
                 targetLabel = str(info.label),
                 targetPackage = info.label.package,
+                targetWorkspaceRoot = info.label.workspace_root,
                 generatedFiles = [f.short_path for f in info.outputs],
                 sourceFiles = srcs,
             ),
