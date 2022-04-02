@@ -470,6 +470,26 @@ will be committed under source control.  `3.` is used to prevent drift: if a
 developer modifies `thing.proto` and neglects to run the `.update` the test will
 fail in CI.
 
+### proto_compile_assets
+
+The macro `proto_compile_assets` aggregates a list of dependencies (which provide `ProtoCompileInfo`) into a single runnable target that copies files in bulk.  
+
+For example, `bazel run //proto:assets` will copy all the generated `.pb.go`
+files back into the source tree:
+
+```py
+load("@build_stack_rules_proto//rules:proto_compile_assets.bzl", "proto_compile_assets")
+
+proto_compile_assets(
+    name = "assets",
+    deps = [,
+      "//proto/api/v1:proto_go_compile",
+      "//proto/api/v2:proto_go_compile",
+      "//proto/api/v3:proto_go_compile",
+    ],
+)
+```
+
 ### The `output_mappings` attribute
 
 Consider the following rule within the package `example/thing`:
