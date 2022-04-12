@@ -47,7 +47,7 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 		debug := false
 
 		if debug {
-			log.Printf("ResolveDepsAttr %q for %s rule %v", attrName, r.Kind(), from)
+			log.Printf("%v (%s.%s): resolving %d imports: %v", from, r.Kind(), attrName, len(imports), imports)
 		}
 
 		existing := r.AttrStrings(attrName)
@@ -65,9 +65,6 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 		unresolvedDeps := make(map[string]error)
 
 		for _, imp := range imports {
-			if debug {
-				log.Println(from, "resolving:", imp)
-			}
 			if excludeWkt && strings.HasPrefix(imp, "google/protobuf/") {
 				continue
 			}
@@ -78,10 +75,13 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 				impLang = overrideImpLang
 			}
 
+			if debug {
+				log.Println(from, "resolving:", imp, impLang)
+			}
 			l, err := resolveAnyKind(c, ix, impLang, imp, from)
 			if err == errSkipImport {
 				if debug {
-					log.Println(from, "skipped:", imp)
+					log.Println(from, "skipped (errSkipImport):", imp)
 				}
 				continue
 			}
@@ -94,7 +94,7 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 				if debug {
 					log.Println(from, "no label", imp)
 				}
-				// log.Panicf("import %q failed to resolve (from=%v)", imp, from)
+				log.Panicf("import %q failed to resolve (from=%v)", imp, from)
 				unresolvedDeps[imp] = ErrNoLabel
 				continue
 			}
@@ -190,11 +190,13 @@ func StripRel(rel string, filename string) string {
 // set of given proto_library.
 func ProtoLibraryImportSpecsForKind(kind string, libs ...ProtoLibrary) []resolve.ImportSpec {
 	specs := make([]resolve.ImportSpec, 0)
-
 	for _, lib := range libs {
 		files := lib.Files()
 		for _, file := range files {
-			specs = append(specs, resolve.ImportSpec{Lang: kind, Imp: path.Join(file.Dir, file.Basename)})
+			imp := path.Join(file.Dir, file.Basename)
+			spec := resolve.ImportSpec{Lang: kind, Imp: imp}
+			log.Printf(".ProtoLibraryImportSpecsForKind(%s): -+-> %+v", kind, spec)
+			specs = append(specs, spec)
 		}
 	}
 

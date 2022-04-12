@@ -1,2 +1,4 @@
 proto,proto,scalapb/scalapb.proto,@scalaapis//scalapb:scalapb_proto
 protobuf,_scala_library,scalapb/scalapb.proto,@scalaapis//scalapb:scalapb_scala_library
+scala,scala,lib.WithSnapshot,//lib:scala
+protobuf,_scala_library,lib.WithSnapshot,//lib:scala

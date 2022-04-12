@@ -232,6 +232,8 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 	from := label.New("", file.Pkg, r.Name())
 	provideScalaImports(s.config.Library.Files(), protoc.GlobalResolver(), from, pluginOptions)
 
+	log.Printf("%v: ProtoLibraryImportSpecsForKind(%s)", from, scalaLibraryRuleSuffix)
+
 	// 2. create import specs for 'protobuf _scala_library'.  This allows
 	// proto_scala_library and grpc_scala_library to resolve deps.
 	return protoc.ProtoLibraryImportSpecsForKind(scalaLibraryRuleSuffix, s.config.Library)
