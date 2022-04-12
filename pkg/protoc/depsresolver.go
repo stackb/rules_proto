@@ -94,7 +94,7 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 				if debug {
 					log.Println(from, "no label", imp)
 				}
-				log.Panicf("import %q failed to resolve (from=%v)", imp, from)
+				log.Printf("warning: import %q failed to resolve (from=%v)", imp, from)
 				unresolvedDeps[imp] = ErrNoLabel
 				continue
 			}
@@ -195,7 +195,6 @@ func ProtoLibraryImportSpecsForKind(kind string, libs ...ProtoLibrary) []resolve
 		for _, file := range files {
 			imp := path.Join(file.Dir, file.Basename)
 			spec := resolve.ImportSpec{Lang: kind, Imp: imp}
-			log.Printf(".ProtoLibraryImportSpecsForKind(%s): -+-> %+v", kind, spec)
 			specs = append(specs, spec)
 		}
 	}
