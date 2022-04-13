@@ -11,7 +11,10 @@ proto_library(
         "service.proto",
     ],
     visibility = ["//visibility:public"],
-    deps = ["@scalaapis//scalapb:scalapb_proto"],
+    deps = [
+        "//proto:proto_proto",
+        "@scalaapis//scalapb:scalapb_proto",
+    ],
 )
 
 grpc_scala_library(
@@ -22,6 +25,8 @@ grpc_scala_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//lib:scala",
+        "//proto:proto_scala_library",
         "@com_google_protobuf//:protobuf_java",
         "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12",
         "@maven_akka//:com_typesafe_akka_akka_actor_2_12",

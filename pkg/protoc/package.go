@@ -199,13 +199,14 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 		}
 
 		if shouldResolve {
-			// package up imports if not already created.
-			imports := r.PrivateAttr(config.GazelleImportsKey)
-			if imports == nil {
-				lib := s.ruleLibs[p]
-				r.SetPrivateAttr(ProtoLibraryKey, lib)
-				r.SetPrivateAttr(config.GazelleImportsKey, lib.Imports())
+			lib := s.ruleLibs[p]
+			r.SetPrivateAttr(ProtoLibraryKey, lib)
+			// package up imports, append those that might already be created.
+			imports := lib.Imports()
+			if existingImports, ok := r.PrivateAttr(config.GazelleImportsKey).([]string); ok {
+				imports = append(imports, existingImports...)
 			}
+			r.SetPrivateAttr(config.GazelleImportsKey, imports)
 		}
 
 		// if this is a duplicate (e.g. the rule provider returned an "other"

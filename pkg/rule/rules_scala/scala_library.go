@@ -196,7 +196,7 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	// set the override language such that deps of 'proto_scala_library' and
 	// 'grpc_scala_library' can resolve together (matches the value used by
 	// "Imports").
-	newRule.SetPrivateAttr(protoc.ResolverImpLangPrivateKey, scalaLibraryRuleSuffix)
+	newRule.SetPrivateAttr(protoc.ResolverImpLangPrivateKey, "scala")
 
 	// add the scalapb plugin options as a private attr so we can inspect them
 	// during the .Imports() phase.  For example, akka 'server_power_apis'
@@ -232,9 +232,9 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 	from := label.New("", file.Pkg, r.Name())
 	provideScalaImports(s.config.Library.Files(), protoc.GlobalResolver(), from, pluginOptions)
 
-	// 2. create import specs for 'protobuf _scala_library'.  This allows
+	// 2. create import specs for 'protobuf scala'.  This allows
 	// proto_scala_library and grpc_scala_library to resolve deps.
-	return protoc.ProtoLibraryImportSpecsForKind(scalaLibraryRuleSuffix, s.config.Library)
+	return protoc.ProtoLibraryImportSpecsForKind("scala", s.config.Library)
 }
 
 // Resolve implements part of the RuleProvider interface.
@@ -244,6 +244,13 @@ func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *r
 
 	if unresolvedDeps, ok := r.PrivateAttr(protoc.UnresolvedDepsPrivateKey).(map[string]error); ok {
 		resolveScalaDeps(c, ix, r, unresolvedDeps, from)
+
+		for imp, err := range unresolvedDeps {
+			if err == nil {
+				continue
+			}
+			log.Printf("%[1]v (%[2]s): warning: failed to resolve %[3]q: %v", from, r.Kind(), imp, err)
+		}
 	}
 }
 
@@ -251,12 +258,20 @@ func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *r
 // "scala" language.  Only unresolved deps of type ErrNoLabel are considered.
 // Typically these unresolved dependencies arise from (scalapb.options) imports.
 func resolveScalaDeps(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, unresolvedDeps map[string]error, from label.Label) {
+	lang := "scala"
+
 	resolvedDeps := make([]string, 0)
 	for imp, err := range unresolvedDeps {
 		if err != protoc.ErrNoLabel {
 			continue
 		}
-		result := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{Lang: "scala", Imp: imp}, "scala")
+		importSpec := resolve.ImportSpec{Lang: lang, Imp: imp}
+		if l, ok := resolve.FindRuleWithOverride(c, importSpec, lang); ok {
+			resolvedDeps = append(resolvedDeps, l.String())
+			unresolvedDeps[imp] = nil
+			continue
+		}
+		result := ix.FindRulesByImportWithConfig(c, importSpec, lang)
 		if len(result) == 0 {
 			continue
 		}
@@ -265,6 +280,7 @@ func resolveScalaDeps(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, unr
 			continue
 		}
 		resolvedDeps = append(resolvedDeps, result[0].Label.String())
+		unresolvedDeps[imp] = nil
 	}
 	if len(resolvedDeps) > 0 {
 		r.SetAttr("deps", protoc.DeduplicateAndSort(append(r.AttrStrings("deps"), resolvedDeps...)))

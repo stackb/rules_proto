@@ -47,7 +47,7 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 		debug := false
 
 		if debug {
-			log.Printf("ResolveDepsAttr %q for %s rule %v", attrName, r.Kind(), from)
+			log.Printf("%v (%s.%s): resolving %d imports: %v", from, r.Kind(), attrName, len(imports), imports)
 		}
 
 		existing := r.AttrStrings(attrName)
@@ -65,9 +65,6 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 		unresolvedDeps := make(map[string]error)
 
 		for _, imp := range imports {
-			if debug {
-				log.Println(from, "resolving:", imp)
-			}
 			if excludeWkt && strings.HasPrefix(imp, "google/protobuf/") {
 				continue
 			}
@@ -78,10 +75,13 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 				impLang = overrideImpLang
 			}
 
-			l, err := resolveAnyKind(c, ix, impLang, imp, from)
+			if debug {
+				log.Println(from, "resolving:", imp, impLang)
+			}
+			l, err := resolveAnyKind(c, ix, ResolverLangName, impLang, imp, from)
 			if err == errSkipImport {
 				if debug {
-					log.Println(from, "skipped:", imp)
+					log.Println(from, "skipped (errSkipImport):", imp)
 				}
 				continue
 			}
@@ -94,7 +94,6 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 				if debug {
 					log.Println(from, "no label", imp)
 				}
-				// log.Panicf("import %q failed to resolve (from=%v)", imp, from)
 				unresolvedDeps[imp] = ErrNoLabel
 				continue
 			}
@@ -130,12 +129,12 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 // resolve directives, or via a YAML config).  If no override is found, the
 // RuleIndex is consulted, which contains all rules indexed by gazelle in the
 // generation phase.   If no match is found, return label.NoLabel.
-func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, lang string, imp string, from label.Label) (label.Label, error) {
-	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: lang, Imp: imp}, ResolverLangName); ok {
+func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, lang, impLang, imp string, from label.Label) (label.Label, error) {
+	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: impLang, Imp: imp}, lang); ok {
 		// log.Println(from, "override hit:", l)
 		return l, nil
 	}
-	if l, err := resolveWithIndex(c, ix, lang, imp, from); err == nil || err == errSkipImport {
+	if l, err := resolveWithIndex(c, ix, lang, impLang, imp, from); err == nil || err == errSkipImport {
 		return l, err
 	} else if err != errNotFound {
 		return label.NoLabel, err
@@ -146,8 +145,8 @@ func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, lang string, imp st
 	return label.NoLabel, nil
 }
 
-func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, kind, imp string, from label.Label) (label.Label, error) {
-	matches := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{Lang: kind, Imp: imp}, ResolverLangName)
+func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, lang, impLang, imp string, from label.Label) (label.Label, error) {
+	matches := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{Lang: impLang, Imp: imp}, lang)
 	if len(matches) == 0 {
 		// log.Println(from, "no matches:", imp)
 		return label.NoLabel, errNotFound
@@ -190,11 +189,12 @@ func StripRel(rel string, filename string) string {
 // set of given proto_library.
 func ProtoLibraryImportSpecsForKind(kind string, libs ...ProtoLibrary) []resolve.ImportSpec {
 	specs := make([]resolve.ImportSpec, 0)
-
 	for _, lib := range libs {
 		files := lib.Files()
 		for _, file := range files {
-			specs = append(specs, resolve.ImportSpec{Lang: kind, Imp: path.Join(file.Dir, file.Basename)})
+			imp := path.Join(file.Dir, file.Basename)
+			spec := resolve.ImportSpec{Lang: kind, Imp: imp}
+			specs = append(specs, spec)
 		}
 	}
 
