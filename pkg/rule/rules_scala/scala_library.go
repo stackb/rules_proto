@@ -249,7 +249,6 @@ func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *r
 			if err == nil {
 				continue
 			}
-			// log.Printf("%[1]v (%[5]s): warning: failed to resolve %[2]q.  Consider adding a directive 'gazelle:resolve %[3]s %[4]s %[2]s //somepkgthatprovides:it' to fix.", from, imp, "", impLang, r.Kind())
 			log.Printf("%[1]v (%[2]s): warning: failed to resolve %[3]q: %v", from, r.Kind(), imp, err)
 		}
 	}
