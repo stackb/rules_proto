@@ -10,11 +10,10 @@ def proto_compile_assets(**kwargs):
         Deps must provide ProtoCompileInfo.
     """
     name = kwargs.pop("name")
-    deps = kwargs.pop("deps", [])
 
     proto_compile_gencopy_run(
         name = name,
-        deps = deps,
         mode = "update",
         update_target_label_name = name,
+        **kwargs
     )

@@ -155,7 +155,7 @@ func update(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 		}
 	}
 
-	fmt.Printf("Target %s: output files copied to source tree:\n", pkg.TargetLabel)
+	// fmt.Printf("Target %s: output files copied to source tree:\n", pkg.TargetLabel)
 	for _, pair := range pairs {
 		fmt.Printf("  %s\n", pair.Dst[len(cfg.WorkspaceRootDirectory)+1:])
 	}
