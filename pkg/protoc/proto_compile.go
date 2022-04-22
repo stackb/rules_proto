@@ -1,6 +1,7 @@
 package protoc
 
 import (
+	"log"
 	"fmt"
 	"sort"
 
@@ -130,6 +131,26 @@ func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)
+	}
+
+	for _, name := range s.ruleConfig.GetAttrNames() {
+		vals := s.ruleConfig.GetAttr(name)
+		if len(vals) == 0 {
+			continue
+		}
+		switch name {
+		case "verbose":
+			val := vals[0]
+			if val == "True" || val == "true" {
+				newRule.SetAttr("verbose", true)
+			} else if val == "False" || val == "false" {
+				newRule.SetAttr("verbose", false)
+			} else {
+				log.Printf("bad attr 'verbose' value: %q", val)
+			}
+		default:
+			newRule.SetAttr(name, vals)
+		}
 	}
 
 	return newRule
