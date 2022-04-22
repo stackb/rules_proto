@@ -192,8 +192,8 @@ def _proto_compile_impl(ctx):
             # const <depset<File>, <list<opaque>>
             plugin_runfiles, plugin_input_manifests = ctx.resolve_tools(tools = [plugin.tool_target])
             if plugin_input_manifests:
-                input_manifests.append(plugin_input_manifests)  # TODO: check this
-            inputs += plugin_runfiles.to_list()
+                input_manifests.extend(plugin_input_manifests)
+            tools += plugin_runfiles.to_list()
 
             # If Windows, mangle the path.
             plugin_tool_path = plugin_tool.path
@@ -339,6 +339,7 @@ def _proto_compile_impl(ctx):
         outputs = outputs,
         progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
         tools = tools,
+        input_manifests = input_manifests,
     )
 
     return [
