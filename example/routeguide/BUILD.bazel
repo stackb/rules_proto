@@ -293,7 +293,11 @@ proto_compile(
 proto_ts_library(
     name = "routeguide_ts_proto",
     srcs = ["routeguide.ts"],
-    args = ["--lib ES2015"],
+    args = [
+        "--lib ES2015",
+        "--allowSyntheticDefaultImports",
+        "--downlevelIteration",
+    ],
     tags = ["manual"],
     tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],

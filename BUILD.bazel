@@ -1,5 +1,6 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+load("//rules/ts:well_known_types.bzl", "wkt_ts_proto", "wkt_ts_proto_compile")
 
 # ----------------------------------------------------
 # Buildifier
@@ -62,5 +63,15 @@ filegroup(
         "//third_party:all_files",
         "//toolchain:all_files",
     ] + glob(["vendor/**/*"]),
+    visibility = ["//visibility:public"],
+)
+
+# ----------------------------------------------------
+# Well Known Types for Typescript
+# ----------------------------------------------------
+
+wkt_ts_proto_compile()
+
+wkt_ts_proto(
     visibility = ["//visibility:public"],
 )

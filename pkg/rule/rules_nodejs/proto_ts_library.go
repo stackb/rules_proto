@@ -100,9 +100,14 @@ func (s *tsLibrary) Srcs() []string {
 	return s.Outputs
 }
 
-// Deps computes the deps list for the rule.
+// Deps returns all known "configured" dependencies:
+// 1. Those given by 'deps' directive on the rule config.
+// 2. Those given by resolving "rewrite" specs against the proto file imports.
 func (s *tsLibrary) Deps() []string {
-	return s.RuleConfig.GetDeps()
+	deps := s.RuleConfig.GetDeps()
+	resolvedDeps := protoc.ResolveLibraryRewrites(s.RuleConfig.GetRewrites(), s.Config.Library)
+	deps = append(deps, resolvedDeps...)
+	return deps
 }
 
 // Visibility provides visibility labels.
