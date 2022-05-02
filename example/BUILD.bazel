@@ -115,6 +115,10 @@
 # gazelle:proto_language closure_js rule proto_closure_js_library
 # gazelle:proto_language closure_js rule grpc_closure_js_library
 
+## javascript es6
+# gazelle:proto_plugin es6_js implementation protocolbuffers:protobuf-javascript:es6
+# gazelle:proto_language es6_js rule proto_compile
+
 ## node_js ##
 # gazelle:proto_plugin node_js implementation builtin:js:common
 # gazelle:proto_plugin protoc-gen-grpc-node implementation grpc:grpc-node:protoc-gen-grpc-node
