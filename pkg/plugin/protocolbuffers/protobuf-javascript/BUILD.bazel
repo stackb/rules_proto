@@ -2,9 +2,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "protobuf-javascript",
-    srcs = [
-        "js_es6_plugin.go",
-    ],
+    srcs = ["js_es6_plugin.go"],
     importpath = "github.com/stackb/rules_proto/pkg/plugin/protocolbuffers/protobuf-javascript",
     visibility = ["//visibility:public"],
     deps = [
@@ -15,9 +13,7 @@ go_library(
 
 go_test(
     name = "protobuf-javascript_test",
-    srcs = [
-        "js_es6_plugin_test.go",
-    ],
+    srcs = ["js_es6_plugin_test.go"],
     data = [":protoc"],
     deps = [
         ":protobuf-javascript",
