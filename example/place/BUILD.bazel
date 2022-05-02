@@ -172,3 +172,10 @@ proto_ts_library(
         "@npm_tsc//protobufjs",
     ],
 )
+
+proto_compile(
+    name = "place_es6_js_compile",
+    outputs = ["place_pb.js"],
+    plugins = ["@build_stack_rules_proto//protocolbuffers/protobuf-javascript:es6"],
+    proto = "place_proto",
+)

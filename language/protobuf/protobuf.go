@@ -13,6 +13,7 @@ import (
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpc/grpcjava"
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpc/grpcnode"
 	_ "github.com/stackb/rules_proto/pkg/plugin/grpcecosystem/grpcgateway"
+	_ "github.com/stackb/rules_proto/pkg/plugin/protocolbuffers/protobuf-javascript"
 	_ "github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb"
 	_ "github.com/stackb/rules_proto/pkg/plugin/stackb/grpc_js"
 	_ "github.com/stackb/rules_proto/pkg/plugin/stephenh/ts-proto"

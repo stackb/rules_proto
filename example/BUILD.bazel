@@ -116,9 +116,9 @@
 # gazelle:proto_language closure_js rule grpc_closure_js_library
 
 ## javascript es6
-# gazelle:proto_plugin es6_js implementation protocolbuffers:protobuf-javascript:es61
+# gazelle:proto_plugin es6 implementation protocolbuffers:protobuf-javascript:es6
 # gazelle:proto_language es6_js rule proto_compile
-# gazelle:proto_language es6_js plugin es6_js
+# gazelle:proto_language es6_js plugin es6
 
 ## node_js ##
 # gazelle:proto_plugin node_js implementation builtin:js:common

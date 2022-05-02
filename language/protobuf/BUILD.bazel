@@ -15,6 +15,7 @@ go_library(
         "//pkg/plugin/grpc/grpcjava",
         "//pkg/plugin/grpc/grpcnode",
         "//pkg/plugin/grpcecosystem/grpcgateway",
+        "//pkg/plugin/protocolbuffers/protobuf-javascript",
         "//pkg/plugin/scalapb/scalapb",
         "//pkg/plugin/stackb/grpc_js",
         "//pkg/plugin/stephenh/ts-proto",

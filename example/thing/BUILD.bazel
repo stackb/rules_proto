@@ -156,3 +156,10 @@ proto_ts_library(
         "@npm_tsc//protobufjs",
     ],
 )
+
+proto_compile(
+    name = "thing_es6_js_compile",
+    outputs = ["thing_pb.js"],
+    plugins = ["@build_stack_rules_proto//protocolbuffers/protobuf-javascript:es6"],
+    proto = "thing_proto",
+)

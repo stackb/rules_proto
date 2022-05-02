@@ -303,3 +303,10 @@ proto_ts_library(
         "@npm_tsc//protobufjs",
     ],
 )
+
+proto_compile(
+    name = "routeguide_es6_js_compile",
+    outputs = ["routeguide_pb.js"],
+    plugins = ["@build_stack_rules_proto//protocolbuffers/protobuf-javascript:es6"],
+    proto = "routeguide_proto",
+)

@@ -173,3 +173,10 @@ proto_ts_library(
         "@npm_tsc//protobufjs",
     ],
 )
+
+proto_compile(
+    name = "person_es6_js_compile",
+    outputs = ["person_pb.js"],
+    plugins = ["@build_stack_rules_proto//protocolbuffers/protobuf-javascript:es6"],
+    proto = "person_proto",
+)
