@@ -51,5 +51,7 @@ ProtoDependencyInfo = provider(
         "yarnLock": "The yarn lock file",
         "packageJson": "The package.json file",
         "packageLockJson": "The package lock json file",
+        "patches": "The patches attribute for http_archive",
+        "patchArgs": "The patch_args attribute for http_archive",
     },
 )

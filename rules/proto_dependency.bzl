@@ -22,6 +22,8 @@ def _proto_dependency_impl(ctx):
             version = ctx.attr.version,
             packageJson = ctx.attr.package_json,
             packageLockJson = ctx.attr.package_lock_json,
+            patches = ctx.attr.patches,
+            patchArgs = ctx.attr.patch_args,
             yarnLock = ctx.attr.yarn_lock,
             workspaceSnippet = ctx.attr.workspace_snippet,
             frozenLockfile = ctx.attr.frozen_lockfile,
@@ -87,6 +89,12 @@ proto_dependency = rule(
         ),
         "yarn_lock": attr.string(
             doc = "The yarn_lock attribute for yarn_install",
+        ),
+        "patches": attr.string_list(
+            doc = "The patches attribute for http_archive",
+        ),
+        "patch_args": attr.string_list(
+            doc = "The patch_args attribute for http_archive",
         ),
     },
 )

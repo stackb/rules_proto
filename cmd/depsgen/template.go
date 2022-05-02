@@ -37,7 +37,13 @@ def {{ .Dep.Name }}():
         sum = "{{ .Dep.Sum }}",{{ end }}{{ if .Dep.Version }}
         version = "{{ .Dep.Version }}",{{ end }}{{ if .Dep.Importpath }}
         importpath = "{{ .Dep.Importpath }}",{{ end }}{{ if .Dep.BuildFileProtoMode }}
-        build_file_proto_mode = "{{ .Dep.BuildFileProtoMode }}",{{ end }}{{ if .Dep.Urls }}
+        build_file_proto_mode = "{{ .Dep.BuildFileProtoMode }}",{{ end }}{{ if .Dep.Patches }}
+        patches = [{{ range .Dep.Patches }}
+            "{{ . }}",{{ end }}
+        ],{{ end }}{{ if .Dep.PatchArgs }}
+        patch_args = [{{ range .Dep.PatchArgs }}
+            "{{ . }}",{{ end }}
+        ],{{ end }}{{ if .Dep.Urls }}
         urls = [{{ range .Dep.Urls }}
             "{{ . }}",{{ end }}
         ],{{ end }}{{ if .Dep.BuildFile }}

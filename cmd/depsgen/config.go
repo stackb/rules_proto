@@ -50,6 +50,8 @@ type ProtoDependencyInfo struct {
 	PackageJson        string
 	PackageLockJson    string
 	YarnLock           string
+	Patches            []string
+	PatchArgs          []string
 }
 
 type LoadInfo struct {
