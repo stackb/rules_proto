@@ -1,0 +1,42 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "protobuf-javascript",
+    srcs = [
+        "js_es6_plugin.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/pkg/plugin/protocolbuffers/protobuf-javascript",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+    ],
+)
+
+go_test(
+    name = "protobuf-javascript_test",
+    srcs = [
+        "js_es6_plugin_test.go",
+    ],
+    data = [":protoc"],
+    deps = [
+        ":protobuf-javascript",
+        "//pkg/plugintest",
+    ],
+)
+
+genrule(
+    name = "protoc_tool",
+    outs = ["protoc"],
+    cmd = "cp $(location @com_google_protobuf//:protoc) $@",
+    executable = True,
+    tools = ["@com_google_protobuf//:protoc"],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+    ] + glob(["*.go"]),
+    visibility = ["//pkg:__pkg__"],
+)

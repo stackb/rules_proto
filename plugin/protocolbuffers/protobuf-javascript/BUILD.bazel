@@ -1,0 +1,9 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "es6",
+    options = ["import_style=es6"],
+    tool = "@com_google_protobuf_javascript//generator:protoc-gen-js",
+    visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
+)
