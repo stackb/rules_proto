@@ -2,7 +2,10 @@ filegroup(
     name = "all_files",
     srcs = [
         "BUILD.bazel",
+        "protobuf-javascript-5.patch",
         "zlib.BUILD",
     ],
     visibility = ["//:__pkg__"],
 )
+
+exports_files(["protobuf-javascript-5.patch"])

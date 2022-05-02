@@ -1,0 +1,30 @@
+From f7a9008321d3c0b3b733a9240a73812eba5c44ba Mon Sep 17 00:00:00 2001
+From: Paul Johnston <pcj@stack.build>
+Date: Sun, 1 May 2022 18:13:34 -0600
+Subject: [PATCH] buildozer 'add visibility //visibility:public'
+ //generator:protoc-gen-js
+
+---
+ generator/BUILD | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/generator/BUILD b/generator/BUILD
+index 18b6869..de1fc18 100644
+--- a/generator/BUILD
++++ b/generator/BUILD
+@@ -1,13 +1,13 @@
+-
+ cc_binary(
+     name = "protoc-gen-js",
+     srcs = [
+-        "protoc-gen-js.cc",
+         "js_generator.cc",
+         "js_generator.h",
++        "protoc-gen-js.cc",
+         "well_known_types_embed.cc",
+         "well_known_types_embed.h",
+     ],
++    visibility = ["//visibility:public"],
+     deps = [
+         #"@com_google_absl//absl/base:core_headers",
+         #"@com_google_absl//absl/container:flat_hash_map",

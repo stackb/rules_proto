@@ -20,6 +20,10 @@ load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
 protobuf_core_deps()
 
+load("//deps:protobuf_javascript_deps.bzl", "protobuf_javascript_deps")
+
+protobuf_javascript_deps()
+
 load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
 prebuilt_protoc_deps()

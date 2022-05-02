@@ -15,6 +15,14 @@ depsgen(
 )
 
 depsgen(
+    name = "protobuf_javascript",
+    deps = [
+        "//deps:com_google_protobuf",
+        "//deps:com_google_protobuf_javascript",
+    ],
+)
+
+depsgen(
     name = "go_core",
     deps = [
         ":com_github_golang_protobuf",
@@ -125,17 +133,55 @@ proto_dependency(
     deps = [":io_bazel_rules_go"],
 )
 
+# Commit: 4f8f6ed027c07b92e4ee5a8b4b51d8673fcc60ee
+# Date: 2022-04-07 20:13:23 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_pkg/commit/4f8f6ed027c07b92e4ee5a8b4b51d8673fcc60ee
+#
+# R7 (#575)
+#
+# * update README and docs for 0.7.0
+# Size: 213156 (213 kB)
+proto_dependency(
+    name = "rules_pkg",
+    repository_rule = "http_archive",
+    sha256 = "67e4dc634cb7237bc501fd03101b6b935c9f991c6f46d31a36b35ed5461f51b6",
+    strip_prefix = "rules_pkg-4f8f6ed027c07b92e4ee5a8b4b51d8673fcc60ee",
+    urls = ["https://github.com/bazelbuild/rules_pkg/archive/4f8f6ed027c07b92e4ee5a8b4b51d8673fcc60ee.tar.gz"],
+)
+
 proto_dependency(
     name = "com_google_protobuf",
     repository_rule = "http_archive",
-    sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
-    strip_prefix = "protobuf-3.14.0",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz"],
+    sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
+    strip_prefix = "protobuf-3.20.1",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz"],
     visibility = ["//visibility:public"],
     deps = [
         ":bazel_skylib",
+        ":rules_pkg",
         ":rules_python",
         ":zlib",
+    ],
+)
+
+# Commit: 3561b05cbf706aa14b0f8886c1167f402cf87b77
+# Date: 2022-04-28 16:58:38 +0000 UTC
+# URL: https://github.com/protocolbuffers/protobuf-javascript/commit/3561b05cbf706aa14b0f8886c1167f402cf87b77
+#
+# Merge pull request #1 from protocolbuffers/plugin-binary
+#
+# Made the JS generator into a plugin that builds into a binary.
+# Size: 289719 (290 kB)
+proto_dependency(
+    name = "com_google_protobuf_javascript",
+    patch_args = ["-p1"],
+    patches = ["//third_party:protobuf-javascript-5.patch"],
+    repository_rule = "http_archive",
+    sha256 = "392cef95222eb8ad7726c489ca9a02e46e93c404716ee80d7f9d3778975b4349",
+    strip_prefix = "protobuf-javascript-3561b05cbf706aa14b0f8886c1167f402cf87b77",
+    urls = ["https://github.com/protocolbuffers/protobuf-javascript/archive/3561b05cbf706aa14b0f8886c1167f402cf87b77.tar.gz"],
+    deps = [
+        ":com_google_protobuf",
     ],
 )
 

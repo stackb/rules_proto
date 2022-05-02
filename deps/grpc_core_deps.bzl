@@ -11,6 +11,7 @@ def _maybe(repo_rule, name, **kwargs):
 def grpc_core_deps():
     build_bazel_rules_swift()  # via com_github_grpc_grpc
     bazel_skylib()  # via com_google_protobuf
+    rules_pkg()  # via com_google_protobuf
     rules_python()  # via com_google_protobuf
     zlib()  # via com_google_protobuf
     com_google_protobuf()  # via com_github_grpc_grpc
@@ -36,6 +37,17 @@ def bazel_skylib():
         strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
         urls = [
             "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+        ],
+    )
+
+def rules_pkg():
+    _maybe(
+        http_archive,
+        name = "rules_pkg",
+        sha256 = "67e4dc634cb7237bc501fd03101b6b935c9f991c6f46d31a36b35ed5461f51b6",
+        strip_prefix = "rules_pkg-4f8f6ed027c07b92e4ee5a8b4b51d8673fcc60ee",
+        urls = [
+            "https://github.com/bazelbuild/rules_pkg/archive/4f8f6ed027c07b92e4ee5a8b4b51d8673fcc60ee.tar.gz",
         ],
     )
 
@@ -67,10 +79,10 @@ def com_google_protobuf():
     _maybe(
         http_archive,
         name = "com_google_protobuf",
-        sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
-        strip_prefix = "protobuf-3.14.0",
+        sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
+        strip_prefix = "protobuf-3.20.1",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz",
         ],
     )
 

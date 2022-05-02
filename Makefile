@@ -9,10 +9,10 @@ tidy: deps
 
 .PHONY: deps
 deps:
-	bazel build //deps:*
+	bzl build //deps:*
 	cp -f ./bazel-bin/deps/*.bzl deps/
 	chmod 0644 deps/*.bzl
-	bazel run //:buildifier -- deps/
+	bzl run //:buildifier -- deps/
 		
 .PHONY: site
 site:

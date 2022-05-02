@@ -8,27 +8,13 @@ def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def grpc_node_deps():
-    build_bazel_rules_swift()  # via com_github_grpc_grpc
+def protobuf_javascript_deps():
     bazel_skylib()  # via com_google_protobuf
     rules_pkg()  # via com_google_protobuf
     rules_python()  # via com_google_protobuf
     zlib()  # via com_google_protobuf
-    com_google_protobuf()  # via com_github_grpc_grpc
-    rules_jvm_external()  # via com_github_grpc_grpc
-    com_github_grpc_grpc()  # via com_github_grpc_grpc_node_packages_grpc_tools_src
-    com_github_grpc_grpc_node_packages_grpc_tools_src()  # via <TOP>
-
-def build_bazel_rules_swift():
-    _maybe(
-        http_archive,
-        name = "build_bazel_rules_swift",
-        sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
-        strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
-        urls = [
-            "https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz",
-        ],
-    )
+    com_google_protobuf()  # via <TOP>
+    com_google_protobuf_javascript()  # via <TOP>
 
 def bazel_skylib():
     _maybe(
@@ -87,56 +73,19 @@ def com_google_protobuf():
         ],
     )
 
-def rules_jvm_external():
+def com_google_protobuf_javascript():
     _maybe(
         http_archive,
-        name = "rules_jvm_external",
-        sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
-        strip_prefix = "rules_jvm_external-4.0",
-        urls = [
-            "https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip",
+        name = "com_google_protobuf_javascript",
+        sha256 = "392cef95222eb8ad7726c489ca9a02e46e93c404716ee80d7f9d3778975b4349",
+        strip_prefix = "protobuf-javascript-3561b05cbf706aa14b0f8886c1167f402cf87b77",
+        patches = [
+            "//third_party:protobuf-javascript-5.patch",
         ],
-    )
-
-def com_github_grpc_grpc():
-    _maybe(
-        http_archive,
-        name = "com_github_grpc_grpc",
-        sha256 = "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b",
-        strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
-        urls = [
-            "https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz",
+        patch_args = [
+            "-p1",
         ],
-    )
-
-def com_github_grpc_grpc_node_packages_grpc_tools_src():
-    _maybe(
-        http_archive,
-        name = "com_github_grpc_grpc_node_packages_grpc_tools_src",
-        sha256 = "7fbe9d04e45420c3c2e02456c0275fa8716fa894c48525b9a8f7db9ac0b4acb0",
-        strip_prefix = "grpc-node-aeb42733d861883b82323e2dc6d1aba0e3a12aa0/packages/grpc-tools/src",
         urls = [
-            "https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz",
+            "https://github.com/protocolbuffers/protobuf-javascript/archive/3561b05cbf706aa14b0f8886c1167f402cf87b77.tar.gz",
         ],
-        build_file_content = """
-cc_library(
-    name = "grpc_plugin_support",
-    srcs = ["node_generator.cc"],
-    hdrs = [
-        "config.h",
-        "config_protobuf.h",
-        "generator_helpers.h",
-        "node_generator.h",
-        "node_generator_helpers.h",
-    ],
-    deps = ["//external:protobuf_clib"],
-)
-
-cc_binary(
-    name = "grpc_node_plugin",
-    srcs = ["node_plugin.cc"],
-    visibility = ["//visibility:public"],
-    deps = [":grpc_plugin_support"],
-)
-""",
     )
