@@ -29,24 +29,25 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 4. Example setups for a variety of languages.
 
 # Table of Contents
-  - [Getting Started](#getting-started)
-    - [Workspace Boilerplate](#workspace-boilerplate)
-    - [Gazelle Setup](#gazelle-setup)
-    - [Gazelle Configuration](#gazelle-configuration)
-      - [Build Directives](#build-directives)
-      - [YAML Config File](#yaml-configuration)
-    - [Running Gazelle](#running-gazelle)
-  - [Build Rules](#build-rules)
-    - [proto_compile](#proto_compile)
-    - [proto_plugin](#proto_plugin)
-    - [proto_compiled_sources](#proto_compiled_sources)
-    - [Deep dive on the mappings attribute](#the-output_mappings-attribute)
-  - [Repository Rules](#repository-rules)
-    - [proto_repository](#proto_repository)
-    - [proto_gazelle](#proto_gazelle)
-  - [Plugin Implementations](#plugin-implementations)
-  - [Rule Implementations](#rule-implementations)
-  - [History of this repository](#history)
+
+- [Getting Started](#getting-started)
+  - [Workspace Boilerplate](#workspace-boilerplate)
+  - [Gazelle Setup](#gazelle-setup)
+  - [Gazelle Configuration](#gazelle-configuration)
+    - [Build Directives](#build-directives)
+    - [YAML Config File](#yaml-configuration)
+  - [Running Gazelle](#running-gazelle)
+- [Build Rules](#build-rules)
+  - [proto_compile](#proto_compile)
+  - [proto_plugin](#proto_plugin)
+  - [proto_compiled_sources](#proto_compiled_sources)
+  - [Deep dive on the mappings attribute](#the-output_mappings-attribute)
+- [Repository Rules](#repository-rules)
+  - [proto_repository](#proto_repository)
+  - [proto_gazelle](#proto_gazelle)
+- [Plugin Implementations](#plugin-implementations)
+- [Rule Implementations](#rule-implementations)
+- [History of this repository](#history)
 
 # Getting Started
 
@@ -74,12 +75,12 @@ http_archive(
 register_toolchains("@build_stack_rules_proto//toolchain:standard")
 ```
 
-> This prepares `protoc` for the `proto_compile` rule.  For simple setups,
+> This prepares `protoc` for the `proto_compile` rule. For simple setups,
 > consider `@build_stack_rules_proto//toolchain:prebuilt` to skip compilation of
 > the tool.
 
 > **NOTE**: if you are planning on hand-writing your `BUILD.bazel` rules
-> yourself (not using the gazelle build file generator), **STOP HERE**.  You'll
+> yourself (not using the gazelle build file generator), **STOP HERE**. You'll
 > need to provide typical proto dependencies such as `@rules_proto` and
 > `@com_google_protobuf` (use macros below if desired), but no additional core
 > dependencies are needed at this point.
@@ -96,7 +97,7 @@ core_deps()
 > you don't already have them.
 
 > The gazelle extension and associated golang dependencies are optional; you can
-> write `proto_compile` and other derived rules by hand.  For gazelle support,
+> write `proto_compile` and other derived rules by hand. For gazelle support,
 > carry on.
 
 ---
@@ -145,7 +146,8 @@ load("@build_stack_rules_proto//deps:protobuf_core_deps.bzl", "protobuf_core_dep
 protobuf_core_deps()
 ```
 
-> This brings in `@com_google_protobuf` and friends if you don't already have them.
+> This brings in `@com_google_protobuf` and friends if you don't already have
+> them.
 
 ## Gazelle Setup
 
@@ -174,16 +176,18 @@ gazelle(
 
 ## Gazelle Configuration
 
-The gazelle extension can be configured using "build directives" and/or a YAML file.
+The gazelle extension can be configured using "build directives" and/or a YAML
+file.
 
 ### Build Directives
-Gazelle is configured by special comments in BUILD files called *directives*.
+
+Gazelle is configured by special comments in BUILD files called _directives_.
 
 > Gazelle works by visiting each package in your workspace; configuration is
 > done "on the way in" whereas actual rule generation is done "on the way out".
-> Gazelle configuration of a subdirectory inherits that from its
-> parents.  As such, directives placed in the root `BUILD.bazel` file apply to
-> the entire workspace.
+> Gazelle configuration of a subdirectory inherits that from its parents. As
+> such, directives placed in the root `BUILD.bazel` file apply to the entire
+> workspace.
 
 ```python
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
@@ -212,40 +216,41 @@ Let's unpack this a bit:
   `cpp` with a piece of golang code that implements the `protoc.Plugin`
   interface. The extension maintains a registry of these actors (the gazelle
   extension ships with a number of them out of the box, but you can also write
-  your own).  The core responsibility a `protoc.Plugin` implementation is to to
-  *predict* the files that a protoc plugin tool will generate for an individual
-  `proto_library` rule.  The implemention has full read access to the
-  `protoc.File`s in the `proto_library` to be able to predict *if* a file will
-  be generated and *where* it will appear in the filesystem (specifically,
-  relative to the bazel execution root during a `proto_compile` action). 
-- `gazelle:proto_rule proto_compile implementation
-  stackb:rules_proto:proto_compile` associates the name `proto_compile` with a
-  piece of golang code that implements the `protoc.LanguageRule` interface.  The
-  extension maintains a registry of rule implementations. Similarly, the
-  extension ships with a bunch of them out of the box, but you can write your
-  own custom rules as well.  The core responsibility a `protoc.LanguageRule`
-  implementation is construct a gazelle `rule.Rule` based upon a `proto_library`
-  rule and the set of plugins that are configured with it.
+  your own). The core responsibility a `protoc.Plugin` implementation is to to
+  _predict_ the files that a protoc plugin tool will generate for an individual
+  `proto_library` rule. The implemention has full read access to the
+  `protoc.File`s in the `proto_library` to be able to predict _if_ a file will
+  be generated and _where_ it will appear in the filesystem (specifically,
+  relative to the bazel execution root during a `proto_compile` action).
+- `gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile`
+  associates the name `proto_compile` with a piece of golang code that
+  implements the `protoc.LanguageRule` interface. The extension maintains a
+  registry of rule implementations. Similarly, the extension ships with a bunch
+  of them out of the box, but you can write your own custom rules as well. The
+  core responsibility a `protoc.LanguageRule` implementation is construct a
+  gazelle `rule.Rule` based upon a `proto_library` rule and the set of plugins
+  that are configured with it.
 - `gazelle:proto_language cpp plugin cpp` instantiates a `protoc.LanguageConfig`
-  having the name `cpp` and adds the `cpp` plugin to it.  The language
+  having the name `cpp` and adds the `cpp` plugin to it. The language
   configuration bundles bundles plugins and rules together.
 - `gazelle:proto_rule grpc_cc_library deps @com_github_grpc_grpc//:grpc++`
   configures the rule such that all generated rules will have that dependency.
 
-> **+/- intent modifiers**.  Although not pictured in this example, many of the
-> directives take an *intent modifier* to turn configuration on/off.  For
+> **+/- intent modifiers**. Although not pictured in this example, many of the
+> directives take an _intent modifier_ to turn configuration on/off. For
 > example, if you wanted to suppress the grpc c++ plugin in the package
-> `//proto/javaapi`, put a directive like `gazelle:proto_language cpp rule
-> -grpc_cc_library` in `proto/javaapi/BUILD.bazel` (note the `-` symbol
-> preceding the name).  To suppress the language entirely, use
+> `//proto/javaapi`, put a directive like
+> `gazelle:proto_language cpp rule -grpc_cc_library` in
+> `proto/javaapi/BUILD.bazel` (note the `-` symbol preceding the name). To
+> suppress the language entirely, use
 > `gazelle:proto_language cpp enabled false`.
 
 ### YAML Configuration
 
-You can also configure the extension using a YAML file.  This is semantically
+You can also configure the extension using a YAML file. This is semantically
 similar to adding gazelle directives to the root `BUILD` file; the YAML
-configuration applies to all downstream packages.  The equivalent YAML config
-for the above directives looks like:
+configuration applies to all downstream packages. The equivalent YAML config for
+the above directives looks like:
 
 ```yaml
 plugins:
@@ -298,7 +303,6 @@ gazelle(
     ],
 )
 ```
-
 
 ## Running Gazelle
 
@@ -367,7 +371,7 @@ grpc_cc_library(
 
 Regarding rules like
 `@build_stack_rules_proto//rules/cc:proto_cc_library.bzl%proto_cc_library"`.
-These are nearly always very thin wrappers for the "real" rule.  For example,
+These are nearly always very thin wrappers for the "real" rule. For example,
 here's the implementation in `proto_cc_library.bzl`:
 
 ```python
@@ -378,16 +382,16 @@ def proto_cc_library(**kwargs):
 ```
 
 An implementation detail of gazelle itself is that two different language
-extensions should not *claim* the same load namespace, so in order to prevent
+extensions should not _claim_ the same load namespace, so in order to prevent
 potential conflicts with other possible gazelle extensions, using the name
 `@rules_cc//cc:defs.bzl%cc_library` is undesirable.
 
 ## Build Rules
 
-The heart of `stackb/rules_proto` contains two build rules:
+The core of `stackb/rules_proto` contains two build rules:
 
 | Rule            | Description                                             |
-|-----------------|---------------------------------------------------------|
+| --------------- | ------------------------------------------------------- |
 | `proto_compile` | Executes the `protoc` tool.                             |
 | `proto_plugin`  | Provides static `protoc` plugin-specific configuration. |
 
@@ -424,7 +428,7 @@ Takeaways:
   rules.
 - `proto_library` is provided by
   [bazelbuild/rules_proto](https://github.com/bazelbuild/rules_proto).
-- A `proto_compile` rule references a single `proto_library` target. 
+- A `proto_compile` rule references a single `proto_library` target.
 - The `plugins` attribute is a list of labels to `proto_plugin` targets.
 - The `outputs` attribute names the files that will be generated by the protoc
   invocation.
@@ -437,19 +441,20 @@ Takeaways:
 
 `proto_plugin` primarily provides the plugin tool executable. The example seen
 above is the simplest case where the plugin is builtin to `protoc` itself; no
-separate plugin tool is required.  In this case the `proto_plugin` rule
+separate plugin tool is required. In this case the `proto_plugin` rule
 degenerates into just a `name`.
 
-It is possible to add additional plugin-specific `name = "foo", options =
-["bar"]` on the `proto_plugin` rule, but the use-case for this is narrow.
-Generally it is preferred to say `# gazelle:proto_plugin foo option bar` such
-that the option can be interpreted during a gazelle run.
+It is possible to add additional plugin-specific
+`name = "foo", options = ["bar"]` on the `proto_plugin` rule, but the use-case
+for this is narrow. Generally it is preferred to say
+`# gazelle:proto_plugin foo option bar` such that the option can be interpreted
+during a gazelle run.
 
 ### proto_compiled_sources
 
 `proto_compiled_sources` is used when you prefer to check the generated files
-into source control.  This may be necessary for legacy reasons, during an
-initial Bazel migration, or to support better IDE integration.
+into source control. This may be necessary for legacy reasons, during an initial
+Bazel migration, or to support better IDE integration.
 
 The shape of a `proto_compiled_sources` rule is essentially identical to
 `proto_compile` with one exception: generated source are named in the `srcs`
@@ -466,13 +471,15 @@ is a macro that generates three rules:
 
 In this scenario, `2.` is used to build the generated files (in the `bazel-bin/`
 output tree) and copy the `example/thing/thing.pb.go` back into place where it
-will be committed under source control.  `3.` is used to prevent drift: if a
+will be committed under source control. `3.` is used to prevent drift: if a
 developer modifies `thing.proto` and neglects to run the `.update` the test will
 fail in CI.
 
 ### proto_compile_assets
 
-The macro `proto_compile_assets` aggregates a list of dependencies (which provide `ProtoCompileInfo`) into a single runnable target that copies files in bulk.  
+The macro `proto_compile_assets` aggregates a list of dependencies (which
+provide `ProtoCompileInfo`) into a single runnable target that copies files in
+bulk.
 
 For example, `bazel run //proto:assets` will copy all the generated `.pb.go`
 files back into the source tree:
@@ -505,8 +512,8 @@ proto_compile(
 ```
 
 This rule is declaring that a file `bazel-bin/example/thing/thing.pb.go` will be
-output when the action is run. When we `bazel build
-//example/thing:thing_go_compile`, the file is indeed created.
+output when the action is run. When we
+`bazel build //example/thing:thing_go_compile`, the file is indeed created.
 
 Let's temporarily comment out the `output_mappings` attribute and rebuild:
 
@@ -525,7 +532,7 @@ $ bazel build //example/thing:thing_go_compile
 ERROR: /github.com/stackb/rules_proto/example/thing/BUILD.bazel:54:14: output 'example/thing/thing.pb.go' was not created
 ```
 
-What happened?  Let's add a debugging attribute `verbose = True` on the rule:
+What happened? Let's add a debugging attribute `verbose = True` on the rule:
 this will print debugging information and show the bazel sandbox before and
 after the `protoc` tool is invoked:
 
@@ -552,20 +559,19 @@ $ bazel build //example/thing:thing_go_compile
 ./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/example/thing/thing.pb.go
 ```
 
-So, the file was created, but not in the location we wanted.  In this case the
-`protoc-gen-go` plugin is not "playing nice" with Bazel.  Because this
-`thing.proto` has `option go_package =
-"github.com/stackb/rules_proto/example/thing;thing";`, the output location is no
-longer based on the `package`.  This is a problem, because Bazel semantics
-disallow declaring a File outside its package boundary.  As a result, we need to
-do a `mv
-./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/example/thing/thing.pb.go
-./bazel-out/darwin-fastbuild/bin/example/thing/thing.pb.go` to relocate the
-file into its expected location before the action terminates.
+So, the file was created, but not in the location we wanted. In this case the
+`protoc-gen-go` plugin is not "playing nice" with Bazel. Because this
+`thing.proto` has
+`option go_package = "github.com/stackb/rules_proto/example/thing;thing";`, the
+output location is no longer based on the `package`. This is a problem, because
+Bazel semantics disallow declaring a File outside its package boundary. As a
+result, we need to do a
+`mv ./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/example/thing/thing.pb.go ./bazel-out/darwin-fastbuild/bin/example/thing/thing.pb.go`
+to relocate the file into its expected location before the action terminates.
 
 Therefore, the `output_mappings` attribute is a list of entries that map file
-locations `want=got` relative to the action execution root.  It is required when
-the actual output location does not match the desired location.  This can occur
+locations `want=got` relative to the action execution root. It is required when
+the actual output location does not match the desired location. This can occur
 if the proto `package` statement does not match the Bazel package path, or in
 special circumstances specific to the plugin itself (like `go_package`).
 
@@ -574,8 +580,8 @@ special circumstances specific to the plugin itself (like `go_package`).
 ## proto_repository
 
 From an implementation standpoint, this is very similar to the `go_repository`
-rule.  Both can download external files and then run the gazelle generator over
-the downloaded files.  Example:
+rule. Both can download external files and then run the gazelle generator over
+the downloaded files. Example:
 
 ```python
 proto_repository(
@@ -593,25 +599,29 @@ proto_repository(
 )
 ```
 
-Takeaways: 
+Takeaways:
 
 - The `urls`, `strip_prefix` and `type` behave similarly to `http_archive`.
 - `build_file_proto_mode` is the same the `go_repository` attribute of the same
   name; additionally the value `file` is permitted which generates a
   `proto_library` for each individual proto file.
 - `build_file_generation` is the same the `go_repository` attribute of the same
-  name; additionally the value `clean` is supported.  For example, googleapis
+  name; additionally the value `clean` is supported. For example, googleapis
   already has a set of BUILD files; the `clean` mode will remove all the
   existing build files before generating new ones.
-- `build_directives` is the same as `go_repository`.  Resolve directives in this
+- `build_directives` is the same as `go_repository`. Resolve directives in this
   case are needed because the gazelle `language/proto` extension hardcodes a
   proto import like `google/api/http.proto` to resolve to the `@go_googleapis`
   workspace; here we want to make sure that http.proto resolves to the same
   external workspace.
 - `proto_language_config_file` is an optional label pointing to a valid
   `config.yaml` file to configure this extension.
-- `override_go_googleapis` is a boolean attribute that has special meaning for the googleapis repository.  Due to the fact that the builtin gazelle "proto" extension has [hardcoded logic](https://github.com/bazelbuild/bazel-gazelle/blob/master/language/proto/known_proto_imports.go) for what googleapis deps look like, additional work is needed to override that. 
-With this sample configuration, the following build command succeeds:
+- `override_go_googleapis` is a boolean attribute that has special meaning for
+  the googleapis repository. Due to the fact that the builtin gazelle "proto"
+  extension has
+  [hardcoded logic](https://github.com/bazelbuild/bazel-gazelle/blob/master/language/proto/known_proto_imports.go)
+  for what googleapis deps look like, additional work is needed to override
+  that. With this sample configuration, the following build command succeeds:
 
 ```bash
 $ bazel build @googleapis//google/api:annotations_cc_library
@@ -652,17 +662,17 @@ Takeaways:
 - The `build_directives` are setting the `gazelle:prefix` for the `language/go`
   plugin; two `proto_language` configs named in the `proto/config.yaml` are
   being enabled.
-- `build_file_expunge` means *remove all existing BUILD files before generating
-  new ones*.
-- `build_file_proto_mode = "file"` means *make a separate `proto_library` rule
-  for every `.proto` file*.
-- `cfgs = ["//proto:config.yaml"]` means *use the configuration in this YAML
-  file as a base set of gazelle directives*.  It is easier/more consistent to
+- `build_file_expunge` means _remove all existing BUILD files before generating
+  new ones_.
+- `build_file_proto_mode = "file"` means _make a separate `proto_library` rule
+  for every `.proto` file_.
+- `cfgs = ["//proto:config.yaml"]` means _use the configuration in this YAML
+  file as a base set of gazelle directives_. It is easier/more consistent to
   share the same `config.yaml` file across multiple `proto_repository` rules.
 
 The last one `imports = ["@googleapis//:imports.csv", ...]` requires extra
-explanation.  When the `proto_repository` gazelle process finishes, it writes a
-file named `imports.csv` in the root of the external workspace.  This file
+explanation. When the `proto_repository` gazelle process finishes, it writes a
+file named `imports.csv` in the root of the external workspace. This file
 records the association between import statements and bazel labels, much like a
 `gazelle:resolve` directive:
 
@@ -686,7 +696,7 @@ To take advantage of this mechanism in the default workspace, use the
 ## proto_gazelle
 
 `proto_gazelle` is not a repository rule: it's just like the typical `gazelle`
-rule, but with extra deps resolution superpowers.  But, we discuss it here since
+rule, but with extra deps resolution superpowers. But, we discuss it here since
 it works in conjunction with `proto_repository`:
 
 ```python
@@ -707,16 +717,45 @@ proto_gazelle(
 ```
 
 In this example, we are again setting the base gazelle config using the YAML
-file (the same one used in for the `proto_repository` rules).  We are also now
+file (the same one used in for the `proto_repository` rules). We are also now
 importing resolve information from four external sources.
 
-With this setup, we can simply place an import statement like `import
-"src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto";`
+With this setup, we can simply place an import statement like
+`import "src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto";`
 in a `foo.proto` file in the default workspace, and gazelle will automagically
 figure out the import dependency tree spanning `@bazelapis`, `@remoteapis`,
-`@googleapis`, and the well-known types from `@protoapis`.  
+`@googleapis`, and the well-known types from `@protoapis`.
 
 This works for any `proto_language`, with any set of custom protoc plugins.
+
+## golden_filegroup
+
+`golden_filegroup` is a utility macro for golden file testing. It works like a
+native filegroup, but adds `.update` and `.test` targets. Example:
+
+```py
+load("@build_stack_rules_proto//rules:golden_filegroup.bzl", "golden_filegroup")
+
+# golden_filegroup asserts that generated files named in 'srcs' are
+# identical to the ones checked into source control.
+#
+# Usage:
+#
+# $ bazel build :golden        # not particularly useful, just a regular filegroup
+#
+# $ bazel test  :golden.test   # checks that generated files are identical to
+# ones in git (for CI)
+#
+# $ bazel run   :golden.update # copies the generated files into source tree
+# (then 'git add' to your PR if it looks good)
+golden_filegroup(
+    name = "golden",
+    srcs = [
+        ":some_generated_file1.json",
+        ":some_generated_file2.json",
+    ],
+)
+```
 
 ## Plugin Implementations
 
@@ -724,7 +763,7 @@ The plugin name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 
 | Plugin                                                                                                                 |
-|------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------------------------------------------------------------------------------------- |
 | [builtin:cpp](pkg/plugin/builtin/cpp_plugin.go)                                                                        |
 | [builtin:csharp](pkg/plugin/builtin/csharp_plugin.go)                                                                  |
 | [builtin:java](pkg/plugin/builtin/java_plugin.go)                                                                      |
@@ -758,7 +797,7 @@ The rule name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/rule_name convention.
 
 | Plugin                                                                                            |
-|---------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------- |
 | [stackb:rules_proto:grpc_cc_library](pkg/rule/rules_cc/grpc_cc_library.go)                        |
 | [stackb:rules_proto:grpc_closure_js_library](pkg/rule/rules_closure/grpc_closure_js_library.go)   |
 | [stackb:rules_proto:grpc_java_library](pkg/rule/rules_java/grpc_java_library.go)                  |
@@ -780,36 +819,36 @@ detail.
 
 # History
 
-The original rules_proto was <https://github.com/pubref/rules_proto>.  This was
+The original rules_proto was <https://github.com/pubref/rules_proto>. This was
 redesigned around the `proto_library` rule and moved to
-<https://github.com/stackb/rules_proto>.  
+<https://github.com/stackb/rules_proto>.
 
 Following earlier experiments with aspects, this ruleset was forked to
 <https://github.com/rules-proto-grpc/rules_proto_grpc>. Aspect-based compilation
 was featured for quite a while there but has recently been deprecated.
 
 Maintaining `stackb/rules_proto` and its polyglot set of languages in its
-original v0-v1 form became a full-time (unpaid) job.  The main issue is that the
+original v0-v1 form became a full-time (unpaid) job. The main issue is that the
 `{LANG}_{PROTO|GRPC}_library` rules are **tightly bound to a specific set of
-dependencies**.  As such, rules_proto users are tightly bound to the specific
-labels named by those rules.  This is a problem for the maintainer as one must
-keep the dependencies current.  It is also a problem for rule consumers: *it
+dependencies**. As such, rules_proto users are tightly bound to the specific
+labels named by those rules. This is a problem for the maintainer as one must
+keep the dependencies current. It is also a problem for rule consumers: _it
 becomes increasingly difficult to upgrade as the dependencies as assumptions and
-dependencies drift*.
+dependencies drift_.
 
 With `stackb/rules_proto` in its `v2` gazelle-based form, it is largely
-**dependency-free**: other than gazelle and the `protoc` toolchain, *there are no
-dependencies that you cannot fully control in your own workspace via the gazelle
-configuration*.
+**dependency-free**: other than gazelle and the `protoc` toolchain, _there are
+no dependencies that you cannot fully control in your own workspace via the
+gazelle configuration_.
 
-The gazelle based design also makes things *much* simpler and powerful, because
-the **content of the proto files is the source of truth**.  Due to the fact that
+The gazelle based design also makes things _much_ simpler and powerful, because
+the **content of the proto files is the source of truth**. Due to the fact that
 Bazel does not permit reading/interpreting a file during the scope of an action,
-it is impossible to make a decision about what to do.  A prime example of this
-is the `go_package` option.  If the `go_package` option is present, the location
-of the output file for `protoc-gen-go` is completely different.  As a result,
-the information about the go_package metadata ultimately needs to be duplicated
-so that the build system can know about it.
+it is impossible to make a decision about what to do. A prime example of this is
+the `go_package` option. If the `go_package` option is present, the location of
+the output file for `protoc-gen-go` is completely different. As a result, the
+information about the go_package metadata ultimately needs to be duplicated so
+that the build system can know about it.
 
 The gazelle-based approach moves all that messy interpretation and evaluation
 into a precompiled state; as a result, the work that needs to be done in the
@@ -819,7 +858,7 @@ Furthermore, by parsing the proto files it is easy to support complex custom
 plugins that do things like:
 
 - Emit no files (only assert/lint).
-- Emit a file only if a specific enum constant is found.  With the previous
-  design, this was near impossible.  With the `v2` design, the `protoc.Plugin`
+- Emit a file only if a specific enum constant is found. With the previous
+  design, this was near impossible. With the `v2` design, the `protoc.Plugin`
   implementation can trivially perform that evaluation because it is handed the
   complete proto AST during gazelle evaluation.
