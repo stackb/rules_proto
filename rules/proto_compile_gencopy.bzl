@@ -53,8 +53,6 @@ def _proto_compile_gencopy_impl(ctx):
                         srcs.append(srcfile.short_path)
                         found = True
                         break
-                    else:
-                        print("nope: got=%s | want=%s (ext=%s)" % (srcfilename, f.basename + ctx.attr.extension, ctx.attr.extension))
                 if not found:
                     fail("could not find matching source file for generated file %s in %r" % (f.basename, srcfiles))
 
