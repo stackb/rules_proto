@@ -24,7 +24,6 @@ def _copy_file(actions, src, dst):
 
 def _proto_compile_gencopy_impl(ctx):
     config = gencopy_config(ctx)
-    print("extension!", ctx.attr.extension)
 
     runfiles = []
 
