@@ -47,8 +47,13 @@ def _proto_compile_gencopy_impl(ctx):
                         srcs.append(replica.short_path)
                         found = True
                         break
+                    elif srcfilename == f.basename + ctx.attr.extension:
+                        runfiles.append(srcfile)
+                        srcs.append(srcfile.short_path)
+                        found = True
+                        break
                 if not found:
-                    fail("could find matching source file for generated file %s in %r" % (f.short_path, srcfiles))
+                    fail("could not find matching source file for generated file %s in %r" % (f.basename, srcfiles))
 
             else:
                 srcs.append(f.short_path)
@@ -81,8 +86,12 @@ def _proto_compile_gencopy_rule(is_test):
                 providers = [ProtoCompileInfo],
             ),
             srcs = attr.label_list(
-                doc = "The ProtoCompileInfo providers",
+                doc = "The source files",
                 allow_files = True,
+            ),
+            extension = attr.string(
+                doc = "optional file extension to add to the copied file",
+                mandatory = False,
             ),
         ),
         executable = True,
