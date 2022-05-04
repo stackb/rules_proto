@@ -39,6 +39,7 @@ def gencopy_config(ctx):
         fileMode = ctx.attr.file_mode,
         updateTargetLabelName = ctx.attr.update_target_label_name,
         packageConfigs = [],
+        extension = ctx.attr.extension,
     )
 
 def gencopy_action(ctx, config, runfiles):

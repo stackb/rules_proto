@@ -47,6 +47,8 @@ type (
 		FileMode string
 		// The set of packages we are generating for
 		PackageConfigs []*PackageConfig
+		// An optional file extension to append to the copied file
+		Extension string
 	}
 
 	PackageConfig struct {
@@ -128,6 +130,7 @@ func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 		if err != nil {
 			return fmt.Errorf("check failed while reading dst %s: %v", pair.Dst, err)
 		}
+
 		if diff := cmp.Diff(expected, actual); diff != "" {
 			return fmt.Errorf("gencopy mismatch %q vs. %q (-want +got):\n%s", pair.Src, pair.Dst, diff)
 		}
@@ -182,7 +185,7 @@ func makePkgSrcDstPair(cfg *Config, pkg *PackageConfig, src, dst string) *SrcDst
 		src = filepath.Join("external", strings.TrimPrefix(src, ".."))
 		dst = filepath.Join(pkg.TargetWorkspaceRoot, dst)
 	}
-	dst = filepath.Join(cfg.WorkspaceRootDirectory, dst)
+	dst = filepath.Join(cfg.WorkspaceRootDirectory, dst) + cfg.Extension
 	return &SrcDst{src, dst}
 }
 
