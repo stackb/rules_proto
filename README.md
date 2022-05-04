@@ -7,7 +7,7 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 
 <table border="0">
   <tr>
-    <td><img src="https://bazel.build/images/bazel-icon.svg" height="120"/></td>
+    <td><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7d/Bazel_logo.svg/1920px-Bazel_logo.svg.png" height="120"/></td>
     <td><img src="https://user-images.githubusercontent.com/50580/141892423-5205bbfd-8487-442b-81c7-f56fa3d1f69e.jpeg" height="120"/></td>
     <td><img src="https://user-images.githubusercontent.com/50580/141900696-bfb2d42d-5d2c-46f8-bd9f-06515969f6a2.png" height="120"/></td>
     <td><img src="https://avatars2.githubusercontent.com/u/7802525?v=4&s=400" height="120"/></td>
