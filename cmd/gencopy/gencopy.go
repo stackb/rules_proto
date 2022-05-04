@@ -145,6 +145,10 @@ func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 }
 
 func update(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
+	for _, pair := range pairs {
+		pair.Dst += cfg.Extension
+	}
+
 	mode, err := parseFileMode(cfg.FileMode)
 	if err != nil {
 		return fmt.Errorf("update: %v", err)
@@ -185,7 +189,7 @@ func makePkgSrcDstPair(cfg *Config, pkg *PackageConfig, src, dst string) *SrcDst
 		src = filepath.Join("external", strings.TrimPrefix(src, ".."))
 		dst = filepath.Join(pkg.TargetWorkspaceRoot, dst)
 	}
-	dst = filepath.Join(cfg.WorkspaceRootDirectory, dst) + cfg.Extension
+	dst = filepath.Join(cfg.WorkspaceRootDirectory, dst)
 	return &SrcDst{src, dst}
 }
 

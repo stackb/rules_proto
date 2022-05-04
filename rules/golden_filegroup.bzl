@@ -63,6 +63,7 @@ def golden_filegroup(
         srcs = goldens,
         deps = [name_sources],
         mode = "check",
+        extension = extension,
         update_target_label_name = name_run,
     )
 
