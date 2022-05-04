@@ -40,7 +40,6 @@ def _proto_compile_gencopy_impl(ctx):
                 # make a copy of it...  but first, we need to find it in the srcs files!
                 found = False
                 for srcfilename, srcfile in srcfiles.items():
-                    print("looking for srcfilename", srcfilename, srcfiles)
                     if srcfilename == f.basename:
                         replica = ctx.actions.declare_file(f.basename + ".actual", sibling = f)
                         _copy_file(ctx.actions, srcfile, replica)
@@ -48,7 +47,7 @@ def _proto_compile_gencopy_impl(ctx):
                         srcs.append(replica.short_path)
                         found = True
                         break
-                    elif srcfilename == f.basename + ".golden":
+                    elif srcfilename == f.basename + ctx.attr.extension:
                         runfiles.append(srcfile)
                         srcs.append(srcfile.short_path)
                         found = True
