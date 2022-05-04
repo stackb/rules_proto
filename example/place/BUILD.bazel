@@ -94,17 +94,8 @@ proto_java_library(
     ],
 )
 
-proto_compile(
-    name = "place_node_js_compile",
-    options = {"@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"]},
-    outputs = ["place_pb.js"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
-    proto = "place_proto",
-)
-
 proto_nodejs_library(
     name = "place_nodejs_library",
-    srcs = ["place_pb.js"],
     visibility = ["//visibility:public"],
 )
 
@@ -176,6 +167,7 @@ proto_ts_library(
 proto_compile(
     name = "place_es6_js_compile",
     outputs = ["place_pb.js"],
-    plugins = ["@build_stack_rules_proto//protocolbuffers/protobuf-javascript:es6"],
+    plugins = ["@build_stack_rules_proto//plugin/protocolbuffers/protobuf-javascript:es6"],
     proto = "place_proto",
+    protoc = "//toolchain:protoc_exe",
 )

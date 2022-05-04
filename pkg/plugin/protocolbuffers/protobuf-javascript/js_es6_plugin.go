@@ -29,7 +29,7 @@ func (p *JsES6Plugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigu
 	}
 
 	return &protoc.PluginConfiguration{
-		Label:   label.New("build_stack_rules_proto", "protocolbuffers/protobuf-javascript", "es6"),
+		Label:   label.New("build_stack_rules_proto", "plugin/protocolbuffers/protobuf-javascript", "es6"),
 		Outputs: []string{library},
 	}
 }

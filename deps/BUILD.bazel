@@ -43,6 +43,13 @@ depsgen(
 )
 
 depsgen(
+    name = "esbuild",
+    deps = [
+        ":com_github_evanw_esbuild",
+    ],
+)
+
+depsgen(
     name = "closure",
     deps = [":io_bazel_rules_closure"],
 )
@@ -175,7 +182,7 @@ proto_dependency(
 proto_dependency(
     name = "com_google_protobuf_javascript",
     patch_args = ["-p1"],
-    patches = ["//third_party:protobuf-javascript-5.patch"],
+    patches = ["@build_stack_rules_proto//third_party:protobuf-javascript-5.patch"],
     repository_rule = "http_archive",
     sha256 = "392cef95222eb8ad7726c489ca9a02e46e93c404716ee80d7f9d3778975b4349",
     strip_prefix = "protobuf-javascript-3561b05cbf706aa14b0f8886c1167f402cf87b77",
@@ -532,4 +539,14 @@ filegroup(
         "BUILD.bazel",
     ] + glob(["*.bzl"]),
     visibility = ["//:__pkg__"],
+)
+
+proto_dependency(
+    name = "com_github_evanw_esbuild",
+    build_file_proto_mode = "disable_global",
+    importpath = "github.com/evanw/esbuild",
+    repository_rule = "go_repository",
+    sum = "h1:tWgtDpFR/VKWbWnSxigewZrxORvulw1Z6+KGOiJdNzA=",
+    version = "v0.14.38",
+    deps = [],
 )

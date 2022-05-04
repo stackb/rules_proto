@@ -1,9 +1,86 @@
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+load("@build_stack_rules_proto//rules:fileset.bzl", "fileset")
+load("@io_bazel_rules_closure//closure/compiler:closure_js_library.bzl", "closure_js_library")
+load("@io_bazel_rules_closure//closure/compiler:closure_js_binary.bzl", "closure_js_binary")
 
 proto_plugin(
     name = "es6",
-    options = ["import_style=es6"],
+    options = [
+        "import_style=es6",
+        "binary",
+    ],
     tool = "@com_google_protobuf_javascript//generator:protoc-gen-js",
     visibility = ["//visibility:public"],
     deps = ["//deps:com_google_protobuf"],
+)
+
+closure_js_library(
+    name = "jspb",
+    srcs = [
+        "export.es6.js",
+        "export.js",
+        "@com_google_protobuf_js//:proto_js_library_files",
+    ],
+    suppress = [
+        "analyzerChecks",
+        "lintChecks",
+        "reportUnknownTypes",
+        "strictCheckTypes",
+        "deprecated",
+        "extraRequire",
+    ],
+    deps = [
+        "@com_google_javascript_closure_library//closure/goog/array",
+        "@com_google_javascript_closure_library//closure/goog/asserts",
+        "@com_google_javascript_closure_library//closure/goog/crypt",
+        "@com_google_javascript_closure_library//closure/goog/crypt:base64",
+        "@com_google_javascript_closure_library//closure/goog/object",
+        "@com_google_javascript_closure_library//closure/goog/string",
+    ],
+)
+
+closure_js_binary(
+    name = "google-protobuf",
+    compilation_level = "SIMPLE",
+    entry_points = ["plugin/protocolbuffers/protobuf-javascript/export.js"],
+    deps = [":jspb"],
+)
+
+closure_js_binary(
+    name = "google-protobuf-next",
+    compilation_level = "SIMPLE",
+    entry_points = ["plugin/protocolbuffers/protobuf-javascript/export.es6.js"],
+    deps = [":jspb"],
+)
+
+genrule(
+    name = "google-protobuf-es6",
+    srcs = [
+        ":google-protobuf.js",
+        "replacements.txt",
+    ],
+    outs = ["google-protobuf-es6.js"],
+    cmd = """
+    sed -f $(location :replacements.txt) < $(location :google-protobuf.js) > $@
+    """,
+)
+
+# genrule(
+#     name = "google-protobuf-es6-min",
+#     srcs = [":google-protobuf-es6.js"],
+#     outs = ["google-protobuf-es6.min.js"],
+#     cmd = """
+#     $(location @com_github_evanw_esbuild//cmd/esbuild) $(location :google-protobuf-es6.js) --bundle --minify > $@
+#     """,
+#     tools = ["@com_github_evanw_esbuild//cmd/esbuild"],
+# )
+
+fileset(
+    name = "google-protobuf-files",
+    srcs = [
+        ":google-protobuf.js",
+        ":google-protobuf-next.js",
+        # ":google-protobuf-es6.js",
+        # ":google-protobuf-es6.min.js",
+    ],
 )

@@ -2,6 +2,11 @@ workspace(name = "build_stack_rules_proto")
 
 # gazelle:repo bazel_gazelle
 
+local_repository(
+    name = "com_google_protobuf_javascript",
+    path = "/Users/pcj/go/src/github.com/protocolbuffers/protobuf-javascript",
+)
+
 # ----------------------------------------------------
 # Toolchain-Related
 # ----------------------------------------------------
@@ -59,6 +64,10 @@ grpc_node_deps()
 load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 
 ts_proto_deps()
+
+load("//deps:esbuild_deps.bzl", "esbuild_deps")
+
+esbuild_deps()
 
 load("//deps:example_routeguide_nodejs_deps.bzl", "example_routeguide_nodejs_deps")
 

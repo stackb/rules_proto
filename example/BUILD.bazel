@@ -133,3 +133,4 @@
 # gazelle:proto_language node_js rule proto_compile
 # gazelle:proto_language node_js rule proto_nodejs_library
 # gazelle:proto_language node_js rule grpc_nodejs_library
+# gazelle:proto_language node_js enabled false

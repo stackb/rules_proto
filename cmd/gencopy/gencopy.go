@@ -121,6 +121,7 @@ $ bazel test %[1]s
 }
 
 func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
+	log.Printf("checking %q v. %q", pairs[0].Src, pairs[0].Dst)
 	for _, pair := range pairs {
 		expected, err := readFileAsString(pair.Src)
 		if err != nil {
@@ -140,6 +141,8 @@ func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 	for _, pair := range pairs {
 		fmt.Printf("  %s\n", pair.Dst)
 	}
+
+	os.Exit(1)
 
 	return nil
 }
@@ -189,7 +192,7 @@ func makePkgSrcDstPair(cfg *Config, pkg *PackageConfig, src, dst string) *SrcDst
 		src = filepath.Join("external", strings.TrimPrefix(src, ".."))
 		dst = filepath.Join(pkg.TargetWorkspaceRoot, dst)
 	}
-	dst = filepath.Join(cfg.WorkspaceRootDirectory, dst)
+	dst = filepath.Join(cfg.WorkspaceRootDirectory, dst) + cfg.Extension
 	return &SrcDst{src, dst}
 }
 

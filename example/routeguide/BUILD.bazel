@@ -187,31 +187,11 @@ proto_java_library(
 
 grpc_nodejs_library(
     name = "routeguide_grpc_nodejs_library",
-    srcs = ["routeguide_grpc_pb.js"],
     visibility = ["//visibility:public"],
-    deps = [":routeguide_nodejs_library"],
-)
-
-proto_compile(
-    name = "routeguide_node_js_compile",
-    options = {
-        "@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"],
-        "@build_stack_rules_proto//plugin/grpc/grpc-node:protoc-gen-grpc-node": ["grpc_js"],
-    },
-    outputs = [
-        "routeguide_grpc_pb.js",
-        "routeguide_pb.js",
-    ],
-    plugins = [
-        "@build_stack_rules_proto//plugin/builtin:commonjs",
-        "@build_stack_rules_proto//plugin/grpc/grpc-node:protoc-gen-grpc-node",
-    ],
-    proto = "routeguide_proto",
 )
 
 proto_nodejs_library(
     name = "routeguide_nodejs_library",
-    srcs = ["routeguide_pb.js"],
     visibility = ["//visibility:public"],
 )
 
@@ -307,6 +287,6 @@ proto_ts_library(
 proto_compile(
     name = "routeguide_es6_js_compile",
     outputs = ["routeguide_pb.js"],
-    plugins = ["@build_stack_rules_proto//protocolbuffers/protobuf-javascript:es6"],
+    plugins = ["@build_stack_rules_proto//plugin/protocolbuffers/protobuf-javascript:es6"],
     proto = "routeguide_proto",
 )

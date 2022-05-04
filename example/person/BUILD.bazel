@@ -95,17 +95,8 @@ proto_java_library(
     ],
 )
 
-proto_compile(
-    name = "person_node_js_compile",
-    options = {"@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"]},
-    outputs = ["person_pb.js"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
-    proto = "person_proto",
-)
-
 proto_nodejs_library(
     name = "person_nodejs_library",
-    srcs = ["person_pb.js"],
     visibility = ["//visibility:public"],
 )
 
@@ -177,6 +168,7 @@ proto_ts_library(
 proto_compile(
     name = "person_es6_js_compile",
     outputs = ["person_pb.js"],
-    plugins = ["@build_stack_rules_proto//protocolbuffers/protobuf-javascript:es6"],
+    plugins = ["@build_stack_rules_proto//plugin/protocolbuffers/protobuf-javascript:es6"],
     proto = "person_proto",
+    protoc = "//toolchain:protoc_exe",
 )

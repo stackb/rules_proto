@@ -80,7 +80,7 @@ def com_google_protobuf_javascript():
         sha256 = "392cef95222eb8ad7726c489ca9a02e46e93c404716ee80d7f9d3778975b4349",
         strip_prefix = "protobuf-javascript-3561b05cbf706aa14b0f8886c1167f402cf87b77",
         patches = [
-            "//third_party:protobuf-javascript-5.patch",
+            "@build_stack_rules_proto//third_party:protobuf-javascript-5.patch",
         ],
         patch_args = [
             "-p1",
