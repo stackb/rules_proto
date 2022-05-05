@@ -5,6 +5,7 @@ go_library(
     srcs = [
         "depsresolver.go",
         "file.go",
+        "golden_filegroup.go",
         "intent.go",
         "language_config.go",
         "language_plugin_config.go",
