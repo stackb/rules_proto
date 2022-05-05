@@ -94,11 +94,3 @@ func withDirectives(items ...string) (d []rule.Directive) {
 	}
 	return
 }
-
-func withImportpathPrefix(prefix string) packageConfigCheck {
-	return func(t *testing.T, cfg *PackageConfig) {
-		if cfg.importpathPrefix != prefix {
-			t.Errorf("expected importpath prefix %s, got %s", prefix, cfg.importpathPrefix)
-		}
-	}
-}
