@@ -99,8 +99,14 @@ proto_nodejs_library(
 
 proto_compile(
     name = "thing_python_compile",
-    outputs = ["thing_pb2.py"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
+    outputs = [
+        "thing_pb2.py",
+        "thing_pb2.pyi",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:python",
+        "@build_stack_rules_proto//plugin/builtin:pyi",
+    ],
     proto = "thing_proto",
 )
 

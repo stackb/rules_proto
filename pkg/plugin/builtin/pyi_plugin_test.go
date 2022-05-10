@@ -8,7 +8,7 @@ import (
 )
 
 func TestPyiPlugin(t *testing.T) {
-	plugintest.Cases(t, &builtin.PythonPlugin{}, map[string]plugintest.Case{
+	plugintest.Cases(t, &builtin.PyiPlugin{}, map[string]plugintest.Case{
 		"empty file": {
 			Input: "",
 			Directives: plugintest.WithDirectives(

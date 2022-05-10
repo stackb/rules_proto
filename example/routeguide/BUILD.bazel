@@ -227,10 +227,12 @@ proto_compile(
     outputs = [
         "routeguide_pb2.py",
         "routeguide_pb2_grpc.py",
+        "routeguide_pb2.pyi",
     ],
     plugins = [
         "@build_stack_rules_proto//plugin/builtin:python",
         "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python",
+        "@build_stack_rules_proto//plugin/builtin:pyi",
     ],
     proto = "routeguide_proto",
 )

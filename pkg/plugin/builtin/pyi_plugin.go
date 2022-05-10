@@ -9,19 +9,19 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&pyiPlugin{})
+	protoc.Plugins().MustRegisterPlugin(&PyiPlugin{})
 }
 
-// pyiPlugin implements Plugin for the built-in protoc --pyi_out.
-type pyiPlugin struct{}
+// PyiPlugin implements Plugin for the built-in protoc --pyi_out.
+type PyiPlugin struct{}
 
 // Name implements part of the Plugin interface.
-func (p *pyiPlugin) Name() string {
+func (p *PyiPlugin) Name() string {
 	return "builtin:pyi"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *pyiPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+func (p *PyiPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	return &protoc.PluginConfiguration{
 		Label: label.New("build_stack_rules_proto", "plugin/builtin", "pyi"),
 		Outputs: protoc.FlatMapFiles(
