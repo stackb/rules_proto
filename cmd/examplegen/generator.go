@@ -87,6 +87,8 @@ func generateTest(c *Config) error {
 	defer f.Close()
 
 	fmt.Fprintln(f, testHeader)
+	fmt.Fprintln(f, c.TestHeader)
+
 	fmt.Fprintln(f, "var txtar=`")
 
 	fmt.Fprintf(f, "-- WORKSPACE --\n")
@@ -96,6 +98,22 @@ func generateTest(c *Config) error {
 	}
 	if _, err := f.Write(data); err != nil {
 		return fmt.Errorf("write %q: %v", c.WorkspaceIn, err)
+	}
+	// seek out the WORKSPACE file and append it now such that the WORKSPACE in
+	// the testdata is concatenated with the config.WorkspaceIn.
+	for _, src := range c.Files {
+		if filepath.Base(src) != "WORKSPACE" {
+			continue
+		}
+		data, err := ioutil.ReadFile(src)
+		if err != nil {
+			return fmt.Errorf("read %q: %v", src, err)
+		}
+		f.WriteString("\n")
+		if _, err := f.Write(data); err != nil {
+			return fmt.Errorf("write: %v", err)
+		}
+		break
 	}
 
 	for _, src := range c.Files {
@@ -108,11 +126,8 @@ func generateTest(c *Config) error {
 		if c.StripPrefix != "" {
 			dstFilename = stripRel(c.StripPrefix, dst)
 		}
+
 		fmt.Fprintf(f, "-- %s --\n", dstFilename)
-		// if dst == "WORKSPACE" {
-		// 	fmt.Fprintln(f, workspace)
-		// 	continue
-		// }
 
 		data, err := ioutil.ReadFile(src)
 		if err != nil {

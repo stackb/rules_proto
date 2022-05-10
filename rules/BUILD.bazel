@@ -10,6 +10,7 @@ filegroup(
         "proto_compiled_sources.bzl",
         "proto_dependency.bzl",
         "proto_descriptor_set.bzl",
+        "proto_gazelle.bzl",
         "proto_plugin.bzl",
         "protogenrule.bzl",
         "providers.bzl",

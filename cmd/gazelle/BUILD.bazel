@@ -55,3 +55,9 @@ go_test(
         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
     ],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"] + glob(["*.go"]),
+    visibility = ["//:__pkg__"],
+)

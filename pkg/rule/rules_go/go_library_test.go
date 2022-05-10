@@ -59,7 +59,7 @@ func TestGoLibraryRuleImportPath(t *testing.T) {
 			}
 			gazelleRule := rule.NewRule("proto_library", "foo_proto")
 			goRule := &goLibraryRule{
-				config: &protoc.ProtocConfiguration{
+				pc: &protoc.ProtocConfiguration{
 					Plugins: tc.plugins,
 					Library: protoc.NewOtherProtoLibrary(nil, gazelleRule, tc.files...),
 				},

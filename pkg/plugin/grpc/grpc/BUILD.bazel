@@ -50,3 +50,11 @@ go_bazel_test(
     srcs = ["grpc_test.go"],
     rule_files = [],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = [
+        "BUILD.bazel",
+    ] + glob(["*.go"]),
+    visibility = ["//pkg:__pkg__"],
+)

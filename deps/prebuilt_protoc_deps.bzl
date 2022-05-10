@@ -17,9 +17,9 @@ def prebuilt_protoc_linux():
     _maybe(
         http_archive,
         name = "prebuilt_protoc_linux",
-        sha256 = "6003de742ea3fcf703cfec1cd4a3380fd143081a2eb0e559065563496af27807",
+        sha256 = "4a3b26d1ebb9c1d23e933694a6669295f6a39ddc64c3db2adf671f0a6026f82e",
         urls = [
-            "https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip",
+            "https://github.com/google/protobuf/releases/download/v3.13.0/protoc-3.13.0-linux-x86_64.zip",
         ],
         build_file_content = """
 filegroup(
@@ -34,9 +34,9 @@ def prebuilt_protoc_osx():
     _maybe(
         http_archive,
         name = "prebuilt_protoc_osx",
-        sha256 = "0decc6ce5beed07f8c20361ddeb5ac7666f09cf34572cca530e16814093f9c0c",
+        sha256 = "a201954cc7d1a309b5f4feacd23a0abcf3ffc20eb15e79c9a0856a5804f6c34c",
         urls = [
-            "https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-osx-x86_64.zip",
+            "https://github.com/google/protobuf/releases/download/v3.13.0/protoc-3.13.0-osx-x86_64.zip",
         ],
         build_file_content = """
 filegroup(
@@ -51,9 +51,9 @@ def prebuilt_protoc_windows():
     _maybe(
         http_archive,
         name = "prebuilt_protoc_windows",
-        sha256 = "0decc6ce5beed07f8c20361ddeb5ac7666f09cf34572cca530e16814093f9c0c",
+        sha256 = "da7ac5d046810ee44c13bd92c6bc034763d483b506e697baf278e2769730716c",
         urls = [
-            "https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-win32.zip",
+            "https://github.com/google/protobuf/releases/download/v3.13.0/protoc-3.13.0-win32.zip",
         ],
         build_file_content = """
 filegroup(

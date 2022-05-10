@@ -18,6 +18,7 @@ var pyLibraryKindInfo = rule.KindInfo{
 		"deps":       true,
 		"visibility": true,
 	},
+	ResolveAttrs: map[string]bool{"deps": true},
 }
 
 // PyLibrary implements RuleProvider for 'py_library'-derived rules.
@@ -89,6 +90,9 @@ func (s *PyLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 
 // Imports implements part of the RuleProvider interface.
 func (s *PyLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
+		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+	}
 	return nil
 }
 

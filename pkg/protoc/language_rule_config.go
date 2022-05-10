@@ -77,6 +77,16 @@ func (c *LanguageRuleConfig) GetOptions() []string {
 	return opts
 }
 
+// GetAttrNames returns the names of attributes that have configuration.
+func (c *LanguageRuleConfig) GetAttrNames() []string {
+	names := make([]string, 0)
+	for name := range c.Attrs {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	return names
+}
+
 // GetAttr returns the positive-intent attr values under the given key.
 func (c *LanguageRuleConfig) GetAttr(name string) []string {
 	vals := make([]string, 0)

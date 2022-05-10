@@ -43,7 +43,7 @@ func (p *ProtocGenGoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginC
 	for k, v := range mappings {
 		// "option" is used as the name since we cannot leave that part of the
 		// label empty.
-		protoc.GlobalResolver().Provide("proto", "M", k, label.New("", v, "option"))
+		protoc.GlobalResolver().Provide("proto", "M", k, label.New("", v, "option")) // FIXME(pcj): should this not be config.RepoName?
 	}
 
 	return &protoc.PluginConfiguration{
@@ -88,7 +88,6 @@ func ResolvePluginOptionsTransitive(cfg *protoc.PluginConfiguration, r *rule.Rul
 }
 
 func ResolveTransitiveImportMappings(r *rule.Rule, from label.Label) map[string]string {
-
 	lib := r.PrivateAttr(protoc.ProtoLibraryKey)
 	if lib == nil {
 		return nil
@@ -110,6 +109,7 @@ func ResolveTransitiveImportMappings(r *rule.Rule, from label.Label) map[string]
 	for _, src := range library.Srcs() {
 		stack.PushBack(path.Join(from.Pkg, src))
 	}
+
 	// for every source file in the proto library, gather the list of source
 	// files on which it depends, until there are no more unprocessed sources.
 	// Foreach one check if there is an importmapping for it and record the

@@ -303,7 +303,8 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 				RegularFiles: regularFiles,
 				GenFiles:     genFiles,
 				OtherEmpty:   empty,
-				OtherGen:     gen})
+				OtherGen:     gen,
+			})
 			if len(res.Gen) != len(res.Imports) {
 				log.Panicf("%s: language %s generated %d rules but returned %d imports", rel, l.Name(), len(res.Gen), len(res.Imports))
 			}
@@ -392,7 +393,7 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 		}
 	}
 	if uc.patchPath != "" {
-		if err := ioutil.WriteFile(uc.patchPath, uc.patchBuffer.Bytes(), 0666); err != nil {
+		if err := ioutil.WriteFile(uc.patchPath, uc.patchBuffer.Bytes(), 0o666); err != nil {
 			return err
 		}
 	}

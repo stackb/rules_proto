@@ -27,7 +27,7 @@ func TestLoadResolver(t *testing.T) {
 			in: "proto,proto,google/protobuf/any.proto,@com_google_protobuf//:any_proto",
 			known: map[string]importLabels{
 				"proto proto": map[string][]label.Label{
-					"google/protobuf/any.proto": []label.Label{label.New("com_google_protobuf", "", "any_proto")},
+					"google/protobuf/any.proto": {label.New("com_google_protobuf", "", "any_proto")},
 				},
 			},
 		},
@@ -66,7 +66,7 @@ func TestSaveResolver(t *testing.T) {
 			// reflect the current workspace.
 			known: map[string]importLabels{
 				"proto proto": map[string][]label.Label{
-					"google/protobuf/any.proto": []label.Label{label.New("com_google_protobuf", "", "any_proto")},
+					"google/protobuf/any.proto": {label.New("com_google_protobuf", "", "any_proto")},
 				},
 			},
 			out: "",
@@ -75,7 +75,7 @@ func TestSaveResolver(t *testing.T) {
 			repoName: "com_google_protobuf",
 			known: map[string]importLabels{
 				"proto proto": map[string][]label.Label{
-					"google/protobuf/any.proto": []label.Label{label.New("", "", "any_proto")},
+					"google/protobuf/any.proto": {label.New("", "", "any_proto")},
 				},
 			},
 			out: "proto,proto,google/protobuf/any.proto,@com_google_protobuf//:any_proto\n",
@@ -107,7 +107,7 @@ func TestProvide(t *testing.T) {
 		"empty case": {
 			known: map[string]importLabels{
 				" ": map[string][]label.Label{
-					"": []label.Label{label.NoLabel},
+					"": {label.NoLabel},
 				},
 			},
 		},
@@ -118,7 +118,7 @@ func TestProvide(t *testing.T) {
 			from:    label.New("com_google_protobuf", "", "any_proto"),
 			known: map[string]importLabels{
 				"proto proto": map[string][]label.Label{
-					"google/protobuf/any.proto": []label.Label{label.New("com_google_protobuf", "", "any_proto")},
+					"google/protobuf/any.proto": {label.New("com_google_protobuf", "", "any_proto")},
 				},
 			},
 		},
@@ -148,7 +148,7 @@ func TestResolve(t *testing.T) {
 		"empty case - matches a single empty result": {
 			known: map[string]importLabels{
 				" ": map[string][]label.Label{
-					"": []label.Label{label.NoLabel},
+					"": {label.NoLabel},
 				},
 			},
 			want: []resolve.FindResult{{}},
@@ -164,7 +164,7 @@ func TestResolve(t *testing.T) {
 			},
 			known: map[string]importLabels{
 				"proto proto": map[string][]label.Label{
-					"google/protobuf/any.proto": []label.Label{label.New("com_google_protobuf", "", "any_proto")},
+					"google/protobuf/any.proto": {label.New("com_google_protobuf", "", "any_proto")},
 				},
 			},
 		},
@@ -178,6 +178,50 @@ func TestResolve(t *testing.T) {
 				known: tc.known,
 			}
 			got := resolver.Resolve(tc.lang, tc.impLang, tc.imp)
+			if diff := cmp.Diff(tc.want, got); diff != "" {
+				t.Errorf("Resolve() mismatch (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+func TestProvided(t *testing.T) {
+	for name, tc := range map[string]struct {
+		lang, impLang string
+		want          map[label.Label][]string
+		known         map[string]importLabels
+	}{
+		"empty case - nothing known": {},
+		"typical usage": {
+			lang:    "proto",
+			impLang: "proto",
+			known: map[string]importLabels{
+				"proto proto": map[string][]label.Label{
+					"google/protobuf/any.proto":        {label.New("com_google_protobuf", "", "any_proto")},
+					"google/protobuf/any_helper.proto": {label.New("com_google_protobuf", "", "any_proto")},
+					"google/protobuf/duration.proto":   {label.New("com_google_protobuf", "", "duration_proto")},
+				},
+			},
+			want: map[label.Label][]string{
+				label.New("com_google_protobuf", "", "any_proto"): {
+					"google/protobuf/any.proto",
+					"google/protobuf/any_helper.proto",
+				},
+				label.New("com_google_protobuf", "", "duration_proto"): {
+					"google/protobuf/duration.proto",
+				},
+			},
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			resolver := &resolver{
+				options: &ImportResolverOptions{
+					Debug:  false,
+					Printf: t.Logf,
+				},
+				known: tc.known,
+			}
+			got := resolver.Provided(tc.lang, tc.impLang)
 			if diff := cmp.Diff(tc.want, got); diff != "" {
 				t.Errorf("Resolve() mismatch (-want +got):\n%s", diff)
 			}

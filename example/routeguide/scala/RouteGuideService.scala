@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit.NANOSECONDS
 import io.grpc.stub.StreamObserver
 import scala.concurrent.Future
 
-import example.routeguide.routeguide.{Feature, Point, RouteNote, RouteSummary, Rectangle, RouteGuideGrpc}
+import example.routeguide.{Feature, Point, RouteNote, RouteSummary, Rectangle, RouteGuideGrpc}
 
 class RouteGuideService(features: Seq[Feature]) extends RouteGuideGrpc.RouteGuide {
 

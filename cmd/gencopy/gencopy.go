@@ -13,6 +13,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -46,6 +47,8 @@ type (
 		FileMode string
 		// The set of packages we are generating for
 		PackageConfigs []*PackageConfig
+		// An optional file extension to append to the copied file
+		Extension string
 	}
 
 	PackageConfig struct {
@@ -53,6 +56,8 @@ type (
 		TargetLabel string
 		// The directory name where the files were generated
 		TargetPackage string
+		// TargetWorkspaceRoot is the value of Label.workspace_root.
+		TargetWorkspaceRoot string
 		// The list of files that were generated in the bazel output tree.  These
 		// should be absolute paths.
 		GeneratedFiles []string
@@ -61,8 +66,8 @@ type (
 		SourceFiles []string
 	}
 
-	srcDst struct {
-		src, dst string
+	SrcDst struct {
+		Src, Dst string
 	}
 )
 
@@ -89,6 +94,10 @@ func copyFile(src, dst string, mode os.FileMode) error {
 		return err
 	}
 
+	if err := os.MkdirAll(filepath.Dir(dst), 0o755); err != nil {
+		return err
+	}
+
 	return ioutil.WriteFile(dst, data, mode)
 }
 
@@ -111,65 +120,86 @@ $ bazel test %[1]s
 `, pkg.TargetLabel, cfg.UpdateTargetLabelName)
 }
 
-func check(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
+func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 	for _, pair := range pairs {
-		expected, err := readFileAsString(pair.src)
+		expected, err := readFileAsString(pair.Src)
 		if err != nil {
-			return fmt.Errorf("check failed while reading src %s: %v", pair.src, err)
+			return fmt.Errorf("check failed while reading src %s: %v", pair.Src, err)
 		}
-		actual, err := readFileAsString(pair.dst)
+		actual, err := readFileAsString(pair.Dst)
 		if err != nil {
-			return fmt.Errorf("check failed while reading dst %s: %v", pair.dst, err)
+			return fmt.Errorf("check failed while reading dst %s: %v", pair.Dst, err)
 		}
+
 		if diff := cmp.Diff(expected, actual); diff != "" {
-			return fmt.Errorf("gencopy mismatch %q vs. %q (-want +got):\n%s", pair.src, pair.dst, diff)
+			return fmt.Errorf("gencopy mismatch %q vs. %q (-want +got):\n%s", pair.Src, pair.Dst, diff)
 		}
 	}
 
 	fmt.Printf("Target %s: generated files are up-to-date:\n", pkg.TargetLabel)
 	for _, pair := range pairs {
-		fmt.Printf("  %s\n", pair.dst)
+		fmt.Printf("  %s\n", pair.Dst)
 	}
 
 	return nil
 }
 
-func update(cfg *Config, pkg *PackageConfig, pairs []*srcDst) error {
+func update(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
+	for _, pair := range pairs {
+		pair.Dst += cfg.Extension
+	}
+
 	mode, err := parseFileMode(cfg.FileMode)
 	if err != nil {
 		return fmt.Errorf("update: %v", err)
 	}
 	for _, pair := range pairs {
-		if err := os.MkdirAll(filepath.Base(pair.dst), os.ModePerm); err != nil {
+		if err := os.MkdirAll(filepath.Base(pair.Dst), os.ModePerm); err != nil {
 			return fmt.Errorf("could not copy file (directory create error): %w", err)
 		}
-		if err := copyFile(pair.src, pair.dst, mode); err != nil {
+		if err := copyFile(pair.Src, pair.Dst, mode); err != nil {
 			return fmt.Errorf("could not copy file pair (%+v): %w", pair, err)
 		}
 	}
 
 	fmt.Printf("Target %s: output files copied to source tree:\n", pkg.TargetLabel)
 	for _, pair := range pairs {
-		fmt.Printf("  %s\n", pair.dst[len(cfg.WorkspaceRootDirectory)+1:])
+		fmt.Printf("  %s\n", pair.Dst[len(cfg.WorkspaceRootDirectory)+1:])
 	}
 
 	return nil
 }
 
-func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
+func makePkgSrcDstPairs(cfg *Config, pkg *PackageConfig) []*SrcDst {
 	// Prepare the src -> dst pairs
-	pairs := make([]*srcDst, len(pkg.GeneratedFiles))
+	pairs := make([]*SrcDst, len(pkg.GeneratedFiles))
 
 	// we are copying/comparing generated files to their source file
 	// equivalents.  So here 'src' is the generated file and 'dst' is the
 	// source file target. So yeah.
 	for i, src := range pkg.GeneratedFiles {
-		if !fileExists(src) {
-			return fmt.Errorf("could not prepare (generated file not found): %q", src)
+		pairs[i] = makePkgSrcDstPair(cfg, pkg, src, pkg.SourceFiles[i])
+	}
+
+	return pairs
+}
+
+func makePkgSrcDstPair(cfg *Config, pkg *PackageConfig, src, dst string) *SrcDst {
+	if pkg.TargetWorkspaceRoot != "" {
+		src = filepath.Join("external", strings.TrimPrefix(src, ".."))
+		dst = filepath.Join(pkg.TargetWorkspaceRoot, dst)
+	}
+	dst = filepath.Join(cfg.WorkspaceRootDirectory, dst)
+	return &SrcDst{src, dst}
+}
+
+func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
+	pairs := makePkgSrcDstPairs(cfg, pkg)
+
+	for _, pair := range pairs {
+		if !fileExists(pair.Src) {
+			return fmt.Errorf("could not prepare (generated file not found): %q", pair.Src)
 		}
-		dst := filepath.Join(cfg.WorkspaceRootDirectory, pkg.SourceFiles[i])
-		pair := &srcDst{src, dst}
-		pairs[i] = pair
 	}
 
 	switch cfg.Mode {

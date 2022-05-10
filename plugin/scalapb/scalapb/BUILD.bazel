@@ -3,49 +3,17 @@ load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "protoc-gen-scala",
     out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}_scala.srcjar",
-    tool = ":protoc-gen-scala.exe",
-    use_built_in_shell_environment = True,
+    options = ["flat_package"],
+    tool = ":protoc-gen-scala_bin",
     visibility = ["//visibility:public"],
 )
 
-genrule(
-    name = "protoc-gen-scala_exe",
-    srcs = select({
-        # TODO: windows support
-        "@bazel_tools//src/conditions:darwin": [
-            "@github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_osx_x86_64_zip//:exe",
-        ],
-        "//conditions:default": [
-            "@github_com_scalapb_scalapb_releases_download_v0_11_5_protoc_gen_scala_0_11_5_linux_x86_64_zip//:exe",
-        ],
-    }),
-    outs = ["protoc-gen-scala.exe"],
-    cmd = "cp $< $@",
-    executable = True,
-    visibility = ["//visibility:public"],
-)
-
-java_library(
-    name = "proto_scala_library_2_12",
-    visibility = ["//visibility:public"],
-    exports = [
-        "@com_google_protobuf//:protobuf_java",
-        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
-    ],
-)
-
-java_library(
-    name = "grpc_scala_library_2_12",
-    visibility = ["//visibility:public"],
-    exports = [
-        ":proto_scala_library_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
-        "@maven_scala//:io_grpc_grpc_api",
-        "@maven_scala//:io_grpc_grpc_core",
-        "@maven_scala//:io_grpc_grpc_netty",
-        "@maven_scala//:io_grpc_grpc_protobuf",
-        "@maven_scala//:io_grpc_grpc_stub",
+java_binary(
+    name = "protoc-gen-scala_bin",
+    main_class = "scalapb.ScalaPbCodeGenerator",
+    runtime_deps = [
+        "@maven_scala//:com_thesamet_scalapb_compilerplugin_2_12",
+        "@maven_scala//:com_thesamet_scalapb_protoc_bridge_2_12",
     ],
 )
 

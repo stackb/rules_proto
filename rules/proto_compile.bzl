@@ -192,8 +192,8 @@ def _proto_compile_impl(ctx):
             # const <depset<File>, <list<opaque>>
             plugin_runfiles, plugin_input_manifests = ctx.resolve_tools(tools = [plugin.tool_target])
             if plugin_input_manifests:
-                input_manifests.append(plugin_input_manifests)  # TODO: check this
-            inputs += plugin_runfiles.to_list()
+                input_manifests.extend(plugin_input_manifests)
+            tools += plugin_runfiles.to_list()
 
             # If Windows, mangle the path.
             plugin_tool_path = plugin_tool.path
@@ -207,7 +207,13 @@ def _proto_compile_impl(ctx):
         # mut <string>
         out = plugin.out
         if ctx.label.workspace_root:
-            out = "/".join([out, ctx.label.workspace_root])
+            # special handling for "{BIN_DIR}".  If we are dealing with a
+            # formatted output string (like for a .srcjar), cannot just append
+            # "external/repo" to the string.
+            if out.find("{BIN_DIR}") != -1:
+                out = out.replace("{BIN_DIR}", "{BIN_DIR}/" + ctx.label.workspace_root)
+            else:
+                out = "/".join([out, ctx.label.workspace_root])
 
         # dict<key=label.package+label.name,value=list<string>>
         options = {_plugin_label_key(Label(k)): v for k, v in ctx.attr.options.items()}
@@ -228,7 +234,6 @@ def _proto_compile_impl(ctx):
             # root might be empty, so filter empty strings via this list
             # comprehension.
             out = "/".join([e for e in [ctx.bin_dir.path, ctx.label.workspace_root, plugin_out] if e])
-
         args.append("--{}_out={}".format(plugin_name, out))
 
         ### Part 2.4: setup awk modifications if any
@@ -258,7 +263,7 @@ def _proto_compile_impl(ctx):
 
     replaced_args = _ctx_replace_args(ctx, _uniq(args))
     final_args = ctx.actions.args()
-    final_args.use_param_file("@%s")
+    final_args.use_param_file("@%s", use_always = False)
     final_args.add_all(replaced_args)
 
     ###
@@ -269,11 +274,6 @@ def _proto_compile_impl(ctx):
         "mkdir -p ./" + ctx.label.package,
         protoc.path + " $@",  # $@ is replaced with args list
     ]
-
-    if verbose:
-        before = ["env", "pwd", "ls -al .", "echo '\n##### SANDBOX BEFORE RUNNING PROTOC'", "find . -type l"]
-        after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find . -type f"]
-        commands = before + commands + after
 
     # if the rule declares any mappings, setup copy file commands to move them
     # into place
@@ -307,17 +307,11 @@ def _proto_compile_impl(ctx):
         inputs.append(mv_script)
         commands.append(mv_script.path)
 
-    ctx.actions.run_shell(
-        arguments = [final_args],
-        command = "\n".join(commands),
-        inputs = inputs,
-        mnemonic = "Protoc",
-        outputs = outputs,
-        progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
-        tools = tools,
-    )
-
     if verbose:
+        before = ["env", "pwd", "ls -al .", "echo '\n##### SANDBOX BEFORE RUNNING PROTOC'", "find * -type l"]
+        after = ["echo '\n##### SANDBOX AFTER RUNNING PROTOC'", "find * -type f"]
+        commands = before + commands + after
+
         for c in commands:
             # buildifier: disable=print
             print("COMMAND:", c)
@@ -336,6 +330,17 @@ def _proto_compile_impl(ctx):
         for f in outputs:
             # buildifier: disable=print
             print("EXPECTED OUTPUT:", f.path)
+
+    ctx.actions.run_shell(
+        arguments = [final_args],
+        command = "\n".join(commands),
+        inputs = inputs,
+        mnemonic = "Protoc",
+        outputs = outputs,
+        progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
+        tools = tools,
+        input_manifests = input_manifests,
+    )
 
     return [
         ProtoCompileInfo(label = ctx.label, outputs = outputs),

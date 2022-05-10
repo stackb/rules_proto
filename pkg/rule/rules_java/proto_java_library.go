@@ -29,13 +29,7 @@ func (s *protoJavaLibrary) Name() string {
 
 // KindInfo implements part of the LanguageRule interface.
 func (s *protoJavaLibrary) KindInfo() rule.KindInfo {
-	return rule.KindInfo{
-		MergeableAttrs: map[string]bool{
-			"srcs":    true,
-			"exports": true,
-		},
-		ResolveAttrs: map[string]bool{"deps": true},
-	}
+	return javaLibraryKindInfo
 }
 
 // LoadInfo implements part of the LanguageRule interface.

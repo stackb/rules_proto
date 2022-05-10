@@ -18,20 +18,21 @@ import (
 const (
 	ProtoGoLibraryRuleName = "proto_go_library"
 	goLibraryRuleSuffix    = "_go_proto"
-	protoLibsKey           = "_proto_libs"
 )
 
 func init() {
 	protoc.Rules().MustRegisterRule("stackb:rules_proto:"+ProtoGoLibraryRuleName,
 		&goLibrary{
-			kindName: ProtoGoLibraryRuleName,
+			kindName:             ProtoGoLibraryRuleName,
+			protoLibrariesByRule: make(map[label.Label][]protoc.ProtoLibrary),
 		})
 }
 
 // goLibrary implements LanguageRule for the '{proto|grpc}_go_library' rule from
 // @rules_proto.
 type goLibrary struct {
-	kindName string
+	kindName             string
+	protoLibrariesByRule map[label.Label][]protoc.ProtoLibrary
 }
 
 // Name implements part of the LanguageRule interface.
@@ -88,24 +89,29 @@ func (s *goLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Proto
 		outputs[i] = path.Join(pc.Rel, path.Base(output))
 	}
 
-	return &goLibraryRule{
-		kindName:       s.kindName,
-		ruleNameSuffix: goLibraryRuleSuffix,
-		outputs:        protoc.DeduplicateAndSort(outputs),
-		deps:           protoc.DeduplicateAndSort(pluginDeps),
-		ruleConfig:     cfg,
-		config:         pc,
+	rule := &goLibraryRule{
+		kindName:             s.kindName,
+		ruleNameSuffix:       goLibraryRuleSuffix,
+		outputs:              protoc.DeduplicateAndSort(outputs),
+		deps:                 protoc.DeduplicateAndSort(pluginDeps),
+		ruleConfig:           cfg,
+		pc:                   pc,
+		protoLibrariesByRule: s.protoLibrariesByRule,
 	}
+	rule.id = label.New("", pc.Rel, rule.Name())
+	return rule
 }
 
 // goLibraryRule implements RuleProvider for 'go_library'-derived rules.
 type goLibraryRule struct {
-	kindName       string
-	ruleNameSuffix string
-	outputs        []string
-	deps           []string
-	config         *protoc.ProtocConfiguration
-	ruleConfig     *protoc.LanguageRuleConfig
+	id                   label.Label
+	kindName             string
+	ruleNameSuffix       string
+	outputs              []string
+	deps                 []string
+	pc                   *protoc.ProtocConfiguration
+	ruleConfig           *protoc.LanguageRuleConfig
+	protoLibrariesByRule map[label.Label][]protoc.ProtoLibrary
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -115,14 +121,14 @@ func (s *goLibraryRule) Kind() string {
 
 // Name implements part of the ruleProvider interface.
 func (s *goLibraryRule) Name() string {
-	return s.config.Library.BaseName() + s.ruleNameSuffix
+	return s.pc.Library.BaseName() + s.ruleNameSuffix
 }
 
 // Srcs computes the srcs list for the rule.
 func (s *goLibraryRule) Srcs() []string {
 	srcs := make([]string, 0)
 	for _, output := range s.outputs {
-		srcs = append(srcs, protoc.StripRel(s.config.Rel, output))
+		srcs = append(srcs, protoc.StripRel(s.pc.Rel, output))
 	}
 	return srcs
 }
@@ -134,7 +140,7 @@ func (s *goLibraryRule) Srcs() []string {
 func (s *goLibraryRule) configDeps() []string {
 	deps := s.deps
 	deps = append(deps, s.ruleConfig.GetDeps()...)
-	resolvedDeps := protoc.ResolveLibraryRewrites(s.ruleConfig.GetRewrites(), s.config.Library)
+	resolvedDeps := protoc.ResolveLibraryRewrites(s.ruleConfig.GetRewrites(), s.pc.Library)
 	deps = append(deps, resolvedDeps...)
 	return deps
 }
@@ -168,7 +174,7 @@ func (s *goLibraryRule) importPath() string {
 	}
 
 	// Next try the 'go_package' option in an imported file
-	for _, file := range s.config.Library.Files() {
+	for _, file := range s.pc.Library.Files() {
 		if value, _ := protoc.GetNamedOption(file.Options(), "go_package"); value != "" {
 			if strings.LastIndexByte(value, '/') == -1 {
 				// return langgo.InferImportPath(c, rel)
@@ -187,89 +193,81 @@ func (s *goLibraryRule) importPath() string {
 		return ""
 	}
 
-	pkg := s.config.Rel
-	name := s.config.Library.BaseName()
+	pkg := s.pc.Rel
+	name := s.pc.Library.BaseName()
 
 	return path.Join(prefix, pkg, name)
 }
 
 // Rule implements part of the ruleProvider interface.
 func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
-	newRule := rule.NewRule(s.Kind(), s.Name())
-
-	newRule.SetAttr("srcs", s.Srcs())
-	newRule.SetPrivateAttr(config.GazelleImportsKey, s.config.Library.Imports())
-	newRule.SetPrivateAttr(protoLibsKey, []protoc.ProtoLibrary{s.config.Library})
-
 	importpath := s.importPath()
-	if importpath != "" {
-		newRule.SetAttr("importpath", importpath)
-	}
-
+	srcs := s.Srcs()
 	deps := s.configDeps()
-	if len(deps) > 0 {
-		newRule.SetAttr("deps", deps)
-	}
-
 	visibility := s.Visibility()
-	if len(visibility) > 0 {
-		newRule.SetAttr("visibility", visibility)
-	}
+	imports := s.pc.Library.Imports()
 
+	// Check if an existing proto_go_library rule has already been generated
+	// under this importpath.  If so, we need to merge into it rather than
+	// create a new rule.
 	for _, other := range otherGen {
 		if other.Kind() == ProtoGoLibraryRuleName && other.AttrString("importpath") == importpath {
-			// rename the rule to reflect the importpath if merged
-			// s.mergeRuleName(importpath, other, otherGen)
-			s.mergeRules(newRule, other)
-			return nil
+			otherLabel := label.New("", s.pc.Rel, other.Name())
+			otherSrcs := other.AttrStrings("srcs")
+			otherDeps := other.AttrStrings("deps")
+			otherVis := other.AttrStrings("visibility")
+			otherImports := other.PrivateAttr(config.GazelleImportsKey).([]string)
+
+			other.SetAttr("srcs", protoc.DeduplicateAndSort(append(otherSrcs, srcs...)))
+			other.SetAttr("deps", protoc.DeduplicateAndSort(append(otherDeps, deps...)))
+			other.SetAttr("visibility", protoc.DeduplicateAndSort(append(otherVis, visibility...)))
+			other.SetPrivateAttr(config.GazelleImportsKey, protoc.DeduplicateAndSort(append(otherImports, imports...)))
+
+			s.protoLibrariesByRule[otherLabel] = append(s.protoLibrariesByRule[otherLabel], s.pc.Library)
+
+			return other
 		}
 	}
 
+	newRule := rule.NewRule(s.Kind(), s.Name())
+	newRule.SetAttr("srcs", srcs)
+	newRule.SetPrivateAttr(config.GazelleImportsKey, imports)
+	s.protoLibrariesByRule[s.id] = []protoc.ProtoLibrary{s.pc.Library}
+
+	if importpath != "" {
+		newRule.SetAttr("importpath", importpath)
+	}
+	if len(deps) > 0 {
+		newRule.SetAttr("deps", deps)
+	}
+	if len(visibility) > 0 {
+		newRule.SetAttr("visibility", visibility)
+	}
 	return newRule
 }
 
-func (s *goLibraryRule) mergeRuleName(importpath string, r *rule.Rule, other []*rule.Rule) {
-	base := path.Base(importpath)
-	if base == "." {
-		base = "_"
+func printProtoLibraryNames(libs []protoc.ProtoLibrary) string {
+	names := make([]string, len(libs))
+	for i, lib := range libs {
+		names[i] = lib.BaseName()
 	}
-	r.SetName(base + goLibraryRuleSuffix)
-}
-
-func (s *goLibraryRule) mergeRules(src, dst *rule.Rule) {
-	// TODO: clean this up.  Created when I was struggling with some other bug.
-
-	// merge attributes
-	dstSrcs := dst.AttrStrings("srcs")
-	dstDeps := dst.AttrStrings("deps")
-	dstImports := dst.PrivateAttr(config.GazelleImportsKey).([]string)
-	dstLibs := dst.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary)
-	dstVis := dst.AttrStrings("visibility")
-
-	dst.DelAttr("srcs")
-	dst.DelAttr("deps")
-	dst.DelAttr("visibility")
-	dst.DelAttr(protoLibsKey)
-	dst.DelAttr(config.GazelleImportsKey)
-
-	dst.SetAttr("srcs", protoc.DeduplicateAndSort(append(dstSrcs, s.Srcs()...)))
-	dst.SetAttr("deps", protoc.DeduplicateAndSort(append(dstDeps, s.configDeps()...)))
-	dst.SetAttr("visibility", protoc.DeduplicateAndSort(append(dstVis, s.Visibility()...)))
-	dst.SetPrivateAttr(config.GazelleImportsKey, protoc.DeduplicateAndSort(append(dstImports, s.config.Library.Imports()...)))
-	dst.SetPrivateAttr(protoLibsKey, append(dstLibs, s.config.Library))
+	return strings.Join(names, ",")
 }
 
 // Imports implements part of the RuleProvider interface.
 func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
 	// for the cross-resolver such that go can cross-resolve this library
 	from := label.New("", f.Pkg, r.Name())
+
 	// log.Println("provide for cross-resolver", r.AttrString("importpath"), from)
 	protoc.GlobalResolver().Provide("go", "go", r.AttrString("importpath"), from)
 
-	if libs, ok := r.PrivateAttr(protoLibsKey).([]protoc.ProtoLibrary); ok {
-		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), libs...)
+	libs, ok := s.protoLibrariesByRule[s.id]
+	if !ok {
+		return nil
 	}
-	return nil
+
+	return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), libs...)
 }
 
 // Resolve implements part of the RuleProvider interface.
@@ -295,7 +293,7 @@ func (s *goLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule
 
 		// If this is a relative label, make it absolute
 		if dl.Repo == "" && dl.Pkg == "" {
-			dl = label.Label{Pkg: s.config.Rel, Name: dl.Name}
+			dl = label.Label{Pkg: s.pc.Rel, Name: dl.Name}
 		}
 
 		// retrieve the rule for this label
@@ -337,7 +335,7 @@ func (s *goLibraryRule) getPluginImportMappingOption() string {
 	}
 
 	// search all plugins
-	for _, plugin := range s.config.Plugins {
+	for _, plugin := range s.pc.Plugins {
 		for _, opt := range plugin.Options {
 			tryParseMapping(opt)
 		}
@@ -349,7 +347,7 @@ func (s *goLibraryRule) getPluginImportMappingOption() string {
 
 	// now that we've gathered all possible options; search all library files
 	// (e.g. foo.proto) and see if we can find a match.
-	for _, file := range s.config.Library.Files() {
+	for _, file := range s.pc.Library.Files() {
 		filename := path.Join(file.Dir, file.Basename)
 		mapping := mappings[filename]
 		if mapping != "" {

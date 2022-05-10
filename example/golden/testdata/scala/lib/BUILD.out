@@ -1,0 +1,8 @@
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library")
+
+scala_library(
+    name = "scala",
+    srcs = ["WithSnapshot.scala"],
+    visibility = ["//visibility:public"],
+    deps = ["//proto:proto_scala_library"],
+)

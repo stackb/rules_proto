@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "github.com/example/app";
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+
+message Request {
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message Response {
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+service Echoer {
+    rpc Echo(Request) returns (Response) {
+        option (google.api.http) = {
+            post: "/v1/example/echo"
+            body: "*"
+        };
+    }
+}
