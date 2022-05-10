@@ -26,8 +26,6 @@ import (
 func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
 	cfg := pl.getOrCreatePackageConfig(args.Config)
 
-	log.Println("generate", args.Rel)
-	
 	files := make(map[string]*protoc.File)
 	for _, f := range args.RegularFiles {
 		if !protoc.IsProtoFile(f) {

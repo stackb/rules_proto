@@ -101,6 +101,8 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//pkg/protoc:BUILD.bazel",
     "@build_stack_rules_proto//pkg/protoc:depsresolver.go",
     "@build_stack_rules_proto//pkg/protoc:file.go",
+    "@build_stack_rules_proto//pkg/protoc:fileset.go",
+    "@build_stack_rules_proto//pkg/protoc:golden_filegroup.go",
     "@build_stack_rules_proto//pkg/protoc:intent.go",
     "@build_stack_rules_proto//pkg/protoc:language_config.go",
     "@build_stack_rules_proto//pkg/protoc:language_plugin_config.go",

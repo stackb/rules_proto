@@ -48,14 +48,7 @@ func (s *Package) generateRules(enabled bool) []RuleProvider {
 	langs := s.cfg.configuredLangs()
 
 	for _, lang := range langs {
-		if enabled {
-			log.Println("generate lang", lang)
-		}
-
 		if enabled != lang.Enabled {
-			if enabled {
-				log.Println("skip generate lang", lang)
-			}
 			continue
 		}
 		for _, lib := range s.libs {
@@ -142,7 +135,6 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			log.Fatalf("proto_rule %q is not configured (available: %v)", name, names)
 		}
 		if !ruleConfig.Enabled {
-			log.Println("SKIP providing (not enabled)", name)
 			continue
 		}
 		impl, err := globalRegistry.LookupRule(ruleConfig.Implementation)
@@ -158,14 +150,12 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 
 		rule := impl.ProvideRule(ruleConfig, pc)
 		if rule == nil {
-			log.Println("SKIP providing (no rule)", name)
 			continue
 		}
 
 		s.ruleLibs[rule] = lib
 
 		rules = append(rules, rule)
-		log.Println("providing", name, rule.Name())
 	}
 
 	return rules

@@ -40,7 +40,6 @@ def _proto_compile_gencopy_impl(ctx):
                 # make a copy of it...  but first, we need to find it in the srcs files!
                 found = False
                 for srcfilename, srcfile in srcfiles.items():
-                    print("looking for srcfilename", srcfilename, srcfiles)
                     if srcfilename == f.basename:
                         replica = ctx.actions.declare_file(f.basename + ".actual", sibling = f)
                         _copy_file(ctx.actions, srcfile, replica)

@@ -19,7 +19,7 @@ type goldenFilegroupRule struct{}
 
 // Name implements part of the LanguageRule interface.
 func (s *goldenFilegroupRule) Name() string {
-	return "rules_golden_filegroup"
+	return "golden_filegroup"
 }
 
 // KindInfo implements part of the LanguageRule interface.
@@ -79,7 +79,7 @@ func (s *goldenFilegroupRuleRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 
 	srcs := make([]string, 0)
 	for _, file := range s.config.Library.Files() {
-		srcs = append(srcs, file.Name)
+		srcs = append(srcs, file.Basename)
 	}
 	newRule.SetAttr("srcs", srcs)
 

@@ -110,16 +110,6 @@ func readFileAsString(filename string) (string, error) {
 	return string(bytes), nil
 }
 
-func usageHint(cfg *Config, pkg *PackageConfig) string {
-	return fmt.Sprintf(`You may need to regenerate the files (bazel run) using the '.%[2]s' target,
-update the 'srcs = [...]' attribute to include the generated files and re-run the test:
-
-$ bazel run %[1]s.%[2]s
-$ bazel test %[1]s
-
-`, pkg.TargetLabel, cfg.UpdateTargetLabelName)
-}
-
 func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 	log.Printf("checking %q v. %q", pairs[0].Src, pairs[0].Dst)
 	for _, pair := range pairs {

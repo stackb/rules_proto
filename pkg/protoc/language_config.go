@@ -31,7 +31,8 @@ func newLanguageConfig(name string, rules ...*LanguageRuleConfig) *LanguageConfi
 	return c
 }
 
-// GetEnabledRules filters the list of enabled Rules in a sorted manner.
+// GetRulesByIntent filters the list of enabled/disabled Rules in a sorted
+// manner.
 func (c *LanguageConfig) GetRulesByIntent(intent bool) []string {
 	names := make([]string, 0)
 	for name, want := range c.Rules {
