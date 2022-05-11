@@ -10,6 +10,7 @@ require (
 	github.com/google/go-cmp v0.5.5
 	github.com/pmezard/go-difflib v1.0.0
 	github.com/stretchr/testify v1.7.0
+	go.starlark.net v0.0.0-20220328144851-d1966c6b9fcd
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
 
