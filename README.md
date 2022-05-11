@@ -772,6 +772,7 @@ artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 | [builtin:objc](pkg/plugin/builtin/objc_plugin.go)                                                                      |
 | [builtin:php](pkg/plugin/builtin/php_plugin.go)                                                                        |
 | [builtin:python](pkg/plugin/builtin/python_plugin.go)                                                                  |
+| [builtin:pyi](pkg/plugin/builtin/pyi_plugin.go)                                                                        |
 | [builtin:ruby](pkg/plugin/builtin/ruby_plugin.go)                                                                      |
 | [grpc:grpc:cpp](pkg/plugin/builtin/grpc_grpc_cpp.go)                                                                   |
 | [grpc:grpc:protoc-gen-grpc-python](pkg/plugin/grpc/grpc/protoc-gen-grpc-python.go)                                     |

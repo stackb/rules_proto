@@ -41,6 +41,12 @@ proto_plugin(
 )
 
 proto_plugin(
+    name = "pyi",
+    visibility = ["//visibility:public"],
+    deps = ["//deps:com_google_protobuf"],
+)
+
+proto_plugin(
     name = "ruby",
     visibility = ["//visibility:public"],
     deps = ["//deps:com_google_protobuf"],
