@@ -3,6 +3,7 @@ package protoc
 import (
 	"log"
 	"path"
+	"path/filepath"
 	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -91,13 +92,14 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		var configureError error
 
 		if err == ErrUnknownPlugin {
+			filename := filepath.Join(s.cfg.Config.WorkDir, plugin.Implementation)
 			if isStarlarkPlugin(plugin.Implementation) {
-				if impl, err = loadStarlarkPlugin(plugin.Name, plugin.Implementation, plugin.Implementation, func(msg string) {
+				if impl, err = loadStarlarkPluginFromFile(plugin.Name, filename, func(msg string) {
 					log.Printf("%s> %s", plugin.Implementation, msg)
 				}, func(err error) {
 					configureError = err
 				}); err != nil {
-					log.Fatalf("%s: plugin loading failed: %v", err)
+					log.Fatalf("%s: plugin loading failed: %v", filename, err)
 				}
 			} else {
 				log.Fatalf(

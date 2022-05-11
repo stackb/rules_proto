@@ -2,17 +2,29 @@ package protoc
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/emicklei/proto"
 	"go.starlark.net/starlark"
 	"go.starlark.net/starlarkstruct"
 )
 
 func isStarlarkPlugin(filename string) bool {
-	return strings.HasSuffix(filename, ".starlark")
+	return strings.HasSuffix(filename, ".star")
+}
+
+func loadStarlarkPluginFromFile(name, filename string, reporter func(msg string), errorReporter func(err error)) (Plugin, error) {
+	f, err := os.Open(filename)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open plugin file %q: %w", filename, err)
+	}
+	defer f.Close()
+
+	return loadStarlarkPlugin(name, filename, f, reporter, errorReporter)
 }
 
 func loadStarlarkPlugin(name, filename string, src interface{}, reporter func(msg string), errorReporter func(err error)) (Plugin, error) {
@@ -63,7 +75,8 @@ func loadStarlarkPlugin(name, filename string, src interface{}, reporter func(ms
 	}
 }
 
-// starlarkPlugin is a starlark plugin that implements the protoc plugin interface.
+// starlarkPlugin is a plugin implemented in starlark that implements the protoc
+// plugin interface.
 type starlarkPlugin struct {
 	name          string
 	reporter      func(thread *starlark.Thread, msg string)
@@ -258,6 +271,7 @@ func newProtoLibraryStruct(p ProtoLibrary) *starlarkstruct.Struct {
 				"deps":                &starlark.List{},
 				"imports":             &starlark.List{},
 				"files":               &starlark.List{},
+				"rule":                newStarlarkProtoLibraryRuleStruct(p.Rule()),
 			},
 		)
 	}
@@ -433,6 +447,21 @@ func newProtoEnumOptionStruct(e proto.Option) *starlarkstruct.Struct {
 			"constant": starlark.String(e.Constant.Source),
 		},
 	)
+}
+
+func newStarlarkProtoLibraryRuleStruct(r *rule.Rule) *starlarkstruct.Struct {
+	return starlarkstruct.FromStringDict(
+		Symbol("Rule"),
+		starlark.StringDict{
+			"name":       starlark.String(r.Name()),
+			"kind":       starlark.String(r.Kind()),
+			"srcs":       newStringList(r.AttrStrings("srcs")),
+			"deps":       newStringList(r.AttrStrings("deps")),
+			"tags":       newStringList(r.AttrStrings("tags")),
+			"visibility": newStringList(r.AttrStrings("visibility")),
+		},
+	)
+
 }
 
 // Symbol is the type of a Starlark constructor symbol.  It prints more
