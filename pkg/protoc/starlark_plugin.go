@@ -36,31 +36,12 @@ func loadStarlarkPlugin(name, filename string, src interface{}, reporter func(ms
 	}
 
 	plugins := make(map[string]*starlarkstruct.Struct)
+	rules := make(map[string]*starlarkstruct.Struct)
+	predeclared := newPredeclared(plugins, rules)
 
-	module := &starlarkstruct.Module{
-		Name: "protoc",
-		Members: starlark.StringDict{
-			"Plugin":              starlark.NewBuiltin("Plugin", newStarlarkPlugin(plugins)),
-			"PluginConfiguration": starlark.NewBuiltin("PluginConfiguration", newStarlarkPluginConfiguration()),
-		},
-	}
-
-	predeclared := starlark.StringDict{
-		"protoc": module,
-	}
-
-	_, program, err := starlark.SourceProgram(filename, src, predeclared.Has)
+	_, thread, err := loadStarlarkProgram(filename, src, predeclared, reporter, errorReporter)
 	if err != nil {
 		return nil, err
-	}
-
-	thread := new(starlark.Thread)
-	thread.Print = func(thread *starlark.Thread, msg string) {
-		reporter(msg)
-	}
-	_, err = program.Init(thread, predeclared)
-	if err != nil {
-		return nil, newErrorf("eval: %w", err)
 	}
 
 	if plugin, ok := plugins[name]; !ok {
@@ -176,7 +157,7 @@ func newStarlarkPluginConfiguration() goStarlarkFunction {
 	}
 }
 
-func newStarlarkPlugin(plugins map[string]*starlarkstruct.Struct) goStarlarkFunction {
+func newStarlarkPluginFunction(plugins map[string]*starlarkstruct.Struct) goStarlarkFunction {
 	return func(thread *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, kwargs []starlark.Tuple) (starlark.Value, error) {
 		var name string
 		var configure starlark.Callable
@@ -206,14 +187,14 @@ func newPluginContextStruct(ctx *PluginContext) *starlarkstruct.Struct {
 		Symbol("PluginContext"),
 		starlark.StringDict{
 			"rel":            starlark.String(ctx.Rel),
-			"plugin_config":  newPluginConfigStruct(ctx.PluginConfig),
+			"plugin_config":  newLanguagePluginConfigStruct(ctx.PluginConfig),
 			"package_config": newPackageConfigStruct(ctx.PackageConfig),
 			"proto_library":  newProtoLibraryStruct(ctx.ProtoLibrary),
 		},
 	)
 }
 
-func newPluginConfigStruct(cfg LanguagePluginConfig) *starlarkstruct.Struct {
+func newLanguagePluginConfigStruct(cfg LanguagePluginConfig) *starlarkstruct.Struct {
 	return starlarkstruct.FromStringDict(
 		Symbol("LanguagePluginConfig"),
 		starlark.StringDict{
