@@ -157,18 +157,35 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		if !ruleConfig.Enabled {
 			continue
 		}
+
+		var configureError error
+
 		impl, err := globalRegistry.LookupRule(ruleConfig.Implementation)
 		if err == ErrUnknownRule {
-			log.Fatalf(
-				"%s: rule not registered: %q (available: %v)",
-				s.rel,
-				ruleConfig.Implementation,
-				globalRegistry.RuleNames(),
-			)
+			filename := filepath.Join(s.cfg.Config.WorkDir, ruleConfig.Implementation)
+			if isStarlarkLanguageRule(ruleConfig.Implementation) {
+				if impl, err = loadStarlarkLanguageRuleFromFile(ruleConfig.Name, filename, func(msg string) {
+					log.Printf("%s> %s", ruleConfig.Implementation, msg)
+				}, func(err error) {
+					configureError = err
+				}); err != nil {
+					log.Fatalf("%s: rule loading failed: %v", filename, err)
+				}
+			} else {
+				log.Fatalf(
+					"%s: rule not registered: %q (available: %v)",
+					s.rel,
+					ruleConfig.Implementation,
+					globalRegistry.RuleNames(),
+				)
+			}
 		}
 		ruleConfig.Impl = impl
 
 		rule := impl.ProvideRule(ruleConfig, pc)
+		if configureError != nil {
+			log.Fatalf("%s: rule configuration failed: %v", name, configureError)
+		}
 		if rule == nil {
 			continue
 		}

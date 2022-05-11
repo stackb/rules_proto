@@ -120,8 +120,8 @@ func (p *starlarkLanguageRule) ProvideRule(rc *LanguageRuleConfig, pc *ProtocCon
 	thread := new(starlark.Thread)
 	thread.Print = p.reporter
 	value, err := starlark.Call(thread, provideRule, starlark.Tuple{
-		newLanguageRuleConfigStruct(*rc),
-		newProtocConfigurationStruct(*pc),
+		newLanguageRuleConfigStruct(rc),
+		newProtocConfigurationStruct(pc),
 	}, []starlark.Tuple{})
 	if err != nil {
 		p.errorReporter("rule %q provide_rule failed: %w", p.name, err)
@@ -187,7 +187,21 @@ func (s *starlarkRuleProvider) Imports(c *config.Config, r *rule.Rule, file *rul
 	return nil
 }
 
-func newLanguageRuleConfigStruct(rc LanguageRuleConfig) *starlarkstruct.Struct {
+func newLanguageRuleConfigStruct(rc *LanguageRuleConfig) *starlarkstruct.Struct {
+	if rc == nil {
+		return starlarkstruct.FromStringDict(
+			Symbol("LanguageRuleConfig"),
+			starlark.StringDict{
+				"config":         newConfigStruct(&config.Config{}),
+				"deps":           &starlark.Dict{},
+				"enabled":        starlark.Bool(false),
+				"implementation": starlark.String(""),
+				"name":           starlark.String(""),
+				"options":        &starlark.Dict{},
+				"visibility":     &starlark.Dict{},
+			},
+		)
+	}
 	return starlarkstruct.FromStringDict(
 		Symbol("LanguageRuleConfig"),
 		starlark.StringDict{
@@ -202,12 +216,27 @@ func newLanguageRuleConfigStruct(rc LanguageRuleConfig) *starlarkstruct.Struct {
 	)
 }
 
-func newProtocConfigurationStruct(pc ProtocConfiguration) *starlarkstruct.Struct {
+func newProtocConfigurationStruct(pc *ProtocConfiguration) *starlarkstruct.Struct {
+	if pc == nil {
+		return starlarkstruct.FromStringDict(
+			Symbol("ProtocConfiguration"),
+			starlark.StringDict{
+				"package_config":  newPackageConfigStruct(nil),
+				"language_config": newLanguageConfigStruct(nil),
+				"rel":             starlark.String(""),
+				"prefix":          starlark.String(""),
+				"outputs":         newStringList([]string{}),
+				"imports":         newStringList([]string{}),
+				"mappings":        &starlark.Dict{},
+				"plugins":         &starlark.List{},
+			},
+		)
+	}
 	return starlarkstruct.FromStringDict(
 		Symbol("ProtocConfiguration"),
 		starlark.StringDict{
-			"package_config":  newPackageConfigStruct(*pc.PackageConfig),
-			"language_config": newLanguageConfigStruct(*pc.LanguageConfig),
+			"package_config":  newPackageConfigStruct(pc.PackageConfig),
+			"language_config": newLanguageConfigStruct(pc.LanguageConfig),
 			"rel":             starlark.String(pc.Rel),
 			"prefix":          starlark.String(pc.Prefix),
 			"outputs":         newStringList(pc.Outputs),
@@ -218,7 +247,19 @@ func newProtocConfigurationStruct(pc ProtocConfiguration) *starlarkstruct.Struct
 	)
 }
 
-func newLanguageConfigStruct(lc LanguageConfig) *starlarkstruct.Struct {
+func newLanguageConfigStruct(lc *LanguageConfig) *starlarkstruct.Struct {
+	if lc == nil {
+		return starlarkstruct.FromStringDict(
+			Symbol("LanguageConfig"),
+			starlark.StringDict{
+				"name":    starlark.String(""),
+				"protoc":  starlark.String(""),
+				"enabled": starlark.Bool(false),
+				"plugins": &starlark.Dict{},
+				"rules":   &starlark.Dict{},
+			},
+		)
+	}
 	return starlarkstruct.FromStringDict(
 		Symbol("LanguageConfig"),
 		starlark.StringDict{

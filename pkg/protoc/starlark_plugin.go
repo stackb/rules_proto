@@ -188,7 +188,7 @@ func newPluginContextStruct(ctx *PluginContext) *starlarkstruct.Struct {
 		starlark.StringDict{
 			"rel":            starlark.String(ctx.Rel),
 			"plugin_config":  newLanguagePluginConfigStruct(ctx.PluginConfig),
-			"package_config": newPackageConfigStruct(ctx.PackageConfig),
+			"package_config": newPackageConfigStruct(&ctx.PackageConfig),
 			"proto_library":  newProtoLibraryStruct(ctx.ProtoLibrary),
 		},
 	)
@@ -208,7 +208,15 @@ func newLanguagePluginConfigStruct(cfg LanguagePluginConfig) *starlarkstruct.Str
 	)
 }
 
-func newPackageConfigStruct(cfg PackageConfig) *starlarkstruct.Struct {
+func newPackageConfigStruct(cfg *PackageConfig) *starlarkstruct.Struct {
+	if cfg == nil {
+		return starlarkstruct.FromStringDict(
+			Symbol("PackageConfig"),
+			starlark.StringDict{
+				"config": newConfigStruct(&config.Config{}),
+			},
+		)
+	}
 	return starlarkstruct.FromStringDict(
 		Symbol("PackageConfig"),
 		starlark.StringDict{
@@ -250,7 +258,6 @@ func newProtoLibraryStruct(p ProtoLibrary) *starlarkstruct.Struct {
 				"deps":                &starlark.List{},
 				"imports":             &starlark.List{},
 				"files":               &starlark.List{},
-				"rule":                newStarlarkProtoLibraryRuleStruct(p.Rule()),
 			},
 		)
 	}
@@ -264,6 +271,7 @@ func newProtoLibraryStruct(p ProtoLibrary) *starlarkstruct.Struct {
 			"deps":                newStringList(p.Deps()),
 			"imports":             newStringList(p.Imports()),
 			"files":               newProtoFileList(p.Files()),
+			"rule":                newStarlarkProtoLibraryRuleStruct(p.Rule()),
 		},
 	)
 }
@@ -413,6 +421,19 @@ func newProtoEnumOptionStruct(e proto.Option) *starlarkstruct.Struct {
 }
 
 func newStarlarkProtoLibraryRuleStruct(r *rule.Rule) *starlarkstruct.Struct {
+	if r == nil {
+		return starlarkstruct.FromStringDict(
+			Symbol("Rule"),
+			starlark.StringDict{
+				"name":       starlark.String(""),
+				"kind":       starlark.String(""),
+				"srcs":       &starlark.List{},
+				"deps":       &starlark.List{},
+				"tags":       &starlark.List{},
+				"visibility": &starlark.List{},
+			},
+		)
+	}
 	return starlarkstruct.FromStringDict(
 		Symbol("Rule"),
 		starlark.StringDict{

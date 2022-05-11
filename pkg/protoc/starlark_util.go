@@ -68,6 +68,7 @@ func newPredeclared(plugins, rules map[string]*starlarkstruct.Struct) starlark.S
 	return starlark.StringDict{
 		protoc.Name:  protoc,
 		gazelle.Name: gazelle,
+		"struct":     starlark.NewBuiltin("struct", starlarkstruct.Make),
 	}
 }
 
@@ -98,7 +99,7 @@ func loadStarlarkProgram(filename string, src interface{}, predeclared starlark.
 func newGazelleRuleFunction() goStarlarkFunction {
 	return func(thread *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, kwargs []starlark.Tuple) (starlark.Value, error) {
 		var name, kind string
-		var attrs *starlark.Dict
+		var attrs starlark.Dict
 
 		if err := starlark.UnpackArgs("Rule", args, kwargs,
 			"name", &name,
@@ -113,7 +114,7 @@ func newGazelleRuleFunction() goStarlarkFunction {
 			starlark.StringDict{
 				"name":  starlark.String(name),
 				"kind":  starlark.String(kind),
-				"attrs": attrs,
+				"attrs": &attrs,
 			},
 		)
 
@@ -135,7 +136,7 @@ func newGazelleLoadInfoFunction() goStarlarkFunction {
 		}
 
 		value := starlarkstruct.FromStringDict(
-			Symbol("Rule"),
+			Symbol("LoadInfo"),
 			starlark.StringDict{
 				"name":    starlark.String(name),
 				"symbols": &symbols,
@@ -164,7 +165,7 @@ func newGazelleKindInfoFunction() goStarlarkFunction {
 		}
 
 		value := starlarkstruct.FromStringDict(
-			Symbol("Rule"),
+			Symbol("KindInfo"),
 			starlark.StringDict{
 				"match_any":        starlark.Bool(matchAny),
 				"match_attrs":      &matchAttrs,
