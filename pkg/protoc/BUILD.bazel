@@ -29,7 +29,8 @@ go_library(
         "rule_provider.go",
         "rule_registry.go",
         "ruleindex.go",
-        "starlark.go",
+        "starlark_plugin.go",
+        "starlark_util.go",
         "syntaxutil.go",
         "yconfig.go",
     ],
@@ -64,7 +65,7 @@ go_test(
         "protoc_configuration_test.go",
         "resolver_test.go",
         "rewrite_test.go",
-        "starlark_test.go",
+        "starlark_plugin_test.go",
     ],
     embed = [":protoc"],
     deps = [
