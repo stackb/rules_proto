@@ -85,19 +85,37 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			plugin.Implementation = plugin.Name
 		}
 		impl, err := globalRegistry.LookupPlugin(plugin.Implementation)
+
+		// the Plugin.Configure API lacks a way to return an error, so we have to
+		// use an indirect method: if the plugin is starlark returns an error, it gets captured here.
+		var configureError error
+
 		if err == ErrUnknownPlugin {
-			log.Fatalf(
-				"%s: plugin not registered: %q (available: %v) [%+v]",
-				s.rel,
-				plugin.Implementation,
-				globalRegistry.PluginNames(),
-				plugin,
-			)
+			if isStarlarkPlugin(plugin.Implementation) {
+				if impl, err = loadStarlarkPlugin(plugin.Name, plugin.Implementation, plugin.Implementation, func(msg string) {
+					log.Printf("%s> %s", plugin.Implementation, msg)
+				}, func(err error) {
+					configureError = err
+				}); err != nil {
+					log.Fatalf("%s: plugin loading failed: %v", err)
+				}
+			} else {
+				log.Fatalf(
+					"%s: plugin not registered: %q (available: %v) [%+v]",
+					s.rel,
+					plugin.Implementation,
+					globalRegistry.PluginNames(),
+					plugin,
+				)
+			}
 		}
 		ctx.Plugin = impl
 
 		// Delegate to the implementation for configuration
 		config := impl.Configure(ctx)
+		if configureError != nil {
+			log.Fatalf("%s: plugin configuration failed: %v", s.rel, configureError)
+		}
 		if config == nil {
 			continue
 		}
