@@ -154,12 +154,12 @@ func newGazelleKindInfoFunction() goStarlarkFunction {
 		var matchAttrs, nonEmptyAttrs, substituteAttrs, mergeableAttrs, resolveAttrs starlark.Dict
 
 		if err := starlark.UnpackArgs("KindInfo", args, kwargs,
-			"match_any", &matchAny,
-			"match_attrs", &matchAttrs,
-			"non_empty_attrs", &nonEmptyAttrs,
-			"substitute_attrs", &substituteAttrs,
-			"mergeable_attrs", &mergeableAttrs,
-			"resolve_attrs", &resolveAttrs,
+			"match_any?", &matchAny,
+			"match_attrs?", &matchAttrs,
+			"non_empty_attrs?", &nonEmptyAttrs,
+			"substitute_attrs?", &substituteAttrs,
+			"mergeable_attrs?", &mergeableAttrs,
+			"resolve_attrs?", &resolveAttrs,
 		); err != nil {
 			return nil, err
 		}
