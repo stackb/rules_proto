@@ -34,6 +34,7 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//pkg/plugin/builtin:js_common_plugin.go",
     "@build_stack_rules_proto//pkg/plugin/builtin:objc_plugin.go",
     "@build_stack_rules_proto//pkg/plugin/builtin:php_plugin.go",
+    "@build_stack_rules_proto//pkg/plugin/builtin:pyi_plugin.go",
     "@build_stack_rules_proto//pkg/plugin/builtin:python_plugin.go",
     "@build_stack_rules_proto//pkg/plugin/builtin:ruby_plugin.go",
     "@build_stack_rules_proto//pkg/plugin/gogo/protobuf:BUILD.bazel",
