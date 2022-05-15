@@ -8,6 +8,7 @@ def _make_java_library_rule(rctx, pctx):
             "srcs": [pctx.proto_library.base_name + ".srcjar"],
         },
     )
+    return r
 
 def _provide_java_library(rctx, pctx):
     return struct(

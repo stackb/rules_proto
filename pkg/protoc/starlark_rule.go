@@ -31,6 +31,7 @@ func loadStarlarkLanguageRule(name, filename string, src interface{}, reporter f
 	newErrorf := func(msg string, args ...interface{}) error {
 		err := fmt.Errorf(filename+": "+msg, args...)
 		errorReporter(err)
+		reporter(err.Error())
 		return err
 	}
 
@@ -97,13 +98,61 @@ func (p *starlarkLanguageRule) Name() string {
 }
 
 // LoadInfo returns the gazelle LoadInfo.
-func (p *starlarkLanguageRule) LoadInfo() rule.LoadInfo {
-	return rule.LoadInfo{}
+func (p *starlarkLanguageRule) LoadInfo() (result rule.LoadInfo) {
+	callable, err := p.rule.Attr("load_info")
+	if err != nil {
+		p.errorReporter("rule %q has no load_info function", p.name)
+		return result
+	}
+
+	thread := new(starlark.Thread)
+	thread.Print = p.reporter
+	value, err := starlark.Call(thread, callable, starlark.Tuple{}, []starlark.Tuple{})
+	if err != nil {
+		p.errorReporter("rule %q load_info failed: %w", p.name, err)
+		return result
+	}
+
+	switch value := value.(type) {
+	case *starlarkstruct.Struct:
+		result.Name = structAttrString(value, "name", p.errorReporter)
+		result.Symbols = structAttrStringSlice(value, "symbols", p.errorReporter)
+		result.After = structAttrStringSlice(value, "after", p.errorReporter)
+	default:
+		p.errorReporter("rule %q provide_rule returned invalid type: %T", p.name, value)
+	}
+	return
 }
 
 // KindInfo returns the gazelle KindInfo.
-func (p *starlarkLanguageRule) KindInfo() rule.KindInfo {
-	return rule.KindInfo{}
+func (p *starlarkLanguageRule) KindInfo() (result rule.KindInfo) {
+	callable, err := p.rule.Attr("kind_info")
+	if err != nil {
+		p.errorReporter("rule %q has no kind_info function", p.name)
+		return result
+	}
+
+	thread := new(starlark.Thread)
+	thread.Print = p.reporter
+	value, err := starlark.Call(thread, callable, starlark.Tuple{}, []starlark.Tuple{})
+	if err != nil {
+		p.errorReporter("rule %q kind_info failed: %w", p.name, err)
+		return result
+	}
+
+	switch value := value.(type) {
+	case *starlarkstruct.Struct:
+		result.MatchAny = structAttrBool(value, "match_any", p.errorReporter)
+		result.MatchAttrs = structAttrStringSlice(value, "match_attrs", p.errorReporter)
+		result.NonEmptyAttrs = structAttrMapStringBool(value, "non_empty_attrs", p.errorReporter)
+		result.SubstituteAttrs = structAttrMapStringBool(value, "substitute_attrs", p.errorReporter)
+		result.MergeableAttrs = structAttrMapStringBool(value, "mergeable_attrs", p.errorReporter)
+		result.ResolveAttrs = structAttrMapStringBool(value, "resolve_attrs", p.errorReporter)
+	default:
+		p.errorReporter("rule %q provide_rule returned invalid type: %T", p.name, value)
+	}
+
+	return
 }
 
 // ProvideRule takes the given configration and compilation and emits a
@@ -111,7 +160,7 @@ func (p *starlarkLanguageRule) KindInfo() rule.KindInfo {
 // rule should not be emitted, implementation should return nil.
 func (p *starlarkLanguageRule) ProvideRule(rc *LanguageRuleConfig, pc *ProtocConfiguration) RuleProvider {
 
-	provideRule, err := p.rule.Attr("provide_rule")
+	callable, err := p.rule.Attr("provide_rule")
 	if err != nil {
 		p.errorReporter("rule %q has no provide_rule function", p.name)
 		return nil
@@ -119,7 +168,7 @@ func (p *starlarkLanguageRule) ProvideRule(rc *LanguageRuleConfig, pc *ProtocCon
 
 	thread := new(starlark.Thread)
 	thread.Print = p.reporter
-	value, err := starlark.Call(thread, provideRule, starlark.Tuple{
+	value, err := starlark.Call(thread, callable, starlark.Tuple{
 		newLanguageRuleConfigStruct(rc),
 		newProtocConfigurationStruct(pc),
 	}, []starlark.Tuple{})
@@ -132,6 +181,7 @@ func (p *starlarkLanguageRule) ProvideRule(rc *LanguageRuleConfig, pc *ProtocCon
 	switch value := value.(type) {
 	case *starlarkstruct.Struct:
 		result = &starlarkRuleProvider{
+			name:          p.name,
 			provider:      value,
 			reporter:      p.reporter,
 			errorReporter: p.errorReporter,
@@ -146,6 +196,7 @@ func (p *starlarkLanguageRule) ProvideRule(rc *LanguageRuleConfig, pc *ProtocCon
 
 // starlarkRuleProvider implements RuleProvider via a starlark struct.
 type starlarkRuleProvider struct {
+	name          string
 	provider      *starlarkstruct.Struct
 	reporter      func(thread *starlark.Thread, msg string)
 	errorReporter func(msg string, args ...interface{}) error
@@ -163,18 +214,80 @@ func (s *starlarkRuleProvider) Kind() string {
 
 // Name implements part of the RuleProvider interface.
 func (s *starlarkRuleProvider) Name() string {
-	name, err := s.provider.Attr("name")
-	if err != nil {
-		s.errorReporter("provider %T has no name", s)
-		return ""
-	}
-	return name.(starlark.String).GoString()
+	return structAttrString(s.provider, "name", s.errorReporter)
 
 }
 
 // Rule implements part of the RuleProvider interface.
 func (s *starlarkRuleProvider) Rule(othergen ...*rule.Rule) *rule.Rule {
-	return nil
+	callable, err := s.provider.Attr("rule")
+	if err != nil {
+		s.errorReporter("rule %q has no rule() function", s.name)
+		return nil
+	}
+
+	thread := new(starlark.Thread)
+	s.reporter(thread, "Invoking rule "+s.name)
+	thread.Print = s.reporter
+	value, err := starlark.Call(thread, callable, starlark.Tuple{}, []starlark.Tuple{})
+	if err != nil {
+		err = s.errorReporter("provider %q rule() failed: %w", s.name, err)
+		return nil
+	}
+
+	switch value := value.(type) {
+	case *starlarkstruct.Struct:
+		rKind := structAttrString(value, "kind", s.errorReporter)
+		if rKind == "" {
+			s.errorReporter("rule %q has no kind", s.name)
+			return nil
+		}
+		rName := structAttrString(value, "name", s.errorReporter)
+		if rName == "" {
+			s.errorReporter("rule %q has no name", s.name)
+			return nil
+		}
+		r := rule.NewRule(rKind, rName)
+		s.reporter(thread, "Created rule "+rKind+" "+rName)
+
+		attrs, err := value.Attr("attrs")
+		if err != nil {
+			s.errorReporter("provider %q rule() returned invalid type: %T", s.name, value)
+			return nil
+		}
+		switch attrs := attrs.(type) {
+		case *starlark.Dict:
+			for _, attr := range attrs.Keys() {
+				attrName, ok := attr.(starlark.String)
+				if !ok {
+					s.errorReporter("%q rule attr key is invalid type (want string, got %T)", s.name, attr)
+					continue
+				}
+				if attrValue, ok, err := attrs.Get(attrName); ok && err == nil {
+					switch t := attrValue.(type) {
+					case *starlark.Bool:
+						r.SetAttr(attrName.GoString(), bool(*t))
+					case *starlark.Int:
+						intValue, _ := t.Int64()
+						r.SetAttr(attrName.GoString(), intValue)
+					case starlark.String:
+						r.SetAttr(attrName.GoString(), t.GoString())
+					case *starlark.List:
+						s.reporter(thread, fmt.Sprintf("!!! %q rule attr %q is a list", s.name, attrName.GoString()))
+						r.SetAttr(attrName.GoString(), stringSlice(t, s.errorReporter))
+					default:
+						s.errorReporter("%q rule attr value is invalid type (want bool, int, string, list, got %T)", s.name, t)
+					}
+				}
+			}
+		default:
+			s.errorReporter("%q rule.attrs returned invalid type: %T", s.name, value)
+		}
+		return r
+	default:
+		s.errorReporter("provider %q rule() returned invalid type: %T", s.name, value)
+		return nil
+	}
 }
 
 // Resolve implements part of the RuleProvider interface.
@@ -223,6 +336,7 @@ func newProtocConfigurationStruct(pc *ProtocConfiguration) *starlarkstruct.Struc
 			starlark.StringDict{
 				"package_config":  newPackageConfigStruct(nil),
 				"language_config": newLanguageConfigStruct(nil),
+				"library":         starlark.None,
 				"rel":             starlark.String(""),
 				"prefix":          starlark.String(""),
 				"outputs":         newStringList([]string{}),
@@ -237,6 +351,7 @@ func newProtocConfigurationStruct(pc *ProtocConfiguration) *starlarkstruct.Struc
 		starlark.StringDict{
 			"package_config":  newPackageConfigStruct(pc.PackageConfig),
 			"language_config": newLanguageConfigStruct(pc.LanguageConfig),
+			"proto_library":   newProtoLibraryStruct(pc.Library),
 			"rel":             starlark.String(pc.Rel),
 			"prefix":          starlark.String(pc.Prefix),
 			"outputs":         newStringList(pc.Outputs),

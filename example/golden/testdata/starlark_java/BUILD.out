@@ -19,6 +19,11 @@ proto_library(
     visibility = ["//visibility:public"],
 )
 
+java_library(
+    name = "example_java_library",
+    srcs = ["example.srcjar"],
+)
+
 proto_compile(
     name = "example_java_compile",
     outputs = ["example.srcjar"],

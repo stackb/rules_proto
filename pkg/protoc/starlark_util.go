@@ -7,6 +7,8 @@ import (
 	"go.starlark.net/starlarkstruct"
 )
 
+type errorReporter func(format string, args ...interface{}) error
+
 type goStarlarkFunction func(thread *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, kwargs []starlark.Tuple) (starlark.Value, error)
 
 // Symbol is the type of a Starlark constructor symbol.  It prints more
@@ -99,7 +101,7 @@ func loadStarlarkProgram(filename string, src interface{}, predeclared starlark.
 func newGazelleRuleFunction() goStarlarkFunction {
 	return func(thread *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, kwargs []starlark.Tuple) (starlark.Value, error) {
 		var name, kind string
-		var attrs starlark.Dict
+		var attrs *starlark.Dict
 
 		if err := starlark.UnpackArgs("Rule", args, kwargs,
 			"name", &name,
@@ -114,7 +116,7 @@ func newGazelleRuleFunction() goStarlarkFunction {
 			starlark.StringDict{
 				"name":  starlark.String(name),
 				"kind":  starlark.String(kind),
-				"attrs": &attrs,
+				"attrs": attrs,
 			},
 		)
 
@@ -151,7 +153,8 @@ func newGazelleLoadInfoFunction() goStarlarkFunction {
 func newGazelleKindInfoFunction() goStarlarkFunction {
 	return func(thread *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, kwargs []starlark.Tuple) (starlark.Value, error) {
 		var matchAny bool
-		var matchAttrs, nonEmptyAttrs, substituteAttrs, mergeableAttrs, resolveAttrs starlark.Dict
+		var matchAttrs starlark.List
+		var nonEmptyAttrs, substituteAttrs, mergeableAttrs, resolveAttrs starlark.Dict
 
 		if err := starlark.UnpackArgs("KindInfo", args, kwargs,
 			"match_any?", &matchAny,
@@ -178,4 +181,86 @@ func newGazelleKindInfoFunction() goStarlarkFunction {
 
 		return value, nil
 	}
+}
+
+func structAttrStringSlice(in *starlarkstruct.Struct, name string, errorReporter errorReporter) []string {
+	value, err := in.Attr(name)
+	if err != nil {
+		errorReporter("getting struct attr %s: %w", err)
+		return nil
+	}
+	list, ok := value.(*starlark.List)
+	if !ok {
+		errorReporter("%s is not a list", name)
+		return nil
+	}
+	return stringSlice(list, errorReporter)
+}
+
+func stringSlice(list *starlark.List, errorReporter errorReporter) (out []string) {
+	for i := 0; i < list.Len(); i++ {
+		value := list.Index(i)
+		switch value := (value).(type) {
+		case starlark.String:
+			out = append(out, value.GoString())
+		default:
+			errorReporter("list[%d]: expected string, got %s", i, value.Type())
+		}
+	}
+	return
+}
+
+func structAttrBool(in *starlarkstruct.Struct, name string, errorReporter errorReporter) (out bool) {
+	value, err := in.Attr(name)
+	if err != nil {
+		errorReporter("getting struct attr %s: %w", err)
+		return
+	}
+	b, ok := value.(*starlark.Bool)
+	if !ok {
+		errorReporter("%s is not a bool", name)
+		return
+	}
+	out = bool(*b)
+	return
+}
+
+func structAttrString(in *starlarkstruct.Struct, name string, errorReporter errorReporter) string {
+	value, err := in.Attr(name)
+	if err != nil {
+		errorReporter("getting struct attr %s: %w", err)
+		return ""
+	}
+	switch value := value.(type) {
+	case starlark.String:
+		return value.GoString()
+	default:
+		errorReporter("%s is not a string (%T)", name, value)
+		return ""
+	}
+}
+
+func structAttrMapStringBool(in *starlarkstruct.Struct, name string, errorReporter errorReporter) (out map[string]bool) {
+	value, err := in.Attr(name)
+	if err != nil {
+		errorReporter("getting struct attr %s: %w", err)
+		return
+	}
+	dict, ok := value.(*starlark.Dict)
+	if !ok {
+		errorReporter("%s is not a dict", name)
+		return
+	}
+	out = make(map[string]bool, dict.Len())
+	for _, key := range dict.Keys() {
+		if value, ok, err := dict.Get(key); ok && err == nil {
+			b, ok := value.(*starlark.Bool)
+			if !ok {
+				errorReporter("%s is not a bool", name)
+				return
+			}
+			out[name] = bool(*b)
+		}
+	}
+	return
 }
