@@ -305,26 +305,28 @@ func newLanguageRuleConfigStruct(rc *LanguageRuleConfig) *starlarkstruct.Struct 
 		return starlarkstruct.FromStringDict(
 			Symbol("LanguageRuleConfig"),
 			starlark.StringDict{
+				"attrs":          &starlark.Dict{},
 				"config":         newConfigStruct(&config.Config{}),
-				"deps":           &starlark.Dict{},
+				"deps":           &starlark.List{},
 				"enabled":        starlark.Bool(false),
 				"implementation": starlark.String(""),
 				"name":           starlark.String(""),
-				"options":        &starlark.Dict{},
-				"visibility":     &starlark.Dict{},
+				"options":        &starlark.List{},
+				"visibility":     &starlark.List{},
 			},
 		)
 	}
 	return starlarkstruct.FromStringDict(
 		Symbol("LanguageRuleConfig"),
 		starlark.StringDict{
+			"attrs":          newStringListDict(rc.Attrs),
 			"config":         newConfigStruct(rc.Config),
-			"deps":           newStringBoolDict(rc.Deps),
+			"deps":           newStringList(rc.GetDeps()),
 			"enabled":        starlark.Bool(rc.Enabled),
 			"implementation": starlark.String(rc.Implementation),
 			"name":           starlark.String(rc.Name),
-			"options":        newStringBoolDict(rc.Options),
-			"visibility":     newStringBoolDict(rc.Visibility),
+			"options":        newStringList(rc.GetOptions()),
+			"visibility":     newStringList(rc.GetVisibility()),
 		},
 	)
 }

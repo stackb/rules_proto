@@ -26,7 +26,7 @@ def _configure_java(ctx):
         label = "@build_stack_rules_proto//plugin/builtin:java",
         outputs = [srcjar],
         out = srcjar,
-        options = [k for (k, v) in ctx.plugin_config.options.items() if v],
+        options = ctx.plugin_config.options,
     )
 
     return config

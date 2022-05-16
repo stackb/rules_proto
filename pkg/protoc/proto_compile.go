@@ -1,8 +1,8 @@
 package protoc
 
 import (
-	"log"
 	"fmt"
+	"log"
 	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -86,15 +86,7 @@ func (s *protoCompileRule) Name() string {
 
 // Visibility provides visibility labels.
 func (s *protoCompileRule) Visibility() []string {
-	visibility := make([]string, 0)
-	for k, want := range s.ruleConfig.Visibility {
-		if !want {
-			continue
-		}
-		visibility = append(visibility, k)
-	}
-	sort.Strings(visibility)
-	return visibility
+	return s.ruleConfig.GetVisibility()
 }
 
 // Rule implements part of the ruleProvider interface.

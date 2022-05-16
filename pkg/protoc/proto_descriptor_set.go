@@ -3,7 +3,6 @@ package protoc
 import (
 	"fmt"
 	"path"
-	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -65,15 +64,7 @@ func (s *protoDescriptorSetRuleRule) Name() string {
 
 // Visibility provides visibility labels.
 func (s *protoDescriptorSetRuleRule) Visibility() []string {
-	visibility := make([]string, 0)
-	for k, want := range s.ruleConfig.Visibility {
-		if !want {
-			continue
-		}
-		visibility = append(visibility, k)
-	}
-	sort.Strings(visibility)
-	return visibility
+	return s.ruleConfig.GetVisibility()
 }
 
 // Rule implements part of the ruleProvider interface.

@@ -1,8 +1,6 @@
 package rules_scala
 
 import (
-	"sort"
-
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/resolve"
@@ -72,15 +70,7 @@ func (s *scalaProtoLibraryRule) Name() string {
 
 // Visibility provides visibility labels.
 func (s *scalaProtoLibraryRule) Visibility() []string {
-	visibility := make([]string, 0)
-	for k, want := range s.ruleConfig.Visibility {
-		if !want {
-			continue
-		}
-		visibility = append(visibility, k)
-	}
-	sort.Strings(visibility)
-	return visibility
+	return s.ruleConfig.GetVisibility()
 }
 
 // Rule implements part of the ruleProvider interface.

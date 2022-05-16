@@ -201,8 +201,8 @@ func newLanguagePluginConfigStruct(cfg LanguagePluginConfig) *starlarkstruct.Str
 			"name":           starlark.String(cfg.Name),
 			"implementation": starlark.String(cfg.Implementation),
 			"label":          starlark.String(cfg.Label.String()),
-			"options":        newStringBoolDict(cfg.Options),
-			"deps":           newStringBoolDict(cfg.Deps),
+			"options":        newStringList(cfg.GetOptions()),
+			"deps":           newStringList(cfg.GetDeps()),
 			"enabled":        starlark.Bool(cfg.Enabled),
 		},
 	)

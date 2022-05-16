@@ -6,6 +6,8 @@ def _make_java_library_rule(rctx, pctx):
         name = pctx.proto_library.base_name + "_java_library",
         attrs = {
             "srcs": [pctx.proto_library.base_name + ".srcjar"],
+            "deps": rctx.deps,
+            "visibility": rctx.visibility,
         },
     )
     return r
