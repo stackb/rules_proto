@@ -87,8 +87,9 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		}
 		impl, err := globalRegistry.LookupPlugin(plugin.Implementation)
 
-		// the Plugin.Configure API lacks a way to return an error, so we have to
-		// use an indirect method: if the plugin is starlark returns an error, it gets captured here.
+		// the Plugin.Configure API lacks a way to return an error, so we have
+		// to use an indirect method: if the plugin is starlark returns an
+		// error, it gets captured here.
 		var configureError error
 
 		if err == ErrUnknownPlugin {

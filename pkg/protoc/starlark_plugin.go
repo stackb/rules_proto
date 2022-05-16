@@ -294,6 +294,7 @@ func newProtoFileStruct(f File) *starlarkstruct.Struct {
 			"dir":          starlark.String(f.Dir),
 			"basename":     starlark.String(f.Basename),
 			"name":         starlark.String(f.Name),
+			"relname":      starlark.String(f.Relname()),
 			"pkg":          newProtoPackageStruct(f.pkg),
 			"imports":      newProtoImportList(f.imports),
 			"options":      newProtoOptionList(f.options),
