@@ -1,7 +1,12 @@
 package protoc
 
 import (
+	"errors"
 	"fmt"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"go.starlark.net/starlark"
 	"go.starlark.net/starlarkstruct"
@@ -77,6 +82,37 @@ func newPredeclared(plugins, rules map[string]*starlarkstruct.Struct) starlark.S
 		gazelle.Name: gazelle,
 		"struct":     starlark.NewBuiltin("struct", starlarkstruct.Make),
 	}
+}
+
+func resolveStarlarkFilename(workDir, filename string) (string, error) {
+	if filename == "" {
+		return "", fmt.Errorf("filename is empty")
+	}
+	if _, err := os.Stat(filepath.Join(workDir, filename)); !errors.Is(err, os.ErrNotExist) {
+		return filepath.Join(workDir, filename), nil
+	}
+
+	dirname := workDir
+	// looking for a file named 'DO_NOT_BUILD_HERE' in a parent directory.  The
+	// contents of this file names the sourceRoot directory.
+	var sourceRoot string
+	for dirname != "." {
+		sourceRootFile := filepath.Join(dirname, "DO_NOT_BUILD_HERE")
+		if _, err := os.Stat(sourceRootFile); errors.Is(err, os.ErrNotExist) {
+			dirname = filepath.Dir(dirname)
+		} else {
+			data, err := ioutil.ReadFile(sourceRootFile)
+			if err != nil {
+				return "", fmt.Errorf("failed to read DO_NOT_BUILD_HERE file: %w", err)
+			}
+			sourceRoot = strings.TrimSpace(string(data))
+			break
+		}
+	}
+	if sourceRoot == "" {
+		return "", fmt.Errorf("failed to find sourceRoot")
+	}
+	return filepath.Join(sourceRoot, filename), nil
 }
 
 func loadStarlarkProgram(filename string, src interface{}, predeclared starlark.StringDict, reporter func(msg string), errorReporter func(err error)) (*starlark.StringDict, *starlark.Thread, error) {

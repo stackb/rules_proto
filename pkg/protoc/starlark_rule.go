@@ -17,7 +17,12 @@ func isStarlarkLanguageRule(filename string) bool {
 	return strings.HasSuffix(filename, ".star")
 }
 
-func loadStarlarkLanguageRuleFromFile(name, filename string, reporter func(msg string), errorReporter func(err error)) (LanguageRule, error) {
+func loadStarlarkLanguageRuleFromFile(workDir, filename, name string, reporter func(msg string), errorReporter func(err error)) (LanguageRule, error) {
+	filename, err := resolveStarlarkFilename(workDir, filename)
+	if err != nil {
+		return nil, err
+	}
+
 	f, err := os.Open(filename)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open rule file %q: %w", filename, err)

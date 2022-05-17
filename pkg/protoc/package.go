@@ -3,7 +3,6 @@ package protoc
 import (
 	"log"
 	"path"
-	"path/filepath"
 	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -93,14 +92,13 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		var configureError error
 
 		if err == ErrUnknownPlugin {
-			filename := filepath.Join(s.cfg.Config.WorkDir, plugin.Implementation)
 			if isStarlarkPlugin(plugin.Implementation) {
-				if impl, err = loadStarlarkPluginFromFile(plugin.Name, filename, func(msg string) {
+				if impl, err = loadStarlarkPluginFromFile(s.cfg.Config.WorkDir, plugin.Implementation, plugin.Name, func(msg string) {
 					log.Printf("%s> %s", plugin.Implementation, msg)
 				}, func(err error) {
 					configureError = err
 				}); err != nil {
-					log.Fatalf("%s: plugin loading failed: %v", filename, err)
+					log.Fatalf("%s: plugin loading failed: %v", plugin.Implementation, err)
 				}
 			} else {
 				log.Fatalf(
@@ -163,14 +161,13 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 
 		impl, err := globalRegistry.LookupRule(ruleConfig.Implementation)
 		if err == ErrUnknownRule {
-			filename := filepath.Join(s.cfg.Config.WorkDir, ruleConfig.Implementation)
 			if isStarlarkLanguageRule(ruleConfig.Implementation) {
-				if impl, err = loadStarlarkLanguageRuleFromFile(ruleConfig.Name, filename, func(msg string) {
+				if impl, err = loadStarlarkLanguageRuleFromFile(s.cfg.Config.WorkDir, ruleConfig.Implementation, ruleConfig.Name, func(msg string) {
 					log.Printf("%s> %s", ruleConfig.Implementation, msg)
 				}, func(err error) {
 					configureError = err
 				}); err != nil {
-					log.Fatalf("%s: rule loading failed: %v", filename, err)
+					log.Fatalf("%s: rule loading failed: %v", ruleConfig.Implementation, err)
 				}
 			} else {
 				log.Fatalf(
