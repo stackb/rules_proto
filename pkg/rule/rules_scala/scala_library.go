@@ -1,6 +1,7 @@
 package rules_scala
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"sort"
@@ -90,6 +91,14 @@ func (s *scalaLibrary) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
+	flags := flag.NewFlagSet(s.kindName, flag.ExitOnError)
+	var noresolveFlagValue string
+	flags.StringVar(&noresolveFlagValue, "noresolve", "", "--noresolve=<path>.proto suppresses deps resolution of <path>.proto")
+
+	if err := flags.Parse(cfg.GetOptions()); err != nil {
+		log.Fatalf("failed to parse flags for %q: %v", s.kindName, err)
+	}
+
 	plugin := pc.GetPluginConfiguration(scalapb.ScalaPBPluginName)
 	if plugin == nil {
 		log.Fatalf("expected plugin configuration for %q to be defined", scalapb.ScalaPBPluginName)
@@ -100,27 +109,33 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 	if !s.shouldProvideRule(pc.Library, plugin) {
 		return nil
 	}
-	outputs := plugin.Outputs
 
 	// include akka outputs here as well: TODO, gather all srcjars
-	outputs = append(outputs, pc.GetPluginOutputs(akka_grpc.AkkaGrpcPluginName)...)
+	outputs := append(plugin.Outputs, pc.GetPluginOutputs(akka_grpc.AkkaGrpcPluginName)...)
+
+	suppressImports := make(map[string]bool)
+	for _, value := range strings.Split(noresolveFlagValue, ",") {
+		suppressImports[value] = true
+	}
 
 	return &scalaLibraryRule{
-		kindName:       s.kindName,
-		ruleNameSuffix: scalaLibraryRuleSuffix,
-		outputs:        outputs,
-		ruleConfig:     cfg,
-		config:         pc,
+		kindName:        s.kindName,
+		ruleNameSuffix:  scalaLibraryRuleSuffix,
+		suppressImports: suppressImports,
+		outputs:         outputs,
+		ruleConfig:      cfg,
+		config:          pc,
 	}
 }
 
 // scalaLibraryRule implements RuleProvider for 'scala_library'-derived rules.
 type scalaLibraryRule struct {
-	kindName       string
-	ruleNameSuffix string
-	outputs        []string
-	config         *protoc.ProtocConfiguration
-	ruleConfig     *protoc.LanguageRuleConfig
+	kindName        string
+	ruleNameSuffix  string
+	outputs         []string
+	suppressImports map[string]bool
+	config          *protoc.ProtocConfiguration
+	ruleConfig      *protoc.LanguageRuleConfig
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -239,8 +254,17 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 
 // Resolve implements part of the RuleProvider interface.
 func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+	// need some mechanism to filter imports that don't generate code.
+	wantImports := make([]string, 0, len(imports))
+	for _, imp := range imports {
+		if s.suppressImports[imp] {
+			continue
+		}
+		wantImports = append(wantImports, imp)
+	}
+
 	resolveFn := protoc.ResolveDepsAttr("deps", true)
-	resolveFn(c, ix, r, imports, from)
+	resolveFn(c, ix, r, wantImports, from)
 
 	if unresolvedDeps, ok := r.PrivateAttr(protoc.UnresolvedDepsPrivateKey).(map[string]error); ok {
 		resolveScalaDeps(c, ix, r, unresolvedDeps, from)
