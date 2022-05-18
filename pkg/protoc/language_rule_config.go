@@ -64,7 +64,7 @@ func (c *LanguageRuleConfig) GetDeps() []string {
 	return deps
 }
 
-// GetOptions returns the rule options.
+// GetOptions returns the rule options having positive intent.
 func (c *LanguageRuleConfig) GetOptions() []string {
 	opts := make([]string, 0)
 	for opt, want := range c.Options {
