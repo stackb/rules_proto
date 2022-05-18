@@ -75,8 +75,7 @@ func (s *scalaLibrary) Name() string {
 func (s *scalaLibrary) KindInfo() rule.KindInfo {
 	return rule.KindInfo{
 		MergeableAttrs: map[string]bool{
-			"srcs":    true,
-			"exports": true,
+			"srcs": true,
 		},
 		ResolveAttrs: map[string]bool{"deps": true},
 	}
@@ -112,9 +111,6 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 	outputs = options.filterOutputs(outputs)
 	if len(outputs) == 0 {
 		return nil
-	}
-	if len(outputs) == 1 && outputs[0] == "package_scala.srcjar" {
-		log.Fatalf("wtf! %q, got %v", s.kindName, outputs)
 	}
 
 	return &scalaLibraryRule{
