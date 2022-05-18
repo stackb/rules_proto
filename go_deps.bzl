@@ -32,6 +32,13 @@ def gazelle_protobuf_extension_go_deps():
         sum = "h1:qIbj1fsPNlZgppZ+VLlY7N33q108Sa+fhmuc+sWQYwY=",
         version = "v1.0.0-20180628173108-788fd7840127",
     )
+    go_repository(
+        name = "com_github_bmatcuk_doublestar",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/bmatcuk/doublestar",
+        sum = "h1:oC24CykoSAB8zd7XgruHo33E0cHJf/WhQA/7BeXj+x0=",
+        version = "v1.2.2",
+    )
 
 def go_deps():
     "go_repository rules derived from the go.mod file."
@@ -65,13 +72,6 @@ def go_deps():
         importpath = "github.com/bazelbuild/rules_go",
         sum = "h1:KViqR7qKXwz+LrNdIauCDU21kneCk+4DnYjpvlJwH50=",
         version = "v0.27.0",
-    )
-    go_repository(
-        name = "com_github_bmatcuk_doublestar",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/bmatcuk/doublestar",
-        sum = "h1:oC24CykoSAB8zd7XgruHo33E0cHJf/WhQA/7BeXj+x0=",
-        version = "v1.2.2",
     )
     go_repository(
         name = "com_github_burntsushi_toml",

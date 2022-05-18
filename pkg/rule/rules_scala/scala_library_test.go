@@ -194,3 +194,66 @@ func (r *fakeImportResolver) Resolve(lang, impLang, imp string) []resolve.FindRe
 func (r *fakeImportResolver) Provide(lang, impLang, imp string, from label.Label) {
 	r.got = append(r.got, resolve.ImportSpec{Imp: imp, Lang: impLang})
 }
+
+func TestScalaLibraryOptionsNoResolve(t *testing.T) {
+	for name, tc := range map[string]struct {
+		args    []string
+		imports []string
+		want    []string
+	}{
+		"degenerate case": {},
+		"prototypical": {
+			args:    []string{"--noresolve=scalapb/scalapb.proto"},
+			imports: []string{"scalapb/scalapb.proto", "google/protobuf/any.proto"},
+			want:    []string{"google/protobuf/any.proto"},
+		},
+		"csv": {
+			args:    []string{"--noresolve=a.proto,b.proto"},
+			imports: []string{"a.proto", "b.proto"},
+			want:    nil,
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			options := parseScalaLibraryOptions("proto_scala_library", tc.args)
+			got := options.filterImports(tc.imports)
+
+			if diff := cmp.Diff(tc.want, got); diff != "" {
+				t.Errorf("(-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+func TestScalaLibraryOptionsNoOutput(t *testing.T) {
+	for name, tc := range map[string]struct {
+		args    []string
+		outputs []string
+		want    []string
+	}{
+		"degenerate case": {},
+		"prototypical": {
+			args:    []string{"--nooutput=package_scala.srcjar"},
+			outputs: []string{"package_scala.srcjar"},
+			want:    nil,
+		},
+		"csv": {
+			args:    []string{"--nooutput=a.srcjar,b.srcjar"},
+			outputs: []string{"a.srcjar", "b.srcjar"},
+			want:    nil,
+		},
+		"pattern": {
+			args:    []string{"--nooutput=**/*.srcjar"},
+			outputs: []string{"a.srcjar", "lib/b.srcjar", "lib/c.jar"},
+			want:    []string{"lib/c.jar"},
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			options := parseScalaLibraryOptions("proto_scala_library", tc.args)
+			got := options.filterOutputs(tc.outputs)
+
+			if diff := cmp.Diff(tc.want, got); diff != "" {
+				t.Errorf("(-want +got):\n%s", diff)
+			}
+		})
+	}
+}
