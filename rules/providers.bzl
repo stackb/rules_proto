@@ -35,6 +35,7 @@ ProtoDependencyInfo = provider(
         "buildFileContent": "The build_file_content of this dependency",
         "buildFileProtoMode": "The build_file_proto_mode of this dependency",
         "deps": "The list of deps of this dependency  list<ProtoDependencyInfo>",
+        "executable": "The executable attribute for 'http_file'",
         "importpath": "The proto dependency importpath string",
         "label": "The proto dependency label string",
         "name": "The proto dependency name (should correspond to the workspace name",

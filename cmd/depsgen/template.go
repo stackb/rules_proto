@@ -29,7 +29,8 @@ def {{ .Dep.Name }}():
         path = "{{ .Dep.Path }}",{{ end }}{{ if .Dep.PackageJson }}
         package_json = "{{ .Dep.PackageJson }}",{{ end }}{{ if .Dep.PackageLockJson }}
         package_lock_json = "{{ .Dep.PackageLockJson }}",{{ end }}{{ if .Dep.YarnLock }}
-        yarn_lock = "{{ .Dep.YarnLock }}",{{ end }}{{ if .Dep.Sha256 }}
+        yarn_lock = "{{ .Dep.YarnLock }}",{{ end }}{{ if .Dep.Executable }}
+        executable = {{ if .Dep.Executable }}True{{ else }}False{{ end }},{{ end }}{{ if .Dep.Sha256 }}
         sha256 = "{{ .Dep.Sha256 }}",{{ end }}{{ if .Dep.StripPrefix }}
         strip_prefix = "{{ .Dep.StripPrefix }}",{{ end }}{{ if .Dep.YarnLock }}
         frozen_lockfile = {{ if .Dep.FrozenLockfile }}True{{ else }}False{{ end }},{{ end }}{{ if .Dep.PackageLockJson }}
