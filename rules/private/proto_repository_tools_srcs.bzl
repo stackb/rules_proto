@@ -106,6 +106,7 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//pkg/rule/rules_java:proto_java_library.go",
     "@build_stack_rules_proto//pkg/rule/rules_nodejs:BUILD.bazel",
     "@build_stack_rules_proto//pkg/rule/rules_nodejs:grpc_nodejs_library.go",
+    "@build_stack_rules_proto//pkg/rule/rules_nodejs:grpc_web_js_library.go",
     "@build_stack_rules_proto//pkg/rule/rules_nodejs:js_library.go",
     "@build_stack_rules_proto//pkg/rule/rules_nodejs:proto_nodejs_library.go",
     "@build_stack_rules_proto//pkg/rule/rules_nodejs:proto_ts_library.go",

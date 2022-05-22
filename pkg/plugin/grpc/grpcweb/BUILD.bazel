@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "grpcweb",
+    srcs = ["protoc-gen-grpc-web.go"],
+    importpath = "github.com/stackb/rules_proto/pkg/plugin/grpc/grpcweb",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+    ],
+)

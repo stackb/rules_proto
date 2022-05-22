@@ -3,6 +3,7 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "grpc_nodejs_library.bzl",
+        "grpc_web_js_library.bzl",
         "proto_nodejs_library.bzl",
     ],
     visibility = ["//rules:__pkg__"],
