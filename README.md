@@ -780,6 +780,7 @@ artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 | [grpc:grpc-go:protoc-gen-go-grpc](pkg/plugin/grpc/grpcgo/protoc-gen-go-grpc.go)                                        |
 | [grpc:grpc-java:protoc-gen-grpc-java](pkg/plugin/grpc/grpcjava/protoc-gen-grpc-java.go)                                |
 | [grpc:grpc-node:protoc-gen-grpc-node](pkg/plugin/grpc/grpcnode/protoc-gen-grpc-node.go)                                |
+| [grpc:grpc-web:protoc-gen-grpc-web](pkg/plugin/grpc/grpcweb/protoc-gen-grpc-web.go)                                    |
 | [gogo:protobuf:protoc-gen-combo](pkg/plugin/gogo/protobuf/protoc-gen-gogo.go)                                          |
 | [gogo:protobuf:protoc-gen-gogo](pkg/plugin/gogo/protobuf/protoc-gen-gogo.go)                                           |
 | [gogo:protobuf:protoc-gen-gogofast](pkg/plugin/gogo/protobuf/protoc-gen-gogo.go)                                       |
@@ -803,6 +804,7 @@ artifact identifiers that follow a GitHub org/repo/rule_name convention.
 | [stackb:rules_proto:grpc_closure_js_library](pkg/rule/rules_closure/grpc_closure_js_library.go)   |
 | [stackb:rules_proto:grpc_java_library](pkg/rule/rules_java/grpc_java_library.go)                  |
 | [stackb:rules_proto:grpc_nodejs_library](pkg/rule/rules_nodejs/grpc_nodejs_library.go)            |
+| [stackb:rules_proto:grpc_web_js_library](pkg/rule/rules_nodejs/grpc_web_js_library.go)            |
 | [stackb:rules_proto:grpc_py_library](pkg/rule/rules_python/grpc_py_library.go)                    |
 | [stackb:rules_proto:proto_cc_library](pkg/rule/rules_cc/proto_cc_library.go)                      |
 | [stackb:rules_proto:proto_closure_js_library](pkg/rule/rules_closure/proto_closure_js_library.go) |
