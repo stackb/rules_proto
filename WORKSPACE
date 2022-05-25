@@ -144,6 +144,18 @@ load("//deps:go_core_deps.bzl", "go_core_deps")
 go_core_deps()
 
 # ----------------------------------------------------
+# gRPC Gateway
+# ----------------------------------------------------
+
+load("//deps:grpc_gateway_deps.bzl", "grpc_gateway_deps")
+
+grpc_gateway_deps()
+
+load("//deps:grpc_gateway_openapiv2_deps.bzl", "grpc_gateway_openapiv2_deps")
+
+grpc_gateway_openapiv2_deps()
+
+# ----------------------------------------------------
 # Scala
 # ----------------------------------------------------
 

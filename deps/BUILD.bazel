@@ -24,6 +24,24 @@ depsgen(
 )
 
 depsgen(
+    name = "grpc_gateway",
+    deps = [
+        ":com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_grpc_gateway_2_10_0_darwin_x86_64",
+        ":com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_grpc_gateway_2_10_0_linux_x86_64",
+        ":com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_grpc_gateway_2_10_0_windows_x86_64",
+    ],
+)
+
+depsgen(
+    name = "grpc_gateway_openapiv2",
+    deps = [
+        ":com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_darwin_x86_64",
+        ":com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_linux_x86_64",
+        ":com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_windows_x86_64",
+    ],
+)
+
+depsgen(
     name = "scala",
     deps = [
         ":rules_jvm_external",
@@ -399,6 +417,60 @@ proto_dependency(
     repository_rule = "go_repository",
     sum = "h1:M1YKkFIboKNieVO5DLUEVzQfGwJD30Nv2jfUgzb5UcE=",
     version = "v1.1.0",
+)
+
+# URL: https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.10.0
+proto_dependency(
+    name = "com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_grpc_gateway_2_10_0_darwin_x86_64",
+    executable = True,
+    repository_rule = "http_file",
+    sha256 = "015932596f3ade410de21526a4823d22d3772b2796269e39e0836ca2c41578f8",
+    urls = ["https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v2.10.0/protoc-gen-grpc-gateway-v2.10.0-darwin-x86_64"],
+)
+
+# URL: https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.10.0
+proto_dependency(
+    name = "com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_grpc_gateway_2_10_0_linux_x86_64",
+    executable = True,
+    repository_rule = "http_file",
+    sha256 = "5137dbf4643ccda82a75903adbaf5a5bedb6c9fb476bf449879345d1e93c6517",
+    urls = ["https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v2.10.0/protoc-gen-grpc-gateway-v2.10.0-linux-x86_64"],
+)
+
+# URL: https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.10.0
+proto_dependency(
+    name = "com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_grpc_gateway_2_10_0_windows_x86_64",
+    executable = True,
+    repository_rule = "http_file",
+    sha256 = "835b61b8a1ca82ba794862ce32caa37f1bb67bd7684e0a47d08aec3a372a5c69",
+    urls = ["https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v2.10.0/protoc-gen-grpc-gateway-v2.10.0-windows-x86_64.exe"],
+)
+
+# URL: https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.10.0
+proto_dependency(
+    name = "com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_darwin_x86_64",
+    executable = True,
+    repository_rule = "http_file",
+    sha256 = "ec2dde842ac14a7fc3d9704863b04f8c878255428b9639e0d2cbbb9bf47280cf",
+    urls = ["https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v2.10.0/protoc-gen-openapiv2-v2.10.0-darwin-x86_64"],
+)
+
+# URL: https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.10.0
+proto_dependency(
+    name = "com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_linux_x86_64",
+    executable = True,
+    repository_rule = "http_file",
+    sha256 = "71f5d666a2af33817b8621d42cb7cf0f695fd4b4690a411951a547532f28f7c7",
+    urls = ["https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v2.10.0/protoc-gen-openapiv2-v2.10.0-linux-x86_64"],
+)
+
+# URL: https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.10.0
+proto_dependency(
+    name = "com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_windows_x86_64",
+    executable = True,
+    repository_rule = "http_file",
+    sha256 = "ae16a52026310bd9eb07b5ab33a3a72a9471ae7c62fcc0dcf6e36bd85281a8af",
+    urls = ["https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v2.10.0/protoc-gen-openapiv2-v2.10.0-windows-x86_64.exe"],
 )
 
 proto_dependency(
