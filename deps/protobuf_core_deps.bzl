@@ -67,9 +67,9 @@ def com_google_protobuf():
     _maybe(
         http_archive,
         name = "com_google_protobuf",
-        sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
-        strip_prefix = "protobuf-3.20.1",
+        sha256 = "ca1ab1b940b484b4f110d0d2bb2666b61f4e4c2a29cc6905f408355c53c55eb3",
+        strip_prefix = "protobuf-3.21.0-rc2",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v3.21.0-rc2.tar.gz",
         ],
     )
