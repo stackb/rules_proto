@@ -18,6 +18,7 @@ depsgen(
     name = "go_core",
     deps = [
         ":com_github_golang_protobuf",
+        ":com_github_grpc_ecosystem_grpc_gateway_v2",
         ":org_golang_google_grpc",
         ":org_golang_google_grpc_cmd_protoc_gen_go_grpc",
     ],
@@ -417,6 +418,15 @@ proto_dependency(
     repository_rule = "go_repository",
     sum = "h1:M1YKkFIboKNieVO5DLUEVzQfGwJD30Nv2jfUgzb5UcE=",
     version = "v1.1.0",
+)
+
+proto_dependency(
+    name = "com_github_grpc_ecosystem_grpc_gateway_v2",
+    build_file_proto_mode = "disable_global",
+    importpath = "github.com/grpc-ecosystem/grpc-gateway/v2",
+    repository_rule = "go_repository",
+    sum = "h1:ESEyqQqXXFIcImj/BE8oKEX37Zsuceb2cZI+EL/zNCY=",
+    version = "v2.10.0",
 )
 
 # URL: https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.10.0
