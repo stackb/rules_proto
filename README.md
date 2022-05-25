@@ -800,7 +800,7 @@ artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 The rule name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/rule_name convention.
 
-| Plugin                                                                                            |
+| Rule                                                                                              |
 | ------------------------------------------------------------------------------------------------- |
 | [stackb:rules_proto:grpc_cc_library](pkg/rule/rules_cc/grpc_cc_library.go)                        |
 | [stackb:rules_proto:grpc_closure_js_library](pkg/rule/rules_closure/grpc_closure_js_library.go)   |
@@ -817,6 +817,7 @@ artifact identifiers that follow a GitHub org/repo/rule_name convention.
 | [stackb:rules_proto:proto_java_library](pkg/rule/rules_java/proto_java_library.go)                |
 | [stackb:rules_proto:proto_nodejs_library](pkg/rule/rules_nodejs/proto_nodejs_library.go)          |
 | [stackb:rules_proto:proto_py_library](pkg/rule/rules_python/proto_py_library.go)                  |
+| [stackb:rules_proto:proto_ts_library](pkg/rule/rules_nodejs/proto_ts_library.go)                  |
 | [bazelbuild:rules_scala:scala_proto_library](pkg/rule/rules_scala/scala_proto_library.go)         |
 
 Please consult the `example/` directory and unit tests for more additional
