@@ -130,9 +130,19 @@ proto_compile(
 
 proto_compile(
     name = "routeguide_go_compile",
+    options = {"@build_stack_rules_proto//plugin/grpc-ecosystem/grpc-gateway:protoc-gen-grpc-gateway": [
+        "generate_unbound_methods=true",
+        "logtostderr=true",
+    ]},
     output_mappings = ["routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go"],
-    outputs = ["routeguide.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    outputs = [
+        "routeguide.pb.go",
+        "routeguide.pb.gw.go",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go",
+        "@build_stack_rules_proto//plugin/grpc-ecosystem/grpc-gateway:protoc-gen-grpc-gateway",
+    ],
     proto = "routeguide_proto",
 )
 

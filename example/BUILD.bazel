@@ -28,6 +28,12 @@
 ## Hold off on proto_go_library until we upgrade the deps of this repo
 ## gazelle:proto_language go rule proto_go_library
 
+## GRPC Gateway ##
+# gazelle:proto_plugin protoc-gen-grpc-gateway implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway
+# gazelle:proto_plugin protoc-gen-grpc-gateway option logtostderr=true
+# gazelle:proto_plugin protoc-gen-grpc-gateway option generate_unbound_methods=true
+# gazelle:proto_language go plugin protoc-gen-grpc-gateway
+
 ## Java ##
 # gazelle:proto_plugin java implementation builtin:java
 # gazelle:proto_plugin protoc-gen-grpc-java implementation grpc:grpc-java:protoc-gen-grpc-java
