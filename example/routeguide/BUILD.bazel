@@ -140,26 +140,44 @@ proto_compile(
             "use_go_templates=true",
         ],
     },
-    output_mappings = ["routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go"],
+    output_mappings = [
+        "routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go",
+        "routeguide_grpc.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide_grpc.pb.go",
+    ],
     outputs = [
         "routeguide.pb.go",
         "routeguide.pb.gw.go",
         "routeguide.swagger.json",
+        "routeguide_grpc.pb.go",
     ],
     plugins = [
         "@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go",
         "@build_stack_rules_proto//plugin/grpc-ecosystem/grpc-gateway:protoc-gen-grpc-gateway",
         "@build_stack_rules_proto//plugin/grpc-ecosystem/grpc-gateway:protoc-gen-grpc-openapiv2",
+        "@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go-grpc",
     ],
     proto = "routeguide_proto",
 )
 
 proto_go_library(
     name = "routeguide_go_proto",
-    srcs = ["routeguide.pb.go"],
+    srcs = [
+        "routeguide.pb.go",
+        "routeguide.pb.gw.go",
+        "routeguide_grpc.pb.go",
+    ],
     importpath = "github.com/stackb/rules_proto/example/routeguide",
     visibility = ["//visibility:public"],
     deps = [
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options",
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//runtime",
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//utilities",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//grpclog",
+        "@org_golang_google_grpc//metadata",
+        "@org_golang_google_grpc//status",
+        "@org_golang_google_protobuf//proto",
         "@org_golang_google_protobuf//reflect/protoreflect",
         "@org_golang_google_protobuf//runtime/protoimpl",
     ],
@@ -258,13 +276,13 @@ proto_compile(
     name = "routeguide_python_compile",
     outputs = [
         "routeguide_pb2.py",
-        "routeguide_pb2_grpc.py",
         "routeguide_pb2.pyi",
+        "routeguide_pb2_grpc.py",
     ],
     plugins = [
+        "@build_stack_rules_proto//plugin/builtin:pyi",
         "@build_stack_rules_proto//plugin/builtin:python",
         "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python",
-        "@build_stack_rules_proto//plugin/builtin:pyi",
     ],
     proto = "routeguide_proto",
 )
@@ -302,12 +320,12 @@ proto_compile(
     name = "routeguide_scala_compile",
     options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
     outputs = [
-        "routeguide_scala.srcjar",
         "routeguide_akka_grpc.srcjar",
+        "routeguide_scala.srcjar",
     ],
     plugins = [
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
         "@build_stack_rules_proto//plugin/akka/akka-grpc:protoc-gen-akka-grpc",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
     ],
     proto = "routeguide_proto",
 )

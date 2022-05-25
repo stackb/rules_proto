@@ -20,19 +20,35 @@
 ## Go ##
 # gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go
 # gazelle:proto_rule proto_go_library implementation stackb:rules_proto:proto_go_library
-# gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//reflect/protoreflect
-# gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//runtime/protoimpl
+# gazelle:proto_plugin protoc-gen-go dep @org_golang_google_protobuf//reflect/protoreflect
+# gazelle:proto_plugin protoc-gen-go dep @org_golang_google_protobuf//runtime/protoimpl
 # gazelle:proto_rule proto_go_library visibility //visibility:public
 # gazelle:proto_language go plugin protoc-gen-go
 # gazelle:proto_language go rule proto_compile
-## Hold off on proto_go_library until we upgrade the deps of this repo
-## gazelle:proto_language go rule proto_go_library
+# TODO: Investigate why build example/routeguide:routeguide_go_proto fails:
+# bazel-out/k8-fastbuild/bin/example/routeguide/routeguide_grpc.pb.go:15:11: undefined: grpc.SupportPackageIsVersion7
+# bazel-out/k8-fastbuild/bin/example/routeguide/routeguide_grpc.pb.go:177:33: undefined: grpc.ServiceRegistrar
+# gazelle:proto_language go rule proto_go_library
+
+## Go gRPC ##
+# gazelle:proto_plugin protoc-gen-go-grpc implementation grpc:grpc-go:protoc-gen-go-grpc
+# gazelle:proto_plugin protoc-gen-go-grpc dep @org_golang_google_grpc//:go_default_library
+# gazelle:proto_plugin protoc-gen-go-grpc dep @org_golang_google_grpc//codes
+# gazelle:proto_plugin protoc-gen-go-grpc dep @org_golang_google_grpc//status
+# gazelle:proto_language go plugin protoc-gen-go-grpc
 
 ## gRPC Gateway ##
 # gazelle:proto_plugin protoc-gen-grpc-gateway implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway
 # gazelle:proto_plugin protoc-gen-grpc-gateway option logtostderr=true
 # gazelle:proto_plugin protoc-gen-grpc-gateway option generate_unbound_methods=true
+# gazelle:proto_plugin protoc-gen-grpc-gateway dep @org_golang_google_grpc//grpclog
+# gazelle:proto_plugin protoc-gen-grpc-gateway dep @org_golang_google_grpc//metadata
+# gazelle:proto_plugin protoc-gen-grpc-gateway dep @org_golang_google_protobuf//proto
+# gazelle:proto_plugin protoc-gen-grpc-gateway dep @com_github_grpc_ecosystem_grpc_gateway_v2//runtime
+# gazelle:proto_plugin protoc-gen-grpc-gateway dep @com_github_grpc_ecosystem_grpc_gateway_v2//utilities
+# gazelle:proto_plugin protoc-gen-grpc-gateway dep @com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options
 # gazelle:proto_language go plugin protoc-gen-grpc-gateway
+
 ## gRPC Gateway OpenAPIv2 ##
 # gazelle:proto_plugin protoc-gen-grpc-openapiv2 implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-openapiv2
 # gazelle:proto_plugin protoc-gen-grpc-openapiv2 option logtostderr=true
