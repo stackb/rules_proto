@@ -126,6 +126,7 @@
 # gazelle:proto_rule proto_ts_library attr args --lib ES2015
 # gazelle:proto_rule proto_ts_library deps @npm_tsc//protobufjs
 # gazelle:proto_rule proto_ts_library deps @npm_tsc//long
+# gazelle:proto_rule proto_ts_library resolve google/protobuf/([a-z]+).proto //google/protobuf:wkt_${1}_ts_proto
 
 # gazelle:proto_language ts_proto plugin ts_proto
 # gazelle:proto_language ts_proto rule proto_compile

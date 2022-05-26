@@ -179,6 +179,7 @@ proto_ts_library(
     tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],
     deps = [
+        "//google/protobuf:wkt_timestamp_ts_proto",
         "@npm_tsc//long",
         "@npm_tsc//protobufjs",
     ],
