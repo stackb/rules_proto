@@ -16,6 +16,7 @@ load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_librar
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 # gazelle:proto_plugin ts_proto option nestJs=true
+# gazelle:proto_rule proto_ts_library attr args --lib DOM
 # gazelle:proto_rule proto_ts_library deps @npm_tsc//@nestjs/microservices
 
 filegroup(
@@ -339,21 +340,41 @@ proto_compile(
 
 proto_compile(
     name = "routeguide_ts_proto_compile",
-    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
-        "emitImportedFiles=false",
-        "esModuleInterop=true",
-        "nestJs=true",
-    ]},
-    outputs = ["routeguide.ts"],
-    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
+    options = {
+        "@build_stack_rules_proto//plugin/grpc-ecosystem/grpc-gateway-ts:protoc-gen-grpc-gateway-ts": [
+            "fetch_module_directory=example/routeguide",
+            "fetch_module_filename=grpc-gateway-shared-fetch.pb.ts",
+        ],
+        "@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
+            "emitImportedFiles=false",
+            "esModuleInterop=true",
+            "nestJs=true",
+        ],
+    },
+    outputs = [
+        "grpc-gateway-shared-fetch.pb.ts",
+        "routeguide.pb.ts",
+        "routeguide.ts",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/grpc-ecosystem/grpc-gateway-ts:protoc-gen-grpc-gateway-ts",
+        "@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto",
+    ],
     proto = "routeguide_proto",
     visibility = ["//visibility:public"],
 )
 
 proto_ts_library(
     name = "routeguide_ts_proto",
-    srcs = ["routeguide.ts"],
-    args = ["--lib ES2015"],
+    srcs = [
+        "grpc-gateway-shared-fetch.pb.ts",
+        "routeguide.pb.ts",
+        "routeguide.ts",
+    ],
+    args = [
+        "--lib DOM",
+        "--lib ES2015",
+    ],
     tags = ["manual"],
     tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],

@@ -132,6 +132,12 @@
 # gazelle:proto_language ts_proto rule proto_compile
 # gazelle:proto_language ts_proto rule proto_ts_library
 
+## gRPC Gateway Typescript ##
+# gazelle:proto_plugin protoc-gen-grpc-gateway-ts implementation grpc-ecosystem:grpc-gateway-ts:protoc-gen-grpc-gateway-ts
+# gazelle:proto_plugin protoc-gen-grpc-gateway-ts option fetch_module_directory=example
+# gazelle:proto_plugin protoc-gen-grpc-gateway-ts option fetch_module_filename=grpc-gateway-shared-fetch.pb.ts
+# gazelle:proto_language ts_proto plugin protoc-gen-grpc-gateway-ts
+
 ## closure + grpc.js ##
 # gazelle:proto_plugin closure_js implementation builtin:js:closure
 # gazelle:proto_plugin protoc-gen-grpc-js implementation stackb:grpc.js:protoc-gen-grpc-js
