@@ -1,0 +1,18 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "protoc-gen-grpc-gateway-ts",
+    options = ["paths=source_relative"],
+    tool = select({
+        "@bazel_tools//src/conditions:darwin_x86_64": "@grpc_gateway_ts_darvin//:exe",
+        "@bazel_tools//src/conditions:linux_x86_64": "@grpc_gateway_ts_linux//:exe",
+        "@bazel_tools//src/conditions:windows": "@grpc_gateway_ts_windows//:exe",
+    }),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = ["BUILD.bazel"],
+    visibility = ["//plugin:__pkg__"],
+)

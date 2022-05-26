@@ -43,6 +43,15 @@ depsgen(
 )
 
 depsgen(
+    name = "grpc_gateway_ts",
+    deps = [
+        ":grpc_gateway_ts_darvin",
+        ":grpc_gateway_ts_linux",
+        ":grpc_gateway_ts_windows",
+    ],
+)
+
+depsgen(
     name = "scala",
     deps = [
         ":rules_jvm_external",
@@ -481,6 +490,51 @@ proto_dependency(
     repository_rule = "http_file",
     sha256 = "ae16a52026310bd9eb07b5ab33a3a72a9471ae7c62fcc0dcf6e36bd85281a8af",
     urls = ["https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v2.10.0/protoc-gen-openapiv2-v2.10.0-windows-x86_64.exe"],
+)
+
+# https://github.com/grpc-ecosystem/protoc-gen-grpc-gateway-ts/releases/tag/v1.1.1
+proto_dependency(
+    name = "grpc_gateway_ts_darvin",
+    build_file_content = """
+filegroup(
+    name = "exe",
+    srcs = ["protoc-gen-grpc-gateway-ts"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "847349db0bcf0dc48ea8b9887de5bff2326561be3ad89b20c8b21f7163d1903d",
+    urls = ["https://github.com/grpc-ecosystem/protoc-gen-grpc-gateway-ts/releases/download/v1.1.1/protoc-gen-grpc-gateway-ts_1.1.1_Darwin_amd64.tar.gz"],
+)
+
+# https://github.com/grpc-ecosystem/protoc-gen-grpc-gateway-ts/releases/tag/v1.1.1
+proto_dependency(
+    name = "grpc_gateway_ts_linux",
+    build_file_content = """
+filegroup(
+    name = "exe",
+    srcs = ["protoc-gen-grpc-gateway-ts"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "48f69195f2e07ad04058e07561c8bc7253c8e3f758165301985b0109ae74057b",
+    urls = ["https://github.com/grpc-ecosystem/protoc-gen-grpc-gateway-ts/releases/download/v1.1.1/protoc-gen-grpc-gateway-ts_1.1.1_Linux_amd64.tar.gz"],
+)
+
+# https://github.com/grpc-ecosystem/protoc-gen-grpc-gateway-ts/releases/tag/v1.1.1
+proto_dependency(
+    name = "grpc_gateway_ts_windows",
+    build_file_content = """
+filegroup(
+    name = "exe",
+    srcs = ["protoc-gen-grpc-gateway-ts.exe"],
+    visibility = ["//visibility:public"],
+)
+""",
+    repository_rule = "http_archive",
+    sha256 = "ba769d45f99fded91329f68053a8755573e4fac9842ca11cd3864dd7f8425817",
+    urls = ["https://github.com/grpc-ecosystem/protoc-gen-grpc-gateway-ts/releases/download/v1.1.1/protoc-gen-grpc-gateway-ts_1.1.1_Windows_amd64.tar.gz"],
 )
 
 proto_dependency(

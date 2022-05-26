@@ -164,6 +164,14 @@ load("//deps:grpc_gateway_openapiv2_deps.bzl", "grpc_gateway_openapiv2_deps")
 grpc_gateway_openapiv2_deps()
 
 # ----------------------------------------------------
+# gRPC Gateway Typescript
+# ----------------------------------------------------
+
+load("//deps:grpc_gateway_ts_deps.bzl", "grpc_gateway_ts_deps")
+
+grpc_gateway_ts_deps()
+
+# ----------------------------------------------------
 # Scala
 # ----------------------------------------------------
 
