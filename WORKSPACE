@@ -210,7 +210,9 @@ load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_depende
 
 rules_closure_toolchains()
 
-rules_closure_dependencies()
+rules_closure_dependencies(
+    omit_com_google_protobuf = True,
+)
 
 # ----------------------------------------------------
 # NodeJS

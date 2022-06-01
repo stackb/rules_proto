@@ -1857,7 +1857,7 @@ npm_install(
 # Rule npm_install defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/npm_install/npm_install.bzl:775:30 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:221:18
+# {WORKSPACE}/WORKSPACE:223:18
 node_toolchain_configure(
     name = "nodejs_windows_amd64_config",
     generator_name = "nodejs_windows_amd64_config",
@@ -1865,7 +1865,7 @@ node_toolchain_configure(
     target_tool = "@nodejs_windows_amd64//:node_bin",
 )
 # Rule nodejs_windows_amd64_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:221:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:223:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
@@ -1887,7 +1887,7 @@ node_repositories(
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:221:18
+# {WORKSPACE}/WORKSPACE:223:18
 node_toolchain_configure(
     name = "nodejs_linux_s390x_config",
     generator_name = "nodejs_linux_s390x_config",
@@ -1895,7 +1895,7 @@ node_toolchain_configure(
     target_tool = "@nodejs_linux_s390x//:node_bin",
 )
 # Rule nodejs_linux_s390x_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:221:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:223:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
@@ -1917,7 +1917,7 @@ node_repositories(
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:221:18
+# {WORKSPACE}/WORKSPACE:223:18
 node_toolchain_configure(
     name = "nodejs_linux_ppc64le_config",
     generator_name = "nodejs_linux_ppc64le_config",
@@ -1925,7 +1925,7 @@ node_toolchain_configure(
     target_tool = "@nodejs_linux_ppc64le//:node_bin",
 )
 # Rule nodejs_linux_ppc64le_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:221:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:223:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
@@ -1947,7 +1947,7 @@ node_repositories(
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:221:18
+# {WORKSPACE}/WORKSPACE:223:18
 node_toolchain_configure(
     name = "nodejs_linux_arm64_config",
     generator_name = "nodejs_linux_arm64_config",
@@ -1955,7 +1955,7 @@ node_toolchain_configure(
     target_tool = "@nodejs_linux_arm64//:node_bin",
 )
 # Rule nodejs_linux_arm64_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:221:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:223:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
@@ -1977,7 +1977,7 @@ node_repositories(
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:221:18
+# {WORKSPACE}/WORKSPACE:223:18
 node_toolchain_configure(
     name = "nodejs_linux_amd64_config",
     generator_name = "nodejs_linux_amd64_config",
@@ -1985,7 +1985,7 @@ node_toolchain_configure(
     target_tool = "@nodejs_linux_amd64//:node_bin",
 )
 # Rule nodejs_linux_amd64_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:221:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:223:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
@@ -2007,7 +2007,7 @@ node_repositories(
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:221:18
+# {WORKSPACE}/WORKSPACE:223:18
 node_toolchain_configure(
     name = "nodejs_darwin_amd64_config",
     generator_name = "nodejs_darwin_amd64_config",
@@ -2015,7 +2015,7 @@ node_toolchain_configure(
     target_tool = "@nodejs_darwin_amd64//:node_bin",
 )
 # Rule nodejs_darwin_amd64_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:221:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:223:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
@@ -5128,19 +5128,20 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:213:27
+# {WORKSPACE}/WORKSPACE:21:19
 http_archive(
     name = "com_google_protobuf",
     generator_name = "com_google_protobuf",
-    generator_function = "rules_closure_dependencies",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.15.3.tar.gz"],
-    sha256 = "b10bf4e2d1a7586f54e64a5d9e7837e5188fc75ae69e36f215eb01def4f9721b",
-    strip_prefix = "protobuf-3.15.3",
+    generator_function = "protobuf_core_deps",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/7062d0a2d0075d5e7d5c294fd3984df67a976da3.tar.gz"],
+    sha256 = "5361aad0b47621ee08ab16d5f997c4bb216eac999c0af9c7c7a7f6180d47e948",
+    strip_prefix = "protobuf-7062d0a2d0075d5e7d5c294fd3984df67a976da3",
 )
 # Rule com_google_protobuf instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:213:27                                                             in <toplevel>
-#   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:139:28 in rules_closure_dependencies
-#   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:741:17 in com_google_protobuf
+#   {WORKSPACE}/WORKSPACE:21:19                   in <toplevel>
+#   {WORKSPACE}/deps/protobuf_core_deps.bzl:17:24 in protobuf_core_deps
+#   {WORKSPACE}/deps/protobuf_core_deps.bzl:67:11 in com_google_protobuf
+#   {WORKSPACE}/deps/protobuf_core_deps.bzl:10:18 in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31 in <toplevel>
 
