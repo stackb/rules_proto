@@ -2,3 +2,4 @@ __pycache__
 docs/vendor
 node_modules
 vendor/**/BUILD.bazel
+bazel-*

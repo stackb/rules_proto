@@ -239,17 +239,17 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Release: v1.42.0
-# TargetCommitish: v1.42.x
-# Date: 2021-11-16 23:39:48 +0000 UTC
-# URL: https://github.com/grpc/grpc/releases/tag/v1.42.0
-# Size: 8460322 (8.5 MB)
+# Release: v1.44.0
+# TargetCommitish: v1.44.x
+# Date: 2022-02-11 09:57:14 +0000 UTC
+# URL: https://github.com/grpc/grpc/releases/tag/v1.44.0
+# Size: 8580632 (8.6 MB)
 proto_dependency(
     name = "com_github_grpc_grpc",
     repository_rule = "http_archive",
-    sha256 = "b2f2620c762427bfeeef96a68c1924319f384e877bc0e084487601e4cc6e434c",
-    strip_prefix = "grpc-1.42.0",
-    urls = ["https://github.com/grpc/grpc/archive/v1.42.0.tar.gz"],
+    sha256 = "8c05641b9f91cbc92f51cc4a5b3a226788d7a63f20af4ca7aaca50d92cc94a0d",
+    strip_prefix = "grpc-1.44.0",
+    urls = ["https://github.com/grpc/grpc/archive/v1.44.0.tar.gz"],
     deps = [
         ":build_bazel_rules_swift",
         ":com_google_protobuf",

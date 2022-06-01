@@ -6,90 +6,90 @@
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "absl",
-    generator_name = "absl",
-    generator_function = "grpc_deps",
-    actual = "@com_google_absl//absl:absl",
+  name = "absl",
+  generator_name = "absl",
+  generator_function = "grpc_deps",
+  actual = "@com_google_absl//absl:absl",
 )
 # Rule absl instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:57:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:58:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "absl-base",
-    generator_name = "absl-base",
-    generator_function = "grpc_deps",
-    actual = "@com_google_absl//absl/base:base",
+  name = "absl-base",
+  generator_name = "absl-base",
+  generator_function = "grpc_deps",
+  actual = "@com_google_absl//absl/base:base",
 )
 # Rule absl-base instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:62:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:63:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "absl-time",
-    generator_name = "absl-time",
-    generator_function = "grpc_deps",
-    actual = "@com_google_absl//absl/time:time",
+  name = "absl-time",
+  generator_name = "absl-time",
+  generator_function = "grpc_deps",
+  actual = "@com_google_absl//absl/time:time",
 )
 # Rule absl-time instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:67:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:68:16 in grpc_deps
 
 # /DEFAULT.WORKSPACE:25:5
 bind(
-    name = "android/crosstool",
-    actual = "@bazel_tools//tools/cpp:toolchain",
+  name = "android/crosstool",
+  actual = "@bazel_tools//tools/cpp:toolchain",
 )
 # Rule android/crosstool instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:25:5 in <toplevel>
 
 # /DEFAULT.WORKSPACE:20:5
 bind(
-    name = "android/d8_jar_import",
-    actual = "@bazel_tools//tools/android:no_android_sdk_repository_error",
+  name = "android/d8_jar_import",
+  actual = "@bazel_tools//tools/android:no_android_sdk_repository_error",
 )
 # Rule android/d8_jar_import instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:20:5 in <toplevel>
 
 # /DEFAULT.WORKSPACE:15:5
 bind(
-    name = "android/dx_jar_import",
-    actual = "@bazel_tools//tools/android:no_android_sdk_repository_error",
+  name = "android/dx_jar_import",
+  actual = "@bazel_tools//tools/android:no_android_sdk_repository_error",
 )
 # Rule android/dx_jar_import instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:15:5 in <toplevel>
 
 # /DEFAULT.WORKSPACE:10:5
 bind(
-    name = "android/sdk",
-    actual = "@bazel_tools//tools/android:poison_pill_android_sdk",
+  name = "android/sdk",
+  actual = "@bazel_tools//tools/android:poison_pill_android_sdk",
 )
 # Rule android/sdk instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:10:5 in <toplevel>
 
 # /DEFAULT.WORKSPACE:35:5
 bind(
-    name = "android_ndk_for_testing",
-    actual = "//:dummy",
+  name = "android_ndk_for_testing",
+  actual = "//:dummy",
 )
 # Rule android_ndk_for_testing instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:35:5 in <toplevel>
 
 # /DEFAULT.WORKSPACE:30:5
 bind(
-    name = "android_sdk_for_testing",
-    actual = "//:dummy",
+  name = "android_sdk_for_testing",
+  actual = "//:dummy",
 )
 # Rule android_sdk_for_testing instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:30:5 in <toplevel>
 
 # /DEFAULT.WORKSPACE.SUFFIX:474:13
 http_archive(
-    name = "android_tools",
-    url = "https://mirror.bazel.build/bazel_android_tools/android_tools_pkg-0.23.0.tar.gz",
-    sha256 = "ed5290594244c2eeab41f0104519bcef51e27c699ff4b379fcbd25215270513e",
+  name = "android_tools",
+  url = "https://mirror.bazel.build/bazel_android_tools/android_tools_pkg-0.23.0.tar.gz",
+  sha256 = "ed5290594244c2eeab41f0104519bcef51e27c699ff4b379fcbd25215270513e",
 )
 # Rule android_tools instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:474:13 in <toplevel>
@@ -98,13 +98,13 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "aopalliance",
-    generator_name = "aopalliance",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["unencumbered"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar", "https://repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar", "http://maven.ibiblio.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"],
-    artifact_sha256 = "0addec670fedcd3f113c5c8091d783280d23f75e3acb841b61a9cdb079376a08",
+  name = "aopalliance",
+  generator_name = "aopalliance",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["unencumbered"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar", "https://repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar", "http://maven.ibiblio.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"],
+  artifact_sha256 = "0addec670fedcd3f113c5c8091d783280d23f75e3acb841b61a9cdb079376a08",
 )
 # Rule aopalliance instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -116,13 +116,13 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "args4j",
-    generator_name = "args4j",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/args4j/args4j/2.0.26/args4j-2.0.26.jar", "https://repo1.maven.org/maven2/args4j/args4j/2.0.26/args4j-2.0.26.jar"],
-    artifact_sha256 = "989bda2321ea073a03686e9d4437ea4928c72c99f993f9ca6fab24615f0771a4",
+  name = "args4j",
+  generator_name = "args4j",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/args4j/args4j/2.0.26/args4j-2.0.26.jar", "https://repo1.maven.org/maven2/args4j/args4j/2.0.26/args4j-2.0.26.jar"],
+  artifact_sha256 = "989bda2321ea073a03686e9d4437ea4928c72c99f993f9ca6fab24615f0771a4",
 )
 # Rule args4j instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -134,43 +134,43 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "bazel_compdb",
-    generator_name = "bazel_compdb",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/grailbio/bazel-compilation-database/archive/0.4.5.tar.gz", "https://github.com/grailbio/bazel-compilation-database/archive/0.4.5.tar.gz"],
-    sha256 = "bcecfd622c4ef272fd4ba42726a52e140b961c4eac23025f18b346c968a8cfb4",
-    strip_prefix = "bazel-compilation-database-0.4.5",
+  name = "bazel_compdb",
+  generator_name = "bazel_compdb",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/grailbio/bazel-compilation-database/archive/0.4.5.tar.gz", "https://github.com/grailbio/bazel-compilation-database/archive/0.4.5.tar.gz"],
+  sha256 = "bcecfd622c4ef272fd4ba42726a52e140b961c4eac23025f18b346c968a8cfb4",
+  strip_prefix = "bazel-compilation-database-0.4.5",
 )
 # Rule bazel_compdb instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:318:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:319:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:17:10
 http_archive(
-    name = "bazel_gazelle",
-    generator_name = "bazel_gazelle",
-    generator_function = "core_deps",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/425d85daecb9aeffa1ae24b83df7b97b534dcf05.tar.gz"],
-    sha256 = "cb05501bd37e2cbfdea8e23b28e5a7fe4ff4f12cef30eeb1924a0b8c3c0cea61",
-    strip_prefix = "bazel-gazelle-425d85daecb9aeffa1ae24b83df7b97b534dcf05",
+  name = "bazel_gazelle",
+  generator_name = "bazel_gazelle",
+  generator_function = "core_deps",
+  urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/425d85daecb9aeffa1ae24b83df7b97b534dcf05.tar.gz"],
+  sha256 = "cb05501bd37e2cbfdea8e23b28e5a7fe4ff4f12cef30eeb1924a0b8c3c0cea61",
+  strip_prefix = "bazel-gazelle-425d85daecb9aeffa1ae24b83df7b97b534dcf05",
 )
 # Rule bazel_gazelle instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:17:10          in <toplevel>
-#   {WORKSPACE}/deps/core_deps.bzl:14:18 in core_deps
-#   {WORKSPACE}/deps/core_deps.bzl:30:11 in bazel_gazelle
-#   {WORKSPACE}/deps/core_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/core_deps.bzl:13:18 in core_deps
+#   {WORKSPACE}/deps/core_deps.bzl:28:11 in bazel_gazelle
+#   {WORKSPACE}/deps/core_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:83:21
 go_repository_cache(
-    name = "bazel_gazelle_go_repository_cache",
-    generator_name = "bazel_gazelle_go_repository_cache",
-    generator_function = "gazelle_dependencies",
-    go_sdk_info = {"go_sdk": "host"},
-    go_env = {},
+  name = "bazel_gazelle_go_repository_cache",
+  generator_name = "bazel_gazelle_go_repository_cache",
+  generator_function = "gazelle_dependencies",
+  go_sdk_info = {"go_sdk": "host"},
+  go_env = {},
 )
 # Rule bazel_gazelle_go_repository_cache instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:83:21                                    in <toplevel>
@@ -180,10 +180,10 @@ go_repository_cache(
 
 # {WORKSPACE}/WORKSPACE:83:21
 go_repository_config(
-    name = "bazel_gazelle_go_repository_config",
-    generator_name = "bazel_gazelle_go_repository_config",
-    generator_function = "gazelle_dependencies",
-    config = "//:WORKSPACE",
+  name = "bazel_gazelle_go_repository_config",
+  generator_name = "bazel_gazelle_go_repository_config",
+  generator_function = "gazelle_dependencies",
+  config = "//:WORKSPACE",
 )
 # Rule bazel_gazelle_go_repository_config instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:83:21                                    in <toplevel>
@@ -193,10 +193,10 @@ go_repository_config(
 
 # {WORKSPACE}/WORKSPACE:83:21
 go_repository_tools(
-    name = "bazel_gazelle_go_repository_tools",
-    generator_name = "bazel_gazelle_go_repository_tools",
-    generator_function = "gazelle_dependencies",
-    go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
+  name = "bazel_gazelle_go_repository_tools",
+  generator_name = "bazel_gazelle_go_repository_tools",
+  generator_function = "gazelle_dependencies",
+  go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
 )
 # Rule bazel_gazelle_go_repository_tools instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:83:21                                    in <toplevel>
@@ -206,11 +206,11 @@ go_repository_tools(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_archive(
-    name = "bazel_skylib",
-    generator_name = "bazel_skylib",
-    generator_function = "rules_closure_dependencies",
-    urls = ["https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/0.8.0/bazel-skylib.0.8.0.tar.gz", "https://github.com/bazelbuild/bazel-skylib/releases/download/0.8.0/bazel-skylib.0.8.0.tar.gz"],
-    sha256 = "2ef429f5d7ce7111263289644d233707dba35e39696377ebab8b0bc701f7818e",
+  name = "bazel_skylib",
+  generator_name = "bazel_skylib",
+  generator_function = "rules_closure_dependencies",
+  urls = ["https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/0.8.0/bazel-skylib.0.8.0.tar.gz", "https://github.com/bazelbuild/bazel-skylib/releases/download/0.8.0/bazel-skylib.0.8.0.tar.gz"],
+  sha256 = "2ef429f5d7ce7111263289644d233707dba35e39696377ebab8b0bc701f7818e",
 )
 # Rule bazel_skylib instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -221,139 +221,139 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "bazel_toolchains",
-    generator_name = "bazel_toolchains",
-    generator_function = "grpc_deps",
-    urls = ["https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/4.1.0.tar.gz", "https://github.com/bazelbuild/bazel-toolchains/releases/download/4.1.0/bazel-toolchains-4.1.0.tar.gz"],
-    sha256 = "179ec02f809e86abf56356d8898c8bd74069f1bd7c56044050c2cd3d79d0e024",
-    strip_prefix = "bazel-toolchains-4.1.0",
+  name = "bazel_toolchains",
+  generator_name = "bazel_toolchains",
+  generator_function = "grpc_deps",
+  urls = ["https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/4.1.0.tar.gz", "https://github.com/bazelbuild/bazel-toolchains/releases/download/4.1.0/bazel-toolchains-4.1.0.tar.gz"],
+  sha256 = "179ec02f809e86abf56356d8898c8bd74069f1bd7c56044050c2cd3d79d0e024",
+  strip_prefix = "bazel-toolchains-4.1.0",
 )
 # Rule bazel_toolchains instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:297:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:298:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # /DEFAULT.WORKSPACE:1:17
 local_repository(
-    name = "bazel_tools",
-    path = "/var/tmp/_bazel_pcj/install/7a9606eb8f092191f2180bf868dc1b49/embedded_tools",
+  name = "bazel_tools",
+  path = "/var/tmp/_bazel_pcj/install/7a9606eb8f092191f2180bf868dc1b49/embedded_tools",
 )
 # Rule bazel_tools instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:1:17 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "benchmark",
-    generator_name = "benchmark",
-    generator_function = "grpc_deps",
-    actual = "@com_github_google_benchmark//:benchmark",
+  name = "benchmark",
+  generator_name = "benchmark",
+  generator_function = "grpc_deps",
+  actual = "@com_github_google_benchmark//:benchmark",
 )
 # Rule benchmark instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:117:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:118:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "boringssl",
-    generator_name = "boringssl",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/google/boringssl/archive/95b3ed1b01f2ef1d72fed290ed79fe1b0e7dafc0.tar.gz", "https://github.com/google/boringssl/archive/95b3ed1b01f2ef1d72fed290ed79fe1b0e7dafc0.tar.gz"],
-    sha256 = "bf070ffab0ea1a2d0c3d024d8ab8c813c96a5d07a890a9e7e9a979e9ad427b47",
-    strip_prefix = "boringssl-95b3ed1b01f2ef1d72fed290ed79fe1b0e7dafc0",
+  name = "boringssl",
+  generator_name = "boringssl",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/google/boringssl/archive/b9232f9e27e5668bc0414879dcdedb2a59ea75f2.tar.gz", "https://github.com/google/boringssl/archive/b9232f9e27e5668bc0414879dcdedb2a59ea75f2.tar.gz"],
+  sha256 = "534fa658bd845fd974b50b10f444d392dfd0d93768c4a51b61263fd37d851c40",
+  strip_prefix = "boringssl-b9232f9e27e5668bc0414879dcdedb2a59ea75f2",
 )
 # Rule boringssl instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:188:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:189:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "build_bazel_apple_support",
-    generator_name = "build_bazel_apple_support",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/bazelbuild/apple_support/releases/download/0.11.0/apple_support.0.11.0.tar.gz", "https://github.com/bazelbuild/apple_support/releases/download/0.11.0/apple_support.0.11.0.tar.gz"],
-    sha256 = "76df040ade90836ff5543888d64616e7ba6c3a7b33b916aa3a4b68f342d1b447",
+  name = "build_bazel_apple_support",
+  generator_name = "build_bazel_apple_support",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/bazelbuild/apple_support/releases/download/0.11.0/apple_support.0.11.0.tar.gz", "https://github.com/bazelbuild/apple_support/releases/download/0.11.0/apple_support.0.11.0.tar.gz"],
+  sha256 = "76df040ade90836ff5543888d64616e7ba6c3a7b33b916aa3a4b68f342d1b447",
 )
 # Rule build_bazel_apple_support instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:382:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:383:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "build_bazel_rules_apple",
-    generator_name = "build_bazel_rules_apple",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/bazelbuild/rules_apple/releases/download/0.31.3/rules_apple.0.31.3.tar.gz", "https://github.com/bazelbuild/rules_apple/releases/download/0.31.3/rules_apple.0.31.3.tar.gz"],
-    sha256 = "0052d452af7742c8f3a4e0929763388a66403de363775db7e90adecb2ba4944b",
+  name = "build_bazel_rules_apple",
+  generator_name = "build_bazel_rules_apple",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/bazelbuild/rules_apple/releases/download/0.31.3/rules_apple.0.31.3.tar.gz", "https://github.com/bazelbuild/rules_apple/releases/download/0.31.3/rules_apple.0.31.3.tar.gz"],
+  sha256 = "0052d452af7742c8f3a4e0929763388a66403de363775db7e90adecb2ba4944b",
 )
 # Rule build_bazel_rules_apple instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:372:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:373:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:49:12
 http_archive(
-    name = "build_bazel_rules_nodejs",
-    generator_name = "build_bazel_rules_nodejs",
-    generator_function = "nodejs_deps",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/4.4.1/rules_nodejs-4.4.1.tar.gz"],
-    sha256 = "4501158976b9da216295ac65d872b1be51e3eeb805273e68c516d2eb36ae1fbb",
+  name = "build_bazel_rules_nodejs",
+  generator_name = "build_bazel_rules_nodejs",
+  generator_function = "nodejs_deps",
+  urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/4.4.1/rules_nodejs-4.4.1.tar.gz"],
+  sha256 = "4501158976b9da216295ac65d872b1be51e3eeb805273e68c516d2eb36ae1fbb",
 )
 # Rule build_bazel_rules_nodejs instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:49:12            in <toplevel>
-#   {WORKSPACE}/deps/nodejs_deps.bzl:13:29 in nodejs_deps
-#   {WORKSPACE}/deps/nodejs_deps.bzl:17:11 in build_bazel_rules_nodejs
-#   {WORKSPACE}/deps/nodejs_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/nodejs_deps.bzl:12:29 in nodejs_deps
+#   {WORKSPACE}/deps/nodejs_deps.bzl:15:11 in build_bazel_rules_nodejs
+#   {WORKSPACE}/deps/nodejs_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:29:15
 http_archive(
-    name = "build_bazel_rules_swift",
-    generator_name = "build_bazel_rules_swift",
-    generator_function = "grpc_core_deps",
-    urls = ["https://github.com/bazelbuild/rules_swift/archive/e52312c88e27f58f98f9c65526a44dcaba892863.tar.gz"],
-    sha256 = "7e361b49ff66486c6bd59a6a715a05b5038a2c48df866acd0044310be5363503",
-    strip_prefix = "rules_swift-e52312c88e27f58f98f9c65526a44dcaba892863",
+  name = "build_bazel_rules_swift",
+  generator_name = "build_bazel_rules_swift",
+  generator_function = "grpc_core_deps",
+  urls = ["https://github.com/bazelbuild/rules_swift/archive/e52312c88e27f58f98f9c65526a44dcaba892863.tar.gz"],
+  sha256 = "7e361b49ff66486c6bd59a6a715a05b5038a2c48df866acd0044310be5363503",
+  strip_prefix = "rules_swift-e52312c88e27f58f98f9c65526a44dcaba892863",
 )
 # Rule build_bazel_rules_swift instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:29:15               in <toplevel>
-#   {WORKSPACE}/deps/grpc_core_deps.bzl:13:28 in grpc_core_deps
-#   {WORKSPACE}/deps/grpc_core_deps.bzl:24:11 in build_bazel_rules_swift
-#   {WORKSPACE}/deps/grpc_core_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/grpc_core_deps.bzl:12:28 in grpc_core_deps
+#   {WORKSPACE}/deps/grpc_core_deps.bzl:22:11 in build_bazel_rules_swift
+#   {WORKSPACE}/deps/grpc_core_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:1:10
 local_repository(
-    name = "build_stack_rules_proto",
-    path = ".",
+  name = "build_stack_rules_proto",
+  path = ".",
 )
 # Rule build_stack_rules_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:1:10 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "cares",
-    generator_name = "cares",
-    generator_function = "grpc_deps",
-    actual = "@com_github_cares_cares//:ares",
+  name = "cares",
+  generator_name = "cares",
+  generator_function = "grpc_deps",
+  actual = "@com_github_cares_cares//:ares",
 )
 # Rule cares instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:107:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:108:16 in grpc_deps
 
 # /DEFAULT.WORKSPACE.SUFFIX:519:13
 bind(
-    name = "cc_toolchain",
-    generator_name = "cc_toolchain",
-    generator_function = "cc_configure",
-    actual = "@local_config_cc//:toolchain",
+  name = "cc_toolchain",
+  generator_name = "cc_toolchain",
+  generator_function = "cc_configure",
+  actual = "@local_config_cc//:toolchain",
 )
 # Rule cc_toolchain instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:519:13                                                                                    in <toplevel>
@@ -361,13 +361,13 @@ bind(
 
 # {WORKSPACE}/WORKSPACE:217:27
 platform_http_file(
-    name = "clang",
-    generator_name = "clang",
-    generator_function = "rules_closure_dependencies",
-    amd64_urls = ["https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz"],
-    amd64_sha256 = "b25f592a0c00686f03e3b7db68ca6dc87418f681f4ead4df4745a01d9be63843",
-    macos_urls = ["https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-apple-darwin.tar.xz"],
-    macos_sha256 = "633a833396bf2276094c126b072d52b59aca6249e7ce8eae14c728016edb5e61",
+  name = "clang",
+  generator_name = "clang",
+  generator_function = "rules_closure_dependencies",
+  amd64_urls = ["https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz"],
+  amd64_sha256 = "b25f592a0c00686f03e3b7db68ca6dc87418f681f4ead4df4745a01d9be63843",
+  macos_urls = ["https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-apple-darwin.tar.xz"],
+  macos_sha256 = "633a833396bf2276094c126b072d52b59aca6249e7ce8eae14c728016edb5e61",
 )
 # Rule clang instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -378,13 +378,13 @@ platform_http_file(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "co_honnef_go_tools",
-    generator_name = "co_honnef_go_tools",
-    generator_function = "go_deps",
-    importpath = "honnef.co/go/tools",
-    version = "v0.0.0-20190523083050-ea95bdfd59fc",
-    sum = "h1:/hemPrYIhOhy8zYrNj+069zDB68us2sMGsfkFJO0iZs=",
-    build_file_proto_mode = "disable_global",
+  name = "co_honnef_go_tools",
+  generator_name = "co_honnef_go_tools",
+  generator_function = "go_deps",
+  importpath = "honnef.co/go/tools",
+  version = "v0.0.0-20190523083050-ea95bdfd59fc",
+  sum = "h1:/hemPrYIhOhy8zYrNj+069zDB68us2sMGsfkFJO0iZs=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule co_honnef_go_tools instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
@@ -394,12 +394,12 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_chuusai_shapeless_2_12_2_3_3",
-    generator_name = "com_chuusai_shapeless_2_12_2_3_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "312e301432375132ab49592bd8d22b9cd42a338a6300c6157fb4eafd1e3d5033",
-    urls = ["https://repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_chuusai_shapeless_2_12_2_3_3",
+  generator_name = "com_chuusai_shapeless_2_12_2_3_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "312e301432375132ab49592bd8d22b9cd42a338a6300c6157fb4eafd1e3d5033",
+  urls = ["https://repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_chuusai_shapeless_2_12_2_3_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                in <toplevel>
@@ -409,12 +409,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_chuusai_shapeless_2_12_jar_sources_2_3_3",
-    generator_name = "com_chuusai_shapeless_2_12_jar_sources_2_3_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "2d53fea1b1ab224a4a731d99245747a640deaa6ef3912c253666aa61287f3d63",
-    urls = ["https://repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_chuusai_shapeless_2_12_jar_sources_2_3_3",
+  generator_name = "com_chuusai_shapeless_2_12_jar_sources_2_3_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "2d53fea1b1ab224a4a731d99245747a640deaa6ef3912c253666aa61287f3d63",
+  urls = ["https://repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_chuusai_shapeless_2_12_jar_sources_2_3_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -424,27 +424,27 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "com_envoyproxy_protoc_gen_validate",
-    generator_name = "com_envoyproxy_protoc_gen_validate",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/envoyproxy/protoc-gen-validate/archive/59da36e59fef2267fc2b1849a05159e3ecdf24f3.tar.gz", "https://github.com/envoyproxy/protoc-gen-validate/archive/59da36e59fef2267fc2b1849a05159e3ecdf24f3.tar.gz"],
-    sha256 = "dd4962e4a9e8388a4fbc5c33e64d73bdb222f103e4bad40ca5535f81c2c606c2",
-    strip_prefix = "protoc-gen-validate-59da36e59fef2267fc2b1849a05159e3ecdf24f3",
+  name = "com_envoyproxy_protoc_gen_validate",
+  generator_name = "com_envoyproxy_protoc_gen_validate",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/envoyproxy/protoc-gen-validate/archive/59da36e59fef2267fc2b1849a05159e3ecdf24f3.tar.gz", "https://github.com/envoyproxy/protoc-gen-validate/archive/59da36e59fef2267fc2b1849a05159e3ecdf24f3.tar.gz"],
+  sha256 = "dd4962e4a9e8388a4fbc5c33e64d73bdb222f103e4bad40ca5535f81c2c606c2",
+  strip_prefix = "protoc-gen-validate-59da36e59fef2267fc2b1849a05159e3ecdf24f3",
 )
 # Rule com_envoyproxy_protoc_gen_validate instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:437:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:438:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_fasterxml_jackson_core_jackson_annotations_2_12_3",
-    generator_name = "com_fasterxml_jackson_core_jackson_annotations_2_12_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "05da0a25bb44a217880a299a1a1e0a301d194b5656a9a07776b77a88f326e7e9",
-    urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.3/jackson-annotations-2.12.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_fasterxml_jackson_core_jackson_annotations_2_12_3",
+  generator_name = "com_fasterxml_jackson_core_jackson_annotations_2_12_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "05da0a25bb44a217880a299a1a1e0a301d194b5656a9a07776b77a88f326e7e9",
+  urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.3/jackson-annotations-2.12.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_annotations_2_12_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -454,12 +454,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_fasterxml_jackson_core_jackson_annotations_jar_sources_2_12_3",
-    generator_name = "com_fasterxml_jackson_core_jackson_annotations_jar_sources_2_12_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "ba3c52400411b47cc73b190cadb6fe91cfda996fc092b0c49ebf72553b8643d7",
-    urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.3/jackson-annotations-2.12.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_fasterxml_jackson_core_jackson_annotations_jar_sources_2_12_3",
+  generator_name = "com_fasterxml_jackson_core_jackson_annotations_jar_sources_2_12_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "ba3c52400411b47cc73b190cadb6fe91cfda996fc092b0c49ebf72553b8643d7",
+  urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.3/jackson-annotations-2.12.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_annotations_jar_sources_2_12_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -469,10 +469,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_fasterxml_jackson_core_jackson_core",
-    generator_name = "com_fasterxml_jackson_core_jackson_core",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_fasterxml_jackson_core_jackson_core",
+  generator_name = "com_fasterxml_jackson_core_jackson_core",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_fasterxml_jackson_core_jackson_core instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                            in <toplevel>
@@ -482,12 +482,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_fasterxml_jackson_core_jackson_core_2_12_3",
-    generator_name = "com_fasterxml_jackson_core_jackson_core_2_12_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "baef34fbce041d54f3af3ff4fc917ed8b43ed2a6fa30e0a6abfd9a2b2c3f71e0",
-    urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.3/jackson-core-2.12.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_fasterxml_jackson_core_jackson_core_2_12_3",
+  generator_name = "com_fasterxml_jackson_core_jackson_core_2_12_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "baef34fbce041d54f3af3ff4fc917ed8b43ed2a6fa30e0a6abfd9a2b2c3f71e0",
+  urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.3/jackson-core-2.12.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_core_2_12_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -497,12 +497,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_fasterxml_jackson_core_jackson_core_jar_sources_2_12_3",
-    generator_name = "com_fasterxml_jackson_core_jackson_core_jar_sources_2_12_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "05eea74b39c545f495fcf8fc683276f8c1c2642dc628d2c72074a1275a47e1c0",
-    urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.3/jackson-core-2.12.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_fasterxml_jackson_core_jackson_core_jar_sources_2_12_3",
+  generator_name = "com_fasterxml_jackson_core_jackson_core_jar_sources_2_12_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "05eea74b39c545f495fcf8fc683276f8c1c2642dc628d2c72074a1275a47e1c0",
+  urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.3/jackson-core-2.12.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_core_jar_sources_2_12_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -512,12 +512,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_fasterxml_jackson_core_jackson_databind_2_12_3",
-    generator_name = "com_fasterxml_jackson_core_jackson_databind_2_12_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "94d973062c2fda3dff2c9a85eafce57204821cce9085a99377693dbc9fb8da23",
-    urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.3/jackson-databind-2.12.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_fasterxml_jackson_core_jackson_databind_2_12_3",
+  generator_name = "com_fasterxml_jackson_core_jackson_databind_2_12_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "94d973062c2fda3dff2c9a85eafce57204821cce9085a99377693dbc9fb8da23",
+  urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.3/jackson-databind-2.12.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_databind_2_12_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -527,12 +527,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_fasterxml_jackson_core_jackson_databind_jar_sources_2_12_3",
-    generator_name = "com_fasterxml_jackson_core_jackson_databind_jar_sources_2_12_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "0e14f25fc916da65fea1124ffb3213ec1a58de3fd715c55b761bd46a5096c734",
-    urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.3/jackson-databind-2.12.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_fasterxml_jackson_core_jackson_databind_jar_sources_2_12_3",
+  generator_name = "com_fasterxml_jackson_core_jackson_databind_jar_sources_2_12_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "0e14f25fc916da65fea1124ffb3213ec1a58de3fd715c55b761bd46a5096c734",
+  urls = ["https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.3/jackson-databind-2.12.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_databind_jar_sources_2_12_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -542,12 +542,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_1_2_0",
-    generator_name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_1_2_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "6d79ba3d7bf05f821b4b18a22cc628d2c75498e4dda5de9695a9f7198096cde0",
-    urls = ["https://repo1.maven.org/maven2/com/github/alexarchambault/argonaut-shapeless_6.2_2.12/1.2.0/argonaut-shapeless_6.2_2.12-1.2.0.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_1_2_0",
+  generator_name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_1_2_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "6d79ba3d7bf05f821b4b18a22cc628d2c75498e4dda5de9695a9f7198096cde0",
+  urls = ["https://repo1.maven.org/maven2/com/github/alexarchambault/argonaut-shapeless_6.2_2.12/1.2.0/argonaut-shapeless_6.2_2.12-1.2.0.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_github_alexarchambault_argonaut_shapeless_6_2_2_12_1_2_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -557,12 +557,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_jar_sources_1_2_0",
-    generator_name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_jar_sources_1_2_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "b9d0a4798f994c9cfeffa02069f105caa88aad3d44e89c2f87b80acabc8f377c",
-    urls = ["https://repo1.maven.org/maven2/com/github/alexarchambault/argonaut-shapeless_6.2_2.12/1.2.0/argonaut-shapeless_6.2_2.12-1.2.0-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_jar_sources_1_2_0",
+  generator_name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_jar_sources_1_2_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "b9d0a4798f994c9cfeffa02069f105caa88aad3d44e89c2f87b80acabc8f377c",
+  urls = ["https://repo1.maven.org/maven2/com/github/alexarchambault/argonaut-shapeless_6.2_2.12/1.2.0/argonaut-shapeless_6.2_2.12-1.2.0-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_github_alexarchambault_argonaut_shapeless_6_2_2_12_jar_sources_1_2_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -572,14 +572,14 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_bazelbuild_bazel_gazelle",
-    generator_name = "com_github_bazelbuild_bazel_gazelle",
-    generator_function = "go_deps",
-    importpath = "github.com/bazelbuild/bazel-gazelle",
-    version = "v0.0.0-20210917215910-a5bd0e0069da",
-    sum = "h1:S63bLCq/N1ewqu9cEdgWLx/XXrNWo7fbVejzh/roGdY=",
-    replace = "github.com/wolfd/bazel-gazelle",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_bazelbuild_bazel_gazelle",
+  generator_name = "com_github_bazelbuild_bazel_gazelle",
+  generator_function = "go_deps",
+  importpath = "github.com/bazelbuild/bazel-gazelle",
+  version = "v0.0.0-20210917215910-a5bd0e0069da",
+  sum = "h1:S63bLCq/N1ewqu9cEdgWLx/XXrNWo7fbVejzh/roGdY=",
+  replace = "github.com/wolfd/bazel-gazelle",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_bazelbuild_bazel_gazelle instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
@@ -589,13 +589,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_bazelbuild_buildtools",
-    generator_name = "com_github_bazelbuild_buildtools",
-    generator_function = "go_deps",
-    importpath = "github.com/bazelbuild/buildtools",
-    version = "v0.0.0-20210408102303-2b0a1af1a898",
-    sum = "h1:V8cZmvXo+hTRtwbaMUOAJoU4ZYBF/tS2wzwx+ywWV1E=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_bazelbuild_buildtools",
+  generator_name = "com_github_bazelbuild_buildtools",
+  generator_function = "go_deps",
+  importpath = "github.com/bazelbuild/buildtools",
+  version = "v0.0.0-20210408102303-2b0a1af1a898",
+  sum = "h1:V8cZmvXo+hTRtwbaMUOAJoU4ZYBF/tS2wzwx+ywWV1E=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_bazelbuild_buildtools instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
@@ -605,13 +605,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_bazelbuild_rules_go",
-    generator_name = "com_github_bazelbuild_rules_go",
-    generator_function = "go_deps",
-    importpath = "github.com/bazelbuild/rules_go",
-    version = "v0.27.0",
-    sum = "h1:KViqR7qKXwz+LrNdIauCDU21kneCk+4DnYjpvlJwH50=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_bazelbuild_rules_go",
+  generator_name = "com_github_bazelbuild_rules_go",
+  generator_function = "go_deps",
+  importpath = "github.com/bazelbuild/rules_go",
+  version = "v0.27.0",
+  sum = "h1:KViqR7qKXwz+LrNdIauCDU21kneCk+4DnYjpvlJwH50=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_bazelbuild_rules_go instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
@@ -621,13 +621,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_bmatcuk_doublestar",
-    generator_name = "com_github_bmatcuk_doublestar",
-    generator_function = "go_deps",
-    importpath = "github.com/bmatcuk/doublestar",
-    version = "v1.2.2",
-    sum = "h1:oC24CykoSAB8zd7XgruHo33E0cHJf/WhQA/7BeXj+x0=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_bmatcuk_doublestar",
+  generator_name = "com_github_bmatcuk_doublestar",
+  generator_function = "go_deps",
+  importpath = "github.com/bmatcuk/doublestar",
+  version = "v1.2.2",
+  sum = "h1:oC24CykoSAB8zd7XgruHo33E0cHJf/WhQA/7BeXj+x0=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_bmatcuk_doublestar instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
@@ -638,18 +638,18 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:103:16
 http_archive(
-    name = "com_github_bufbuild_buf",
-    tags = ["manual"],
-    generator_name = "com_github_bufbuild_buf",
-    generator_function = "grpc_extra_deps",
-    urls = ["https://github.com/bufbuild/buf/releases/download/v0.53.0/buf-Linux-x86_64.tar.gz"],
-    sha256 = "888bb52d358e34a8d6a57ecff426bed896bdf478ad13c78a70a9e1a9a2d75715",
-    strip_prefix = "buf",
-    build_file_content = "\npackage(\n    default_visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"buf\",\n    srcs = [\n        \"@com_github_bufbuild_buf//:bin/buf\",\n    ],\n    tags = [\"manual\"], # buf is downloaded as a linux binary; tagged manual to prevent build for non-linux users\n)\n",
+  name = "com_github_bufbuild_buf",
+  tags = ["manual"],
+  generator_name = "com_github_bufbuild_buf",
+  generator_function = "grpc_extra_deps",
+  urls = ["https://github.com/bufbuild/buf/releases/download/v0.53.0/buf-Linux-x86_64.tar.gz"],
+  sha256 = "888bb52d358e34a8d6a57ecff426bed896bdf478ad13c78a70a9e1a9a2d75715",
+  strip_prefix = "buf",
+  build_file_content = "\npackage(\n    default_visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"buf\",\n    srcs = [\n        \"@com_github_bufbuild_buf//:bin/buf\",\n    ],\n    tags = [\"manual\"], # buf is downloaded as a linux binary; tagged manual to prevent build for non-linux users\n)\n",
 )
 # Rule com_github_bufbuild_buf instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:47:21 in grpc_extra_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:51:21 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:50:26               in api_dependencies
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:9:23                in external_http_archive
 #   {OUTPUT_BASE}/external/envoy_api/bazel/envoy_http_archive.bzl:16:17         in envoy_http_archive
@@ -658,13 +658,13 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_burntsushi_toml",
-    generator_name = "com_github_burntsushi_toml",
-    generator_function = "go_deps",
-    importpath = "github.com/BurntSushi/toml",
-    version = "v0.3.1",
-    sum = "h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_burntsushi_toml",
+  generator_name = "com_github_burntsushi_toml",
+  generator_function = "go_deps",
+  importpath = "github.com/BurntSushi/toml",
+  version = "v0.3.1",
+  sum = "h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_burntsushi_toml instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
@@ -674,29 +674,29 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "com_github_cares_cares",
-    generator_name = "com_github_cares_cares",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/c-ares/c-ares/archive/e982924acee7f7313b4baa4ee5ec000c5e373c30.tar.gz", "https://github.com/c-ares/c-ares/archive/e982924acee7f7313b4baa4ee5ec000c5e373c30.tar.gz"],
-    sha256 = "e8c2751ddc70fed9dc6f999acd92e232d5846f009ee1674f8aee81f19b2b915a",
-    strip_prefix = "c-ares-e982924acee7f7313b4baa4ee5ec000c5e373c30",
-    build_file = "@com_github_grpc_grpc//third_party:cares/cares.BUILD",
+  name = "com_github_cares_cares",
+  generator_name = "com_github_cares_cares",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/c-ares/c-ares/archive/e982924acee7f7313b4baa4ee5ec000c5e373c30.tar.gz", "https://github.com/c-ares/c-ares/archive/e982924acee7f7313b4baa4ee5ec000c5e373c30.tar.gz"],
+  sha256 = "e8c2751ddc70fed9dc6f999acd92e232d5846f009ee1674f8aee81f19b2b915a",
+  strip_prefix = "c-ares-e982924acee7f7313b4baa4ee5ec000c5e373c30",
+  build_file = "@com_github_grpc_grpc//third_party:cares/cares.BUILD",
 )
 # Rule com_github_cares_cares instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:273:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:274:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_census_instrumentation_opencensus_proto",
-    generator_name = "com_github_census_instrumentation_opencensus_proto",
-    generator_function = "go_deps",
-    importpath = "github.com/census-instrumentation/opencensus-proto",
-    version = "v0.2.1",
-    sum = "h1:glEXhBS5PSLLv4IXzLA5yPRVX4bilULVyxxbrfOtDAk=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_census_instrumentation_opencensus_proto",
+  generator_name = "com_github_census_instrumentation_opencensus_proto",
+  generator_function = "go_deps",
+  importpath = "github.com/census-instrumentation/opencensus-proto",
+  version = "v0.2.1",
+  sum = "h1:glEXhBS5PSLLv4IXzLA5yPRVX4bilULVyxxbrfOtDAk=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_census_instrumentation_opencensus_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
@@ -706,13 +706,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_chzyer_logex",
-    generator_name = "com_github_chzyer_logex",
-    generator_function = "go_deps",
-    importpath = "github.com/chzyer/logex",
-    version = "v1.1.10",
-    sum = "h1:Swpa1K6QvQznwJRcfTfQJmTE72DqScAa40E+fbHEXEE=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_chzyer_logex",
+  generator_name = "com_github_chzyer_logex",
+  generator_function = "go_deps",
+  importpath = "github.com/chzyer/logex",
+  version = "v1.1.10",
+  sum = "h1:Swpa1K6QvQznwJRcfTfQJmTE72DqScAa40E+fbHEXEE=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_chzyer_logex instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
@@ -722,13 +722,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_chzyer_readline",
-    generator_name = "com_github_chzyer_readline",
-    generator_function = "go_deps",
-    importpath = "github.com/chzyer/readline",
-    version = "v0.0.0-20180603132655-2972be24d48e",
-    sum = "h1:fY5BOSpyZCqRo5OhCuC+XN+r/bBCmeuuJtjz+bCNIf8=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_chzyer_readline",
+  generator_name = "com_github_chzyer_readline",
+  generator_function = "go_deps",
+  importpath = "github.com/chzyer/readline",
+  version = "v0.0.0-20180603132655-2972be24d48e",
+  sum = "h1:fY5BOSpyZCqRo5OhCuC+XN+r/bBCmeuuJtjz+bCNIf8=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_chzyer_readline instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
@@ -738,13 +738,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_chzyer_test",
-    generator_name = "com_github_chzyer_test",
-    generator_function = "go_deps",
-    importpath = "github.com/chzyer/test",
-    version = "v0.0.0-20180213035817-a1ea475d72b1",
-    sum = "h1:q763qf9huN11kDQavWsoZXJNW3xEE4JJyHa5Q25/sd8=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_chzyer_test",
+  generator_name = "com_github_chzyer_test",
+  generator_function = "go_deps",
+  importpath = "github.com/chzyer/test",
+  version = "v0.0.0-20180213035817-a1ea475d72b1",
+  sum = "h1:q763qf9huN11kDQavWsoZXJNW3xEE4JJyHa5Q25/sd8=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_chzyer_test instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -754,13 +754,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_client9_misspell",
-    generator_name = "com_github_client9_misspell",
-    generator_function = "go_deps",
-    importpath = "github.com/client9/misspell",
-    version = "v0.3.4",
-    sum = "h1:ta993UF76GwbvJcIo3Y68y/M3WxlpEHPWIGDkJYwzJI=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_client9_misspell",
+  generator_name = "com_github_client9_misspell",
+  generator_function = "go_deps",
+  importpath = "github.com/client9/misspell",
+  version = "v0.3.4",
+  sum = "h1:ta993UF76GwbvJcIo3Y68y/M3WxlpEHPWIGDkJYwzJI=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_client9_misspell instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -768,33 +768,30 @@ go_repository(
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:103:16
+# {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "com_github_cncf_udpa",
-    generator_name = "com_github_cncf_udpa",
-    generator_function = "grpc_extra_deps",
-    urls = ["https://github.com/cncf/xds/archive/cb28da3451f158a947dfc45090fe92b07b243bc1.tar.gz"],
-    sha256 = "5bc8365613fe2f8ce6cc33959b7667b13b7fe56cb9d16ba740c06e1a7c4242fc",
-    strip_prefix = "xds-cb28da3451f158a947dfc45090fe92b07b243bc1",
+  name = "com_github_cncf_udpa",
+  generator_name = "com_github_cncf_udpa",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/cncf/xds/archive/cb28da3451f158a947dfc45090fe92b07b243bc1.tar.gz", "https://github.com/cncf/xds/archive/cb28da3451f158a947dfc45090fe92b07b243bc1.tar.gz"],
+  sha256 = "5bc8365613fe2f8ce6cc33959b7667b13b7fe56cb9d16ba740c06e1a7c4242fc",
+  strip_prefix = "xds-cb28da3451f158a947dfc45090fe92b07b243bc1",
 )
 # Rule com_github_cncf_udpa instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:47:21 in grpc_extra_deps
-#   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:28:26               in api_dependencies
-#   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:9:23                in external_http_archive
-#   {OUTPUT_BASE}/external/envoy_api/bazel/envoy_http_archive.bzl:16:17         in envoy_http_archive
+#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:449:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_davecgh_go_spew",
-    generator_name = "com_github_davecgh_go_spew",
-    generator_function = "go_deps",
-    importpath = "github.com/davecgh/go-spew",
-    version = "v1.1.1",
-    sum = "h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_davecgh_go_spew",
+  generator_name = "com_github_davecgh_go_spew",
+  generator_function = "go_deps",
+  importpath = "github.com/davecgh/go-spew",
+  version = "v1.1.1",
+  sum = "h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_davecgh_go_spew instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -804,13 +801,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_emicklei_proto",
-    generator_name = "com_github_emicklei_proto",
-    generator_function = "go_deps",
-    importpath = "github.com/emicklei/proto",
-    version = "v1.9.0",
-    sum = "h1:l0QiNT6Qs7Yj0Mb4X6dnWBQer4ebei2BFcgQLbGqUDc=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_emicklei_proto",
+  generator_name = "com_github_emicklei_proto",
+  generator_function = "go_deps",
+  importpath = "github.com/emicklei/proto",
+  version = "v1.9.0",
+  sum = "h1:l0QiNT6Qs7Yj0Mb4X6dnWBQer4ebei2BFcgQLbGqUDc=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_emicklei_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -820,13 +817,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_envoyproxy_go_control_plane",
-    generator_name = "com_github_envoyproxy_go_control_plane",
-    generator_function = "go_deps",
-    importpath = "github.com/envoyproxy/go-control-plane",
-    version = "v0.9.1-0.20191026205805-5f8ba28d4473",
-    sum = "h1:4cmBvAEBNJaGARUEs3/suWRyfyBfhf7I60WBZq+bv2w=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_envoyproxy_go_control_plane",
+  generator_name = "com_github_envoyproxy_go_control_plane",
+  generator_function = "go_deps",
+  importpath = "github.com/envoyproxy/go-control-plane",
+  version = "v0.9.1-0.20191026205805-5f8ba28d4473",
+  sum = "h1:4cmBvAEBNJaGARUEs3/suWRyfyBfhf7I60WBZq+bv2w=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_envoyproxy_go_control_plane instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -836,13 +833,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_envoyproxy_protoc_gen_validate",
-    generator_name = "com_github_envoyproxy_protoc_gen_validate",
-    generator_function = "go_deps",
-    importpath = "github.com/envoyproxy/protoc-gen-validate",
-    version = "v0.1.0",
-    sum = "h1:EQciDnbrYxy13PgWoY8AqoxGiPrpgBZ1R8UNe3ddc+A=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_envoyproxy_protoc_gen_validate",
+  generator_name = "com_github_envoyproxy_protoc_gen_validate",
+  generator_function = "go_deps",
+  importpath = "github.com/envoyproxy/protoc-gen-validate",
+  version = "v0.1.0",
+  sum = "h1:EQciDnbrYxy13PgWoY8AqoxGiPrpgBZ1R8UNe3ddc+A=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_envoyproxy_protoc_gen_validate instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -852,13 +849,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_fsnotify_fsnotify",
-    generator_name = "com_github_fsnotify_fsnotify",
-    generator_function = "go_deps",
-    importpath = "github.com/fsnotify/fsnotify",
-    version = "v1.4.7",
-    sum = "h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_fsnotify_fsnotify",
+  generator_name = "com_github_fsnotify_fsnotify",
+  generator_function = "go_deps",
+  importpath = "github.com/fsnotify/fsnotify",
+  version = "v1.4.7",
+  sum = "h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_fsnotify_fsnotify instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -868,14 +865,14 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:73:22
 http_archive(
-    name = "com_github_gogo_protobuf",
-    generator_name = "com_github_gogo_protobuf",
-    generator_function = "go_rules_dependencies",
-    urls = ["https://mirror.bazel.build/github.com/gogo/protobuf/archive/v1.3.2.zip", "https://github.com/gogo/protobuf/archive/v1.3.2.zip"],
-    sha256 = "f89f8241af909ce3226562d135c25b28e656ae173337b3e58ede917aa26e1e3c",
-    strip_prefix = "protobuf-1.3.2",
-    patches = ["@io_bazel_rules_go//third_party:com_github_gogo_protobuf-gazelle.patch"],
-    patch_args = ["-p1"],
+  name = "com_github_gogo_protobuf",
+  generator_name = "com_github_gogo_protobuf",
+  generator_function = "go_rules_dependencies",
+  urls = ["https://mirror.bazel.build/github.com/gogo/protobuf/archive/v1.3.2.zip", "https://github.com/gogo/protobuf/archive/v1.3.2.zip"],
+  sha256 = "f89f8241af909ce3226562d135c25b28e656ae173337b3e58ede917aa26e1e3c",
+  strip_prefix = "protobuf-1.3.2",
+  patches = ["@io_bazel_rules_go//third_party:com_github_gogo_protobuf-gazelle.patch"],
+  patch_args = ["-p1"],
 )
 # Rule com_github_gogo_protobuf instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
@@ -886,13 +883,13 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_golang_glog",
-    generator_name = "com_github_golang_glog",
-    generator_function = "go_deps",
-    importpath = "github.com/golang/glog",
-    version = "v0.0.0-20160126235308-23def4e6c14b",
-    sum = "h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_golang_glog",
+  generator_name = "com_github_golang_glog",
+  generator_function = "go_deps",
+  importpath = "github.com/golang/glog",
+  version = "v0.0.0-20160126235308-23def4e6c14b",
+  sum = "h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_golang_glog instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -902,13 +899,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_golang_mock",
-    generator_name = "com_github_golang_mock",
-    generator_function = "go_deps",
-    importpath = "github.com/golang/mock",
-    version = "v1.1.1",
-    sum = "h1:G5FRp8JnTd7RQH5kemVNlMeyXQAztQ3mOWV95KxsXH8=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_golang_mock",
+  generator_name = "com_github_golang_mock",
+  generator_function = "go_deps",
+  importpath = "github.com/golang/mock",
+  version = "v1.1.1",
+  sum = "h1:G5FRp8JnTd7RQH5kemVNlMeyXQAztQ3mOWV95KxsXH8=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_golang_mock instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -918,13 +915,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_golang_protobuf",
-    generator_name = "com_github_golang_protobuf",
-    generator_function = "go_deps",
-    importpath = "github.com/golang/protobuf",
-    version = "v1.4.3",
-    sum = "h1:JjCZWpVbqXDqFVmTfYWEVTMIYrL/NPdPSCHPJ0T/raM=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_golang_protobuf",
+  generator_name = "com_github_golang_protobuf",
+  generator_function = "go_deps",
+  importpath = "github.com/golang/protobuf",
+  version = "v1.4.3",
+  sum = "h1:JjCZWpVbqXDqFVmTfYWEVTMIYrL/NPdPSCHPJ0T/raM=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_golang_protobuf instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -934,28 +931,28 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "com_github_google_benchmark",
-    generator_name = "com_github_google_benchmark",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/google/benchmark/archive/0baacde3618ca617da95375e0af13ce1baadea47.tar.gz", "https://github.com/google/benchmark/archive/0baacde3618ca617da95375e0af13ce1baadea47.tar.gz"],
-    sha256 = "0b921a3bc39e35f4275c8dcc658af2391c150fb966102341287b0401ff2e6f21",
-    strip_prefix = "benchmark-0baacde3618ca617da95375e0af13ce1baadea47",
+  name = "com_github_google_benchmark",
+  generator_name = "com_github_google_benchmark",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/google/benchmark/archive/0baacde3618ca617da95375e0af13ce1baadea47.tar.gz", "https://github.com/google/benchmark/archive/0baacde3618ca617da95375e0af13ce1baadea47.tar.gz"],
+  sha256 = "0b921a3bc39e35f4275c8dcc658af2391c150fb966102341287b0401ff2e6f21",
+  strip_prefix = "benchmark-0baacde3618ca617da95375e0af13ce1baadea47",
 )
 # Rule com_github_google_benchmark instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:250:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:251:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_google_go_cmp",
-    generator_name = "com_github_google_go_cmp",
-    generator_function = "go_deps",
-    importpath = "github.com/google/go-cmp",
-    version = "v0.5.5",
-    sum = "h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_google_go_cmp",
+  generator_name = "com_github_google_go_cmp",
+  generator_function = "go_deps",
+  importpath = "github.com/google/go-cmp",
+  version = "v0.5.5",
+  sum = "h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_google_go_cmp instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -965,48 +962,48 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:29:15
 http_archive(
-    name = "com_github_grpc_grpc",
-    generator_name = "com_github_grpc_grpc",
-    generator_function = "grpc_core_deps",
-    urls = ["https://github.com/grpc/grpc/archive/v1.42.0.tar.gz"],
-    sha256 = "b2f2620c762427bfeeef96a68c1924319f384e877bc0e084487601e4cc6e434c",
-    strip_prefix = "grpc-1.42.0",
+  name = "com_github_grpc_grpc",
+  generator_name = "com_github_grpc_grpc",
+  generator_function = "grpc_core_deps",
+  urls = ["https://github.com/grpc/grpc/archive/v1.44.0.tar.gz"],
+  sha256 = "8c05641b9f91cbc92f51cc4a5b3a226788d7a63f20af4ca7aaca50d92cc94a0d",
+  strip_prefix = "grpc-1.44.0",
 )
 # Rule com_github_grpc_grpc instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:29:15                in <toplevel>
-#   {WORKSPACE}/deps/grpc_core_deps.bzl:20:25  in grpc_core_deps
-#   {WORKSPACE}/deps/grpc_core_deps.bzl:103:11 in com_github_grpc_grpc
-#   {WORKSPACE}/deps/grpc_core_deps.bzl:10:18  in _maybe
+#   {WORKSPACE}/deps/grpc_core_deps.bzl:19:25  in grpc_core_deps
+#   {WORKSPACE}/deps/grpc_core_deps.bzl:101:11 in com_github_grpc_grpc
+#   {WORKSPACE}/deps/grpc_core_deps.bzl:9:18   in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:53:15
 http_archive(
-    name = "com_github_grpc_grpc_node_packages_grpc_tools_src",
-    generator_name = "com_github_grpc_grpc_node_packages_grpc_tools_src",
-    generator_function = "grpc_node_deps",
-    urls = ["https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz"],
-    sha256 = "7fbe9d04e45420c3c2e02456c0275fa8716fa894c48525b9a8f7db9ac0b4acb0",
-    strip_prefix = "grpc-node-aeb42733d861883b82323e2dc6d1aba0e3a12aa0/packages/grpc-tools/src",
-    build_file_content = "\ncc_library(\n    name = \"grpc_plugin_support\",\n    srcs = [\"node_generator.cc\"],\n    hdrs = [\n        \"config.h\",\n        \"config_protobuf.h\",\n        \"generator_helpers.h\",\n        \"node_generator.h\",\n        \"node_generator_helpers.h\",\n    ],\n    deps = [\"//external:protobuf_clib\"],\n)\n\ncc_binary(\n    name = \"grpc_node_plugin\",\n    srcs = [\"node_plugin.cc\"],\n    visibility = [\"//visibility:public\"],\n    deps = [\":grpc_plugin_support\"],\n)\n",
+  name = "com_github_grpc_grpc_node_packages_grpc_tools_src",
+  generator_name = "com_github_grpc_grpc_node_packages_grpc_tools_src",
+  generator_function = "grpc_node_deps",
+  urls = ["https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz"],
+  sha256 = "7fbe9d04e45420c3c2e02456c0275fa8716fa894c48525b9a8f7db9ac0b4acb0",
+  strip_prefix = "grpc-node-aeb42733d861883b82323e2dc6d1aba0e3a12aa0/packages/grpc-tools/src",
+  build_file_content = "\ncc_library(\n    name = \"grpc_plugin_support\",\n    srcs = [\"node_generator.cc\"],\n    hdrs = [\n        \"config.h\",\n        \"config_protobuf.h\",\n        \"generator_helpers.h\",\n        \"node_generator.h\",\n        \"node_generator_helpers.h\",\n    ],\n    deps = [\"//external:protobuf_clib\"],\n)\n\ncc_binary(\n    name = \"grpc_node_plugin\",\n    srcs = [\"node_plugin.cc\"],\n    visibility = [\"//visibility:public\"],\n    deps = [\":grpc_plugin_support\"],\n)\n",
 )
 # Rule com_github_grpc_grpc_node_packages_grpc_tools_src instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:53:15                in <toplevel>
-#   {WORKSPACE}/deps/grpc_node_deps.bzl:21:54  in grpc_node_deps
-#   {WORKSPACE}/deps/grpc_node_deps.bzl:115:11 in com_github_grpc_grpc_node_packages_grpc_tools_src
-#   {WORKSPACE}/deps/grpc_node_deps.bzl:10:18  in _maybe
+#   {WORKSPACE}/deps/grpc_node_deps.bzl:20:54  in grpc_node_deps
+#   {WORKSPACE}/deps/grpc_node_deps.bzl:113:11 in com_github_grpc_grpc_node_packages_grpc_tools_src
+#   {WORKSPACE}/deps/grpc_node_deps.bzl:9:18   in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_kr_pretty",
-    generator_name = "com_github_kr_pretty",
-    generator_function = "go_deps",
-    importpath = "github.com/kr/pretty",
-    version = "v0.1.0",
-    sum = "h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_kr_pretty",
+  generator_name = "com_github_kr_pretty",
+  generator_function = "go_deps",
+  importpath = "github.com/kr/pretty",
+  version = "v0.1.0",
+  sum = "h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_kr_pretty instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -1016,13 +1013,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_kr_pty",
-    generator_name = "com_github_kr_pty",
-    generator_function = "go_deps",
-    importpath = "github.com/kr/pty",
-    version = "v1.1.1",
-    sum = "h1:VkoXIwSboBpnk99O/KFauAEILuNHv5DVFKZMBN/gUgw=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_kr_pty",
+  generator_name = "com_github_kr_pty",
+  generator_function = "go_deps",
+  importpath = "github.com/kr/pty",
+  version = "v1.1.1",
+  sum = "h1:VkoXIwSboBpnk99O/KFauAEILuNHv5DVFKZMBN/gUgw=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_kr_pty instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -1032,13 +1029,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_kr_text",
-    generator_name = "com_github_kr_text",
-    generator_function = "go_deps",
-    importpath = "github.com/kr/text",
-    version = "v0.1.0",
-    sum = "h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_kr_text",
+  generator_name = "com_github_kr_text",
+  generator_function = "go_deps",
+  importpath = "github.com/kr/text",
+  version = "v0.1.0",
+  sum = "h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_kr_text instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -1048,12 +1045,12 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:73:22
 http_archive(
-    name = "com_github_mwitkow_go_proto_validators",
-    generator_name = "com_github_mwitkow_go_proto_validators",
-    generator_function = "go_rules_dependencies",
-    urls = ["https://mirror.bazel.build/github.com/mwitkow/go-proto-validators/archive/v0.3.2.zip", "https://github.com/mwitkow/go-proto-validators/archive/v0.3.2.zip"],
-    sha256 = "d8697f05a2f0eaeb65261b480e1e6035301892d9fc07ed945622f41b12a68142",
-    strip_prefix = "go-proto-validators-0.3.2",
+  name = "com_github_mwitkow_go_proto_validators",
+  generator_name = "com_github_mwitkow_go_proto_validators",
+  generator_function = "go_rules_dependencies",
+  urls = ["https://mirror.bazel.build/github.com/mwitkow/go-proto-validators/archive/v0.3.2.zip", "https://github.com/mwitkow/go-proto-validators/archive/v0.3.2.zip"],
+  sha256 = "d8697f05a2f0eaeb65261b480e1e6035301892d9fc07ed945622f41b12a68142",
+  strip_prefix = "go-proto-validators-0.3.2",
 )
 # Rule com_github_mwitkow_go_proto_validators instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
@@ -1064,17 +1061,17 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:103:16
 http_archive(
-    name = "com_github_openzipkin_zipkinapi",
-    generator_name = "com_github_openzipkin_zipkinapi",
-    generator_function = "grpc_extra_deps",
-    urls = ["https://github.com/openzipkin/zipkin-api/archive/1.0.0.tar.gz"],
-    sha256 = "6c8ee2014cf0746ba452e5f2c01f038df60e85eb2d910b226f9aa27ddc0e44cf",
-    strip_prefix = "zipkin-api-1.0.0",
-    build_file_content = "\n\nload(\"@envoy_api//bazel:api_build_system.bzl\", \"api_cc_py_proto_library\")\nload(\"@io_bazel_rules_go//proto:def.bzl\", \"go_proto_library\")\n\napi_cc_py_proto_library(\n    name = \"zipkin\",\n    srcs = [\n        \"zipkin-jsonv2.proto\",\n        \"zipkin.proto\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"zipkin_go_proto\",\n    proto = \":zipkin\",\n    visibility = [\"//visibility:public\"],\n)\n",
+  name = "com_github_openzipkin_zipkinapi",
+  generator_name = "com_github_openzipkin_zipkinapi",
+  generator_function = "grpc_extra_deps",
+  urls = ["https://github.com/openzipkin/zipkin-api/archive/1.0.0.tar.gz"],
+  sha256 = "6c8ee2014cf0746ba452e5f2c01f038df60e85eb2d910b226f9aa27ddc0e44cf",
+  strip_prefix = "zipkin-api-1.0.0",
+  build_file_content = "\n\nload(\"@envoy_api//bazel:api_build_system.bzl\", \"api_cc_py_proto_library\")\nload(\"@io_bazel_rules_go//proto:def.bzl\", \"go_proto_library\")\n\napi_cc_py_proto_library(\n    name = \"zipkin\",\n    srcs = [\n        \"zipkin-jsonv2.proto\",\n        \"zipkin.proto\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"zipkin_go_proto\",\n    proto = \":zipkin\",\n    visibility = [\"//visibility:public\"],\n)\n",
 )
 # Rule com_github_openzipkin_zipkinapi instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:47:21 in grpc_extra_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:51:21 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:42:26               in api_dependencies
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:9:23                in external_http_archive
 #   {OUTPUT_BASE}/external/envoy_api/bazel/envoy_http_archive.bzl:16:17         in envoy_http_archive
@@ -1083,13 +1080,13 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_pelletier_go_toml",
-    generator_name = "com_github_pelletier_go_toml",
-    generator_function = "go_deps",
-    importpath = "github.com/pelletier/go-toml",
-    version = "v1.2.0",
-    sum = "h1:T5zMGML61Wp+FlcbWjRDT7yAxhJNAiPPLOFECq181zc=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_pelletier_go_toml",
+  generator_name = "com_github_pelletier_go_toml",
+  generator_function = "go_deps",
+  importpath = "github.com/pelletier/go-toml",
+  version = "v1.2.0",
+  sum = "h1:T5zMGML61Wp+FlcbWjRDT7yAxhJNAiPPLOFECq181zc=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_pelletier_go_toml instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -1099,13 +1096,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_pmezard_go_difflib",
-    generator_name = "com_github_pmezard_go_difflib",
-    generator_function = "go_deps",
-    importpath = "github.com/pmezard/go-difflib",
-    version = "v1.0.0",
-    sum = "h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_pmezard_go_difflib",
+  generator_name = "com_github_pmezard_go_difflib",
+  generator_function = "go_deps",
+  importpath = "github.com/pmezard/go-difflib",
+  version = "v1.0.0",
+  sum = "h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_pmezard_go_difflib instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -1115,13 +1112,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_prometheus_client_model",
-    generator_name = "com_github_prometheus_client_model",
-    generator_function = "go_deps",
-    importpath = "github.com/prometheus/client_model",
-    version = "v0.0.0-20190812154241-14fe0d1b01d4",
-    sum = "h1:gQz4mCbXsO+nc9n1hCxHcGA3Zx3Eo+UHZoInFGUIXNM=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_prometheus_client_model",
+  generator_name = "com_github_prometheus_client_model",
+  generator_function = "go_deps",
+  importpath = "github.com/prometheus/client_model",
+  version = "v0.0.0-20190812154241-14fe0d1b01d4",
+  sum = "h1:gQz4mCbXsO+nc9n1hCxHcGA3Zx3Eo+UHZoInFGUIXNM=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_prometheus_client_model instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -1131,30 +1128,30 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:41:13
 http_archive(
-    name = "com_github_stackb_grpc_js",
-    generator_name = "com_github_stackb_grpc_js",
-    generator_function = "grpc_js_deps",
-    urls = ["https://github.com/stackb/grpc.js/archive/c938ee76ee462abf4f83d758f63d52f03fa24c7c.tar.gz"],
-    sha256 = "33042aa893625ec5bf6d59bf38b3954e5558b7e549b1cb2eeee66cd2ccf8ab29",
-    strip_prefix = "grpc.js-c938ee76ee462abf4f83d758f63d52f03fa24c7c",
+  name = "com_github_stackb_grpc_js",
+  generator_name = "com_github_stackb_grpc_js",
+  generator_function = "grpc_js_deps",
+  urls = ["https://github.com/stackb/grpc.js/archive/c938ee76ee462abf4f83d758f63d52f03fa24c7c.tar.gz"],
+  sha256 = "33042aa893625ec5bf6d59bf38b3954e5558b7e549b1cb2eeee66cd2ccf8ab29",
+  strip_prefix = "grpc.js-c938ee76ee462abf4f83d758f63d52f03fa24c7c",
 )
 # Rule com_github_stackb_grpc_js instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:41:13             in <toplevel>
-#   {WORKSPACE}/deps/grpc_js_deps.bzl:13:30 in grpc_js_deps
-#   {WORKSPACE}/deps/grpc_js_deps.bzl:17:11 in com_github_stackb_grpc_js
-#   {WORKSPACE}/deps/grpc_js_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/grpc_js_deps.bzl:12:30 in grpc_js_deps
+#   {WORKSPACE}/deps/grpc_js_deps.bzl:15:11 in com_github_stackb_grpc_js
+#   {WORKSPACE}/deps/grpc_js_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_stretchr_objx",
-    generator_name = "com_github_stretchr_objx",
-    generator_function = "go_deps",
-    importpath = "github.com/stretchr/objx",
-    version = "v0.1.0",
-    sum = "h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_stretchr_objx",
+  generator_name = "com_github_stretchr_objx",
+  generator_function = "go_deps",
+  importpath = "github.com/stretchr/objx",
+  version = "v0.1.0",
+  sum = "h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_stretchr_objx instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -1164,13 +1161,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_github_stretchr_testify",
-    generator_name = "com_github_stretchr_testify",
-    generator_function = "go_deps",
-    importpath = "github.com/stretchr/testify",
-    version = "v1.7.0",
-    sum = "h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=",
-    build_file_proto_mode = "disable_global",
+  name = "com_github_stretchr_testify",
+  generator_name = "com_github_stretchr_testify",
+  generator_function = "go_deps",
+  importpath = "github.com/stretchr/testify",
+  version = "v1.7.0",
+  sum = "h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_github_stretchr_testify instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -1180,12 +1177,12 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:83:21
 go_repository(
-    name = "com_github_yuin_goldmark",
-    generator_name = "com_github_yuin_goldmark",
-    generator_function = "gazelle_dependencies",
-    importpath = "github.com/yuin/goldmark",
-    version = "v1.4.0",
-    sum = "h1:OtISOGfH6sOWa1/qXqqAiOIAO6Z5J3AEAE18WAq6BiQ=",
+  name = "com_github_yuin_goldmark",
+  generator_name = "com_github_yuin_goldmark",
+  generator_function = "gazelle_dependencies",
+  importpath = "github.com/yuin/goldmark",
+  version = "v1.4.0",
+  sum = "h1:OtISOGfH6sOWa1/qXqqAiOIAO6Z5J3AEAE18WAq6BiQ=",
 )
 # Rule com_github_yuin_goldmark instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:83:21                                     in <toplevel>
@@ -1196,25 +1193,25 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "com_google_absl",
-    generator_name = "com_google_absl",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/abseil/abseil-cpp/archive/278e0a071885a22dcd2fd1b5576cc44757299343.tar.gz", "https://github.com/abseil/abseil-cpp/archive/278e0a071885a22dcd2fd1b5576cc44757299343.tar.gz"],
-    sha256 = "1764491a199eb9325b177126547f03d244f86b4ff28f16f206c7b3e7e4f777ec",
-    strip_prefix = "abseil-cpp-278e0a071885a22dcd2fd1b5576cc44757299343",
+  name = "com_google_absl",
+  generator_name = "com_google_absl",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz", "https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz"],
+  sha256 = "dcf71b9cba8dc0ca9940c4b316a0c796be8fab42b070bb6b7cab62b48f0e66c4",
+  strip_prefix = "abseil-cpp-20211102.0",
 )
 # Rule com_google_absl instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:285:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:286:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_android_annotations",
-    generator_name = "com_google_android_annotations",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_android_annotations",
+  generator_name = "com_google_android_annotations",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_android_annotations instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                            in <toplevel>
@@ -1224,12 +1221,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_android_annotations_4_1_1_4",
-    generator_name = "com_google_android_annotations_4_1_1_4",
-    generator_function = "pinned_maven_install",
-    sha256 = "ba734e1e84c09d615af6a09d33034b4f0442f8772dec120efb376d86a565ae15",
-    urls = ["https://repo1.maven.org/maven2/com/google/android/annotations/4.1.1.4/annotations-4.1.1.4.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_android_annotations_4_1_1_4",
+  generator_name = "com_google_android_annotations_4_1_1_4",
+  generator_function = "pinned_maven_install",
+  sha256 = "ba734e1e84c09d615af6a09d33034b4f0442f8772dec120efb376d86a565ae15",
+  urls = ["https://repo1.maven.org/maven2/com/google/android/annotations/4.1.1.4/annotations-4.1.1.4.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_android_annotations_4_1_1_4 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                               in <toplevel>
@@ -1239,12 +1236,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_android_annotations_jar_sources_4_1_1_4",
-    generator_name = "com_google_android_annotations_jar_sources_4_1_1_4",
-    generator_function = "pinned_maven_install",
-    sha256 = "e9b667aa958df78ea1ad115f7bbac18a5869c3128b1d5043feb360b0cfce9d40",
-    urls = ["https://repo1.maven.org/maven2/com/google/android/annotations/4.1.1.4/annotations-4.1.1.4-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_android_annotations_jar_sources_4_1_1_4",
+  generator_name = "com_google_android_annotations_jar_sources_4_1_1_4",
+  generator_function = "pinned_maven_install",
+  sha256 = "e9b667aa958df78ea1ad115f7bbac18a5869c3128b1d5043feb360b0cfce9d40",
+  urls = ["https://repo1.maven.org/maven2/com/google/android/annotations/4.1.1.4/annotations-4.1.1.4-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_android_annotations_jar_sources_4_1_1_4 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1254,10 +1251,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_api_grpc_proto_google_common_protos",
-    generator_name = "com_google_api_grpc_proto_google_common_protos",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_api_grpc_proto_google_common_protos",
+  generator_name = "com_google_api_grpc_proto_google_common_protos",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_api_grpc_proto_google_common_protos instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -1267,12 +1264,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_google_api_grpc_proto_google_common_protos_2_0_1",
-    generator_name = "com_google_api_grpc_proto_google_common_protos_2_0_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "5ce71656118618731e34a5d4c61aa3a031be23446dc7de8b5a5e77b66ebcd6ef",
-    urls = ["https://repo1.maven.org/maven2/com/google/api/grpc/proto-google-common-protos/2.0.1/proto-google-common-protos-2.0.1.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_google_api_grpc_proto_google_common_protos_2_0_1",
+  generator_name = "com_google_api_grpc_proto_google_common_protos_2_0_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "5ce71656118618731e34a5d4c61aa3a031be23446dc7de8b5a5e77b66ebcd6ef",
+  urls = ["https://repo1.maven.org/maven2/com/google/api/grpc/proto-google-common-protos/2.0.1/proto-google-common-protos-2.0.1.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_google_api_grpc_proto_google_common_protos_2_0_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -1282,12 +1279,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_google_api_grpc_proto_google_common_protos_jar_sources_2_0_1",
-    generator_name = "com_google_api_grpc_proto_google_common_protos_jar_sources_2_0_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "e5caddf23bcb7224ade6d3809e073f02715b76779540db58c5a76b994b7a07e7",
-    urls = ["https://repo1.maven.org/maven2/com/google/api/grpc/proto-google-common-protos/2.0.1/proto-google-common-protos-2.0.1-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_google_api_grpc_proto_google_common_protos_jar_sources_2_0_1",
+  generator_name = "com_google_api_grpc_proto_google_common_protos_jar_sources_2_0_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "e5caddf23bcb7224ade6d3809e073f02715b76779540db58c5a76b994b7a07e7",
+  urls = ["https://repo1.maven.org/maven2/com/google/api/grpc/proto-google-common-protos/2.0.1/proto-google-common-protos-2.0.1-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_google_api_grpc_proto_google_common_protos_jar_sources_2_0_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
@@ -1297,10 +1294,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_auth_google_auth_library_credentials",
-    generator_name = "com_google_auth_google_auth_library_credentials",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_auth_google_auth_library_credentials",
+  generator_name = "com_google_auth_google_auth_library_credentials",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_auth_google_auth_library_credentials instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -1310,10 +1307,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_auth_google_auth_library_oauth2_http",
-    generator_name = "com_google_auth_google_auth_library_oauth2_http",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_auth_google_auth_library_oauth2_http",
+  generator_name = "com_google_auth_google_auth_library_oauth2_http",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_auth_google_auth_library_oauth2_http instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -1323,15 +1320,15 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_auto_common",
-    generator_name = "com_google_auto_common",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/auto/auto-common/0.7/auto-common-0.7.jar", "https://repo1.maven.org/maven2/com/google/auto/auto-common/0.7/auto-common-0.7.jar", "http://maven.ibiblio.org/maven2/com/google/auto/auto-common/0.7/auto-common-0.7.jar"],
-    artifact_sha256 = "eee75e0d1b1b8f31584dcbe25e7c30752545001b46673d007d468d75cf6b2c52",
-    deps = ["@com_google_guava"],
-    default_visibility = ["@com_google_auto_factory//:__pkg__"],
+  name = "com_google_auto_common",
+  generator_name = "com_google_auto_common",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/auto/auto-common/0.7/auto-common-0.7.jar", "https://repo1.maven.org/maven2/com/google/auto/auto-common/0.7/auto-common-0.7.jar", "http://maven.ibiblio.org/maven2/com/google/auto/auto-common/0.7/auto-common-0.7.jar"],
+  artifact_sha256 = "eee75e0d1b1b8f31584dcbe25e7c30752545001b46673d007d468d75cf6b2c52",
+  deps = ["@com_google_guava"],
+  default_visibility = ["@com_google_auto_factory//:__pkg__"],
 )
 # Rule com_google_auto_common instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1343,15 +1340,15 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_auto_factory",
-    generator_name = "com_google_auto_factory",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/auto/factory/auto-factory/1.0-beta5/auto-factory-1.0-beta5.jar", "https://repo1.maven.org/maven2/com/google/auto/factory/auto-factory/1.0-beta5/auto-factory-1.0-beta5.jar"],
-    artifact_sha256 = "e6bed6aaa879f568449d735561a6a26a5a06f7662ed96ca88d27d2200a8dc6cf",
-    generated_rule_name = "jar",
-    extra_build_file_content = "java_library(\n    name = \"processor\",\n    exports = [\":jar\"],\n    runtime_deps = [\n        \"@com_google_auto_common\",\n        \"@com_google_auto_value\",\n        \"@com_google_guava\",\n        \"@com_google_java_format\",\n        \"@com_squareup_javapoet\",\n        \"@javax_inject\",\n    ],\n)\n\njava_plugin(\n    name = \"AutoFactoryProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.factory.processor.AutoFactoryProcessor\",\n    generates_api = 1,\n    tags = [\"annotation=com.google.auto.factory.AutoFactory;genclass=${package}.${outerclasses}@{className|${classname}Factory}\"],\n    deps = [\":processor\"],\n)\n\njava_library(\n    name = \"com_google_auto_factory\",\n    exported_plugins = [\":AutoFactoryProcessor\"],\n    exports = [\n        \":jar\",\n        \"@com_google_code_findbugs_jsr305\",\n        \"@javax_annotation_jsr250_api\",\n        \"@javax_inject\",\n    ],\n)",
+  name = "com_google_auto_factory",
+  generator_name = "com_google_auto_factory",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/auto/factory/auto-factory/1.0-beta5/auto-factory-1.0-beta5.jar", "https://repo1.maven.org/maven2/com/google/auto/factory/auto-factory/1.0-beta5/auto-factory-1.0-beta5.jar"],
+  artifact_sha256 = "e6bed6aaa879f568449d735561a6a26a5a06f7662ed96ca88d27d2200a8dc6cf",
+  generated_rule_name = "jar",
+  extra_build_file_content = "java_library(\n    name = \"processor\",\n    exports = [\":jar\"],\n    runtime_deps = [\n        \"@com_google_auto_common\",\n        \"@com_google_auto_value\",\n        \"@com_google_guava\",\n        \"@com_google_java_format\",\n        \"@com_squareup_javapoet\",\n        \"@javax_inject\",\n    ],\n)\n\njava_plugin(\n    name = \"AutoFactoryProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.factory.processor.AutoFactoryProcessor\",\n    generates_api = 1,\n    tags = [\"annotation=com.google.auto.factory.AutoFactory;genclass=${package}.${outerclasses}@{className|${classname}Factory}\"],\n    deps = [\":processor\"],\n)\n\njava_library(\n    name = \"com_google_auto_factory\",\n    exported_plugins = [\":AutoFactoryProcessor\"],\n    exports = [\n        \":jar\",\n        \"@com_google_code_findbugs_jsr305\",\n        \"@javax_annotation_jsr250_api\",\n        \"@javax_inject\",\n    ],\n)",
 )
 # Rule com_google_auto_factory instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1363,16 +1360,16 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_auto_value",
-    generator_name = "com_google_auto_value",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/auto/value/auto-value/1.6/auto-value-1.6.jar", "https://repo1.maven.org/maven2/com/google/auto/value/auto-value/1.6/auto-value-1.6.jar"],
-    artifact_sha256 = "fd811b92bb59ae8a4cf7eb9dedd208300f4ea2b6275d726e4df52d8334aaae9d",
-    exports = ["@com_google_auto_value_annotations"],
-    generated_rule_name = "processor",
-    extra_build_file_content = "java_plugin(\n    name = \"AutoAnnotationProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.value.processor.AutoAnnotationProcessor\",\n    tags = [\"annotation=com.google.auto.value.AutoAnnotation;genclass=${package}.AutoAnnotation_${outerclasses}${classname}_${methodname}\"],\n    deps = [\":processor\"],\n)\n\njava_plugin(\n    name = \"AutoOneOfProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.value.processor.AutoOneOfProcessor\",\n    tags = [\"annotation=com.google.auto.value.AutoValue;genclass=${package}.AutoOneOf_${outerclasses}${classname}\"],\n    deps = [\":processor\"],\n)\n\njava_plugin(\n    name = \"AutoValueProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.value.processor.AutoValueProcessor\",\n    tags = [\"annotation=com.google.auto.value.AutoValue;genclass=${package}.AutoValue_${outerclasses}${classname}\"],\n    deps = [\":processor\"],\n)\n\njava_library(\n    name = \"com_google_auto_value\",\n    exported_plugins = [\n        \":AutoAnnotationProcessor\",\n        \":AutoOneOfProcessor\",\n        \":AutoValueProcessor\",\n    ],\n    exports = [\"@com_google_auto_value_annotations\"],\n)",
+  name = "com_google_auto_value",
+  generator_name = "com_google_auto_value",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/auto/value/auto-value/1.6/auto-value-1.6.jar", "https://repo1.maven.org/maven2/com/google/auto/value/auto-value/1.6/auto-value-1.6.jar"],
+  artifact_sha256 = "fd811b92bb59ae8a4cf7eb9dedd208300f4ea2b6275d726e4df52d8334aaae9d",
+  exports = ["@com_google_auto_value_annotations"],
+  generated_rule_name = "processor",
+  extra_build_file_content = "java_plugin(\n    name = \"AutoAnnotationProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.value.processor.AutoAnnotationProcessor\",\n    tags = [\"annotation=com.google.auto.value.AutoAnnotation;genclass=${package}.AutoAnnotation_${outerclasses}${classname}_${methodname}\"],\n    deps = [\":processor\"],\n)\n\njava_plugin(\n    name = \"AutoOneOfProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.value.processor.AutoOneOfProcessor\",\n    tags = [\"annotation=com.google.auto.value.AutoValue;genclass=${package}.AutoOneOf_${outerclasses}${classname}\"],\n    deps = [\":processor\"],\n)\n\njava_plugin(\n    name = \"AutoValueProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.value.processor.AutoValueProcessor\",\n    tags = [\"annotation=com.google.auto.value.AutoValue;genclass=${package}.AutoValue_${outerclasses}${classname}\"],\n    deps = [\":processor\"],\n)\n\njava_library(\n    name = \"com_google_auto_value\",\n    exported_plugins = [\n        \":AutoAnnotationProcessor\",\n        \":AutoOneOfProcessor\",\n        \":AutoValueProcessor\",\n    ],\n    exports = [\"@com_google_auto_value_annotations\"],\n)",
 )
 # Rule com_google_auto_value instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1384,15 +1381,15 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_auto_value_annotations",
-    generator_name = "com_google_auto_value_annotations",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6/auto-value-annotations-1.6.jar", "https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6/auto-value-annotations-1.6.jar"],
-    artifact_sha256 = "d095936c432f2afc671beaab67433e7cef50bba4a861b77b9c46561b801fae69",
-    neverlink = True,
-    default_visibility = ["@com_google_auto_value//:__pkg__"],
+  name = "com_google_auto_value_annotations",
+  generator_name = "com_google_auto_value_annotations",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6/auto-value-annotations-1.6.jar", "https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6/auto-value-annotations-1.6.jar"],
+  artifact_sha256 = "d095936c432f2afc671beaab67433e7cef50bba4a861b77b9c46561b801fae69",
+  neverlink = True,
+  default_visibility = ["@com_google_auto_value//:__pkg__"],
 )
 # Rule com_google_auto_value_annotations instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1404,10 +1401,10 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_auto_value_auto_value_annotations",
-    generator_name = "com_google_auto_value_auto_value_annotations",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_auto_value_auto_value_annotations",
+  generator_name = "com_google_auto_value_auto_value_annotations",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_auto_value_auto_value_annotations instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -1417,15 +1414,15 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_closure_stylesheets",
-    generator_name = "com_google_closure_stylesheets",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/closure-stylesheets/closure-stylesheets/1.5.0/closure-stylesheets-1.5.0.jar", "https://repo1.maven.org/maven2/com/google/closure-stylesheets/closure-stylesheets/1.5.0/closure-stylesheets-1.5.0.jar"],
-    artifact_sha256 = "fef768d4f7cead3c0c0783891118e7d3d6ecf17a3093557891f583d842362e2b",
-    deps = ["@args4j", "@com_google_javascript_closure_compiler", "@com_google_code_gson", "@com_google_guava", "@com_google_code_findbugs_jsr305"],
-    extra_build_file_content = "java_binary(\n    name = \"ClosureCommandLineCompiler\",\n    main_class = \"com.google.common.css.compiler.commandline.ClosureCommandLineCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_closure_stylesheets\"],\n)",
+  name = "com_google_closure_stylesheets",
+  generator_name = "com_google_closure_stylesheets",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/closure-stylesheets/closure-stylesheets/1.5.0/closure-stylesheets-1.5.0.jar", "https://repo1.maven.org/maven2/com/google/closure-stylesheets/closure-stylesheets/1.5.0/closure-stylesheets-1.5.0.jar"],
+  artifact_sha256 = "fef768d4f7cead3c0c0783891118e7d3d6ecf17a3093557891f583d842362e2b",
+  deps = ["@args4j", "@com_google_javascript_closure_compiler", "@com_google_code_gson", "@com_google_guava", "@com_google_code_findbugs_jsr305"],
+  extra_build_file_content = "java_binary(\n    name = \"ClosureCommandLineCompiler\",\n    main_class = \"com.google.common.css.compiler.commandline.ClosureCommandLineCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_closure_stylesheets\"],\n)",
 )
 # Rule com_google_closure_stylesheets instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1437,13 +1434,13 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "com_google_cloud_go",
-    generator_name = "com_google_cloud_go",
-    generator_function = "go_deps",
-    importpath = "cloud.google.com/go",
-    version = "v0.26.0",
-    sum = "h1:e0WKqKTd5BnrG8aKH3J3h+QvEIQtSUcf2n5UZ5ZgLtQ=",
-    build_file_proto_mode = "disable_global",
+  name = "com_google_cloud_go",
+  generator_name = "com_google_cloud_go",
+  generator_function = "go_deps",
+  importpath = "cloud.google.com/go",
+  version = "v0.26.0",
+  sum = "h1:e0WKqKTd5BnrG8aKH3J3h+QvEIQtSUcf2n5UZ5ZgLtQ=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule com_google_cloud_go instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -1453,13 +1450,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_code_findbugs_jsr305",
-    generator_name = "com_google_code_findbugs_jsr305",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/code/findbugs/jsr305/2.0.3/jsr305-2.0.3.jar", "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/2.0.3/jsr305-2.0.3.jar", "http://maven.ibiblio.org/maven2/com/google/code/findbugs/jsr305/2.0.3/jsr305-2.0.3.jar"],
-    artifact_sha256 = "bec0b24dcb23f9670172724826584802b80ae6cbdaba03bdebdef9327b962f6a",
+  name = "com_google_code_findbugs_jsr305",
+  generator_name = "com_google_code_findbugs_jsr305",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/code/findbugs/jsr305/2.0.3/jsr305-2.0.3.jar", "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/2.0.3/jsr305-2.0.3.jar", "http://maven.ibiblio.org/maven2/com/google/code/findbugs/jsr305/2.0.3/jsr305-2.0.3.jar"],
+  artifact_sha256 = "bec0b24dcb23f9670172724826584802b80ae6cbdaba03bdebdef9327b962f6a",
 )
 # Rule com_google_code_findbugs_jsr305 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1471,12 +1468,12 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_code_findbugs_jsr305_3_0_2",
-    generator_name = "com_google_code_findbugs_jsr305_3_0_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
-    urls = ["https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_code_findbugs_jsr305_3_0_2",
+  generator_name = "com_google_code_findbugs_jsr305_3_0_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
+  urls = ["https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_code_findbugs_jsr305_3_0_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1486,12 +1483,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_code_findbugs_jsr305_jar_sources_3_0_2",
-    generator_name = "com_google_code_findbugs_jsr305_jar_sources_3_0_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "1c9e85e272d0708c6a591dc74828c71603053b48cc75ae83cce56912a2aa063b",
-    urls = ["https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_code_findbugs_jsr305_jar_sources_3_0_2",
+  generator_name = "com_google_code_findbugs_jsr305_jar_sources_3_0_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "1c9e85e272d0708c6a591dc74828c71603053b48cc75ae83cce56912a2aa063b",
+  urls = ["https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_code_findbugs_jsr305_jar_sources_3_0_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1501,14 +1498,14 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_code_gson",
-    generator_name = "com_google_code_gson",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/code/gson/gson/2.7/gson-2.7.jar", "https://repo1.maven.org/maven2/com/google/code/gson/gson/2.7/gson-2.7.jar", "http://maven.ibiblio.org/maven2/com/google/code/gson/gson/2.7/gson-2.7.jar"],
-    artifact_sha256 = "2d43eb5ea9e133d2ee2405cc14f5ee08951b8361302fdd93494a3a997b508d32",
-    deps = ["@com_google_code_findbugs_jsr305"],
+  name = "com_google_code_gson",
+  generator_name = "com_google_code_gson",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/code/gson/gson/2.7/gson-2.7.jar", "https://repo1.maven.org/maven2/com/google/code/gson/gson/2.7/gson-2.7.jar", "http://maven.ibiblio.org/maven2/com/google/code/gson/gson/2.7/gson-2.7.jar"],
+  artifact_sha256 = "2d43eb5ea9e133d2ee2405cc14f5ee08951b8361302fdd93494a3a997b508d32",
+  deps = ["@com_google_code_findbugs_jsr305"],
 )
 # Rule com_google_code_gson instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1520,10 +1517,10 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_code_gson_gson",
-    generator_name = "com_google_code_gson_gson",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_code_gson_gson",
+  generator_name = "com_google_code_gson_gson",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_code_gson_gson instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -1533,12 +1530,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_google_code_gson_gson_2_8_6",
-    generator_name = "com_google_code_gson_gson_2_8_6",
-    generator_function = "pinned_maven_install",
-    sha256 = "c8fb4839054d280b3033f800d1f5a97de2f028eb8ba2eb458ad287e536f3f25f",
-    urls = ["https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_google_code_gson_gson_2_8_6",
+  generator_name = "com_google_code_gson_gson_2_8_6",
+  generator_function = "pinned_maven_install",
+  sha256 = "c8fb4839054d280b3033f800d1f5a97de2f028eb8ba2eb458ad287e536f3f25f",
+  urls = ["https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_google_code_gson_gson_2_8_6 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -1548,12 +1545,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_code_gson_gson_2_8_9",
-    generator_name = "com_google_code_gson_gson_2_8_9",
-    generator_function = "pinned_maven_install",
-    sha256 = "d3999291855de495c94c743761b8ab5176cfeabe281a5ab0d8e8d45326fd703e",
-    urls = ["https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.9/gson-2.8.9.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_code_gson_gson_2_8_9",
+  generator_name = "com_google_code_gson_gson_2_8_9",
+  generator_function = "pinned_maven_install",
+  sha256 = "d3999291855de495c94c743761b8ab5176cfeabe281a5ab0d8e8d45326fd703e",
+  urls = ["https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.9/gson-2.8.9.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_code_gson_gson_2_8_9 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1563,12 +1560,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_google_code_gson_gson_jar_sources_2_8_6",
-    generator_name = "com_google_code_gson_gson_jar_sources_2_8_6",
-    generator_function = "pinned_maven_install",
-    sha256 = "da4d787939dc8de214724a20d88614b70ef8c3a4931d9c694300b5d9098ed9bc",
-    urls = ["https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.6/gson-2.8.6-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_google_code_gson_gson_jar_sources_2_8_6",
+  generator_name = "com_google_code_gson_gson_jar_sources_2_8_6",
+  generator_function = "pinned_maven_install",
+  sha256 = "da4d787939dc8de214724a20d88614b70ef8c3a4931d9c694300b5d9098ed9bc",
+  urls = ["https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.6/gson-2.8.6-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_google_code_gson_gson_jar_sources_2_8_6 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -1578,12 +1575,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_code_gson_gson_jar_sources_2_8_9",
-    generator_name = "com_google_code_gson_gson_jar_sources_2_8_9",
-    generator_function = "pinned_maven_install",
-    sha256 = "ba5bddb1a89eb721fcca39f3b34294532060f851e2407a82d82134a41eec4719",
-    urls = ["https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.9/gson-2.8.9-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_code_gson_gson_jar_sources_2_8_9",
+  generator_name = "com_google_code_gson_gson_jar_sources_2_8_9",
+  generator_function = "pinned_maven_install",
+  sha256 = "ba5bddb1a89eb721fcca39f3b34294532060f851e2407a82d82134a41eec4719",
+  urls = ["https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.9/gson-2.8.9-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_code_gson_gson_jar_sources_2_8_9 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1593,14 +1590,14 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_common_html_types",
-    generator_name = "com_google_common_html_types",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/common/html/types/types/1.0.7/types-1.0.7.jar", "https://repo1.maven.org/maven2/com/google/common/html/types/types/1.0.7/types-1.0.7.jar"],
-    artifact_sha256 = "78b6baa2ecc56435dc0ae88c57f442bd2d07127cb50424d400441ddccc45ea24",
-    deps = ["@com_google_code_findbugs_jsr305", "@com_google_errorprone_error_prone_annotations", "@com_google_guava", "@com_google_jsinterop_annotations", "@com_google_protobuf//:protobuf_java", "@javax_annotation_jsr250_api"],
+  name = "com_google_common_html_types",
+  generator_name = "com_google_common_html_types",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/common/html/types/types/1.0.7/types-1.0.7.jar", "https://repo1.maven.org/maven2/com/google/common/html/types/types/1.0.7/types-1.0.7.jar"],
+  artifact_sha256 = "78b6baa2ecc56435dc0ae88c57f442bd2d07127cb50424d400441ddccc45ea24",
+  deps = ["@com_google_code_findbugs_jsr305", "@com_google_errorprone_error_prone_annotations", "@com_google_guava", "@com_google_jsinterop_annotations", "@com_google_protobuf//:protobuf_java", "@javax_annotation_jsr250_api"],
 )
 # Rule com_google_common_html_types instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1612,11 +1609,11 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_file(
-    name = "com_google_common_html_types_html_proto",
-    generator_name = "com_google_common_html_types_html_proto",
-    generator_function = "rules_closure_dependencies",
-    sha256 = "6ece202f11574e37d0c31d9cf2e9e11a0dbc9218766d50d211059ebd495b49c3",
-    urls = ["https://mirror.bazel.build/raw.githubusercontent.com/google/safe-html-types/release-1.0.5/proto/src/main/protobuf/webutil/html/types/proto/html.proto", "https://raw.githubusercontent.com/google/safe-html-types/release-1.0.5/proto/src/main/protobuf/webutil/html/types/proto/html.proto"],
+  name = "com_google_common_html_types_html_proto",
+  generator_name = "com_google_common_html_types_html_proto",
+  generator_function = "rules_closure_dependencies",
+  sha256 = "6ece202f11574e37d0c31d9cf2e9e11a0dbc9218766d50d211059ebd495b49c3",
+  urls = ["https://mirror.bazel.build/raw.githubusercontent.com/google/safe-html-types/release-1.0.5/proto/src/main/protobuf/webutil/html/types/proto/html.proto", "https://raw.githubusercontent.com/google/safe-html-types/release-1.0.5/proto/src/main/protobuf/webutil/html/types/proto/html.proto"],
 )
 # Rule com_google_common_html_types_html_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1627,16 +1624,16 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_dagger",
-    generator_name = "com_google_dagger",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/dagger/dagger/2.14.1/dagger-2.14.1.jar", "https://repo1.maven.org/maven2/com/google/dagger/dagger/2.14.1/dagger-2.14.1.jar"],
-    artifact_sha256 = "374cfee26c9c93f44caa1946583c9edc135bb9a42838476522551ec46aa55c7c",
-    deps = ["@javax_inject"],
-    generated_rule_name = "runtime",
-    extra_build_file_content = "java_library(\n    name = \"com_google_dagger\",\n    exported_plugins = [\"@com_google_dagger_compiler//:ComponentProcessor\"],\n    exports = [\n        \":runtime\",\n        \"@javax_inject\",\n    ],\n)",
+  name = "com_google_dagger",
+  generator_name = "com_google_dagger",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/dagger/dagger/2.14.1/dagger-2.14.1.jar", "https://repo1.maven.org/maven2/com/google/dagger/dagger/2.14.1/dagger-2.14.1.jar"],
+  artifact_sha256 = "374cfee26c9c93f44caa1946583c9edc135bb9a42838476522551ec46aa55c7c",
+  deps = ["@javax_inject"],
+  generated_rule_name = "runtime",
+  extra_build_file_content = "java_library(\n    name = \"com_google_dagger\",\n    exported_plugins = [\"@com_google_dagger_compiler//:ComponentProcessor\"],\n    exports = [\n        \":runtime\",\n        \"@javax_inject\",\n    ],\n)",
 )
 # Rule com_google_dagger instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1648,15 +1645,15 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_dagger_compiler",
-    generator_name = "com_google_dagger_compiler",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/dagger/dagger-compiler/2.14.1/dagger-compiler-2.14.1.jar", "https://repo1.maven.org/maven2/com/google/dagger/dagger-compiler/2.14.1/dagger-compiler-2.14.1.jar"],
-    artifact_sha256 = "ff16d55273e375349537fc82292b00de04d8a2caca2d4aa6c642692b1a68194d",
-    deps = ["@com_google_code_findbugs_jsr305", "@com_google_dagger//:runtime", "@com_google_dagger_producers//:runtime", "@com_google_dagger_spi", "@com_google_guava", "@com_google_java_format", "@com_squareup_javapoet"],
-    extra_build_file_content = "java_plugin(\n    name = \"ComponentProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"dagger.internal.codegen.ComponentProcessor\",\n    generates_api = 1,\n    tags = [\n        \"annotation=dagger.Component;genclass=${package}.Dagger${outerclasses}${classname}\",\n        \"annotation=dagger.producers.ProductionComponent;genclass=${package}.Dagger${outerclasses}${classname}\",\n    ],\n    deps = [\":com_google_dagger_compiler\"],\n)",
+  name = "com_google_dagger_compiler",
+  generator_name = "com_google_dagger_compiler",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/dagger/dagger-compiler/2.14.1/dagger-compiler-2.14.1.jar", "https://repo1.maven.org/maven2/com/google/dagger/dagger-compiler/2.14.1/dagger-compiler-2.14.1.jar"],
+  artifact_sha256 = "ff16d55273e375349537fc82292b00de04d8a2caca2d4aa6c642692b1a68194d",
+  deps = ["@com_google_code_findbugs_jsr305", "@com_google_dagger//:runtime", "@com_google_dagger_producers//:runtime", "@com_google_dagger_spi", "@com_google_guava", "@com_google_java_format", "@com_squareup_javapoet"],
+  extra_build_file_content = "java_plugin(\n    name = \"ComponentProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"dagger.internal.codegen.ComponentProcessor\",\n    generates_api = 1,\n    tags = [\n        \"annotation=dagger.Component;genclass=${package}.Dagger${outerclasses}${classname}\",\n        \"annotation=dagger.producers.ProductionComponent;genclass=${package}.Dagger${outerclasses}${classname}\",\n    ],\n    deps = [\":com_google_dagger_compiler\"],\n)",
 )
 # Rule com_google_dagger_compiler instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1668,16 +1665,16 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_dagger_producers",
-    generator_name = "com_google_dagger_producers",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/dagger/dagger-producers/2.14.1/dagger-producers-2.14.1.jar", "https://repo1.maven.org/maven2/com/google/dagger/dagger-producers/2.14.1/dagger-producers-2.14.1.jar"],
-    artifact_sha256 = "96f950bc4b94d013b0c538632a4bc630f33eda8b01f63ae752b76c5e48783859",
-    deps = ["@com_google_dagger//:runtime", "@com_google_guava"],
-    generated_rule_name = "runtime",
-    extra_build_file_content = "java_library(\n    name = \"com_google_dagger_producers\",\n    exported_plugins = [\"@com_google_dagger_compiler//:ComponentProcessor\"],\n    exports = [\n        \":runtime\",\n        \"@com_google_dagger//:runtime\",\n        \"@javax_inject\",\n    ],\n)",
+  name = "com_google_dagger_producers",
+  generator_name = "com_google_dagger_producers",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/dagger/dagger-producers/2.14.1/dagger-producers-2.14.1.jar", "https://repo1.maven.org/maven2/com/google/dagger/dagger-producers/2.14.1/dagger-producers-2.14.1.jar"],
+  artifact_sha256 = "96f950bc4b94d013b0c538632a4bc630f33eda8b01f63ae752b76c5e48783859",
+  deps = ["@com_google_dagger//:runtime", "@com_google_guava"],
+  generated_rule_name = "runtime",
+  extra_build_file_content = "java_library(\n    name = \"com_google_dagger_producers\",\n    exported_plugins = [\"@com_google_dagger_compiler//:ComponentProcessor\"],\n    exports = [\n        \":runtime\",\n        \"@com_google_dagger//:runtime\",\n        \"@javax_inject\",\n    ],\n)",
 )
 # Rule com_google_dagger_producers instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1689,13 +1686,13 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_dagger_spi",
-    generator_name = "com_google_dagger_spi",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/dagger/dagger-spi/2.14.1/dagger-spi-2.14.1.jar", "https://repo1.maven.org/maven2/com/google/dagger/dagger-spi/2.14.1/dagger-spi-2.14.1.jar"],
-    artifact_sha256 = "6a20d6c6620fefe50747e9e910e0d0c178cf39d76b67ccffb505ac9a167302cb",
+  name = "com_google_dagger_spi",
+  generator_name = "com_google_dagger_spi",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/dagger/dagger-spi/2.14.1/dagger-spi-2.14.1.jar", "https://repo1.maven.org/maven2/com/google/dagger/dagger-spi/2.14.1/dagger-spi-2.14.1.jar"],
+  artifact_sha256 = "6a20d6c6620fefe50747e9e910e0d0c178cf39d76b67ccffb505ac9a167302cb",
 )
 # Rule com_google_dagger_spi instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1707,13 +1704,13 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_errorprone_error_prone_annotations",
-    generator_name = "com_google_errorprone_error_prone_annotations",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.1.3/error_prone_annotations-2.1.3.jar", "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.1.3/error_prone_annotations-2.1.3.jar"],
-    artifact_sha256 = "03d0329547c13da9e17c634d1049ea2ead093925e290567e1a364fd6b1fc7ff8",
+  name = "com_google_errorprone_error_prone_annotations",
+  generator_name = "com_google_errorprone_error_prone_annotations",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.1.3/error_prone_annotations-2.1.3.jar", "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.1.3/error_prone_annotations-2.1.3.jar"],
+  artifact_sha256 = "03d0329547c13da9e17c634d1049ea2ead093925e290567e1a364fd6b1fc7ff8",
 )
 # Rule com_google_errorprone_error_prone_annotations instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1725,12 +1722,12 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_google_errorprone_error_prone_annotations_2_4_0",
-    generator_name = "com_google_errorprone_error_prone_annotations_2_4_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "5f2a0648230a662e8be049df308d583d7369f13af683e44ddf5829b6d741a228",
-    urls = ["https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.4.0/error_prone_annotations-2.4.0.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_google_errorprone_error_prone_annotations_2_4_0",
+  generator_name = "com_google_errorprone_error_prone_annotations_2_4_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "5f2a0648230a662e8be049df308d583d7369f13af683e44ddf5829b6d741a228",
+  urls = ["https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.4.0/error_prone_annotations-2.4.0.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_google_errorprone_error_prone_annotations_2_4_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -1740,12 +1737,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_errorprone_error_prone_annotations_2_9_0",
-    generator_name = "com_google_errorprone_error_prone_annotations_2_9_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "f947bdc33ae27a6b4aa44799e6c21e1944797bd0010ba43eb82d11446e163694",
-    urls = ["https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.9.0/error_prone_annotations-2.9.0.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_errorprone_error_prone_annotations_2_9_0",
+  generator_name = "com_google_errorprone_error_prone_annotations_2_9_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "f947bdc33ae27a6b4aa44799e6c21e1944797bd0010ba43eb82d11446e163694",
+  urls = ["https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.9.0/error_prone_annotations-2.9.0.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_errorprone_error_prone_annotations_2_9_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1755,12 +1752,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_google_errorprone_error_prone_annotations_jar_sources_2_4_0",
-    generator_name = "com_google_errorprone_error_prone_annotations_jar_sources_2_4_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "d74a623bd5c8861621c267187c5a4a4f891b4989de91cda6577e243ee2716da5",
-    urls = ["https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.4.0/error_prone_annotations-2.4.0-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_google_errorprone_error_prone_annotations_jar_sources_2_4_0",
+  generator_name = "com_google_errorprone_error_prone_annotations_jar_sources_2_4_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "d74a623bd5c8861621c267187c5a4a4f891b4989de91cda6577e243ee2716da5",
+  urls = ["https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.4.0/error_prone_annotations-2.4.0-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_google_errorprone_error_prone_annotations_jar_sources_2_4_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -1770,12 +1767,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_errorprone_error_prone_annotations_jar_sources_2_9_0",
-    generator_name = "com_google_errorprone_error_prone_annotations_jar_sources_2_9_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "0e41e099f0d4c9be030c34a6991821e67a57e2846dba908f4e9bc9ec60732837",
-    urls = ["https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.9.0/error_prone_annotations-2.9.0-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_errorprone_error_prone_annotations_jar_sources_2_9_0",
+  generator_name = "com_google_errorprone_error_prone_annotations_jar_sources_2_9_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "0e41e099f0d4c9be030c34a6991821e67a57e2846dba908f4e9bc9ec60732837",
+  urls = ["https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.9.0/error_prone_annotations-2.9.0-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_errorprone_error_prone_annotations_jar_sources_2_9_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1785,13 +1782,13 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_errorprone_javac_shaded",
-    generator_name = "com_google_errorprone_javac_shaded",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["restricted"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/errorprone/javac-shaded/9-dev-r4023-3/javac-shaded-9-dev-r4023-3.jar", "https://repo1.maven.org/maven2/com/google/errorprone/javac-shaded/9-dev-r4023-3/javac-shaded-9-dev-r4023-3.jar"],
-    artifact_sha256 = "65bfccf60986c47fbc17c9ebab0be626afc41741e0a6ec7109e0768817a36f30",
+  name = "com_google_errorprone_javac_shaded",
+  generator_name = "com_google_errorprone_javac_shaded",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["restricted"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/errorprone/javac-shaded/9-dev-r4023-3/javac-shaded-9-dev-r4023-3.jar", "https://repo1.maven.org/maven2/com/google/errorprone/javac-shaded/9-dev-r4023-3/javac-shaded-9-dev-r4023-3.jar"],
+  artifact_sha256 = "65bfccf60986c47fbc17c9ebab0be626afc41741e0a6ec7109e0768817a36f30",
 )
 # Rule com_google_errorprone_javac_shaded instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1803,59 +1800,59 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "com_google_googleapis",
-    generator_name = "com_google_googleapis",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/googleapis/googleapis/archive/2f9af297c84c55c8b871ba4495e01ade42476c92.tar.gz", "https://github.com/googleapis/googleapis/archive/2f9af297c84c55c8b871ba4495e01ade42476c92.tar.gz"],
-    sha256 = "5bb6b0253ccf64b53d6c7249625a7e3f6c3bc6402abd52d3778bfa48258703a0",
-    strip_prefix = "googleapis-2f9af297c84c55c8b871ba4495e01ade42476c92",
+  name = "com_google_googleapis",
+  generator_name = "com_google_googleapis",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/googleapis/googleapis/archive/2f9af297c84c55c8b871ba4495e01ade42476c92.tar.gz", "https://github.com/googleapis/googleapis/archive/2f9af297c84c55c8b871ba4495e01ade42476c92.tar.gz"],
+  sha256 = "5bb6b0253ccf64b53d6c7249625a7e3f6c3bc6402abd52d3778bfa48258703a0",
+  strip_prefix = "googleapis-2f9af297c84c55c8b871ba4495e01ade42476c92",
 )
 # Rule com_google_googleapis instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:404:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:405:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:103:16
 switched_rules(
-    name = "com_google_googleapis_imports",
-    generator_name = "com_google_googleapis_imports",
-    generator_function = "grpc_extra_deps",
-    rules = {"proto_library_with_info": ["", ""], "moved_proto_library": ["", ""], "java_proto_library": ["", ""], "java_grpc_library": ["", ""], "java_gapic_library": ["", ""], "java_gapic_test": ["", ""], "java_gapic_assembly_gradle_pkg": ["", ""], "py_proto_library": ["@com_github_grpc_grpc//bazel:python_rules.bzl", ""], "py_grpc_library": ["@com_github_grpc_grpc//bazel:python_rules.bzl", ""], "py_gapic_library": ["", ""], "py_gapic_assembly_pkg": ["", ""], "go_proto_library": ["", ""], "go_library": ["", ""], "go_test": ["", ""], "go_gapic_library": ["", ""], "go_gapic_assembly_pkg": ["", ""], "cc_proto_library": ["native.cc_proto_library", ""], "cc_grpc_library": ["@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", ""], "cc_gapic_library": ["", ""], "php_proto_library": ["", "php_proto_library"], "php_grpc_library": ["", "php_grpc_library"], "php_gapic_library": ["", "php_gapic_library"], "php_gapic_assembly_pkg": ["", "php_gapic_assembly_pkg"], "nodejs_gapic_library": ["", "typescript_gapic_library"], "nodejs_gapic_assembly_pkg": ["", "typescript_gapic_assembly_pkg"], "ruby_proto_library": ["", ""], "ruby_grpc_library": ["", ""], "ruby_ads_gapic_library": ["", ""], "ruby_cloud_gapic_library": ["", ""], "ruby_gapic_assembly_pkg": ["", ""], "csharp_proto_library": ["", ""], "csharp_grpc_library": ["", ""], "csharp_gapic_library": ["", ""], "csharp_gapic_assembly_pkg": ["", ""]},
+  name = "com_google_googleapis_imports",
+  generator_name = "com_google_googleapis_imports",
+  generator_function = "grpc_extra_deps",
+  rules = {"proto_library_with_info": ["", ""], "moved_proto_library": ["", ""], "java_proto_library": ["", ""], "java_grpc_library": ["", ""], "java_gapic_library": ["", ""], "java_gapic_test": ["", ""], "java_gapic_assembly_gradle_pkg": ["", ""], "py_proto_library": ["@com_github_grpc_grpc//bazel:python_rules.bzl", ""], "py_grpc_library": ["@com_github_grpc_grpc//bazel:python_rules.bzl", ""], "py_gapic_library": ["", ""], "py_gapic_assembly_pkg": ["", ""], "go_proto_library": ["", ""], "go_library": ["", ""], "go_test": ["", ""], "go_gapic_library": ["", ""], "go_gapic_assembly_pkg": ["", ""], "cc_proto_library": ["native.cc_proto_library", ""], "cc_grpc_library": ["@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", ""], "cc_gapic_library": ["", ""], "php_proto_library": ["", "php_proto_library"], "php_grpc_library": ["", "php_grpc_library"], "php_gapic_library": ["", "php_gapic_library"], "php_gapic_assembly_pkg": ["", "php_gapic_assembly_pkg"], "nodejs_gapic_library": ["", "typescript_gapic_library"], "nodejs_gapic_assembly_pkg": ["", "typescript_gapic_assembly_pkg"], "ruby_proto_library": ["", ""], "ruby_grpc_library": ["", ""], "ruby_ads_gapic_library": ["", ""], "ruby_cloud_gapic_library": ["", ""], "ruby_gapic_assembly_pkg": ["", ""], "csharp_proto_library": ["", ""], "csharp_grpc_library": ["", ""], "csharp_gapic_library": ["", ""], "csharp_gapic_assembly_pkg": ["", ""]},
 )
 # Rule com_google_googleapis_imports instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:57:31 in grpc_extra_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:61:31 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/com_google_googleapis/repository_rules.bzl:291:19    in switched_rules_by_language
 # Rule switched_rules defined at (most recent call last):
 #   {OUTPUT_BASE}/external/com_google_googleapis/repository_rules.bzl:45:33 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "com_google_googletest",
-    generator_name = "com_google_googletest",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/google/googletest/archive/c9ccac7cb7345901884aabf5d1a786cfa6e2f397.tar.gz", "https://github.com/google/googletest/archive/c9ccac7cb7345901884aabf5d1a786cfa6e2f397.tar.gz"],
-    sha256 = "443d383db648ebb8e391382c0ab63263b7091d03197f304390baac10f178a468",
-    strip_prefix = "googletest-c9ccac7cb7345901884aabf5d1a786cfa6e2f397",
+  name = "com_google_googletest",
+  generator_name = "com_google_googletest",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/google/googletest/archive/c9ccac7cb7345901884aabf5d1a786cfa6e2f397.tar.gz", "https://github.com/google/googletest/archive/c9ccac7cb7345901884aabf5d1a786cfa6e2f397.tar.gz"],
+  sha256 = "443d383db648ebb8e391382c0ab63263b7091d03197f304390baac10f178a468",
+  strip_prefix = "googletest-c9ccac7cb7345901884aabf5d1a786cfa6e2f397",
 )
 # Rule com_google_googletest instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:226:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:227:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_guava",
-    generator_name = "com_google_guava",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar", "https://repo1.maven.org/maven2/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar"],
-    artifact_sha256 = "44ce229ce26d880bf3afc362bbfcec34d7e6903d195bbb1db9f3b6e0d9834f06",
-    deps = ["@com_google_guava_failure_access"],
-    exports = ["@com_google_code_findbugs_jsr305", "@com_google_errorprone_error_prone_annotations"],
+  name = "com_google_guava",
+  generator_name = "com_google_guava",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar", "https://repo1.maven.org/maven2/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar"],
+  artifact_sha256 = "44ce229ce26d880bf3afc362bbfcec34d7e6903d195bbb1db9f3b6e0d9834f06",
+  deps = ["@com_google_guava_failure_access"],
+  exports = ["@com_google_code_findbugs_jsr305", "@com_google_errorprone_error_prone_annotations"],
 )
 # Rule com_google_guava instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1867,13 +1864,13 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_guava_failure_access",
-    generator_name = "com_google_guava_failure_access",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar", "https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar"],
-    artifact_sha256 = "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26",
+  name = "com_google_guava_failure_access",
+  generator_name = "com_google_guava_failure_access",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar", "https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar"],
+  artifact_sha256 = "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26",
 )
 # Rule com_google_guava_failure_access instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -1885,10 +1882,10 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_guava_failureaccess",
-    generator_name = "com_google_guava_failureaccess",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_guava_failureaccess",
+  generator_name = "com_google_guava_failureaccess",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_guava_failureaccess instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -1898,12 +1895,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_guava_failureaccess_1_0_1",
-    generator_name = "com_google_guava_failureaccess_1_0_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26",
-    urls = ["https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_guava_failureaccess_1_0_1",
+  generator_name = "com_google_guava_failureaccess_1_0_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26",
+  urls = ["https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_guava_failureaccess_1_0_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1913,12 +1910,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_guava_failureaccess_jar_sources_1_0_1",
-    generator_name = "com_google_guava_failureaccess_jar_sources_1_0_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "092346eebbb1657b51aa7485a246bf602bb464cc0b0e2e1c7e7201fadce1e98f",
-    urls = ["https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_guava_failureaccess_jar_sources_1_0_1",
+  generator_name = "com_google_guava_failureaccess_jar_sources_1_0_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "092346eebbb1657b51aa7485a246bf602bb464cc0b0e2e1c7e7201fadce1e98f",
+  urls = ["https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_guava_failureaccess_jar_sources_1_0_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1928,10 +1925,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_guava_guava",
-    generator_name = "com_google_guava_guava",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_guava_guava",
+  generator_name = "com_google_guava_guava",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_guava_guava instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -1941,12 +1938,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_guava_guava_30_1_1_android",
-    generator_name = "com_google_guava_guava_30_1_1_android",
-    generator_function = "pinned_maven_install",
-    sha256 = "355f79352f8c252f2bdaa06c687c4836a38016caccfc4c28d16ae77ecfdffa2f",
-    urls = ["https://repo1.maven.org/maven2/com/google/guava/guava/30.1.1-android/guava-30.1.1-android.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_guava_guava_30_1_1_android",
+  generator_name = "com_google_guava_guava_30_1_1_android",
+  generator_function = "pinned_maven_install",
+  sha256 = "355f79352f8c252f2bdaa06c687c4836a38016caccfc4c28d16ae77ecfdffa2f",
+  urls = ["https://repo1.maven.org/maven2/com/google/guava/guava/30.1.1-android/guava-30.1.1-android.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_guava_guava_30_1_1_android instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1956,12 +1953,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_google_guava_guava_30_1_android",
-    generator_name = "com_google_guava_guava_30_1_android",
-    generator_function = "pinned_maven_install",
-    sha256 = "ea0b5a62b707482eee5cf305c8f35ef91cf4ceaff504f011a5c49c41355f5781",
-    urls = ["https://repo1.maven.org/maven2/com/google/guava/guava/30.1-android/guava-30.1-android.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_google_guava_guava_30_1_android",
+  generator_name = "com_google_guava_guava_30_1_android",
+  generator_function = "pinned_maven_install",
+  sha256 = "ea0b5a62b707482eee5cf305c8f35ef91cf4ceaff504f011a5c49c41355f5781",
+  urls = ["https://repo1.maven.org/maven2/com/google/guava/guava/30.1-android/guava-30.1-android.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_google_guava_guava_30_1_android instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -1971,12 +1968,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_guava_guava_jar_sources_30_1_1_android",
-    generator_name = "com_google_guava_guava_jar_sources_30_1_1_android",
-    generator_function = "pinned_maven_install",
-    sha256 = "dac52416371d86baea1ffe6ef7b54b2730b52fcea19091ae32942cb5cd9f868c",
-    urls = ["https://repo1.maven.org/maven2/com/google/guava/guava/30.1.1-android/guava-30.1.1-android-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_guava_guava_jar_sources_30_1_1_android",
+  generator_name = "com_google_guava_guava_jar_sources_30_1_1_android",
+  generator_function = "pinned_maven_install",
+  sha256 = "dac52416371d86baea1ffe6ef7b54b2730b52fcea19091ae32942cb5cd9f868c",
+  urls = ["https://repo1.maven.org/maven2/com/google/guava/guava/30.1.1-android/guava-30.1.1-android-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_guava_guava_jar_sources_30_1_1_android instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -1986,12 +1983,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_google_guava_guava_jar_sources_30_1_android",
-    generator_name = "com_google_guava_guava_jar_sources_30_1_android",
-    generator_function = "pinned_maven_install",
-    sha256 = "6b41b4f2dddbef10f3a6952f44e66e9f72549d20ea1e69847c62f25ed9b99134",
-    urls = ["https://repo1.maven.org/maven2/com/google/guava/guava/30.1-android/guava-30.1-android-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_google_guava_guava_jar_sources_30_1_android",
+  generator_name = "com_google_guava_guava_jar_sources_30_1_android",
+  generator_function = "pinned_maven_install",
+  sha256 = "6b41b4f2dddbef10f3a6952f44e66e9f72549d20ea1e69847c62f25ed9b99134",
+  urls = ["https://repo1.maven.org/maven2/com/google/guava/guava/30.1-android/guava-30.1-android-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_google_guava_guava_jar_sources_30_1_android instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2001,10 +1998,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_guava_listenablefuture",
-    generator_name = "com_google_guava_listenablefuture",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_guava_listenablefuture",
+  generator_name = "com_google_guava_listenablefuture",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_guava_listenablefuture instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -2014,12 +2011,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava",
-    generator_name = "com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava",
-    generator_function = "pinned_maven_install",
-    sha256 = "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99",
-    urls = ["https://repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava",
+  generator_name = "com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava",
+  generator_function = "pinned_maven_install",
+  sha256 = "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99",
+  urls = ["https://repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -2029,10 +2026,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_http_client_google_http_client",
-    generator_name = "com_google_http_client_google_http_client",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_http_client_google_http_client",
+  generator_name = "com_google_http_client_google_http_client",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_http_client_google_http_client instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -2042,10 +2039,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_http_client_google_http_client_jackson2",
-    generator_name = "com_google_http_client_google_http_client_jackson2",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_http_client_google_http_client_jackson2",
+  generator_name = "com_google_http_client_google_http_client_jackson2",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_http_client_google_http_client_jackson2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -2055,14 +2052,14 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_inject_extensions_guice_assistedinject",
-    generator_name = "com_google_inject_extensions_guice_assistedinject",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.1.0/guice-assistedinject-4.1.0.jar", "https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.1.0/guice-assistedinject-4.1.0.jar", "http://maven.ibiblio.org/maven2/com/google/inject/extensions/guice-assistedinject/4.1.0/guice-assistedinject-4.1.0.jar"],
-    artifact_sha256 = "663728123fb9a6b79ea39ae289e5d56b4113e1b8e9413eb792f91e53a6dd5868",
-    deps = ["@com_google_guava", "@com_google_inject_guice", "@javax_inject"],
+  name = "com_google_inject_extensions_guice_assistedinject",
+  generator_name = "com_google_inject_extensions_guice_assistedinject",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.1.0/guice-assistedinject-4.1.0.jar", "https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.1.0/guice-assistedinject-4.1.0.jar", "http://maven.ibiblio.org/maven2/com/google/inject/extensions/guice-assistedinject/4.1.0/guice-assistedinject-4.1.0.jar"],
+  artifact_sha256 = "663728123fb9a6b79ea39ae289e5d56b4113e1b8e9413eb792f91e53a6dd5868",
+  deps = ["@com_google_guava", "@com_google_inject_guice", "@javax_inject"],
 )
 # Rule com_google_inject_extensions_guice_assistedinject instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2074,14 +2071,14 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_inject_extensions_guice_multibindings",
-    generator_name = "com_google_inject_extensions_guice_multibindings",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/inject/extensions/guice-multibindings/4.1.0/guice-multibindings-4.1.0.jar", "https://repo1.maven.org/maven2/com/google/inject/extensions/guice-multibindings/4.1.0/guice-multibindings-4.1.0.jar", "http://maven.ibiblio.org/maven2/com/google/inject/extensions/guice-multibindings/4.1.0/guice-multibindings-4.1.0.jar"],
-    artifact_sha256 = "592773a4c745cc87ba37fa0647fed8126c7e474349c603c9f229aa25d3ef5448",
-    deps = ["@com_google_guava", "@com_google_inject_guice", "@javax_inject"],
+  name = "com_google_inject_extensions_guice_multibindings",
+  generator_name = "com_google_inject_extensions_guice_multibindings",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/inject/extensions/guice-multibindings/4.1.0/guice-multibindings-4.1.0.jar", "https://repo1.maven.org/maven2/com/google/inject/extensions/guice-multibindings/4.1.0/guice-multibindings-4.1.0.jar", "http://maven.ibiblio.org/maven2/com/google/inject/extensions/guice-multibindings/4.1.0/guice-multibindings-4.1.0.jar"],
+  artifact_sha256 = "592773a4c745cc87ba37fa0647fed8126c7e474349c603c9f229aa25d3ef5448",
+  deps = ["@com_google_guava", "@com_google_inject_guice", "@javax_inject"],
 )
 # Rule com_google_inject_extensions_guice_multibindings instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2093,14 +2090,14 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_inject_guice",
-    generator_name = "com_google_inject_guice",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/inject/guice/4.1.0/guice-4.1.0.jar", "https://repo1.maven.org/maven2/com/google/inject/guice/4.1.0/guice-4.1.0.jar", "http://maven.ibiblio.org/maven2/com/google/inject/guice/4.1.0/guice-4.1.0.jar"],
-    artifact_sha256 = "9b9df27a5b8c7864112b4137fd92b36c3f1395bfe57be42fedf2f520ead1a93e",
-    deps = ["@aopalliance", "@org_ow2_asm", "@com_google_guava", "@com_google_code_findbugs_jsr305", "@javax_inject"],
+  name = "com_google_inject_guice",
+  generator_name = "com_google_inject_guice",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/inject/guice/4.1.0/guice-4.1.0.jar", "https://repo1.maven.org/maven2/com/google/inject/guice/4.1.0/guice-4.1.0.jar", "http://maven.ibiblio.org/maven2/com/google/inject/guice/4.1.0/guice-4.1.0.jar"],
+  artifact_sha256 = "9b9df27a5b8c7864112b4137fd92b36c3f1395bfe57be42fedf2f520ead1a93e",
+  deps = ["@aopalliance", "@org_ow2_asm", "@com_google_guava", "@com_google_code_findbugs_jsr305", "@javax_inject"],
 )
 # Rule com_google_inject_guice instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2112,10 +2109,10 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_j2objc_j2objc_annotations",
-    generator_name = "com_google_j2objc_j2objc_annotations",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_j2objc_j2objc_annotations",
+  generator_name = "com_google_j2objc_j2objc_annotations",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_j2objc_j2objc_annotations instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -2125,12 +2122,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_j2objc_j2objc_annotations_1_3",
-    generator_name = "com_google_j2objc_j2objc_annotations_1_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "21af30c92267bd6122c0e0b4d20cccb6641a37eaf956c6540ec471d584e64a7b",
-    urls = ["https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_j2objc_j2objc_annotations_1_3",
+  generator_name = "com_google_j2objc_j2objc_annotations_1_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "21af30c92267bd6122c0e0b4d20cccb6641a37eaf956c6540ec471d584e64a7b",
+  urls = ["https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_j2objc_j2objc_annotations_1_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -2140,12 +2137,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_j2objc_j2objc_annotations_jar_sources_1_3",
-    generator_name = "com_google_j2objc_j2objc_annotations_jar_sources_1_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "ba4df669fec153fa4cd0ef8d02c6d3ef0702b7ac4cabe080facf3b6e490bb972",
-    urls = ["https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_j2objc_j2objc_annotations_jar_sources_1_3",
+  generator_name = "com_google_j2objc_j2objc_annotations_jar_sources_1_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "ba4df669fec153fa4cd0ef8d02c6d3ef0702b7ac4cabe080facf3b6e490bb972",
+  urls = ["https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_j2objc_j2objc_annotations_jar_sources_1_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -2155,14 +2152,14 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_java_format",
-    generator_name = "com_google_java_format",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/googlejavaformat/google-java-format/1.5/google-java-format-1.5.jar", "https://repo1.maven.org/maven2/com/google/googlejavaformat/google-java-format/1.5/google-java-format-1.5.jar"],
-    artifact_sha256 = "aa19ad7850fb85178aa22f2fddb163b84d6ce4d0035872f30d4408195ca1144e",
-    deps = ["@com_google_guava", "@com_google_errorprone_javac_shaded"],
+  name = "com_google_java_format",
+  generator_name = "com_google_java_format",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/googlejavaformat/google-java-format/1.5/google-java-format-1.5.jar", "https://repo1.maven.org/maven2/com/google/googlejavaformat/google-java-format/1.5/google-java-format-1.5.jar"],
+  artifact_sha256 = "aa19ad7850fb85178aa22f2fddb163b84d6ce4d0035872f30d4408195ca1144e",
+  deps = ["@com_google_guava", "@com_google_errorprone_javac_shaded"],
 )
 # Rule com_google_java_format instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2174,15 +2171,15 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_javascript_closure_compiler",
-    generator_name = "com_google_javascript_closure_compiler",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["reciprocal"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/javascript/closure-compiler-unshaded/v20200830/closure-compiler-unshaded-v20200830.jar", "https://repo1.maven.org/maven2/com/google/javascript/closure-compiler-unshaded/v20200830/closure-compiler-unshaded-v20200830.jar"],
-    artifact_sha256 = "76e571780ac0db918ed03b5e38ee2f8ee4b02c718c9af6a6ef1b7572bf83f1ce",
-    deps = ["@com_google_code_gson", "@com_google_guava", "@com_google_code_findbugs_jsr305", "@com_google_protobuf//:protobuf_java"],
-    extra_build_file_content = "java_binary(\n    name = \"main\",\n    main_class = \"com.google.javascript.jscomp.CommandLineRunner\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\n        \":com_google_javascript_closure_compiler\",\n        \"@args4j\",\n    ],\n)\n\ngenrule(\n    name = \"externs\",\n    srcs = [\"closure-compiler-unshaded-v20200830.jar\"],\n    outs = [\"externs.zip\"],\n    tools = [\"@bazel_tools//tools/jdk:jar\"],\n    cmd = \"$(location @bazel_tools//tools/jdk:jar) -xf $(location :closure-compiler-unshaded-v20200830.jar) externs.zip; mv externs.zip $@\",\n)\n",
+  name = "com_google_javascript_closure_compiler",
+  generator_name = "com_google_javascript_closure_compiler",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["reciprocal"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/javascript/closure-compiler-unshaded/v20200830/closure-compiler-unshaded-v20200830.jar", "https://repo1.maven.org/maven2/com/google/javascript/closure-compiler-unshaded/v20200830/closure-compiler-unshaded-v20200830.jar"],
+  artifact_sha256 = "76e571780ac0db918ed03b5e38ee2f8ee4b02c718c9af6a6ef1b7572bf83f1ce",
+  deps = ["@com_google_code_gson", "@com_google_guava", "@com_google_code_findbugs_jsr305", "@com_google_protobuf//:protobuf_java"],
+  extra_build_file_content = "java_binary(\n    name = \"main\",\n    main_class = \"com.google.javascript.jscomp.CommandLineRunner\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\n        \":com_google_javascript_closure_compiler\",\n        \"@args4j\",\n    ],\n)\n\ngenrule(\n    name = \"externs\",\n    srcs = [\"closure-compiler-unshaded-v20200830.jar\"],\n    outs = [\"externs.zip\"],\n    tools = [\"@bazel_tools//tools/jdk:jar\"],\n    cmd = \"$(location @bazel_tools//tools/jdk:jar) -xf $(location :closure-compiler-unshaded-v20200830.jar) externs.zip; mv externs.zip $@\",\n)\n",
 )
 # Rule com_google_javascript_closure_compiler instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2194,14 +2191,14 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_archive(
-    name = "com_google_javascript_closure_library",
-    generator_name = "com_google_javascript_closure_library",
-    generator_function = "rules_closure_dependencies",
-    urls = ["https://github.com/google/closure-library/archive/a3a34924b764bc5c6ae6fa05238f4006d9af3528.tar.gz"],
-    sha256 = "074a39bd37539ba9e693e6258b690ad56c48e726cae68600c3ce9bdaedb72fa9",
-    strip_prefix = "closure-library-a3a34924b764bc5c6ae6fa05238f4006d9af3528",
-    patches = ["@io_bazel_rules_closure//third_party/closure:com_google_javascript_closure_library.suppressions.patch"],
-    patch_args = ["-p1"],
+  name = "com_google_javascript_closure_library",
+  generator_name = "com_google_javascript_closure_library",
+  generator_function = "rules_closure_dependencies",
+  urls = ["https://github.com/google/closure-library/archive/a3a34924b764bc5c6ae6fa05238f4006d9af3528.tar.gz"],
+  sha256 = "074a39bd37539ba9e693e6258b690ad56c48e726cae68600c3ce9bdaedb72fa9",
+  strip_prefix = "closure-library-a3a34924b764bc5c6ae6fa05238f4006d9af3528",
+  patches = ["@io_bazel_rules_closure//third_party/closure:com_google_javascript_closure_library.suppressions.patch"],
+  patch_args = ["-p1"],
 )
 # Rule com_google_javascript_closure_library instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2212,13 +2209,13 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_jsinterop_annotations",
-    generator_name = "com_google_jsinterop_annotations",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/maven.ibiblio.org/maven2/com/google/jsinterop/jsinterop-annotations/1.0.1/jsinterop-annotations-1.0.1.jar", "http://maven.ibiblio.org/maven2/com/google/jsinterop/jsinterop-annotations/1.0.1/jsinterop-annotations-1.0.1.jar", "https://repo1.maven.org/maven2/com/google/jsinterop/jsinterop-annotations/1.0.1/jsinterop-annotations-1.0.1.jar"],
-    artifact_sha256 = "b2cc45519d62a1144f8cd932fa0c2c30a944c3ae9f060934587a337d81b391c8",
+  name = "com_google_jsinterop_annotations",
+  generator_name = "com_google_jsinterop_annotations",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/maven.ibiblio.org/maven2/com/google/jsinterop/jsinterop-annotations/1.0.1/jsinterop-annotations-1.0.1.jar", "http://maven.ibiblio.org/maven2/com/google/jsinterop/jsinterop-annotations/1.0.1/jsinterop-annotations-1.0.1.jar", "https://repo1.maven.org/maven2/com/google/jsinterop/jsinterop-annotations/1.0.1/jsinterop-annotations-1.0.1.jar"],
+  artifact_sha256 = "b2cc45519d62a1144f8cd932fa0c2c30a944c3ae9f060934587a337d81b391c8",
 )
 # Rule com_google_jsinterop_annotations instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2230,29 +2227,29 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:21:19
 http_archive(
-    name = "com_google_protobuf",
-    generator_name = "com_google_protobuf",
-    generator_function = "protobuf_core_deps",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz"],
-    sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
-    strip_prefix = "protobuf-3.20.1",
+  name = "com_google_protobuf",
+  generator_name = "com_google_protobuf",
+  generator_function = "protobuf_core_deps",
+  urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz"],
+  sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
+  strip_prefix = "protobuf-3.20.1",
 )
 # Rule com_google_protobuf instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:21:19                   in <toplevel>
-#   {WORKSPACE}/deps/protobuf_core_deps.bzl:17:24 in protobuf_core_deps
-#   {WORKSPACE}/deps/protobuf_core_deps.bzl:67:11 in com_google_protobuf
-#   {WORKSPACE}/deps/protobuf_core_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/protobuf_core_deps.bzl:16:24 in protobuf_core_deps
+#   {WORKSPACE}/deps/protobuf_core_deps.bzl:65:11 in com_google_protobuf
+#   {WORKSPACE}/deps/protobuf_core_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:136:23
 http_archive(
-    name = "com_google_protobuf_javalite",
-    generator_name = "com_google_protobuf_javalite",
-    generator_function = "grpc_java_repositories",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.12.0.zip"],
-    sha256 = "b37e96e81842af659605908a421960a5dc809acbc888f6b947bc320f8628e5b1",
-    strip_prefix = "protobuf-3.12.0",
+  name = "com_google_protobuf_javalite",
+  generator_name = "com_google_protobuf_javalite",
+  generator_function = "grpc_java_repositories",
+  urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.12.0.zip"],
+  sha256 = "b37e96e81842af659605908a421960a5dc809acbc888f6b947bc320f8628e5b1",
+  strip_prefix = "protobuf-3.12.0",
 )
 # Rule com_google_protobuf_javalite instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:136:23                                                in <toplevel>
@@ -2263,13 +2260,13 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_archive(
-    name = "com_google_protobuf_js",
-    generator_name = "com_google_protobuf_js",
-    generator_function = "rules_closure_dependencies",
-    urls = ["https://mirror.bazel.build/github.com/google/protobuf/archive/v3.18.1.tar.gz", "https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz"],
-    sha256 = "9111bf0b542b631165fadbd80aa60e7fb25b25311c532139ed2089d76ddf6dd7",
-    strip_prefix = "protobuf-3.18.1/js",
-    build_file = "@io_bazel_rules_closure//closure/protobuf:protobuf_js.BUILD",
+  name = "com_google_protobuf_js",
+  generator_name = "com_google_protobuf_js",
+  generator_function = "rules_closure_dependencies",
+  urls = ["https://mirror.bazel.build/github.com/google/protobuf/archive/v3.18.1.tar.gz", "https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz"],
+  sha256 = "9111bf0b542b631165fadbd80aa60e7fb25b25311c532139ed2089d76ddf6dd7",
+  strip_prefix = "protobuf-3.18.1/js",
+  build_file = "@io_bazel_rules_closure//closure/protobuf:protobuf_js.BUILD",
 )
 # Rule com_google_protobuf_js instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2280,12 +2277,12 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_google_protobuf_protobuf_java_3_17_2",
-    generator_name = "com_google_protobuf_protobuf_java_3_17_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "cf697452fbe7f6bdfdf65043797a16cd627b1dd4248be4b572fcb73f8c032cc0",
-    urls = ["https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.17.2/protobuf-java-3.17.2.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_google_protobuf_protobuf_java_3_17_2",
+  generator_name = "com_google_protobuf_protobuf_java_3_17_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "cf697452fbe7f6bdfdf65043797a16cd627b1dd4248be4b572fcb73f8c032cc0",
+  urls = ["https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.17.2/protobuf-java-3.17.2.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_google_protobuf_protobuf_java_3_17_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2295,12 +2292,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_protobuf_protobuf_java_3_19_3",
-    generator_name = "com_google_protobuf_protobuf_java_3_19_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "440642e3b526663d1c15b4a2071c2696f2a25f031332ac3eb43f63969d819b3d",
-    urls = ["https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.19.3/protobuf-java-3.19.3.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_protobuf_protobuf_java_3_19_3",
+  generator_name = "com_google_protobuf_protobuf_java_3_19_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "440642e3b526663d1c15b4a2071c2696f2a25f031332ac3eb43f63969d819b3d",
+  urls = ["https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.19.3/protobuf-java-3.19.3.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_protobuf_protobuf_java_3_19_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
@@ -2310,12 +2307,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_google_protobuf_protobuf_java_jar_sources_3_17_2",
-    generator_name = "com_google_protobuf_protobuf_java_jar_sources_3_17_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "86d7db29e8799558efa077ff4aac76107912064938237817a6cb59ee9b3f4ba5",
-    urls = ["https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.17.2/protobuf-java-3.17.2-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_google_protobuf_protobuf_java_jar_sources_3_17_2",
+  generator_name = "com_google_protobuf_protobuf_java_jar_sources_3_17_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "86d7db29e8799558efa077ff4aac76107912064938237817a6cb59ee9b3f4ba5",
+  urls = ["https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.17.2/protobuf-java-3.17.2-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_google_protobuf_protobuf_java_jar_sources_3_17_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2325,12 +2322,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_google_protobuf_protobuf_java_jar_sources_3_19_3",
-    generator_name = "com_google_protobuf_protobuf_java_jar_sources_3_19_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "5ea4993336a2dc4f28140c365e2841f07f61275d899a01a5fc54de1ef853f895",
-    urls = ["https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.19.3/protobuf-java-3.19.3-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_google_protobuf_protobuf_java_jar_sources_3_19_3",
+  generator_name = "com_google_protobuf_protobuf_java_jar_sources_3_19_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "5ea4993336a2dc4f28140c365e2841f07f61275d899a01a5fc54de1ef853f895",
+  urls = ["https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.19.3/protobuf-java-3.19.3-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_google_protobuf_protobuf_java_jar_sources_3_19_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2340,15 +2337,15 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_google_template_soy",
-    generator_name = "com_google_template_soy",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/template/soy/2021-02-01/soy-2021-02-01.jar", "https://repo1.maven.org/maven2/com/google/template/soy/2021-02-01/soy-2021-02-01.jar"],
-    artifact_sha256 = "1b96cc533e8fdfb8c5287df3fb614cb46833b48cd0bc59337751fe3220ddf0b6",
-    deps = ["@args4j", "@com_google_code_findbugs_jsr305", "@com_google_code_gson", "@com_google_common_html_types", "@com_google_guava", "@com_google_inject_extensions_guice_assistedinject", "@com_google_inject_extensions_guice_multibindings", "@com_google_inject_guice", "@com_google_protobuf//:protobuf_java", "@com_ibm_icu_icu4j", "@javax_inject", "@org_json", "@org_ow2_asm", "@org_ow2_asm_analysis", "@org_ow2_asm_commons", "@org_ow2_asm_util"],
-    extra_build_file_content = "java_binary(\n    name = \"SoyParseInfoGenerator\",\n    main_class = \"com.google.template.soy.SoyParseInfoGenerator\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n\njava_binary(\n    name = \"SoyToJbcSrcCompiler\",\n    main_class = \"com.google.template.soy.SoyToJbcSrcCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n\njava_binary(\n    name = \"SoyToJsSrcCompiler\",\n    main_class = \"com.google.template.soy.SoyToJsSrcCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n\njava_binary(\n    name = \"SoyToPySrcCompiler\",\n    main_class = \"com.google.template.soy.SoyToPySrcCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n",
+  name = "com_google_template_soy",
+  generator_name = "com_google_template_soy",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/google/template/soy/2021-02-01/soy-2021-02-01.jar", "https://repo1.maven.org/maven2/com/google/template/soy/2021-02-01/soy-2021-02-01.jar"],
+  artifact_sha256 = "1b96cc533e8fdfb8c5287df3fb614cb46833b48cd0bc59337751fe3220ddf0b6",
+  deps = ["@args4j", "@com_google_code_findbugs_jsr305", "@com_google_code_gson", "@com_google_common_html_types", "@com_google_guava", "@com_google_inject_extensions_guice_assistedinject", "@com_google_inject_extensions_guice_multibindings", "@com_google_inject_guice", "@com_google_protobuf//:protobuf_java", "@com_ibm_icu_icu4j", "@javax_inject", "@org_json", "@org_ow2_asm", "@org_ow2_asm_analysis", "@org_ow2_asm_commons", "@org_ow2_asm_util"],
+  extra_build_file_content = "java_binary(\n    name = \"SoyParseInfoGenerator\",\n    main_class = \"com.google.template.soy.SoyParseInfoGenerator\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n\njava_binary(\n    name = \"SoyToJbcSrcCompiler\",\n    main_class = \"com.google.template.soy.SoyToJbcSrcCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n\njava_binary(\n    name = \"SoyToJsSrcCompiler\",\n    main_class = \"com.google.template.soy.SoyToJsSrcCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n\njava_binary(\n    name = \"SoyToPySrcCompiler\",\n    main_class = \"com.google.template.soy.SoyToPySrcCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n",
 )
 # Rule com_google_template_soy instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2360,13 +2357,13 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_archive(
-    name = "com_google_template_soy_jssrc",
-    generator_name = "com_google_template_soy_jssrc",
-    generator_function = "rules_closure_dependencies",
-    urls = ["https://github.com/google/closure-templates/archive/a1c02e60ae88ed1b7db92722ea25ac7d396514fc.tar.gz"],
-    sha256 = "b8863e45841cb89e9c1e29d46eaabfb4599724d85ef081dbb6f9dfc6ffc58c99",
-    strip_prefix = "closure-templates-a1c02e60ae88ed1b7db92722ea25ac7d396514fc/javascript",
-    build_file = "@io_bazel_rules_closure//closure/templates:soy_jssrc.BUILD",
+  name = "com_google_template_soy_jssrc",
+  generator_name = "com_google_template_soy_jssrc",
+  generator_function = "rules_closure_dependencies",
+  urls = ["https://github.com/google/closure-templates/archive/a1c02e60ae88ed1b7db92722ea25ac7d396514fc.tar.gz"],
+  sha256 = "b8863e45841cb89e9c1e29d46eaabfb4599724d85ef081dbb6f9dfc6ffc58c99",
+  strip_prefix = "closure-templates-a1c02e60ae88ed1b7db92722ea25ac7d396514fc/javascript",
+  build_file = "@io_bazel_rules_closure//closure/templates:soy_jssrc.BUILD",
 )
 # Rule com_google_template_soy_jssrc instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2377,10 +2374,10 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_google_truth_truth",
-    generator_name = "com_google_truth_truth",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_google_truth_truth",
+  generator_name = "com_google_truth_truth",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_google_truth_truth instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -2390,10 +2387,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_googlecode_java_diff_utils_diffutils",
-    generator_name = "com_googlecode_java_diff_utils_diffutils",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_googlecode_java_diff_utils_diffutils",
+  generator_name = "com_googlecode_java_diff_utils_diffutils",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_googlecode_java_diff_utils_diffutils instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -2403,28 +2400,28 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "com_googlesource_code_re2",
-    generator_name = "com_googlesource_code_re2",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/google/re2/archive/8e08f47b11b413302749c0d8b17a1c94777495d5.tar.gz", "https://github.com/google/re2/archive/8e08f47b11b413302749c0d8b17a1c94777495d5.tar.gz"],
-    sha256 = "319a58a58d8af295db97dfeecc4e250179c5966beaa2d842a82f0a013b6a239b",
-    strip_prefix = "re2-8e08f47b11b413302749c0d8b17a1c94777495d5",
+  name = "com_googlesource_code_re2",
+  generator_name = "com_googlesource_code_re2",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/google/re2/archive/8e08f47b11b413302749c0d8b17a1c94777495d5.tar.gz", "https://github.com/google/re2/archive/8e08f47b11b413302749c0d8b17a1c94777495d5.tar.gz"],
+  sha256 = "319a58a58d8af295db97dfeecc4e250179c5966beaa2d842a82f0a013b6a239b",
+  strip_prefix = "re2-8e08f47b11b413302749c0d8b17a1c94777495d5",
 )
 # Rule com_googlesource_code_re2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:261:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:262:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_ibm_icu_icu4j",
-    generator_name = "com_ibm_icu_icu4j",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/ibm/icu/icu4j/57.1/icu4j-57.1.jar", "https://repo1.maven.org/maven2/com/ibm/icu/icu4j/57.1/icu4j-57.1.jar", "http://maven.ibiblio.org/maven2/com/ibm/icu/icu4j/57.1/icu4j-57.1.jar"],
-    artifact_sha256 = "759d89ed2f8c6a6b627ab954be5913fbdc464f62254a513294e52260f28591ee",
+  name = "com_ibm_icu_icu4j",
+  generator_name = "com_ibm_icu_icu4j",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/ibm/icu/icu4j/57.1/icu4j-57.1.jar", "https://repo1.maven.org/maven2/com/ibm/icu/icu4j/57.1/icu4j-57.1.jar", "http://maven.ibiblio.org/maven2/com/ibm/icu/icu4j/57.1/icu4j-57.1.jar"],
+  artifact_sha256 = "759d89ed2f8c6a6b627ab954be5913fbdc464f62254a513294e52260f28591ee",
 )
 # Rule com_ibm_icu_icu4j instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2436,12 +2433,12 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_2_1_3",
-    generator_name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_2_1_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "7866a5ba64dcc5370804552c3e8086781e8d20b8a785c9a7fb01d5128ec04a6c",
-    urls = ["https://repo1.maven.org/maven2/com/lightbend/akka/grpc/akka-grpc-codegen_2.12/2.1.3/akka-grpc-codegen_2.12-2.1.3.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_2_1_3",
+  generator_name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_2_1_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "7866a5ba64dcc5370804552c3e8086781e8d20b8a785c9a7fb01d5128ec04a6c",
+  urls = ["https://repo1.maven.org/maven2/com/lightbend/akka/grpc/akka-grpc-codegen_2.12/2.1.3/akka-grpc-codegen_2.12-2.1.3.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_lightbend_akka_grpc_akka_grpc_codegen_2_12_2_1_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2451,12 +2448,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_jar_sources_2_1_3",
-    generator_name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_jar_sources_2_1_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "a7c510a8a417ac0e5db556d3fab882785575c3d81f3164e4d4176d766d710ce0",
-    urls = ["https://repo1.maven.org/maven2/com/lightbend/akka/grpc/akka-grpc-codegen_2.12/2.1.3/akka-grpc-codegen_2.12-2.1.3-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_jar_sources_2_1_3",
+  generator_name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_jar_sources_2_1_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "a7c510a8a417ac0e5db556d3fab882785575c3d81f3164e4d4176d766d710ce0",
+  urls = ["https://repo1.maven.org/maven2/com/lightbend/akka/grpc/akka-grpc-codegen_2.12/2.1.3/akka-grpc-codegen_2.12-2.1.3-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_lightbend_akka_grpc_akka_grpc_codegen_2_12_jar_sources_2_1_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2466,12 +2463,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3",
-    generator_name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "c413168eb709e82c29f9a7c1f7ef0109685c9b403f14d6c8fb776105870d13be",
-    urls = ["https://repo1.maven.org/maven2/com/lightbend/akka/grpc/akka-grpc-runtime_2.12/2.1.3/akka-grpc-runtime_2.12-2.1.3.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3",
+  generator_name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "c413168eb709e82c29f9a7c1f7ef0109685c9b403f14d6c8fb776105870d13be",
+  urls = ["https://repo1.maven.org/maven2/com/lightbend/akka/grpc/akka-grpc-runtime_2.12/2.1.3/akka-grpc-runtime_2.12-2.1.3.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2481,12 +2478,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_jar_sources_2_1_3",
-    generator_name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_jar_sources_2_1_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "25a5d49836e4135b13312140b92fc3e1874ea8eaae226d186e6ae246d650614c",
-    urls = ["https://repo1.maven.org/maven2/com/lightbend/akka/grpc/akka-grpc-runtime_2.12/2.1.3/akka-grpc-runtime_2.12-2.1.3-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_jar_sources_2_1_3",
+  generator_name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_jar_sources_2_1_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "25a5d49836e4135b13312140b92fc3e1874ea8eaae226d186e6ae246d650614c",
+  urls = ["https://repo1.maven.org/maven2/com/lightbend/akka/grpc/akka-grpc-runtime_2.12/2.1.3/akka-grpc-runtime_2.12-2.1.3-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_lightbend_akka_grpc_akka_grpc_runtime_2_12_jar_sources_2_1_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2496,13 +2493,13 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "com_squareup_javapoet",
-    generator_name = "com_squareup_javapoet",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/squareup/javapoet/1.9.0/javapoet-1.9.0.jar", "https://repo1.maven.org/maven2/com/squareup/javapoet/1.9.0/javapoet-1.9.0.jar"],
-    artifact_sha256 = "5bb5abdfe4366c15c0da3332c57d484e238bd48260d6f9d6acf2b08fdde1efea",
+  name = "com_squareup_javapoet",
+  generator_name = "com_squareup_javapoet",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/com/squareup/javapoet/1.9.0/javapoet-1.9.0.jar", "https://repo1.maven.org/maven2/com/squareup/javapoet/1.9.0/javapoet-1.9.0.jar"],
+  artifact_sha256 = "5bb5abdfe4366c15c0da3332c57d484e238bd48260d6f9d6acf2b08fdde1efea",
 )
 # Rule com_squareup_javapoet instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -2514,10 +2511,10 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_squareup_okhttp_okhttp",
-    generator_name = "com_squareup_okhttp_okhttp",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_squareup_okhttp_okhttp",
+  generator_name = "com_squareup_okhttp_okhttp",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_squareup_okhttp_okhttp instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -2527,10 +2524,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "com_squareup_okio_okio",
-    generator_name = "com_squareup_okio_okio",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "com_squareup_okio_okio",
+  generator_name = "com_squareup_okio_okio",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule com_squareup_okio_okio instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -2540,12 +2537,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_5",
-    generator_name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "13dbfdfa0ad6c54c39bd714f1fac99ba2fc974d9683ab333ea2cc0b4058b3658",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/compilerplugin_2.12/0.11.5/compilerplugin_2.12-0.11.5.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_5",
+  generator_name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "13dbfdfa0ad6c54c39bd714f1fac99ba2fc974d9683ab333ea2cc0b4058b3658",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/compilerplugin_2.12/0.11.5/compilerplugin_2.12-0.11.5.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_compilerplugin_2_12_0_11_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2555,12 +2552,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
-    generator_name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
-    generator_function = "pinned_maven_install",
-    sha256 = "6e25a328c7b95011b5407b1a705a08caee3410029b3939dc4d968bf6dd037c83",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/compilerplugin_2.12/0.11.8/compilerplugin_2.12-0.11.8.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
+  generator_name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
+  generator_function = "pinned_maven_install",
+  sha256 = "6e25a328c7b95011b5407b1a705a08caee3410029b3939dc4d968bf6dd037c83",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/compilerplugin_2.12/0.11.8/compilerplugin_2.12-0.11.8.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_compilerplugin_2_12_0_11_8 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2570,12 +2567,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_5",
-    generator_name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "4f3591ae707e382c8b818c9f3543ae1d66956bad1522aca801caf8c6d621e4a8",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/compilerplugin_2.12/0.11.5/compilerplugin_2.12-0.11.5-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_5",
+  generator_name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "4f3591ae707e382c8b818c9f3543ae1d66956bad1522aca801caf8c6d621e4a8",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/compilerplugin_2.12/0.11.5/compilerplugin_2.12-0.11.5-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2585,12 +2582,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_8",
-    generator_name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_8",
-    generator_function = "pinned_maven_install",
-    sha256 = "19c931dec589de197aa1b9d0d327006da9a548836dbd3f77c3f6fefdbd03bde3",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/compilerplugin_2.12/0.11.8/compilerplugin_2.12-0.11.8-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_8",
+  generator_name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_8",
+  generator_function = "pinned_maven_install",
+  sha256 = "19c931dec589de197aa1b9d0d327006da9a548836dbd3f77c3f6fefdbd03bde3",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/compilerplugin_2.12/0.11.8/compilerplugin_2.12-0.11.8-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_8 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2600,12 +2597,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_lenses_2_12_0_11_5",
-    generator_name = "com_thesamet_scalapb_lenses_2_12_0_11_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "570ea835f2b88fe38a47e7b663617c65bb2180fcd50fb0cc54de62f98ce7cbfe",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/lenses_2.12/0.11.5/lenses_2.12-0.11.5.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_lenses_2_12_0_11_5",
+  generator_name = "com_thesamet_scalapb_lenses_2_12_0_11_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "570ea835f2b88fe38a47e7b663617c65bb2180fcd50fb0cc54de62f98ce7cbfe",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/lenses_2.12/0.11.5/lenses_2.12-0.11.5.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_lenses_2_12_0_11_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2615,12 +2612,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_thesamet_scalapb_lenses_2_12_0_11_8",
-    generator_name = "com_thesamet_scalapb_lenses_2_12_0_11_8",
-    generator_function = "pinned_maven_install",
-    sha256 = "410d3fbc2d81bd8cdfe2acc7c48bb46eb18374f473711d3d2e46da5efe4acb00",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/lenses_2.12/0.11.8/lenses_2.12-0.11.8.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_thesamet_scalapb_lenses_2_12_0_11_8",
+  generator_name = "com_thesamet_scalapb_lenses_2_12_0_11_8",
+  generator_function = "pinned_maven_install",
+  sha256 = "410d3fbc2d81bd8cdfe2acc7c48bb46eb18374f473711d3d2e46da5efe4acb00",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/lenses_2.12/0.11.8/lenses_2.12-0.11.8.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_lenses_2_12_0_11_8 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2630,12 +2627,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_5",
-    generator_name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "48dc91a85b2bbafc3369a6051b35dcf2a58fff6eae427d114774bde42e4ced1e",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/lenses_2.12/0.11.5/lenses_2.12-0.11.5-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_5",
+  generator_name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "48dc91a85b2bbafc3369a6051b35dcf2a58fff6eae427d114774bde42e4ced1e",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/lenses_2.12/0.11.5/lenses_2.12-0.11.5-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2645,12 +2642,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_8",
-    generator_name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_8",
-    generator_function = "pinned_maven_install",
-    sha256 = "ecced98ef4815672d724dbe1aca483524dd2ec775cb2ef913c6bd63b7dde6835",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/lenses_2.12/0.11.8/lenses_2.12-0.11.8-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_8",
+  generator_name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_8",
+  generator_function = "pinned_maven_install",
+  sha256 = "ecced98ef4815672d724dbe1aca483524dd2ec775cb2ef913c6bd63b7dde6835",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/lenses_2.12/0.11.8/lenses_2.12-0.11.8-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_8 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2660,12 +2657,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_3",
-    generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "afef1293e83066500f441a15a74545d8c60bee84dc5f1278d7130da0fef1e2cd",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-bridge_2.12/0.9.3/protoc-bridge_2.12-0.9.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_3",
+  generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "afef1293e83066500f441a15a74545d8c60bee84dc5f1278d7130da0fef1e2cd",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-bridge_2.12/0.9.3/protoc-bridge_2.12-0.9.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_bridge_2_12_0_9_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2675,12 +2672,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_5",
-    generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "e72e3cf632475483240c5d099e458542d13389812f757907a1db95a3b41f6119",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-bridge_2.12/0.9.5/protoc-bridge_2.12-0.9.5.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_5",
+  generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "e72e3cf632475483240c5d099e458542d13389812f757907a1db95a3b41f6119",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-bridge_2.12/0.9.5/protoc-bridge_2.12-0.9.5.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_bridge_2_12_0_9_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2690,12 +2687,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_3",
-    generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "3898e65048bb04213001236209c4cc968acba866d97dd1f57e72deb8ba08cae0",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-bridge_2.12/0.9.3/protoc-bridge_2.12-0.9.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_3",
+  generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "3898e65048bb04213001236209c4cc968acba866d97dd1f57e72deb8ba08cae0",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-bridge_2.12/0.9.3/protoc-bridge_2.12-0.9.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2705,12 +2702,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_5",
-    generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "5d083ac9d7e0166fec077bc04b5abf56272a48f0d184b4ca912e3a6611998978",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-bridge_2.12/0.9.5/protoc-bridge_2.12-0.9.5-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_5",
+  generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "5d083ac9d7e0166fec077bc04b5abf56272a48f0d184b4ca912e3a6611998978",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-bridge_2.12/0.9.5/protoc-bridge_2.12-0.9.5-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2720,12 +2717,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_0_9_3",
-    generator_name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_0_9_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "e5cba02164a9a981239763d75e823e394f2e75617ed807a67eb036491414c21e",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-cache-coursier_2.12/0.9.3/protoc-cache-coursier_2.12-0.9.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_0_9_3",
+  generator_name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_0_9_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "e5cba02164a9a981239763d75e823e394f2e75617ed807a67eb036491414c21e",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-cache-coursier_2.12/0.9.3/protoc-cache-coursier_2.12-0.9.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_cache_coursier_2_12_0_9_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2735,12 +2732,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_jar_sources_0_9_3",
-    generator_name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_jar_sources_0_9_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "69f9ba7efe4c7b1b1530c812b5da3593d1bfe1fa28d6234a0bc388b579aa7924",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-cache-coursier_2.12/0.9.3/protoc-cache-coursier_2.12-0.9.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_jar_sources_0_9_3",
+  generator_name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_jar_sources_0_9_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "69f9ba7efe4c7b1b1530c812b5da3593d1bfe1fa28d6234a0bc388b579aa7924",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-cache-coursier_2.12/0.9.3/protoc-cache-coursier_2.12-0.9.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_cache_coursier_2_12_jar_sources_0_9_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2750,12 +2747,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_3",
-    generator_name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "6b2e8ae70c2ec93f2b24dcae9decc6b6ff3e9a33a098ab7d2481f83ea8e2ec95",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-gen_2.12/0.9.3/protoc-gen_2.12-0.9.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_3",
+  generator_name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "6b2e8ae70c2ec93f2b24dcae9decc6b6ff3e9a33a098ab7d2481f83ea8e2ec95",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-gen_2.12/0.9.3/protoc-gen_2.12-0.9.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_gen_2_12_0_9_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2765,12 +2762,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_5",
-    generator_name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "607df518bdc68e52742c9ed28793b441ac6a47508960b74b7dbac1f0e6fc6252",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-gen_2.12/0.9.5/protoc-gen_2.12-0.9.5.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_5",
+  generator_name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "607df518bdc68e52742c9ed28793b441ac6a47508960b74b7dbac1f0e6fc6252",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-gen_2.12/0.9.5/protoc-gen_2.12-0.9.5.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_gen_2_12_0_9_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2780,12 +2777,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_3",
-    generator_name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "5eff909d27bb515ac547ab71c68c45abf6c10b48df17ea2d3793b0cc7fa13052",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-gen_2.12/0.9.3/protoc-gen_2.12-0.9.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_3",
+  generator_name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "5eff909d27bb515ac547ab71c68c45abf6c10b48df17ea2d3793b0cc7fa13052",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-gen_2.12/0.9.3/protoc-gen_2.12-0.9.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2795,12 +2792,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_5",
-    generator_name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "6d6a54593751a5fdd136f8ae7054e26c83f355b5c0c3618447d6b25adfcdd13c",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-gen_2.12/0.9.5/protoc-gen_2.12-0.9.5-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_5",
+  generator_name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "6d6a54593751a5fdd136f8ae7054e26c83f355b5c0c3618447d6b25adfcdd13c",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-gen_2.12/0.9.5/protoc-gen_2.12-0.9.5-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2810,12 +2807,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0",
-    generator_name = "com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "1daf365db2f1ee6d1f913074c75b1cdda054cdbd295120b9ad569c22736c2306",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-json4s_2.12/0.12.0/scalapb-json4s_2.12-0.12.0.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0",
+  generator_name = "com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "1daf365db2f1ee6d1f913074c75b1cdda054cdbd295120b9ad569c22736c2306",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-json4s_2.12/0.12.0/scalapb-json4s_2.12-0.12.0.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2825,12 +2822,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_scalapb_json4s_2_12_jar_sources_0_12_0",
-    generator_name = "com_thesamet_scalapb_scalapb_json4s_2_12_jar_sources_0_12_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "31afc887ceb7b4fb048eb028020c2ac67379fb0298ca1f53caa3ac7bb6924c77",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-json4s_2.12/0.12.0/scalapb-json4s_2.12-0.12.0-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_scalapb_json4s_2_12_jar_sources_0_12_0",
+  generator_name = "com_thesamet_scalapb_scalapb_json4s_2_12_jar_sources_0_12_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "31afc887ceb7b4fb048eb028020c2ac67379fb0298ca1f53caa3ac7bb6924c77",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-json4s_2.12/0.12.0/scalapb-json4s_2.12-0.12.0-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_json4s_2_12_jar_sources_0_12_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2840,12 +2837,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_5",
-    generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "50a61590102e116f52de88a76e9a425fbe5ee5d0f5f4c3cd6bec641998c0194e",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime_2.12/0.11.5/scalapb-runtime_2.12-0.11.5.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_5",
+  generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "50a61590102e116f52de88a76e9a425fbe5ee5d0f5f4c3cd6bec641998c0194e",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime_2.12/0.11.5/scalapb-runtime_2.12-0.11.5.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_2_12_0_11_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2855,12 +2852,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_8",
-    generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_8",
-    generator_function = "pinned_maven_install",
-    sha256 = "c51af42cd520d206d8071ede12f7cf0c36f102379a6e115b9454d4a09038f46e",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime_2.12/0.11.8/scalapb-runtime_2.12-0.11.8.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_8",
+  generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_8",
+  generator_function = "pinned_maven_install",
+  sha256 = "c51af42cd520d206d8071ede12f7cf0c36f102379a6e115b9454d4a09038f46e",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime_2.12/0.11.8/scalapb-runtime_2.12-0.11.8.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_2_12_0_11_8 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2870,12 +2867,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_5",
-    generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "c564857a61900cc26da0d876f65f4cce0565be4cc2586555666954597ec735a5",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime_2.12/0.11.5/scalapb-runtime_2.12-0.11.5-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_5",
+  generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "c564857a61900cc26da0d876f65f4cce0565be4cc2586555666954597ec735a5",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime_2.12/0.11.5/scalapb-runtime_2.12-0.11.5-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2885,12 +2882,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_8",
-    generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_8",
-    generator_function = "pinned_maven_install",
-    sha256 = "01cd9a941c791e50b9f9eacdb405b2a6fc2819ad5f26400c2b5bec8577fb5341",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime_2.12/0.11.8/scalapb-runtime_2.12-0.11.8-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_8",
+  generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_8",
+  generator_function = "pinned_maven_install",
+  sha256 = "01cd9a941c791e50b9f9eacdb405b2a6fc2819ad5f26400c2b5bec8577fb5341",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime_2.12/0.11.8/scalapb-runtime_2.12-0.11.8-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_8 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -2900,12 +2897,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_0_11_5",
-    generator_name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_0_11_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "c04ed3a9261dcb29d221310fb9eaa21c85bfa5dbe2ec801ee2bc840ee85466a6",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime-grpc_2.12/0.11.5/scalapb-runtime-grpc_2.12-0.11.5.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_0_11_5",
+  generator_name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_0_11_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "c04ed3a9261dcb29d221310fb9eaa21c85bfa5dbe2ec801ee2bc840ee85466a6",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime-grpc_2.12/0.11.5/scalapb-runtime-grpc_2.12-0.11.5.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_grpc_2_12_0_11_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2915,12 +2912,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_jar_sources_0_11_5",
-    generator_name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_jar_sources_0_11_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "5653ea96f6bc7f654d3aebbc4d0ea56312b93099af2a11aef26fbfd332b3f67a",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime-grpc_2.12/0.11.5/scalapb-runtime-grpc_2.12-0.11.5-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_jar_sources_0_11_5",
+  generator_name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_jar_sources_0_11_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "5653ea96f6bc7f654d3aebbc4d0ea56312b93099af2a11aef26fbfd332b3f67a",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapb-runtime-grpc_2.12/0.11.5/scalapb-runtime-grpc_2.12-0.11.5-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_grpc_2_12_jar_sources_0_11_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2930,12 +2927,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_scalapbc_2_12_0_11_5",
-    generator_name = "com_thesamet_scalapb_scalapbc_2_12_0_11_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "7c67ec9f847e636e9cd5aa770aa1d65c360ba34aced95b0659ed372956701e07",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapbc_2.12/0.11.5/scalapbc_2.12-0.11.5.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_scalapbc_2_12_0_11_5",
+  generator_name = "com_thesamet_scalapb_scalapbc_2_12_0_11_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "7c67ec9f847e636e9cd5aa770aa1d65c360ba34aced95b0659ed372956701e07",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapbc_2.12/0.11.5/scalapbc_2.12-0.11.5.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapbc_2_12_0_11_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2945,12 +2942,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thesamet_scalapb_scalapbc_2_12_jar_sources_0_11_5",
-    generator_name = "com_thesamet_scalapb_scalapbc_2_12_jar_sources_0_11_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "ebb6daf856583cc8d1b67a5e801ab8ec12eee00b6ea41bcd9df6ed09f511874f",
-    urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapbc_2.12/0.11.5/scalapbc_2.12-0.11.5-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thesamet_scalapb_scalapbc_2_12_jar_sources_0_11_5",
+  generator_name = "com_thesamet_scalapb_scalapbc_2_12_jar_sources_0_11_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "ebb6daf856583cc8d1b67a5e801ab8ec12eee00b6ea41bcd9df6ed09f511874f",
+  urls = ["https://repo1.maven.org/maven2/com/thesamet/scalapb/scalapbc_2.12/0.11.5/scalapbc_2.12-0.11.5-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapbc_2_12_jar_sources_0_11_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2960,12 +2957,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thoughtworks_paranamer_paranamer_2_8",
-    generator_name = "com_thoughtworks_paranamer_paranamer_2_8",
-    generator_function = "pinned_maven_install",
-    sha256 = "688cb118a6021d819138e855208c956031688be4b47a24bb615becc63acedf07",
-    urls = ["https://repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer/2.8/paranamer-2.8.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thoughtworks_paranamer_paranamer_2_8",
+  generator_name = "com_thoughtworks_paranamer_paranamer_2_8",
+  generator_function = "pinned_maven_install",
+  sha256 = "688cb118a6021d819138e855208c956031688be4b47a24bb615becc63acedf07",
+  urls = ["https://repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer/2.8/paranamer-2.8.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thoughtworks_paranamer_paranamer_2_8 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2975,12 +2972,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "com_thoughtworks_paranamer_paranamer_jar_sources_2_8",
-    generator_name = "com_thoughtworks_paranamer_paranamer_jar_sources_2_8",
-    generator_function = "pinned_maven_install",
-    sha256 = "8a4bfc21755c36ccdd70f96d7ab891d842d5aebd6afa1b74e0efc6441e3df39c",
-    urls = ["https://repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer/2.8/paranamer-2.8-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "com_thoughtworks_paranamer_paranamer_jar_sources_2_8",
+  generator_name = "com_thoughtworks_paranamer_paranamer_jar_sources_2_8",
+  generator_function = "pinned_maven_install",
+  sha256 = "8a4bfc21755c36ccdd70f96d7ab891d842d5aebd6afa1b74e0efc6441e3df39c",
+  urls = ["https://repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer/2.8/paranamer-2.8-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule com_thoughtworks_paranamer_paranamer_jar_sources_2_8 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -2990,12 +2987,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_actor_2_12_2_6_9",
-    generator_name = "com_typesafe_akka_akka_actor_2_12_2_6_9",
-    generator_function = "pinned_maven_install",
-    sha256 = "cb875fa0f30a481509f00180acefd83eeac6db4e97996a6ff2996273e0bd227c",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.6.9/akka-actor_2.12-2.6.9.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_actor_2_12_2_6_9",
+  generator_name = "com_typesafe_akka_akka_actor_2_12_2_6_9",
+  generator_function = "pinned_maven_install",
+  sha256 = "cb875fa0f30a481509f00180acefd83eeac6db4e97996a6ff2996273e0bd227c",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.6.9/akka-actor_2.12-2.6.9.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_actor_2_12_2_6_9 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3005,12 +3002,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_actor_2_12_jar_sources_2_6_9",
-    generator_name = "com_typesafe_akka_akka_actor_2_12_jar_sources_2_6_9",
-    generator_function = "pinned_maven_install",
-    sha256 = "c07422e349079197077446bf26b20834757ed97d6b36e593f167cf74a3764e86",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.6.9/akka-actor_2.12-2.6.9-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_actor_2_12_jar_sources_2_6_9",
+  generator_name = "com_typesafe_akka_akka_actor_2_12_jar_sources_2_6_9",
+  generator_function = "pinned_maven_install",
+  sha256 = "c07422e349079197077446bf26b20834757ed97d6b36e593f167cf74a3764e86",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.6.9/akka-actor_2.12-2.6.9-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_actor_2_12_jar_sources_2_6_9 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3020,12 +3017,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_discovery_2_12_2_6_9",
-    generator_name = "com_typesafe_akka_akka_discovery_2_12_2_6_9",
-    generator_function = "pinned_maven_install",
-    sha256 = "dc612897781c9293c9d8c4a3b427534b1e2b25e566f14444e55a4cb5ea8d990b",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-discovery_2.12/2.6.9/akka-discovery_2.12-2.6.9.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_discovery_2_12_2_6_9",
+  generator_name = "com_typesafe_akka_akka_discovery_2_12_2_6_9",
+  generator_function = "pinned_maven_install",
+  sha256 = "dc612897781c9293c9d8c4a3b427534b1e2b25e566f14444e55a4cb5ea8d990b",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-discovery_2.12/2.6.9/akka-discovery_2.12-2.6.9.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_discovery_2_12_2_6_9 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3035,12 +3032,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_discovery_2_12_jar_sources_2_6_9",
-    generator_name = "com_typesafe_akka_akka_discovery_2_12_jar_sources_2_6_9",
-    generator_function = "pinned_maven_install",
-    sha256 = "9308930b39ef8046ab458392c5e80e153c1652dab28c19f388864b050602da52",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-discovery_2.12/2.6.9/akka-discovery_2.12-2.6.9-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_discovery_2_12_jar_sources_2_6_9",
+  generator_name = "com_typesafe_akka_akka_discovery_2_12_jar_sources_2_6_9",
+  generator_function = "pinned_maven_install",
+  sha256 = "9308930b39ef8046ab458392c5e80e153c1652dab28c19f388864b050602da52",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-discovery_2.12/2.6.9/akka-discovery_2.12-2.6.9-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_discovery_2_12_jar_sources_2_6_9 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3050,12 +3047,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_http_2_12_10_2_7",
-    generator_name = "com_typesafe_akka_akka_http_2_12_10_2_7",
-    generator_function = "pinned_maven_install",
-    sha256 = "e1df23a61be68767abf673cef10ae4c2ff6c82e5ff702a2845c82f0fc9929b09",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-http_2.12/10.2.7/akka-http_2.12-10.2.7.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_http_2_12_10_2_7",
+  generator_name = "com_typesafe_akka_akka_http_2_12_10_2_7",
+  generator_function = "pinned_maven_install",
+  sha256 = "e1df23a61be68767abf673cef10ae4c2ff6c82e5ff702a2845c82f0fc9929b09",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-http_2.12/10.2.7/akka-http_2.12-10.2.7.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_http_2_12_10_2_7 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3065,12 +3062,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_http_2_12_jar_sources_10_2_7",
-    generator_name = "com_typesafe_akka_akka_http_2_12_jar_sources_10_2_7",
-    generator_function = "pinned_maven_install",
-    sha256 = "1c2045b44bf53077d8f1baba5e3db081c857c78c0fde491296e75881635c55c2",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-http_2.12/10.2.7/akka-http_2.12-10.2.7-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_http_2_12_jar_sources_10_2_7",
+  generator_name = "com_typesafe_akka_akka_http_2_12_jar_sources_10_2_7",
+  generator_function = "pinned_maven_install",
+  sha256 = "1c2045b44bf53077d8f1baba5e3db081c857c78c0fde491296e75881635c55c2",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-http_2.12/10.2.7/akka-http_2.12-10.2.7-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_http_2_12_jar_sources_10_2_7 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3080,12 +3077,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_http_core_2_12_10_2_7",
-    generator_name = "com_typesafe_akka_akka_http_core_2_12_10_2_7",
-    generator_function = "pinned_maven_install",
-    sha256 = "6a554b06f0c4cc8cb724c87f31d82b96409ccb1113c003b3dd9dbee685a2a44a",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.2.7/akka-http-core_2.12-10.2.7.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_http_core_2_12_10_2_7",
+  generator_name = "com_typesafe_akka_akka_http_core_2_12_10_2_7",
+  generator_function = "pinned_maven_install",
+  sha256 = "6a554b06f0c4cc8cb724c87f31d82b96409ccb1113c003b3dd9dbee685a2a44a",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.2.7/akka-http-core_2.12-10.2.7.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_http_core_2_12_10_2_7 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3095,12 +3092,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_http_core_2_12_jar_sources_10_2_7",
-    generator_name = "com_typesafe_akka_akka_http_core_2_12_jar_sources_10_2_7",
-    generator_function = "pinned_maven_install",
-    sha256 = "3627b744afa37489588edd9004959aa046ec9fb14e5168098121cc6f42da67c6",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.2.7/akka-http-core_2.12-10.2.7-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_http_core_2_12_jar_sources_10_2_7",
+  generator_name = "com_typesafe_akka_akka_http_core_2_12_jar_sources_10_2_7",
+  generator_function = "pinned_maven_install",
+  sha256 = "3627b744afa37489588edd9004959aa046ec9fb14e5168098121cc6f42da67c6",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.2.7/akka-http-core_2.12-10.2.7-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_http_core_2_12_jar_sources_10_2_7 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3110,12 +3107,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_parsing_2_12_10_2_7",
-    generator_name = "com_typesafe_akka_akka_parsing_2_12_10_2_7",
-    generator_function = "pinned_maven_install",
-    sha256 = "89b4a5735c273185043641fa5f5ef21958e0030f37bcd96535953b50ba4d6b6c",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.2.7/akka-parsing_2.12-10.2.7.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_parsing_2_12_10_2_7",
+  generator_name = "com_typesafe_akka_akka_parsing_2_12_10_2_7",
+  generator_function = "pinned_maven_install",
+  sha256 = "89b4a5735c273185043641fa5f5ef21958e0030f37bcd96535953b50ba4d6b6c",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.2.7/akka-parsing_2.12-10.2.7.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_parsing_2_12_10_2_7 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3125,12 +3122,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_parsing_2_12_jar_sources_10_2_7",
-    generator_name = "com_typesafe_akka_akka_parsing_2_12_jar_sources_10_2_7",
-    generator_function = "pinned_maven_install",
-    sha256 = "e981a044fb56f44fd575a4c89fe24d1dadfe4c050846e81595ab64745281aebe",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.2.7/akka-parsing_2.12-10.2.7-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_parsing_2_12_jar_sources_10_2_7",
+  generator_name = "com_typesafe_akka_akka_parsing_2_12_jar_sources_10_2_7",
+  generator_function = "pinned_maven_install",
+  sha256 = "e981a044fb56f44fd575a4c89fe24d1dadfe4c050846e81595ab64745281aebe",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.2.7/akka-parsing_2.12-10.2.7-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_parsing_2_12_jar_sources_10_2_7 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3140,12 +3137,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_protobuf_v3_2_12_2_6_9",
-    generator_name = "com_typesafe_akka_akka_protobuf_v3_2_12_2_6_9",
-    generator_function = "pinned_maven_install",
-    sha256 = "362500e2f36526e0c67d322a0eda8e47d4149113911a7260c06ed2f1ee14aa6b",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.6.9/akka-protobuf-v3_2.12-2.6.9.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_protobuf_v3_2_12_2_6_9",
+  generator_name = "com_typesafe_akka_akka_protobuf_v3_2_12_2_6_9",
+  generator_function = "pinned_maven_install",
+  sha256 = "362500e2f36526e0c67d322a0eda8e47d4149113911a7260c06ed2f1ee14aa6b",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.6.9/akka-protobuf-v3_2.12-2.6.9.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_protobuf_v3_2_12_2_6_9 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3155,12 +3152,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_protobuf_v3_2_12_jar_sources_2_6_9",
-    generator_name = "com_typesafe_akka_akka_protobuf_v3_2_12_jar_sources_2_6_9",
-    generator_function = "pinned_maven_install",
-    sha256 = "ca5adf5808d7a2f49f2d3bc1ca4d7c48a20fd0b6ec09d2b53f2a05962885a26c",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.6.9/akka-protobuf-v3_2.12-2.6.9-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_protobuf_v3_2_12_jar_sources_2_6_9",
+  generator_name = "com_typesafe_akka_akka_protobuf_v3_2_12_jar_sources_2_6_9",
+  generator_function = "pinned_maven_install",
+  sha256 = "ca5adf5808d7a2f49f2d3bc1ca4d7c48a20fd0b6ec09d2b53f2a05962885a26c",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.6.9/akka-protobuf-v3_2.12-2.6.9-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_protobuf_v3_2_12_jar_sources_2_6_9 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3170,12 +3167,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_stream_2_12_2_6_9",
-    generator_name = "com_typesafe_akka_akka_stream_2_12_2_6_9",
-    generator_function = "pinned_maven_install",
-    sha256 = "370d84d8ba7862793c06e586fcbe8b852c543df265abf9c7133466fa36c15eb6",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.6.9/akka-stream_2.12-2.6.9.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_stream_2_12_2_6_9",
+  generator_name = "com_typesafe_akka_akka_stream_2_12_2_6_9",
+  generator_function = "pinned_maven_install",
+  sha256 = "370d84d8ba7862793c06e586fcbe8b852c543df265abf9c7133466fa36c15eb6",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.6.9/akka-stream_2.12-2.6.9.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_stream_2_12_2_6_9 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3185,12 +3182,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_akka_akka_stream_2_12_jar_sources_2_6_9",
-    generator_name = "com_typesafe_akka_akka_stream_2_12_jar_sources_2_6_9",
-    generator_function = "pinned_maven_install",
-    sha256 = "e9f9d7e0e4a31f10e2e6d4676958c910614c50aecb516bbf768c8f74ffdf1480",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.6.9/akka-stream_2.12-2.6.9-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_akka_akka_stream_2_12_jar_sources_2_6_9",
+  generator_name = "com_typesafe_akka_akka_stream_2_12_jar_sources_2_6_9",
+  generator_function = "pinned_maven_install",
+  sha256 = "e9f9d7e0e4a31f10e2e6d4676958c910614c50aecb516bbf768c8f74ffdf1480",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.6.9/akka-stream_2.12-2.6.9-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_stream_2_12_jar_sources_2_6_9 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3200,12 +3197,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_config_1_4_0",
-    generator_name = "com_typesafe_config_1_4_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "aadbfd5a524551beef10d3f891d305b83bb27d54703d9a4de7aca2a12d9847e2",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/config/1.4.0/config-1.4.0.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_config_1_4_0",
+  generator_name = "com_typesafe_config_1_4_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "aadbfd5a524551beef10d3f891d305b83bb27d54703d9a4de7aca2a12d9847e2",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/config/1.4.0/config-1.4.0.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_config_1_4_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3215,12 +3212,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_config_jar_sources_1_4_0",
-    generator_name = "com_typesafe_config_jar_sources_1_4_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "ffaf8892dc8c61605bd7319c6cdcea022b6c9c28b62776915a809e8de93d8a6e",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/config/1.4.0/config-1.4.0-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_config_jar_sources_1_4_0",
+  generator_name = "com_typesafe_config_jar_sources_1_4_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "ffaf8892dc8c61605bd7319c6cdcea022b6c9c28b62776915a809e8de93d8a6e",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/config/1.4.0/config-1.4.0-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_config_jar_sources_1_4_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3230,12 +3227,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_play_twirl_api_2_12_1_5_1",
-    generator_name = "com_typesafe_play_twirl_api_2_12_1_5_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "073463e2fcb60bf02a0e8f5212561a754c5e4151dfe8e84aa0aea67780a3dbe1",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/play/twirl-api_2.12/1.5.1/twirl-api_2.12-1.5.1.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_play_twirl_api_2_12_1_5_1",
+  generator_name = "com_typesafe_play_twirl_api_2_12_1_5_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "073463e2fcb60bf02a0e8f5212561a754c5e4151dfe8e84aa0aea67780a3dbe1",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/play/twirl-api_2.12/1.5.1/twirl-api_2.12-1.5.1.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_play_twirl_api_2_12_1_5_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3245,12 +3242,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_play_twirl_api_2_12_jar_sources_1_5_1",
-    generator_name = "com_typesafe_play_twirl_api_2_12_jar_sources_1_5_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "b1deb1fa40527b9385adc9ff27fb2d0efe1e770f21a8ba908a5c2b7779983001",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/play/twirl-api_2.12/1.5.1/twirl-api_2.12-1.5.1-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_play_twirl_api_2_12_jar_sources_1_5_1",
+  generator_name = "com_typesafe_play_twirl_api_2_12_jar_sources_1_5_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "b1deb1fa40527b9385adc9ff27fb2d0efe1e770f21a8ba908a5c2b7779983001",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/play/twirl-api_2.12/1.5.1/twirl-api_2.12-1.5.1-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_play_twirl_api_2_12_jar_sources_1_5_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3260,12 +3257,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_ssl_config_core_2_12_0_4_2",
-    generator_name = "com_typesafe_ssl_config_core_2_12_0_4_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "c9f16f354a2285d47f73188a0abee6c1e8be3f302b634a22c0a61810c10f4aaa",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.2/ssl-config-core_2.12-0.4.2.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_ssl_config_core_2_12_0_4_2",
+  generator_name = "com_typesafe_ssl_config_core_2_12_0_4_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "c9f16f354a2285d47f73188a0abee6c1e8be3f302b634a22c0a61810c10f4aaa",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.2/ssl-config-core_2.12-0.4.2.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_ssl_config_core_2_12_0_4_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3275,12 +3272,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "com_typesafe_ssl_config_core_2_12_jar_sources_0_4_2",
-    generator_name = "com_typesafe_ssl_config_core_2_12_jar_sources_0_4_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "c7674e8810f55f4677de9a30fd8c48c75533183a0adc453a14e72f43daef3766",
-    urls = ["https://repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.2/ssl-config-core_2.12-0.4.2-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "com_typesafe_ssl_config_core_2_12_jar_sources_0_4_2",
+  generator_name = "com_typesafe_ssl_config_core_2_12_jar_sources_0_4_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "c7674e8810f55f4677de9a30fd8c48c75533183a0adc453a14e72f43daef3766",
+  urls = ["https://repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.2/ssl-config-core_2.12-0.4.2-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_ssl_config_core_2_12_jar_sources_0_4_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3290,10 +3287,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "commons_codec_commons_codec",
-    generator_name = "commons_codec_commons_codec",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "commons_codec_commons_codec",
+  generator_name = "commons_codec_commons_codec",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule commons_codec_commons_codec instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -3303,10 +3300,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "commons_logging_commons_logging",
-    generator_name = "commons_logging_commons_logging",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "commons_logging_commons_logging",
+  generator_name = "commons_logging_commons_logging",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule commons_logging_commons_logging instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -3316,37 +3313,37 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "cython",
-    generator_name = "cython",
-    generator_function = "grpc_deps",
-    urls = ["https://github.com/cython/cython/archive/0.29.21.tar.gz"],
-    sha256 = "e2e38e1f0572ca54d6085df3dec8b607d20e81515fb80215aed19c81e8fe2079",
-    strip_prefix = "cython-0.29.21",
-    build_file = "@com_github_grpc_grpc//third_party:cython.BUILD",
+  name = "cython",
+  generator_name = "cython",
+  generator_function = "grpc_deps",
+  urls = ["https://github.com/cython/cython/archive/0.29.26.tar.gz"],
+  sha256 = "bb72b2f0ef029472759c711f0a4bded6e15e3f9bda3797550cef3c1d87d02283",
+  strip_prefix = "cython-0.29.26",
+  build_file = "@com_github_grpc_grpc//third_party:cython.BUILD",
 )
 # Rule cython instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:447:21       in grpc_deps
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:66:21 in grpc_python_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:69:21 in grpc_python_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # /DEFAULT.WORKSPACE:40:5
 bind(
-    name = "databinding_annotation_processor",
-    actual = "@bazel_tools//tools/android:empty",
+  name = "databinding_annotation_processor",
+  actual = "@bazel_tools//tools/android:empty",
 )
 # Rule databinding_annotation_processor instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:40:5 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "dev_dirs_directories_26",
-    generator_name = "dev_dirs_directories_26",
-    generator_function = "pinned_maven_install",
-    sha256 = "6d18fe25aa30b7e08b908cd21151d8f96e22965c640acd7751add9bbfe6137d4",
-    urls = ["https://repo1.maven.org/maven2/dev/dirs/directories/26/directories-26.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "dev_dirs_directories_26",
+  generator_name = "dev_dirs_directories_26",
+  generator_function = "pinned_maven_install",
+  sha256 = "6d18fe25aa30b7e08b908cd21151d8f96e22965c640acd7751add9bbfe6137d4",
+  urls = ["https://repo1.maven.org/maven2/dev/dirs/directories/26/directories-26.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule dev_dirs_directories_26 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3356,12 +3353,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "dev_dirs_directories_jar_sources_26",
-    generator_name = "dev_dirs_directories_jar_sources_26",
-    generator_function = "pinned_maven_install",
-    sha256 = "192050e3a2a0eba7f22745765aaaf567ce6d515fe6a992688b4e262e9f14947b",
-    urls = ["https://repo1.maven.org/maven2/dev/dirs/directories/26/directories-26-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "dev_dirs_directories_jar_sources_26",
+  generator_name = "dev_dirs_directories_jar_sources_26",
+  generator_function = "pinned_maven_install",
+  sha256 = "192050e3a2a0eba7f22745765aaaf567ce6d515fe6a992688b4e262e9f14947b",
+  urls = ["https://repo1.maven.org/maven2/dev/dirs/directories/26/directories-26-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule dev_dirs_directories_jar_sources_26 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -3371,42 +3368,42 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "enum34",
-    generator_name = "enum34",
-    generator_function = "grpc_deps",
-    urls = ["https://files.pythonhosted.org/packages/bf/3e/31d502c25302814a7c2f1d3959d2a3b3f78e509002ba91aea64993936876/enum34-1.1.6.tar.gz"],
-    sha256 = "8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1",
-    strip_prefix = "enum34-1.1.6",
-    build_file = "@com_github_grpc_grpc//third_party:enum34.BUILD",
+  name = "enum34",
+  generator_name = "enum34",
+  generator_function = "grpc_deps",
+  urls = ["https://files.pythonhosted.org/packages/bf/3e/31d502c25302814a7c2f1d3959d2a3b3f78e509002ba91aea64993936876/enum34-1.1.6.tar.gz"],
+  sha256 = "8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1",
+  strip_prefix = "enum34-1.1.6",
+  build_file = "@com_github_grpc_grpc//third_party:enum34.BUILD",
 )
 # Rule enum34 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:447:21       in grpc_deps
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:32:21 in grpc_python_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:35:21 in grpc_python_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "envoy_api",
-    generator_name = "envoy_api",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/envoyproxy/data-plane-api/archive/20b1b5fcee88a20a08b71051a961181839ec7268.tar.gz", "https://github.com/envoyproxy/data-plane-api/archive/20b1b5fcee88a20a08b71051a961181839ec7268.tar.gz"],
-    sha256 = "e89d4dddbadf797dd2700ce45ee8abc82557a934a15fcad82673e7d13213b868",
-    strip_prefix = "data-plane-api-20b1b5fcee88a20a08b71051a961181839ec7268",
+  name = "envoy_api",
+  generator_name = "envoy_api",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/envoyproxy/data-plane-api/archive/20b1b5fcee88a20a08b71051a961181839ec7268.tar.gz", "https://github.com/envoyproxy/data-plane-api/archive/20b1b5fcee88a20a08b71051a961181839ec7268.tar.gz"],
+  sha256 = "e89d4dddbadf797dd2700ce45ee8abc82557a934a15fcad82673e7d13213b868",
+  strip_prefix = "data-plane-api-20b1b5fcee88a20a08b71051a961181839ec7268",
 )
 # Rule envoy_api instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:351:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:352:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:136:23
 bind(
-    name = "error_prone_annotations",
-    generator_name = "error_prone_annotations",
-    generator_function = "grpc_java_repositories",
-    actual = "@com_google_errorprone_error_prone_annotations//jar:jar",
+  name = "error_prone_annotations",
+  generator_name = "error_prone_annotations",
+  generator_function = "grpc_java_repositories",
+  actual = "@com_google_errorprone_error_prone_annotations//jar:jar",
 )
 # Rule error_prone_annotations instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:136:23                                                in <toplevel>
@@ -3414,11 +3411,11 @@ bind(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_file(
-    name = "fonts_noto_hinted_deb",
-    generator_name = "fonts_noto_hinted_deb",
-    generator_function = "rules_closure_dependencies",
-    sha256 = "a71fcee2bc7820fc4e0c780bb9c7c6db8364fd2c5bac20867c5c33eed470dc51",
-    urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-hinted_20161116-1_all.deb", "http://http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-hinted_20161116-1_all.deb"],
+  name = "fonts_noto_hinted_deb",
+  generator_name = "fonts_noto_hinted_deb",
+  generator_function = "rules_closure_dependencies",
+  sha256 = "a71fcee2bc7820fc4e0c780bb9c7c6db8364fd2c5bac20867c5c33eed470dc51",
+  urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-hinted_20161116-1_all.deb", "http://http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-hinted_20161116-1_all.deb"],
 )
 # Rule fonts_noto_hinted_deb instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -3429,11 +3426,11 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_file(
-    name = "fonts_noto_mono_deb",
-    generator_name = "fonts_noto_mono_deb",
-    generator_function = "rules_closure_dependencies",
-    sha256 = "71ff715cf50a74a8cc11b02e7c906b69a242d3d677e739e0b2d18cd23b7de375",
-    urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-mono_20161116-1_all.deb", "http://http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-mono_20161116-1_all.deb"],
+  name = "fonts_noto_mono_deb",
+  generator_name = "fonts_noto_mono_deb",
+  generator_function = "rules_closure_dependencies",
+  sha256 = "71ff715cf50a74a8cc11b02e7c906b69a242d3d677e739e0b2d18cd23b7de375",
+  urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-mono_20161116-1_all.deb", "http://http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-mono_20161116-1_all.deb"],
 )
 # Rule fonts_noto_mono_deb instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -3444,31 +3441,31 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "futures",
-    generator_name = "futures",
-    generator_function = "grpc_deps",
-    urls = ["https://files.pythonhosted.org/packages/47/04/5fc6c74ad114032cd2c544c575bffc17582295e9cd6a851d6026ab4b2c00/futures-3.3.0.tar.gz"],
-    sha256 = "7e033af76a5e35f58e56da7a91e687706faf4e7bdfb2cbc3f2cca6b9bcda9794",
-    strip_prefix = "futures-3.3.0",
-    build_file = "@com_github_grpc_grpc//third_party:futures.BUILD",
+  name = "futures",
+  generator_name = "futures",
+  generator_function = "grpc_deps",
+  urls = ["https://files.pythonhosted.org/packages/47/04/5fc6c74ad114032cd2c544c575bffc17582295e9cd6a851d6026ab4b2c00/futures-3.3.0.tar.gz"],
+  sha256 = "7e033af76a5e35f58e56da7a91e687706faf4e7bdfb2cbc3f2cca6b9bcda9794",
+  strip_prefix = "futures-3.3.0",
+  build_file = "@com_github_grpc_grpc//third_party:futures.BUILD",
 )
 # Rule futures instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:447:21       in grpc_deps
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:41:21 in grpc_python_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:44:21 in grpc_python_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:73:22
 http_archive(
-    name = "go_googleapis",
-    generator_name = "go_googleapis",
-    generator_function = "go_rules_dependencies",
-    urls = ["https://mirror.bazel.build/github.com/googleapis/googleapis/archive/1c5c56c18ab4e2353f87a9c2e14864f218c5502c.zip", "https://github.com/googleapis/googleapis/archive/1c5c56c18ab4e2353f87a9c2e14864f218c5502c.zip"],
-    sha256 = "fa52a03d9c49c28e475a33f9adfb0551344ca0dbd15168d6862ac32cc8354c1c",
-    strip_prefix = "googleapis-1c5c56c18ab4e2353f87a9c2e14864f218c5502c",
-    patches = ["@io_bazel_rules_go//third_party:go_googleapis-deletebuild.patch", "@io_bazel_rules_go//third_party:go_googleapis-directives.patch", "@io_bazel_rules_go//third_party:go_googleapis-gazelle.patch"],
-    patch_args = ["-E", "-p1"],
+  name = "go_googleapis",
+  generator_name = "go_googleapis",
+  generator_function = "go_rules_dependencies",
+  urls = ["https://mirror.bazel.build/github.com/googleapis/googleapis/archive/1c5c56c18ab4e2353f87a9c2e14864f218c5502c.zip", "https://github.com/googleapis/googleapis/archive/1c5c56c18ab4e2353f87a9c2e14864f218c5502c.zip"],
+  sha256 = "fa52a03d9c49c28e475a33f9adfb0551344ca0dbd15168d6862ac32cc8354c1c",
+  strip_prefix = "googleapis-1c5c56c18ab4e2353f87a9c2e14864f218c5502c",
+  patches = ["@io_bazel_rules_go//third_party:go_googleapis-deletebuild.patch", "@io_bazel_rules_go//third_party:go_googleapis-directives.patch", "@io_bazel_rules_go//third_party:go_googleapis-gazelle.patch"],
+  patch_args = ["-E", "-p1"],
 )
 # Rule go_googleapis instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
@@ -3479,10 +3476,10 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:75:23
 _go_download_sdk(
-    name = "go_sdk",
-    generator_name = "go_sdk",
-    generator_function = "go_register_toolchains",
-    version = "1.16.2",
+  name = "go_sdk",
+  generator_name = "go_sdk",
+  generator_function = "go_register_toolchains",
+  version = "1.16.2",
 )
 # Rule go_sdk instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:75:23                                                   in <toplevel>
@@ -3493,9 +3490,9 @@ _go_download_sdk(
 
 # {WORKSPACE}/WORKSPACE:73:22
 gogo_special_proto(
-    name = "gogo_special_proto",
-    generator_name = "gogo_special_proto",
-    generator_function = "go_rules_dependencies",
+  name = "gogo_special_proto",
+  generator_name = "gogo_special_proto",
+  generator_function = "go_rules_dependencies",
 )
 # Rule gogo_special_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
@@ -3506,32 +3503,32 @@ gogo_special_proto(
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "grpc++_codegen_proto",
-    generator_name = "grpc++_codegen_proto",
-    generator_function = "grpc_deps",
-    actual = "@com_github_grpc_grpc//:grpc++_codegen_proto",
+  name = "grpc++_codegen_proto",
+  generator_name = "grpc++_codegen_proto",
+  generator_function = "grpc_deps",
+  actual = "@com_github_grpc_grpc//:grpc++_codegen_proto",
 )
 # Rule grpc++_codegen_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:132:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:133:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "grpc_cpp_plugin",
-    generator_name = "grpc_cpp_plugin",
-    generator_function = "grpc_deps",
-    actual = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
+  name = "grpc_cpp_plugin",
+  generator_name = "grpc_cpp_plugin",
+  generator_function = "grpc_deps",
+  actual = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
 )
 # Rule grpc_cpp_plugin instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:127:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:128:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:136:23
 bind(
-    name = "gson",
-    generator_name = "gson",
-    generator_function = "grpc_java_repositories",
-    actual = "@com_google_code_gson_gson//jar:jar",
+  name = "gson",
+  generator_name = "gson",
+  generator_function = "grpc_java_repositories",
+  actual = "@com_google_code_gson_gson//jar:jar",
 )
 # Rule gson instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:136:23                                               in <toplevel>
@@ -3539,21 +3536,21 @@ bind(
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "gtest",
-    generator_name = "gtest",
-    generator_function = "grpc_deps",
-    actual = "@com_google_googletest//:gtest",
+  name = "gtest",
+  generator_name = "gtest",
+  generator_function = "grpc_deps",
+  actual = "@com_google_googletest//:gtest",
 )
 # Rule gtest instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:112:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:113:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:136:23
 bind(
-    name = "guava",
-    generator_name = "guava",
-    generator_function = "grpc_java_repositories",
-    actual = "@com_google_guava_guava//jar:jar",
+  name = "guava",
+  generator_name = "guava",
+  generator_function = "grpc_java_repositories",
+  actual = "@com_google_guava_guava//jar:jar",
 )
 # Rule guava instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:136:23                                               in <toplevel>
@@ -3561,21 +3558,21 @@ bind(
 
 # /DEFAULT.WORKSPACE:47:5
 bind(
-    name = "has_androidsdk",
-    actual = "@bazel_tools//tools/android:always_false",
+  name = "has_androidsdk",
+  actual = "@bazel_tools//tools/android:always_false",
 )
 # Rule has_androidsdk instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:47:5 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "in_gopkg_check_v1",
-    generator_name = "in_gopkg_check_v1",
-    generator_function = "go_deps",
-    importpath = "gopkg.in/check.v1",
-    version = "v1.0.0-20180628173108-788fd7840127",
-    sum = "h1:qIbj1fsPNlZgppZ+VLlY7N33q108Sa+fhmuc+sWQYwY=",
-    build_file_proto_mode = "disable_global",
+  name = "in_gopkg_check_v1",
+  generator_name = "in_gopkg_check_v1",
+  generator_function = "go_deps",
+  importpath = "gopkg.in/check.v1",
+  version = "v1.0.0-20180628173108-788fd7840127",
+  sum = "h1:qIbj1fsPNlZgppZ+VLlY7N33q108Sa+fhmuc+sWQYwY=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule in_gopkg_check_v1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -3585,13 +3582,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "in_gopkg_yaml_v2",
-    generator_name = "in_gopkg_yaml_v2",
-    generator_function = "go_deps",
-    importpath = "gopkg.in/yaml.v2",
-    version = "v2.2.2",
-    sum = "h1:ZCJp+EgiOT7lHqUV2J862kp8Qj64Jo6az82+3Td9dZw=",
-    build_file_proto_mode = "disable_global",
+  name = "in_gopkg_yaml_v2",
+  generator_name = "in_gopkg_yaml_v2",
+  generator_function = "go_deps",
+  importpath = "gopkg.in/yaml.v2",
+  version = "v2.2.2",
+  sum = "h1:ZCJp+EgiOT7lHqUV2J862kp8Qj64Jo6az82+3Td9dZw=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule in_gopkg_yaml_v2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -3601,13 +3598,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "in_gopkg_yaml_v3",
-    generator_name = "in_gopkg_yaml_v3",
-    generator_function = "go_deps",
-    importpath = "gopkg.in/yaml.v3",
-    version = "v3.0.0-20210107192922-496545a6307b",
-    sum = "h1:h8qDotaEPuJATrMmW04NCwg7v22aHH28wwpauUhK9Oo=",
-    build_file_proto_mode = "disable_global",
+  name = "in_gopkg_yaml_v3",
+  generator_name = "in_gopkg_yaml_v3",
+  generator_function = "go_deps",
+  importpath = "gopkg.in/yaml.v3",
+  version = "v3.0.0-20210107192922-496545a6307b",
+  sum = "h1:h8qDotaEPuJATrMmW04NCwg7v22aHH28wwpauUhK9Oo=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule in_gopkg_yaml_v3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -3617,12 +3614,12 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_argonaut_argonaut_2_12_6_2_5",
-    generator_name = "io_argonaut_argonaut_2_12_6_2_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "a89474477cb3abd6473e48c4e7af3722743993a2c203272499c6e2cc79c012a3",
-    urls = ["https://repo1.maven.org/maven2/io/argonaut/argonaut_2.12/6.2.5/argonaut_2.12-6.2.5.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_argonaut_argonaut_2_12_6_2_5",
+  generator_name = "io_argonaut_argonaut_2_12_6_2_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "a89474477cb3abd6473e48c4e7af3722743993a2c203272499c6e2cc79c012a3",
+  urls = ["https://repo1.maven.org/maven2/io/argonaut/argonaut_2.12/6.2.5/argonaut_2.12-6.2.5.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_argonaut_argonaut_2_12_6_2_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -3632,12 +3629,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_argonaut_argonaut_2_12_jar_sources_6_2_5",
-    generator_name = "io_argonaut_argonaut_2_12_jar_sources_6_2_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "8328a4dbf49c1f2b96589995a05e89cac6a16d7fffbdccf794611c898528fbea",
-    urls = ["https://repo1.maven.org/maven2/io/argonaut/argonaut_2.12/6.2.5/argonaut_2.12-6.2.5-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_argonaut_argonaut_2_12_jar_sources_6_2_5",
+  generator_name = "io_argonaut_argonaut_2_12_jar_sources_6_2_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "8328a4dbf49c1f2b96589995a05e89cac6a16d7fffbdccf794611c898528fbea",
+  urls = ["https://repo1.maven.org/maven2/io/argonaut/argonaut_2.12/6.2.5/argonaut_2.12-6.2.5-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_argonaut_argonaut_2_12_jar_sources_6_2_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -3647,73 +3644,73 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:37:13
 http_archive(
-    name = "io_bazel_rules_closure",
-    generator_name = "io_bazel_rules_closure",
-    generator_function = "closure_deps",
-    urls = ["https://github.com/bazelbuild/rules_closure/archive/42195b5ca136f78d28819ef486e3a7b02ad45146.tar.gz"],
-    sha256 = "00d492551233d7548ca2a983f4e19d6aabb0bc716957ade62d691baf1dcef374",
-    strip_prefix = "rules_closure-42195b5ca136f78d28819ef486e3a7b02ad45146",
+  name = "io_bazel_rules_closure",
+  generator_name = "io_bazel_rules_closure",
+  generator_function = "closure_deps",
+  urls = ["https://github.com/bazelbuild/rules_closure/archive/42195b5ca136f78d28819ef486e3a7b02ad45146.tar.gz"],
+  sha256 = "00d492551233d7548ca2a983f4e19d6aabb0bc716957ade62d691baf1dcef374",
+  strip_prefix = "rules_closure-42195b5ca136f78d28819ef486e3a7b02ad45146",
 )
 # Rule io_bazel_rules_closure instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:37:13             in <toplevel>
-#   {WORKSPACE}/deps/closure_deps.bzl:13:27 in closure_deps
-#   {WORKSPACE}/deps/closure_deps.bzl:17:11 in io_bazel_rules_closure
-#   {WORKSPACE}/deps/closure_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/closure_deps.bzl:12:27 in closure_deps
+#   {WORKSPACE}/deps/closure_deps.bzl:15:11 in io_bazel_rules_closure
+#   {WORKSPACE}/deps/closure_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:17:10
 http_archive(
-    name = "io_bazel_rules_go",
-    generator_name = "io_bazel_rules_go",
-    generator_function = "core_deps",
-    urls = ["https://github.com/bazelbuild/rules_go/archive/v0.28.0.tar.gz"],
-    sha256 = "38171ce619b2695fa095427815d52c2a115c716b15f4cd0525a88c376113f584",
-    strip_prefix = "rules_go-0.28.0",
+  name = "io_bazel_rules_go",
+  generator_name = "io_bazel_rules_go",
+  generator_function = "core_deps",
+  urls = ["https://github.com/bazelbuild/rules_go/archive/v0.28.0.tar.gz"],
+  sha256 = "38171ce619b2695fa095427815d52c2a115c716b15f4cd0525a88c376113f584",
+  strip_prefix = "rules_go-0.28.0",
 )
 # Rule io_bazel_rules_go instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:17:10          in <toplevel>
-#   {WORKSPACE}/deps/core_deps.bzl:13:22 in core_deps
-#   {WORKSPACE}/deps/core_deps.bzl:19:11 in io_bazel_rules_go
-#   {WORKSPACE}/deps/core_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/core_deps.bzl:12:22 in core_deps
+#   {WORKSPACE}/deps/core_deps.bzl:17:11 in io_bazel_rules_go
+#   {WORKSPACE}/deps/core_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:103:16
 go_name_hack(
-    name = "io_bazel_rules_go_name_hack",
-    generator_name = "io_bazel_rules_go_name_hack",
-    generator_function = "grpc_extra_deps",
-    is_rules_go = False,
+  name = "io_bazel_rules_go_name_hack",
+  generator_name = "io_bazel_rules_go_name_hack",
+  generator_function = "grpc_extra_deps",
+  is_rules_go = False,
 )
 # Rule io_bazel_rules_go_name_hack instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:49:26 in grpc_extra_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:53:26 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:303:17 in go_rules_dependencies
 # Rule go_name_hack defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:325:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:103:16
 http_archive(
-    name = "io_bazel_rules_kotlin",
-    generator_name = "io_bazel_rules_kotlin",
-    generator_function = "grpc_extra_deps",
-    urls = ["https://github.com/bazelbuild/rules_kotlin/releases/download/v1.5.0-beta-4/rules_kotlin_release.tgz"],
-    sha256 = "6cbd4e5768bdfae1598662e40272729ec9ece8b7bded8f0d2c81c8ff96dc139d",
+  name = "io_bazel_rules_kotlin",
+  generator_name = "io_bazel_rules_kotlin",
+  generator_function = "grpc_extra_deps",
+  urls = ["https://github.com/bazelbuild/rules_kotlin/releases/download/v1.5.0-beta-4/rules_kotlin_release.tgz"],
+  sha256 = "6cbd4e5768bdfae1598662e40272729ec9ece8b7bded8f0d2c81c8ff96dc139d",
 )
 # Rule io_bazel_rules_kotlin instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:43:18 in grpc_extra_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:47:18 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/com_google_protobuf/protobuf_deps.bzl:89:21          in protobuf_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:73:22
 go_register_nogo(
-    name = "io_bazel_rules_nogo",
-    generator_name = "io_bazel_rules_nogo",
-    generator_function = "go_rules_dependencies",
-    nogo = "@io_bazel_rules_go//:default_nogo",
+  name = "io_bazel_rules_nogo",
+  generator_name = "io_bazel_rules_nogo",
+  generator_function = "go_rules_dependencies",
+  nogo = "@io_bazel_rules_go//:default_nogo",
 )
 # Rule io_bazel_rules_nogo instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
@@ -3724,44 +3721,44 @@ go_register_nogo(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "io_bazel_rules_python",
-    generator_name = "io_bazel_rules_python",
-    generator_function = "grpc_deps",
-    url = "https://github.com/bazelbuild/rules_python/releases/download/0.4.0/rules_python-0.4.0.tar.gz",
-    sha256 = "954aa89b491be4a083304a2cb838019c8b8c3720a7abb9c4cb81ac7a24230cea",
-    patches = ["//third_party:rules_python.patch"],
-    patch_args = ["-p1"],
+  name = "io_bazel_rules_python",
+  generator_name = "io_bazel_rules_python",
+  generator_function = "grpc_deps",
+  url = "https://github.com/bazelbuild/rules_python/releases/download/0.4.0/rules_python-0.4.0.tar.gz",
+  sha256 = "954aa89b491be4a083304a2cb838019c8b8c3720a7abb9c4cb81ac7a24230cea",
+  patches = ["//third_party:rules_python.patch"],
+  patch_args = ["-p1"],
 )
 # Rule io_bazel_rules_python instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:447:21       in grpc_deps
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:50:21 in grpc_python_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:53:21 in grpc_python_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:45:11
 http_archive(
-    name = "io_bazel_rules_scala",
-    generator_name = "io_bazel_rules_scala",
-    generator_function = "scala_deps",
-    urls = ["https://github.com/bazelbuild/rules_scala/archive/2437e40131072cadc1628726775ff00fa3941a4a.tar.gz"],
-    sha256 = "0701ee4e1cfd59702d780acde907ac657752fbb5c7d08a0ec6f58ebea8cd0efb",
-    strip_prefix = "rules_scala-2437e40131072cadc1628726775ff00fa3941a4a",
+  name = "io_bazel_rules_scala",
+  generator_name = "io_bazel_rules_scala",
+  generator_function = "scala_deps",
+  urls = ["https://github.com/bazelbuild/rules_scala/archive/2437e40131072cadc1628726775ff00fa3941a4a.tar.gz"],
+  sha256 = "0701ee4e1cfd59702d780acde907ac657752fbb5c7d08a0ec6f58ebea8cd0efb",
+  strip_prefix = "rules_scala-2437e40131072cadc1628726775ff00fa3941a4a",
 )
 # Rule io_bazel_rules_scala instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:45:11           in <toplevel>
-#   {WORKSPACE}/deps/scala_deps.bzl:15:25 in scala_deps
-#   {WORKSPACE}/deps/scala_deps.bzl:41:11 in io_bazel_rules_scala
-#   {WORKSPACE}/deps/scala_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/scala_deps.bzl:14:25 in scala_deps
+#   {WORKSPACE}/deps/scala_deps.bzl:39:11 in io_bazel_rules_scala
+#   {WORKSPACE}/deps/scala_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:152:13
 _config_repository(
-    name = "io_bazel_rules_scala_config",
-    generator_name = "io_bazel_rules_scala_config",
-    generator_function = "scala_config",
-    scala_version = "2.12.11",
+  name = "io_bazel_rules_scala_config",
+  generator_name = "io_bazel_rules_scala_config",
+  generator_function = "scala_config",
+  scala_version = "2.12.11",
 )
 # Rule io_bazel_rules_scala_config instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:152:13                                                  in <toplevel>
@@ -3771,17 +3768,17 @@ _config_repository(
 
 # {WORKSPACE}/WORKSPACE:156:19
 jvm_import_external(
-    name = "io_bazel_rules_scala_scala_compiler",
-    generator_name = "io_bazel_rules_scala_scala_compiler",
-    generator_function = "scala_repositories",
-    rule_name = "scala_import",
-    licenses = ["notice"],
-    jar_urls = ["https://repo.maven.apache.org/maven2/org/scala-lang/scala-compiler/2.12.11/scala-compiler-2.12.11.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scala-lang/scala-compiler/2.12.11/scala-compiler-2.12.11.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.12.11/scala-compiler-2.12.11.jar", "https://jcenter.bintray.com/org/scala-lang/scala-compiler/2.12.11/scala-compiler-2.12.11.jar"],
-    artifact_sha256 = "e901937dbeeae1715b231a7cfcd547a10d5bbf0dfb9d52d2886eae18b4d62ab6",
-    rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
-    deps = [],
-    runtime_deps = [],
-    testonly_ = False,
+  name = "io_bazel_rules_scala_scala_compiler",
+  generator_name = "io_bazel_rules_scala_scala_compiler",
+  generator_function = "scala_repositories",
+  rule_name = "scala_import",
+  licenses = ["notice"],
+  jar_urls = ["https://repo.maven.apache.org/maven2/org/scala-lang/scala-compiler/2.12.11/scala-compiler-2.12.11.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scala-lang/scala-compiler/2.12.11/scala-compiler-2.12.11.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.12.11/scala-compiler-2.12.11.jar", "https://jcenter.bintray.com/org/scala-lang/scala-compiler/2.12.11/scala-compiler-2.12.11.jar"],
+  artifact_sha256 = "e901937dbeeae1715b231a7cfcd547a10d5bbf0dfb9d52d2886eae18b4d62ab6",
+  rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
+  deps = [],
+  runtime_deps = [],
+  testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scala_compiler instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
@@ -3794,17 +3791,17 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:156:19
 jvm_import_external(
-    name = "io_bazel_rules_scala_scala_library",
-    generator_name = "io_bazel_rules_scala_scala_library",
-    generator_function = "scala_repositories",
-    rule_name = "scala_import",
-    licenses = ["notice"],
-    jar_urls = ["https://repo.maven.apache.org/maven2/org/scala-lang/scala-library/2.12.11/scala-library-2.12.11.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scala-lang/scala-library/2.12.11/scala-library-2.12.11.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.11/scala-library-2.12.11.jar", "https://jcenter.bintray.com/org/scala-lang/scala-library/2.12.11/scala-library-2.12.11.jar"],
-    artifact_sha256 = "dbfe77a3fc7a16c0c7cb6cb2b91fecec5438f2803112a744cb1b187926a138be",
-    rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
-    deps = [],
-    runtime_deps = [],
-    testonly_ = False,
+  name = "io_bazel_rules_scala_scala_library",
+  generator_name = "io_bazel_rules_scala_scala_library",
+  generator_function = "scala_repositories",
+  rule_name = "scala_import",
+  licenses = ["notice"],
+  jar_urls = ["https://repo.maven.apache.org/maven2/org/scala-lang/scala-library/2.12.11/scala-library-2.12.11.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scala-lang/scala-library/2.12.11/scala-library-2.12.11.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.11/scala-library-2.12.11.jar", "https://jcenter.bintray.com/org/scala-lang/scala-library/2.12.11/scala-library-2.12.11.jar"],
+  artifact_sha256 = "dbfe77a3fc7a16c0c7cb6cb2b91fecec5438f2803112a744cb1b187926a138be",
+  rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
+  deps = [],
+  runtime_deps = [],
+  testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scala_library instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
@@ -3817,17 +3814,17 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:156:19
 jvm_import_external(
-    name = "io_bazel_rules_scala_scala_parser_combinators",
-    generator_name = "io_bazel_rules_scala_scala_parser_combinators",
-    generator_function = "scala_repositories",
-    rule_name = "scala_import",
-    licenses = ["notice"],
-    jar_urls = ["https://repo.maven.apache.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar", "https://jcenter.bintray.com/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar"],
-    artifact_sha256 = "24985eb43e295a9dd77905ada307a850ca25acf819cdb579c093fc6987b0dbc2",
-    rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
-    deps = [],
-    runtime_deps = [],
-    testonly_ = False,
+  name = "io_bazel_rules_scala_scala_parser_combinators",
+  generator_name = "io_bazel_rules_scala_scala_parser_combinators",
+  generator_function = "scala_repositories",
+  rule_name = "scala_import",
+  licenses = ["notice"],
+  jar_urls = ["https://repo.maven.apache.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar", "https://jcenter.bintray.com/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar"],
+  artifact_sha256 = "24985eb43e295a9dd77905ada307a850ca25acf819cdb579c093fc6987b0dbc2",
+  rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
+  deps = [],
+  runtime_deps = [],
+  testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scala_parser_combinators instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
@@ -3840,17 +3837,17 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:156:19
 jvm_import_external(
-    name = "io_bazel_rules_scala_scala_reflect",
-    generator_name = "io_bazel_rules_scala_scala_reflect",
-    generator_function = "scala_repositories",
-    rule_name = "scala_import",
-    licenses = ["notice"],
-    jar_urls = ["https://repo.maven.apache.org/maven2/org/scala-lang/scala-reflect/2.12.11/scala-reflect-2.12.11.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scala-lang/scala-reflect/2.12.11/scala-reflect-2.12.11.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.11/scala-reflect-2.12.11.jar", "https://jcenter.bintray.com/org/scala-lang/scala-reflect/2.12.11/scala-reflect-2.12.11.jar"],
-    artifact_sha256 = "5f9e156aeba45ef2c4d24b303405db259082739015190b3b334811843bd90d6a",
-    rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
-    deps = [],
-    runtime_deps = [],
-    testonly_ = False,
+  name = "io_bazel_rules_scala_scala_reflect",
+  generator_name = "io_bazel_rules_scala_scala_reflect",
+  generator_function = "scala_repositories",
+  rule_name = "scala_import",
+  licenses = ["notice"],
+  jar_urls = ["https://repo.maven.apache.org/maven2/org/scala-lang/scala-reflect/2.12.11/scala-reflect-2.12.11.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scala-lang/scala-reflect/2.12.11/scala-reflect-2.12.11.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.11/scala-reflect-2.12.11.jar", "https://jcenter.bintray.com/org/scala-lang/scala-reflect/2.12.11/scala-reflect-2.12.11.jar"],
+  artifact_sha256 = "5f9e156aeba45ef2c4d24b303405db259082739015190b3b334811843bd90d6a",
+  rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
+  deps = [],
+  runtime_deps = [],
+  testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scala_reflect instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
@@ -3863,17 +3860,17 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:156:19
 jvm_import_external(
-    name = "io_bazel_rules_scala_scala_xml",
-    generator_name = "io_bazel_rules_scala_scala_xml",
-    generator_function = "scala_repositories",
-    rule_name = "scala_import",
-    licenses = ["notice"],
-    jar_urls = ["https://repo.maven.apache.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar", "https://jcenter.bintray.com/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar"],
-    artifact_sha256 = "1b48dc206f527b7604ef32492ada8e71706c63a65d999e0cabdafdc5793b4d63",
-    rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
-    deps = [],
-    runtime_deps = [],
-    testonly_ = False,
+  name = "io_bazel_rules_scala_scala_xml",
+  generator_name = "io_bazel_rules_scala_scala_xml",
+  generator_function = "scala_repositories",
+  rule_name = "scala_import",
+  licenses = ["notice"],
+  jar_urls = ["https://repo.maven.apache.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar", "https://jcenter.bintray.com/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar"],
+  artifact_sha256 = "1b48dc206f527b7604ef32492ada8e71706c63a65d999e0cabdafdc5793b4d63",
+  rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
+  deps = [],
+  runtime_deps = [],
+  testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scala_xml instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
@@ -3886,17 +3883,17 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:156:19
 jvm_import_external(
-    name = "io_bazel_rules_scala_scalactic",
-    generator_name = "io_bazel_rules_scala_scalactic",
-    generator_function = "scala_repositories",
-    rule_name = "scala_import",
-    licenses = ["notice"],
-    jar_urls = ["https://repo.maven.apache.org/maven2/org/scalactic/scalactic_2.12/3.1.2/scalactic_2.12-3.1.2.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scalactic/scalactic_2.12/3.1.2/scalactic_2.12-3.1.2.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.1.2/scalactic_2.12-3.1.2.jar", "https://jcenter.bintray.com/org/scalactic/scalactic_2.12/3.1.2/scalactic_2.12-3.1.2.jar"],
-    artifact_sha256 = "3b32040bb6f60d8dd054746a9047ac99ee9e075dca752dde55ed72cd7915f54f",
-    rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
-    deps = [],
-    runtime_deps = [],
-    testonly_ = False,
+  name = "io_bazel_rules_scala_scalactic",
+  generator_name = "io_bazel_rules_scala_scalactic",
+  generator_function = "scala_repositories",
+  rule_name = "scala_import",
+  licenses = ["notice"],
+  jar_urls = ["https://repo.maven.apache.org/maven2/org/scalactic/scalactic_2.12/3.1.2/scalactic_2.12-3.1.2.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scalactic/scalactic_2.12/3.1.2/scalactic_2.12-3.1.2.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.1.2/scalactic_2.12-3.1.2.jar", "https://jcenter.bintray.com/org/scalactic/scalactic_2.12/3.1.2/scalactic_2.12-3.1.2.jar"],
+  artifact_sha256 = "3b32040bb6f60d8dd054746a9047ac99ee9e075dca752dde55ed72cd7915f54f",
+  rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
+  deps = [],
+  runtime_deps = [],
+  testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scalactic instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
@@ -3909,17 +3906,17 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:156:19
 jvm_import_external(
-    name = "io_bazel_rules_scala_scalatest",
-    generator_name = "io_bazel_rules_scala_scalatest",
-    generator_function = "scala_repositories",
-    rule_name = "scala_import",
-    licenses = ["notice"],
-    jar_urls = ["https://repo.maven.apache.org/maven2/org/scalatest/scalatest_2.12/3.1.2/scalatest_2.12-3.1.2.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scalatest/scalatest_2.12/3.1.2/scalatest_2.12-3.1.2.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scalatest/scalatest_2.12/3.1.2/scalatest_2.12-3.1.2.jar", "https://jcenter.bintray.com/org/scalatest/scalatest_2.12/3.1.2/scalatest_2.12-3.1.2.jar"],
-    artifact_sha256 = "d7cb6c48e033d317dbb4a25c0514fb27538d798662f178c37235870a30da4f23",
-    rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
-    deps = [],
-    runtime_deps = [],
-    testonly_ = False,
+  name = "io_bazel_rules_scala_scalatest",
+  generator_name = "io_bazel_rules_scala_scalatest",
+  generator_function = "scala_repositories",
+  rule_name = "scala_import",
+  licenses = ["notice"],
+  jar_urls = ["https://repo.maven.apache.org/maven2/org/scalatest/scalatest_2.12/3.1.2/scalatest_2.12-3.1.2.jar", "https://maven-central.storage-download.googleapis.com/maven2/org/scalatest/scalatest_2.12/3.1.2/scalatest_2.12-3.1.2.jar", "https://mirror.bazel.build/repo1.maven.org/maven2/org/scalatest/scalatest_2.12/3.1.2/scalatest_2.12-3.1.2.jar", "https://jcenter.bintray.com/org/scalatest/scalatest_2.12/3.1.2/scalatest_2.12-3.1.2.jar"],
+  artifact_sha256 = "d7cb6c48e033d317dbb4a25c0514fb27538d798662f178c37235870a30da4f23",
+  rule_load = "load(\"@io_bazel_rules_scala//scala:scala_import.bzl\", \"scala_import\")",
+  deps = [],
+  runtime_deps = [],
+  testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scalatest instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
@@ -3932,12 +3929,12 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_get_coursier_coursier_2_12_2_0_16",
-    generator_name = "io_get_coursier_coursier_2_12_2_0_16",
-    generator_function = "pinned_maven_install",
-    sha256 = "22f6731465b615ee635e028aedee890fc81949b172bda0dc2ee4ff6891d72076",
-    urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier_2.12/2.0.16/coursier_2.12-2.0.16.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_get_coursier_coursier_2_12_2_0_16",
+  generator_name = "io_get_coursier_coursier_2_12_2_0_16",
+  generator_function = "pinned_maven_install",
+  sha256 = "22f6731465b615ee635e028aedee890fc81949b172bda0dc2ee4ff6891d72076",
+  urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier_2.12/2.0.16/coursier_2.12-2.0.16.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_2_12_2_0_16 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -3947,12 +3944,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_get_coursier_coursier_2_12_jar_sources_2_0_16",
-    generator_name = "io_get_coursier_coursier_2_12_jar_sources_2_0_16",
-    generator_function = "pinned_maven_install",
-    sha256 = "d3fea2cfd02220b72e98e8780dea6eadfc5ad50849f2efb2dc330e1fcac20a31",
-    urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier_2.12/2.0.16/coursier_2.12-2.0.16-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_get_coursier_coursier_2_12_jar_sources_2_0_16",
+  generator_name = "io_get_coursier_coursier_2_12_jar_sources_2_0_16",
+  generator_function = "pinned_maven_install",
+  sha256 = "d3fea2cfd02220b72e98e8780dea6eadfc5ad50849f2efb2dc330e1fcac20a31",
+  urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier_2.12/2.0.16/coursier_2.12-2.0.16-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_2_12_jar_sources_2_0_16 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -3962,12 +3959,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_get_coursier_coursier_cache_2_12_2_0_16",
-    generator_name = "io_get_coursier_coursier_cache_2_12_2_0_16",
-    generator_function = "pinned_maven_install",
-    sha256 = "c13a1ddb33613c5a3f8c605aba4c380cc2820998331c5b4bd815cf84816e8106",
-    urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-cache_2.12/2.0.16/coursier-cache_2.12-2.0.16.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_get_coursier_coursier_cache_2_12_2_0_16",
+  generator_name = "io_get_coursier_coursier_cache_2_12_2_0_16",
+  generator_function = "pinned_maven_install",
+  sha256 = "c13a1ddb33613c5a3f8c605aba4c380cc2820998331c5b4bd815cf84816e8106",
+  urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-cache_2.12/2.0.16/coursier-cache_2.12-2.0.16.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_cache_2_12_2_0_16 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -3977,12 +3974,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_get_coursier_coursier_cache_2_12_jar_sources_2_0_16",
-    generator_name = "io_get_coursier_coursier_cache_2_12_jar_sources_2_0_16",
-    generator_function = "pinned_maven_install",
-    sha256 = "a9d4bb8f1876f2af7576f71d2524a556c0f5f5fc30cbe5c07748f333107099c7",
-    urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-cache_2.12/2.0.16/coursier-cache_2.12-2.0.16-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_get_coursier_coursier_cache_2_12_jar_sources_2_0_16",
+  generator_name = "io_get_coursier_coursier_cache_2_12_jar_sources_2_0_16",
+  generator_function = "pinned_maven_install",
+  sha256 = "a9d4bb8f1876f2af7576f71d2524a556c0f5f5fc30cbe5c07748f333107099c7",
+  urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-cache_2.12/2.0.16/coursier-cache_2.12-2.0.16-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_cache_2_12_jar_sources_2_0_16 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -3992,12 +3989,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_get_coursier_coursier_core_2_12_2_0_16",
-    generator_name = "io_get_coursier_coursier_core_2_12_2_0_16",
-    generator_function = "pinned_maven_install",
-    sha256 = "dab857458183d6c9f4ad543c754134bd59a1994499dcaf3cc7a779099d5a74ab",
-    urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-core_2.12/2.0.16/coursier-core_2.12-2.0.16.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_get_coursier_coursier_core_2_12_2_0_16",
+  generator_name = "io_get_coursier_coursier_core_2_12_2_0_16",
+  generator_function = "pinned_maven_install",
+  sha256 = "dab857458183d6c9f4ad543c754134bd59a1994499dcaf3cc7a779099d5a74ab",
+  urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-core_2.12/2.0.16/coursier-core_2.12-2.0.16.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_core_2_12_2_0_16 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4007,12 +4004,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_get_coursier_coursier_core_2_12_jar_sources_2_0_16",
-    generator_name = "io_get_coursier_coursier_core_2_12_jar_sources_2_0_16",
-    generator_function = "pinned_maven_install",
-    sha256 = "fcad74eb5e65d0cff5560797a5f33b96c05fed5c97fcdf47957c9237065280bd",
-    urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-core_2.12/2.0.16/coursier-core_2.12-2.0.16-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_get_coursier_coursier_core_2_12_jar_sources_2_0_16",
+  generator_name = "io_get_coursier_coursier_core_2_12_jar_sources_2_0_16",
+  generator_function = "pinned_maven_install",
+  sha256 = "fcad74eb5e65d0cff5560797a5f33b96c05fed5c97fcdf47957c9237065280bd",
+  urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-core_2.12/2.0.16/coursier-core_2.12-2.0.16-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_core_2_12_jar_sources_2_0_16 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4022,12 +4019,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_get_coursier_coursier_util_2_12_2_0_16",
-    generator_name = "io_get_coursier_coursier_util_2_12_2_0_16",
-    generator_function = "pinned_maven_install",
-    sha256 = "b5dd71545b81a9bb298a9a0acc1ba7c55eecbe8ac6722a809c04c460978cfa26",
-    urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-util_2.12/2.0.16/coursier-util_2.12-2.0.16.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_get_coursier_coursier_util_2_12_2_0_16",
+  generator_name = "io_get_coursier_coursier_util_2_12_2_0_16",
+  generator_function = "pinned_maven_install",
+  sha256 = "b5dd71545b81a9bb298a9a0acc1ba7c55eecbe8ac6722a809c04c460978cfa26",
+  urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-util_2.12/2.0.16/coursier-util_2.12-2.0.16.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_util_2_12_2_0_16 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4037,12 +4034,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_get_coursier_coursier_util_2_12_jar_sources_2_0_16",
-    generator_name = "io_get_coursier_coursier_util_2_12_jar_sources_2_0_16",
-    generator_function = "pinned_maven_install",
-    sha256 = "1b63d71af89914a3e0a12a90ae87cbafa14a76d71bd43f221089a33897202c2b",
-    urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-util_2.12/2.0.16/coursier-util_2.12-2.0.16-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_get_coursier_coursier_util_2_12_jar_sources_2_0_16",
+  generator_name = "io_get_coursier_coursier_util_2_12_jar_sources_2_0_16",
+  generator_function = "pinned_maven_install",
+  sha256 = "1b63d71af89914a3e0a12a90ae87cbafa14a76d71bd43f221089a33897202c2b",
+  urls = ["https://repo1.maven.org/maven2/io/get-coursier/coursier-util_2.12/2.0.16/coursier-util_2.12-2.0.16-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_util_2_12_jar_sources_2_0_16 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4052,12 +4049,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_github_alexarchambault_concurrent_reference_hash_map_1_0_0",
-    generator_name = "io_github_alexarchambault_concurrent_reference_hash_map_1_0_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "6f23a489c24743f1109125554e0d1c6420ab784f36acedd80a0704c8873b9642",
-    urls = ["https://repo1.maven.org/maven2/io/github/alexarchambault/concurrent-reference-hash-map/1.0.0/concurrent-reference-hash-map-1.0.0.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_github_alexarchambault_concurrent_reference_hash_map_1_0_0",
+  generator_name = "io_github_alexarchambault_concurrent_reference_hash_map_1_0_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "6f23a489c24743f1109125554e0d1c6420ab784f36acedd80a0704c8873b9642",
+  urls = ["https://repo1.maven.org/maven2/io/github/alexarchambault/concurrent-reference-hash-map/1.0.0/concurrent-reference-hash-map-1.0.0.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_github_alexarchambault_concurrent_reference_hash_map_1_0_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4067,12 +4064,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_github_alexarchambault_concurrent_reference_hash_map_jar_sources_1_0_0",
-    generator_name = "io_github_alexarchambault_concurrent_reference_hash_map_jar_sources_1_0_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "78d9552cb737e3d2d5bff0e059d84a42284c748f20d75c4f70280abeb8241f1c",
-    urls = ["https://repo1.maven.org/maven2/io/github/alexarchambault/concurrent-reference-hash-map/1.0.0/concurrent-reference-hash-map-1.0.0-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_github_alexarchambault_concurrent_reference_hash_map_jar_sources_1_0_0",
+  generator_name = "io_github_alexarchambault_concurrent_reference_hash_map_jar_sources_1_0_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "78d9552cb737e3d2d5bff0e059d84a42284c748f20d75c4f70280abeb8241f1c",
+  urls = ["https://repo1.maven.org/maven2/io/github/alexarchambault/concurrent-reference-hash-map/1.0.0/concurrent-reference-hash-map-1.0.0-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_github_alexarchambault_concurrent_reference_hash_map_jar_sources_1_0_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4082,12 +4079,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_github_alexarchambault_windows_ansi_windows_ansi_0_0_3",
-    generator_name = "io_github_alexarchambault_windows_ansi_windows_ansi_0_0_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "ad622c46395c28246f6ac3e1f4970b370e3ff19daa41af94ecfb61697cec4e92",
-    urls = ["https://repo1.maven.org/maven2/io/github/alexarchambault/windows-ansi/windows-ansi/0.0.3/windows-ansi-0.0.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_github_alexarchambault_windows_ansi_windows_ansi_0_0_3",
+  generator_name = "io_github_alexarchambault_windows_ansi_windows_ansi_0_0_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "ad622c46395c28246f6ac3e1f4970b370e3ff19daa41af94ecfb61697cec4e92",
+  urls = ["https://repo1.maven.org/maven2/io/github/alexarchambault/windows-ansi/windows-ansi/0.0.3/windows-ansi-0.0.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_github_alexarchambault_windows_ansi_windows_ansi_0_0_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4097,12 +4094,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_github_alexarchambault_windows_ansi_windows_ansi_jar_sources_0_0_3",
-    generator_name = "io_github_alexarchambault_windows_ansi_windows_ansi_jar_sources_0_0_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "6285b77411e1b35b461d40f3fa8dd8458e15d1da8a7835c3903e264a82665b01",
-    urls = ["https://repo1.maven.org/maven2/io/github/alexarchambault/windows-ansi/windows-ansi/0.0.3/windows-ansi-0.0.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_github_alexarchambault_windows_ansi_windows_ansi_jar_sources_0_0_3",
+  generator_name = "io_github_alexarchambault_windows_ansi_windows_ansi_jar_sources_0_0_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "6285b77411e1b35b461d40f3fa8dd8458e15d1da8a7835c3903e264a82665b01",
+  urls = ["https://repo1.maven.org/maven2/io/github/alexarchambault/windows-ansi/windows-ansi/0.0.3/windows-ansi-0.0.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_github_alexarchambault_windows_ansi_windows_ansi_jar_sources_0_0_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4112,12 +4109,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_api_1_40_1",
-    generator_name = "io_grpc_grpc_api_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "9c33559cba6ad4eb3f2ed8a24a0c12eb591595f565d95122d2f1da28a20caa37",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-api/1.40.1/grpc-api-1.40.1.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_api_1_40_1",
+  generator_name = "io_grpc_grpc_api_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "9c33559cba6ad4eb3f2ed8a24a0c12eb591595f565d95122d2f1da28a20caa37",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-api/1.40.1/grpc-api-1.40.1.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_api_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4127,12 +4124,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "io_grpc_grpc_api_1_43_2",
-    generator_name = "io_grpc_grpc_api_1_43_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "97f5cf205720ee50c18941f3ed44615f0ebe48839f0183805a978075b76cc487",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-api/1.43.2/grpc-api-1.43.2.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "io_grpc_grpc_api_1_43_2",
+  generator_name = "io_grpc_grpc_api_1_43_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "97f5cf205720ee50c18941f3ed44615f0ebe48839f0183805a978075b76cc487",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-api/1.43.2/grpc-api-1.43.2.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_api_1_43_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -4142,12 +4139,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_api_jar_sources_1_40_1",
-    generator_name = "io_grpc_grpc_api_jar_sources_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "2018efa8427b210b72975b74b38d8507763f464b4f7ab92ab4da9e081fd2f84d",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-api/1.40.1/grpc-api-1.40.1-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_api_jar_sources_1_40_1",
+  generator_name = "io_grpc_grpc_api_jar_sources_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "2018efa8427b210b72975b74b38d8507763f464b4f7ab92ab4da9e081fd2f84d",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-api/1.40.1/grpc-api-1.40.1-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_api_jar_sources_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4157,12 +4154,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "io_grpc_grpc_api_jar_sources_1_43_2",
-    generator_name = "io_grpc_grpc_api_jar_sources_1_43_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "b88fbf9b1fdf48817e97f32c559e71e3583f3024bef44ca18a4f8f9ea1d5a442",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-api/1.43.2/grpc-api-1.43.2-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "io_grpc_grpc_api_jar_sources_1_43_2",
+  generator_name = "io_grpc_grpc_api_jar_sources_1_43_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "b88fbf9b1fdf48817e97f32c559e71e3583f3024bef44ca18a4f8f9ea1d5a442",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-api/1.43.2/grpc-api-1.43.2-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_api_jar_sources_1_43_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -4172,12 +4169,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_context_1_40_1",
-    generator_name = "io_grpc_grpc_context_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "8ac7129db6ad9976aa38811d51a51d2535e7875a21e87b7bafad2c84cb9de265",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-context/1.40.1/grpc-context-1.40.1.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_context_1_40_1",
+  generator_name = "io_grpc_grpc_context_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "8ac7129db6ad9976aa38811d51a51d2535e7875a21e87b7bafad2c84cb9de265",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-context/1.40.1/grpc-context-1.40.1.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_context_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4187,12 +4184,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "io_grpc_grpc_context_1_43_2",
-    generator_name = "io_grpc_grpc_context_1_43_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "2d5922bba25760781288eced257b42672daaed51a1d2154bac0b78a8ded349df",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-context/1.43.2/grpc-context-1.43.2.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "io_grpc_grpc_context_1_43_2",
+  generator_name = "io_grpc_grpc_context_1_43_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "2d5922bba25760781288eced257b42672daaed51a1d2154bac0b78a8ded349df",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-context/1.43.2/grpc-context-1.43.2.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_context_1_43_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -4202,12 +4199,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_context_jar_sources_1_40_1",
-    generator_name = "io_grpc_grpc_context_jar_sources_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "d59ba16c5d7a0338a4916a4a04565700db612829dbe04f58b05200510057d0f9",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-context/1.40.1/grpc-context-1.40.1-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_context_jar_sources_1_40_1",
+  generator_name = "io_grpc_grpc_context_jar_sources_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "d59ba16c5d7a0338a4916a4a04565700db612829dbe04f58b05200510057d0f9",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-context/1.40.1/grpc-context-1.40.1-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_context_jar_sources_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4217,12 +4214,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "io_grpc_grpc_context_jar_sources_1_43_2",
-    generator_name = "io_grpc_grpc_context_jar_sources_1_43_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "d5d20f55f0436ce43ae915b087155d4231faeedb417f73af26b1ab265b4a2f37",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-context/1.43.2/grpc-context-1.43.2-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "io_grpc_grpc_context_jar_sources_1_43_2",
+  generator_name = "io_grpc_grpc_context_jar_sources_1_43_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "d5d20f55f0436ce43ae915b087155d4231faeedb417f73af26b1ab265b4a2f37",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-context/1.43.2/grpc-context-1.43.2-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_context_jar_sources_1_43_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -4232,12 +4229,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_core_1_40_1",
-    generator_name = "io_grpc_grpc_core_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "c32e97f7b937445cde40e88760df8a308bc2c2420ff0d00a3ce2025fde939e0f",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-core/1.40.1/grpc-core-1.40.1.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_core_1_40_1",
+  generator_name = "io_grpc_grpc_core_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "c32e97f7b937445cde40e88760df8a308bc2c2420ff0d00a3ce2025fde939e0f",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-core/1.40.1/grpc-core-1.40.1.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_core_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4247,12 +4244,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "io_grpc_grpc_core_1_43_2",
-    generator_name = "io_grpc_grpc_core_1_43_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "6478ad3ffc1f2c63a7624aacf82b276f4f3c4d735d8c85a11a85145227d8fbf5",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-core/1.43.2/grpc-core-1.43.2.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "io_grpc_grpc_core_1_43_2",
+  generator_name = "io_grpc_grpc_core_1_43_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "6478ad3ffc1f2c63a7624aacf82b276f4f3c4d735d8c85a11a85145227d8fbf5",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-core/1.43.2/grpc-core-1.43.2.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_core_1_43_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -4262,12 +4259,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_core_jar_sources_1_40_1",
-    generator_name = "io_grpc_grpc_core_jar_sources_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "c11b0c12588ce87c2c10013c6ba349f64ebaa84b35a02470839b1b54b26dc93e",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-core/1.40.1/grpc-core-1.40.1-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_core_jar_sources_1_40_1",
+  generator_name = "io_grpc_grpc_core_jar_sources_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "c11b0c12588ce87c2c10013c6ba349f64ebaa84b35a02470839b1b54b26dc93e",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-core/1.40.1/grpc-core-1.40.1-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_core_jar_sources_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4277,12 +4274,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "io_grpc_grpc_core_jar_sources_1_43_2",
-    generator_name = "io_grpc_grpc_core_jar_sources_1_43_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "db407559dccbe71c64eeb206ff16b05163542c57fb935a5643f377b9e2dbc687",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-core/1.43.2/grpc-core-1.43.2-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "io_grpc_grpc_core_jar_sources_1_43_2",
+  generator_name = "io_grpc_grpc_core_jar_sources_1_43_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "db407559dccbe71c64eeb206ff16b05163542c57fb935a5643f377b9e2dbc687",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-core/1.43.2/grpc-core-1.43.2-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_core_jar_sources_1_43_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -4292,29 +4289,29 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:33:15
 http_archive(
-    name = "io_grpc_grpc_java",
-    generator_name = "io_grpc_grpc_java",
-    generator_function = "grpc_java_deps",
-    urls = ["https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz"],
-    sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
-    strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
+  name = "io_grpc_grpc_java",
+  generator_name = "io_grpc_grpc_java",
+  generator_function = "grpc_java_deps",
+  urls = ["https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz"],
+  sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
+  strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
 )
 # Rule io_grpc_grpc_java instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:33:15               in <toplevel>
-#   {WORKSPACE}/deps/grpc_java_deps.bzl:14:22 in grpc_java_deps
-#   {WORKSPACE}/deps/grpc_java_deps.bzl:29:11 in io_grpc_grpc_java
-#   {WORKSPACE}/deps/grpc_java_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/grpc_java_deps.bzl:13:22 in grpc_java_deps
+#   {WORKSPACE}/deps/grpc_java_deps.bzl:27:11 in io_grpc_grpc_java
+#   {WORKSPACE}/deps/grpc_java_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_netty_1_40_1",
-    generator_name = "io_grpc_grpc_netty_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "34b5afa83616cf42284ea7ab6acb0bda3ddec66411f1be4865b78ebefa3a90a7",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-netty/1.40.1/grpc-netty-1.40.1.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_netty_1_40_1",
+  generator_name = "io_grpc_grpc_netty_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "34b5afa83616cf42284ea7ab6acb0bda3ddec66411f1be4865b78ebefa3a90a7",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-netty/1.40.1/grpc-netty-1.40.1.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_netty_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4324,12 +4321,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_netty_jar_sources_1_40_1",
-    generator_name = "io_grpc_grpc_netty_jar_sources_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "30eb58a391320d5ef160f98d22f32b3c600a932058ca69d412187ced5f926ef5",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-netty/1.40.1/grpc-netty-1.40.1-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_netty_jar_sources_1_40_1",
+  generator_name = "io_grpc_grpc_netty_jar_sources_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "30eb58a391320d5ef160f98d22f32b3c600a932058ca69d412187ced5f926ef5",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-netty/1.40.1/grpc-netty-1.40.1-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_netty_jar_sources_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4339,12 +4336,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "io_grpc_grpc_netty_shaded_1_43_2",
-    generator_name = "io_grpc_grpc_netty_shaded_1_43_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "35d8a50bea5bf5dc96ec9286e8ed4cf02c3ab4d94e29ebe83017b4af6a065e34",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-netty-shaded/1.43.2/grpc-netty-shaded-1.43.2.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "io_grpc_grpc_netty_shaded_1_43_2",
+  generator_name = "io_grpc_grpc_netty_shaded_1_43_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "35d8a50bea5bf5dc96ec9286e8ed4cf02c3ab4d94e29ebe83017b4af6a065e34",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-netty-shaded/1.43.2/grpc-netty-shaded-1.43.2.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_netty_shaded_1_43_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -4354,12 +4351,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "io_grpc_grpc_netty_shaded_jar_sources_1_43_2",
-    generator_name = "io_grpc_grpc_netty_shaded_jar_sources_1_43_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "5da9c6a7ee1a52e4a5706ef04631d724a16207d76649c4732b27fd1013017248",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-netty-shaded/1.43.2/grpc-netty-shaded-1.43.2-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "io_grpc_grpc_netty_shaded_jar_sources_1_43_2",
+  generator_name = "io_grpc_grpc_netty_shaded_jar_sources_1_43_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "5da9c6a7ee1a52e4a5706ef04631d724a16207d76649c4732b27fd1013017248",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-netty-shaded/1.43.2/grpc-netty-shaded-1.43.2-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_netty_shaded_jar_sources_1_43_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -4369,12 +4366,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:136:23
 http_archive(
-    name = "io_grpc_grpc_proto",
-    generator_name = "io_grpc_grpc_proto",
-    generator_function = "grpc_java_repositories",
-    urls = ["https://github.com/grpc/grpc-proto/archive/cf828d0e1155e5ea58b46d7184ee5596e03ddcb8.zip"],
-    sha256 = "5848a4e034126bece0c37c16554fb80625615aedf1acad4e2a3cdbaaa76944eb",
-    strip_prefix = "grpc-proto-cf828d0e1155e5ea58b46d7184ee5596e03ddcb8",
+  name = "io_grpc_grpc_proto",
+  generator_name = "io_grpc_grpc_proto",
+  generator_function = "grpc_java_repositories",
+  urls = ["https://github.com/grpc/grpc-proto/archive/cf828d0e1155e5ea58b46d7184ee5596e03ddcb8.zip"],
+  sha256 = "5848a4e034126bece0c37c16554fb80625615aedf1acad4e2a3cdbaaa76944eb",
+  strip_prefix = "grpc-proto-cf828d0e1155e5ea58b46d7184ee5596e03ddcb8",
 )
 # Rule io_grpc_grpc_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:136:23                                                in <toplevel>
@@ -4385,12 +4382,12 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_protobuf_1_40_1",
-    generator_name = "io_grpc_grpc_protobuf_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "8c00437701483c73977144fac6313403475b448cb5e913ac54efc3f3cb1d44f8",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-protobuf/1.40.1/grpc-protobuf-1.40.1.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_protobuf_1_40_1",
+  generator_name = "io_grpc_grpc_protobuf_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "8c00437701483c73977144fac6313403475b448cb5e913ac54efc3f3cb1d44f8",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-protobuf/1.40.1/grpc-protobuf-1.40.1.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_protobuf_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4400,12 +4397,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_protobuf_jar_sources_1_40_1",
-    generator_name = "io_grpc_grpc_protobuf_jar_sources_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "f67ca3ebf26d7634310edb93075f22e50fe71bff454044fd1b898a1cf6ebe9b5",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-protobuf/1.40.1/grpc-protobuf-1.40.1-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_protobuf_jar_sources_1_40_1",
+  generator_name = "io_grpc_grpc_protobuf_jar_sources_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "f67ca3ebf26d7634310edb93075f22e50fe71bff454044fd1b898a1cf6ebe9b5",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-protobuf/1.40.1/grpc-protobuf-1.40.1-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_protobuf_jar_sources_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4415,12 +4412,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_protobuf_lite_1_40_1",
-    generator_name = "io_grpc_grpc_protobuf_lite_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "c17fe8f4f6a3ff60f2dc1c5119815c5bcbcc3967e60ab1e538272459e4fd69a7",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-protobuf-lite/1.40.1/grpc-protobuf-lite-1.40.1.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_protobuf_lite_1_40_1",
+  generator_name = "io_grpc_grpc_protobuf_lite_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "c17fe8f4f6a3ff60f2dc1c5119815c5bcbcc3967e60ab1e538272459e4fd69a7",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-protobuf-lite/1.40.1/grpc-protobuf-lite-1.40.1.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_protobuf_lite_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4430,12 +4427,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_protobuf_lite_jar_sources_1_40_1",
-    generator_name = "io_grpc_grpc_protobuf_lite_jar_sources_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "22cc22888e8ecf61d9be384baa6446cff82029b7dbe02d6d5413a36e89c27204",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-protobuf-lite/1.40.1/grpc-protobuf-lite-1.40.1-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_protobuf_lite_jar_sources_1_40_1",
+  generator_name = "io_grpc_grpc_protobuf_lite_jar_sources_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "22cc22888e8ecf61d9be384baa6446cff82029b7dbe02d6d5413a36e89c27204",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-protobuf-lite/1.40.1/grpc-protobuf-lite-1.40.1-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_protobuf_lite_jar_sources_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4445,12 +4442,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_stub_1_40_1",
-    generator_name = "io_grpc_grpc_stub_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "110730e0b57e77f17530b8ecd7972447a531410b06b6ad1c1f910884a5a13638",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-stub/1.40.1/grpc-stub-1.40.1.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_stub_1_40_1",
+  generator_name = "io_grpc_grpc_stub_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "110730e0b57e77f17530b8ecd7972447a531410b06b6ad1c1f910884a5a13638",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-stub/1.40.1/grpc-stub-1.40.1.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_stub_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4460,12 +4457,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_grpc_grpc_stub_jar_sources_1_40_1",
-    generator_name = "io_grpc_grpc_stub_jar_sources_1_40_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "69554bee645cdcdf4b55aec411f51ccaa24730595fbd30053b46ef5cf198168a",
-    urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-stub/1.40.1/grpc-stub-1.40.1-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_grpc_grpc_stub_jar_sources_1_40_1",
+  generator_name = "io_grpc_grpc_stub_jar_sources_1_40_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "69554bee645cdcdf4b55aec411f51ccaa24730595fbd30053b46ef5cf198168a",
+  urls = ["https://repo1.maven.org/maven2/io/grpc/grpc-stub/1.40.1/grpc-stub-1.40.1-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_stub_jar_sources_1_40_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4475,10 +4472,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_buffer",
-    generator_name = "io_netty_netty_buffer",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_buffer",
+  generator_name = "io_netty_netty_buffer",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_buffer instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -4488,12 +4485,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_buffer_4_1_52_Final",
-    generator_name = "io_netty_netty_buffer_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "41ca1035aee6e0f8177597d0a7610a5aa2c6e6fac744ac81fde4e5e58f639675",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-buffer/4.1.52.Final/netty-buffer-4.1.52.Final.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_buffer_4_1_52_Final",
+  generator_name = "io_netty_netty_buffer_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "41ca1035aee6e0f8177597d0a7610a5aa2c6e6fac744ac81fde4e5e58f639675",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-buffer/4.1.52.Final/netty-buffer-4.1.52.Final.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_buffer_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4503,12 +4500,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_buffer_jar_sources_4_1_52_Final",
-    generator_name = "io_netty_netty_buffer_jar_sources_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "d6a2d45be2b203ed331cd483f2030cd85b424deafafc748a58dd07b7f0e12571",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-buffer/4.1.52.Final/netty-buffer-4.1.52.Final-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_buffer_jar_sources_4_1_52_Final",
+  generator_name = "io_netty_netty_buffer_jar_sources_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "d6a2d45be2b203ed331cd483f2030cd85b424deafafc748a58dd07b7f0e12571",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-buffer/4.1.52.Final/netty-buffer-4.1.52.Final-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_buffer_jar_sources_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4518,10 +4515,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_codec",
-    generator_name = "io_netty_netty_codec",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_codec",
+  generator_name = "io_netty_netty_codec",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_codec instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4531,12 +4528,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_codec_4_1_52_Final",
-    generator_name = "io_netty_netty_codec_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "3c7e78dcce7e353d86ac7dba2c251ab5cddd4eb86eaa889cfe4229782b828e52",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec/4.1.52.Final/netty-codec-4.1.52.Final.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_codec_4_1_52_Final",
+  generator_name = "io_netty_netty_codec_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "3c7e78dcce7e353d86ac7dba2c251ab5cddd4eb86eaa889cfe4229782b828e52",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec/4.1.52.Final/netty-codec-4.1.52.Final.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4546,10 +4543,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_codec_http",
-    generator_name = "io_netty_netty_codec_http",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_codec_http",
+  generator_name = "io_netty_netty_codec_http",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_codec_http instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -4559,10 +4556,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_codec_http2",
-    generator_name = "io_netty_netty_codec_http2",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_codec_http2",
+  generator_name = "io_netty_netty_codec_http2",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_codec_http2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -4572,12 +4569,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_codec_http2_4_1_52_Final",
-    generator_name = "io_netty_netty_codec_http2_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "eb527a42d2289d12dee6d4753ca2715978a37bbb41c71915ce4e9539c49f93a1",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-http2/4.1.52.Final/netty-codec-http2-4.1.52.Final.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_codec_http2_4_1_52_Final",
+  generator_name = "io_netty_netty_codec_http2_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "eb527a42d2289d12dee6d4753ca2715978a37bbb41c71915ce4e9539c49f93a1",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-http2/4.1.52.Final/netty-codec-http2-4.1.52.Final.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_http2_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4587,12 +4584,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_codec_http2_jar_sources_4_1_52_Final",
-    generator_name = "io_netty_netty_codec_http2_jar_sources_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "566c9907182c81f0d89ae8f48e55d93f65a887d1455b77f3d2a1809756df001e",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-http2/4.1.52.Final/netty-codec-http2-4.1.52.Final-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_codec_http2_jar_sources_4_1_52_Final",
+  generator_name = "io_netty_netty_codec_http2_jar_sources_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "566c9907182c81f0d89ae8f48e55d93f65a887d1455b77f3d2a1809756df001e",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-http2/4.1.52.Final/netty-codec-http2-4.1.52.Final-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_http2_jar_sources_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4602,12 +4599,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_codec_http_4_1_52_Final",
-    generator_name = "io_netty_netty_codec_http_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "b5da28d0ea878b07d3111acf5e4faf41288ef2302b26414190fdd1a7d973c80c",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-http/4.1.52.Final/netty-codec-http-4.1.52.Final.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_codec_http_4_1_52_Final",
+  generator_name = "io_netty_netty_codec_http_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "b5da28d0ea878b07d3111acf5e4faf41288ef2302b26414190fdd1a7d973c80c",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-http/4.1.52.Final/netty-codec-http-4.1.52.Final.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_http_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4617,12 +4614,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_codec_http_jar_sources_4_1_52_Final",
-    generator_name = "io_netty_netty_codec_http_jar_sources_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "2a6e072320f5b351080f6d90273063a709ad88a2e3fb45daa748a54421ee0fa0",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-http/4.1.52.Final/netty-codec-http-4.1.52.Final-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_codec_http_jar_sources_4_1_52_Final",
+  generator_name = "io_netty_netty_codec_http_jar_sources_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "2a6e072320f5b351080f6d90273063a709ad88a2e3fb45daa748a54421ee0fa0",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-http/4.1.52.Final/netty-codec-http-4.1.52.Final-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_http_jar_sources_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4632,12 +4629,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_codec_jar_sources_4_1_52_Final",
-    generator_name = "io_netty_netty_codec_jar_sources_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "e4ded3ec6c497573f50406f7587ad062d758b81e1c181c44893648c6e268cb90",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec/4.1.52.Final/netty-codec-4.1.52.Final-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_codec_jar_sources_4_1_52_Final",
+  generator_name = "io_netty_netty_codec_jar_sources_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "e4ded3ec6c497573f50406f7587ad062d758b81e1c181c44893648c6e268cb90",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec/4.1.52.Final/netty-codec-4.1.52.Final-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_jar_sources_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4647,10 +4644,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_codec_socks",
-    generator_name = "io_netty_netty_codec_socks",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_codec_socks",
+  generator_name = "io_netty_netty_codec_socks",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_codec_socks instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
@@ -4660,12 +4657,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_codec_socks_4_1_52_Final",
-    generator_name = "io_netty_netty_codec_socks_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "fecc577e0bb7721d6768cfc1846ee172911d16ab80dfbd9995d9657a551d4ea7",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-socks/4.1.52.Final/netty-codec-socks-4.1.52.Final.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_codec_socks_4_1_52_Final",
+  generator_name = "io_netty_netty_codec_socks_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "fecc577e0bb7721d6768cfc1846ee172911d16ab80dfbd9995d9657a551d4ea7",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-socks/4.1.52.Final/netty-codec-socks-4.1.52.Final.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_socks_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4675,12 +4672,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_codec_socks_jar_sources_4_1_52_Final",
-    generator_name = "io_netty_netty_codec_socks_jar_sources_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "f58efad4b57fc3ba6c219ef010a648a5b2837945497276b9d04bc1b9d56a2ede",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-socks/4.1.52.Final/netty-codec-socks-4.1.52.Final-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_codec_socks_jar_sources_4_1_52_Final",
+  generator_name = "io_netty_netty_codec_socks_jar_sources_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "f58efad4b57fc3ba6c219ef010a648a5b2837945497276b9d04bc1b9d56a2ede",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-codec-socks/4.1.52.Final/netty-codec-socks-4.1.52.Final-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_socks_jar_sources_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4690,10 +4687,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_common",
-    generator_name = "io_netty_netty_common",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_common",
+  generator_name = "io_netty_netty_common",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_common instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4703,12 +4700,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_common_4_1_52_Final",
-    generator_name = "io_netty_netty_common_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "0d1f101e4db7d530ed04d7cabd57d95c0750f059bb6b3fadfed0c80d4734c717",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-common/4.1.52.Final/netty-common-4.1.52.Final.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_common_4_1_52_Final",
+  generator_name = "io_netty_netty_common_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "0d1f101e4db7d530ed04d7cabd57d95c0750f059bb6b3fadfed0c80d4734c717",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-common/4.1.52.Final/netty-common-4.1.52.Final.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_common_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4718,12 +4715,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_common_jar_sources_4_1_52_Final",
-    generator_name = "io_netty_netty_common_jar_sources_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "e96d029218a64f3c1eb4f5caf19cf51ff777f4fbeb7ffbdc3e62dcc2eab380a6",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-common/4.1.52.Final/netty-common-4.1.52.Final-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_common_jar_sources_4_1_52_Final",
+  generator_name = "io_netty_netty_common_jar_sources_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "e96d029218a64f3c1eb4f5caf19cf51ff777f4fbeb7ffbdc3e62dcc2eab380a6",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-common/4.1.52.Final/netty-common-4.1.52.Final-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_common_jar_sources_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4733,10 +4730,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_handler",
-    generator_name = "io_netty_netty_handler",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_handler",
+  generator_name = "io_netty_netty_handler",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_handler instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4746,12 +4743,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_handler_4_1_52_Final",
-    generator_name = "io_netty_netty_handler_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "2cdc21fbfae04940c85929039779c93f51f618f5efb216079319dcfcf32a55c1",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-handler/4.1.52.Final/netty-handler-4.1.52.Final.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_handler_4_1_52_Final",
+  generator_name = "io_netty_netty_handler_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "2cdc21fbfae04940c85929039779c93f51f618f5efb216079319dcfcf32a55c1",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-handler/4.1.52.Final/netty-handler-4.1.52.Final.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_handler_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4761,12 +4758,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_handler_jar_sources_4_1_52_Final",
-    generator_name = "io_netty_netty_handler_jar_sources_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "6e36cc811bd80b2e2f8d4b389b60b62c032d199fdfc1a7d0b234b4443a5e4d44",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-handler/4.1.52.Final/netty-handler-4.1.52.Final-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_handler_jar_sources_4_1_52_Final",
+  generator_name = "io_netty_netty_handler_jar_sources_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "6e36cc811bd80b2e2f8d4b389b60b62c032d199fdfc1a7d0b234b4443a5e4d44",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-handler/4.1.52.Final/netty-handler-4.1.52.Final-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_handler_jar_sources_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4776,10 +4773,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_handler_proxy",
-    generator_name = "io_netty_netty_handler_proxy",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_handler_proxy",
+  generator_name = "io_netty_netty_handler_proxy",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_handler_proxy instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4789,12 +4786,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_handler_proxy_4_1_52_Final",
-    generator_name = "io_netty_netty_handler_proxy_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "e8d07863ceb4bd4806e255a1d532c8650f0f3b2d4d006ad6d21812e941b42fdc",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-handler-proxy/4.1.52.Final/netty-handler-proxy-4.1.52.Final.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_handler_proxy_4_1_52_Final",
+  generator_name = "io_netty_netty_handler_proxy_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "e8d07863ceb4bd4806e255a1d532c8650f0f3b2d4d006ad6d21812e941b42fdc",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-handler-proxy/4.1.52.Final/netty-handler-proxy-4.1.52.Final.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_handler_proxy_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4804,12 +4801,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_handler_proxy_jar_sources_4_1_52_Final",
-    generator_name = "io_netty_netty_handler_proxy_jar_sources_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "f122f6f2ced8a28aa1e8e68e981b080cb55e17c12795fc9e4cb31c48802f5795",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-handler-proxy/4.1.52.Final/netty-handler-proxy-4.1.52.Final-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_handler_proxy_jar_sources_4_1_52_Final",
+  generator_name = "io_netty_netty_handler_proxy_jar_sources_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "f122f6f2ced8a28aa1e8e68e981b080cb55e17c12795fc9e4cb31c48802f5795",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-handler-proxy/4.1.52.Final/netty-handler-proxy-4.1.52.Final-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_handler_proxy_jar_sources_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4819,10 +4816,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_resolver",
-    generator_name = "io_netty_netty_resolver",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_resolver",
+  generator_name = "io_netty_netty_resolver",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_resolver instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4832,12 +4829,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_resolver_4_1_52_Final",
-    generator_name = "io_netty_netty_resolver_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "6eeb72a233979cb45b0b4d6d46c5a41332c57c0cf8a803b1efc60dbbecba09a6",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-resolver/4.1.52.Final/netty-resolver-4.1.52.Final.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_resolver_4_1_52_Final",
+  generator_name = "io_netty_netty_resolver_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "6eeb72a233979cb45b0b4d6d46c5a41332c57c0cf8a803b1efc60dbbecba09a6",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-resolver/4.1.52.Final/netty-resolver-4.1.52.Final.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_resolver_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4847,12 +4844,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_resolver_jar_sources_4_1_52_Final",
-    generator_name = "io_netty_netty_resolver_jar_sources_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "e490478fb2469e94794cb73acaf75d6ed65983ac7f1a3982dd2c82cd30794773",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-resolver/4.1.52.Final/netty-resolver-4.1.52.Final-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_resolver_jar_sources_4_1_52_Final",
+  generator_name = "io_netty_netty_resolver_jar_sources_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "e490478fb2469e94794cb73acaf75d6ed65983ac7f1a3982dd2c82cd30794773",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-resolver/4.1.52.Final/netty-resolver-4.1.52.Final-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_resolver_jar_sources_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4862,10 +4859,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_tcnative_boringssl_static",
-    generator_name = "io_netty_netty_tcnative_boringssl_static",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_tcnative_boringssl_static",
+  generator_name = "io_netty_netty_tcnative_boringssl_static",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_tcnative_boringssl_static instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4875,10 +4872,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_transport",
-    generator_name = "io_netty_netty_transport",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_transport",
+  generator_name = "io_netty_netty_transport",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_transport instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4888,12 +4885,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_transport_4_1_52_Final",
-    generator_name = "io_netty_netty_transport_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "9a3e6f8c0e55de363eb1ea10fe781797eca394e62186df2ae0b4eb2bce0b4541",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-transport/4.1.52.Final/netty-transport-4.1.52.Final.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_transport_4_1_52_Final",
+  generator_name = "io_netty_netty_transport_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "9a3e6f8c0e55de363eb1ea10fe781797eca394e62186df2ae0b4eb2bce0b4541",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-transport/4.1.52.Final/netty-transport-4.1.52.Final.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_transport_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4903,12 +4900,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "io_netty_netty_transport_jar_sources_4_1_52_Final",
-    generator_name = "io_netty_netty_transport_jar_sources_4_1_52_Final",
-    generator_function = "pinned_maven_install",
-    sha256 = "697ebd4d871fdcb3aeab2fc1d145a5a26cad36c0e8c22dd0856bcd2b3472fec7",
-    urls = ["https://repo1.maven.org/maven2/io/netty/netty-transport/4.1.52.Final/netty-transport-4.1.52.Final-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "io_netty_netty_transport_jar_sources_4_1_52_Final",
+  generator_name = "io_netty_netty_transport_jar_sources_4_1_52_Final",
+  generator_function = "pinned_maven_install",
+  sha256 = "697ebd4d871fdcb3aeab2fc1d145a5a26cad36c0e8c22dd0856bcd2b3472fec7",
+  urls = ["https://repo1.maven.org/maven2/io/netty/netty-transport/4.1.52.Final/netty-transport-4.1.52.Final-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_transport_jar_sources_4_1_52_Final instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -4918,10 +4915,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_transport_native_epoll_linux_x86_64",
-    generator_name = "io_netty_netty_transport_native_epoll_linux_x86_64",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_transport_native_epoll_linux_x86_64",
+  generator_name = "io_netty_netty_transport_native_epoll_linux_x86_64",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_transport_native_epoll_linux_x86_64 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4931,10 +4928,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_netty_netty_transport_native_unix_common",
-    generator_name = "io_netty_netty_transport_native_unix_common",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_netty_netty_transport_native_unix_common",
+  generator_name = "io_netty_netty_transport_native_unix_common",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_netty_netty_transport_native_unix_common instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4944,25 +4941,25 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "io_opencensus_cpp",
-    generator_name = "io_opencensus_cpp",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/census-instrumentation/opencensus-cpp/archive/c9a4da319bc669a772928ffc55af4a61be1a1176.tar.gz", "https://github.com/census-instrumentation/opencensus-cpp/archive/c9a4da319bc669a772928ffc55af4a61be1a1176.tar.gz"],
-    sha256 = "90d6fafa8b1a2ea613bf662731d3086e1c2ed286f458a95c81744df2dbae41b1",
-    strip_prefix = "opencensus-cpp-c9a4da319bc669a772928ffc55af4a61be1a1176",
+  name = "io_opencensus_cpp",
+  generator_name = "io_opencensus_cpp",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/census-instrumentation/opencensus-cpp/archive/c9a4da319bc669a772928ffc55af4a61be1a1176.tar.gz", "https://github.com/census-instrumentation/opencensus-cpp/archive/c9a4da319bc669a772928ffc55af4a61be1a1176.tar.gz"],
+  sha256 = "90d6fafa8b1a2ea613bf662731d3086e1c2ed286f458a95c81744df2dbae41b1",
+  strip_prefix = "opencensus-cpp-c9a4da319bc669a772928ffc55af4a61be1a1176",
 )
 # Rule io_opencensus_cpp instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:329:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:330:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_opencensus_opencensus_api",
-    generator_name = "io_opencensus_opencensus_api",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_opencensus_opencensus_api",
+  generator_name = "io_opencensus_opencensus_api",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_opencensus_opencensus_api instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4972,10 +4969,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_opencensus_opencensus_contrib_grpc_metrics",
-    generator_name = "io_opencensus_opencensus_contrib_grpc_metrics",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_opencensus_opencensus_contrib_grpc_metrics",
+  generator_name = "io_opencensus_opencensus_contrib_grpc_metrics",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_opencensus_opencensus_contrib_grpc_metrics instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4985,10 +4982,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_opencensus_opencensus_contrib_http_util",
-    generator_name = "io_opencensus_opencensus_contrib_http_util",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_opencensus_opencensus_contrib_http_util",
+  generator_name = "io_opencensus_opencensus_contrib_http_util",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_opencensus_opencensus_contrib_http_util instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -4998,10 +4995,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "io_perfmark_perfmark_api",
-    generator_name = "io_perfmark_perfmark_api",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "io_perfmark_perfmark_api",
+  generator_name = "io_perfmark_perfmark_api",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule io_perfmark_perfmark_api instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -5011,12 +5008,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "io_perfmark_perfmark_api_0_23_0",
-    generator_name = "io_perfmark_perfmark_api_0_23_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "c705b5c10c18ff3032b9e81742bc2f6b0e5607f6a6dfc0c8ad0cff75d4913042",
-    urls = ["https://repo1.maven.org/maven2/io/perfmark/perfmark-api/0.23.0/perfmark-api-0.23.0.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "io_perfmark_perfmark_api_0_23_0",
+  generator_name = "io_perfmark_perfmark_api_0_23_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "c705b5c10c18ff3032b9e81742bc2f6b0e5607f6a6dfc0c8ad0cff75d4913042",
+  urls = ["https://repo1.maven.org/maven2/io/perfmark/perfmark-api/0.23.0/perfmark-api-0.23.0.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule io_perfmark_perfmark_api_0_23_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -5026,12 +5023,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "io_perfmark_perfmark_api_jar_sources_0_23_0",
-    generator_name = "io_perfmark_perfmark_api_jar_sources_0_23_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "8b75ae9cac9c14c8b697501adf74584130a307f2851d135e0ada4667cdf3b7b5",
-    urls = ["https://repo1.maven.org/maven2/io/perfmark/perfmark-api/0.23.0/perfmark-api-0.23.0-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "io_perfmark_perfmark_api_jar_sources_0_23_0",
+  generator_name = "io_perfmark_perfmark_api_jar_sources_0_23_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "8b75ae9cac9c14c8b697501adf74584130a307f2851d135e0ada4667cdf3b7b5",
+  urls = ["https://repo1.maven.org/maven2/io/perfmark/perfmark-api/0.23.0/perfmark-api-0.23.0-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule io_perfmark_perfmark_api_jar_sources_0_23_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -5041,13 +5038,13 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "javax_annotation_jsr250_api",
-    generator_name = "javax_annotation_jsr250_api",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["reciprocal"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar", "https://repo1.maven.org/maven2/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar", "http://maven.ibiblio.org/maven2/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar"],
-    artifact_sha256 = "a1a922d0d9b6d183ed3800dfac01d1e1eb159f0e8c6f94736931c1def54a941f",
+  name = "javax_annotation_jsr250_api",
+  generator_name = "javax_annotation_jsr250_api",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["reciprocal"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar", "https://repo1.maven.org/maven2/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar", "http://maven.ibiblio.org/maven2/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar"],
+  artifact_sha256 = "a1a922d0d9b6d183ed3800dfac01d1e1eb159f0e8c6f94736931c1def54a941f",
 )
 # Rule javax_annotation_jsr250_api instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -5059,13 +5056,13 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "javax_inject",
-    generator_name = "javax_inject",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar", "https://repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar", "http://maven.ibiblio.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar"],
-    artifact_sha256 = "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff",
+  name = "javax_inject",
+  generator_name = "javax_inject",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar", "https://repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar", "http://maven.ibiblio.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar"],
+  artifact_sha256 = "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff",
 )
 # Rule javax_inject instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -5077,10 +5074,10 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "junit_junit",
-    generator_name = "junit_junit",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "junit_junit",
+  generator_name = "junit_junit",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule junit_junit instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -5090,22 +5087,22 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "libcrypto",
-    generator_name = "libcrypto",
-    generator_function = "grpc_deps",
-    actual = "@boringssl//:crypto",
+  name = "libcrypto",
+  generator_name = "libcrypto",
+  generator_function = "grpc_deps",
+  actual = "@boringssl//:crypto",
 )
 # Rule libcrypto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:77:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:78:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_file(
-    name = "libexpat_amd64_deb",
-    generator_name = "libexpat_amd64_deb",
-    generator_function = "rules_closure_dependencies",
-    sha256 = "682d2321297c56dec327770efa986d4bef43a5acb1a5528b3098e05652998fae",
-    urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/e/expat/libexpat1_2.1.0-6+deb8u3_amd64.deb", "http://http.us.debian.org/debian/pool/main/e/expat/libexpat1_2.1.0-6+deb8u3_amd64.deb"],
+  name = "libexpat_amd64_deb",
+  generator_name = "libexpat_amd64_deb",
+  generator_function = "rules_closure_dependencies",
+  sha256 = "682d2321297c56dec327770efa986d4bef43a5acb1a5528b3098e05652998fae",
+  urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/e/expat/libexpat1_2.1.0-6+deb8u3_amd64.deb", "http://http.us.debian.org/debian/pool/main/e/expat/libexpat1_2.1.0-6+deb8u3_amd64.deb"],
 )
 # Rule libexpat_amd64_deb instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -5116,11 +5113,11 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_file(
-    name = "libfontconfig_amd64_deb",
-    generator_name = "libfontconfig_amd64_deb",
-    generator_function = "rules_closure_dependencies",
-    sha256 = "0bb54d61c13aa5b5253cb5e08aaca0dfc4c626a05ee30f51d0e3002cda166fec",
-    urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/fontconfig/libfontconfig1_2.11.0-6.3+deb8u1_amd64.deb", "http://http.us.debian.org/debian/pool/main/f/fontconfig/libfontconfig1_2.11.0-6.3+deb8u1_amd64.deb"],
+  name = "libfontconfig_amd64_deb",
+  generator_name = "libfontconfig_amd64_deb",
+  generator_function = "rules_closure_dependencies",
+  sha256 = "0bb54d61c13aa5b5253cb5e08aaca0dfc4c626a05ee30f51d0e3002cda166fec",
+  urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/fontconfig/libfontconfig1_2.11.0-6.3+deb8u1_amd64.deb", "http://http.us.debian.org/debian/pool/main/f/fontconfig/libfontconfig1_2.11.0-6.3+deb8u1_amd64.deb"],
 )
 # Rule libfontconfig_amd64_deb instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -5131,11 +5128,11 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_file(
-    name = "libfreetype_amd64_deb",
-    generator_name = "libfreetype_amd64_deb",
-    generator_function = "rules_closure_dependencies",
-    sha256 = "80184d932f9b0acc130af081c60a2da114c7b1e7531c18c63174498fae47d862",
-    urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/freetype/libfreetype6_2.5.2-3+deb8u1_amd64.deb", "http://http.us.debian.org/debian/pool/main/f/freetype/libfreetype6_2.5.2-3+deb8u1_amd64.deb"],
+  name = "libfreetype_amd64_deb",
+  generator_name = "libfreetype_amd64_deb",
+  generator_function = "rules_closure_dependencies",
+  sha256 = "80184d932f9b0acc130af081c60a2da114c7b1e7531c18c63174498fae47d862",
+  urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/freetype/libfreetype6_2.5.2-3+deb8u1_amd64.deb", "http://http.us.debian.org/debian/pool/main/f/freetype/libfreetype6_2.5.2-3+deb8u1_amd64.deb"],
 )
 # Rule libfreetype_amd64_deb instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -5146,11 +5143,11 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_file(
-    name = "libpng_amd64_deb",
-    generator_name = "libpng_amd64_deb",
-    generator_function = "rules_closure_dependencies",
-    sha256 = "a57b6d53169c67a7754719f4b742c96554a18f931ca5b9e0408fb6502bb77e80",
-    urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/libp/libpng/libpng12-0_1.2.50-2+deb8u2_amd64.deb", "http://http.us.debian.org/debian/pool/main/libp/libpng/libpng12-0_1.2.50-2+deb8u2_amd64.deb"],
+  name = "libpng_amd64_deb",
+  generator_name = "libpng_amd64_deb",
+  generator_function = "rules_closure_dependencies",
+  sha256 = "a57b6d53169c67a7754719f4b742c96554a18f931ca5b9e0408fb6502bb77e80",
+  urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/libp/libpng/libpng12-0_1.2.50-2+deb8u2_amd64.deb", "http://http.us.debian.org/debian/pool/main/libp/libpng/libpng12-0_1.2.50-2+deb8u2_amd64.deb"],
 )
 # Rule libpng_amd64_deb instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -5161,31 +5158,36 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "libssl",
-    generator_name = "libssl",
-    generator_function = "grpc_deps",
-    actual = "@boringssl//:ssl",
+  name = "libssl",
+  generator_name = "libssl",
+  generator_function = "grpc_deps",
+  actual = "@boringssl//:ssl",
 )
 # Rule libssl instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:72:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:73:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
-bind(
-    name = "libuv",
-    generator_name = "libuv",
-    generator_function = "grpc_deps",
-    actual = "@libuv//:libuv",
+http_archive(
+  name = "libuv",
+  generator_name = "libuv",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/libuv/libuv/archive/02a9e1be252b623ee032a3137c0b0c94afbe6809.tar.gz", "https://github.com/libuv/libuv/archive/02a9e1be252b623ee032a3137c0b0c94afbe6809.tar.gz"],
+  sha256 = "5ca4e9091f3231d8ad8801862dc4e851c23af89c69141d27723157776f7291e7",
+  strip_prefix = "libuv-02a9e1be252b623ee032a3137c0b0c94afbe6809",
+  build_file = "@com_github_grpc_grpc//third_party:libuv.BUILD",
 )
 # Rule libuv instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:182:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:393:21 in grpc_deps
+# Rule http_archive defined at (most recent call last):
+#   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # /DEFAULT.WORKSPACE.SUFFIX:519:13
 cc_autoconf(
-    name = "local_config_cc",
-    generator_name = "local_config_cc",
-    generator_function = "cc_configure",
+  name = "local_config_cc",
+  generator_name = "local_config_cc",
+  generator_function = "cc_configure",
 )
 # Rule local_config_cc instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:519:13                                                                                    in <toplevel>
@@ -5195,9 +5197,9 @@ cc_autoconf(
 
 # /DEFAULT.WORKSPACE.SUFFIX:519:13
 cc_autoconf_toolchains(
-    name = "local_config_cc_toolchains",
-    generator_name = "local_config_cc_toolchains",
-    generator_function = "cc_configure",
+  name = "local_config_cc_toolchains",
+  generator_name = "local_config_cc_toolchains",
+  generator_function = "cc_configure",
 )
 # Rule local_config_cc_toolchains instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:519:13                                                                                    in <toplevel>
@@ -5207,9 +5209,9 @@ cc_autoconf_toolchains(
 
 # /DEFAULT.WORKSPACE.SUFFIX:504:6
 local_config_platform(
-    name = "local_config_platform",
-    generator_name = "local_config_platform",
-    generator_function = "maybe",
+  name = "local_config_platform",
+  generator_name = "local_config_platform",
+  generator_function = "maybe",
 )
 # Rule local_config_platform instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:504:6                                                                                          in <toplevel>
@@ -5217,22 +5219,22 @@ local_config_platform(
 
 # {WORKSPACE}/WORKSPACE:99:10
 python_configure(
-    name = "local_config_python",
-    generator_name = "local_config_python",
-    generator_function = "grpc_deps",
+  name = "local_config_python",
+  generator_name = "local_config_python",
+  generator_function = "grpc_deps",
 )
 # Rule local_config_python instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:447:21       in grpc_deps
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:58:21 in grpc_python_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:61:21 in grpc_python_deps
 # Rule python_configure defined at (most recent call last):
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/third_party/py/python_configure.bzl:365:35 in <toplevel>
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/third_party/py/python_configure.bzl:354:35 in <toplevel>
 
 # /DEFAULT.WORKSPACE.SUFFIX:525:13
 sh_config(
-    name = "local_config_sh",
-    generator_name = "local_config_sh",
-    generator_function = "sh_configure",
+  name = "local_config_sh",
+  generator_name = "local_config_sh",
+  generator_function = "sh_configure",
 )
 # Rule local_config_sh instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:525:13                                                                                  in <toplevel>
@@ -5242,10 +5244,10 @@ sh_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:522:16
 xcode_autoconf(
-    name = "local_config_xcode",
-    generator_name = "local_config_xcode",
-    generator_function = "xcode_configure",
-    xcode_locator = "@bazel_tools//tools/osx:xcode_locator.m",
+  name = "local_config_xcode",
+  generator_name = "local_config_xcode",
+  generator_function = "xcode_configure",
+  xcode_locator = "@bazel_tools//tools/osx:xcode_locator.m",
 )
 # Rule local_config_xcode instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:522:16                                                                                       in <toplevel>
@@ -5255,12 +5257,12 @@ xcode_autoconf(
 
 # /DEFAULT.WORKSPACE.SUFFIX:27:6
 _local_java_repository_rule(
-    name = "local_jdk",
-    generator_name = "local_jdk",
-    generator_function = "maybe",
-    java_home = "/Library/Java/JavaVirtualMachines/zulu-18.jdk/Contents/Home",
-    version = "",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "local_jdk",
+  generator_name = "local_jdk",
+  generator_function = "maybe",
+  java_home = "/Library/Java/JavaVirtualMachines/zulu-18.jdk/Contents/Home",
+  version = "",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule local_jdk instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:27:6                                                                                               in <toplevel>
@@ -5271,34 +5273,34 @@ _local_java_repository_rule(
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "madler_zlib",
-    generator_name = "madler_zlib",
-    generator_function = "grpc_deps",
-    actual = "@zlib//:zlib",
+  name = "madler_zlib",
+  generator_name = "madler_zlib",
+  generator_function = "grpc_deps",
+  actual = "@zlib//:zlib",
 )
 # Rule madler_zlib instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:82:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:83:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:120:14
 coursier_fetch(
-    name = "maven",
-    generator_name = "maven",
-    generator_function = "maven_install",
-    repositories = ["{ \"repo_url\": \"https://repo.maven.apache.org/maven2/\" }"],
-    artifacts = ["{ \"group\": \"com.google.android\", \"artifact\": \"annotations\", \"version\": \"4.1.1.4\" }", "{ \"group\": \"com.google.api.grpc\", \"artifact\": \"proto-google-common-protos\", \"version\": \"2.0.1\" }", "{ \"group\": \"com.google.auth\", \"artifact\": \"google-auth-library-credentials\", \"version\": \"0.22.0\" }", "{ \"group\": \"com.google.auth\", \"artifact\": \"google-auth-library-oauth2-http\", \"version\": \"0.22.0\" }", "{ \"group\": \"com.google.code.findbugs\", \"artifact\": \"jsr305\", \"version\": \"3.0.2\" }", "{ \"group\": \"com.google.code.gson\", \"artifact\": \"gson\", \"version\": \"2.8.6\", \"packaging\": \"jar\" }", "{ \"group\": \"com.google.errorprone\", \"artifact\": \"error_prone_annotations\", \"version\": \"2.4.0\" }", "{ \"group\": \"com.google.guava\", \"artifact\": \"failureaccess\", \"version\": \"1.0.1\" }", "{ \"group\": \"com.google.guava\", \"artifact\": \"guava\", \"version\": \"29.0-android\" }", "{ \"group\": \"com.google.j2objc\", \"artifact\": \"j2objc-annotations\", \"version\": \"1.3\" }", "{ \"group\": \"com.google.truth\", \"artifact\": \"truth\", \"version\": \"1.0.1\" }", "{ \"group\": \"com.squareup.okhttp\", \"artifact\": \"okhttp\", \"version\": \"2.7.4\" }", "{ \"group\": \"com.squareup.okio\", \"artifact\": \"okio\", \"version\": \"1.17.5\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-buffer\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-codec-http2\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-codec-http\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-codec-socks\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-codec\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-common\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-handler-proxy\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-handler\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-resolver\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-tcnative-boringssl-static\", \"version\": \"2.0.34.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-transport-native-epoll\", \"version\": \"4.1.52.Final\", \"packaging\": \"jar\", \"classifier\": \"linux-x86_64\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-transport\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.opencensus\", \"artifact\": \"opencensus-api\", \"version\": \"0.24.0\" }", "{ \"group\": \"io.opencensus\", \"artifact\": \"opencensus-contrib-grpc-metrics\", \"version\": \"0.24.0\" }", "{ \"group\": \"io.perfmark\", \"artifact\": \"perfmark-api\", \"version\": \"0.23.0\" }", "{ \"group\": \"junit\", \"artifact\": \"junit\", \"version\": \"4.12\" }", "{ \"group\": \"org.apache.tomcat\", \"artifact\": \"annotations-api\", \"version\": \"6.0.53\" }", "{ \"group\": \"org.codehaus.mojo\", \"artifact\": \"animal-sniffer-annotations\", \"version\": \"1.19\" }"],
-    fail_on_missing_checksum = True,
-    fetch_sources = False,
-    fetch_javadoc = False,
-    use_unsafe_shared_cache = False,
-    excluded_artifacts = [],
-    generate_compat_repositories = True,
-    version_conflict_policy = "default",
-    override_targets = {"com.google.protobuf:protobuf-java": "@com_google_protobuf//:protobuf_java", "com.google.protobuf:protobuf-java-util": "@com_google_protobuf//:protobuf_java_util", "com.google.protobuf:protobuf-javalite": "@com_google_protobuf_javalite//:protobuf_java_lite", "io.grpc:grpc-alts": "@io_grpc_grpc_java//alts", "io.grpc:grpc-api": "@io_grpc_grpc_java//api", "io.grpc:grpc-auth": "@io_grpc_grpc_java//auth", "io.grpc:grpc-census": "@io_grpc_grpc_java//census", "io.grpc:grpc-context": "@io_grpc_grpc_java//context", "io.grpc:grpc-core": "@io_grpc_grpc_java//core:core_maven", "io.grpc:grpc-grpclb": "@io_grpc_grpc_java//grpclb", "io.grpc:grpc-netty": "@io_grpc_grpc_java//netty", "io.grpc:grpc-netty-shaded": "@io_grpc_grpc_java//netty:shaded_maven", "io.grpc:grpc-okhttp": "@io_grpc_grpc_java//okhttp", "io.grpc:grpc-protobuf": "@io_grpc_grpc_java//protobuf", "io.grpc:grpc-protobuf-lite": "@io_grpc_grpc_java//protobuf-lite", "io.grpc:grpc-stub": "@io_grpc_grpc_java//stub", "io.grpc:grpc-testing": "@io_grpc_grpc_java//testing"},
-    strict_visibility = False,
-    resolve_timeout = 600,
-    jetify = False,
-    jetify_include_list = ["*"],
+  name = "maven",
+  generator_name = "maven",
+  generator_function = "maven_install",
+  repositories = ["{ \"repo_url\": \"https://repo.maven.apache.org/maven2/\" }"],
+  artifacts = ["{ \"group\": \"com.google.android\", \"artifact\": \"annotations\", \"version\": \"4.1.1.4\" }", "{ \"group\": \"com.google.api.grpc\", \"artifact\": \"proto-google-common-protos\", \"version\": \"2.0.1\" }", "{ \"group\": \"com.google.auth\", \"artifact\": \"google-auth-library-credentials\", \"version\": \"0.22.0\" }", "{ \"group\": \"com.google.auth\", \"artifact\": \"google-auth-library-oauth2-http\", \"version\": \"0.22.0\" }", "{ \"group\": \"com.google.code.findbugs\", \"artifact\": \"jsr305\", \"version\": \"3.0.2\" }", "{ \"group\": \"com.google.code.gson\", \"artifact\": \"gson\", \"version\": \"2.8.6\", \"packaging\": \"jar\" }", "{ \"group\": \"com.google.errorprone\", \"artifact\": \"error_prone_annotations\", \"version\": \"2.4.0\" }", "{ \"group\": \"com.google.guava\", \"artifact\": \"failureaccess\", \"version\": \"1.0.1\" }", "{ \"group\": \"com.google.guava\", \"artifact\": \"guava\", \"version\": \"29.0-android\" }", "{ \"group\": \"com.google.j2objc\", \"artifact\": \"j2objc-annotations\", \"version\": \"1.3\" }", "{ \"group\": \"com.google.truth\", \"artifact\": \"truth\", \"version\": \"1.0.1\" }", "{ \"group\": \"com.squareup.okhttp\", \"artifact\": \"okhttp\", \"version\": \"2.7.4\" }", "{ \"group\": \"com.squareup.okio\", \"artifact\": \"okio\", \"version\": \"1.17.5\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-buffer\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-codec-http2\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-codec-http\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-codec-socks\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-codec\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-common\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-handler-proxy\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-handler\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-resolver\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-tcnative-boringssl-static\", \"version\": \"2.0.34.Final\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-transport-native-epoll\", \"version\": \"4.1.52.Final\", \"packaging\": \"jar\", \"classifier\": \"linux-x86_64\" }", "{ \"group\": \"io.netty\", \"artifact\": \"netty-transport\", \"version\": \"4.1.52.Final\" }", "{ \"group\": \"io.opencensus\", \"artifact\": \"opencensus-api\", \"version\": \"0.24.0\" }", "{ \"group\": \"io.opencensus\", \"artifact\": \"opencensus-contrib-grpc-metrics\", \"version\": \"0.24.0\" }", "{ \"group\": \"io.perfmark\", \"artifact\": \"perfmark-api\", \"version\": \"0.23.0\" }", "{ \"group\": \"junit\", \"artifact\": \"junit\", \"version\": \"4.12\" }", "{ \"group\": \"org.apache.tomcat\", \"artifact\": \"annotations-api\", \"version\": \"6.0.53\" }", "{ \"group\": \"org.codehaus.mojo\", \"artifact\": \"animal-sniffer-annotations\", \"version\": \"1.19\" }"],
+  fail_on_missing_checksum = True,
+  fetch_sources = False,
+  fetch_javadoc = False,
+  use_unsafe_shared_cache = False,
+  excluded_artifacts = [],
+  generate_compat_repositories = True,
+  version_conflict_policy = "default",
+  override_targets = {"com.google.protobuf:protobuf-java": "@com_google_protobuf//:protobuf_java", "com.google.protobuf:protobuf-java-util": "@com_google_protobuf//:protobuf_java_util", "com.google.protobuf:protobuf-javalite": "@com_google_protobuf_javalite//:protobuf_java_lite", "io.grpc:grpc-alts": "@io_grpc_grpc_java//alts", "io.grpc:grpc-api": "@io_grpc_grpc_java//api", "io.grpc:grpc-auth": "@io_grpc_grpc_java//auth", "io.grpc:grpc-census": "@io_grpc_grpc_java//census", "io.grpc:grpc-context": "@io_grpc_grpc_java//context", "io.grpc:grpc-core": "@io_grpc_grpc_java//core:core_maven", "io.grpc:grpc-grpclb": "@io_grpc_grpc_java//grpclb", "io.grpc:grpc-netty": "@io_grpc_grpc_java//netty", "io.grpc:grpc-netty-shaded": "@io_grpc_grpc_java//netty:shaded_maven", "io.grpc:grpc-okhttp": "@io_grpc_grpc_java//okhttp", "io.grpc:grpc-protobuf": "@io_grpc_grpc_java//protobuf", "io.grpc:grpc-protobuf-lite": "@io_grpc_grpc_java//protobuf-lite", "io.grpc:grpc-stub": "@io_grpc_grpc_java//stub", "io.grpc:grpc-testing": "@io_grpc_grpc_java//testing"},
+  strict_visibility = False,
+  resolve_timeout = 600,
+  jetify = False,
+  jetify_include_list = ["*"],
 )
 # Rule maven instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:120:14                                         in <toplevel>
@@ -5308,20 +5310,20 @@ coursier_fetch(
 
 # {WORKSPACE}/WORKSPACE:194:14
 pinned_coursier_fetch(
-    name = "maven_akka",
-    generator_name = "maven_akka",
-    generator_function = "maven_install",
-    repositories = ["{ \"repo_url\": \"https://repo1.maven.org/maven2\" }"],
-    artifacts = ["{ \"group\": \"com.lightbend.akka.grpc\", \"artifact\": \"akka-grpc-codegen_2.12\", \"version\": \"2.1.3\" }", "{ \"group\": \"com.lightbend.akka.grpc\", \"artifact\": \"akka-grpc-runtime_2.12\", \"version\": \"2.1.3\" }"],
-    fetch_sources = True,
-    fetch_javadoc = False,
-    generate_compat_repositories = False,
-    maven_install_json = "//:maven_akka_install.json",
-    override_targets = {},
-    strict_visibility = False,
-    jetify = False,
-    jetify_include_list = ["*"],
-    additional_netrc_lines = [],
+  name = "maven_akka",
+  generator_name = "maven_akka",
+  generator_function = "maven_install",
+  repositories = ["{ \"repo_url\": \"https://repo1.maven.org/maven2\" }"],
+  artifacts = ["{ \"group\": \"com.lightbend.akka.grpc\", \"artifact\": \"akka-grpc-codegen_2.12\", \"version\": \"2.1.3\" }", "{ \"group\": \"com.lightbend.akka.grpc\", \"artifact\": \"akka-grpc-runtime_2.12\", \"version\": \"2.1.3\" }"],
+  fetch_sources = True,
+  fetch_javadoc = False,
+  generate_compat_repositories = False,
+  maven_install_json = "//:maven_akka_install.json",
+  override_targets = {},
+  strict_visibility = False,
+  jetify = False,
+  jetify_include_list = ["*"],
+  additional_netrc_lines = [],
 )
 # Rule maven_akka instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:194:14                                         in <toplevel>
@@ -5331,20 +5333,20 @@ pinned_coursier_fetch(
 
 # {WORKSPACE}/WORKSPACE:164:14
 pinned_coursier_fetch(
-    name = "maven_scala",
-    generator_name = "maven_scala",
-    generator_function = "maven_install",
-    repositories = ["{ \"repo_url\": \"https://repo1.maven.org/maven2\" }"],
-    artifacts = ["{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"lenses_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-json4s_2.12\", \"version\": \"0.12.0\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-runtime_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-runtime-grpc_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapbc_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-api\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-core\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-netty\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-protobuf\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-stub\", \"version\": \"1.40.1\" }", "{ \"group\": \"org.json4s\", \"artifact\": \"json4s-core_2.12\", \"version\": \"4.0.3\" }"],
-    fetch_sources = True,
-    fetch_javadoc = False,
-    generate_compat_repositories = False,
-    maven_install_json = "//:maven_scala_install.json",
-    override_targets = {},
-    strict_visibility = False,
-    jetify = False,
-    jetify_include_list = ["*"],
-    additional_netrc_lines = [],
+  name = "maven_scala",
+  generator_name = "maven_scala",
+  generator_function = "maven_install",
+  repositories = ["{ \"repo_url\": \"https://repo1.maven.org/maven2\" }"],
+  artifacts = ["{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"lenses_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-json4s_2.12\", \"version\": \"0.12.0\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-runtime_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-runtime-grpc_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapbc_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-api\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-core\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-netty\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-protobuf\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-stub\", \"version\": \"1.40.1\" }", "{ \"group\": \"org.json4s\", \"artifact\": \"json4s-core_2.12\", \"version\": \"4.0.3\" }"],
+  fetch_sources = True,
+  fetch_javadoc = False,
+  generate_compat_repositories = False,
+  maven_install_json = "//:maven_scala_install.json",
+  override_targets = {},
+  strict_visibility = False,
+  jetify = False,
+  jetify_include_list = ["*"],
+  additional_netrc_lines = [],
 )
 # Rule maven_scala instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:164:14                                         in <toplevel>
@@ -5354,13 +5356,13 @@ pinned_coursier_fetch(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "net_starlark_go",
-    generator_name = "net_starlark_go",
-    generator_function = "go_deps",
-    importpath = "go.starlark.net",
-    version = "v0.0.0-20210223155950-e043a3d3c984",
-    sum = "h1:xwwDQW5We85NaTk2APgoN9202w/l0DVGp+GZMfsrh7s=",
-    build_file_proto_mode = "disable_global",
+  name = "net_starlark_go",
+  generator_name = "net_starlark_go",
+  generator_function = "go_deps",
+  importpath = "go.starlark.net",
+  version = "v0.0.0-20210223155950-e043a3d3c984",
+  sum = "h1:xwwDQW5We85NaTk2APgoN9202w/l0DVGp+GZMfsrh7s=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule net_starlark_go instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -5370,16 +5372,16 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:57:14
 nodejs_repo_host_os_alias(
-    name = "nodejs",
-    generator_name = "nodejs",
-    generator_function = "ts_proto_deps",
-    node_version = "14.17.5",
+  name = "nodejs",
+  generator_name = "nodejs",
+  generator_function = "ts_proto_deps",
+  node_version = "14.17.5",
 )
 # Rule nodejs instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:12:17                                                             in ts_proto_deps
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:16:11                                                             in npm_ts_proto
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:9:18                                                              in _maybe
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:68:11 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
@@ -5388,15 +5390,15 @@ nodejs_repo_host_os_alias(
 
 # {WORKSPACE}/WORKSPACE:57:14
 node_repositories(
-    name = "nodejs_darwin_amd64",
-    generator_name = "nodejs_darwin_amd64",
-    generator_function = "ts_proto_deps",
+  name = "nodejs_darwin_amd64",
+  generator_name = "nodejs_darwin_amd64",
+  generator_function = "ts_proto_deps",
 )
 # Rule nodejs_darwin_amd64 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:12:17                                                             in ts_proto_deps
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:16:11                                                             in npm_ts_proto
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:9:18                                                              in _maybe
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
@@ -5405,10 +5407,10 @@ node_repositories(
 
 # {WORKSPACE}/WORKSPACE:227:18
 node_toolchain_configure(
-    name = "nodejs_darwin_amd64_config",
-    generator_name = "nodejs_darwin_amd64_config",
-    generator_function = "node_repositories",
-    target_tool = "@nodejs_darwin_amd64//:node_bin",
+  name = "nodejs_darwin_amd64_config",
+  generator_name = "nodejs_darwin_amd64_config",
+  generator_function = "node_repositories",
+  target_tool = "@nodejs_darwin_amd64//:node_bin",
 )
 # Rule nodejs_darwin_amd64_config instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
@@ -5418,15 +5420,15 @@ node_toolchain_configure(
 
 # {WORKSPACE}/WORKSPACE:57:14
 node_repositories(
-    name = "nodejs_linux_amd64",
-    generator_name = "nodejs_linux_amd64",
-    generator_function = "ts_proto_deps",
+  name = "nodejs_linux_amd64",
+  generator_name = "nodejs_linux_amd64",
+  generator_function = "ts_proto_deps",
 )
 # Rule nodejs_linux_amd64 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:12:17                                                             in ts_proto_deps
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:16:11                                                             in npm_ts_proto
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:9:18                                                              in _maybe
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
@@ -5435,10 +5437,10 @@ node_repositories(
 
 # {WORKSPACE}/WORKSPACE:227:18
 node_toolchain_configure(
-    name = "nodejs_linux_amd64_config",
-    generator_name = "nodejs_linux_amd64_config",
-    generator_function = "node_repositories",
-    target_tool = "@nodejs_linux_amd64//:node_bin",
+  name = "nodejs_linux_amd64_config",
+  generator_name = "nodejs_linux_amd64_config",
+  generator_function = "node_repositories",
+  target_tool = "@nodejs_linux_amd64//:node_bin",
 )
 # Rule nodejs_linux_amd64_config instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
@@ -5448,15 +5450,15 @@ node_toolchain_configure(
 
 # {WORKSPACE}/WORKSPACE:57:14
 node_repositories(
-    name = "nodejs_linux_arm64",
-    generator_name = "nodejs_linux_arm64",
-    generator_function = "ts_proto_deps",
+  name = "nodejs_linux_arm64",
+  generator_name = "nodejs_linux_arm64",
+  generator_function = "ts_proto_deps",
 )
 # Rule nodejs_linux_arm64 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:12:17                                                             in ts_proto_deps
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:16:11                                                             in npm_ts_proto
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:9:18                                                              in _maybe
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
@@ -5465,10 +5467,10 @@ node_repositories(
 
 # {WORKSPACE}/WORKSPACE:227:18
 node_toolchain_configure(
-    name = "nodejs_linux_arm64_config",
-    generator_name = "nodejs_linux_arm64_config",
-    generator_function = "node_repositories",
-    target_tool = "@nodejs_linux_arm64//:node_bin",
+  name = "nodejs_linux_arm64_config",
+  generator_name = "nodejs_linux_arm64_config",
+  generator_function = "node_repositories",
+  target_tool = "@nodejs_linux_arm64//:node_bin",
 )
 # Rule nodejs_linux_arm64_config instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
@@ -5478,15 +5480,15 @@ node_toolchain_configure(
 
 # {WORKSPACE}/WORKSPACE:57:14
 node_repositories(
-    name = "nodejs_linux_ppc64le",
-    generator_name = "nodejs_linux_ppc64le",
-    generator_function = "ts_proto_deps",
+  name = "nodejs_linux_ppc64le",
+  generator_name = "nodejs_linux_ppc64le",
+  generator_function = "ts_proto_deps",
 )
 # Rule nodejs_linux_ppc64le instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:12:17                                                             in ts_proto_deps
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:16:11                                                             in npm_ts_proto
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:9:18                                                              in _maybe
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
@@ -5495,10 +5497,10 @@ node_repositories(
 
 # {WORKSPACE}/WORKSPACE:227:18
 node_toolchain_configure(
-    name = "nodejs_linux_ppc64le_config",
-    generator_name = "nodejs_linux_ppc64le_config",
-    generator_function = "node_repositories",
-    target_tool = "@nodejs_linux_ppc64le//:node_bin",
+  name = "nodejs_linux_ppc64le_config",
+  generator_name = "nodejs_linux_ppc64le_config",
+  generator_function = "node_repositories",
+  target_tool = "@nodejs_linux_ppc64le//:node_bin",
 )
 # Rule nodejs_linux_ppc64le_config instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
@@ -5508,15 +5510,15 @@ node_toolchain_configure(
 
 # {WORKSPACE}/WORKSPACE:57:14
 node_repositories(
-    name = "nodejs_linux_s390x",
-    generator_name = "nodejs_linux_s390x",
-    generator_function = "ts_proto_deps",
+  name = "nodejs_linux_s390x",
+  generator_name = "nodejs_linux_s390x",
+  generator_function = "ts_proto_deps",
 )
 # Rule nodejs_linux_s390x instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:12:17                                                             in ts_proto_deps
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:16:11                                                             in npm_ts_proto
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:9:18                                                              in _maybe
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
@@ -5525,10 +5527,10 @@ node_repositories(
 
 # {WORKSPACE}/WORKSPACE:227:18
 node_toolchain_configure(
-    name = "nodejs_linux_s390x_config",
-    generator_name = "nodejs_linux_s390x_config",
-    generator_function = "node_repositories",
-    target_tool = "@nodejs_linux_s390x//:node_bin",
+  name = "nodejs_linux_s390x_config",
+  generator_name = "nodejs_linux_s390x_config",
+  generator_function = "node_repositories",
+  target_tool = "@nodejs_linux_s390x//:node_bin",
 )
 # Rule nodejs_linux_s390x_config instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
@@ -5538,15 +5540,15 @@ node_toolchain_configure(
 
 # {WORKSPACE}/WORKSPACE:57:14
 node_repositories(
-    name = "nodejs_windows_amd64",
-    generator_name = "nodejs_windows_amd64",
-    generator_function = "ts_proto_deps",
+  name = "nodejs_windows_amd64",
+  generator_name = "nodejs_windows_amd64",
+  generator_function = "ts_proto_deps",
 )
 # Rule nodejs_windows_amd64 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:12:17                                                             in ts_proto_deps
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:16:11                                                             in npm_ts_proto
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:9:18                                                              in _maybe
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
@@ -5555,10 +5557,10 @@ node_repositories(
 
 # {WORKSPACE}/WORKSPACE:227:18
 node_toolchain_configure(
-    name = "nodejs_windows_amd64_config",
-    generator_name = "nodejs_windows_amd64_config",
-    generator_function = "node_repositories",
-    target_tool = "@nodejs_windows_amd64//:node_bin",
+  name = "nodejs_windows_amd64_config",
+  generator_name = "nodejs_windows_amd64_config",
+  generator_function = "node_repositories",
+  target_tool = "@nodejs_windows_amd64//:node_bin",
 )
 # Rule nodejs_windows_amd64_config instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
@@ -5568,185 +5570,185 @@ node_toolchain_configure(
 
 # {WORKSPACE}/WORKSPACE:61:31
 npm_install(
-    name = "npm_example_routeguide_nodejs",
-    generator_name = "npm_example_routeguide_nodejs",
-    generator_function = "example_routeguide_nodejs_deps",
-    package_json = "//example/routeguide/nodejs:package.json",
-    symlink_node_modules = False,
-    package_lock_json = "//example/routeguide/nodejs:package-lock.json",
+  name = "npm_example_routeguide_nodejs",
+  generator_name = "npm_example_routeguide_nodejs",
+  generator_function = "example_routeguide_nodejs_deps",
+  package_json = "//example/routeguide/nodejs:package.json",
+  symlink_node_modules = False,
+  package_lock_json = "//example/routeguide/nodejs:package-lock.json",
 )
 # Rule npm_example_routeguide_nodejs instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:61:31                                                in <toplevel>
-#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:15:34                  in example_routeguide_nodejs_deps
-#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:29:11                  in npm_example_routeguide_nodejs
-#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:11:18                  in _maybe
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:14:34                  in example_routeguide_nodejs_deps
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:27:11                  in npm_example_routeguide_nodejs
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:10:18                  in _maybe
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:78:17 in npm_install
 # Rule npm_install defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/npm_install/npm_install.bzl:775:30 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:57:14
 npm_install(
-    name = "npm_ts_proto",
-    generator_name = "npm_ts_proto",
-    generator_function = "ts_proto_deps",
-    package_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package.json",
-    symlink_node_modules = False,
-    package_lock_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package-lock.json",
+  name = "npm_ts_proto",
+  generator_name = "npm_ts_proto",
+  generator_function = "ts_proto_deps",
+  package_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package.json",
+  symlink_node_modules = False,
+  package_lock_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package-lock.json",
 )
 # Rule npm_ts_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:57:14                                                in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                   in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                   in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                   in _maybe
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:12:17                                   in ts_proto_deps
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:16:11                                   in npm_ts_proto
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:9:18                                    in _maybe
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:78:17 in npm_install
 # Rule npm_install defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/npm_install/npm_install.bzl:775:30 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:57:14
 yarn_install(
-    name = "npm_tsc",
-    generator_name = "npm_tsc",
-    generator_function = "ts_proto_deps",
-    package_json = "@build_stack_rules_proto//rules/ts:package.json",
-    frozen_lockfile = True,
-    yarn_lock = "@build_stack_rules_proto//rules/ts:yarn.lock",
+  name = "npm_tsc",
+  generator_name = "npm_tsc",
+  generator_function = "ts_proto_deps",
+  package_json = "@build_stack_rules_proto//rules/ts:package.json",
+  frozen_lockfile = True,
+  yarn_lock = "@build_stack_rules_proto//rules/ts:yarn.lock",
 )
 # Rule npm_tsc instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:57:14                                                in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:14:12                                   in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:27:11                                   in npm_tsc
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                   in _maybe
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:12                                   in ts_proto_deps
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:25:11                                   in npm_tsc
+#   {WORKSPACE}/deps/ts_proto_deps.bzl:9:18                                    in _maybe
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:83:18 in yarn_install
 # Rule yarn_install defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/npm_install/npm_install.bzl:917:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "opencensus-context",
-    generator_name = "opencensus-context",
-    generator_function = "grpc_deps",
-    actual = "@io_opencensus_cpp//opencensus/context:context",
+  name = "opencensus-context",
+  generator_name = "opencensus-context",
+  generator_function = "grpc_deps",
+  actual = "@io_opencensus_cpp//opencensus/context:context",
 )
 # Rule opencensus-context instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:137:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:138:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "opencensus-stats",
-    generator_name = "opencensus-stats",
-    generator_function = "grpc_deps",
-    actual = "@io_opencensus_cpp//opencensus/stats:stats",
+  name = "opencensus-stats",
+  generator_name = "opencensus-stats",
+  generator_function = "grpc_deps",
+  actual = "@io_opencensus_cpp//opencensus/stats:stats",
 )
 # Rule opencensus-stats instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:157:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:158:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "opencensus-stats-test",
-    generator_name = "opencensus-stats-test",
-    generator_function = "grpc_deps",
-    actual = "@io_opencensus_cpp//opencensus/stats:test_utils",
+  name = "opencensus-stats-test",
+  generator_name = "opencensus-stats-test",
+  generator_function = "grpc_deps",
+  actual = "@io_opencensus_cpp//opencensus/stats:test_utils",
 )
 # Rule opencensus-stats-test instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:162:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:163:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "opencensus-tags",
-    generator_name = "opencensus-tags",
-    generator_function = "grpc_deps",
-    actual = "@io_opencensus_cpp//opencensus/tags:tags",
+  name = "opencensus-tags",
+  generator_name = "opencensus-tags",
+  generator_function = "grpc_deps",
+  actual = "@io_opencensus_cpp//opencensus/tags:tags",
 )
 # Rule opencensus-tags instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:172:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:173:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "opencensus-tags-context_util",
-    generator_name = "opencensus-tags-context_util",
-    generator_function = "grpc_deps",
-    actual = "@io_opencensus_cpp//opencensus/tags:context_util",
+  name = "opencensus-tags-context_util",
+  generator_name = "opencensus-tags-context_util",
+  generator_function = "grpc_deps",
+  actual = "@io_opencensus_cpp//opencensus/tags:context_util",
 )
 # Rule opencensus-tags-context_util instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:177:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:178:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "opencensus-trace",
-    generator_name = "opencensus-trace",
-    generator_function = "grpc_deps",
-    actual = "@io_opencensus_cpp//opencensus/trace:trace",
+  name = "opencensus-trace",
+  generator_name = "opencensus-trace",
+  generator_function = "grpc_deps",
+  actual = "@io_opencensus_cpp//opencensus/trace:trace",
 )
 # Rule opencensus-trace instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:142:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:143:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "opencensus-trace-context_util",
-    generator_name = "opencensus-trace-context_util",
-    generator_function = "grpc_deps",
-    actual = "@io_opencensus_cpp//opencensus/trace:context_util",
+  name = "opencensus-trace-context_util",
+  generator_name = "opencensus-trace-context_util",
+  generator_function = "grpc_deps",
+  actual = "@io_opencensus_cpp//opencensus/trace:context_util",
 )
 # Rule opencensus-trace-context_util instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:147:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:148:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "opencensus-trace-propagation",
-    generator_name = "opencensus-trace-propagation",
-    generator_function = "grpc_deps",
-    actual = "@io_opencensus_cpp//opencensus/trace:grpc_trace_bin",
+  name = "opencensus-trace-propagation",
+  generator_name = "opencensus-trace-propagation",
+  generator_function = "grpc_deps",
+  actual = "@io_opencensus_cpp//opencensus/trace:grpc_trace_bin",
 )
 # Rule opencensus-trace-propagation instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:152:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:153:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "opencensus-with-tag-map",
-    generator_name = "opencensus-with-tag-map",
-    generator_function = "grpc_deps",
-    actual = "@io_opencensus_cpp//opencensus/tags:with_tag_map",
+  name = "opencensus-with-tag-map",
+  generator_name = "opencensus-with-tag-map",
+  generator_function = "grpc_deps",
+  actual = "@io_opencensus_cpp//opencensus/tags:with_tag_map",
 )
 # Rule opencensus-with-tag-map instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:167:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:168:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "opencensus_proto",
-    generator_name = "opencensus_proto",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/census-instrumentation/opencensus-proto/archive/v0.3.0.tar.gz", "https://github.com/census-instrumentation/opencensus-proto/archive/v0.3.0.tar.gz"],
-    sha256 = "b7e13f0b4259e80c3070b583c2f39e53153085a6918718b1c710caf7037572b0",
-    strip_prefix = "opencensus-proto-0.3.0/src",
+  name = "opencensus_proto",
+  generator_name = "opencensus_proto",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/census-instrumentation/opencensus-proto/archive/v0.3.0.tar.gz", "https://github.com/census-instrumentation/opencensus-proto/archive/v0.3.0.tar.gz"],
+  sha256 = "b7e13f0b4259e80c3070b583c2f39e53153085a6918718b1c710caf7037572b0",
+  strip_prefix = "opencensus-proto-0.3.0/src",
 )
 # Rule opencensus_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:426:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:427:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:103:16
 http_archive(
-    name = "opentelemetry_proto",
-    generator_name = "opentelemetry_proto",
-    generator_function = "grpc_extra_deps",
-    urls = ["https://github.com/open-telemetry/opentelemetry-proto/archive/v0.11.0.tar.gz"],
-    sha256 = "985367f8905e91018e636cbf0d83ab3f834b665c4f5899a27d10cae9657710e2",
-    strip_prefix = "opentelemetry-proto-0.11.0",
-    build_file_content = "\nload(\"@envoy_api//bazel:api_build_system.bzl\", \"api_cc_py_proto_library\")\nload(\"@io_bazel_rules_go//proto:def.bzl\", \"go_proto_library\")\n\napi_cc_py_proto_library(\n    name = \"common\",\n    srcs = [\n        \"opentelemetry/proto/common/v1/common.proto\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"common_go_proto\",\n    importpath = \"go.opentelemetry.io/proto/otlp/common/v1\",\n    proto = \":common\",\n    visibility = [\"//visibility:public\"],\n)\n\n# TODO(snowp): Generating one Go package from all of these protos could cause problems in the future,\n# but nothing references symbols from collector or resource so we're fine for now.\napi_cc_py_proto_library(\n    name = \"logs\",\n    srcs = [\n        \"opentelemetry/proto/collector/logs/v1/logs_service.proto\",\n        \"opentelemetry/proto/logs/v1/logs.proto\",\n        \"opentelemetry/proto/resource/v1/resource.proto\",\n    ],\n    deps = [\n        \"//:common\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"logs_go_proto\",\n    importpath = \"go.opentelemetry.io/proto/otlp/logs/v1\",\n    proto = \":logs\",\n    visibility = [\"//visibility:public\"],\n)\n",
+  name = "opentelemetry_proto",
+  generator_name = "opentelemetry_proto",
+  generator_function = "grpc_extra_deps",
+  urls = ["https://github.com/open-telemetry/opentelemetry-proto/archive/v0.11.0.tar.gz"],
+  sha256 = "985367f8905e91018e636cbf0d83ab3f834b665c4f5899a27d10cae9657710e2",
+  strip_prefix = "opentelemetry-proto-0.11.0",
+  build_file_content = "\nload(\"@envoy_api//bazel:api_build_system.bzl\", \"api_cc_py_proto_library\")\nload(\"@io_bazel_rules_go//proto:def.bzl\", \"go_proto_library\")\n\napi_cc_py_proto_library(\n    name = \"common\",\n    srcs = [\n        \"opentelemetry/proto/common/v1/common.proto\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"common_go_proto\",\n    importpath = \"go.opentelemetry.io/proto/otlp/common/v1\",\n    proto = \":common\",\n    visibility = [\"//visibility:public\"],\n)\n\n# TODO(snowp): Generating one Go package from all of these protos could cause problems in the future,\n# but nothing references symbols from collector or resource so we're fine for now.\napi_cc_py_proto_library(\n    name = \"logs\",\n    srcs = [\n        \"opentelemetry/proto/collector/logs/v1/logs_service.proto\",\n        \"opentelemetry/proto/logs/v1/logs.proto\",\n        \"opentelemetry/proto/resource/v1/resource.proto\",\n    ],\n    deps = [\n        \"//:common\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"logs_go_proto\",\n    importpath = \"go.opentelemetry.io/proto/otlp/logs/v1\",\n    proto = \":logs\",\n    visibility = [\"//visibility:public\"],\n)\n",
 )
 # Rule opentelemetry_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:47:21 in grpc_extra_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:51:21 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:46:26               in api_dependencies
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:9:23                in external_http_archive
 #   {OUTPUT_BASE}/external/envoy_api/bazel/envoy_http_archive.bzl:16:17         in envoy_http_archive
@@ -5755,10 +5757,10 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "org_apache_httpcomponents_httpclient",
-    generator_name = "org_apache_httpcomponents_httpclient",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "org_apache_httpcomponents_httpclient",
+  generator_name = "org_apache_httpcomponents_httpclient",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule org_apache_httpcomponents_httpclient instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -5768,10 +5770,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "org_apache_httpcomponents_httpcore",
-    generator_name = "org_apache_httpcomponents_httpcore",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "org_apache_httpcomponents_httpcore",
+  generator_name = "org_apache_httpcomponents_httpcore",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule org_apache_httpcomponents_httpcore instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -5781,10 +5783,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "org_apache_tomcat_annotations_api",
-    generator_name = "org_apache_tomcat_annotations_api",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "org_apache_tomcat_annotations_api",
+  generator_name = "org_apache_tomcat_annotations_api",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule org_apache_tomcat_annotations_api instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -5794,10 +5796,10 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "org_checkerframework_checker_compat_qual",
-    generator_name = "org_checkerframework_checker_compat_qual",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "org_checkerframework_checker_compat_qual",
+  generator_name = "org_checkerframework_checker_compat_qual",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule org_checkerframework_checker_compat_qual instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -5807,12 +5809,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_checkerframework_checker_compat_qual_2_5_5",
-    generator_name = "org_checkerframework_checker_compat_qual_2_5_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "11d134b245e9cacc474514d2d66b5b8618f8039a1465cdc55bbc0b34e0008b7a",
-    urls = ["https://repo1.maven.org/maven2/org/checkerframework/checker-compat-qual/2.5.5/checker-compat-qual-2.5.5.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_checkerframework_checker_compat_qual_2_5_5",
+  generator_name = "org_checkerframework_checker_compat_qual_2_5_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "11d134b245e9cacc474514d2d66b5b8618f8039a1465cdc55bbc0b34e0008b7a",
+  urls = ["https://repo1.maven.org/maven2/org/checkerframework/checker-compat-qual/2.5.5/checker-compat-qual-2.5.5.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_checkerframework_checker_compat_qual_2_5_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -5822,12 +5824,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_checkerframework_checker_compat_qual_jar_sources_2_5_5",
-    generator_name = "org_checkerframework_checker_compat_qual_jar_sources_2_5_5",
-    generator_function = "pinned_maven_install",
-    sha256 = "7c63a4a46b2ef903f941aeac63da87dd345be3243b472796aa945fa715bf3ca9",
-    urls = ["https://repo1.maven.org/maven2/org/checkerframework/checker-compat-qual/2.5.5/checker-compat-qual-2.5.5-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_checkerframework_checker_compat_qual_jar_sources_2_5_5",
+  generator_name = "org_checkerframework_checker_compat_qual_jar_sources_2_5_5",
+  generator_function = "pinned_maven_install",
+  sha256 = "7c63a4a46b2ef903f941aeac63da87dd345be3243b472796aa945fa715bf3ca9",
+  urls = ["https://repo1.maven.org/maven2/org/checkerframework/checker-compat-qual/2.5.5/checker-compat-qual-2.5.5-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_checkerframework_checker_compat_qual_jar_sources_2_5_5 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -5837,10 +5839,10 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "org_codehaus_mojo_animal_sniffer_annotations",
-    generator_name = "org_codehaus_mojo_animal_sniffer_annotations",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "org_codehaus_mojo_animal_sniffer_annotations",
+  generator_name = "org_codehaus_mojo_animal_sniffer_annotations",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule org_codehaus_mojo_animal_sniffer_annotations instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -5850,12 +5852,12 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_codehaus_mojo_animal_sniffer_annotations_1_19",
-    generator_name = "org_codehaus_mojo_animal_sniffer_annotations_1_19",
-    generator_function = "pinned_maven_install",
-    sha256 = "e67ec27ceeaf13ab5d54cf5fdbcc544c41b4db8d02d9f006678cca2c7c13ee9d",
-    urls = ["https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.19/animal-sniffer-annotations-1.19.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_codehaus_mojo_animal_sniffer_annotations_1_19",
+  generator_name = "org_codehaus_mojo_animal_sniffer_annotations_1_19",
+  generator_function = "pinned_maven_install",
+  sha256 = "e67ec27ceeaf13ab5d54cf5fdbcc544c41b4db8d02d9f006678cca2c7c13ee9d",
+  urls = ["https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.19/animal-sniffer-annotations-1.19.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_codehaus_mojo_animal_sniffer_annotations_1_19 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -5865,12 +5867,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_codehaus_mojo_animal_sniffer_annotations_jar_sources_1_19",
-    generator_name = "org_codehaus_mojo_animal_sniffer_annotations_jar_sources_1_19",
-    generator_function = "pinned_maven_install",
-    sha256 = "da2e67cba66639197d23c1976e6c27d0967ad4dc69e6228b934e05a0d39e2991",
-    urls = ["https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.19/animal-sniffer-annotations-1.19-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_codehaus_mojo_animal_sniffer_annotations_jar_sources_1_19",
+  generator_name = "org_codehaus_mojo_animal_sniffer_annotations_jar_sources_1_19",
+  generator_function = "pinned_maven_install",
+  sha256 = "da2e67cba66639197d23c1976e6c27d0967ad4dc69e6228b934e05a0d39e2991",
+  urls = ["https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.19/animal-sniffer-annotations-1.19-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_codehaus_mojo_animal_sniffer_annotations_jar_sources_1_19 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -5880,12 +5882,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_fusesource_jansi_jansi_1_18",
-    generator_name = "org_fusesource_jansi_jansi_1_18",
-    generator_function = "pinned_maven_install",
-    sha256 = "109e64fc65767c7a1a3bd654709d76f107b0a3b39db32cbf11139e13a6f5229b",
-    urls = ["https://repo1.maven.org/maven2/org/fusesource/jansi/jansi/1.18/jansi-1.18.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_fusesource_jansi_jansi_1_18",
+  generator_name = "org_fusesource_jansi_jansi_1_18",
+  generator_function = "pinned_maven_install",
+  sha256 = "109e64fc65767c7a1a3bd654709d76f107b0a3b39db32cbf11139e13a6f5229b",
+  urls = ["https://repo1.maven.org/maven2/org/fusesource/jansi/jansi/1.18/jansi-1.18.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_fusesource_jansi_jansi_1_18 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -5895,12 +5897,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_fusesource_jansi_jansi_jar_sources_1_18",
-    generator_name = "org_fusesource_jansi_jansi_jar_sources_1_18",
-    generator_function = "pinned_maven_install",
-    sha256 = "dcddb789ebf8efd8cedbafad6619a510fb5489600edd53d6c3aed5365fba215d",
-    urls = ["https://repo1.maven.org/maven2/org/fusesource/jansi/jansi/1.18/jansi-1.18-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_fusesource_jansi_jansi_jar_sources_1_18",
+  generator_name = "org_fusesource_jansi_jansi_jar_sources_1_18",
+  generator_function = "pinned_maven_install",
+  sha256 = "dcddb789ebf8efd8cedbafad6619a510fb5489600edd53d6c3aed5365fba215d",
+  urls = ["https://repo1.maven.org/maven2/org/fusesource/jansi/jansi/1.18/jansi-1.18-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_fusesource_jansi_jansi_jar_sources_1_18 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -5910,13 +5912,13 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_google_appengine",
-    generator_name = "org_golang_google_appengine",
-    generator_function = "go_deps",
-    importpath = "google.golang.org/appengine",
-    version = "v1.4.0",
-    sum = "h1:/wp5JvzpHIxhs/dumFmF7BXTf3Z+dd4uXta4kVyO508=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_google_appengine",
+  generator_name = "org_golang_google_appengine",
+  generator_function = "go_deps",
+  importpath = "google.golang.org/appengine",
+  version = "v1.4.0",
+  sum = "h1:/wp5JvzpHIxhs/dumFmF7BXTf3Z+dd4uXta4kVyO508=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_google_appengine instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -5926,13 +5928,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_google_genproto",
-    generator_name = "org_golang_google_genproto",
-    generator_function = "go_deps",
-    importpath = "google.golang.org/genproto",
-    version = "v0.0.0-20200526211855-cb27e3aa2013",
-    sum = "h1:+kGHl1aib/qcwaRi1CbqBZ1rk19r85MNUf8HaBghugY=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_google_genproto",
+  generator_name = "org_golang_google_genproto",
+  generator_function = "go_deps",
+  importpath = "google.golang.org/genproto",
+  version = "v0.0.0-20200526211855-cb27e3aa2013",
+  sum = "h1:+kGHl1aib/qcwaRi1CbqBZ1rk19r85MNUf8HaBghugY=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_google_genproto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -5942,13 +5944,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_google_grpc",
-    generator_name = "org_golang_google_grpc",
-    generator_function = "go_deps",
-    importpath = "google.golang.org/grpc",
-    version = "v1.27.0",
-    sum = "h1:rRYRFMVgRv6E0D70Skyfsr28tDXIuuPZyWGMPdMcnXg=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_google_grpc",
+  generator_name = "org_golang_google_grpc",
+  generator_function = "go_deps",
+  importpath = "google.golang.org/grpc",
+  version = "v1.27.0",
+  sum = "h1:rRYRFMVgRv6E0D70Skyfsr28tDXIuuPZyWGMPdMcnXg=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_google_grpc instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -5958,31 +5960,31 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:144:13
 go_repository(
-    name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
-    generator_name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
-    generator_function = "go_core_deps",
-    importpath = "google.golang.org/grpc/cmd/protoc-gen-go-grpc",
-    version = "v1.1.0",
-    sum = "h1:M1YKkFIboKNieVO5DLUEVzQfGwJD30Nv2jfUgzb5UcE=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
+  generator_name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
+  generator_function = "go_core_deps",
+  importpath = "google.golang.org/grpc/cmd/protoc-gen-go-grpc",
+  version = "v1.1.0",
+  sum = "h1:M1YKkFIboKNieVO5DLUEVzQfGwJD30Nv2jfUgzb5UcE=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_google_grpc_cmd_protoc_gen_go_grpc instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:144:13            in <toplevel>
-#   {WORKSPACE}/deps/go_core_deps.bzl:15:50 in go_core_deps
-#   {WORKSPACE}/deps/go_core_deps.bzl:39:11 in org_golang_google_grpc_cmd_protoc_gen_go_grpc
-#   {WORKSPACE}/deps/go_core_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/go_core_deps.bzl:14:50 in go_core_deps
+#   {WORKSPACE}/deps/go_core_deps.bzl:37:11 in org_golang_google_grpc_cmd_protoc_gen_go_grpc
+#   {WORKSPACE}/deps/go_core_deps.bzl:9:18  in _maybe
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_google_protobuf",
-    generator_name = "org_golang_google_protobuf",
-    generator_function = "go_deps",
-    importpath = "google.golang.org/protobuf",
-    version = "v1.25.0",
-    sum = "h1:Ejskq+SyPohKW+1uil0JJMtmHCgJPJ/qWTxr8qp+R4c=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_google_protobuf",
+  generator_name = "org_golang_google_protobuf",
+  generator_function = "go_deps",
+  importpath = "google.golang.org/protobuf",
+  version = "v1.25.0",
+  sum = "h1:Ejskq+SyPohKW+1uil0JJMtmHCgJPJ/qWTxr8qp+R4c=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_google_protobuf instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -5992,13 +5994,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_crypto",
-    generator_name = "org_golang_x_crypto",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/crypto",
-    version = "v0.0.0-20191011191535-87dc89f01550",
-    sum = "h1:ObdrDkeb4kJdCP557AjRjq69pTHfNouLtWZG7j9rPN8=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_crypto",
+  generator_name = "org_golang_x_crypto",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/crypto",
+  version = "v0.0.0-20191011191535-87dc89f01550",
+  sum = "h1:ObdrDkeb4kJdCP557AjRjq69pTHfNouLtWZG7j9rPN8=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_crypto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6008,13 +6010,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_exp",
-    generator_name = "org_golang_x_exp",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/exp",
-    version = "v0.0.0-20190121172915-509febef88a4",
-    sum = "h1:c2HOrn5iMezYjSlGPncknSEr/8x5LELb/ilJbXi9DEA=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_exp",
+  generator_name = "org_golang_x_exp",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/exp",
+  version = "v0.0.0-20190121172915-509febef88a4",
+  sum = "h1:c2HOrn5iMezYjSlGPncknSEr/8x5LELb/ilJbXi9DEA=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_exp instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6024,13 +6026,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_lint",
-    generator_name = "org_golang_x_lint",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/lint",
-    version = "v0.0.0-20190313153728-d0100b6bd8b3",
-    sum = "h1:XQyxROzUlZH+WIQwySDgnISgOivlhjIEwaQaJEJrrN0=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_lint",
+  generator_name = "org_golang_x_lint",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/lint",
+  version = "v0.0.0-20190313153728-d0100b6bd8b3",
+  sum = "h1:XQyxROzUlZH+WIQwySDgnISgOivlhjIEwaQaJEJrrN0=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_lint instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6040,13 +6042,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_mod",
-    generator_name = "org_golang_x_mod",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/mod",
-    version = "v0.4.1",
-    sum = "h1:Kvvh58BN8Y9/lBi7hTekvtMpm07eUZ0ck5pRHpsMWrY=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_mod",
+  generator_name = "org_golang_x_mod",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/mod",
+  version = "v0.4.1",
+  sum = "h1:Kvvh58BN8Y9/lBi7hTekvtMpm07eUZ0ck5pRHpsMWrY=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_mod instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6056,13 +6058,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_net",
-    generator_name = "org_golang_x_net",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/net",
-    version = "v0.0.0-20190620200207-3b0461eec859",
-    sum = "h1:R/3boaszxrf1GEUWTVDzSKVwLmSJpwZ1yqXm8j0v2QI=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_net",
+  generator_name = "org_golang_x_net",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/net",
+  version = "v0.0.0-20190620200207-3b0461eec859",
+  sum = "h1:R/3boaszxrf1GEUWTVDzSKVwLmSJpwZ1yqXm8j0v2QI=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_net instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6072,13 +6074,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_oauth2",
-    generator_name = "org_golang_x_oauth2",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/oauth2",
-    version = "v0.0.0-20180821212333-d2e6202438be",
-    sum = "h1:vEDujvNQGv4jgYKudGeI/+DAX4Jffq6hpD55MmoEvKs=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_oauth2",
+  generator_name = "org_golang_x_oauth2",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/oauth2",
+  version = "v0.0.0-20180821212333-d2e6202438be",
+  sum = "h1:vEDujvNQGv4jgYKudGeI/+DAX4Jffq6hpD55MmoEvKs=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_oauth2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6088,13 +6090,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_sync",
-    generator_name = "org_golang_x_sync",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/sync",
-    version = "v0.0.0-20190911185100-cd5d95a43a6e",
-    sum = "h1:vcxGaoTs7kV8m5Np9uUNQin4BrLOthgV7252N8V+FwY=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_sync",
+  generator_name = "org_golang_x_sync",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/sync",
+  version = "v0.0.0-20190911185100-cd5d95a43a6e",
+  sum = "h1:vcxGaoTs7kV8m5Np9uUNQin4BrLOthgV7252N8V+FwY=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_sync instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6104,13 +6106,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_sys",
-    generator_name = "org_golang_x_sys",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/sys",
-    version = "v0.0.0-20200930185726-fdedc70b468f",
-    sum = "h1:+Nyd8tzPX9R7BWHguqsrbFdRx3WQ/1ib8I44HXV5yTA=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_sys",
+  generator_name = "org_golang_x_sys",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/sys",
+  version = "v0.0.0-20200930185726-fdedc70b468f",
+  sum = "h1:+Nyd8tzPX9R7BWHguqsrbFdRx3WQ/1ib8I44HXV5yTA=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_sys instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6120,13 +6122,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_text",
-    generator_name = "org_golang_x_text",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/text",
-    version = "v0.3.0",
-    sum = "h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_text",
+  generator_name = "org_golang_x_text",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/text",
+  version = "v0.3.0",
+  sum = "h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_text instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6136,13 +6138,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_tools",
-    generator_name = "org_golang_x_tools",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/tools",
-    version = "v0.0.0-20191119224855-298f0cb1881e",
-    sum = "h1:aZzprAO9/8oim3qStq3wc1Xuxx4QmAGriC4VU4ojemQ=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_tools",
+  generator_name = "org_golang_x_tools",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/tools",
+  version = "v0.0.0-20191119224855-298f0cb1881e",
+  sum = "h1:aZzprAO9/8oim3qStq3wc1Xuxx4QmAGriC4VU4ojemQ=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_tools instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6152,13 +6154,13 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:88:8
 go_repository(
-    name = "org_golang_x_xerrors",
-    generator_name = "org_golang_x_xerrors",
-    generator_function = "go_deps",
-    importpath = "golang.org/x/xerrors",
-    version = "v0.0.0-20200804184101-5ec99f83aff1",
-    sum = "h1:go1bK/D/BFZV2I8cIQd1NKEZ+0owSTG1fDTci4IqFcE=",
-    build_file_proto_mode = "disable_global",
+  name = "org_golang_x_xerrors",
+  generator_name = "org_golang_x_xerrors",
+  generator_function = "go_deps",
+  importpath = "golang.org/x/xerrors",
+  version = "v0.0.0-20200804184101-5ec99f83aff1",
+  sum = "h1:go1bK/D/BFZV2I8cIQd1NKEZ+0owSTG1fDTci4IqFcE=",
+  build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_xerrors instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
@@ -6168,10 +6170,10 @@ go_repository(
 
 # {WORKSPACE}/WORKSPACE:134:20
 compat_repository(
-    name = "org_hamcrest_hamcrest_core",
-    generator_name = "org_hamcrest_hamcrest_core",
-    generator_function = "compat_repositories",
-    generating_repository = "maven",
+  name = "org_hamcrest_hamcrest_core",
+  generator_name = "org_hamcrest_hamcrest_core",
+  generator_function = "compat_repositories",
+  generating_repository = "maven",
 )
 # Rule org_hamcrest_hamcrest_core instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
@@ -6181,13 +6183,13 @@ compat_repository(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "org_json",
-    generator_name = "org_json",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/json/json/20160212/json-20160212.jar", "https://repo1.maven.org/maven2/org/json/json/20160212/json-20160212.jar", "http://maven.ibiblio.org/maven2/org/json/json/20160212/json-20160212.jar"],
-    artifact_sha256 = "0aaf0e7e286ece88fb60b9ba14dd45c05a48e55618876efb7d1b6f19c25e7a29",
+  name = "org_json",
+  generator_name = "org_json",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/json/json/20160212/json-20160212.jar", "https://repo1.maven.org/maven2/org/json/json/20160212/json-20160212.jar", "http://maven.ibiblio.org/maven2/org/json/json/20160212/json-20160212.jar"],
+  artifact_sha256 = "0aaf0e7e286ece88fb60b9ba14dd45c05a48e55618876efb7d1b6f19c25e7a29",
 )
 # Rule org_json instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -6199,12 +6201,12 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_json4s_json4s_ast_2_12_4_0_3",
-    generator_name = "org_json4s_json4s_ast_2_12_4_0_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "410056728163a5da5799db901522d1ed26fb66ad7046eed996d94c3e23c04430",
-    urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-ast_2.12/4.0.3/json4s-ast_2.12-4.0.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_json4s_json4s_ast_2_12_4_0_3",
+  generator_name = "org_json4s_json4s_ast_2_12_4_0_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "410056728163a5da5799db901522d1ed26fb66ad7046eed996d94c3e23c04430",
+  urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-ast_2.12/4.0.3/json4s-ast_2.12-4.0.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_ast_2_12_4_0_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6214,12 +6216,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_json4s_json4s_ast_2_12_jar_sources_4_0_3",
-    generator_name = "org_json4s_json4s_ast_2_12_jar_sources_4_0_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "d92d90d53cb5740001579a27ae6752a99979edb3caa7eb497f17e476dafc28f1",
-    urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-ast_2.12/4.0.3/json4s-ast_2.12-4.0.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_json4s_json4s_ast_2_12_jar_sources_4_0_3",
+  generator_name = "org_json4s_json4s_ast_2_12_jar_sources_4_0_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "d92d90d53cb5740001579a27ae6752a99979edb3caa7eb497f17e476dafc28f1",
+  urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-ast_2.12/4.0.3/json4s-ast_2.12-4.0.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_ast_2_12_jar_sources_4_0_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6229,12 +6231,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_json4s_json4s_core_2_12_4_0_3",
-    generator_name = "org_json4s_json4s_core_2_12_4_0_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "0b8e1b48cbecc496de4f79d2a01e564e51cc72b46d8312f35a38b0a08dcd0b24",
-    urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-core_2.12/4.0.3/json4s-core_2.12-4.0.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_json4s_json4s_core_2_12_4_0_3",
+  generator_name = "org_json4s_json4s_core_2_12_4_0_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "0b8e1b48cbecc496de4f79d2a01e564e51cc72b46d8312f35a38b0a08dcd0b24",
+  urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-core_2.12/4.0.3/json4s-core_2.12-4.0.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_core_2_12_4_0_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6244,12 +6246,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_json4s_json4s_core_2_12_jar_sources_4_0_3",
-    generator_name = "org_json4s_json4s_core_2_12_jar_sources_4_0_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "09740f4827e80cb5c2ab9cfbd1f58fa4686ed43ceb3cdb2f6eab3f681e57a1e0",
-    urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-core_2.12/4.0.3/json4s-core_2.12-4.0.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_json4s_json4s_core_2_12_jar_sources_4_0_3",
+  generator_name = "org_json4s_json4s_core_2_12_jar_sources_4_0_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "09740f4827e80cb5c2ab9cfbd1f58fa4686ed43ceb3cdb2f6eab3f681e57a1e0",
+  urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-core_2.12/4.0.3/json4s-core_2.12-4.0.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_core_2_12_jar_sources_4_0_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6259,12 +6261,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_json4s_json4s_jackson_core_2_12_4_0_1",
-    generator_name = "org_json4s_json4s_jackson_core_2_12_4_0_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "d70600212e5c2660545914ec65530411b537061389542a5cbba1977ed8922067",
-    urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-jackson-core_2.12/4.0.1/json4s-jackson-core_2.12-4.0.1.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_json4s_json4s_jackson_core_2_12_4_0_1",
+  generator_name = "org_json4s_json4s_jackson_core_2_12_4_0_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "d70600212e5c2660545914ec65530411b537061389542a5cbba1977ed8922067",
+  urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-jackson-core_2.12/4.0.1/json4s-jackson-core_2.12-4.0.1.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_jackson_core_2_12_4_0_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6274,12 +6276,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_json4s_json4s_jackson_core_2_12_jar_sources_4_0_1",
-    generator_name = "org_json4s_json4s_jackson_core_2_12_jar_sources_4_0_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "54eb610a68a23695b2058ccff523183dfa743182fae78bf1b0a01aaa92ec85e0",
-    urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-jackson-core_2.12/4.0.1/json4s-jackson-core_2.12-4.0.1-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_json4s_json4s_jackson_core_2_12_jar_sources_4_0_1",
+  generator_name = "org_json4s_json4s_jackson_core_2_12_jar_sources_4_0_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "54eb610a68a23695b2058ccff523183dfa743182fae78bf1b0a01aaa92ec85e0",
+  urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-jackson-core_2.12/4.0.1/json4s-jackson-core_2.12-4.0.1-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_jackson_core_2_12_jar_sources_4_0_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6289,12 +6291,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_json4s_json4s_scalap_2_12_4_0_3",
-    generator_name = "org_json4s_json4s_scalap_2_12_4_0_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "6daaec1ec198f81f0a55c51fdc3eb9bf5d00047ebb8dacb17938256d9a1480ec",
-    urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-scalap_2.12/4.0.3/json4s-scalap_2.12-4.0.3.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_json4s_json4s_scalap_2_12_4_0_3",
+  generator_name = "org_json4s_json4s_scalap_2_12_4_0_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "6daaec1ec198f81f0a55c51fdc3eb9bf5d00047ebb8dacb17938256d9a1480ec",
+  urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-scalap_2.12/4.0.3/json4s-scalap_2.12-4.0.3.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_scalap_2_12_4_0_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6304,12 +6306,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_json4s_json4s_scalap_2_12_jar_sources_4_0_3",
-    generator_name = "org_json4s_json4s_scalap_2_12_jar_sources_4_0_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "7abf8faab46fcaafd124dc3f4eadc4f31482dad1ff99758deb1752824ff45123",
-    urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-scalap_2.12/4.0.3/json4s-scalap_2.12-4.0.3-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_json4s_json4s_scalap_2_12_jar_sources_4_0_3",
+  generator_name = "org_json4s_json4s_scalap_2_12_jar_sources_4_0_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "7abf8faab46fcaafd124dc3f4eadc4f31482dad1ff99758deb1752824ff45123",
+  urls = ["https://repo1.maven.org/maven2/org/json4s/json4s-scalap_2.12/4.0.3/json4s-scalap_2.12-4.0.3-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_scalap_2_12_jar_sources_4_0_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6319,13 +6321,13 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "org_jsoup",
-    generator_name = "org_jsoup",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.jar", "https://repo1.maven.org/maven2/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.jar"],
-    artifact_sha256 = "df2c71a4240ecbdae7cdcd1667bcf0d747e4e3dcefe8161e787adcff7e5f2fa0",
+  name = "org_jsoup",
+  generator_name = "org_jsoup",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.jar", "https://repo1.maven.org/maven2/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.jar"],
+  artifact_sha256 = "df2c71a4240ecbdae7cdcd1667bcf0d747e4e3dcefe8161e787adcff7e5f2fa0",
 )
 # Rule org_jsoup instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -6337,13 +6339,13 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "org_ow2_asm",
-    generator_name = "org_ow2_asm",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/ow2/asm/asm/6.0/asm-6.0.jar", "https://repo1.maven.org/maven2/org/ow2/asm/asm/6.0/asm-6.0.jar"],
-    artifact_sha256 = "dd8971c74a4e697899a8e95caae4ea8760ea6c486dc6b97b1795e75760420461",
+  name = "org_ow2_asm",
+  generator_name = "org_ow2_asm",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/ow2/asm/asm/6.0/asm-6.0.jar", "https://repo1.maven.org/maven2/org/ow2/asm/asm/6.0/asm-6.0.jar"],
+  artifact_sha256 = "dd8971c74a4e697899a8e95caae4ea8760ea6c486dc6b97b1795e75760420461",
 )
 # Rule org_ow2_asm instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -6355,14 +6357,14 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "org_ow2_asm_analysis",
-    generator_name = "org_ow2_asm_analysis",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/ow2/asm/asm-analysis/6.0/asm-analysis-6.0.jar", "https://repo1.maven.org/maven2/org/ow2/asm/asm-analysis/6.0/asm-analysis-6.0.jar"],
-    artifact_sha256 = "2f1a6387219c3a6cc4856481f221b03bd9f2408a326d416af09af5d6f608c1f4",
-    exports = ["@org_ow2_asm", "@org_ow2_asm_tree"],
+  name = "org_ow2_asm_analysis",
+  generator_name = "org_ow2_asm_analysis",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/ow2/asm/asm-analysis/6.0/asm-analysis-6.0.jar", "https://repo1.maven.org/maven2/org/ow2/asm/asm-analysis/6.0/asm-analysis-6.0.jar"],
+  artifact_sha256 = "2f1a6387219c3a6cc4856481f221b03bd9f2408a326d416af09af5d6f608c1f4",
+  exports = ["@org_ow2_asm", "@org_ow2_asm_tree"],
 )
 # Rule org_ow2_asm_analysis instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -6374,14 +6376,14 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "org_ow2_asm_commons",
-    generator_name = "org_ow2_asm_commons",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/ow2/asm/asm-commons/6.0/asm-commons-6.0.jar", "https://repo1.maven.org/maven2/org/ow2/asm/asm-commons/6.0/asm-commons-6.0.jar"],
-    artifact_sha256 = "f1bce5c648a96a017bdcd01fe5d59af9845297fd7b79b81c015a6fbbd9719abf",
-    exports = ["@org_ow2_asm_tree"],
+  name = "org_ow2_asm_commons",
+  generator_name = "org_ow2_asm_commons",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/ow2/asm/asm-commons/6.0/asm-commons-6.0.jar", "https://repo1.maven.org/maven2/org/ow2/asm/asm-commons/6.0/asm-commons-6.0.jar"],
+  artifact_sha256 = "f1bce5c648a96a017bdcd01fe5d59af9845297fd7b79b81c015a6fbbd9719abf",
+  exports = ["@org_ow2_asm_tree"],
 )
 # Rule org_ow2_asm_commons instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
@@ -6393,14 +6395,14 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "org_ow2_asm_tree",
-    generator_name = "org_ow2_asm_tree",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/ow2/asm/asm-tree/6.0/asm-tree-6.0.jar", "https://repo1.maven.org/maven2/org/ow2/asm/asm-tree/6.0/asm-tree-6.0.jar"],
-    artifact_sha256 = "887998fb69727c8759e4d253f856822801e33f9fd4caa566b3ac58ee92106215",
-    exports = ["@org_ow2_asm"],
+  name = "org_ow2_asm_tree",
+  generator_name = "org_ow2_asm_tree",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/ow2/asm/asm-tree/6.0/asm-tree-6.0.jar", "https://repo1.maven.org/maven2/org/ow2/asm/asm-tree/6.0/asm-tree-6.0.jar"],
+  artifact_sha256 = "887998fb69727c8759e4d253f856822801e33f9fd4caa566b3ac58ee92106215",
+  exports = ["@org_ow2_asm"],
 )
 # Rule org_ow2_asm_tree instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
@@ -6412,14 +6414,14 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:217:27
 jvm_import_external(
-    name = "org_ow2_asm_util",
-    generator_name = "org_ow2_asm_util",
-    generator_function = "rules_closure_dependencies",
-    rule_name = "java_import",
-    licenses = ["notice"],
-    artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/ow2/asm/asm-util/6.0/asm-util-6.0.jar", "https://repo1.maven.org/maven2/org/ow2/asm/asm-util/6.0/asm-util-6.0.jar"],
-    artifact_sha256 = "356afebdb0f870175262e5188f8709a3b17aa2a5a6a4b0340b04d4b449bca5f6",
-    exports = ["@org_ow2_asm_analysis", "@org_ow2_asm_tree"],
+  name = "org_ow2_asm_util",
+  generator_name = "org_ow2_asm_util",
+  generator_function = "rules_closure_dependencies",
+  rule_name = "java_import",
+  licenses = ["notice"],
+  artifact_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2/org/ow2/asm/asm-util/6.0/asm-util-6.0.jar", "https://repo1.maven.org/maven2/org/ow2/asm/asm-util/6.0/asm-util-6.0.jar"],
+  artifact_sha256 = "356afebdb0f870175262e5188f8709a3b17aa2a5a6a4b0340b04d4b449bca5f6",
+  exports = ["@org_ow2_asm_analysis", "@org_ow2_asm_tree"],
 )
 # Rule org_ow2_asm_util instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
@@ -6431,12 +6433,12 @@ jvm_import_external(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_reactivestreams_reactive_streams_1_0_3",
-    generator_name = "org_reactivestreams_reactive_streams_1_0_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "1dee0481072d19c929b623e155e14d2f6085dc011529a0a0dbefc84cf571d865",
-    urls = ["https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_reactivestreams_reactive_streams_1_0_3",
+  generator_name = "org_reactivestreams_reactive_streams_1_0_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "1dee0481072d19c929b623e155e14d2f6085dc011529a0a0dbefc84cf571d865",
+  urls = ["https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_reactivestreams_reactive_streams_1_0_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6446,12 +6448,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_reactivestreams_reactive_streams_jar_sources_1_0_3",
-    generator_name = "org_reactivestreams_reactive_streams_jar_sources_1_0_3",
-    generator_function = "pinned_maven_install",
-    sha256 = "d5b4070a22c9b1ca5b9b5aa668466bcca391dbe5d5fe8311c300765c1621feba",
-    urls = ["https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_reactivestreams_reactive_streams_jar_sources_1_0_3",
+  generator_name = "org_reactivestreams_reactive_streams_jar_sources_1_0_3",
+  generator_function = "pinned_maven_install",
+  sha256 = "d5b4070a22c9b1ca5b9b5aa668466bcca391dbe5d5fe8311c300765c1621feba",
+  urls = ["https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_reactivestreams_reactive_streams_jar_sources_1_0_3 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6461,12 +6463,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_scala_lang_modules_scala_collection_compat_2_12_2_5_0",
-    generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_2_5_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "fd2848c52fa99720c5bdc4ce212a9f9b929a4243d4e31c0b23e2f9d219acae69",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.5.0/scala-collection-compat_2.12-2.5.0.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_scala_lang_modules_scala_collection_compat_2_12_2_5_0",
+  generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_2_5_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "fd2848c52fa99720c5bdc4ce212a9f9b929a4243d4e31c0b23e2f9d219acae69",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.5.0/scala-collection-compat_2.12-2.5.0.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_modules_scala_collection_compat_2_12_2_5_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6476,12 +6478,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_scala_lang_modules_scala_collection_compat_2_12_2_6_0",
-    generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_2_6_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "3732c1456bfe0a3f4a483503bc304cd26bf20865c4f822128502fdf403df65f5",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.6.0/scala-collection-compat_2.12-2.6.0.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_scala_lang_modules_scala_collection_compat_2_12_2_6_0",
+  generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_2_6_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "3732c1456bfe0a3f4a483503bc304cd26bf20865c4f822128502fdf403df65f5",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.6.0/scala-collection-compat_2.12-2.6.0.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_collection_compat_2_12_2_6_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6491,12 +6493,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_5_0",
-    generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_5_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "4f5b0562c4c78eb6195abc3d915976f5fe9ff479fd4d7dab4ac758f32fe331f4",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.5.0/scala-collection-compat_2.12-2.5.0-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_5_0",
+  generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_5_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "4f5b0562c4c78eb6195abc3d915976f5fe9ff479fd4d7dab4ac758f32fe331f4",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.5.0/scala-collection-compat_2.12-2.5.0-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_5_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6506,12 +6508,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_6_0",
-    generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_6_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "fdd53a68b15b895ee8847a3d58287d6ced3c2c2ba2fc87c9e6121b98f193b7b5",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.6.0/scala-collection-compat_2.12-2.6.0-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_6_0",
+  generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_6_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "fdd53a68b15b895ee8847a3d58287d6ced3c2c2ba2fc87c9e6121b98f193b7b5",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.6.0/scala-collection-compat_2.12-2.6.0-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_6_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6521,12 +6523,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_scala_lang_modules_scala_java8_compat_2_12_0_8_0",
-    generator_name = "org_scala_lang_modules_scala_java8_compat_2_12_0_8_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "d9d5dfd1bc49a8158e6e0a90b2ed08fa602984d815c00af16cec53557e83ef8e",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.8.0/scala-java8-compat_2.12-0.8.0.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_scala_lang_modules_scala_java8_compat_2_12_0_8_0",
+  generator_name = "org_scala_lang_modules_scala_java8_compat_2_12_0_8_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "d9d5dfd1bc49a8158e6e0a90b2ed08fa602984d815c00af16cec53557e83ef8e",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.8.0/scala-java8-compat_2.12-0.8.0.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_java8_compat_2_12_0_8_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6536,12 +6538,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_scala_lang_modules_scala_java8_compat_2_12_jar_sources_0_8_0",
-    generator_name = "org_scala_lang_modules_scala_java8_compat_2_12_jar_sources_0_8_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "c0926003987a5c21108748fda401023485085eaa9fe90a41a40bcf67596fff34",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.8.0/scala-java8-compat_2.12-0.8.0-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_scala_lang_modules_scala_java8_compat_2_12_jar_sources_0_8_0",
+  generator_name = "org_scala_lang_modules_scala_java8_compat_2_12_jar_sources_0_8_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "c0926003987a5c21108748fda401023485085eaa9fe90a41a40bcf67596fff34",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.8.0/scala-java8-compat_2.12-0.8.0-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_java8_compat_2_12_jar_sources_0_8_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6551,12 +6553,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_scala_lang_modules_scala_parser_combinators_2_12_1_1_2",
-    generator_name = "org_scala_lang_modules_scala_parser_combinators_2_12_1_1_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "24985eb43e295a9dd77905ada307a850ca25acf819cdb579c093fc6987b0dbc2",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_scala_lang_modules_scala_parser_combinators_2_12_1_1_2",
+  generator_name = "org_scala_lang_modules_scala_parser_combinators_2_12_1_1_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "24985eb43e295a9dd77905ada307a850ca25acf819cdb579c093fc6987b0dbc2",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_parser_combinators_2_12_1_1_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6566,12 +6568,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_scala_lang_modules_scala_parser_combinators_2_12_jar_sources_1_1_2",
-    generator_name = "org_scala_lang_modules_scala_parser_combinators_2_12_jar_sources_1_1_2",
-    generator_function = "pinned_maven_install",
-    sha256 = "8fbe3fa9e748f24aa6d6868c0c2be30d41a02d20428ed5429bb57a897cb756e3",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_scala_lang_modules_scala_parser_combinators_2_12_jar_sources_1_1_2",
+  generator_name = "org_scala_lang_modules_scala_parser_combinators_2_12_jar_sources_1_1_2",
+  generator_function = "pinned_maven_install",
+  sha256 = "8fbe3fa9e748f24aa6d6868c0c2be30d41a02d20428ed5429bb57a897cb756e3",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_parser_combinators_2_12_jar_sources_1_1_2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6581,12 +6583,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_scala_lang_modules_scala_xml_2_12_1_2_0",
-    generator_name = "org_scala_lang_modules_scala_xml_2_12_1_2_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "1b48dc206f527b7604ef32492ada8e71706c63a65d999e0cabdafdc5793b4d63",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_scala_lang_modules_scala_xml_2_12_1_2_0",
+  generator_name = "org_scala_lang_modules_scala_xml_2_12_1_2_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "1b48dc206f527b7604ef32492ada8e71706c63a65d999e0cabdafdc5793b4d63",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_xml_2_12_1_2_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6596,12 +6598,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_scala_lang_modules_scala_xml_2_12_1_3_0",
-    generator_name = "org_scala_lang_modules_scala_xml_2_12_1_3_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "ccaa5edaf1e653f5ba6bfbb3cefa525f34719112b61e4fa42e8c4fcf690a3e35",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.3.0/scala-xml_2.12-1.3.0.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_scala_lang_modules_scala_xml_2_12_1_3_0",
+  generator_name = "org_scala_lang_modules_scala_xml_2_12_1_3_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "ccaa5edaf1e653f5ba6bfbb3cefa525f34719112b61e4fa42e8c4fcf690a3e35",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.3.0/scala-xml_2.12-1.3.0.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_modules_scala_xml_2_12_1_3_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6611,12 +6613,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_2_0",
-    generator_name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_2_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "288fdce0b296df28725707cc87cff0f65ef435c54e93e0c1fbc5a7fcc8e19ade",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_2_0",
+  generator_name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_2_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "288fdce0b296df28725707cc87cff0f65ef435c54e93e0c1fbc5a7fcc8e19ade",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_xml_2_12_jar_sources_1_2_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6626,12 +6628,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_3_0",
-    generator_name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_3_0",
-    generator_function = "pinned_maven_install",
-    sha256 = "f4c3284cf8bb195488263414d8608f0df34e0d5b8f4bc6ec6a157115bfeb5300",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.3.0/scala-xml_2.12-1.3.0-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_3_0",
+  generator_name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_3_0",
+  generator_function = "pinned_maven_install",
+  sha256 = "f4c3284cf8bb195488263414d8608f0df34e0d5b8f4bc6ec6a157115bfeb5300",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.3.0/scala-xml_2.12-1.3.0-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_modules_scala_xml_2_12_jar_sources_1_3_0 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6641,12 +6643,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_scala_lang_scala_library_2_12_14",
-    generator_name = "org_scala_lang_scala_library_2_12_14",
-    generator_function = "pinned_maven_install",
-    sha256 = "0451dce8322903a6c2aa7d31232b54daa72a61ced8ade0b4c5022442a3f6cb57",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.14/scala-library-2.12.14.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_scala_lang_scala_library_2_12_14",
+  generator_name = "org_scala_lang_scala_library_2_12_14",
+  generator_function = "pinned_maven_install",
+  sha256 = "0451dce8322903a6c2aa7d31232b54daa72a61ced8ade0b4c5022442a3f6cb57",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.14/scala-library-2.12.14.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_scala_library_2_12_14 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6656,12 +6658,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_scala_lang_scala_library_2_12_15",
-    generator_name = "org_scala_lang_scala_library_2_12_15",
-    generator_function = "pinned_maven_install",
-    sha256 = "e518bb640e2175de5cb1f8e326679b8d975376221f1b547757de429bbf4563f0",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.15/scala-library-2.12.15.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_scala_lang_scala_library_2_12_15",
+  generator_name = "org_scala_lang_scala_library_2_12_15",
+  generator_function = "pinned_maven_install",
+  sha256 = "e518bb640e2175de5cb1f8e326679b8d975376221f1b547757de429bbf4563f0",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.15/scala-library-2.12.15.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_scala_library_2_12_15 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6671,12 +6673,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_scala_lang_scala_library_jar_sources_2_12_14",
-    generator_name = "org_scala_lang_scala_library_jar_sources_2_12_14",
-    generator_function = "pinned_maven_install",
-    sha256 = "5d3d5e62367e1dc39d6eac1299db6a3a4ead71f6f3bae2394b2d61251461dd26",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.14/scala-library-2.12.14-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_scala_lang_scala_library_jar_sources_2_12_14",
+  generator_name = "org_scala_lang_scala_library_jar_sources_2_12_14",
+  generator_function = "pinned_maven_install",
+  sha256 = "5d3d5e62367e1dc39d6eac1299db6a3a4ead71f6f3bae2394b2d61251461dd26",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.14/scala-library-2.12.14-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_scala_library_jar_sources_2_12_14 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6686,12 +6688,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:207:26
 http_file(
-    name = "org_scala_lang_scala_library_jar_sources_2_12_15",
-    generator_name = "org_scala_lang_scala_library_jar_sources_2_12_15",
-    generator_function = "pinned_maven_install",
-    sha256 = "e6be8e8ad322cfd312b06fe96e38f58db30a512efc009b91d9045c2d4f331ce2",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.15/scala-library-2.12.15-sources.jar"],
-    netrc = "../maven_akka/netrc",
+  name = "org_scala_lang_scala_library_jar_sources_2_12_15",
+  generator_name = "org_scala_lang_scala_library_jar_sources_2_12_15",
+  generator_function = "pinned_maven_install",
+  sha256 = "e6be8e8ad322cfd312b06fe96e38f58db30a512efc009b91d9045c2d4f331ce2",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.15/scala-library-2.12.15-sources.jar"],
+  netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_scala_library_jar_sources_2_12_15 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
@@ -6701,12 +6703,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_scala_lang_scala_reflect_2_12_10",
-    generator_name = "org_scala_lang_scala_reflect_2_12_10",
-    generator_function = "pinned_maven_install",
-    sha256 = "56b609e1bab9144fb51525bfa01ccd72028154fc40a58685a1e9adcbe7835730",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.10/scala-reflect-2.12.10.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_scala_lang_scala_reflect_2_12_10",
+  generator_name = "org_scala_lang_scala_reflect_2_12_10",
+  generator_function = "pinned_maven_install",
+  sha256 = "56b609e1bab9144fb51525bfa01ccd72028154fc40a58685a1e9adcbe7835730",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.10/scala-reflect-2.12.10.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_scala_reflect_2_12_10 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6716,12 +6718,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_scala_lang_scala_reflect_jar_sources_2_12_10",
-    generator_name = "org_scala_lang_scala_reflect_jar_sources_2_12_10",
-    generator_function = "pinned_maven_install",
-    sha256 = "c3a883670038f8030c41e5e3840d592e2c8bd89bf33d7d42a15c60f1207b9a32",
-    urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.10/scala-reflect-2.12.10-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_scala_lang_scala_reflect_jar_sources_2_12_10",
+  generator_name = "org_scala_lang_scala_reflect_jar_sources_2_12_10",
+  generator_function = "pinned_maven_install",
+  sha256 = "c3a883670038f8030c41e5e3840d592e2c8bd89bf33d7d42a15c60f1207b9a32",
+  urls = ["https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.10/scala-reflect-2.12.10-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_scala_reflect_jar_sources_2_12_10 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6731,12 +6733,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_typelevel_macro_compat_2_12_1_1_1",
-    generator_name = "org_typelevel_macro_compat_2_12_1_1_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "8b1514ec99ac9c7eded284367b6c9f8f17a097198a44e6f24488706d66bbd2b8",
-    urls = ["https://repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_typelevel_macro_compat_2_12_1_1_1",
+  generator_name = "org_typelevel_macro_compat_2_12_1_1_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "8b1514ec99ac9c7eded284367b6c9f8f17a097198a44e6f24488706d66bbd2b8",
+  urls = ["https://repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_typelevel_macro_compat_2_12_1_1_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6746,12 +6748,12 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "org_typelevel_macro_compat_2_12_jar_sources_1_1_1",
-    generator_name = "org_typelevel_macro_compat_2_12_jar_sources_1_1_1",
-    generator_function = "pinned_maven_install",
-    sha256 = "c748cbcda2e8828dd25e788617a4c559abf92960ef0f92f9f5d3ea67774c34c8",
-    urls = ["https://repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1-sources.jar"],
-    netrc = "../maven_scala/netrc",
+  name = "org_typelevel_macro_compat_2_12_jar_sources_1_1_1",
+  generator_name = "org_typelevel_macro_compat_2_12_jar_sources_1_1_1",
+  generator_function = "pinned_maven_install",
+  sha256 = "c748cbcda2e8828dd25e788617a4c559abf92960ef0f92f9f5d3ea67774c34c8",
+  urls = ["https://repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1-sources.jar"],
+  netrc = "../maven_scala/netrc",
 )
 # Rule org_typelevel_macro_compat_2_12_jar_sources_1_1_1 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
@@ -6761,13 +6763,13 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:217:27
 platform_http_file(
-    name = "phantomjs",
-    generator_name = "phantomjs",
-    generator_function = "rules_closure_dependencies",
-    amd64_urls = ["https://mirror.bazel.build/bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2", "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2"],
-    amd64_sha256 = "86dd9a4bf4aee45f1a84c9f61cf1947c1d6dce9b9e8d2a907105da7852460d2f",
-    macos_urls = ["https://mirror.bazel.build/bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-macosx.zip", "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-macosx.zip"],
-    macos_sha256 = "538cf488219ab27e309eafc629e2bcee9976990fe90b1ec334f541779150f8c1",
+  name = "phantomjs",
+  generator_name = "phantomjs",
+  generator_function = "rules_closure_dependencies",
+  amd64_urls = ["https://mirror.bazel.build/bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2", "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2"],
+  amd64_sha256 = "86dd9a4bf4aee45f1a84c9f61cf1947c1d6dce9b9e8d2a907105da7852460d2f",
+  macos_urls = ["https://mirror.bazel.build/bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-macosx.zip", "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-macosx.zip"],
+  macos_sha256 = "538cf488219ab27e309eafc629e2bcee9976990fe90b1ec334f541779150f8c1",
 )
 # Rule phantomjs instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
@@ -6778,12 +6780,12 @@ platform_http_file(
 
 # {WORKSPACE}/WORKSPACE:73:22
 http_archive(
-    name = "platforms",
-    generator_name = "platforms",
-    generator_function = "go_rules_dependencies",
-    urls = ["https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.4/platforms-0.0.4.tar.gz", "https://github.com/bazelbuild/platforms/releases/download/0.0.4/platforms-0.0.4.tar.gz"],
-    sha256 = "079945598e4b6cc075846f7fd6a9d0857c33a7afc0de868c2ccb96405225135d",
-    strip_prefix = "",
+  name = "platforms",
+  generator_name = "platforms",
+  generator_function = "go_rules_dependencies",
+  urls = ["https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.4/platforms-0.0.4.tar.gz", "https://github.com/bazelbuild/platforms/releases/download/0.0.4/platforms-0.0.4.tar.gz"],
+  sha256 = "079945598e4b6cc075846f7fd6a9d0857c33a7afc0de868c2ccb96405225135d",
+  strip_prefix = "",
 )
 # Rule platforms instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
@@ -6794,68 +6796,68 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:25:21
 http_archive(
-    name = "prebuilt_protoc_linux",
-    generator_name = "prebuilt_protoc_linux",
-    generator_function = "prebuilt_protoc_deps",
-    urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-linux-x86_64.zip"],
-    sha256 = "3a0e900f9556fbcac4c3a913a00d07680f0fdf6b990a341462d822247b265562",
-    build_file_content = "\nfilegroup(\n    name = \"protoc\",\n    srcs = [\"bin/protoc\"],\n    visibility = [\"//visibility:public\"],\n)\n",
+  name = "prebuilt_protoc_linux",
+  generator_name = "prebuilt_protoc_linux",
+  generator_function = "prebuilt_protoc_deps",
+  urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-linux-x86_64.zip"],
+  sha256 = "3a0e900f9556fbcac4c3a913a00d07680f0fdf6b990a341462d822247b265562",
+  build_file_content = "\nfilegroup(\n    name = \"protoc\",\n    srcs = [\"bin/protoc\"],\n    visibility = [\"//visibility:public\"],\n)\n",
 )
 # Rule prebuilt_protoc_linux instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:25:21                     in <toplevel>
-#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:13:26 in prebuilt_protoc_deps
-#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:19:11 in prebuilt_protoc_linux
-#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:12:26 in prebuilt_protoc_deps
+#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:17:11 in prebuilt_protoc_linux
+#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:25:21
 http_archive(
-    name = "prebuilt_protoc_osx",
-    generator_name = "prebuilt_protoc_osx",
-    generator_function = "prebuilt_protoc_deps",
-    urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-osx-x86_64.zip"],
-    sha256 = "b4f36b18202d54d343a66eebc9f8ae60809a2a96cc2d1b378137550bbe4cf33c",
-    build_file_content = "\nfilegroup(\n    name = \"protoc\",\n    srcs = [\"bin/protoc\"],\n    visibility = [\"//visibility:public\"],\n)\n",
+  name = "prebuilt_protoc_osx",
+  generator_name = "prebuilt_protoc_osx",
+  generator_function = "prebuilt_protoc_deps",
+  urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-osx-x86_64.zip"],
+  sha256 = "b4f36b18202d54d343a66eebc9f8ae60809a2a96cc2d1b378137550bbe4cf33c",
+  build_file_content = "\nfilegroup(\n    name = \"protoc\",\n    srcs = [\"bin/protoc\"],\n    visibility = [\"//visibility:public\"],\n)\n",
 )
 # Rule prebuilt_protoc_osx instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:25:21                     in <toplevel>
-#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:14:24 in prebuilt_protoc_deps
-#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:36:11 in prebuilt_protoc_osx
-#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:13:24 in prebuilt_protoc_deps
+#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:34:11 in prebuilt_protoc_osx
+#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:25:21
 http_archive(
-    name = "prebuilt_protoc_windows",
-    generator_name = "prebuilt_protoc_windows",
-    generator_function = "prebuilt_protoc_deps",
-    urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-win32.zip"],
-    sha256 = "2291c634777242f3bf4891b082cebc6dd495ae621fbf751b27e800b83369a345",
-    build_file_content = "\nfilegroup(\n    name = \"protoc\",\n    srcs = [\"bin/protoc.exe\"],\n    visibility = [\"//visibility:public\"],\n)\n",
+  name = "prebuilt_protoc_windows",
+  generator_name = "prebuilt_protoc_windows",
+  generator_function = "prebuilt_protoc_deps",
+  urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-win32.zip"],
+  sha256 = "2291c634777242f3bf4891b082cebc6dd495ae621fbf751b27e800b83369a345",
+  build_file_content = "\nfilegroup(\n    name = \"protoc\",\n    srcs = [\"bin/protoc.exe\"],\n    visibility = [\"//visibility:public\"],\n)\n",
 )
 # Rule prebuilt_protoc_windows instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:25:21                     in <toplevel>
-#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:15:28 in prebuilt_protoc_deps
-#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:53:11 in prebuilt_protoc_windows
-#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:14:28 in prebuilt_protoc_deps
+#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:51:11 in prebuilt_protoc_windows
+#   {WORKSPACE}/deps/prebuilt_protoc_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:103:16
 http_archive(
-    name = "prometheus_metrics_model",
-    generator_name = "prometheus_metrics_model",
-    generator_function = "grpc_extra_deps",
-    urls = ["https://github.com/prometheus/client_model/archive/147c58e9608a4f9628b53b6cc863325ca746f63a.tar.gz"],
-    sha256 = "f7da30879dcdfae367fa65af1969945c3148cfbfc462b30b7d36f17134675047",
-    strip_prefix = "client_model-147c58e9608a4f9628b53b6cc863325ca746f63a",
-    build_file_content = "\nload(\"@envoy_api//bazel:api_build_system.bzl\", \"api_cc_py_proto_library\")\nload(\"@io_bazel_rules_go//proto:def.bzl\", \"go_proto_library\")\n\napi_cc_py_proto_library(\n    name = \"client_model\",\n    srcs = [\n        \"io/prometheus/client/metrics.proto\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"client_model_go_proto\",\n    importpath = \"github.com/prometheus/client_model/go\",\n    proto = \":client_model\",\n    visibility = [\"//visibility:public\"],\n)\n",
+  name = "prometheus_metrics_model",
+  generator_name = "prometheus_metrics_model",
+  generator_function = "grpc_extra_deps",
+  urls = ["https://github.com/prometheus/client_model/archive/147c58e9608a4f9628b53b6cc863325ca746f63a.tar.gz"],
+  sha256 = "f7da30879dcdfae367fa65af1969945c3148cfbfc462b30b7d36f17134675047",
+  strip_prefix = "client_model-147c58e9608a4f9628b53b6cc863325ca746f63a",
+  build_file_content = "\nload(\"@envoy_api//bazel:api_build_system.bzl\", \"api_cc_py_proto_library\")\nload(\"@io_bazel_rules_go//proto:def.bzl\", \"go_proto_library\")\n\napi_cc_py_proto_library(\n    name = \"client_model\",\n    srcs = [\n        \"io/prometheus/client/metrics.proto\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"client_model_go_proto\",\n    importpath = \"github.com/prometheus/client_model/go\",\n    proto = \":client_model\",\n    visibility = [\"//visibility:public\"],\n)\n",
 )
 # Rule prometheus_metrics_model instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:47:21 in grpc_extra_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:51:21 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:32:26               in api_dependencies
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:9:23                in external_http_archive
 #   {OUTPUT_BASE}/external/envoy_api/bazel/envoy_http_archive.bzl:16:17         in envoy_http_archive
@@ -6864,10 +6866,10 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:88:8
 proto_repository_tools(
-    name = "proto_repository_tools",
-    generator_name = "proto_repository_tools",
-    generator_function = "go_deps",
-    go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
+  name = "proto_repository_tools",
+  generator_name = "proto_repository_tools",
+  generator_function = "go_deps",
+  go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
 )
 # Rule proto_repository_tools instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
@@ -6878,76 +6880,76 @@ proto_repository_tools(
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "protobuf",
-    generator_name = "protobuf",
-    generator_function = "grpc_deps",
-    actual = "@com_google_protobuf//:protobuf",
+  name = "protobuf",
+  generator_name = "protobuf",
+  generator_function = "grpc_deps",
+  actual = "@com_google_protobuf//:protobuf",
 )
 # Rule protobuf instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:87:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:88:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "protobuf_clib",
-    generator_name = "protobuf_clib",
-    generator_function = "grpc_deps",
-    actual = "@com_google_protobuf//:protoc_lib",
+  name = "protobuf_clib",
+  generator_name = "protobuf_clib",
+  generator_function = "grpc_deps",
+  actual = "@com_google_protobuf//:protoc_lib",
 )
 # Rule protobuf_clib instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:92:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:93:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "protobuf_headers",
-    generator_name = "protobuf_headers",
-    generator_function = "grpc_deps",
-    actual = "@com_google_protobuf//:protobuf_headers",
+  name = "protobuf_headers",
+  generator_name = "protobuf_headers",
+  generator_function = "grpc_deps",
+  actual = "@com_google_protobuf//:protobuf_headers",
 )
 # Rule protobuf_headers instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:97:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:98:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "protocol_compiler",
-    generator_name = "protocol_compiler",
-    generator_function = "grpc_deps",
-    actual = "@com_google_protobuf//:protoc",
+  name = "protocol_compiler",
+  generator_name = "protocol_compiler",
+  generator_function = "grpc_deps",
+  actual = "@com_google_protobuf//:protoc",
 )
 # Rule protocol_compiler instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:102:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:103:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "python_headers",
-    generator_name = "python_headers",
-    generator_function = "grpc_deps",
-    actual = "@local_config_python//:python_headers",
+  name = "python_headers",
+  generator_name = "python_headers",
+  generator_function = "grpc_deps",
+  actual = "@local_config_python//:python_headers",
 )
 # Rule python_headers instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:447:21       in grpc_deps
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:60:16 in grpc_python_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:63:16 in grpc_python_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "re2",
-    generator_name = "re2",
-    generator_function = "grpc_deps",
-    actual = "@com_googlesource_code_re2//:re2",
+  name = "re2",
+  generator_name = "re2",
+  generator_function = "grpc_deps",
+  actual = "@com_googlesource_code_re2//:re2",
 )
 # Rule re2 instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:122:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:123:16 in grpc_deps
 
 # /DEFAULT.WORKSPACE.SUFFIX:481:13
 http_archive(
-    name = "remote_coverage_tools",
-    urls = ["https://mirror.bazel.build/bazel_coverage_output_generator/releases/coverage_output_generator-v2.5.zip"],
-    sha256 = "cd14f1cb4559e4723e63b7e7b06d09fcc3bd7ba58d03f354cdff1439bd936a7d",
+  name = "remote_coverage_tools",
+  urls = ["https://mirror.bazel.build/bazel_coverage_output_generator/releases/coverage_output_generator-v2.5.zip"],
+  sha256 = "cd14f1cb4559e4723e63b7e7b06d09fcc3bd7ba58d03f354cdff1439bd936a7d",
 )
 # Rule remote_coverage_tools instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:481:13 in <toplevel>
@@ -6956,11 +6958,11 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:392:6
 http_archive(
-    name = "remote_java_tools",
-    generator_name = "remote_java_tools",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/bazel_java_tools/releases/java/v11.6/java_tools-v11.6.zip", "https://github.com/bazelbuild/java_tools/releases/download/java_v11.6/java_tools-v11.6.zip"],
-    sha256 = "a7ac5922ee01e8b8fcb546ffc264ef314d0a0c679328b7fa4c432e5f54a86067",
+  name = "remote_java_tools",
+  generator_name = "remote_java_tools",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/bazel_java_tools/releases/java/v11.6/java_tools-v11.6.zip", "https://github.com/bazelbuild/java_tools/releases/download/java_v11.6/java_tools-v11.6.zip"],
+  sha256 = "a7ac5922ee01e8b8fcb546ffc264ef314d0a0c679328b7fa4c432e5f54a86067",
 )
 # Rule remote_java_tools instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:392:6                                                                                          in <toplevel>
@@ -6970,11 +6972,11 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:419:6
 http_archive(
-    name = "remote_java_tools_darwin",
-    generator_name = "remote_java_tools_darwin",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/bazel_java_tools/releases/java/v11.6/java_tools_darwin-v11.6.zip", "https://github.com/bazelbuild/java_tools/releases/download/java_v11.6/java_tools_darwin-v11.6.zip"],
-    sha256 = "f17ee54582b61f1ebd84c8fa2c54df796914cfbaac3cb821fb1286b55b080bc0",
+  name = "remote_java_tools_darwin",
+  generator_name = "remote_java_tools_darwin",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/bazel_java_tools/releases/java/v11.6/java_tools_darwin-v11.6.zip", "https://github.com/bazelbuild/java_tools/releases/download/java_v11.6/java_tools_darwin-v11.6.zip"],
+  sha256 = "f17ee54582b61f1ebd84c8fa2c54df796914cfbaac3cb821fb1286b55b080bc0",
 )
 # Rule remote_java_tools_darwin instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:419:6                                                                                          in <toplevel>
@@ -6984,11 +6986,11 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:401:6
 http_archive(
-    name = "remote_java_tools_linux",
-    generator_name = "remote_java_tools_linux",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/bazel_java_tools/releases/java/v11.6/java_tools_linux-v11.6.zip", "https://github.com/bazelbuild/java_tools/releases/download/java_v11.6/java_tools_linux-v11.6.zip"],
-    sha256 = "15da4f84a7d39cd179acf3035d9def638eea6ba89a0ed8f4e8a8e6e1d6c8e328",
+  name = "remote_java_tools_linux",
+  generator_name = "remote_java_tools_linux",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/bazel_java_tools/releases/java/v11.6/java_tools_linux-v11.6.zip", "https://github.com/bazelbuild/java_tools/releases/download/java_v11.6/java_tools_linux-v11.6.zip"],
+  sha256 = "15da4f84a7d39cd179acf3035d9def638eea6ba89a0ed8f4e8a8e6e1d6c8e328",
 )
 # Rule remote_java_tools_linux instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:401:6                                                                                          in <toplevel>
@@ -6998,11 +7000,11 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:410:6
 http_archive(
-    name = "remote_java_tools_windows",
-    generator_name = "remote_java_tools_windows",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/bazel_java_tools/releases/java/v11.6/java_tools_windows-v11.6.zip", "https://github.com/bazelbuild/java_tools/releases/download/java_v11.6/java_tools_windows-v11.6.zip"],
-    sha256 = "939f9d91f0df02851bbad8f5b1d26d24011329394cafe5668c1234e31ac2a1f7",
+  name = "remote_java_tools_windows",
+  generator_name = "remote_java_tools_windows",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/bazel_java_tools/releases/java/v11.6/java_tools_windows-v11.6.zip", "https://github.com/bazelbuild/java_tools/releases/download/java_v11.6/java_tools_windows-v11.6.zip"],
+  sha256 = "939f9d91f0df02851bbad8f5b1d26d24011329394cafe5668c1234e31ac2a1f7",
 )
 # Rule remote_java_tools_windows instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:410:6                                                                                          in <toplevel>
@@ -7012,13 +7014,13 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:41:6
 http_archive(
-    name = "remotejdk11_linux",
-    generator_name = "remotejdk11_linux",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/openjdk/azul-zulu11.50.19-ca-jdk11.0.12/zulu11.50.19-ca-jdk11.0.12-linux_x64.tar.gz"],
-    sha256 = "b8e8a63b79bc312aa90f3558edbea59e71495ef1a9c340e38900dd28a1c579f3",
-    strip_prefix = "zulu11.50.19-ca-jdk11.0.12-linux_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk11_linux",
+  generator_name = "remotejdk11_linux",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/openjdk/azul-zulu11.50.19-ca-jdk11.0.12/zulu11.50.19-ca-jdk11.0.12-linux_x64.tar.gz"],
+  sha256 = "b8e8a63b79bc312aa90f3558edbea59e71495ef1a9c340e38900dd28a1c579f3",
+  strip_prefix = "zulu11.50.19-ca-jdk11.0.12-linux_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk11_linux instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:41:6                                                                                               in <toplevel>
@@ -7029,13 +7031,13 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:57:6
 http_archive(
-    name = "remotejdk11_linux_aarch64",
-    generator_name = "remotejdk11_linux_aarch64",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/openjdk/azul-zulu11.50.19-ca-jdk11.0.12/zulu11.50.19-ca-jdk11.0.12-linux_aarch64.tar.gz"],
-    sha256 = "61254688067454d3ccf0ef25993b5dcab7b56c8129e53b73566c28a8dd4d48fb",
-    strip_prefix = "zulu11.50.19-ca-jdk11.0.12-linux_aarch64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk11_linux_aarch64",
+  generator_name = "remotejdk11_linux_aarch64",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/openjdk/azul-zulu11.50.19-ca-jdk11.0.12/zulu11.50.19-ca-jdk11.0.12-linux_aarch64.tar.gz"],
+  sha256 = "61254688067454d3ccf0ef25993b5dcab7b56c8129e53b73566c28a8dd4d48fb",
+  strip_prefix = "zulu11.50.19-ca-jdk11.0.12-linux_aarch64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk11_linux_aarch64 instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:57:6                                                                                               in <toplevel>
@@ -7046,10 +7048,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:57:6
 _toolchain_config(
-    name = "remotejdk11_linux_aarch64_toolchain_config_repo",
-    generator_name = "remotejdk11_linux_aarch64_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:aarch64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_linux_aarch64//:jdk\",\n)\n",
+  name = "remotejdk11_linux_aarch64_toolchain_config_repo",
+  generator_name = "remotejdk11_linux_aarch64_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:aarch64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_linux_aarch64//:jdk\",\n)\n",
 )
 # Rule remotejdk11_linux_aarch64_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:57:6                                                                                               in <toplevel>
@@ -7060,13 +7062,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:73:6
 http_archive(
-    name = "remotejdk11_linux_ppc64le",
-    generator_name = "remotejdk11_linux_ppc64le",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/openjdk/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7+10/OpenJDK11U-jdk_ppc64le_linux_hotspot_11.0.7_10.tar.gz", "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7+10/OpenJDK11U-jdk_ppc64le_linux_hotspot_11.0.7_10.tar.gz"],
-    sha256 = "a417db0295b1f4b538ecbaf7c774f3a177fab9657a665940170936c0eca4e71a",
-    strip_prefix = "jdk-11.0.7+10",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk11_linux_ppc64le",
+  generator_name = "remotejdk11_linux_ppc64le",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/openjdk/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7+10/OpenJDK11U-jdk_ppc64le_linux_hotspot_11.0.7_10.tar.gz", "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7+10/OpenJDK11U-jdk_ppc64le_linux_hotspot_11.0.7_10.tar.gz"],
+  sha256 = "a417db0295b1f4b538ecbaf7c774f3a177fab9657a665940170936c0eca4e71a",
+  strip_prefix = "jdk-11.0.7+10",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk11_linux_ppc64le instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:73:6                                                                                               in <toplevel>
@@ -7077,10 +7079,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:73:6
 _toolchain_config(
-    name = "remotejdk11_linux_ppc64le_toolchain_config_repo",
-    generator_name = "remotejdk11_linux_ppc64le_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:ppc\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_linux_ppc64le//:jdk\",\n)\n",
+  name = "remotejdk11_linux_ppc64le_toolchain_config_repo",
+  generator_name = "remotejdk11_linux_ppc64le_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:ppc\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_linux_ppc64le//:jdk\",\n)\n",
 )
 # Rule remotejdk11_linux_ppc64le_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:73:6                                                                                               in <toplevel>
@@ -7091,13 +7093,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:90:6
 http_archive(
-    name = "remotejdk11_linux_s390x",
-    generator_name = "remotejdk11_linux_s390x",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7+10/OpenJDK11U-jdk_s390x_linux_hotspot_11.0.7_10.tar.gz", "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7+10/OpenJDK11U-jdk_s390x_linux_hotspot_11.0.7_10.tar.gz"],
-    sha256 = "d9b72e87a1d3ebc0c9552f72ae5eb150fffc0298a7cb841f1ce7bfc70dcd1059",
-    strip_prefix = "jdk-11.0.7+10",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk11_linux_s390x",
+  generator_name = "remotejdk11_linux_s390x",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7+10/OpenJDK11U-jdk_s390x_linux_hotspot_11.0.7_10.tar.gz", "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7+10/OpenJDK11U-jdk_s390x_linux_hotspot_11.0.7_10.tar.gz"],
+  sha256 = "d9b72e87a1d3ebc0c9552f72ae5eb150fffc0298a7cb841f1ce7bfc70dcd1059",
+  strip_prefix = "jdk-11.0.7+10",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk11_linux_s390x instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:90:6                                                                                               in <toplevel>
@@ -7108,10 +7110,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:90:6
 _toolchain_config(
-    name = "remotejdk11_linux_s390x_toolchain_config_repo",
-    generator_name = "remotejdk11_linux_s390x_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:s390x\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_linux_s390x//:jdk\",\n)\n",
+  name = "remotejdk11_linux_s390x_toolchain_config_repo",
+  generator_name = "remotejdk11_linux_s390x_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:s390x\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_linux_s390x//:jdk\",\n)\n",
 )
 # Rule remotejdk11_linux_s390x_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:90:6                                                                                               in <toplevel>
@@ -7122,10 +7124,10 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:41:6
 _toolchain_config(
-    name = "remotejdk11_linux_toolchain_config_repo",
-    generator_name = "remotejdk11_linux_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_linux//:jdk\",\n)\n",
+  name = "remotejdk11_linux_toolchain_config_repo",
+  generator_name = "remotejdk11_linux_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_linux//:jdk\",\n)\n",
 )
 # Rule remotejdk11_linux_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:41:6                                                                                               in <toplevel>
@@ -7136,13 +7138,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:107:6
 http_archive(
-    name = "remotejdk11_macos",
-    generator_name = "remotejdk11_macos",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/openjdk/azul-zulu11.50.19-ca-jdk11.0.12/zulu11.50.19-ca-jdk11.0.12-macosx_x64.tar.gz"],
-    sha256 = "0b8c8b7cf89c7c55b7e2239b47201d704e8d2170884875b00f3103cf0662d6d7",
-    strip_prefix = "zulu11.50.19-ca-jdk11.0.12-macosx_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk11_macos",
+  generator_name = "remotejdk11_macos",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/openjdk/azul-zulu11.50.19-ca-jdk11.0.12/zulu11.50.19-ca-jdk11.0.12-macosx_x64.tar.gz"],
+  sha256 = "0b8c8b7cf89c7c55b7e2239b47201d704e8d2170884875b00f3103cf0662d6d7",
+  strip_prefix = "zulu11.50.19-ca-jdk11.0.12-macosx_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk11_macos instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:107:6                                                                                              in <toplevel>
@@ -7153,13 +7155,13 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:123:6
 http_archive(
-    name = "remotejdk11_macos_aarch64",
-    generator_name = "remotejdk11_macos_aarch64",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/openjdk/azul-zulu11.50.19-ca-jdk11.0.12/zulu11.50.19-ca-jdk11.0.12-macosx_aarch64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu11.50.19-ca-jdk11.0.12-macosx_aarch64.tar.gz"],
-    sha256 = "e908a0b4c0da08d41c3e19230f819b364ff2e5f1dafd62d2cf991a85a34d3a17",
-    strip_prefix = "zulu11.50.19-ca-jdk11.0.12-macosx_aarch64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk11_macos_aarch64",
+  generator_name = "remotejdk11_macos_aarch64",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/openjdk/azul-zulu11.50.19-ca-jdk11.0.12/zulu11.50.19-ca-jdk11.0.12-macosx_aarch64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu11.50.19-ca-jdk11.0.12-macosx_aarch64.tar.gz"],
+  sha256 = "e908a0b4c0da08d41c3e19230f819b364ff2e5f1dafd62d2cf991a85a34d3a17",
+  strip_prefix = "zulu11.50.19-ca-jdk11.0.12-macosx_aarch64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk11_macos_aarch64 instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:123:6                                                                                              in <toplevel>
@@ -7170,10 +7172,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:123:6
 _toolchain_config(
-    name = "remotejdk11_macos_aarch64_toolchain_config_repo",
-    generator_name = "remotejdk11_macos_aarch64_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:aarch64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_macos_aarch64//:jdk\",\n)\n",
+  name = "remotejdk11_macos_aarch64_toolchain_config_repo",
+  generator_name = "remotejdk11_macos_aarch64_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:aarch64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_macos_aarch64//:jdk\",\n)\n",
 )
 # Rule remotejdk11_macos_aarch64_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:123:6                                                                                              in <toplevel>
@@ -7184,10 +7186,10 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:107:6
 _toolchain_config(
-    name = "remotejdk11_macos_toolchain_config_repo",
-    generator_name = "remotejdk11_macos_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_macos//:jdk\",\n)\n",
+  name = "remotejdk11_macos_toolchain_config_repo",
+  generator_name = "remotejdk11_macos_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_macos//:jdk\",\n)\n",
 )
 # Rule remotejdk11_macos_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:107:6                                                                                              in <toplevel>
@@ -7198,13 +7200,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:140:6
 http_archive(
-    name = "remotejdk11_win",
-    generator_name = "remotejdk11_win",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/openjdk/azul-zulu11.50.19-ca-jdk11.0.12/zulu11.50.19-ca-jdk11.0.12-win_x64.zip"],
-    sha256 = "42ae65e75d615a3f06a674978e1fa85fdf078cad94e553fee3e779b2b42bb015",
-    strip_prefix = "zulu11.50.19-ca-jdk11.0.12-win_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk11_win",
+  generator_name = "remotejdk11_win",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/openjdk/azul-zulu11.50.19-ca-jdk11.0.12/zulu11.50.19-ca-jdk11.0.12-win_x64.zip"],
+  sha256 = "42ae65e75d615a3f06a674978e1fa85fdf078cad94e553fee3e779b2b42bb015",
+  strip_prefix = "zulu11.50.19-ca-jdk11.0.12-win_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk11_win instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:140:6                                                                                              in <toplevel>
@@ -7215,13 +7217,13 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:156:6
 http_archive(
-    name = "remotejdk11_win_arm64",
-    generator_name = "remotejdk11_win_arm64",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/aka.ms/download-jdk/microsoft-jdk-11.0.13.8.1-windows-aarch64.zip"],
-    sha256 = "b8a28e6e767d90acf793ea6f5bed0bb595ba0ba5ebdf8b99f395266161e53ec2",
-    strip_prefix = "jdk-11.0.13+8",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk11_win_arm64",
+  generator_name = "remotejdk11_win_arm64",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/aka.ms/download-jdk/microsoft-jdk-11.0.13.8.1-windows-aarch64.zip"],
+  sha256 = "b8a28e6e767d90acf793ea6f5bed0bb595ba0ba5ebdf8b99f395266161e53ec2",
+  strip_prefix = "jdk-11.0.13+8",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk11_win_arm64 instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:156:6                                                                                              in <toplevel>
@@ -7232,10 +7234,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:156:6
 _toolchain_config(
-    name = "remotejdk11_win_arm64_toolchain_config_repo",
-    generator_name = "remotejdk11_win_arm64_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:arm64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_win_arm64//:jdk\",\n)\n",
+  name = "remotejdk11_win_arm64_toolchain_config_repo",
+  generator_name = "remotejdk11_win_arm64_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:arm64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_win_arm64//:jdk\",\n)\n",
 )
 # Rule remotejdk11_win_arm64_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:156:6                                                                                              in <toplevel>
@@ -7246,10 +7248,10 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:140:6
 _toolchain_config(
-    name = "remotejdk11_win_toolchain_config_repo",
-    generator_name = "remotejdk11_win_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_win//:jdk\",\n)\n",
+  name = "remotejdk11_win_toolchain_config_repo",
+  generator_name = "remotejdk11_win_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_11\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"11\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk11_win//:jdk\",\n)\n",
 )
 # Rule remotejdk11_win_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:140:6                                                                                              in <toplevel>
@@ -7260,13 +7262,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:172:6
 http_archive(
-    name = "remotejdk15_linux",
-    generator_name = "remotejdk15_linux",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-linux_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-linux_x64.tar.gz"],
-    sha256 = "0a38f1138c15a4f243b75eb82f8ef40855afcc402e3c2a6de97ce8235011b1ad",
-    strip_prefix = "zulu15.27.17-ca-jdk15.0.0-linux_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk15_linux",
+  generator_name = "remotejdk15_linux",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-linux_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-linux_x64.tar.gz"],
+  sha256 = "0a38f1138c15a4f243b75eb82f8ef40855afcc402e3c2a6de97ce8235011b1ad",
+  strip_prefix = "zulu15.27.17-ca-jdk15.0.0-linux_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk15_linux instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:172:6                                                                                              in <toplevel>
@@ -7277,10 +7279,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:172:6
 _toolchain_config(
-    name = "remotejdk15_linux_toolchain_config_repo",
-    generator_name = "remotejdk15_linux_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_15\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"15\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk15_linux//:jdk\",\n)\n",
+  name = "remotejdk15_linux_toolchain_config_repo",
+  generator_name = "remotejdk15_linux_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_15\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"15\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk15_linux//:jdk\",\n)\n",
 )
 # Rule remotejdk15_linux_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:172:6                                                                                              in <toplevel>
@@ -7291,13 +7293,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:189:6
 http_archive(
-    name = "remotejdk15_macos",
-    generator_name = "remotejdk15_macos",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-macosx_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-macosx_x64.tar.gz"],
-    sha256 = "f80b2e0512d9d8a92be24497334c974bfecc8c898fc215ce0e76594f00437482",
-    strip_prefix = "zulu15.27.17-ca-jdk15.0.0-macosx_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk15_macos",
+  generator_name = "remotejdk15_macos",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-macosx_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-macosx_x64.tar.gz"],
+  sha256 = "f80b2e0512d9d8a92be24497334c974bfecc8c898fc215ce0e76594f00437482",
+  strip_prefix = "zulu15.27.17-ca-jdk15.0.0-macosx_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk15_macos instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:189:6                                                                                              in <toplevel>
@@ -7308,13 +7310,13 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:206:6
 http_archive(
-    name = "remotejdk15_macos_aarch64",
-    generator_name = "remotejdk15_macos_aarch64",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu15.29.15-ca-jdk15.0.2-macosx_aarch64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu15.29.15-ca-jdk15.0.2-macosx_aarch64.tar.gz"],
-    sha256 = "2613c3f15eef6b6ecd0fd102da92282b985e4573905dc902f1783d8059c1efc5",
-    strip_prefix = "zulu15.29.15-ca-jdk15.0.2-macosx_aarch64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk15_macos_aarch64",
+  generator_name = "remotejdk15_macos_aarch64",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu15.29.15-ca-jdk15.0.2-macosx_aarch64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu15.29.15-ca-jdk15.0.2-macosx_aarch64.tar.gz"],
+  sha256 = "2613c3f15eef6b6ecd0fd102da92282b985e4573905dc902f1783d8059c1efc5",
+  strip_prefix = "zulu15.29.15-ca-jdk15.0.2-macosx_aarch64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk15_macos_aarch64 instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:206:6                                                                                              in <toplevel>
@@ -7325,10 +7327,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:206:6
 _toolchain_config(
-    name = "remotejdk15_macos_aarch64_toolchain_config_repo",
-    generator_name = "remotejdk15_macos_aarch64_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_15\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"15\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:aarch64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk15_macos_aarch64//:jdk\",\n)\n",
+  name = "remotejdk15_macos_aarch64_toolchain_config_repo",
+  generator_name = "remotejdk15_macos_aarch64_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_15\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"15\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:aarch64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk15_macos_aarch64//:jdk\",\n)\n",
 )
 # Rule remotejdk15_macos_aarch64_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:206:6                                                                                              in <toplevel>
@@ -7339,10 +7341,10 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:189:6
 _toolchain_config(
-    name = "remotejdk15_macos_toolchain_config_repo",
-    generator_name = "remotejdk15_macos_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_15\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"15\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk15_macos//:jdk\",\n)\n",
+  name = "remotejdk15_macos_toolchain_config_repo",
+  generator_name = "remotejdk15_macos_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_15\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"15\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk15_macos//:jdk\",\n)\n",
 )
 # Rule remotejdk15_macos_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:189:6                                                                                              in <toplevel>
@@ -7353,13 +7355,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:223:6
 http_archive(
-    name = "remotejdk15_win",
-    generator_name = "remotejdk15_win",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-win_x64.zip", "https://cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-win_x64.zip"],
-    sha256 = "f535a530151e6c20de8a3078057e332b08887cb3ba1a4735717357e72765cad6",
-    strip_prefix = "zulu15.27.17-ca-jdk15.0.0-win_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk15_win",
+  generator_name = "remotejdk15_win",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-win_x64.zip", "https://cdn.azul.com/zulu/bin/zulu15.27.17-ca-jdk15.0.0-win_x64.zip"],
+  sha256 = "f535a530151e6c20de8a3078057e332b08887cb3ba1a4735717357e72765cad6",
+  strip_prefix = "zulu15.27.17-ca-jdk15.0.0-win_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk15_win instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:223:6                                                                                              in <toplevel>
@@ -7370,10 +7372,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:223:6
 _toolchain_config(
-    name = "remotejdk15_win_toolchain_config_repo",
-    generator_name = "remotejdk15_win_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_15\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"15\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk15_win//:jdk\",\n)\n",
+  name = "remotejdk15_win_toolchain_config_repo",
+  generator_name = "remotejdk15_win_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_15\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"15\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk15_win//:jdk\",\n)\n",
 )
 # Rule remotejdk15_win_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:223:6                                                                                              in <toplevel>
@@ -7384,13 +7386,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:240:6
 http_archive(
-    name = "remotejdk16_linux",
-    generator_name = "remotejdk16_linux",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-linux_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-linux_x64.tar.gz"],
-    sha256 = "236b5ea97aff3cb312e743848d7efa77faf305170e41371a732ca93c1b797665",
-    strip_prefix = "zulu16.28.11-ca-jdk16.0.0-linux_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk16_linux",
+  generator_name = "remotejdk16_linux",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-linux_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-linux_x64.tar.gz"],
+  sha256 = "236b5ea97aff3cb312e743848d7efa77faf305170e41371a732ca93c1b797665",
+  strip_prefix = "zulu16.28.11-ca-jdk16.0.0-linux_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk16_linux instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:240:6                                                                                              in <toplevel>
@@ -7401,10 +7403,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:240:6
 _toolchain_config(
-    name = "remotejdk16_linux_toolchain_config_repo",
-    generator_name = "remotejdk16_linux_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_16\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"16\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk16_linux//:jdk\",\n)\n",
+  name = "remotejdk16_linux_toolchain_config_repo",
+  generator_name = "remotejdk16_linux_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_16\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"16\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk16_linux//:jdk\",\n)\n",
 )
 # Rule remotejdk16_linux_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:240:6                                                                                              in <toplevel>
@@ -7415,13 +7417,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:257:6
 http_archive(
-    name = "remotejdk16_macos",
-    generator_name = "remotejdk16_macos",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-macosx_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-macosx_x64.tar.gz"],
-    sha256 = "6d47ef22dc56ce1f5a102ed39e21d9a97320f0bb786818e2c686393109d79bc5",
-    strip_prefix = "zulu16.28.11-ca-jdk16.0.0-macosx_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk16_macos",
+  generator_name = "remotejdk16_macos",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-macosx_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-macosx_x64.tar.gz"],
+  sha256 = "6d47ef22dc56ce1f5a102ed39e21d9a97320f0bb786818e2c686393109d79bc5",
+  strip_prefix = "zulu16.28.11-ca-jdk16.0.0-macosx_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk16_macos instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:257:6                                                                                              in <toplevel>
@@ -7432,13 +7434,13 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:274:6
 http_archive(
-    name = "remotejdk16_macos_aarch64",
-    generator_name = "remotejdk16_macos_aarch64",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-macosx_aarch64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-macosx_aarch64.tar.gz"],
-    sha256 = "c92131e83bc71474850e667bc4e05fca33662b8feb009a0547aa14e76b40e890",
-    strip_prefix = "zulu16.28.11-ca-jdk16.0.0-macosx_aarch64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk16_macos_aarch64",
+  generator_name = "remotejdk16_macos_aarch64",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-macosx_aarch64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-macosx_aarch64.tar.gz"],
+  sha256 = "c92131e83bc71474850e667bc4e05fca33662b8feb009a0547aa14e76b40e890",
+  strip_prefix = "zulu16.28.11-ca-jdk16.0.0-macosx_aarch64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk16_macos_aarch64 instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:274:6                                                                                              in <toplevel>
@@ -7449,10 +7451,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:274:6
 _toolchain_config(
-    name = "remotejdk16_macos_aarch64_toolchain_config_repo",
-    generator_name = "remotejdk16_macos_aarch64_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_16\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"16\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:aarch64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk16_macos_aarch64//:jdk\",\n)\n",
+  name = "remotejdk16_macos_aarch64_toolchain_config_repo",
+  generator_name = "remotejdk16_macos_aarch64_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_16\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"16\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:aarch64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk16_macos_aarch64//:jdk\",\n)\n",
 )
 # Rule remotejdk16_macos_aarch64_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:274:6                                                                                              in <toplevel>
@@ -7463,10 +7465,10 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:257:6
 _toolchain_config(
-    name = "remotejdk16_macos_toolchain_config_repo",
-    generator_name = "remotejdk16_macos_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_16\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"16\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk16_macos//:jdk\",\n)\n",
+  name = "remotejdk16_macos_toolchain_config_repo",
+  generator_name = "remotejdk16_macos_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_16\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"16\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk16_macos//:jdk\",\n)\n",
 )
 # Rule remotejdk16_macos_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:257:6                                                                                              in <toplevel>
@@ -7477,13 +7479,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:291:6
 http_archive(
-    name = "remotejdk16_win",
-    generator_name = "remotejdk16_win",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-win_x64.zip", "https://cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-win_x64.zip"],
-    sha256 = "6cbf98ada27476526a5f6dff79fd5f2c15e2f671818e503bdf741eb6c8fed3d4",
-    strip_prefix = "zulu16.28.11-ca-jdk16.0.0-win_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk16_win",
+  generator_name = "remotejdk16_win",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-win_x64.zip", "https://cdn.azul.com/zulu/bin/zulu16.28.11-ca-jdk16.0.0-win_x64.zip"],
+  sha256 = "6cbf98ada27476526a5f6dff79fd5f2c15e2f671818e503bdf741eb6c8fed3d4",
+  strip_prefix = "zulu16.28.11-ca-jdk16.0.0-win_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk16_win instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:291:6                                                                                              in <toplevel>
@@ -7494,10 +7496,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:291:6
 _toolchain_config(
-    name = "remotejdk16_win_toolchain_config_repo",
-    generator_name = "remotejdk16_win_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_16\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"16\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk16_win//:jdk\",\n)\n",
+  name = "remotejdk16_win_toolchain_config_repo",
+  generator_name = "remotejdk16_win_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_16\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"16\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk16_win//:jdk\",\n)\n",
 )
 # Rule remotejdk16_win_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:291:6                                                                                              in <toplevel>
@@ -7508,13 +7510,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:308:6
 http_archive(
-    name = "remotejdk17_linux",
-    generator_name = "remotejdk17_linux",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-linux_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-linux_x64.tar.gz"],
-    sha256 = "37c4f8e48536cceae8c6c20250d6c385e176972532fd35759fa7d6015c965f56",
-    strip_prefix = "zulu17.28.13-ca-jdk17.0.0-linux_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk17_linux",
+  generator_name = "remotejdk17_linux",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-linux_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-linux_x64.tar.gz"],
+  sha256 = "37c4f8e48536cceae8c6c20250d6c385e176972532fd35759fa7d6015c965f56",
+  strip_prefix = "zulu17.28.13-ca-jdk17.0.0-linux_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk17_linux instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:308:6                                                                                              in <toplevel>
@@ -7525,10 +7527,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:308:6
 _toolchain_config(
-    name = "remotejdk17_linux_toolchain_config_repo",
-    generator_name = "remotejdk17_linux_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk17_linux//:jdk\",\n)\n",
+  name = "remotejdk17_linux_toolchain_config_repo",
+  generator_name = "remotejdk17_linux_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk17_linux//:jdk\",\n)\n",
 )
 # Rule remotejdk17_linux_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:308:6                                                                                              in <toplevel>
@@ -7539,13 +7541,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:325:6
 http_archive(
-    name = "remotejdk17_macos",
-    generator_name = "remotejdk17_macos",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-macosx_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-macosx_x64.tar.gz"],
-    sha256 = "6029b1fe6853cecad22ab99ac0b3bb4fb8c903dd2edefa91c3abc89755bbd47d",
-    strip_prefix = "zulu17.28.13-ca-jdk17.0.0-macosx_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk17_macos",
+  generator_name = "remotejdk17_macos",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-macosx_x64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-macosx_x64.tar.gz"],
+  sha256 = "6029b1fe6853cecad22ab99ac0b3bb4fb8c903dd2edefa91c3abc89755bbd47d",
+  strip_prefix = "zulu17.28.13-ca-jdk17.0.0-macosx_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk17_macos instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:325:6                                                                                              in <toplevel>
@@ -7556,13 +7558,13 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:342:6
 http_archive(
-    name = "remotejdk17_macos_aarch64",
-    generator_name = "remotejdk17_macos_aarch64",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-macosx_aarch64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-macosx_aarch64.tar.gz"],
-    sha256 = "6b17f01f767ee7abf4704149ca4d86423aab9b16b68697b7d36e9b616846a8b0",
-    strip_prefix = "zulu17.28.13-ca-jdk17.0.0-macosx_aarch64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk17_macos_aarch64",
+  generator_name = "remotejdk17_macos_aarch64",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-macosx_aarch64.tar.gz", "https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-macosx_aarch64.tar.gz"],
+  sha256 = "6b17f01f767ee7abf4704149ca4d86423aab9b16b68697b7d36e9b616846a8b0",
+  strip_prefix = "zulu17.28.13-ca-jdk17.0.0-macosx_aarch64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk17_macos_aarch64 instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:342:6                                                                                              in <toplevel>
@@ -7573,10 +7575,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:342:6
 _toolchain_config(
-    name = "remotejdk17_macos_aarch64_toolchain_config_repo",
-    generator_name = "remotejdk17_macos_aarch64_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:aarch64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk17_macos_aarch64//:jdk\",\n)\n",
+  name = "remotejdk17_macos_aarch64_toolchain_config_repo",
+  generator_name = "remotejdk17_macos_aarch64_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:aarch64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk17_macos_aarch64//:jdk\",\n)\n",
 )
 # Rule remotejdk17_macos_aarch64_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:342:6                                                                                              in <toplevel>
@@ -7587,10 +7589,10 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:325:6
 _toolchain_config(
-    name = "remotejdk17_macos_toolchain_config_repo",
-    generator_name = "remotejdk17_macos_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk17_macos//:jdk\",\n)\n",
+  name = "remotejdk17_macos_toolchain_config_repo",
+  generator_name = "remotejdk17_macos_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:macos\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk17_macos//:jdk\",\n)\n",
 )
 # Rule remotejdk17_macos_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:325:6                                                                                              in <toplevel>
@@ -7601,13 +7603,13 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:359:6
 http_archive(
-    name = "remotejdk17_win",
-    generator_name = "remotejdk17_win",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-win_x64.zip", "https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-win_x64.zip"],
-    sha256 = "f4437011239f3f0031c794bb91c02a6350bc941d4196bdd19c9f157b491815a3",
-    strip_prefix = "zulu17.28.13-ca-jdk17.0.0-win_x64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk17_win",
+  generator_name = "remotejdk17_win",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-win_x64.zip", "https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-win_x64.zip"],
+  sha256 = "f4437011239f3f0031c794bb91c02a6350bc941d4196bdd19c9f157b491815a3",
+  strip_prefix = "zulu17.28.13-ca-jdk17.0.0-win_x64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk17_win instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:359:6                                                                                              in <toplevel>
@@ -7618,13 +7620,13 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:375:6
 http_archive(
-    name = "remotejdk17_win_arm64",
-    generator_name = "remotejdk17_win_arm64",
-    generator_function = "maybe",
-    urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-win_aarch64.zip", "https://cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-win_aarch64.zip"],
-    sha256 = "811d7e7591bac4f081dfb00ba6bd15b6fc5969e1f89f0f327ef75147027c3877",
-    strip_prefix = "zulu17.30.15-ca-jdk17.0.1-win_aarch64",
-    build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
+  name = "remotejdk17_win_arm64",
+  generator_name = "remotejdk17_win_arm64",
+  generator_function = "maybe",
+  urls = ["https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-win_aarch64.zip", "https://cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-win_aarch64.zip"],
+  sha256 = "811d7e7591bac4f081dfb00ba6bd15b6fc5969e1f89f0f327ef75147027c3877",
+  strip_prefix = "zulu17.30.15-ca-jdk17.0.1-win_aarch64",
+  build_file = "@bazel_tools//tools/jdk:jdk.BUILD",
 )
 # Rule remotejdk17_win_arm64 instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:375:6                                                                                              in <toplevel>
@@ -7635,10 +7637,10 @@ http_archive(
 
 # /DEFAULT.WORKSPACE.SUFFIX:375:6
 _toolchain_config(
-    name = "remotejdk17_win_arm64_toolchain_config_repo",
-    generator_name = "remotejdk17_win_arm64_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:arm64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk17_win_arm64//:jdk\",\n)\n",
+  name = "remotejdk17_win_arm64_toolchain_config_repo",
+  generator_name = "remotejdk17_win_arm64_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:arm64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk17_win_arm64//:jdk\",\n)\n",
 )
 # Rule remotejdk17_win_arm64_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:375:6                                                                                              in <toplevel>
@@ -7649,10 +7651,10 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:359:6
 _toolchain_config(
-    name = "remotejdk17_win_toolchain_config_repo",
-    generator_name = "remotejdk17_win_toolchain_config_repo",
-    generator_function = "maybe",
-    build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk17_win//:jdk\",\n)\n",
+  name = "remotejdk17_win_toolchain_config_repo",
+  generator_name = "remotejdk17_win_toolchain_config_repo",
+  generator_function = "maybe",
+  build_file = "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk17_win//:jdk\",\n)\n",
 )
 # Rule remotejdk17_win_toolchain_config_repo instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:359:6                                                                                              in <toplevel>
@@ -7663,10 +7665,10 @@ _toolchain_config(
 
 # /DEFAULT.WORKSPACE.SUFFIX:512:13
 http_archive(
-    name = "rules_cc",
-    urls = ["https://mirror.bazel.build/github.com/bazelbuild/rules_cc/archive/b1c40e1de81913a3c40e5948f78719c28152486d.zip", "https://github.com/bazelbuild/rules_cc/archive/b1c40e1de81913a3c40e5948f78719c28152486d.zip"],
-    sha256 = "d0c573b94a6ef20ef6ff20154a23d0efcb409fb0e1ff0979cec318dfe42f0cdd",
-    strip_prefix = "rules_cc-b1c40e1de81913a3c40e5948f78719c28152486d",
+  name = "rules_cc",
+  urls = ["https://mirror.bazel.build/github.com/bazelbuild/rules_cc/archive/b1c40e1de81913a3c40e5948f78719c28152486d.zip", "https://github.com/bazelbuild/rules_cc/archive/b1c40e1de81913a3c40e5948f78719c28152486d.zip"],
+  sha256 = "d0c573b94a6ef20ef6ff20154a23d0efcb409fb0e1ff0979cec318dfe42f0cdd",
+  strip_prefix = "rules_cc-b1c40e1de81913a3c40e5948f78719c28152486d",
 )
 # Rule rules_cc instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE.SUFFIX:512:13 in <toplevel>
@@ -7675,12 +7677,12 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_archive(
-    name = "rules_java",
-    generator_name = "rules_java",
-    generator_function = "rules_closure_dependencies",
-    urls = ["https://mirror.bazel.build/github.com/bazelbuild/rules_java/archive/981f06c3d2bd10225e85209904090eb7b5fb26bd.tar.gz", "https://github.com/bazelbuild/rules_java/archive/981f06c3d2bd10225e85209904090eb7b5fb26bd.tar.gz"],
-    sha256 = "f5a3e477e579231fca27bf202bb0e8fbe4fc6339d63b38ccb87c2760b533d1c3",
-    strip_prefix = "rules_java-981f06c3d2bd10225e85209904090eb7b5fb26bd",
+  name = "rules_java",
+  generator_name = "rules_java",
+  generator_function = "rules_closure_dependencies",
+  urls = ["https://mirror.bazel.build/github.com/bazelbuild/rules_java/archive/981f06c3d2bd10225e85209904090eb7b5fb26bd.tar.gz", "https://github.com/bazelbuild/rules_java/archive/981f06c3d2bd10225e85209904090eb7b5fb26bd.tar.gz"],
+  sha256 = "f5a3e477e579231fca27bf202bb0e8fbe4fc6339d63b38ccb87c2760b533d1c3",
+  strip_prefix = "rules_java-981f06c3d2bd10225e85209904090eb7b5fb26bd",
 )
 # Rule rules_java instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
@@ -7691,30 +7693,30 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:29:15
 http_archive(
-    name = "rules_jvm_external",
-    generator_name = "rules_jvm_external",
-    generator_function = "grpc_core_deps",
-    urls = ["https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip"],
-    sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
-    strip_prefix = "rules_jvm_external-4.0",
+  name = "rules_jvm_external",
+  generator_name = "rules_jvm_external",
+  generator_function = "grpc_core_deps",
+  urls = ["https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip"],
+  sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
+  strip_prefix = "rules_jvm_external-4.0",
 )
 # Rule rules_jvm_external instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:29:15               in <toplevel>
-#   {WORKSPACE}/deps/grpc_core_deps.bzl:19:23 in grpc_core_deps
-#   {WORKSPACE}/deps/grpc_core_deps.bzl:92:11 in rules_jvm_external
-#   {WORKSPACE}/deps/grpc_core_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/grpc_core_deps.bzl:18:23 in grpc_core_deps
+#   {WORKSPACE}/deps/grpc_core_deps.bzl:90:11 in rules_jvm_external
+#   {WORKSPACE}/deps/grpc_core_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "rules_jvm_external_jq_linux",
-    generator_name = "rules_jvm_external_jq_linux",
-    generator_function = "pinned_maven_install",
-    executable = True,
-    downloaded_file_path = "jq",
-    sha256 = "af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44",
-    urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"],
+  name = "rules_jvm_external_jq_linux",
+  generator_name = "rules_jvm_external_jq_linux",
+  generator_function = "pinned_maven_install",
+  executable = True,
+  downloaded_file_path = "jq",
+  sha256 = "af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44",
+  urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"],
 )
 # Rule rules_jvm_external_jq_linux instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                                         in <toplevel>
@@ -7725,13 +7727,13 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "rules_jvm_external_jq_macos",
-    generator_name = "rules_jvm_external_jq_macos",
-    generator_function = "pinned_maven_install",
-    executable = True,
-    downloaded_file_path = "jq",
-    sha256 = "5c0a0a3ea600f302ee458b30317425dd9632d1ad8882259fcaf4e9b868b2b1ef",
-    urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64"],
+  name = "rules_jvm_external_jq_macos",
+  generator_name = "rules_jvm_external_jq_macos",
+  generator_function = "pinned_maven_install",
+  executable = True,
+  downloaded_file_path = "jq",
+  sha256 = "5c0a0a3ea600f302ee458b30317425dd9632d1ad8882259fcaf4e9b868b2b1ef",
+  urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64"],
 )
 # Rule rules_jvm_external_jq_macos instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                                         in <toplevel>
@@ -7742,13 +7744,13 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:186:27
 http_file(
-    name = "rules_jvm_external_jq_windows",
-    generator_name = "rules_jvm_external_jq_windows",
-    generator_function = "pinned_maven_install",
-    executable = True,
-    downloaded_file_path = "jq",
-    sha256 = "a51d36968dcbdeabb3142c6f5cf9b401a65dc3a095f3144bd0c118d5bb192753",
-    urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe"],
+  name = "rules_jvm_external_jq_windows",
+  generator_name = "rules_jvm_external_jq_windows",
+  generator_function = "pinned_maven_install",
+  executable = True,
+  downloaded_file_path = "jq",
+  sha256 = "a51d36968dcbdeabb3142c6f5cf9b401a65dc3a095f3144bd0c118d5bb192753",
+  urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe"],
 )
 # Rule rules_jvm_external_jq_windows instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:186:27                                                         in <toplevel>
@@ -7759,29 +7761,29 @@ http_file(
 
 # {WORKSPACE}/WORKSPACE:21:19
 http_archive(
-    name = "rules_pkg",
-    generator_name = "rules_pkg",
-    generator_function = "protobuf_core_deps",
-    urls = ["https://github.com/bazelbuild/rules_pkg/archive/ea8c75a15c4ac9562da29f3d9a633decb384d4a3.tar.gz"],
-    sha256 = "de4cf980e4c5eba24f3897016a71daec6b8d3c36f9ecdfe4e6dbcabb5017ade0",
-    strip_prefix = "rules_pkg-ea8c75a15c4ac9562da29f3d9a633decb384d4a3",
+  name = "rules_pkg",
+  generator_name = "rules_pkg",
+  generator_function = "protobuf_core_deps",
+  urls = ["https://github.com/bazelbuild/rules_pkg/archive/ea8c75a15c4ac9562da29f3d9a633decb384d4a3.tar.gz"],
+  sha256 = "de4cf980e4c5eba24f3897016a71daec6b8d3c36f9ecdfe4e6dbcabb5017ade0",
+  strip_prefix = "rules_pkg-ea8c75a15c4ac9562da29f3d9a633decb384d4a3",
 )
 # Rule rules_pkg instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:21:19                   in <toplevel>
-#   {WORKSPACE}/deps/protobuf_core_deps.bzl:14:14 in protobuf_core_deps
-#   {WORKSPACE}/deps/protobuf_core_deps.bzl:32:11 in rules_pkg
-#   {WORKSPACE}/deps/protobuf_core_deps.bzl:10:18 in _maybe
+#   {WORKSPACE}/deps/protobuf_core_deps.bzl:13:14 in protobuf_core_deps
+#   {WORKSPACE}/deps/protobuf_core_deps.bzl:30:11 in rules_pkg
+#   {WORKSPACE}/deps/protobuf_core_deps.bzl:9:18  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_archive(
-    name = "rules_proto",
-    generator_name = "rules_proto",
-    generator_function = "rules_closure_dependencies",
-    urls = ["https://mirror.bazel.build/github.com/bazelbuild/rules_proto/archive/97d8af4dc474595af3900dd85cb3a29ad28cc313.tar.gz", "https://github.com/bazelbuild/rules_proto/archive/97d8af4dc474595af3900dd85cb3a29ad28cc313.tar.gz"],
-    sha256 = "602e7161d9195e50246177e7c55b2f39950a9cf7366f74ed5f22fd45750cd208",
-    strip_prefix = "rules_proto-97d8af4dc474595af3900dd85cb3a29ad28cc313",
+  name = "rules_proto",
+  generator_name = "rules_proto",
+  generator_function = "rules_closure_dependencies",
+  urls = ["https://mirror.bazel.build/github.com/bazelbuild/rules_proto/archive/97d8af4dc474595af3900dd85cb3a29ad28cc313.tar.gz", "https://github.com/bazelbuild/rules_proto/archive/97d8af4dc474595af3900dd85cb3a29ad28cc313.tar.gz"],
+  sha256 = "602e7161d9195e50246177e7c55b2f39950a9cf7366f74ed5f22fd45750cd208",
+  strip_prefix = "rules_proto-97d8af4dc474595af3900dd85cb3a29ad28cc313",
 )
 # Rule rules_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
@@ -7792,12 +7794,12 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_archive(
-    name = "rules_python",
-    generator_name = "rules_python",
-    generator_function = "rules_closure_dependencies",
-    urls = ["https://mirror.bazel.build/github.com/bazelbuild/rules_python/archive/4b84ad270387a7c439ebdccfd530e2339601ef27.tar.gz", "https://github.com/bazelbuild/rules_python/archive/4b84ad270387a7c439ebdccfd530e2339601ef27.tar.gz"],
-    sha256 = "e5470e92a18aa51830db99a4d9c492cc613761d5bdb7131c04bd92b9834380f6",
-    strip_prefix = "rules_python-4b84ad270387a7c439ebdccfd530e2339601ef27",
+  name = "rules_python",
+  generator_name = "rules_python",
+  generator_function = "rules_closure_dependencies",
+  urls = ["https://mirror.bazel.build/github.com/bazelbuild/rules_python/archive/4b84ad270387a7c439ebdccfd530e2339601ef27.tar.gz", "https://github.com/bazelbuild/rules_python/archive/4b84ad270387a7c439ebdccfd530e2339601ef27.tar.gz"],
+  sha256 = "e5470e92a18aa51830db99a4d9c492cc613761d5bdb7131c04bd92b9834380f6",
+  strip_prefix = "rules_python-4b84ad270387a7c439ebdccfd530e2339601ef27",
 )
 # Rule rules_python instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
@@ -7808,32 +7810,32 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "six",
-    generator_name = "six",
-    generator_function = "grpc_deps",
-    urls = ["https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"],
-    sha256 = "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
-    build_file = "@com_github_grpc_grpc//third_party:six.BUILD",
+  name = "six",
+  generator_name = "six",
+  generator_function = "grpc_deps",
+  urls = ["https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"],
+  sha256 = "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
+  build_file = "@com_github_grpc_grpc//third_party:six.BUILD",
 )
 # Rule six instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:447:21       in grpc_deps
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:24:21 in grpc_python_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:27:21 in grpc_python_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:103:16
 http_archive(
-    name = "subpar",
-    generator_name = "subpar",
-    generator_function = "grpc_extra_deps",
-    urls = ["https://github.com/google/subpar/archive/2.0.0.tar.gz"],
-    sha256 = "b80297a1b8d38027a86836dbadc22f55dc3ecad56728175381aa6330705ac10f",
-    strip_prefix = "subpar-2.0.0",
+  name = "subpar",
+  generator_name = "subpar",
+  generator_function = "grpc_extra_deps",
+  urls = ["https://github.com/google/subpar/archive/2.0.0.tar.gz"],
+  sha256 = "b80297a1b8d38027a86836dbadc22f55dc3ecad56728175381aa6330705ac10f",
+  strip_prefix = "subpar-2.0.0",
 )
 # Rule subpar instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:103:16                                                            in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:52:29  in grpc_extra_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:56:29  in grpc_extra_deps
 #   {OUTPUT_BASE}/external/build_bazel_rules_apple/apple/repositories.bzl:129:11 in apple_rules_dependencies
 #   {OUTPUT_BASE}/external/build_bazel_rules_apple/apple/repositories.bzl:86:14  in _maybe
 # Rule http_archive defined at (most recent call last):
@@ -7841,24 +7843,24 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:194:14
 coursier_fetch(
-    name = "unpinned_maven_akka",
-    generator_name = "unpinned_maven_akka",
-    generator_function = "maven_install",
-    repositories = ["{ \"repo_url\": \"https://repo1.maven.org/maven2\" }"],
-    artifacts = ["{ \"group\": \"com.lightbend.akka.grpc\", \"artifact\": \"akka-grpc-codegen_2.12\", \"version\": \"2.1.3\" }", "{ \"group\": \"com.lightbend.akka.grpc\", \"artifact\": \"akka-grpc-runtime_2.12\", \"version\": \"2.1.3\" }"],
-    fail_on_missing_checksum = True,
-    fetch_sources = True,
-    fetch_javadoc = False,
-    use_unsafe_shared_cache = False,
-    excluded_artifacts = [],
-    generate_compat_repositories = False,
-    version_conflict_policy = "default",
-    maven_install_json = "//:maven_akka_install.json",
-    override_targets = {},
-    strict_visibility = False,
-    resolve_timeout = 600,
-    jetify = False,
-    jetify_include_list = ["*"],
+  name = "unpinned_maven_akka",
+  generator_name = "unpinned_maven_akka",
+  generator_function = "maven_install",
+  repositories = ["{ \"repo_url\": \"https://repo1.maven.org/maven2\" }"],
+  artifacts = ["{ \"group\": \"com.lightbend.akka.grpc\", \"artifact\": \"akka-grpc-codegen_2.12\", \"version\": \"2.1.3\" }", "{ \"group\": \"com.lightbend.akka.grpc\", \"artifact\": \"akka-grpc-runtime_2.12\", \"version\": \"2.1.3\" }"],
+  fail_on_missing_checksum = True,
+  fetch_sources = True,
+  fetch_javadoc = False,
+  use_unsafe_shared_cache = False,
+  excluded_artifacts = [],
+  generate_compat_repositories = False,
+  version_conflict_policy = "default",
+  maven_install_json = "//:maven_akka_install.json",
+  override_targets = {},
+  strict_visibility = False,
+  resolve_timeout = 600,
+  jetify = False,
+  jetify_include_list = ["*"],
 )
 # Rule unpinned_maven_akka instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:194:14                                         in <toplevel>
@@ -7868,24 +7870,24 @@ coursier_fetch(
 
 # {WORKSPACE}/WORKSPACE:164:14
 coursier_fetch(
-    name = "unpinned_maven_scala",
-    generator_name = "unpinned_maven_scala",
-    generator_function = "maven_install",
-    repositories = ["{ \"repo_url\": \"https://repo1.maven.org/maven2\" }"],
-    artifacts = ["{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"lenses_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-json4s_2.12\", \"version\": \"0.12.0\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-runtime_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-runtime-grpc_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapbc_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-api\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-core\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-netty\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-protobuf\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-stub\", \"version\": \"1.40.1\" }", "{ \"group\": \"org.json4s\", \"artifact\": \"json4s-core_2.12\", \"version\": \"4.0.3\" }"],
-    fail_on_missing_checksum = True,
-    fetch_sources = True,
-    fetch_javadoc = False,
-    use_unsafe_shared_cache = False,
-    excluded_artifacts = [],
-    generate_compat_repositories = False,
-    version_conflict_policy = "default",
-    maven_install_json = "//:maven_scala_install.json",
-    override_targets = {},
-    strict_visibility = False,
-    resolve_timeout = 600,
-    jetify = False,
-    jetify_include_list = ["*"],
+  name = "unpinned_maven_scala",
+  generator_name = "unpinned_maven_scala",
+  generator_function = "maven_install",
+  repositories = ["{ \"repo_url\": \"https://repo1.maven.org/maven2\" }"],
+  artifacts = ["{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"lenses_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-json4s_2.12\", \"version\": \"0.12.0\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-runtime_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapb-runtime-grpc_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"com.thesamet.scalapb\", \"artifact\": \"scalapbc_2.12\", \"version\": \"0.11.5\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-api\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-core\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-netty\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-protobuf\", \"version\": \"1.40.1\" }", "{ \"group\": \"io.grpc\", \"artifact\": \"grpc-stub\", \"version\": \"1.40.1\" }", "{ \"group\": \"org.json4s\", \"artifact\": \"json4s-core_2.12\", \"version\": \"4.0.3\" }"],
+  fail_on_missing_checksum = True,
+  fetch_sources = True,
+  fetch_javadoc = False,
+  use_unsafe_shared_cache = False,
+  excluded_artifacts = [],
+  generate_compat_repositories = False,
+  version_conflict_policy = "default",
+  maven_install_json = "//:maven_scala_install.json",
+  override_targets = {},
+  strict_visibility = False,
+  resolve_timeout = 600,
+  jetify = False,
+  jetify_include_list = ["*"],
 )
 # Rule unpinned_maven_scala instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:164:14                                         in <toplevel>
@@ -7895,108 +7897,119 @@ coursier_fetch(
 
 # {WORKSPACE}/WORKSPACE:99:10
 http_archive(
-    name = "upb",
-    generator_name = "upb",
-    generator_function = "grpc_deps",
-    urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/protocolbuffers/upb/archive/2de300726a1ba2de9a468468dc5ff9ed17a3215f.tar.gz", "https://github.com/protocolbuffers/upb/archive/2de300726a1ba2de9a468468dc5ff9ed17a3215f.tar.gz"],
-    sha256 = "6a5f67874af66b239b709c572ac1a5a00fdb1b29beaf13c3e6f79b1ba10dc7c4",
-    strip_prefix = "upb-2de300726a1ba2de9a468468dc5ff9ed17a3215f",
+  name = "upb",
+  generator_name = "upb",
+  generator_function = "grpc_deps",
+  urls = ["https://storage.googleapis.com/grpc-bazel-mirror/github.com/protocolbuffers/upb/archive/0e0de7d9f927aa888d9a0baeaf6576bbbb23bf0b.tar.gz", "https://github.com/protocolbuffers/upb/archive/0e0de7d9f927aa888d9a0baeaf6576bbbb23bf0b.tar.gz"],
+  sha256 = "7c02096dceb6b1249feaf11e4531f6bf31b9abdbd2305038349d1f1749bf88ea",
+  strip_prefix = "upb-0e0de7d9f927aa888d9a0baeaf6576bbbb23bf0b",
 )
 # Rule upb instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:340:21 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:341:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "upb_generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me",
-    generator_name = "upb_generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me",
-    generator_function = "grpc_deps",
-    actual = "@upb//:generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me",
+  name = "upb_generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me",
+  generator_name = "upb_generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me",
+  generator_function = "grpc_deps",
+  actual = "@upb//:generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me",
 )
 # Rule upb_generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:52:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:53:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "upb_json_lib",
-    generator_name = "upb_json_lib",
-    generator_function = "grpc_deps",
-    actual = "@upb//:json",
+  name = "upb_json_lib",
+  generator_name = "upb_json_lib",
+  generator_function = "grpc_deps",
+  actual = "@upb//:json",
 )
 # Rule upb_json_lib instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:47:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:48:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "upb_lib",
-    generator_name = "upb_lib",
-    generator_function = "grpc_deps",
-    actual = "@upb//:upb",
+  name = "upb_lib",
+  generator_name = "upb_lib",
+  generator_function = "grpc_deps",
+  actual = "@upb//:upb",
 )
 # Rule upb_lib instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:22:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:23:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "upb_lib_descriptor",
-    generator_name = "upb_lib_descriptor",
-    generator_function = "grpc_deps",
-    actual = "@upb//:descriptor_upb_proto",
+  name = "upb_lib_descriptor",
+  generator_name = "upb_lib_descriptor",
+  generator_function = "grpc_deps",
+  actual = "@upb//:descriptor_upb_proto",
 )
 # Rule upb_lib_descriptor instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:32:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:33:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "upb_lib_descriptor_reflection",
-    generator_name = "upb_lib_descriptor_reflection",
-    generator_function = "grpc_deps",
-    actual = "@upb//:descriptor_upb_proto_reflection",
+  name = "upb_lib_descriptor_reflection",
+  generator_name = "upb_lib_descriptor_reflection",
+  generator_function = "grpc_deps",
+  actual = "@upb//:descriptor_upb_proto_reflection",
 )
 # Rule upb_lib_descriptor_reflection instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:37:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:38:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "upb_reflection",
-    generator_name = "upb_reflection",
-    generator_function = "grpc_deps",
-    actual = "@upb//:reflection",
+  name = "upb_reflection",
+  generator_name = "upb_reflection",
+  generator_function = "grpc_deps",
+  actual = "@upb//:reflection",
 )
 # Rule upb_reflection instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:27:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:28:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:99:10
 bind(
-    name = "upb_textformat_lib",
-    generator_name = "upb_textformat_lib",
-    generator_function = "grpc_deps",
-    actual = "@upb//:textformat",
+  name = "upb_textformat_lib",
+  generator_name = "upb_textformat_lib",
+  generator_function = "grpc_deps",
+  actual = "@upb//:textformat",
 )
 # Rule upb_textformat_lib instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:42:16 in grpc_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:43:16 in grpc_deps
+
+# {WORKSPACE}/WORKSPACE:99:10
+bind(
+  name = "uv",
+  generator_name = "uv",
+  generator_function = "grpc_deps",
+  actual = "@libuv//:libuv",
+)
+# Rule uv instantiated at (most recent call last):
+#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:183:16 in grpc_deps
 
 # {WORKSPACE}/WORKSPACE:103:16
 http_archive(
-    name = "xctestrunner",
-    generator_name = "xctestrunner",
-    generator_function = "grpc_extra_deps",
-    urls = ["https://github.com/google/xctestrunner/archive/64a9be0b6fa833b4b2371729c5c8cdd2c6f7775b.tar.gz"],
-    sha256 = "c03e91efc01a1fa2f6c7764b93f5312e20c9c4fae124de2fc398871e46d4244d",
-    strip_prefix = "xctestrunner-64a9be0b6fa833b4b2371729c5c8cdd2c6f7775b",
+  name = "xctestrunner",
+  generator_name = "xctestrunner",
+  generator_function = "grpc_extra_deps",
+  urls = ["https://github.com/google/xctestrunner/archive/64a9be0b6fa833b4b2371729c5c8cdd2c6f7775b.tar.gz"],
+  sha256 = "c03e91efc01a1fa2f6c7764b93f5312e20c9c4fae124de2fc398871e46d4244d",
+  strip_prefix = "xctestrunner-64a9be0b6fa833b4b2371729c5c8cdd2c6f7775b",
 )
 # Rule xctestrunner instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:103:16                                                            in <toplevel>
-#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:52:29  in grpc_extra_deps
+#   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:56:29  in grpc_extra_deps
 #   {OUTPUT_BASE}/external/build_bazel_rules_apple/apple/repositories.bzl:140:11 in apple_rules_dependencies
 #   {OUTPUT_BASE}/external/build_bazel_rules_apple/apple/repositories.bzl:86:14  in _maybe
 # Rule http_archive defined at (most recent call last):
@@ -8004,13 +8017,13 @@ http_archive(
 
 # {WORKSPACE}/WORKSPACE:217:27
 http_archive(
-    name = "zlib",
-    generator_name = "zlib",
-    generator_function = "rules_closure_dependencies",
-    urls = ["https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz", "https://zlib.net/zlib-1.2.11.tar.gz"],
-    sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
-    strip_prefix = "zlib-1.2.11",
-    build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
+  name = "zlib",
+  generator_name = "zlib",
+  generator_function = "rules_closure_dependencies",
+  urls = ["https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz", "https://zlib.net/zlib-1.2.11.tar.gz"],
+  sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
+  strip_prefix = "zlib-1.2.11",
+  build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
 )
 # Rule zlib instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
