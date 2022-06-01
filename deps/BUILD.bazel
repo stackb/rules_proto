@@ -259,7 +259,7 @@ proto_dependency(
     strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
     urls = ["https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz"],
     deps = [
-        ":build_bazel_rules_swift",
+        # ":build_bazel_rules_swift",
         ":com_google_protobuf",
         ":rules_jvm_external",
     ],

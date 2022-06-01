@@ -9,7 +9,6 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def grpc_node_deps():
-    build_bazel_rules_swift()  # via com_github_grpc_grpc
     bazel_skylib()  # via com_google_protobuf
     rules_pkg()  # via com_google_protobuf
     rules_python()  # via com_google_protobuf
@@ -18,17 +17,6 @@ def grpc_node_deps():
     rules_jvm_external()  # via com_github_grpc_grpc
     com_github_grpc_grpc()  # via com_github_grpc_grpc_node_packages_grpc_tools_src
     com_github_grpc_grpc_node_packages_grpc_tools_src()  # via <TOP>
-
-def build_bazel_rules_swift():
-    _maybe(
-        http_archive,
-        name = "build_bazel_rules_swift",
-        sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
-        strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
-        urls = [
-            "https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz",
-        ],
-    )
 
 def bazel_skylib():
     _maybe(
