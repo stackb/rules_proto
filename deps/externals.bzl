@@ -5133,9 +5133,9 @@ http_archive(
     name = "com_google_protobuf",
     generator_name = "com_google_protobuf",
     generator_function = "protobuf_core_deps",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/7062d0a2d0075d5e7d5c294fd3984df67a976da3.tar.gz"],
-    sha256 = "5361aad0b47621ee08ab16d5f997c4bb216eac999c0af9c7c7a7f6180d47e948",
-    strip_prefix = "protobuf-7062d0a2d0075d5e7d5c294fd3984df67a976da3",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz"],
+    sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
+    strip_prefix = "protobuf-3.20.1",
 )
 # Rule com_google_protobuf instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:21:19                   in <toplevel>
