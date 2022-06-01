@@ -17,10 +17,10 @@ def io_bazel_rules_go():
     _maybe(
         http_archive,
         name = "io_bazel_rules_go",
-        sha256 = "38171ce619b2695fa095427815d52c2a115c716b15f4cd0525a88c376113f584",
-        strip_prefix = "rules_go-0.28.0",
+        sha256 = "9a37844f00eab4236d8ddbe9844d52c87fda58aa2631d05d9961a07976edb9c0",
+        strip_prefix = "rules_go-0.32.0",
         urls = [
-            "https://github.com/bazelbuild/rules_go/archive/v0.28.0.tar.gz",
+            "https://github.com/bazelbuild/rules_go/archive/v0.32.0.tar.gz",
         ],
     )
 

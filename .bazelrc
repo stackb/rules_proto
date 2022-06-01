@@ -1,3 +1,5 @@
 build:bazelci --deleted_packages=docs
 
 build --incompatible_java_common_parameters=false
+
+#build --host_platform="@io_bazel_rules_go//go/toolchain:darwin_amd64" --platforms="@io_bazel_rules_go//go/toolchain:darwin_arm64
