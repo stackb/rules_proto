@@ -239,54 +239,41 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Release: v1.35.0
-# Commit: v1.35.x
-# Date: 2021-01-19 18:07:57 +0000 UTC
-# URL: https://github.com/grpc/grpc/releases/tag/v1.35.0
-# Branch: master
-# Commit: 5f759fcd1f602b38004b948b071f8b5726a9a4b1
-# Date: 2021-02-09 05:46:27 +0000 UTC
-# URL: https://github.com/grpc/grpc/commit/5f759fcd1f602b38004b948b071f8b5726a9a4b1
-#
-# Merge pull request #25384 from gnossen/fix_interop_typo
-#
-# Fix Interop Client Typo
-# Size: 7899154 (7.9 MB)
+# Release: v1.42.0
+# TargetCommitish: v1.42.x
+# Date: 2021-11-16 23:39:48 +0000 UTC
+# URL: https://github.com/grpc/grpc/releases/tag/v1.42.0
+# Size: 8460322 (8.5 MB)
 proto_dependency(
     name = "com_github_grpc_grpc",
     repository_rule = "http_archive",
-    sha256 = "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b",
-    strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
-    urls = ["https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz"],
+    sha256 = "b2f2620c762427bfeeef96a68c1924319f384e877bc0e084487601e4cc6e434c",
+    strip_prefix = "grpc-1.42.0",
+    urls = ["https://github.com/grpc/grpc/archive/v1.42.0.tar.gz"],
     deps = [
-        # ":build_bazel_rules_swift",
+        ":build_bazel_rules_swift",
         ":com_google_protobuf",
         ":rules_jvm_external",
     ],
 )
 
-# Release: 0.18.0
-# Commit: master
-# Date: 2021-01-04 23:36:38 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_swift/releases/tag/0.18.0
 # Branch: master
-# Commit: dadd12190182530cf6f91ca7f9e70391644ce502
-# Date: 2021-02-08 21:24:10 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_swift/commit/dadd12190182530cf6f91ca7f9e70391644ce502
+# Commit: e52312c88e27f58f98f9c65526a44dcaba892863
+# Date: 2022-05-31 18:20:11 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_swift/commit/e52312c88e27f58f98f9c65526a44dcaba892863
 #
-# Don't re-export the modules imported by a Swift generated header.
+# Cleanup swiftdeps on corrupt incremental module (#837)
 #
-# This was an unintentional change in behavior from https://github.com/bazelbuild/rules_swift/commit/5f51ca9c5149122f41cada6122c61788d880fee9; this puts us back to the original behavior, but leaves an API in place for finer-grained control over re-exporting modules in the future. (But the BUILD rules today don't really have the flexibility to support it yet.)
+# When a SwiftCompile action is cancelled, it can leave the incremental storage area in a corrupt state, in which all later compiles return exit code 0, but don't actually produce an output (#819).
 #
-# PiperOrigin-RevId: 356338982
-# (cherry picked from commit f45eea8c02a87c3077e5209f471fe4a193b5b0ba)
-# Size: 157518 (158 kB)
+# 34ce7835bda5e787b633f2ce0cc9687e90f7f952 identified a good way to tell that the storage area was in a corrupt state, but it didn't fully fix the problem. We also need to delete the existing `swiftdeps` files, which this change does.
+# Size: 188540 (188 kB)
 proto_dependency(
     name = "build_bazel_rules_swift",
     repository_rule = "http_archive",
-    sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
-    strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
-    urls = ["https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"],
+    sha256 = "7e361b49ff66486c6bd59a6a715a05b5038a2c48df866acd0044310be5363503",
+    strip_prefix = "rules_swift-e52312c88e27f58f98f9c65526a44dcaba892863",
+    urls = ["https://github.com/bazelbuild/rules_swift/archive/e52312c88e27f58f98f9c65526a44dcaba892863.tar.gz"],
 )
 
 # Release: v1.35.0

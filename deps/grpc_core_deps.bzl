@@ -9,6 +9,7 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def grpc_core_deps():
+    build_bazel_rules_swift()  # via com_github_grpc_grpc
     bazel_skylib()  # via com_google_protobuf
     rules_pkg()  # via com_google_protobuf
     rules_python()  # via com_google_protobuf
@@ -16,6 +17,17 @@ def grpc_core_deps():
     com_google_protobuf()  # via com_github_grpc_grpc
     rules_jvm_external()  # via com_github_grpc_grpc
     com_github_grpc_grpc()  # via <TOP>
+
+def build_bazel_rules_swift():
+    _maybe(
+        http_archive,
+        name = "build_bazel_rules_swift",
+        sha256 = "7e361b49ff66486c6bd59a6a715a05b5038a2c48df866acd0044310be5363503",
+        strip_prefix = "rules_swift-e52312c88e27f58f98f9c65526a44dcaba892863",
+        urls = [
+            "https://github.com/bazelbuild/rules_swift/archive/e52312c88e27f58f98f9c65526a44dcaba892863.tar.gz",
+        ],
+    )
 
 def bazel_skylib():
     _maybe(
@@ -89,9 +101,9 @@ def com_github_grpc_grpc():
     _maybe(
         http_archive,
         name = "com_github_grpc_grpc",
-        sha256 = "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b",
-        strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
+        sha256 = "b2f2620c762427bfeeef96a68c1924319f384e877bc0e084487601e4cc6e434c",
+        strip_prefix = "grpc-1.42.0",
         urls = [
-            "https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.42.0.tar.gz",
         ],
     )
