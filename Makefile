@@ -14,8 +14,9 @@ deps:
 	$(BAZEL) build //deps:*
 	cp -f ./bazel-bin/deps/*.bzl deps/
 	chmod 0644 deps/*.bzl
+	$(BAZEL) run //deps:generate-externals
 	$(BAZEL) run //:buildifier -- deps/
-		
+
 .PHONY: site
 site:
 	$(BAZEL) build //example/golden:*

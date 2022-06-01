@@ -1,6 +1,11 @@
 load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
 load("@build_stack_rules_proto//rules:depsgen.bzl", "depsgen")
 
+sh_binary(
+    name = "generate-externals",
+    srcs = [":generate-externals.sh"],
+)
+
 depsgen(
     name = "core",
     deps = [
