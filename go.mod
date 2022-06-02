@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/bazelbuild/bazel-gazelle v0.24.0
 	github.com/bazelbuild/buildtools v0.0.0-20210408102303-2b0a1af1a898
-	github.com/bazelbuild/rules_go v0.27.0
+	github.com/bazelbuild/rules_go v0.32.0
 	github.com/bmatcuk/doublestar v1.2.2
 	github.com/emicklei/proto v1.9.0
 	github.com/google/go-cmp v0.5.5

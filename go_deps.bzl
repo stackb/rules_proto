@@ -70,8 +70,8 @@ def go_deps():
         name = "com_github_bazelbuild_rules_go",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/bazelbuild/rules_go",
-        sum = "h1:KViqR7qKXwz+LrNdIauCDU21kneCk+4DnYjpvlJwH50=",
-        version = "v0.27.0",
+        sum = "h1:2DmbGvRnmGUTIn9upKuly/8Wg3/HNKesliVPWKnrtZU=",
+        version = "v0.32.0",
     )
     go_repository(
         name = "com_github_bmatcuk_doublestar",

@@ -51,9 +51,20 @@ func Runfile(path string) (string, error) {
 	}
 
 	// Search manifest if we have one.
-	if entry, ok := runfiles.index[path]; ok {
+	if entry, ok := runfiles.index.GetIgnoringWorkspace(path); ok {
 		return entry.Path, nil
 	}
+
+	if strings.HasPrefix(path, "../") || strings.HasPrefix(path, "external/") {
+		pathParts := strings.Split(path, "/")
+		if len(pathParts) >= 3 {
+			workspace := pathParts[1]
+			pathInsideWorkspace := strings.Join(pathParts[2:], "/")
+			if path := runfiles.index.Get(workspace, pathInsideWorkspace); path != "" {
+				return path, nil
+			}
+		}
+    }
 
 	// Search the main workspace.
 	if runfiles.workspace != "" {
@@ -279,7 +290,7 @@ var runfiles = struct {
 	list []RunfileEntry
 
 	// index maps runfile short paths to absolute paths.
-	index map[string]RunfileEntry
+	index index
 
 	// dir is a path to the runfile directory. Typically this is a directory
 	// named <target>.runfiles, with a subdirectory for each workspace.
@@ -296,6 +307,47 @@ var runfiles = struct {
 	err error
 }{}
 
+type index struct {
+	indexWithWorkspace map[indexKey]*RunfileEntry
+	indexIgnoringWorksapce map[string]*RunfileEntry
+}
+
+func newIndex() index {
+	return index {
+		indexWithWorkspace: make(map[indexKey]*RunfileEntry),
+		indexIgnoringWorksapce: make(map[string]*RunfileEntry),
+	}
+}
+
+func (i *index) Put(entry *RunfileEntry) {
+	i.indexWithWorkspace[indexKey{
+		workspace: entry.Workspace,
+		shortPath: entry.ShortPath,
+	}] = entry
+	i.indexIgnoringWorksapce[entry.ShortPath] = entry
+}
+
+func (i *index) Get(workspace string, shortPath string) string {
+	entry := i.indexWithWorkspace[indexKey{
+		workspace: workspace,
+		shortPath: shortPath,
+	}]
+	if entry == nil {
+		return ""
+	}
+	return entry.Path
+}
+
+func (i *index) GetIgnoringWorkspace(shortPath string) (*RunfileEntry, bool) {
+	entry, ok := i.indexIgnoringWorksapce[shortPath]
+	return entry, ok
+}
+
+type indexKey struct {
+	workspace string
+	shortPath string
+}
+
 func ensureRunfiles() error {
 	runfiles.once.Do(initRunfiles)
 	return runfiles.err
@@ -307,7 +359,7 @@ func initRunfiles() {
 		// On Windows, Bazel doesn't create a symlink tree of runfiles because
 		// Windows doesn't support symbolic links by default. Instead, runfile
 		// locations are written to a manifest file.
-		runfiles.index = make(map[string]RunfileEntry)
+		runfiles.index = newIndex()
 		data, err := ioutil.ReadFile(manifest)
 		if err != nil {
 			runfiles.err = err
@@ -325,17 +377,29 @@ func initRunfiles() {
 				data = data[i+1:]
 			}
 			lineno++
-			line = bytes.TrimSpace(line)
+
+			// Only TrimRight newlines. Do not TrimRight() completely, because that would remove spaces too.
+			// This is necessary in order to have at least one space in every manifest line.
+			// Some manifest entries don't have any path after this space, namely the "__init__.py" entries.
+			// original comment sourced from: https://github.com/bazelbuild/bazel/blob/09c621e4cf5b968f4c6cdf905ab142d5961f9ddc/src/test/py/bazel/runfiles_test.py#L225
+			line = bytes.TrimRight(line, "\r\n")
 			if len(line) == 0 {
 				continue
 			}
-			e := bytes.SplitN(line, []byte(" "), 2)
-			if len(e) < 2 {
-				runfiles.err = fmt.Errorf("error parsing runfiles manifest: %s:%d: no space", manifest, lineno)
+
+			spaceIndex := bytes.IndexByte(line, ' ')
+			if spaceIndex < 0 {
+				runfiles.err = fmt.Errorf(
+					"error parsing runfiles manifest: %s:%d: no space: '%s'", manifest, lineno, line)
 				return
 			}
+			shortPath := string(line[0:spaceIndex])
+			abspath := ""
+			if len(line) > spaceIndex+1 {
+				abspath = string(line[spaceIndex+1:])
+			}
 
-			entry := RunfileEntry{ShortPath: string(e[0]), Path: string(e[1])}
+			entry := RunfileEntry{ShortPath: shortPath, Path: abspath}
 			if i := strings.IndexByte(entry.ShortPath, '/'); i >= 0 {
 				entry.Workspace = entry.ShortPath[:i]
 				entry.ShortPath = entry.ShortPath[i+1:]
@@ -349,7 +413,7 @@ func initRunfiles() {
 			}
 
 			runfiles.list = append(runfiles.list, entry)
-			runfiles.index[entry.ShortPath] = entry
+			runfiles.index.Put(&entry)
 		}
 	}
 
@@ -362,7 +426,7 @@ func initRunfiles() {
 	} else if runtime.GOOS != "windows" {
 		dir, err := os.Getwd()
 		if err != nil {
-			runfiles.err = fmt.Errorf("error localting runfiles dir: %v", err)
+			runfiles.err = fmt.Errorf("error locating runfiles dir: %v", err)
 			return
 		}
 

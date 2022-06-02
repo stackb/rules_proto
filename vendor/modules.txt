@@ -19,7 +19,7 @@ github.com/bazelbuild/bazel-gazelle/walk
 ## explicit
 github.com/bazelbuild/buildtools/build
 github.com/bazelbuild/buildtools/tables
-# github.com/bazelbuild/rules_go v0.27.0
+# github.com/bazelbuild/rules_go v0.32.0
 ## explicit
 github.com/bazelbuild/rules_go/go/tools/bazel
 github.com/bazelbuild/rules_go/go/tools/bazel_testing
