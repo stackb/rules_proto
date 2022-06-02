@@ -25,6 +25,7 @@ github.com/bazelbuild/rules_go/go/tools/bazel
 github.com/bazelbuild/rules_go/go/tools/bazel_testing
 github.com/bazelbuild/rules_go/go/tools/internal/txtar
 # github.com/bmatcuk/doublestar v1.2.2
+## explicit
 github.com/bmatcuk/doublestar
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
