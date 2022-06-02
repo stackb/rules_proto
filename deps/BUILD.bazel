@@ -125,7 +125,7 @@ proto_dependency(
     name = "bazel_gazelle",
     repository_rule = "http_archive",
     sha256 = "cb05501bd37e2cbfdea8e23b28e5a7fe4ff4f12cef30eeb1924a0b8c3c0cea61",
-    strip_prefix = "bazel-gazelle-425d85daecb9aeffa1ae24b83df7b97b534dcf05",
+    strip_prefix = "bazel-gazelle-42f5d85daecb9aeffa1ae24b83df7b97b534dcf05",
     urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/425d85daecb9aeffa1ae24b83df7b97b534dcf05.tar.gz"],
     deps = [":io_bazel_rules_go"],
 )
@@ -139,12 +139,12 @@ proto_dependency(
 # Size: 5109233 (5.1 MB)
 proto_dependency(
     name = "com_google_protobuf",
+    patch_args = ["-p1"],
+    patches = ["//third_party:com_google_protobuf.deploy_env.patch"],
     repository_rule = "http_archive",
-    sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
-    strip_prefix = "protobuf-3.20.1",
-    urls = [
-        "https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz",
-    ],
+    sha256 = "5361aad0b47621ee08ab16d5f997c4bb216eac999c0af9c7c7a7f6180d47e948",
+    strip_prefix = "protobuf-7062d0a2d0075d5e7d5c294fd3984df67a976da3",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/7062d0a2d0075d5e7d5c294fd3984df67a976da3.tar.gz"],
     visibility = ["//visibility:public"],
     deps = [
         ":bazel_skylib",

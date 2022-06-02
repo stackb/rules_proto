@@ -2,7 +2,10 @@ filegroup(
     name = "all_files",
     srcs = [
         "BUILD.bazel",
+        "com_google_protobuf.deploy_env.patch",
         "zlib.BUILD",
     ],
     visibility = ["//:__pkg__"],
 )
+
+exports_files(["com_google_protobuf.deploy_env.patch"])

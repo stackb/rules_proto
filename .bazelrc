@@ -1,7 +1,5 @@
+# used by .bazelci/presubmit.yml
 build:bazelci --deleted_packages=docs
 
+# TODO(pcj): remove when more deps are bazel-5 compatible
 build --incompatible_java_common_parameters=false
-
-build --toolchain_resolution_debug=true 
-
-#build --host_platform="@io_bazel_rules_go//go/toolchain:darwin_amd64" --platforms="@io_bazel_rules_go//go/toolchain:darwin_arm64

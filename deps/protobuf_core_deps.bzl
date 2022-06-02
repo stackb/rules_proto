@@ -2,6 +2,7 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def _maybe(repo_rule, name, **kwargs):
@@ -14,6 +15,7 @@ def protobuf_core_deps():
     rules_python()  # via com_google_protobuf
     zlib()  # via com_google_protobuf
     com_google_protobuf()  # via <TOP>
+
 
 def bazel_skylib():
     _maybe(
@@ -65,9 +67,9 @@ def com_google_protobuf():
     _maybe(
         http_archive,
         name = "com_google_protobuf",
-        sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
-        strip_prefix = "protobuf-3.20.1",
+        sha256 = "5361aad0b47621ee08ab16d5f997c4bb216eac999c0af9c7c7a7f6180d47e948",
+        strip_prefix = "protobuf-7062d0a2d0075d5e7d5c294fd3984df67a976da3",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/7062d0a2d0075d5e7d5c294fd3984df67a976da3.tar.gz",
         ],
     )
