@@ -52,14 +52,6 @@ load("//deps:grpc_node_deps.bzl", "grpc_node_deps")
 
 grpc_node_deps()
 
-load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
-
-ts_proto_deps()
-
-load("//deps:example_routeguide_nodejs_deps.bzl", "example_routeguide_nodejs_deps")
-
-example_routeguide_nodejs_deps()
-
 # ----------------------------------------------------
 # Go Tools
 # ----------------------------------------------------
@@ -224,6 +216,16 @@ rules_closure_dependencies(
 
 load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 
-node_repositories()
+node_repositories(
+    node_version = "16.6.2",
+)
 
 register_toolchains("//toolchain:nodejs")
+
+load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
+
+ts_proto_deps()
+
+load("//deps:example_routeguide_nodejs_deps.bzl", "example_routeguide_nodejs_deps")
+
+example_routeguide_nodejs_deps()

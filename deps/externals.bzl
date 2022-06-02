@@ -6,7 +6,7 @@
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "absl",
     generator_name = "absl",
@@ -14,10 +14,10 @@ bind(
     actual = "@com_google_absl//absl:absl",
 )
 # Rule absl instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:58:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "absl-base",
     generator_name = "absl-base",
@@ -25,10 +25,10 @@ bind(
     actual = "@com_google_absl//absl/base:base",
 )
 # Rule absl-base instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:63:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "absl-time",
     generator_name = "absl-time",
@@ -36,7 +36,7 @@ bind(
     actual = "@com_google_absl//absl/time:time",
 )
 # Rule absl-time instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:68:16 in grpc_deps
 
 # /DEFAULT.WORKSPACE:25:5
@@ -98,7 +98,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "aopalliance",
     generator_name = "aopalliance",
@@ -109,14 +109,14 @@ jvm_import_external(
     artifact_sha256 = "0addec670fedcd3f113c5c8091d783280d23f75e3acb841b61a9cdb079376a08",
 )
 # Rule aopalliance instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:85:20  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:196:25 in aopalliance
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "args4j",
     generator_name = "args4j",
@@ -127,14 +127,14 @@ jvm_import_external(
     artifact_sha256 = "989bda2321ea073a03686e9d4437ea4928c72c99f993f9ca6fab24615f0771a4",
 )
 # Rule args4j instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:87:15  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:208:25 in args4j
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "bazel_compdb",
     generator_name = "bazel_compdb",
@@ -144,7 +144,7 @@ http_archive(
     strip_prefix = "bazel-compilation-database-0.4.5",
 )
 # Rule bazel_compdb instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:319:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
@@ -166,7 +166,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:83:21
+# {WORKSPACE}/WORKSPACE:75:21
 go_repository_cache(
     name = "bazel_gazelle_go_repository_cache",
     generator_name = "bazel_gazelle_go_repository_cache",
@@ -175,12 +175,12 @@ go_repository_cache(
     go_env = {},
 )
 # Rule bazel_gazelle_go_repository_cache instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:83:21                                    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:75:21                                    in <toplevel>
 #   {OUTPUT_BASE}/external/bazel_gazelle/deps.bzl:69:28 in gazelle_dependencies
 # Rule go_repository_cache defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository_cache.bzl:71:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:83:21
+# {WORKSPACE}/WORKSPACE:75:21
 go_repository_config(
     name = "bazel_gazelle_go_repository_config",
     generator_name = "bazel_gazelle_go_repository_config",
@@ -188,12 +188,12 @@ go_repository_config(
     config = "//:WORKSPACE",
 )
 # Rule bazel_gazelle_go_repository_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:83:21                                    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:75:21                                    in <toplevel>
 #   {OUTPUT_BASE}/external/bazel_gazelle/deps.bzl:80:25 in gazelle_dependencies
 # Rule go_repository_config defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository_config.bzl:62:39 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:83:21
+# {WORKSPACE}/WORKSPACE:75:21
 go_repository_tools(
     name = "bazel_gazelle_go_repository_tools",
     generator_name = "bazel_gazelle_go_repository_tools",
@@ -201,12 +201,12 @@ go_repository_tools(
     go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
 )
 # Rule bazel_gazelle_go_repository_tools instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:83:21                                    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:75:21                                    in <toplevel>
 #   {OUTPUT_BASE}/external/bazel_gazelle/deps.bzl:75:24 in gazelle_dependencies
 # Rule go_repository_tools defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository_tools.bzl:117:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_archive(
     name = "bazel_skylib",
     generator_name = "bazel_skylib",
@@ -215,13 +215,13 @@ http_archive(
     sha256 = "2ef429f5d7ce7111263289644d233707dba35e39696377ebab8b0bc701f7818e",
 )
 # Rule bazel_skylib instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:89:21  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:219:17 in bazel_skylib
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "bazel_toolchains",
     generator_name = "bazel_toolchains",
@@ -231,7 +231,7 @@ http_archive(
     strip_prefix = "bazel-toolchains-4.1.0",
 )
 # Rule bazel_toolchains instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:298:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
@@ -244,7 +244,7 @@ local_repository(
 # Rule bazel_tools instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:1:17 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "benchmark",
     generator_name = "benchmark",
@@ -252,10 +252,10 @@ bind(
     actual = "@com_github_google_benchmark//:benchmark",
 )
 # Rule benchmark instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:118:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "boringssl",
     generator_name = "boringssl",
@@ -265,12 +265,12 @@ http_archive(
     strip_prefix = "boringssl-b9232f9e27e5668bc0414879dcdedb2a59ea75f2",
 )
 # Rule boringssl instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:189:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "build_bazel_apple_support",
     generator_name = "build_bazel_apple_support",
@@ -279,12 +279,12 @@ http_archive(
     sha256 = "76df040ade90836ff5543888d64616e7ba6c3a7b33b916aa3a4b68f342d1b447",
 )
 # Rule build_bazel_apple_support instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:383:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "build_bazel_rules_apple",
     generator_name = "build_bazel_rules_apple",
@@ -293,7 +293,7 @@ http_archive(
     sha256 = "0052d452af7742c8f3a4e0929763388a66403de363775db7e90adecb2ba4944b",
 )
 # Rule build_bazel_rules_apple instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:373:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
@@ -339,7 +339,7 @@ local_repository(
 # Rule build_stack_rules_proto instantiated at (most recent call last):
 #   {WORKSPACE}/WORKSPACE:1:10 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "cares",
     generator_name = "cares",
@@ -347,7 +347,7 @@ bind(
     actual = "@com_github_cares_cares//:ares",
 )
 # Rule cares instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:108:16 in grpc_deps
 
 # /DEFAULT.WORKSPACE.SUFFIX:519:13
@@ -361,7 +361,7 @@ bind(
 #   /DEFAULT.WORKSPACE.SUFFIX:519:13                                                                                    in <toplevel>
 #   {OUTPUT_BASE}/external/bazel_tools/tools/cpp/cc_configure.bzl:185:16 in cc_configure
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 platform_http_file(
     name = "clang",
     generator_name = "clang",
@@ -372,13 +372,13 @@ platform_http_file(
     macos_sha256 = "633a833396bf2276094c126b072d52b59aca6249e7ce8eae14c728016edb5e61",
 )
 # Rule clang instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:91:14  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:229:23 in clang
 # Rule platform_http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/private/platform_http_file.bzl:37:37 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "co_honnef_go_tools",
     generator_name = "co_honnef_go_tools",
@@ -389,12 +389,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule co_honnef_go_tools instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8    in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:47:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_chuusai_shapeless_2_12_2_3_3",
     generator_name = "com_chuusai_shapeless_2_12_2_3_3",
@@ -404,12 +404,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_chuusai_shapeless_2_12_2_3_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:4:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_chuusai_shapeless_2_12_jar_sources_2_3_3",
     generator_name = "com_chuusai_shapeless_2_12_jar_sources_2_3_3",
@@ -419,12 +419,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_chuusai_shapeless_2_12_jar_sources_2_3_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:10:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "com_envoyproxy_protoc_gen_validate",
     generator_name = "com_envoyproxy_protoc_gen_validate",
@@ -434,12 +434,12 @@ http_archive(
     strip_prefix = "protoc-gen-validate-59da36e59fef2267fc2b1849a05159e3ecdf24f3",
 )
 # Rule com_envoyproxy_protoc_gen_validate instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:438:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_fasterxml_jackson_core_jackson_annotations_2_12_3",
     generator_name = "com_fasterxml_jackson_core_jackson_annotations_2_12_3",
@@ -449,12 +449,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_annotations_2_12_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:16:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_fasterxml_jackson_core_jackson_annotations_jar_sources_2_12_3",
     generator_name = "com_fasterxml_jackson_core_jackson_annotations_jar_sources_2_12_3",
@@ -464,12 +464,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_annotations_jar_sources_2_12_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:22:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_fasterxml_jackson_core_jackson_core",
     generator_name = "com_fasterxml_jackson_core_jackson_core",
@@ -477,12 +477,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_fasterxml_jackson_core_jackson_core instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                            in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                            in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:3:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_fasterxml_jackson_core_jackson_core_2_12_3",
     generator_name = "com_fasterxml_jackson_core_jackson_core_2_12_3",
@@ -492,12 +492,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_core_2_12_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:28:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_fasterxml_jackson_core_jackson_core_jar_sources_2_12_3",
     generator_name = "com_fasterxml_jackson_core_jackson_core_jar_sources_2_12_3",
@@ -507,12 +507,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_core_jar_sources_2_12_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:34:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_fasterxml_jackson_core_jackson_databind_2_12_3",
     generator_name = "com_fasterxml_jackson_core_jackson_databind_2_12_3",
@@ -522,12 +522,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_databind_2_12_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:40:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_fasterxml_jackson_core_jackson_databind_jar_sources_2_12_3",
     generator_name = "com_fasterxml_jackson_core_jackson_databind_jar_sources_2_12_3",
@@ -537,12 +537,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_fasterxml_jackson_core_jackson_databind_jar_sources_2_12_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:46:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_1_2_0",
     generator_name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_1_2_0",
@@ -552,12 +552,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_github_alexarchambault_argonaut_shapeless_6_2_2_12_1_2_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:52:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_jar_sources_1_2_0",
     generator_name = "com_github_alexarchambault_argonaut_shapeless_6_2_2_12_jar_sources_1_2_0",
@@ -567,12 +567,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_github_alexarchambault_argonaut_shapeless_6_2_2_12_jar_sources_1_2_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:58:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_bazelbuild_bazel_gazelle",
     generator_name = "com_github_bazelbuild_bazel_gazelle",
@@ -584,12 +584,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_bazelbuild_bazel_gazelle instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8    in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:54:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_bazelbuild_buildtools",
     generator_name = "com_github_bazelbuild_buildtools",
@@ -600,12 +600,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_bazelbuild_buildtools instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8    in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:62:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_bazelbuild_rules_go",
     generator_name = "com_github_bazelbuild_rules_go",
@@ -616,12 +616,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_bazelbuild_rules_go instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8    in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:69:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_bmatcuk_doublestar",
     generator_name = "com_github_bmatcuk_doublestar",
@@ -632,13 +632,13 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_bmatcuk_doublestar instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8    in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:45:39 in go_deps
 #   {WORKSPACE}/go_deps.bzl:35:18 in gazelle_protobuf_extension_go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:103:16
+# {WORKSPACE}/WORKSPACE:95:16
 http_archive(
     name = "com_github_bufbuild_buf",
     tags = ["manual"],
@@ -650,7 +650,7 @@ http_archive(
     build_file_content = "\npackage(\n    default_visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"buf\",\n    srcs = [\n        \"@com_github_bufbuild_buf//:bin/buf\",\n    ],\n    tags = [\"manual\"], # buf is downloaded as a linux binary; tagged manual to prevent build for non-linux users\n)\n",
 )
 # Rule com_github_bufbuild_buf instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
+#   {WORKSPACE}/WORKSPACE:95:16                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:51:21 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:50:26               in api_dependencies
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:9:23                in external_http_archive
@@ -658,7 +658,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_burntsushi_toml",
     generator_name = "com_github_burntsushi_toml",
@@ -669,12 +669,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_burntsushi_toml instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8    in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:76:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "com_github_cares_cares",
     generator_name = "com_github_cares_cares",
@@ -685,12 +685,12 @@ http_archive(
     build_file = "@com_github_grpc_grpc//third_party:cares/cares.BUILD",
 )
 # Rule com_github_cares_cares instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:274:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_census_instrumentation_opencensus_proto",
     generator_name = "com_github_census_instrumentation_opencensus_proto",
@@ -701,12 +701,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_census_instrumentation_opencensus_proto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8    in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:83:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_chzyer_logex",
     generator_name = "com_github_chzyer_logex",
@@ -717,12 +717,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_chzyer_logex instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8    in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:90:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_chzyer_readline",
     generator_name = "com_github_chzyer_readline",
@@ -733,12 +733,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_chzyer_readline instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8    in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:97:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_chzyer_test",
     generator_name = "com_github_chzyer_test",
@@ -749,12 +749,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_chzyer_test instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:104:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_client9_misspell",
     generator_name = "com_github_client9_misspell",
@@ -765,12 +765,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_client9_misspell instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:111:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "com_github_cncf_udpa",
     generator_name = "com_github_cncf_udpa",
@@ -780,12 +780,12 @@ http_archive(
     strip_prefix = "xds-cb28da3451f158a947dfc45090fe92b07b243bc1",
 )
 # Rule com_github_cncf_udpa instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:449:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_davecgh_go_spew",
     generator_name = "com_github_davecgh_go_spew",
@@ -796,12 +796,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_davecgh_go_spew instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:118:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_emicklei_proto",
     generator_name = "com_github_emicklei_proto",
@@ -812,12 +812,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_emicklei_proto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:125:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_envoyproxy_go_control_plane",
     generator_name = "com_github_envoyproxy_go_control_plane",
@@ -828,12 +828,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_envoyproxy_go_control_plane instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:133:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_envoyproxy_protoc_gen_validate",
     generator_name = "com_github_envoyproxy_protoc_gen_validate",
@@ -844,12 +844,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_envoyproxy_protoc_gen_validate instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:140:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_fsnotify_fsnotify",
     generator_name = "com_github_fsnotify_fsnotify",
@@ -860,12 +860,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_fsnotify_fsnotify instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:147:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:73:22
+# {WORKSPACE}/WORKSPACE:65:22
 http_archive(
     name = "com_github_gogo_protobuf",
     generator_name = "com_github_gogo_protobuf",
@@ -877,13 +877,13 @@ http_archive(
     patch_args = ["-p1"],
 )
 # Rule com_github_gogo_protobuf instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
+#   {WORKSPACE}/WORKSPACE:65:22                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:192:11 in go_rules_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:292:18 in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_golang_glog",
     generator_name = "com_github_golang_glog",
@@ -894,12 +894,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_golang_glog instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:155:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_golang_mock",
     generator_name = "com_github_golang_mock",
@@ -910,12 +910,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_golang_mock instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:162:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_golang_protobuf",
     generator_name = "com_github_golang_protobuf",
@@ -926,12 +926,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_golang_protobuf instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:169:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "com_github_google_benchmark",
     generator_name = "com_github_google_benchmark",
@@ -941,12 +941,12 @@ http_archive(
     strip_prefix = "benchmark-0baacde3618ca617da95375e0af13ce1baadea47",
 )
 # Rule com_github_google_benchmark instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:251:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_google_go_cmp",
     generator_name = "com_github_google_go_cmp",
@@ -957,7 +957,7 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_google_go_cmp instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:176:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
@@ -997,7 +997,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_kr_pretty",
     generator_name = "com_github_kr_pretty",
@@ -1008,12 +1008,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_kr_pretty instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:184:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_kr_pty",
     generator_name = "com_github_kr_pty",
@@ -1024,12 +1024,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_kr_pty instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:191:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_kr_text",
     generator_name = "com_github_kr_text",
@@ -1040,12 +1040,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_kr_text instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:198:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:73:22
+# {WORKSPACE}/WORKSPACE:65:22
 http_archive(
     name = "com_github_mwitkow_go_proto_validators",
     generator_name = "com_github_mwitkow_go_proto_validators",
@@ -1055,13 +1055,13 @@ http_archive(
     strip_prefix = "go-proto-validators-0.3.2",
 )
 # Rule com_github_mwitkow_go_proto_validators instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
+#   {WORKSPACE}/WORKSPACE:65:22                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:178:11 in go_rules_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:292:18 in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:103:16
+# {WORKSPACE}/WORKSPACE:95:16
 http_archive(
     name = "com_github_openzipkin_zipkinapi",
     generator_name = "com_github_openzipkin_zipkinapi",
@@ -1072,7 +1072,7 @@ http_archive(
     build_file_content = "\n\nload(\"@envoy_api//bazel:api_build_system.bzl\", \"api_cc_py_proto_library\")\nload(\"@io_bazel_rules_go//proto:def.bzl\", \"go_proto_library\")\n\napi_cc_py_proto_library(\n    name = \"zipkin\",\n    srcs = [\n        \"zipkin-jsonv2.proto\",\n        \"zipkin.proto\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"zipkin_go_proto\",\n    proto = \":zipkin\",\n    visibility = [\"//visibility:public\"],\n)\n",
 )
 # Rule com_github_openzipkin_zipkinapi instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
+#   {WORKSPACE}/WORKSPACE:95:16                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:51:21 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:42:26               in api_dependencies
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:9:23                in external_http_archive
@@ -1080,7 +1080,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_pelletier_go_toml",
     generator_name = "com_github_pelletier_go_toml",
@@ -1091,12 +1091,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_pelletier_go_toml instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:206:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_pmezard_go_difflib",
     generator_name = "com_github_pmezard_go_difflib",
@@ -1107,12 +1107,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_pmezard_go_difflib instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:213:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_prometheus_client_model",
     generator_name = "com_github_prometheus_client_model",
@@ -1123,7 +1123,7 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_prometheus_client_model instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:220:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
@@ -1145,7 +1145,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_stretchr_objx",
     generator_name = "com_github_stretchr_objx",
@@ -1156,12 +1156,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_stretchr_objx instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:227:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_github_stretchr_testify",
     generator_name = "com_github_stretchr_testify",
@@ -1172,12 +1172,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_github_stretchr_testify instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:235:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:83:21
+# {WORKSPACE}/WORKSPACE:75:21
 go_repository(
     name = "com_github_yuin_goldmark",
     generator_name = "com_github_yuin_goldmark",
@@ -1187,13 +1187,13 @@ go_repository(
     sum = "h1:OtISOGfH6sOWa1/qXqqAiOIAO6Z5J3AEAE18WAq6BiQ=",
 )
 # Rule com_github_yuin_goldmark instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:83:21                                     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:75:21                                     in <toplevel>
 #   {OUTPUT_BASE}/external/bazel_gazelle/deps.bzl:233:11 in gazelle_dependencies
 #   {OUTPUT_BASE}/external/bazel_gazelle/deps.bzl:376:18 in _maybe
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "com_google_absl",
     generator_name = "com_google_absl",
@@ -1203,12 +1203,12 @@ http_archive(
     strip_prefix = "abseil-cpp-20211102.0",
 )
 # Rule com_google_absl instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:286:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_android_annotations",
     generator_name = "com_google_android_annotations",
@@ -1216,12 +1216,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_android_annotations instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                            in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                            in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:7:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_android_annotations_4_1_1_4",
     generator_name = "com_google_android_annotations_4_1_1_4",
@@ -1231,12 +1231,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_android_annotations_4_1_1_4 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                               in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                               in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:4:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_android_annotations_jar_sources_4_1_1_4",
     generator_name = "com_google_android_annotations_jar_sources_4_1_1_4",
@@ -1246,12 +1246,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_android_annotations_jar_sources_4_1_1_4 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:10:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_api_grpc_proto_google_common_protos",
     generator_name = "com_google_api_grpc_proto_google_common_protos",
@@ -1259,12 +1259,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_api_grpc_proto_google_common_protos instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:11:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_google_api_grpc_proto_google_common_protos_2_0_1",
     generator_name = "com_google_api_grpc_proto_google_common_protos_2_0_1",
@@ -1274,12 +1274,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_google_api_grpc_proto_google_common_protos_2_0_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:76:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_google_api_grpc_proto_google_common_protos_jar_sources_2_0_1",
     generator_name = "com_google_api_grpc_proto_google_common_protos_jar_sources_2_0_1",
@@ -1289,12 +1289,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_google_api_grpc_proto_google_common_protos_jar_sources_2_0_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:82:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_auth_google_auth_library_credentials",
     generator_name = "com_google_auth_google_auth_library_credentials",
@@ -1302,12 +1302,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_auth_google_auth_library_credentials instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:15:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_auth_google_auth_library_oauth2_http",
     generator_name = "com_google_auth_google_auth_library_oauth2_http",
@@ -1315,12 +1315,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_auth_google_auth_library_oauth2_http instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:19:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_auto_common",
     generator_name = "com_google_auto_common",
@@ -1333,14 +1333,14 @@ jvm_import_external(
     default_visibility = ["@com_google_auto_factory//:__pkg__"],
 )
 # Rule com_google_auto_common instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:93:31  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:242:25 in com_google_auto_common
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_auto_factory",
     generator_name = "com_google_auto_factory",
@@ -1353,14 +1353,14 @@ jvm_import_external(
     extra_build_file_content = "java_library(\n    name = \"processor\",\n    exports = [\":jar\"],\n    runtime_deps = [\n        \"@com_google_auto_common\",\n        \"@com_google_auto_value\",\n        \"@com_google_guava\",\n        \"@com_google_java_format\",\n        \"@com_squareup_javapoet\",\n        \"@javax_inject\",\n    ],\n)\n\njava_plugin(\n    name = \"AutoFactoryProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.factory.processor.AutoFactoryProcessor\",\n    generates_api = 1,\n    tags = [\"annotation=com.google.auto.factory.AutoFactory;genclass=${package}.${outerclasses}@{className|${classname}Factory}\"],\n    deps = [\":processor\"],\n)\n\njava_library(\n    name = \"com_google_auto_factory\",\n    exported_plugins = [\":AutoFactoryProcessor\"],\n    exports = [\n        \":jar\",\n        \"@com_google_code_findbugs_jsr305\",\n        \"@javax_annotation_jsr250_api\",\n        \"@javax_inject\",\n    ],\n)",
 )
 # Rule com_google_auto_factory instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:95:32  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:256:25 in com_google_auto_factory
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_auto_value",
     generator_name = "com_google_auto_value",
@@ -1374,14 +1374,14 @@ jvm_import_external(
     extra_build_file_content = "java_plugin(\n    name = \"AutoAnnotationProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.value.processor.AutoAnnotationProcessor\",\n    tags = [\"annotation=com.google.auto.value.AutoAnnotation;genclass=${package}.AutoAnnotation_${outerclasses}${classname}_${methodname}\"],\n    deps = [\":processor\"],\n)\n\njava_plugin(\n    name = \"AutoOneOfProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.value.processor.AutoOneOfProcessor\",\n    tags = [\"annotation=com.google.auto.value.AutoValue;genclass=${package}.AutoOneOf_${outerclasses}${classname}\"],\n    deps = [\":processor\"],\n)\n\njava_plugin(\n    name = \"AutoValueProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"com.google.auto.value.processor.AutoValueProcessor\",\n    tags = [\"annotation=com.google.auto.value.AutoValue;genclass=${package}.AutoValue_${outerclasses}${classname}\"],\n    deps = [\":processor\"],\n)\n\njava_library(\n    name = \"com_google_auto_value\",\n    exported_plugins = [\n        \":AutoAnnotationProcessor\",\n        \":AutoOneOfProcessor\",\n        \":AutoValueProcessor\",\n    ],\n    exports = [\"@com_google_auto_value_annotations\"],\n)",
 )
 # Rule com_google_auto_value instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:97:30  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:309:25 in com_google_auto_value
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_auto_value_annotations",
     generator_name = "com_google_auto_value_annotations",
@@ -1394,14 +1394,14 @@ jvm_import_external(
     default_visibility = ["@com_google_auto_value//:__pkg__"],
 )
 # Rule com_google_auto_value_annotations instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:99:42  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:358:25 in com_google_auto_value_annotations
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_auto_value_auto_value_annotations",
     generator_name = "com_google_auto_value_auto_value_annotations",
@@ -1409,12 +1409,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_auto_value_auto_value_annotations instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:23:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_closure_stylesheets",
     generator_name = "com_google_closure_stylesheets",
@@ -1427,14 +1427,14 @@ jvm_import_external(
     extra_build_file_content = "java_binary(\n    name = \"ClosureCommandLineCompiler\",\n    main_class = \"com.google.common.css.compiler.commandline.ClosureCommandLineCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_closure_stylesheets\"],\n)",
 )
 # Rule com_google_closure_stylesheets instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:101:39 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:371:25 in com_google_closure_stylesheets
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "com_google_cloud_go",
     generator_name = "com_google_cloud_go",
@@ -1445,12 +1445,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule com_google_cloud_go instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:242:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_code_findbugs_jsr305",
     generator_name = "com_google_code_findbugs_jsr305",
@@ -1461,14 +1461,14 @@ jvm_import_external(
     artifact_sha256 = "bec0b24dcb23f9670172724826584802b80ae6cbdaba03bdebdef9327b962f6a",
 )
 # Rule com_google_code_findbugs_jsr305 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:103:40 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:397:25 in com_google_code_findbugs_jsr305
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_code_findbugs_jsr305_3_0_2",
     generator_name = "com_google_code_findbugs_jsr305_3_0_2",
@@ -1478,12 +1478,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_code_findbugs_jsr305_3_0_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:16:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_code_findbugs_jsr305_jar_sources_3_0_2",
     generator_name = "com_google_code_findbugs_jsr305_jar_sources_3_0_2",
@@ -1493,12 +1493,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_code_findbugs_jsr305_jar_sources_3_0_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:22:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_code_gson",
     generator_name = "com_google_code_gson",
@@ -1510,14 +1510,14 @@ jvm_import_external(
     deps = ["@com_google_code_findbugs_jsr305"],
 )
 # Rule com_google_code_gson instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:105:29 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:409:25 in com_google_code_gson
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_code_gson_gson",
     generator_name = "com_google_code_gson_gson",
@@ -1525,12 +1525,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_code_gson_gson instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:31:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_google_code_gson_gson_2_8_6",
     generator_name = "com_google_code_gson_gson_2_8_6",
@@ -1540,12 +1540,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_google_code_gson_gson_2_8_6 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:100:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_code_gson_gson_2_8_9",
     generator_name = "com_google_code_gson_gson_2_8_9",
@@ -1555,12 +1555,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_code_gson_gson_2_8_9 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:28:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_google_code_gson_gson_jar_sources_2_8_6",
     generator_name = "com_google_code_gson_gson_jar_sources_2_8_6",
@@ -1570,12 +1570,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_google_code_gson_gson_jar_sources_2_8_6 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:106:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_code_gson_gson_jar_sources_2_8_9",
     generator_name = "com_google_code_gson_gson_jar_sources_2_8_9",
@@ -1585,12 +1585,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_code_gson_gson_jar_sources_2_8_9 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:34:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_common_html_types",
     generator_name = "com_google_common_html_types",
@@ -1602,14 +1602,14 @@ jvm_import_external(
     deps = ["@com_google_code_findbugs_jsr305", "@com_google_errorprone_error_prone_annotations", "@com_google_guava", "@com_google_jsinterop_annotations", "@com_google_protobuf//:protobuf_java", "@javax_annotation_jsr250_api"],
 )
 # Rule com_google_common_html_types instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:107:37 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:422:25 in com_google_common_html_types
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_file(
     name = "com_google_common_html_types_html_proto",
     generator_name = "com_google_common_html_types_html_proto",
@@ -1618,13 +1618,13 @@ http_file(
     urls = ["https://mirror.bazel.build/raw.githubusercontent.com/google/safe-html-types/release-1.0.5/proto/src/main/protobuf/webutil/html/types/proto/html.proto", "https://raw.githubusercontent.com/google/safe-html-types/release-1.0.5/proto/src/main/protobuf/webutil/html/types/proto/html.proto"],
 )
 # Rule com_google_common_html_types_html_proto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:109:48 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:441:14 in com_google_common_html_types_html_proto
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_dagger",
     generator_name = "com_google_dagger",
@@ -1638,14 +1638,14 @@ jvm_import_external(
     extra_build_file_content = "java_library(\n    name = \"com_google_dagger\",\n    exported_plugins = [\"@com_google_dagger_compiler//:ComponentProcessor\"],\n    exports = [\n        \":runtime\",\n        \"@javax_inject\",\n    ],\n)",
 )
 # Rule com_google_dagger instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:111:26 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:451:25 in com_google_dagger
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_dagger_compiler",
     generator_name = "com_google_dagger_compiler",
@@ -1658,14 +1658,14 @@ jvm_import_external(
     extra_build_file_content = "java_plugin(\n    name = \"ComponentProcessor\",\n    output_licenses = [\"unencumbered\"],\n    processor_class = \"dagger.internal.codegen.ComponentProcessor\",\n    generates_api = 1,\n    tags = [\n        \"annotation=dagger.Component;genclass=${package}.Dagger${outerclasses}${classname}\",\n        \"annotation=dagger.producers.ProductionComponent;genclass=${package}.Dagger${outerclasses}${classname}\",\n    ],\n    deps = [\":com_google_dagger_compiler\"],\n)",
 )
 # Rule com_google_dagger_compiler instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:113:35 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:474:25 in com_google_dagger_compiler
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_dagger_producers",
     generator_name = "com_google_dagger_producers",
@@ -1679,14 +1679,14 @@ jvm_import_external(
     extra_build_file_content = "java_library(\n    name = \"com_google_dagger_producers\",\n    exported_plugins = [\"@com_google_dagger_compiler//:ComponentProcessor\"],\n    exports = [\n        \":runtime\",\n        \"@com_google_dagger//:runtime\",\n        \"@javax_inject\",\n    ],\n)",
 )
 # Rule com_google_dagger_producers instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:115:36 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:507:25 in com_google_dagger_producers
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_dagger_spi",
     generator_name = "com_google_dagger_spi",
@@ -1697,14 +1697,14 @@ jvm_import_external(
     artifact_sha256 = "6a20d6c6620fefe50747e9e910e0d0c178cf39d76b67ccffb505ac9a167302cb",
 )
 # Rule com_google_dagger_spi instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:117:30 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:534:25 in com_google_dagger_spi
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_errorprone_error_prone_annotations",
     generator_name = "com_google_errorprone_error_prone_annotations",
@@ -1715,14 +1715,14 @@ jvm_import_external(
     artifact_sha256 = "03d0329547c13da9e17c634d1049ea2ead093925e290567e1a364fd6b1fc7ff8",
 )
 # Rule com_google_errorprone_error_prone_annotations instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:119:54 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:545:25 in com_google_errorprone_error_prone_annotations
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_google_errorprone_error_prone_annotations_2_4_0",
     generator_name = "com_google_errorprone_error_prone_annotations_2_4_0",
@@ -1732,12 +1732,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_google_errorprone_error_prone_annotations_2_4_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:112:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_errorprone_error_prone_annotations_2_9_0",
     generator_name = "com_google_errorprone_error_prone_annotations_2_9_0",
@@ -1747,12 +1747,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_errorprone_error_prone_annotations_2_9_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:40:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_google_errorprone_error_prone_annotations_jar_sources_2_4_0",
     generator_name = "com_google_errorprone_error_prone_annotations_jar_sources_2_4_0",
@@ -1762,12 +1762,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_google_errorprone_error_prone_annotations_jar_sources_2_4_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:118:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_errorprone_error_prone_annotations_jar_sources_2_9_0",
     generator_name = "com_google_errorprone_error_prone_annotations_jar_sources_2_9_0",
@@ -1777,12 +1777,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_errorprone_error_prone_annotations_jar_sources_2_9_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:46:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_errorprone_javac_shaded",
     generator_name = "com_google_errorprone_javac_shaded",
@@ -1793,14 +1793,14 @@ jvm_import_external(
     artifact_sha256 = "65bfccf60986c47fbc17c9ebab0be626afc41741e0a6ec7109e0768817a36f30",
 )
 # Rule com_google_errorprone_javac_shaded instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:121:43 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:558:25 in com_google_errorprone_javac_shaded
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "com_google_googleapis",
     generator_name = "com_google_googleapis",
@@ -1810,12 +1810,12 @@ http_archive(
     strip_prefix = "googleapis-2f9af297c84c55c8b871ba4495e01ade42476c92",
 )
 # Rule com_google_googleapis instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:405:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:103:16
+# {WORKSPACE}/WORKSPACE:95:16
 switched_rules(
     name = "com_google_googleapis_imports",
     generator_name = "com_google_googleapis_imports",
@@ -1823,13 +1823,13 @@ switched_rules(
     rules = {"proto_library_with_info": ["", ""], "moved_proto_library": ["", ""], "java_proto_library": ["", ""], "java_grpc_library": ["", ""], "java_gapic_library": ["", ""], "java_gapic_test": ["", ""], "java_gapic_assembly_gradle_pkg": ["", ""], "py_proto_library": ["@com_github_grpc_grpc//bazel:python_rules.bzl", ""], "py_grpc_library": ["@com_github_grpc_grpc//bazel:python_rules.bzl", ""], "py_gapic_library": ["", ""], "py_gapic_assembly_pkg": ["", ""], "go_proto_library": ["", ""], "go_library": ["", ""], "go_test": ["", ""], "go_gapic_library": ["", ""], "go_gapic_assembly_pkg": ["", ""], "cc_proto_library": ["native.cc_proto_library", ""], "cc_grpc_library": ["@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", ""], "cc_gapic_library": ["", ""], "php_proto_library": ["", "php_proto_library"], "php_grpc_library": ["", "php_grpc_library"], "php_gapic_library": ["", "php_gapic_library"], "php_gapic_assembly_pkg": ["", "php_gapic_assembly_pkg"], "nodejs_gapic_library": ["", "typescript_gapic_library"], "nodejs_gapic_assembly_pkg": ["", "typescript_gapic_assembly_pkg"], "ruby_proto_library": ["", ""], "ruby_grpc_library": ["", ""], "ruby_ads_gapic_library": ["", ""], "ruby_cloud_gapic_library": ["", ""], "ruby_gapic_assembly_pkg": ["", ""], "csharp_proto_library": ["", ""], "csharp_grpc_library": ["", ""], "csharp_gapic_library": ["", ""], "csharp_gapic_assembly_pkg": ["", ""]},
 )
 # Rule com_google_googleapis_imports instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
+#   {WORKSPACE}/WORKSPACE:95:16                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:61:31 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/com_google_googleapis/repository_rules.bzl:291:19    in switched_rules_by_language
 # Rule switched_rules defined at (most recent call last):
 #   {OUTPUT_BASE}/external/com_google_googleapis/repository_rules.bzl:45:33 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "com_google_googletest",
     generator_name = "com_google_googletest",
@@ -1839,12 +1839,12 @@ http_archive(
     strip_prefix = "googletest-c9ccac7cb7345901884aabf5d1a786cfa6e2f397",
 )
 # Rule com_google_googletest instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:227:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_guava",
     generator_name = "com_google_guava",
@@ -1857,14 +1857,14 @@ jvm_import_external(
     exports = ["@com_google_code_findbugs_jsr305", "@com_google_errorprone_error_prone_annotations"],
 )
 # Rule com_google_guava instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:123:25 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:574:25 in com_google_guava
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_guava_failure_access",
     generator_name = "com_google_guava_failure_access",
@@ -1875,14 +1875,14 @@ jvm_import_external(
     artifact_sha256 = "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26",
 )
 # Rule com_google_guava_failure_access instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:123:25 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:592:25 in com_google_guava
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_guava_failureaccess",
     generator_name = "com_google_guava_failureaccess",
@@ -1890,12 +1890,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_guava_failureaccess instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:39:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_guava_failureaccess_1_0_1",
     generator_name = "com_google_guava_failureaccess_1_0_1",
@@ -1905,12 +1905,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_guava_failureaccess_1_0_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:52:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_guava_failureaccess_jar_sources_1_0_1",
     generator_name = "com_google_guava_failureaccess_jar_sources_1_0_1",
@@ -1920,12 +1920,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_guava_failureaccess_jar_sources_1_0_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:58:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_guava_guava",
     generator_name = "com_google_guava_guava",
@@ -1933,12 +1933,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_guava_guava instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:43:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_guava_guava_30_1_1_android",
     generator_name = "com_google_guava_guava_30_1_1_android",
@@ -1948,12 +1948,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_guava_guava_30_1_1_android instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:64:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_google_guava_guava_30_1_android",
     generator_name = "com_google_guava_guava_30_1_android",
@@ -1963,12 +1963,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_google_guava_guava_30_1_android instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:136:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_guava_guava_jar_sources_30_1_1_android",
     generator_name = "com_google_guava_guava_jar_sources_30_1_1_android",
@@ -1978,12 +1978,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_guava_guava_jar_sources_30_1_1_android instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:70:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_google_guava_guava_jar_sources_30_1_android",
     generator_name = "com_google_guava_guava_jar_sources_30_1_android",
@@ -1993,12 +1993,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_google_guava_guava_jar_sources_30_1_android instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:142:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_guava_listenablefuture",
     generator_name = "com_google_guava_listenablefuture",
@@ -2006,12 +2006,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_guava_listenablefuture instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:47:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava",
     generator_name = "com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava",
@@ -2021,12 +2021,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:76:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_http_client_google_http_client",
     generator_name = "com_google_http_client_google_http_client",
@@ -2034,12 +2034,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_http_client_google_http_client instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:55:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_http_client_google_http_client_jackson2",
     generator_name = "com_google_http_client_google_http_client_jackson2",
@@ -2047,12 +2047,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_http_client_google_http_client_jackson2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:51:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_inject_extensions_guice_assistedinject",
     generator_name = "com_google_inject_extensions_guice_assistedinject",
@@ -2064,14 +2064,14 @@ jvm_import_external(
     deps = ["@com_google_guava", "@com_google_inject_guice", "@javax_inject"],
 )
 # Rule com_google_inject_extensions_guice_assistedinject instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:125:58 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:603:25 in com_google_inject_extensions_guice_assistedinject
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_inject_extensions_guice_multibindings",
     generator_name = "com_google_inject_extensions_guice_multibindings",
@@ -2083,14 +2083,14 @@ jvm_import_external(
     deps = ["@com_google_guava", "@com_google_inject_guice", "@javax_inject"],
 )
 # Rule com_google_inject_extensions_guice_multibindings instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:127:57 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:620:25 in com_google_inject_extensions_guice_multibindings
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_inject_guice",
     generator_name = "com_google_inject_guice",
@@ -2102,14 +2102,14 @@ jvm_import_external(
     deps = ["@aopalliance", "@org_ow2_asm", "@com_google_guava", "@com_google_code_findbugs_jsr305", "@javax_inject"],
 )
 # Rule com_google_inject_guice instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:129:32 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:637:25 in com_google_inject_guice
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_j2objc_j2objc_annotations",
     generator_name = "com_google_j2objc_j2objc_annotations",
@@ -2117,12 +2117,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_j2objc_j2objc_annotations instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:59:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_j2objc_j2objc_annotations_1_3",
     generator_name = "com_google_j2objc_j2objc_annotations_1_3",
@@ -2132,12 +2132,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_j2objc_j2objc_annotations_1_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:82:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_j2objc_j2objc_annotations_jar_sources_1_3",
     generator_name = "com_google_j2objc_j2objc_annotations_jar_sources_1_3",
@@ -2147,12 +2147,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_j2objc_j2objc_annotations_jar_sources_1_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:88:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_java_format",
     generator_name = "com_google_java_format",
@@ -2164,14 +2164,14 @@ jvm_import_external(
     deps = ["@com_google_guava", "@com_google_errorprone_javac_shaded"],
 )
 # Rule com_google_java_format instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:131:31 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:656:25 in com_google_java_format
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_javascript_closure_compiler",
     generator_name = "com_google_javascript_closure_compiler",
@@ -2184,14 +2184,14 @@ jvm_import_external(
     extra_build_file_content = "java_binary(\n    name = \"main\",\n    main_class = \"com.google.javascript.jscomp.CommandLineRunner\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\n        \":com_google_javascript_closure_compiler\",\n        \"@args4j\",\n    ],\n)\n\ngenrule(\n    name = \"externs\",\n    srcs = [\"closure-compiler-unshaded-v20200830.jar\"],\n    outs = [\"externs.zip\"],\n    tools = [\"@bazel_tools//tools/jdk:jar\"],\n    cmd = \"$(location @bazel_tools//tools/jdk:jar) -xf $(location :closure-compiler-unshaded-v20200830.jar) externs.zip; mv externs.zip $@\",\n)\n",
 )
 # Rule com_google_javascript_closure_compiler instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:133:47 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:673:25 in com_google_javascript_closure_compiler
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_archive(
     name = "com_google_javascript_closure_library",
     generator_name = "com_google_javascript_closure_library",
@@ -2203,13 +2203,13 @@ http_archive(
     patch_args = ["-p1"],
 )
 # Rule com_google_javascript_closure_library instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:135:46 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:719:17 in com_google_javascript_closure_library
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_jsinterop_annotations",
     generator_name = "com_google_jsinterop_annotations",
@@ -2220,7 +2220,7 @@ jvm_import_external(
     artifact_sha256 = "b2cc45519d62a1144f8cd932fa0c2c30a944c3ae9f060934587a337d81b391c8",
 )
 # Rule com_google_jsinterop_annotations instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:137:41 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:729:25 in com_google_jsinterop_annotations
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
@@ -2244,7 +2244,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:136:23
+# {WORKSPACE}/WORKSPACE:128:23
 http_archive(
     name = "com_google_protobuf_javalite",
     generator_name = "com_google_protobuf_javalite",
@@ -2254,13 +2254,13 @@ http_archive(
     strip_prefix = "protobuf-3.12.0",
 )
 # Rule com_google_protobuf_javalite instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:136:23                                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:128:23                                                in <toplevel>
 #   {OUTPUT_BASE}/external/io_grpc_grpc_java/repositories.bzl:89:37  in grpc_java_repositories
 #   {OUTPUT_BASE}/external/io_grpc_grpc_java/repositories.bzl:119:17 in com_google_protobuf_javalite
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_archive(
     name = "com_google_protobuf_js",
     generator_name = "com_google_protobuf_js",
@@ -2271,13 +2271,13 @@ http_archive(
     build_file = "@io_bazel_rules_closure//closure/protobuf:protobuf_js.BUILD",
 )
 # Rule com_google_protobuf_js instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:141:31 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:751:17 in com_google_protobuf_js
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_google_protobuf_protobuf_java_3_17_2",
     generator_name = "com_google_protobuf_protobuf_java_3_17_2",
@@ -2287,12 +2287,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_google_protobuf_protobuf_java_3_17_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:166:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_protobuf_protobuf_java_3_19_3",
     generator_name = "com_google_protobuf_protobuf_java_3_19_3",
@@ -2302,12 +2302,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_protobuf_protobuf_java_3_19_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:94:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_google_protobuf_protobuf_java_jar_sources_3_17_2",
     generator_name = "com_google_protobuf_protobuf_java_jar_sources_3_17_2",
@@ -2317,12 +2317,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_google_protobuf_protobuf_java_jar_sources_3_17_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:172:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_google_protobuf_protobuf_java_jar_sources_3_19_3",
     generator_name = "com_google_protobuf_protobuf_java_jar_sources_3_19_3",
@@ -2332,12 +2332,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_google_protobuf_protobuf_java_jar_sources_3_19_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:100:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_google_template_soy",
     generator_name = "com_google_template_soy",
@@ -2350,14 +2350,14 @@ jvm_import_external(
     extra_build_file_content = "java_binary(\n    name = \"SoyParseInfoGenerator\",\n    main_class = \"com.google.template.soy.SoyParseInfoGenerator\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n\njava_binary(\n    name = \"SoyToJbcSrcCompiler\",\n    main_class = \"com.google.template.soy.SoyToJbcSrcCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n\njava_binary(\n    name = \"SoyToJsSrcCompiler\",\n    main_class = \"com.google.template.soy.SoyToJsSrcCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n\njava_binary(\n    name = \"SoyToPySrcCompiler\",\n    main_class = \"com.google.template.soy.SoyToPySrcCompiler\",\n    output_licenses = [\"unencumbered\"],\n    runtime_deps = [\":com_google_template_soy\"],\n)\n",
 )
 # Rule com_google_template_soy instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:143:32 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:763:25 in com_google_template_soy
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_archive(
     name = "com_google_template_soy_jssrc",
     generator_name = "com_google_template_soy_jssrc",
@@ -2368,13 +2368,13 @@ http_archive(
     build_file = "@io_bazel_rules_closure//closure/templates:soy_jssrc.BUILD",
 )
 # Rule com_google_template_soy_jssrc instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:145:38 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:819:17 in com_google_template_soy_jssrc
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_google_truth_truth",
     generator_name = "com_google_truth_truth",
@@ -2382,12 +2382,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_google_truth_truth instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:63:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_googlecode_java_diff_utils_diffutils",
     generator_name = "com_googlecode_java_diff_utils_diffutils",
@@ -2395,12 +2395,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_googlecode_java_diff_utils_diffutils instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:67:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "com_googlesource_code_re2",
     generator_name = "com_googlesource_code_re2",
@@ -2410,12 +2410,12 @@ http_archive(
     strip_prefix = "re2-8e08f47b11b413302749c0d8b17a1c94777495d5",
 )
 # Rule com_googlesource_code_re2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:262:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_ibm_icu_icu4j",
     generator_name = "com_ibm_icu_icu4j",
@@ -2426,14 +2426,14 @@ jvm_import_external(
     artifact_sha256 = "759d89ed2f8c6a6b627ab954be5913fbdc464f62254a513294e52260f28591ee",
 )
 # Rule com_ibm_icu_icu4j instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:147:26 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:828:25 in com_ibm_icu_icu4j
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_2_1_3",
     generator_name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_2_1_3",
@@ -2443,12 +2443,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_lightbend_akka_grpc_akka_grpc_codegen_2_12_2_1_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:106:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_jar_sources_2_1_3",
     generator_name = "com_lightbend_akka_grpc_akka_grpc_codegen_2_12_jar_sources_2_1_3",
@@ -2458,12 +2458,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_lightbend_akka_grpc_akka_grpc_codegen_2_12_jar_sources_2_1_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:112:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3",
     generator_name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3",
@@ -2473,12 +2473,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:118:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_jar_sources_2_1_3",
     generator_name = "com_lightbend_akka_grpc_akka_grpc_runtime_2_12_jar_sources_2_1_3",
@@ -2488,12 +2488,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_lightbend_akka_grpc_akka_grpc_runtime_2_12_jar_sources_2_1_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:124:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "com_squareup_javapoet",
     generator_name = "com_squareup_javapoet",
@@ -2504,14 +2504,14 @@ jvm_import_external(
     artifact_sha256 = "5bb5abdfe4366c15c0da3332c57d484e238bd48260d6f9d6acf2b08fdde1efea",
 )
 # Rule com_squareup_javapoet instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:149:30 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:840:25 in com_squareup_javapoet
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_squareup_okhttp_okhttp",
     generator_name = "com_squareup_okhttp_okhttp",
@@ -2519,12 +2519,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_squareup_okhttp_okhttp instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:71:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "com_squareup_okio_okio",
     generator_name = "com_squareup_okio_okio",
@@ -2532,12 +2532,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule com_squareup_okio_okio instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:75:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_5",
     generator_name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_5",
@@ -2547,12 +2547,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_compilerplugin_2_12_0_11_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:178:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
     generator_name = "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
@@ -2562,12 +2562,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_compilerplugin_2_12_0_11_8 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:130:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_5",
     generator_name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_5",
@@ -2577,12 +2577,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:184:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_8",
     generator_name = "com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_8",
@@ -2592,12 +2592,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_compilerplugin_2_12_jar_sources_0_11_8 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:136:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_lenses_2_12_0_11_5",
     generator_name = "com_thesamet_scalapb_lenses_2_12_0_11_5",
@@ -2607,12 +2607,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_lenses_2_12_0_11_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:190:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_thesamet_scalapb_lenses_2_12_0_11_8",
     generator_name = "com_thesamet_scalapb_lenses_2_12_0_11_8",
@@ -2622,12 +2622,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_lenses_2_12_0_11_8 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:142:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_5",
     generator_name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_5",
@@ -2637,12 +2637,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:196:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_8",
     generator_name = "com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_8",
@@ -2652,12 +2652,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_lenses_2_12_jar_sources_0_11_8 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:148:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_3",
     generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_3",
@@ -2667,12 +2667,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_bridge_2_12_0_9_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:202:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_5",
     generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_0_9_5",
@@ -2682,12 +2682,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_bridge_2_12_0_9_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:154:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_3",
     generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_3",
@@ -2697,12 +2697,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:208:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_5",
     generator_name = "com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_5",
@@ -2712,12 +2712,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_bridge_2_12_jar_sources_0_9_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:160:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_0_9_3",
     generator_name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_0_9_3",
@@ -2727,12 +2727,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_cache_coursier_2_12_0_9_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:214:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_jar_sources_0_9_3",
     generator_name = "com_thesamet_scalapb_protoc_cache_coursier_2_12_jar_sources_0_9_3",
@@ -2742,12 +2742,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_cache_coursier_2_12_jar_sources_0_9_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:220:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_3",
     generator_name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_3",
@@ -2757,12 +2757,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_gen_2_12_0_9_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:226:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_5",
     generator_name = "com_thesamet_scalapb_protoc_gen_2_12_0_9_5",
@@ -2772,12 +2772,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_gen_2_12_0_9_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:166:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_3",
     generator_name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_3",
@@ -2787,12 +2787,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:232:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_5",
     generator_name = "com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_5",
@@ -2802,12 +2802,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_protoc_gen_2_12_jar_sources_0_9_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:172:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0",
     generator_name = "com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0",
@@ -2817,12 +2817,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:238:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_scalapb_json4s_2_12_jar_sources_0_12_0",
     generator_name = "com_thesamet_scalapb_scalapb_json4s_2_12_jar_sources_0_12_0",
@@ -2832,12 +2832,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_json4s_2_12_jar_sources_0_12_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:244:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_5",
     generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_5",
@@ -2847,12 +2847,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_2_12_0_11_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:262:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_8",
     generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_0_11_8",
@@ -2862,12 +2862,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_2_12_0_11_8 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:178:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_5",
     generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_5",
@@ -2877,12 +2877,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:268:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_8",
     generator_name = "com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_8",
@@ -2892,12 +2892,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_2_12_jar_sources_0_11_8 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:184:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_0_11_5",
     generator_name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_0_11_5",
@@ -2907,12 +2907,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_grpc_2_12_0_11_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:250:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_jar_sources_0_11_5",
     generator_name = "com_thesamet_scalapb_scalapb_runtime_grpc_2_12_jar_sources_0_11_5",
@@ -2922,12 +2922,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapb_runtime_grpc_2_12_jar_sources_0_11_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:256:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_scalapbc_2_12_0_11_5",
     generator_name = "com_thesamet_scalapb_scalapbc_2_12_0_11_5",
@@ -2937,12 +2937,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapbc_2_12_0_11_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:274:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thesamet_scalapb_scalapbc_2_12_jar_sources_0_11_5",
     generator_name = "com_thesamet_scalapb_scalapbc_2_12_jar_sources_0_11_5",
@@ -2952,12 +2952,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thesamet_scalapb_scalapbc_2_12_jar_sources_0_11_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:280:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thoughtworks_paranamer_paranamer_2_8",
     generator_name = "com_thoughtworks_paranamer_paranamer_2_8",
@@ -2967,12 +2967,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thoughtworks_paranamer_paranamer_2_8 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:286:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "com_thoughtworks_paranamer_paranamer_jar_sources_2_8",
     generator_name = "com_thoughtworks_paranamer_paranamer_jar_sources_2_8",
@@ -2982,12 +2982,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule com_thoughtworks_paranamer_paranamer_jar_sources_2_8 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:292:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_actor_2_12_2_6_9",
     generator_name = "com_typesafe_akka_akka_actor_2_12_2_6_9",
@@ -2997,12 +2997,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_actor_2_12_2_6_9 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:190:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_actor_2_12_jar_sources_2_6_9",
     generator_name = "com_typesafe_akka_akka_actor_2_12_jar_sources_2_6_9",
@@ -3012,12 +3012,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_actor_2_12_jar_sources_2_6_9 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:196:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_discovery_2_12_2_6_9",
     generator_name = "com_typesafe_akka_akka_discovery_2_12_2_6_9",
@@ -3027,12 +3027,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_discovery_2_12_2_6_9 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:202:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_discovery_2_12_jar_sources_2_6_9",
     generator_name = "com_typesafe_akka_akka_discovery_2_12_jar_sources_2_6_9",
@@ -3042,12 +3042,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_discovery_2_12_jar_sources_2_6_9 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:208:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_http_2_12_10_2_7",
     generator_name = "com_typesafe_akka_akka_http_2_12_10_2_7",
@@ -3057,12 +3057,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_http_2_12_10_2_7 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:226:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_http_2_12_jar_sources_10_2_7",
     generator_name = "com_typesafe_akka_akka_http_2_12_jar_sources_10_2_7",
@@ -3072,12 +3072,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_http_2_12_jar_sources_10_2_7 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:232:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_http_core_2_12_10_2_7",
     generator_name = "com_typesafe_akka_akka_http_core_2_12_10_2_7",
@@ -3087,12 +3087,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_http_core_2_12_10_2_7 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:214:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_http_core_2_12_jar_sources_10_2_7",
     generator_name = "com_typesafe_akka_akka_http_core_2_12_jar_sources_10_2_7",
@@ -3102,12 +3102,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_http_core_2_12_jar_sources_10_2_7 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:220:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_parsing_2_12_10_2_7",
     generator_name = "com_typesafe_akka_akka_parsing_2_12_10_2_7",
@@ -3117,12 +3117,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_parsing_2_12_10_2_7 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:238:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_parsing_2_12_jar_sources_10_2_7",
     generator_name = "com_typesafe_akka_akka_parsing_2_12_jar_sources_10_2_7",
@@ -3132,12 +3132,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_parsing_2_12_jar_sources_10_2_7 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:244:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_protobuf_v3_2_12_2_6_9",
     generator_name = "com_typesafe_akka_akka_protobuf_v3_2_12_2_6_9",
@@ -3147,12 +3147,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_protobuf_v3_2_12_2_6_9 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:250:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_protobuf_v3_2_12_jar_sources_2_6_9",
     generator_name = "com_typesafe_akka_akka_protobuf_v3_2_12_jar_sources_2_6_9",
@@ -3162,12 +3162,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_protobuf_v3_2_12_jar_sources_2_6_9 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:256:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_stream_2_12_2_6_9",
     generator_name = "com_typesafe_akka_akka_stream_2_12_2_6_9",
@@ -3177,12 +3177,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_stream_2_12_2_6_9 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:262:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_akka_akka_stream_2_12_jar_sources_2_6_9",
     generator_name = "com_typesafe_akka_akka_stream_2_12_jar_sources_2_6_9",
@@ -3192,12 +3192,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_akka_akka_stream_2_12_jar_sources_2_6_9 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:268:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_config_1_4_0",
     generator_name = "com_typesafe_config_1_4_0",
@@ -3207,12 +3207,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_config_1_4_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:286:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_config_jar_sources_1_4_0",
     generator_name = "com_typesafe_config_jar_sources_1_4_0",
@@ -3222,12 +3222,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_config_jar_sources_1_4_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:292:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_play_twirl_api_2_12_1_5_1",
     generator_name = "com_typesafe_play_twirl_api_2_12_1_5_1",
@@ -3237,12 +3237,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_play_twirl_api_2_12_1_5_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:274:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_play_twirl_api_2_12_jar_sources_1_5_1",
     generator_name = "com_typesafe_play_twirl_api_2_12_jar_sources_1_5_1",
@@ -3252,12 +3252,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_play_twirl_api_2_12_jar_sources_1_5_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:280:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_ssl_config_core_2_12_0_4_2",
     generator_name = "com_typesafe_ssl_config_core_2_12_0_4_2",
@@ -3267,12 +3267,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_ssl_config_core_2_12_0_4_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:298:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "com_typesafe_ssl_config_core_2_12_jar_sources_0_4_2",
     generator_name = "com_typesafe_ssl_config_core_2_12_jar_sources_0_4_2",
@@ -3282,12 +3282,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule com_typesafe_ssl_config_core_2_12_jar_sources_0_4_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:304:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "commons_codec_commons_codec",
     generator_name = "commons_codec_commons_codec",
@@ -3295,12 +3295,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule commons_codec_commons_codec instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:79:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "commons_logging_commons_logging",
     generator_name = "commons_logging_commons_logging",
@@ -3308,12 +3308,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule commons_logging_commons_logging instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:83:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "cython",
     generator_name = "cython",
@@ -3324,7 +3324,7 @@ http_archive(
     build_file = "@com_github_grpc_grpc//third_party:cython.BUILD",
 )
 # Rule cython instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:69:21 in grpc_python_deps
 # Rule http_archive defined at (most recent call last):
@@ -3338,7 +3338,7 @@ bind(
 # Rule databinding_annotation_processor instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:40:5 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "dev_dirs_directories_26",
     generator_name = "dev_dirs_directories_26",
@@ -3348,12 +3348,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule dev_dirs_directories_26 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:310:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "dev_dirs_directories_jar_sources_26",
     generator_name = "dev_dirs_directories_jar_sources_26",
@@ -3363,12 +3363,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule dev_dirs_directories_jar_sources_26 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:316:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "enum34",
     generator_name = "enum34",
@@ -3379,13 +3379,13 @@ http_archive(
     build_file = "@com_github_grpc_grpc//third_party:enum34.BUILD",
 )
 # Rule enum34 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:35:21 in grpc_python_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "envoy_api",
     generator_name = "envoy_api",
@@ -3395,12 +3395,12 @@ http_archive(
     strip_prefix = "data-plane-api-20b1b5fcee88a20a08b71051a961181839ec7268",
 )
 # Rule envoy_api instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:352:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:136:23
+# {WORKSPACE}/WORKSPACE:128:23
 bind(
     name = "error_prone_annotations",
     generator_name = "error_prone_annotations",
@@ -3408,10 +3408,10 @@ bind(
     actual = "@com_google_errorprone_error_prone_annotations//jar:jar",
 )
 # Rule error_prone_annotations instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:136:23                                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:128:23                                                in <toplevel>
 #   {OUTPUT_BASE}/external/io_grpc_grpc_java/repositories.bzl:101:16 in grpc_java_repositories
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_file(
     name = "fonts_noto_hinted_deb",
     generator_name = "fonts_noto_hinted_deb",
@@ -3420,13 +3420,13 @@ http_file(
     urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-hinted_20161116-1_all.deb", "http://http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-hinted_20161116-1_all.deb"],
 )
 # Rule fonts_noto_hinted_deb instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:151:30 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:851:14 in fonts_noto_hinted_deb
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_file(
     name = "fonts_noto_mono_deb",
     generator_name = "fonts_noto_mono_deb",
@@ -3435,13 +3435,13 @@ http_file(
     urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-mono_20161116-1_all.deb", "http://http.us.debian.org/debian/pool/main/f/fonts-noto/fonts-noto-mono_20161116-1_all.deb"],
 )
 # Rule fonts_noto_mono_deb instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:153:28 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:861:14 in fonts_noto_mono_deb
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "futures",
     generator_name = "futures",
@@ -3452,13 +3452,13 @@ http_archive(
     build_file = "@com_github_grpc_grpc//third_party:futures.BUILD",
 )
 # Rule futures instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:44:21 in grpc_python_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:73:22
+# {WORKSPACE}/WORKSPACE:65:22
 http_archive(
     name = "go_googleapis",
     generator_name = "go_googleapis",
@@ -3470,13 +3470,13 @@ http_archive(
     patch_args = ["-E", "-p1"],
 )
 # Rule go_googleapis instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
+#   {WORKSPACE}/WORKSPACE:65:22                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:242:11 in go_rules_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:292:18 in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:75:23
+# {WORKSPACE}/WORKSPACE:67:23
 _go_download_sdk(
     name = "go_sdk",
     generator_name = "go_sdk",
@@ -3484,26 +3484,26 @@ _go_download_sdk(
     version = "1.18.2",
 )
 # Rule go_sdk instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:75:23                                                   in <toplevel>
+#   {WORKSPACE}/WORKSPACE:67:23                                                   in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/sdk.bzl:474:28 in go_register_toolchains
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/sdk.bzl:129:21 in go_download_sdk
 # Rule _go_download_sdk defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/sdk.bzl:116:35 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:73:22
+# {WORKSPACE}/WORKSPACE:65:22
 gogo_special_proto(
     name = "gogo_special_proto",
     generator_name = "gogo_special_proto",
     generator_function = "go_rules_dependencies",
 )
 # Rule gogo_special_proto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
+#   {WORKSPACE}/WORKSPACE:65:22                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:209:11 in go_rules_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:292:18 in _maybe
 # Rule gogo_special_proto defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/proto/gogo.bzl:36:37 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "grpc++_codegen_proto",
     generator_name = "grpc++_codegen_proto",
@@ -3511,10 +3511,10 @@ bind(
     actual = "@com_github_grpc_grpc//:grpc++_codegen_proto",
 )
 # Rule grpc++_codegen_proto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:133:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "grpc_cpp_plugin",
     generator_name = "grpc_cpp_plugin",
@@ -3522,10 +3522,10 @@ bind(
     actual = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
 )
 # Rule grpc_cpp_plugin instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:128:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:136:23
+# {WORKSPACE}/WORKSPACE:128:23
 bind(
     name = "gson",
     generator_name = "gson",
@@ -3533,10 +3533,10 @@ bind(
     actual = "@com_google_code_gson_gson//jar:jar",
 )
 # Rule gson instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:136:23                                               in <toplevel>
+#   {WORKSPACE}/WORKSPACE:128:23                                               in <toplevel>
 #   {OUTPUT_BASE}/external/io_grpc_grpc_java/repositories.bzl:97:16 in grpc_java_repositories
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "gtest",
     generator_name = "gtest",
@@ -3544,10 +3544,10 @@ bind(
     actual = "@com_google_googletest//:gtest",
 )
 # Rule gtest instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:113:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:136:23
+# {WORKSPACE}/WORKSPACE:128:23
 bind(
     name = "guava",
     generator_name = "guava",
@@ -3555,7 +3555,7 @@ bind(
     actual = "@com_google_guava_guava//jar:jar",
 )
 # Rule guava instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:136:23                                               in <toplevel>
+#   {WORKSPACE}/WORKSPACE:128:23                                               in <toplevel>
 #   {OUTPUT_BASE}/external/io_grpc_grpc_java/repositories.bzl:93:16 in grpc_java_repositories
 
 # /DEFAULT.WORKSPACE:47:5
@@ -3566,7 +3566,7 @@ bind(
 # Rule has_androidsdk instantiated at (most recent call last):
 #   /DEFAULT.WORKSPACE:47:5 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "in_gopkg_check_v1",
     generator_name = "in_gopkg_check_v1",
@@ -3577,12 +3577,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule in_gopkg_check_v1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:249:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "in_gopkg_yaml_v2",
     generator_name = "in_gopkg_yaml_v2",
@@ -3593,12 +3593,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule in_gopkg_yaml_v2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:256:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "in_gopkg_yaml_v3",
     generator_name = "in_gopkg_yaml_v3",
@@ -3609,12 +3609,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule in_gopkg_yaml_v3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:264:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_argonaut_argonaut_2_12_6_2_5",
     generator_name = "io_argonaut_argonaut_2_12_6_2_5",
@@ -3624,12 +3624,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_argonaut_argonaut_2_12_6_2_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:310:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_argonaut_argonaut_2_12_jar_sources_6_2_5",
     generator_name = "io_argonaut_argonaut_2_12_jar_sources_6_2_5",
@@ -3639,7 +3639,7 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_argonaut_argonaut_2_12_jar_sources_6_2_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:316:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
@@ -3678,7 +3678,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:103:16
+# {WORKSPACE}/WORKSPACE:95:16
 http_archive(
     name = "io_bazel_rules_kotlin",
     generator_name = "io_bazel_rules_kotlin",
@@ -3687,13 +3687,13 @@ http_archive(
     sha256 = "6cbd4e5768bdfae1598662e40272729ec9ece8b7bded8f0d2c81c8ff96dc139d",
 )
 # Rule io_bazel_rules_kotlin instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
+#   {WORKSPACE}/WORKSPACE:95:16                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:47:18 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/com_google_protobuf/protobuf_deps.bzl:89:21          in protobuf_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:73:22
+# {WORKSPACE}/WORKSPACE:65:22
 go_register_nogo(
     name = "io_bazel_rules_nogo",
     generator_name = "io_bazel_rules_nogo",
@@ -3701,13 +3701,13 @@ go_register_nogo(
     nogo = "@io_bazel_rules_go//:default_nogo",
 )
 # Rule io_bazel_rules_nogo instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:73:22                                                            in <toplevel>
+#   {WORKSPACE}/WORKSPACE:65:22                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:284:11 in go_rules_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/repositories.bzl:292:18 in _maybe
 # Rule go_register_nogo defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_go/go/private/nogo.bzl:31:35 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "io_bazel_rules_python",
     generator_name = "io_bazel_rules_python",
@@ -3718,7 +3718,7 @@ http_archive(
     patch_args = ["-p1"],
 )
 # Rule io_bazel_rules_python instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:53:21 in grpc_python_deps
 # Rule http_archive defined at (most recent call last):
@@ -3741,7 +3741,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:152:13
+# {WORKSPACE}/WORKSPACE:144:13
 _config_repository(
     name = "io_bazel_rules_scala_config",
     generator_name = "io_bazel_rules_scala_config",
@@ -3749,12 +3749,12 @@ _config_repository(
     scala_version = "2.12.11",
 )
 # Rule io_bazel_rules_scala_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:152:13                                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:144:13                                                  in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala_config.bzl:34:23 in scala_config
 # Rule _config_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala_config.bzl:23:37 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:156:19
+# {WORKSPACE}/WORKSPACE:148:19
 jvm_import_external(
     name = "io_bazel_rules_scala_scala_compiler",
     generator_name = "io_bazel_rules_scala_scala_compiler",
@@ -3769,7 +3769,7 @@ jvm_import_external(
     testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scala_compiler instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:148:19                                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/private/macros/scala_repositories.bzl:54:21 in scala_repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/third_party/repositories/repositories.bzl:29:37   in repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:240:30      in scala_maven_import_external
@@ -3777,7 +3777,7 @@ jvm_import_external(
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:207:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:156:19
+# {WORKSPACE}/WORKSPACE:148:19
 jvm_import_external(
     name = "io_bazel_rules_scala_scala_library",
     generator_name = "io_bazel_rules_scala_scala_library",
@@ -3792,7 +3792,7 @@ jvm_import_external(
     testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scala_library instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:148:19                                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/private/macros/scala_repositories.bzl:54:21 in scala_repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/third_party/repositories/repositories.bzl:29:37   in repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:240:30      in scala_maven_import_external
@@ -3800,7 +3800,7 @@ jvm_import_external(
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:207:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:156:19
+# {WORKSPACE}/WORKSPACE:148:19
 jvm_import_external(
     name = "io_bazel_rules_scala_scala_parser_combinators",
     generator_name = "io_bazel_rules_scala_scala_parser_combinators",
@@ -3815,7 +3815,7 @@ jvm_import_external(
     testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scala_parser_combinators instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:148:19                                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/private/macros/scala_repositories.bzl:54:21 in scala_repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/third_party/repositories/repositories.bzl:29:37   in repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:240:30      in scala_maven_import_external
@@ -3823,7 +3823,7 @@ jvm_import_external(
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:207:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:156:19
+# {WORKSPACE}/WORKSPACE:148:19
 jvm_import_external(
     name = "io_bazel_rules_scala_scala_reflect",
     generator_name = "io_bazel_rules_scala_scala_reflect",
@@ -3838,7 +3838,7 @@ jvm_import_external(
     testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scala_reflect instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:148:19                                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/private/macros/scala_repositories.bzl:54:21 in scala_repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/third_party/repositories/repositories.bzl:29:37   in repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:240:30      in scala_maven_import_external
@@ -3846,7 +3846,7 @@ jvm_import_external(
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:207:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:156:19
+# {WORKSPACE}/WORKSPACE:148:19
 jvm_import_external(
     name = "io_bazel_rules_scala_scala_xml",
     generator_name = "io_bazel_rules_scala_scala_xml",
@@ -3861,7 +3861,7 @@ jvm_import_external(
     testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scala_xml instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:148:19                                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/private/macros/scala_repositories.bzl:54:21 in scala_repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/third_party/repositories/repositories.bzl:29:37   in repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:240:30      in scala_maven_import_external
@@ -3869,7 +3869,7 @@ jvm_import_external(
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:207:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:156:19
+# {WORKSPACE}/WORKSPACE:148:19
 jvm_import_external(
     name = "io_bazel_rules_scala_scalactic",
     generator_name = "io_bazel_rules_scala_scalactic",
@@ -3884,7 +3884,7 @@ jvm_import_external(
     testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scalactic instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:148:19                                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/private/macros/scala_repositories.bzl:54:21 in scala_repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/third_party/repositories/repositories.bzl:29:37   in repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:240:30      in scala_maven_import_external
@@ -3892,7 +3892,7 @@ jvm_import_external(
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:207:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:156:19
+# {WORKSPACE}/WORKSPACE:148:19
 jvm_import_external(
     name = "io_bazel_rules_scala_scalatest",
     generator_name = "io_bazel_rules_scala_scalatest",
@@ -3907,7 +3907,7 @@ jvm_import_external(
     testonly_ = False,
 )
 # Rule io_bazel_rules_scala_scalatest instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:156:19                                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:148:19                                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/private/macros/scala_repositories.bzl:54:21 in scala_repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/third_party/repositories/repositories.bzl:29:37   in repositories
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:240:30      in scala_maven_import_external
@@ -3915,7 +3915,7 @@ jvm_import_external(
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/io_bazel_rules_scala/scala/scala_maven_import_external.bzl:207:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_get_coursier_coursier_2_12_2_0_16",
     generator_name = "io_get_coursier_coursier_2_12_2_0_16",
@@ -3925,12 +3925,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_2_12_2_0_16 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:358:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_get_coursier_coursier_2_12_jar_sources_2_0_16",
     generator_name = "io_get_coursier_coursier_2_12_jar_sources_2_0_16",
@@ -3940,12 +3940,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_2_12_jar_sources_2_0_16 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:364:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_get_coursier_coursier_cache_2_12_2_0_16",
     generator_name = "io_get_coursier_coursier_cache_2_12_2_0_16",
@@ -3955,12 +3955,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_cache_2_12_2_0_16 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:322:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_get_coursier_coursier_cache_2_12_jar_sources_2_0_16",
     generator_name = "io_get_coursier_coursier_cache_2_12_jar_sources_2_0_16",
@@ -3970,12 +3970,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_cache_2_12_jar_sources_2_0_16 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:328:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_get_coursier_coursier_core_2_12_2_0_16",
     generator_name = "io_get_coursier_coursier_core_2_12_2_0_16",
@@ -3985,12 +3985,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_core_2_12_2_0_16 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:334:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_get_coursier_coursier_core_2_12_jar_sources_2_0_16",
     generator_name = "io_get_coursier_coursier_core_2_12_jar_sources_2_0_16",
@@ -4000,12 +4000,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_core_2_12_jar_sources_2_0_16 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:340:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_get_coursier_coursier_util_2_12_2_0_16",
     generator_name = "io_get_coursier_coursier_util_2_12_2_0_16",
@@ -4015,12 +4015,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_util_2_12_2_0_16 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:346:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_get_coursier_coursier_util_2_12_jar_sources_2_0_16",
     generator_name = "io_get_coursier_coursier_util_2_12_jar_sources_2_0_16",
@@ -4030,12 +4030,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_get_coursier_coursier_util_2_12_jar_sources_2_0_16 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:352:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_github_alexarchambault_concurrent_reference_hash_map_1_0_0",
     generator_name = "io_github_alexarchambault_concurrent_reference_hash_map_1_0_0",
@@ -4045,12 +4045,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_github_alexarchambault_concurrent_reference_hash_map_1_0_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:382:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_github_alexarchambault_concurrent_reference_hash_map_jar_sources_1_0_0",
     generator_name = "io_github_alexarchambault_concurrent_reference_hash_map_jar_sources_1_0_0",
@@ -4060,12 +4060,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_github_alexarchambault_concurrent_reference_hash_map_jar_sources_1_0_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:388:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_github_alexarchambault_windows_ansi_windows_ansi_0_0_3",
     generator_name = "io_github_alexarchambault_windows_ansi_windows_ansi_0_0_3",
@@ -4075,12 +4075,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_github_alexarchambault_windows_ansi_windows_ansi_0_0_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:370:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_github_alexarchambault_windows_ansi_windows_ansi_jar_sources_0_0_3",
     generator_name = "io_github_alexarchambault_windows_ansi_windows_ansi_jar_sources_0_0_3",
@@ -4090,12 +4090,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_github_alexarchambault_windows_ansi_windows_ansi_jar_sources_0_0_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:376:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_api_1_40_1",
     generator_name = "io_grpc_grpc_api_1_40_1",
@@ -4105,12 +4105,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_api_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:394:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "io_grpc_grpc_api_1_43_2",
     generator_name = "io_grpc_grpc_api_1_43_2",
@@ -4120,12 +4120,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_api_1_43_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:322:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_api_jar_sources_1_40_1",
     generator_name = "io_grpc_grpc_api_jar_sources_1_40_1",
@@ -4135,12 +4135,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_api_jar_sources_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:400:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "io_grpc_grpc_api_jar_sources_1_43_2",
     generator_name = "io_grpc_grpc_api_jar_sources_1_43_2",
@@ -4150,12 +4150,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_api_jar_sources_1_43_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:328:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_context_1_40_1",
     generator_name = "io_grpc_grpc_context_1_40_1",
@@ -4165,12 +4165,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_context_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:406:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "io_grpc_grpc_context_1_43_2",
     generator_name = "io_grpc_grpc_context_1_43_2",
@@ -4180,12 +4180,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_context_1_43_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:334:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_context_jar_sources_1_40_1",
     generator_name = "io_grpc_grpc_context_jar_sources_1_40_1",
@@ -4195,12 +4195,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_context_jar_sources_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:412:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "io_grpc_grpc_context_jar_sources_1_43_2",
     generator_name = "io_grpc_grpc_context_jar_sources_1_43_2",
@@ -4210,12 +4210,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_context_jar_sources_1_43_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:340:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_core_1_40_1",
     generator_name = "io_grpc_grpc_core_1_40_1",
@@ -4225,12 +4225,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_core_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:418:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "io_grpc_grpc_core_1_43_2",
     generator_name = "io_grpc_grpc_core_1_43_2",
@@ -4240,12 +4240,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_core_1_43_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:346:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_core_jar_sources_1_40_1",
     generator_name = "io_grpc_grpc_core_jar_sources_1_40_1",
@@ -4255,12 +4255,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_core_jar_sources_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:424:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "io_grpc_grpc_core_jar_sources_1_43_2",
     generator_name = "io_grpc_grpc_core_jar_sources_1_43_2",
@@ -4270,7 +4270,7 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_core_jar_sources_1_43_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:352:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
@@ -4292,7 +4292,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_netty_1_40_1",
     generator_name = "io_grpc_grpc_netty_1_40_1",
@@ -4302,12 +4302,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_netty_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:430:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_netty_jar_sources_1_40_1",
     generator_name = "io_grpc_grpc_netty_jar_sources_1_40_1",
@@ -4317,12 +4317,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_netty_jar_sources_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:436:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "io_grpc_grpc_netty_shaded_1_43_2",
     generator_name = "io_grpc_grpc_netty_shaded_1_43_2",
@@ -4332,12 +4332,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_netty_shaded_1_43_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:358:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "io_grpc_grpc_netty_shaded_jar_sources_1_43_2",
     generator_name = "io_grpc_grpc_netty_shaded_jar_sources_1_43_2",
@@ -4347,12 +4347,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule io_grpc_grpc_netty_shaded_jar_sources_1_43_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:364:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:136:23
+# {WORKSPACE}/WORKSPACE:128:23
 http_archive(
     name = "io_grpc_grpc_proto",
     generator_name = "io_grpc_grpc_proto",
@@ -4362,13 +4362,13 @@ http_archive(
     strip_prefix = "grpc-proto-cf828d0e1155e5ea58b46d7184ee5596e03ddcb8",
 )
 # Rule io_grpc_grpc_proto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:136:23                                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:128:23                                                in <toplevel>
 #   {OUTPUT_BASE}/external/io_grpc_grpc_java/repositories.bzl:91:27  in grpc_java_repositories
 #   {OUTPUT_BASE}/external/io_grpc_grpc_java/repositories.bzl:127:17 in io_grpc_grpc_proto
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_protobuf_1_40_1",
     generator_name = "io_grpc_grpc_protobuf_1_40_1",
@@ -4378,12 +4378,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_protobuf_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:454:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_protobuf_jar_sources_1_40_1",
     generator_name = "io_grpc_grpc_protobuf_jar_sources_1_40_1",
@@ -4393,12 +4393,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_protobuf_jar_sources_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:460:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_protobuf_lite_1_40_1",
     generator_name = "io_grpc_grpc_protobuf_lite_1_40_1",
@@ -4408,12 +4408,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_protobuf_lite_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:442:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_protobuf_lite_jar_sources_1_40_1",
     generator_name = "io_grpc_grpc_protobuf_lite_jar_sources_1_40_1",
@@ -4423,12 +4423,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_protobuf_lite_jar_sources_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:448:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_stub_1_40_1",
     generator_name = "io_grpc_grpc_stub_1_40_1",
@@ -4438,12 +4438,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_stub_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:466:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_grpc_grpc_stub_jar_sources_1_40_1",
     generator_name = "io_grpc_grpc_stub_jar_sources_1_40_1",
@@ -4453,12 +4453,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_grpc_grpc_stub_jar_sources_1_40_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:472:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_buffer",
     generator_name = "io_netty_netty_buffer",
@@ -4466,12 +4466,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_buffer instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:87:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_buffer_4_1_52_Final",
     generator_name = "io_netty_netty_buffer_4_1_52_Final",
@@ -4481,12 +4481,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_buffer_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:478:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_buffer_jar_sources_4_1_52_Final",
     generator_name = "io_netty_netty_buffer_jar_sources_4_1_52_Final",
@@ -4496,12 +4496,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_buffer_jar_sources_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:484:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_codec",
     generator_name = "io_netty_netty_codec",
@@ -4509,12 +4509,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_codec instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:103:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_codec_4_1_52_Final",
     generator_name = "io_netty_netty_codec_4_1_52_Final",
@@ -4524,12 +4524,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:526:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_codec_http",
     generator_name = "io_netty_netty_codec_http",
@@ -4537,12 +4537,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_codec_http instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:95:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_codec_http2",
     generator_name = "io_netty_netty_codec_http2",
@@ -4550,12 +4550,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_codec_http2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:91:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_codec_http2_4_1_52_Final",
     generator_name = "io_netty_netty_codec_http2_4_1_52_Final",
@@ -4565,12 +4565,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_http2_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:490:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_codec_http2_jar_sources_4_1_52_Final",
     generator_name = "io_netty_netty_codec_http2_jar_sources_4_1_52_Final",
@@ -4580,12 +4580,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_http2_jar_sources_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:496:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_codec_http_4_1_52_Final",
     generator_name = "io_netty_netty_codec_http_4_1_52_Final",
@@ -4595,12 +4595,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_http_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:502:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_codec_http_jar_sources_4_1_52_Final",
     generator_name = "io_netty_netty_codec_http_jar_sources_4_1_52_Final",
@@ -4610,12 +4610,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_http_jar_sources_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:508:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_codec_jar_sources_4_1_52_Final",
     generator_name = "io_netty_netty_codec_jar_sources_4_1_52_Final",
@@ -4625,12 +4625,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_jar_sources_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:532:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_codec_socks",
     generator_name = "io_netty_netty_codec_socks",
@@ -4638,12 +4638,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_codec_socks instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                             in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:99:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_codec_socks_4_1_52_Final",
     generator_name = "io_netty_netty_codec_socks_4_1_52_Final",
@@ -4653,12 +4653,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_socks_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:514:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_codec_socks_jar_sources_4_1_52_Final",
     generator_name = "io_netty_netty_codec_socks_jar_sources_4_1_52_Final",
@@ -4668,12 +4668,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_codec_socks_jar_sources_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:520:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_common",
     generator_name = "io_netty_netty_common",
@@ -4681,12 +4681,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_common instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:107:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_common_4_1_52_Final",
     generator_name = "io_netty_netty_common_4_1_52_Final",
@@ -4696,12 +4696,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_common_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:538:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_common_jar_sources_4_1_52_Final",
     generator_name = "io_netty_netty_common_jar_sources_4_1_52_Final",
@@ -4711,12 +4711,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_common_jar_sources_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:544:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_handler",
     generator_name = "io_netty_netty_handler",
@@ -4724,12 +4724,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_handler instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:115:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_handler_4_1_52_Final",
     generator_name = "io_netty_netty_handler_4_1_52_Final",
@@ -4739,12 +4739,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_handler_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:562:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_handler_jar_sources_4_1_52_Final",
     generator_name = "io_netty_netty_handler_jar_sources_4_1_52_Final",
@@ -4754,12 +4754,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_handler_jar_sources_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:568:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_handler_proxy",
     generator_name = "io_netty_netty_handler_proxy",
@@ -4767,12 +4767,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_handler_proxy instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:111:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_handler_proxy_4_1_52_Final",
     generator_name = "io_netty_netty_handler_proxy_4_1_52_Final",
@@ -4782,12 +4782,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_handler_proxy_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:550:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_handler_proxy_jar_sources_4_1_52_Final",
     generator_name = "io_netty_netty_handler_proxy_jar_sources_4_1_52_Final",
@@ -4797,12 +4797,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_handler_proxy_jar_sources_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:556:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_resolver",
     generator_name = "io_netty_netty_resolver",
@@ -4810,12 +4810,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_resolver instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:119:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_resolver_4_1_52_Final",
     generator_name = "io_netty_netty_resolver_4_1_52_Final",
@@ -4825,12 +4825,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_resolver_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:574:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_resolver_jar_sources_4_1_52_Final",
     generator_name = "io_netty_netty_resolver_jar_sources_4_1_52_Final",
@@ -4840,12 +4840,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_resolver_jar_sources_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:580:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_tcnative_boringssl_static",
     generator_name = "io_netty_netty_tcnative_boringssl_static",
@@ -4853,12 +4853,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_tcnative_boringssl_static instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:123:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_transport",
     generator_name = "io_netty_netty_transport",
@@ -4866,12 +4866,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_transport instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:135:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_transport_4_1_52_Final",
     generator_name = "io_netty_netty_transport_4_1_52_Final",
@@ -4881,12 +4881,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_transport_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:586:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "io_netty_netty_transport_jar_sources_4_1_52_Final",
     generator_name = "io_netty_netty_transport_jar_sources_4_1_52_Final",
@@ -4896,12 +4896,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule io_netty_netty_transport_jar_sources_4_1_52_Final instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:592:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_transport_native_epoll_linux_x86_64",
     generator_name = "io_netty_netty_transport_native_epoll_linux_x86_64",
@@ -4909,12 +4909,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_transport_native_epoll_linux_x86_64 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:127:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_netty_netty_transport_native_unix_common",
     generator_name = "io_netty_netty_transport_native_unix_common",
@@ -4922,12 +4922,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_netty_netty_transport_native_unix_common instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:131:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "io_opencensus_cpp",
     generator_name = "io_opencensus_cpp",
@@ -4937,12 +4937,12 @@ http_archive(
     strip_prefix = "opencensus-cpp-c9a4da319bc669a772928ffc55af4a61be1a1176",
 )
 # Rule io_opencensus_cpp instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:330:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_opencensus_opencensus_api",
     generator_name = "io_opencensus_opencensus_api",
@@ -4950,12 +4950,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_opencensus_opencensus_api instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:139:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_opencensus_opencensus_contrib_grpc_metrics",
     generator_name = "io_opencensus_opencensus_contrib_grpc_metrics",
@@ -4963,12 +4963,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_opencensus_opencensus_contrib_grpc_metrics instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:143:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_opencensus_opencensus_contrib_http_util",
     generator_name = "io_opencensus_opencensus_contrib_http_util",
@@ -4976,12 +4976,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_opencensus_opencensus_contrib_http_util instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:147:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "io_perfmark_perfmark_api",
     generator_name = "io_perfmark_perfmark_api",
@@ -4989,12 +4989,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule io_perfmark_perfmark_api instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:151:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "io_perfmark_perfmark_api_0_23_0",
     generator_name = "io_perfmark_perfmark_api_0_23_0",
@@ -5004,12 +5004,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule io_perfmark_perfmark_api_0_23_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:370:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "io_perfmark_perfmark_api_jar_sources_0_23_0",
     generator_name = "io_perfmark_perfmark_api_jar_sources_0_23_0",
@@ -5019,12 +5019,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule io_perfmark_perfmark_api_jar_sources_0_23_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:376:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "javax_annotation_jsr250_api",
     generator_name = "javax_annotation_jsr250_api",
@@ -5035,14 +5035,14 @@ jvm_import_external(
     artifact_sha256 = "a1a922d0d9b6d183ed3800dfac01d1e1eb159f0e8c6f94736931c1def54a941f",
 )
 # Rule javax_annotation_jsr250_api instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:155:36 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:871:25 in javax_annotation_jsr250_api
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "javax_inject",
     generator_name = "javax_inject",
@@ -5053,14 +5053,14 @@ jvm_import_external(
     artifact_sha256 = "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff",
 )
 # Rule javax_inject instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:157:21 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:883:25 in javax_inject
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "junit_junit",
     generator_name = "junit_junit",
@@ -5068,12 +5068,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule junit_junit instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:155:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "libcrypto",
     generator_name = "libcrypto",
@@ -5081,10 +5081,10 @@ bind(
     actual = "@boringssl//:crypto",
 )
 # Rule libcrypto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:78:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_file(
     name = "libexpat_amd64_deb",
     generator_name = "libexpat_amd64_deb",
@@ -5093,13 +5093,13 @@ http_file(
     urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/e/expat/libexpat1_2.1.0-6+deb8u3_amd64.deb", "http://http.us.debian.org/debian/pool/main/e/expat/libexpat1_2.1.0-6+deb8u3_amd64.deb"],
 )
 # Rule libexpat_amd64_deb instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:159:27 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:895:14 in libexpat_amd64_deb
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_file(
     name = "libfontconfig_amd64_deb",
     generator_name = "libfontconfig_amd64_deb",
@@ -5108,13 +5108,13 @@ http_file(
     urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/fontconfig/libfontconfig1_2.11.0-6.3+deb8u1_amd64.deb", "http://http.us.debian.org/debian/pool/main/f/fontconfig/libfontconfig1_2.11.0-6.3+deb8u1_amd64.deb"],
 )
 # Rule libfontconfig_amd64_deb instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:161:32 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:905:14 in libfontconfig_amd64_deb
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_file(
     name = "libfreetype_amd64_deb",
     generator_name = "libfreetype_amd64_deb",
@@ -5123,13 +5123,13 @@ http_file(
     urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/f/freetype/libfreetype6_2.5.2-3+deb8u1_amd64.deb", "http://http.us.debian.org/debian/pool/main/f/freetype/libfreetype6_2.5.2-3+deb8u1_amd64.deb"],
 )
 # Rule libfreetype_amd64_deb instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:163:30 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:915:14 in libfreetype_amd64_deb
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_file(
     name = "libpng_amd64_deb",
     generator_name = "libpng_amd64_deb",
@@ -5138,13 +5138,13 @@ http_file(
     urls = ["https://mirror.bazel.build/http.us.debian.org/debian/pool/main/libp/libpng/libpng12-0_1.2.50-2+deb8u2_amd64.deb", "http://http.us.debian.org/debian/pool/main/libp/libpng/libpng12-0_1.2.50-2+deb8u2_amd64.deb"],
 )
 # Rule libpng_amd64_deb instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:165:25 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:925:14 in libpng_amd64_deb
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "libssl",
     generator_name = "libssl",
@@ -5152,10 +5152,10 @@ bind(
     actual = "@boringssl//:ssl",
 )
 # Rule libssl instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:73:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "libuv",
     generator_name = "libuv",
@@ -5166,7 +5166,7 @@ http_archive(
     build_file = "@com_github_grpc_grpc//third_party:libuv.BUILD",
 )
 # Rule libuv instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:393:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
@@ -5205,14 +5205,14 @@ local_config_platform(
 #   /DEFAULT.WORKSPACE.SUFFIX:504:6                                                                                          in <toplevel>
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/utils.bzl:233:18 in maybe
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 python_configure(
     name = "local_config_python",
     generator_name = "local_config_python",
     generator_function = "grpc_deps",
 )
 # Rule local_config_python instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:61:21 in grpc_python_deps
 # Rule python_configure defined at (most recent call last):
@@ -5259,7 +5259,7 @@ _local_java_repository_rule(
 # Rule _local_java_repository_rule defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/jdk/local_java_repository.bzl:202:46 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "madler_zlib",
     generator_name = "madler_zlib",
@@ -5267,10 +5267,10 @@ bind(
     actual = "@zlib//:zlib",
 )
 # Rule madler_zlib instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:83:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:120:14
+# {WORKSPACE}/WORKSPACE:112:14
 coursier_fetch(
     name = "maven",
     generator_name = "maven",
@@ -5291,12 +5291,12 @@ coursier_fetch(
     jetify_include_list = ["*"],
 )
 # Rule maven instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:120:14                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:112:14                                         in <toplevel>
 #   {OUTPUT_BASE}/external/rules_jvm_external/defs.bzl:105:19 in maven_install
 # Rule coursier_fetch defined at (most recent call last):
 #   {OUTPUT_BASE}/external/rules_jvm_external/coursier.bzl:1009:33 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:194:14
+# {WORKSPACE}/WORKSPACE:186:14
 pinned_coursier_fetch(
     name = "maven_akka",
     generator_name = "maven_akka",
@@ -5314,12 +5314,12 @@ pinned_coursier_fetch(
     additional_netrc_lines = [],
 )
 # Rule maven_akka instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:194:14                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:186:14                                         in <toplevel>
 #   {OUTPUT_BASE}/external/rules_jvm_external/defs.bzl:130:30 in maven_install
 # Rule pinned_coursier_fetch defined at (most recent call last):
 #   {OUTPUT_BASE}/external/rules_jvm_external/coursier.bzl:983:40 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:164:14
+# {WORKSPACE}/WORKSPACE:156:14
 pinned_coursier_fetch(
     name = "maven_scala",
     generator_name = "maven_scala",
@@ -5337,12 +5337,12 @@ pinned_coursier_fetch(
     additional_netrc_lines = [],
 )
 # Rule maven_scala instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:164:14                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:156:14                                         in <toplevel>
 #   {OUTPUT_BASE}/external/rules_jvm_external/defs.bzl:130:30 in maven_install
 # Rule pinned_coursier_fetch defined at (most recent call last):
 #   {OUTPUT_BASE}/external/rules_jvm_external/coursier.bzl:983:40 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "net_starlark_go",
     generator_name = "net_starlark_go",
@@ -5353,210 +5353,239 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule net_starlark_go instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:271:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:57:14
+# {WORKSPACE}/WORKSPACE:219:18
 nodejs_repo_host_os_alias(
     name = "nodejs",
     generator_name = "nodejs",
-    generator_function = "ts_proto_deps",
-    node_version = "14.17.5",
+    generator_function = "node_repositories",
+    node_version = "16.6.2",
 )
 # Rule nodejs instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
-#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
+#   {WORKSPACE}/WORKSPACE:219:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:68:11 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
 # Rule nodejs_repo_host_os_alias defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/private/nodejs_repo_host_os_alias.bzl:38:44 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:57:14
+# {WORKSPACE}/WORKSPACE:219:18
 node_repositories(
     name = "nodejs_darwin_amd64",
     generator_name = "nodejs_darwin_amd64",
-    generator_function = "ts_proto_deps",
+    generator_function = "node_repositories",
+    node_version = "16.6.2",
 )
 # Rule nodejs_darwin_amd64 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
-#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
+#   {WORKSPACE}/WORKSPACE:219:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:227:18
+# {WORKSPACE}/WORKSPACE:231:31
 node_toolchain_configure(
     name = "nodejs_darwin_amd64_config",
     generator_name = "nodejs_darwin_amd64_config",
-    generator_function = "node_repositories",
+    generator_function = "example_routeguide_nodejs_deps",
     target_tool = "@nodejs_darwin_amd64//:node_bin",
 )
 # Rule nodejs_darwin_amd64_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:231:31                                                                         in <toplevel>
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:15:34                                            in example_routeguide_nodejs_deps
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:29:11                                            in npm_example_routeguide_nodejs
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:11:18                                            in _maybe
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:57:14
+# {WORKSPACE}/WORKSPACE:219:18
+node_repositories(
+    name = "nodejs_darwin_arm64",
+    generator_name = "nodejs_darwin_arm64",
+    generator_function = "node_repositories",
+    node_version = "16.6.2",
+)
+# Rule nodejs_darwin_arm64 instantiated at (most recent call last):
+#   {WORKSPACE}/WORKSPACE:219:18                                                                         in <toplevel>
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
+# Rule node_repositories defined at (most recent call last):
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
+
+# {WORKSPACE}/WORKSPACE:219:18
+node_toolchain_configure(
+    name = "nodejs_darwin_arm64_config",
+    generator_name = "nodejs_darwin_arm64_config",
+    generator_function = "node_repositories",
+    target_tool = "@nodejs_darwin_arm64//:node_bin",
+)
+# Rule nodejs_darwin_arm64_config instantiated at (most recent call last):
+#   {WORKSPACE}/WORKSPACE:219:18                                                                         in <toplevel>
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
+# Rule node_toolchain_configure defined at (most recent call last):
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
+
+# {WORKSPACE}/WORKSPACE:219:18
 node_repositories(
     name = "nodejs_linux_amd64",
     generator_name = "nodejs_linux_amd64",
-    generator_function = "ts_proto_deps",
+    generator_function = "node_repositories",
+    node_version = "16.6.2",
 )
 # Rule nodejs_linux_amd64 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
-#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
+#   {WORKSPACE}/WORKSPACE:219:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:227:18
+# {WORKSPACE}/WORKSPACE:231:31
 node_toolchain_configure(
     name = "nodejs_linux_amd64_config",
     generator_name = "nodejs_linux_amd64_config",
-    generator_function = "node_repositories",
+    generator_function = "example_routeguide_nodejs_deps",
     target_tool = "@nodejs_linux_amd64//:node_bin",
 )
 # Rule nodejs_linux_amd64_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:231:31                                                                         in <toplevel>
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:15:34                                            in example_routeguide_nodejs_deps
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:29:11                                            in npm_example_routeguide_nodejs
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:11:18                                            in _maybe
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:57:14
+# {WORKSPACE}/WORKSPACE:219:18
 node_repositories(
     name = "nodejs_linux_arm64",
     generator_name = "nodejs_linux_arm64",
-    generator_function = "ts_proto_deps",
+    generator_function = "node_repositories",
+    node_version = "16.6.2",
 )
 # Rule nodejs_linux_arm64 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
-#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
+#   {WORKSPACE}/WORKSPACE:219:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:227:18
+# {WORKSPACE}/WORKSPACE:231:31
 node_toolchain_configure(
     name = "nodejs_linux_arm64_config",
     generator_name = "nodejs_linux_arm64_config",
-    generator_function = "node_repositories",
+    generator_function = "example_routeguide_nodejs_deps",
     target_tool = "@nodejs_linux_arm64//:node_bin",
 )
 # Rule nodejs_linux_arm64_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:231:31                                                                         in <toplevel>
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:15:34                                            in example_routeguide_nodejs_deps
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:29:11                                            in npm_example_routeguide_nodejs
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:11:18                                            in _maybe
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:57:14
+# {WORKSPACE}/WORKSPACE:219:18
 node_repositories(
     name = "nodejs_linux_ppc64le",
     generator_name = "nodejs_linux_ppc64le",
-    generator_function = "ts_proto_deps",
+    generator_function = "node_repositories",
+    node_version = "16.6.2",
 )
 # Rule nodejs_linux_ppc64le instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
-#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
+#   {WORKSPACE}/WORKSPACE:219:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:227:18
+# {WORKSPACE}/WORKSPACE:231:31
 node_toolchain_configure(
     name = "nodejs_linux_ppc64le_config",
     generator_name = "nodejs_linux_ppc64le_config",
-    generator_function = "node_repositories",
+    generator_function = "example_routeguide_nodejs_deps",
     target_tool = "@nodejs_linux_ppc64le//:node_bin",
 )
 # Rule nodejs_linux_ppc64le_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:231:31                                                                         in <toplevel>
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:15:34                                            in example_routeguide_nodejs_deps
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:29:11                                            in npm_example_routeguide_nodejs
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:11:18                                            in _maybe
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:57:14
+# {WORKSPACE}/WORKSPACE:219:18
 node_repositories(
     name = "nodejs_linux_s390x",
     generator_name = "nodejs_linux_s390x",
-    generator_function = "ts_proto_deps",
+    generator_function = "node_repositories",
+    node_version = "16.6.2",
 )
 # Rule nodejs_linux_s390x instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
-#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
+#   {WORKSPACE}/WORKSPACE:219:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:227:18
+# {WORKSPACE}/WORKSPACE:231:31
 node_toolchain_configure(
     name = "nodejs_linux_s390x_config",
     generator_name = "nodejs_linux_s390x_config",
-    generator_function = "node_repositories",
+    generator_function = "example_routeguide_nodejs_deps",
     target_tool = "@nodejs_linux_s390x//:node_bin",
 )
 # Rule nodejs_linux_s390x_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:231:31                                                                         in <toplevel>
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:15:34                                            in example_routeguide_nodejs_deps
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:29:11                                            in npm_example_routeguide_nodejs
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:11:18                                            in _maybe
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:57:14
+# {WORKSPACE}/WORKSPACE:219:18
 node_repositories(
     name = "nodejs_windows_amd64",
     generator_name = "nodejs_windows_amd64",
-    generator_function = "ts_proto_deps",
+    generator_function = "node_repositories",
+    node_version = "16.6.2",
 )
 # Rule nodejs_windows_amd64 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:57:14                                                                          in <toplevel>
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                                             in ts_proto_deps
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                                             in npm_ts_proto
-#   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                                             in _maybe
-#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
+#   {WORKSPACE}/WORKSPACE:219:18                                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:54:15 in node_repositories
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:76:18 in _maybe
 # Rule node_repositories defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/nodejs/repositories.bzl:709:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:227:18
+# {WORKSPACE}/WORKSPACE:231:31
 node_toolchain_configure(
     name = "nodejs_windows_amd64_config",
     generator_name = "nodejs_windows_amd64_config",
-    generator_function = "node_repositories",
+    generator_function = "example_routeguide_nodejs_deps",
     target_tool = "@nodejs_windows_amd64//:node_bin",
 )
 # Rule nodejs_windows_amd64_config instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:227:18                                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:231:31                                                                         in <toplevel>
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:15:34                                            in example_routeguide_nodejs_deps
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:29:11                                            in npm_example_routeguide_nodejs
+#   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:11:18                                            in _maybe
+#   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/index.bzl:77:23                           in npm_install
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/node/node_repositories.bzl:61:33 in node_repositories
 # Rule node_toolchain_configure defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/toolchains/node/node_toolchain_configure.bzl:40:43 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:61:31
+# {WORKSPACE}/WORKSPACE:231:31
 npm_install(
     name = "npm_example_routeguide_nodejs",
     generator_name = "npm_example_routeguide_nodejs",
@@ -5566,7 +5595,7 @@ npm_install(
     package_lock_json = "//example/routeguide/nodejs:package-lock.json",
 )
 # Rule npm_example_routeguide_nodejs instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:61:31                                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:231:31                                               in <toplevel>
 #   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:15:34                  in example_routeguide_nodejs_deps
 #   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:29:11                  in npm_example_routeguide_nodejs
 #   {WORKSPACE}/deps/example_routeguide_nodejs_deps.bzl:11:18                  in _maybe
@@ -5574,7 +5603,7 @@ npm_install(
 # Rule npm_install defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/npm_install/npm_install.bzl:775:30 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:57:14
+# {WORKSPACE}/WORKSPACE:227:14
 npm_install(
     name = "npm_ts_proto",
     generator_name = "npm_ts_proto",
@@ -5584,7 +5613,7 @@ npm_install(
     package_lock_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package-lock.json",
 )
 # Rule npm_ts_proto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:57:14                                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:227:14                                               in <toplevel>
 #   {WORKSPACE}/deps/ts_proto_deps.bzl:13:17                                   in ts_proto_deps
 #   {WORKSPACE}/deps/ts_proto_deps.bzl:18:11                                   in npm_ts_proto
 #   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                   in _maybe
@@ -5592,7 +5621,7 @@ npm_install(
 # Rule npm_install defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/npm_install/npm_install.bzl:775:30 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:57:14
+# {WORKSPACE}/WORKSPACE:227:14
 yarn_install(
     name = "npm_tsc",
     generator_name = "npm_tsc",
@@ -5602,7 +5631,7 @@ yarn_install(
     yarn_lock = "@build_stack_rules_proto//rules/ts:yarn.lock",
 )
 # Rule npm_tsc instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:57:14                                                in <toplevel>
+#   {WORKSPACE}/WORKSPACE:227:14                                               in <toplevel>
 #   {WORKSPACE}/deps/ts_proto_deps.bzl:14:12                                   in ts_proto_deps
 #   {WORKSPACE}/deps/ts_proto_deps.bzl:27:11                                   in npm_tsc
 #   {WORKSPACE}/deps/ts_proto_deps.bzl:10:18                                   in _maybe
@@ -5610,7 +5639,7 @@ yarn_install(
 # Rule yarn_install defined at (most recent call last):
 #   {OUTPUT_BASE}/external/build_bazel_rules_nodejs/internal/npm_install/npm_install.bzl:917:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "opencensus-context",
     generator_name = "opencensus-context",
@@ -5618,10 +5647,10 @@ bind(
     actual = "@io_opencensus_cpp//opencensus/context:context",
 )
 # Rule opencensus-context instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:138:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "opencensus-stats",
     generator_name = "opencensus-stats",
@@ -5629,10 +5658,10 @@ bind(
     actual = "@io_opencensus_cpp//opencensus/stats:stats",
 )
 # Rule opencensus-stats instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:158:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "opencensus-stats-test",
     generator_name = "opencensus-stats-test",
@@ -5640,10 +5669,10 @@ bind(
     actual = "@io_opencensus_cpp//opencensus/stats:test_utils",
 )
 # Rule opencensus-stats-test instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:163:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "opencensus-tags",
     generator_name = "opencensus-tags",
@@ -5651,10 +5680,10 @@ bind(
     actual = "@io_opencensus_cpp//opencensus/tags:tags",
 )
 # Rule opencensus-tags instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:173:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "opencensus-tags-context_util",
     generator_name = "opencensus-tags-context_util",
@@ -5662,10 +5691,10 @@ bind(
     actual = "@io_opencensus_cpp//opencensus/tags:context_util",
 )
 # Rule opencensus-tags-context_util instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:178:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "opencensus-trace",
     generator_name = "opencensus-trace",
@@ -5673,10 +5702,10 @@ bind(
     actual = "@io_opencensus_cpp//opencensus/trace:trace",
 )
 # Rule opencensus-trace instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:143:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "opencensus-trace-context_util",
     generator_name = "opencensus-trace-context_util",
@@ -5684,10 +5713,10 @@ bind(
     actual = "@io_opencensus_cpp//opencensus/trace:context_util",
 )
 # Rule opencensus-trace-context_util instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:148:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "opencensus-trace-propagation",
     generator_name = "opencensus-trace-propagation",
@@ -5695,10 +5724,10 @@ bind(
     actual = "@io_opencensus_cpp//opencensus/trace:grpc_trace_bin",
 )
 # Rule opencensus-trace-propagation instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:153:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "opencensus-with-tag-map",
     generator_name = "opencensus-with-tag-map",
@@ -5706,10 +5735,10 @@ bind(
     actual = "@io_opencensus_cpp//opencensus/tags:with_tag_map",
 )
 # Rule opencensus-with-tag-map instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:168:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "opencensus_proto",
     generator_name = "opencensus_proto",
@@ -5719,12 +5748,12 @@ http_archive(
     strip_prefix = "opencensus-proto-0.3.0/src",
 )
 # Rule opencensus_proto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:427:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:103:16
+# {WORKSPACE}/WORKSPACE:95:16
 http_archive(
     name = "opentelemetry_proto",
     generator_name = "opentelemetry_proto",
@@ -5735,7 +5764,7 @@ http_archive(
     build_file_content = "\nload(\"@envoy_api//bazel:api_build_system.bzl\", \"api_cc_py_proto_library\")\nload(\"@io_bazel_rules_go//proto:def.bzl\", \"go_proto_library\")\n\napi_cc_py_proto_library(\n    name = \"common\",\n    srcs = [\n        \"opentelemetry/proto/common/v1/common.proto\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"common_go_proto\",\n    importpath = \"go.opentelemetry.io/proto/otlp/common/v1\",\n    proto = \":common\",\n    visibility = [\"//visibility:public\"],\n)\n\n# TODO(snowp): Generating one Go package from all of these protos could cause problems in the future,\n# but nothing references symbols from collector or resource so we're fine for now.\napi_cc_py_proto_library(\n    name = \"logs\",\n    srcs = [\n        \"opentelemetry/proto/collector/logs/v1/logs_service.proto\",\n        \"opentelemetry/proto/logs/v1/logs.proto\",\n        \"opentelemetry/proto/resource/v1/resource.proto\",\n    ],\n    deps = [\n        \"//:common\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"logs_go_proto\",\n    importpath = \"go.opentelemetry.io/proto/otlp/logs/v1\",\n    proto = \":logs\",\n    visibility = [\"//visibility:public\"],\n)\n",
 )
 # Rule opentelemetry_proto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
+#   {WORKSPACE}/WORKSPACE:95:16                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:51:21 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:46:26               in api_dependencies
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:9:23                in external_http_archive
@@ -5743,7 +5772,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "org_apache_httpcomponents_httpclient",
     generator_name = "org_apache_httpcomponents_httpclient",
@@ -5751,12 +5780,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule org_apache_httpcomponents_httpclient instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:159:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "org_apache_httpcomponents_httpcore",
     generator_name = "org_apache_httpcomponents_httpcore",
@@ -5764,12 +5793,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule org_apache_httpcomponents_httpcore instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:163:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "org_apache_tomcat_annotations_api",
     generator_name = "org_apache_tomcat_annotations_api",
@@ -5777,12 +5806,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule org_apache_tomcat_annotations_api instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:167:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "org_checkerframework_checker_compat_qual",
     generator_name = "org_checkerframework_checker_compat_qual",
@@ -5790,12 +5819,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule org_checkerframework_checker_compat_qual instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:171:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_checkerframework_checker_compat_qual_2_5_5",
     generator_name = "org_checkerframework_checker_compat_qual_2_5_5",
@@ -5805,12 +5834,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_checkerframework_checker_compat_qual_2_5_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:382:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_checkerframework_checker_compat_qual_jar_sources_2_5_5",
     generator_name = "org_checkerframework_checker_compat_qual_jar_sources_2_5_5",
@@ -5820,12 +5849,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_checkerframework_checker_compat_qual_jar_sources_2_5_5 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:388:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "org_codehaus_mojo_animal_sniffer_annotations",
     generator_name = "org_codehaus_mojo_animal_sniffer_annotations",
@@ -5833,12 +5862,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule org_codehaus_mojo_animal_sniffer_annotations instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:175:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_codehaus_mojo_animal_sniffer_annotations_1_19",
     generator_name = "org_codehaus_mojo_animal_sniffer_annotations_1_19",
@@ -5848,12 +5877,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_codehaus_mojo_animal_sniffer_annotations_1_19 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:394:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_codehaus_mojo_animal_sniffer_annotations_jar_sources_1_19",
     generator_name = "org_codehaus_mojo_animal_sniffer_annotations_jar_sources_1_19",
@@ -5863,12 +5892,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_codehaus_mojo_animal_sniffer_annotations_jar_sources_1_19 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:400:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_fusesource_jansi_jansi_1_18",
     generator_name = "org_fusesource_jansi_jansi_1_18",
@@ -5878,12 +5907,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_fusesource_jansi_jansi_1_18 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:634:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_fusesource_jansi_jansi_jar_sources_1_18",
     generator_name = "org_fusesource_jansi_jansi_jar_sources_1_18",
@@ -5893,12 +5922,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_fusesource_jansi_jansi_jar_sources_1_18 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:640:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_google_appengine",
     generator_name = "org_golang_google_appengine",
@@ -5909,12 +5938,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_google_appengine instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:278:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_google_genproto",
     generator_name = "org_golang_google_genproto",
@@ -5925,12 +5954,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_google_genproto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:285:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_google_grpc",
     generator_name = "org_golang_google_grpc",
@@ -5941,12 +5970,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_google_grpc instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:292:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:144:13
+# {WORKSPACE}/WORKSPACE:136:13
 go_repository(
     name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
     generator_name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
@@ -5957,14 +5986,14 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_google_grpc_cmd_protoc_gen_go_grpc instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:144:13            in <toplevel>
+#   {WORKSPACE}/WORKSPACE:136:13            in <toplevel>
 #   {WORKSPACE}/deps/go_core_deps.bzl:15:50 in go_core_deps
 #   {WORKSPACE}/deps/go_core_deps.bzl:39:11 in org_golang_google_grpc_cmd_protoc_gen_go_grpc
 #   {WORKSPACE}/deps/go_core_deps.bzl:10:18 in _maybe
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_google_protobuf",
     generator_name = "org_golang_google_protobuf",
@@ -5975,12 +6004,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_google_protobuf instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:299:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_crypto",
     generator_name = "org_golang_x_crypto",
@@ -5991,12 +6020,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_crypto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:306:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_exp",
     generator_name = "org_golang_x_exp",
@@ -6007,12 +6036,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_exp instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:313:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_lint",
     generator_name = "org_golang_x_lint",
@@ -6023,12 +6052,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_lint instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:320:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_mod",
     generator_name = "org_golang_x_mod",
@@ -6039,12 +6068,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_mod instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:327:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_net",
     generator_name = "org_golang_x_net",
@@ -6055,12 +6084,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_net instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:334:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_oauth2",
     generator_name = "org_golang_x_oauth2",
@@ -6071,12 +6100,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_oauth2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:341:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_sync",
     generator_name = "org_golang_x_sync",
@@ -6087,12 +6116,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_sync instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:348:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_sys",
     generator_name = "org_golang_x_sys",
@@ -6103,12 +6132,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_sys instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:355:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_text",
     generator_name = "org_golang_x_text",
@@ -6119,12 +6148,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_text instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:362:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_tools",
     generator_name = "org_golang_x_tools",
@@ -6135,12 +6164,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_tools instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:369:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 go_repository(
     name = "org_golang_x_xerrors",
     generator_name = "org_golang_x_xerrors",
@@ -6151,12 +6180,12 @@ go_repository(
     build_file_proto_mode = "disable_global",
 )
 # Rule org_golang_x_xerrors instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8     in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8     in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:376:18 in go_deps
 # Rule go_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_gazelle/internal/go_repository.bzl:267:32 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:134:20
+# {WORKSPACE}/WORKSPACE:126:20
 compat_repository(
     name = "org_hamcrest_hamcrest_core",
     generator_name = "org_hamcrest_hamcrest_core",
@@ -6164,12 +6193,12 @@ compat_repository(
     generating_repository = "maven",
 )
 # Rule org_hamcrest_hamcrest_core instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:134:20                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:126:20                              in <toplevel>
 #   {OUTPUT_BASE}/external/maven/compat.bzl:179:22 in compat_repositories
 # Rule compat_repository defined at (most recent call last):
 #   {OUTPUT_BASE}/external/maven/compat_repository.bzl:37:36 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "org_json",
     generator_name = "org_json",
@@ -6180,14 +6209,14 @@ jvm_import_external(
     artifact_sha256 = "0aaf0e7e286ece88fb60b9ba14dd45c05a48e55618876efb7d1b6f19c25e7a29",
 )
 # Rule org_json instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:167:17 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:947:25 in org_json
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_json4s_json4s_ast_2_12_4_0_3",
     generator_name = "org_json4s_json4s_ast_2_12_4_0_3",
@@ -6197,12 +6226,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_ast_2_12_4_0_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:646:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_json4s_json4s_ast_2_12_jar_sources_4_0_3",
     generator_name = "org_json4s_json4s_ast_2_12_jar_sources_4_0_3",
@@ -6212,12 +6241,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_ast_2_12_jar_sources_4_0_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:652:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_json4s_json4s_core_2_12_4_0_3",
     generator_name = "org_json4s_json4s_core_2_12_4_0_3",
@@ -6227,12 +6256,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_core_2_12_4_0_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:658:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_json4s_json4s_core_2_12_jar_sources_4_0_3",
     generator_name = "org_json4s_json4s_core_2_12_jar_sources_4_0_3",
@@ -6242,12 +6271,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_core_2_12_jar_sources_4_0_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:664:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_json4s_json4s_jackson_core_2_12_4_0_1",
     generator_name = "org_json4s_json4s_jackson_core_2_12_4_0_1",
@@ -6257,12 +6286,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_jackson_core_2_12_4_0_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:670:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_json4s_json4s_jackson_core_2_12_jar_sources_4_0_1",
     generator_name = "org_json4s_json4s_jackson_core_2_12_jar_sources_4_0_1",
@@ -6272,12 +6301,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_jackson_core_2_12_jar_sources_4_0_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:676:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_json4s_json4s_scalap_2_12_4_0_3",
     generator_name = "org_json4s_json4s_scalap_2_12_4_0_3",
@@ -6287,12 +6316,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_scalap_2_12_4_0_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:682:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_json4s_json4s_scalap_2_12_jar_sources_4_0_3",
     generator_name = "org_json4s_json4s_scalap_2_12_jar_sources_4_0_3",
@@ -6302,12 +6331,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_json4s_json4s_scalap_2_12_jar_sources_4_0_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:688:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "org_jsoup",
     generator_name = "org_jsoup",
@@ -6318,14 +6347,14 @@ jvm_import_external(
     artifact_sha256 = "df2c71a4240ecbdae7cdcd1667bcf0d747e4e3dcefe8161e787adcff7e5f2fa0",
 )
 # Rule org_jsoup instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:169:18 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:959:25 in org_jsoup
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "org_ow2_asm",
     generator_name = "org_ow2_asm",
@@ -6336,14 +6365,14 @@ jvm_import_external(
     artifact_sha256 = "dd8971c74a4e697899a8e95caae4ea8760ea6c486dc6b97b1795e75760420461",
 )
 # Rule org_ow2_asm instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:171:20 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:970:25 in org_ow2_asm
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "org_ow2_asm_analysis",
     generator_name = "org_ow2_asm_analysis",
@@ -6355,14 +6384,14 @@ jvm_import_external(
     exports = ["@org_ow2_asm", "@org_ow2_asm_tree"],
 )
 # Rule org_ow2_asm_analysis instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:173:29 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:981:25 in org_ow2_asm_analysis
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "org_ow2_asm_commons",
     generator_name = "org_ow2_asm_commons",
@@ -6374,14 +6403,14 @@ jvm_import_external(
     exports = ["@org_ow2_asm_tree"],
 )
 # Rule org_ow2_asm_commons instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:175:28 in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:996:25 in org_ow2_asm_commons
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24      in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "org_ow2_asm_tree",
     generator_name = "org_ow2_asm_tree",
@@ -6393,14 +6422,14 @@ jvm_import_external(
     exports = ["@org_ow2_asm"],
 )
 # Rule org_ow2_asm_tree instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                              in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:177:25  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:1008:25 in org_ow2_asm_tree
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24       in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 jvm_import_external(
     name = "org_ow2_asm_util",
     generator_name = "org_ow2_asm_util",
@@ -6412,14 +6441,14 @@ jvm_import_external(
     exports = ["@org_ow2_asm_analysis", "@org_ow2_asm_tree"],
 )
 # Rule org_ow2_asm_util instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                              in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:179:25  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:1020:25 in org_ow2_asm_util
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/java.bzl:170:24       in java_import_external
 # Rule jvm_import_external defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/jvm.bzl:217:38 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_reactivestreams_reactive_streams_1_0_3",
     generator_name = "org_reactivestreams_reactive_streams_1_0_3",
@@ -6429,12 +6458,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_reactivestreams_reactive_streams_1_0_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:406:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_reactivestreams_reactive_streams_jar_sources_1_0_3",
     generator_name = "org_reactivestreams_reactive_streams_jar_sources_1_0_3",
@@ -6444,12 +6473,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_reactivestreams_reactive_streams_jar_sources_1_0_3 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:412:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_scala_lang_modules_scala_collection_compat_2_12_2_5_0",
     generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_2_5_0",
@@ -6459,12 +6488,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_modules_scala_collection_compat_2_12_2_5_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:694:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_scala_lang_modules_scala_collection_compat_2_12_2_6_0",
     generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_2_6_0",
@@ -6474,12 +6503,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_collection_compat_2_12_2_6_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:418:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_5_0",
     generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_5_0",
@@ -6489,12 +6518,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_5_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:700:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_6_0",
     generator_name = "org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_6_0",
@@ -6504,12 +6533,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_collection_compat_2_12_jar_sources_2_6_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:424:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_scala_lang_modules_scala_java8_compat_2_12_0_8_0",
     generator_name = "org_scala_lang_modules_scala_java8_compat_2_12_0_8_0",
@@ -6519,12 +6548,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_java8_compat_2_12_0_8_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:430:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_scala_lang_modules_scala_java8_compat_2_12_jar_sources_0_8_0",
     generator_name = "org_scala_lang_modules_scala_java8_compat_2_12_jar_sources_0_8_0",
@@ -6534,12 +6563,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_java8_compat_2_12_jar_sources_0_8_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:436:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_scala_lang_modules_scala_parser_combinators_2_12_1_1_2",
     generator_name = "org_scala_lang_modules_scala_parser_combinators_2_12_1_1_2",
@@ -6549,12 +6578,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_parser_combinators_2_12_1_1_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:442:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_scala_lang_modules_scala_parser_combinators_2_12_jar_sources_1_1_2",
     generator_name = "org_scala_lang_modules_scala_parser_combinators_2_12_jar_sources_1_1_2",
@@ -6564,12 +6593,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_parser_combinators_2_12_jar_sources_1_1_2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:448:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_scala_lang_modules_scala_xml_2_12_1_2_0",
     generator_name = "org_scala_lang_modules_scala_xml_2_12_1_2_0",
@@ -6579,12 +6608,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_xml_2_12_1_2_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:454:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_scala_lang_modules_scala_xml_2_12_1_3_0",
     generator_name = "org_scala_lang_modules_scala_xml_2_12_1_3_0",
@@ -6594,12 +6623,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_modules_scala_xml_2_12_1_3_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:706:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_2_0",
     generator_name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_2_0",
@@ -6609,12 +6638,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_modules_scala_xml_2_12_jar_sources_1_2_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:460:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_3_0",
     generator_name = "org_scala_lang_modules_scala_xml_2_12_jar_sources_1_3_0",
@@ -6624,12 +6653,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_modules_scala_xml_2_12_jar_sources_1_3_0 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:712:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_scala_lang_scala_library_2_12_14",
     generator_name = "org_scala_lang_scala_library_2_12_14",
@@ -6639,12 +6668,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_scala_library_2_12_14 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:718:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_scala_lang_scala_library_2_12_15",
     generator_name = "org_scala_lang_scala_library_2_12_15",
@@ -6654,12 +6683,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_scala_library_2_12_15 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:466:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_scala_lang_scala_library_jar_sources_2_12_14",
     generator_name = "org_scala_lang_scala_library_jar_sources_2_12_14",
@@ -6669,12 +6698,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_scala_library_jar_sources_2_12_14 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:724:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:207:26
+# {WORKSPACE}/WORKSPACE:199:26
 http_file(
     name = "org_scala_lang_scala_library_jar_sources_2_12_15",
     generator_name = "org_scala_lang_scala_library_jar_sources_2_12_15",
@@ -6684,12 +6713,12 @@ http_file(
     netrc = "../maven_akka/netrc",
 )
 # Rule org_scala_lang_scala_library_jar_sources_2_12_15 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:207:26                                 in <toplevel>
+#   {WORKSPACE}/WORKSPACE:199:26                                 in <toplevel>
 #   {OUTPUT_BASE}/external/maven_akka/defs.bzl:472:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_scala_lang_scala_reflect_2_12_10",
     generator_name = "org_scala_lang_scala_reflect_2_12_10",
@@ -6699,12 +6728,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_scala_reflect_2_12_10 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:730:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_scala_lang_scala_reflect_jar_sources_2_12_10",
     generator_name = "org_scala_lang_scala_reflect_jar_sources_2_12_10",
@@ -6714,12 +6743,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_scala_lang_scala_reflect_jar_sources_2_12_10 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:736:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_typelevel_macro_compat_2_12_1_1_1",
     generator_name = "org_typelevel_macro_compat_2_12_1_1_1",
@@ -6729,12 +6758,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_typelevel_macro_compat_2_12_1_1_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:742:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "org_typelevel_macro_compat_2_12_jar_sources_1_1_1",
     generator_name = "org_typelevel_macro_compat_2_12_jar_sources_1_1_1",
@@ -6744,12 +6773,12 @@ http_file(
     netrc = "../maven_scala/netrc",
 )
 # Rule org_typelevel_macro_compat_2_12_jar_sources_1_1_1 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                  in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                  in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:748:14 in pinned_maven_install
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 platform_http_file(
     name = "phantomjs",
     generator_name = "phantomjs",
@@ -6760,7 +6789,7 @@ platform_http_file(
     macos_sha256 = "538cf488219ab27e309eafc629e2bcee9976990fe90b1ec334f541779150f8c1",
 )
 # Rule phantomjs instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                              in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:181:18  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:1035:23 in phantomjs
 # Rule platform_http_file defined at (most recent call last):
@@ -6828,7 +6857,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:103:16
+# {WORKSPACE}/WORKSPACE:95:16
 http_archive(
     name = "prometheus_metrics_model",
     generator_name = "prometheus_metrics_model",
@@ -6839,7 +6868,7 @@ http_archive(
     build_file_content = "\nload(\"@envoy_api//bazel:api_build_system.bzl\", \"api_cc_py_proto_library\")\nload(\"@io_bazel_rules_go//proto:def.bzl\", \"go_proto_library\")\n\napi_cc_py_proto_library(\n    name = \"client_model\",\n    srcs = [\n        \"io/prometheus/client/metrics.proto\",\n    ],\n    visibility = [\"//visibility:public\"],\n)\n\ngo_proto_library(\n    name = \"client_model_go_proto\",\n    importpath = \"github.com/prometheus/client_model/go\",\n    proto = \":client_model\",\n    visibility = [\"//visibility:public\"],\n)\n",
 )
 # Rule prometheus_metrics_model instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:103:16                                                           in <toplevel>
+#   {WORKSPACE}/WORKSPACE:95:16                                                            in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:51:21 in grpc_extra_deps
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:32:26               in api_dependencies
 #   {OUTPUT_BASE}/external/envoy_api/bazel/repositories.bzl:9:23                in external_http_archive
@@ -6847,7 +6876,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:88:8
+# {WORKSPACE}/WORKSPACE:80:8
 proto_repository_tools(
     name = "proto_repository_tools",
     generator_name = "proto_repository_tools",
@@ -6855,13 +6884,13 @@ proto_repository_tools(
     go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
 )
 # Rule proto_repository_tools instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:88:8    in <toplevel>
+#   {WORKSPACE}/WORKSPACE:80:8    in <toplevel>
 #   {WORKSPACE}/go_deps.bzl:45:39 in go_deps
 #   {WORKSPACE}/go_deps.bzl:10:27 in gazelle_protobuf_extension_go_deps
 # Rule proto_repository_tools defined at (most recent call last):
 #   {WORKSPACE}/rules/private/proto_repository_tools.bzl:102:41 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "protobuf",
     generator_name = "protobuf",
@@ -6869,10 +6898,10 @@ bind(
     actual = "@com_google_protobuf//:protobuf",
 )
 # Rule protobuf instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:88:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "protobuf_clib",
     generator_name = "protobuf_clib",
@@ -6880,10 +6909,10 @@ bind(
     actual = "@com_google_protobuf//:protoc_lib",
 )
 # Rule protobuf_clib instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:93:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "protobuf_headers",
     generator_name = "protobuf_headers",
@@ -6891,10 +6920,10 @@ bind(
     actual = "@com_google_protobuf//:protobuf_headers",
 )
 # Rule protobuf_headers instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:98:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "protocol_compiler",
     generator_name = "protocol_compiler",
@@ -6902,10 +6931,10 @@ bind(
     actual = "@com_google_protobuf//:protoc",
 )
 # Rule protocol_compiler instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:103:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "python_headers",
     generator_name = "python_headers",
@@ -6913,11 +6942,11 @@ bind(
     actual = "@local_config_python//:python_headers",
 )
 # Rule python_headers instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:63:16 in grpc_python_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "re2",
     generator_name = "re2",
@@ -6925,7 +6954,7 @@ bind(
     actual = "@com_googlesource_code_re2//:re2",
 )
 # Rule re2 instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:123:16 in grpc_deps
 
 # /DEFAULT.WORKSPACE.SUFFIX:481:13
@@ -7658,7 +7687,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_archive(
     name = "rules_java",
     generator_name = "rules_java",
@@ -7668,7 +7697,7 @@ http_archive(
     strip_prefix = "rules_java-981f06c3d2bd10225e85209904090eb7b5fb26bd",
 )
 # Rule rules_java instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                              in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:185:19  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:1061:17 in rules_java
 # Rule http_archive defined at (most recent call last):
@@ -7691,7 +7720,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "rules_jvm_external_jq_linux",
     generator_name = "rules_jvm_external_jq_linux",
@@ -7702,13 +7731,13 @@ http_file(
     urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"],
 )
 # Rule rules_jvm_external_jq_linux instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:754:10                        in pinned_maven_install
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/utils.bzl:233:18 in maybe
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "rules_jvm_external_jq_macos",
     generator_name = "rules_jvm_external_jq_macos",
@@ -7719,13 +7748,13 @@ http_file(
     urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64"],
 )
 # Rule rules_jvm_external_jq_macos instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:762:10                        in pinned_maven_install
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/utils.bzl:233:18 in maybe
 # Rule http_file defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:443:28 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:186:27
+# {WORKSPACE}/WORKSPACE:178:27
 http_file(
     name = "rules_jvm_external_jq_windows",
     generator_name = "rules_jvm_external_jq_windows",
@@ -7736,7 +7765,7 @@ http_file(
     urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe"],
 )
 # Rule rules_jvm_external_jq_windows instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:186:27                                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:178:27                                                         in <toplevel>
 #   {OUTPUT_BASE}/external/maven_scala/defs.bzl:770:10                        in pinned_maven_install
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/utils.bzl:233:18 in maybe
 # Rule http_file defined at (most recent call last):
@@ -7759,7 +7788,7 @@ http_archive(
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_archive(
     name = "rules_proto",
     generator_name = "rules_proto",
@@ -7769,13 +7798,13 @@ http_archive(
     strip_prefix = "rules_proto-97d8af4dc474595af3900dd85cb3a29ad28cc313",
 )
 # Rule rules_proto instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                              in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:187:20  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:1072:17 in rules_proto
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_archive(
     name = "rules_python",
     generator_name = "rules_python",
@@ -7785,13 +7814,13 @@ http_archive(
     strip_prefix = "rules_python-4b84ad270387a7c439ebdccfd530e2339601ef27",
 )
 # Rule rules_python instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                              in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:189:21  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:1083:17 in rules_python
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "six",
     generator_name = "six",
@@ -7801,13 +7830,13 @@ http_archive(
     build_file = "@com_github_grpc_grpc//third_party:six.BUILD",
 )
 # Rule six instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                             in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:459:21       in grpc_deps
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_python_deps.bzl:27:21 in grpc_python_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:103:16
+# {WORKSPACE}/WORKSPACE:95:16
 http_archive(
     name = "subpar",
     generator_name = "subpar",
@@ -7817,14 +7846,14 @@ http_archive(
     strip_prefix = "subpar-2.0.0",
 )
 # Rule subpar instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:103:16                                                            in <toplevel>
+#   {WORKSPACE}/WORKSPACE:95:16                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:56:29  in grpc_extra_deps
 #   {OUTPUT_BASE}/external/build_bazel_rules_apple/apple/repositories.bzl:129:11 in apple_rules_dependencies
 #   {OUTPUT_BASE}/external/build_bazel_rules_apple/apple/repositories.bzl:86:14  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:194:14
+# {WORKSPACE}/WORKSPACE:186:14
 coursier_fetch(
     name = "unpinned_maven_akka",
     generator_name = "unpinned_maven_akka",
@@ -7846,12 +7875,12 @@ coursier_fetch(
     jetify_include_list = ["*"],
 )
 # Rule unpinned_maven_akka instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:194:14                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:186:14                                         in <toplevel>
 #   {OUTPUT_BASE}/external/rules_jvm_external/defs.bzl:105:19 in maven_install
 # Rule coursier_fetch defined at (most recent call last):
 #   {OUTPUT_BASE}/external/rules_jvm_external/coursier.bzl:1009:33 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:164:14
+# {WORKSPACE}/WORKSPACE:156:14
 coursier_fetch(
     name = "unpinned_maven_scala",
     generator_name = "unpinned_maven_scala",
@@ -7873,12 +7902,12 @@ coursier_fetch(
     jetify_include_list = ["*"],
 )
 # Rule unpinned_maven_scala instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:164:14                                         in <toplevel>
+#   {WORKSPACE}/WORKSPACE:156:14                                         in <toplevel>
 #   {OUTPUT_BASE}/external/rules_jvm_external/defs.bzl:105:19 in maven_install
 # Rule coursier_fetch defined at (most recent call last):
 #   {OUTPUT_BASE}/external/rules_jvm_external/coursier.bzl:1009:33 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 http_archive(
     name = "upb",
     generator_name = "upb",
@@ -7888,12 +7917,12 @@ http_archive(
     strip_prefix = "upb-0e0de7d9f927aa888d9a0baeaf6576bbbb23bf0b",
 )
 # Rule upb instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:341:21 in grpc_deps
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "upb_generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me",
     generator_name = "upb_generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me",
@@ -7901,10 +7930,10 @@ bind(
     actual = "@upb//:generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me",
 )
 # Rule upb_generated_code_support__only_for_generated_code_do_not_use__i_give_permission_to_break_me instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:53:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "upb_json_lib",
     generator_name = "upb_json_lib",
@@ -7912,10 +7941,10 @@ bind(
     actual = "@upb//:json",
 )
 # Rule upb_json_lib instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:48:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "upb_lib",
     generator_name = "upb_lib",
@@ -7923,10 +7952,10 @@ bind(
     actual = "@upb//:upb",
 )
 # Rule upb_lib instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:23:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "upb_lib_descriptor",
     generator_name = "upb_lib_descriptor",
@@ -7934,10 +7963,10 @@ bind(
     actual = "@upb//:descriptor_upb_proto",
 )
 # Rule upb_lib_descriptor instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:33:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "upb_lib_descriptor_reflection",
     generator_name = "upb_lib_descriptor_reflection",
@@ -7945,10 +7974,10 @@ bind(
     actual = "@upb//:descriptor_upb_proto_reflection",
 )
 # Rule upb_lib_descriptor_reflection instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:38:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "upb_reflection",
     generator_name = "upb_reflection",
@@ -7956,10 +7985,10 @@ bind(
     actual = "@upb//:reflection",
 )
 # Rule upb_reflection instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:28:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "upb_textformat_lib",
     generator_name = "upb_textformat_lib",
@@ -7967,10 +7996,10 @@ bind(
     actual = "@upb//:textformat",
 )
 # Rule upb_textformat_lib instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                      in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                      in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:43:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:99:10
+# {WORKSPACE}/WORKSPACE:91:10
 bind(
     name = "uv",
     generator_name = "uv",
@@ -7978,10 +8007,10 @@ bind(
     actual = "@libuv//:libuv",
 )
 # Rule uv instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:99:10                                                       in <toplevel>
+#   {WORKSPACE}/WORKSPACE:91:10                                                       in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_deps.bzl:183:16 in grpc_deps
 
-# {WORKSPACE}/WORKSPACE:103:16
+# {WORKSPACE}/WORKSPACE:95:16
 http_archive(
     name = "xctestrunner",
     generator_name = "xctestrunner",
@@ -7991,14 +8020,14 @@ http_archive(
     strip_prefix = "xctestrunner-64a9be0b6fa833b4b2371729c5c8cdd2c6f7775b",
 )
 # Rule xctestrunner instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:103:16                                                            in <toplevel>
+#   {WORKSPACE}/WORKSPACE:95:16                                                             in <toplevel>
 #   {OUTPUT_BASE}/external/com_github_grpc_grpc/bazel/grpc_extra_deps.bzl:56:29  in grpc_extra_deps
 #   {OUTPUT_BASE}/external/build_bazel_rules_apple/apple/repositories.bzl:140:11 in apple_rules_dependencies
 #   {OUTPUT_BASE}/external/build_bazel_rules_apple/apple/repositories.bzl:86:14  in _maybe
 # Rule http_archive defined at (most recent call last):
 #   {OUTPUT_BASE}/external/bazel_tools/tools/build_defs/repo/http.bzl:353:31 in <toplevel>
 
-# {WORKSPACE}/WORKSPACE:217:27
+# {WORKSPACE}/WORKSPACE:209:27
 http_archive(
     name = "zlib",
     generator_name = "zlib",
@@ -8009,7 +8038,7 @@ http_archive(
     build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
 )
 # Rule zlib instantiated at (most recent call last):
-#   {WORKSPACE}/WORKSPACE:217:27                                                              in <toplevel>
+#   {WORKSPACE}/WORKSPACE:209:27                                                              in <toplevel>
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:191:13  in rules_closure_dependencies
 #   {OUTPUT_BASE}/external/io_bazel_rules_closure/closure/repositories.bzl:1094:17 in zlib
 # Rule http_archive defined at (most recent call last):
