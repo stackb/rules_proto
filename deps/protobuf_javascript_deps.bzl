@@ -31,10 +31,10 @@ def rules_pkg():
     _maybe(
         http_archive,
         name = "rules_pkg",
-        sha256 = "67e4dc634cb7237bc501fd03101b6b935c9f991c6f46d31a36b35ed5461f51b6",
-        strip_prefix = "rules_pkg-4f8f6ed027c07b92e4ee5a8b4b51d8673fcc60ee",
+        sha256 = "de4cf980e4c5eba24f3897016a71daec6b8d3c36f9ecdfe4e6dbcabb5017ade0",
+        strip_prefix = "rules_pkg-ea8c75a15c4ac9562da29f3d9a633decb384d4a3",
         urls = [
-            "https://github.com/bazelbuild/rules_pkg/archive/4f8f6ed027c07b92e4ee5a8b4b51d8673fcc60ee.tar.gz",
+            "https://github.com/bazelbuild/rules_pkg/archive/ea8c75a15c4ac9562da29f3d9a633decb384d4a3.tar.gz",
         ],
     )
 
