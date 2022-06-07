@@ -1,0 +1,20 @@
+diff --git a/java/util/BUILD.bazel b/java/util/BUILD.bazel
+index e3804fb..c71f34e 100644
+--- a/java/util/BUILD.bazel
++++ b/java/util/BUILD.bazel
+@@ -1,6 +1,6 @@
+ load("@rules_java//java:defs.bzl", "java_proto_library")
+ load("@rules_jvm_external//:defs.bzl", "java_export")
+-load("@rules_pkg//:mappings.bzl", "pkg_filegroup", "pkg_files", "strip_prefix")
++load("@rules_pkg//:mappings.bzl", "pkg_files", "strip_prefix")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+ load("//:protobuf_version.bzl", "PROTOBUF_JAVA_VERSION")
+ load("//java/internal:testing.bzl", "junit_tests")
+@@ -24,7 +24,6 @@ java_library(
+ # Bazel users, don't depend on this target, use :util.
+ java_export(
+     name = "util_mvn",
+-    deploy_env = ["//java/core"],
+     maven_coordinates = "com.google.protobuf:protobuf-java-util:%s" % PROTOBUF_JAVA_VERSION,
+     pom_template = "pom_template.xml",
+     tags = ["manual"],

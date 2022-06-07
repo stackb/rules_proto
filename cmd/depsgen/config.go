@@ -34,21 +34,23 @@ type ProtoDependencyInfo struct {
 	BuildFileContent   string
 	BuildFileProtoMode string
 	Deps               []*ProtoDependencyInfo
+	FrozenLockfile     bool
 	Importpath         string
 	Label              string
 	Name               string
+	PackageJson        string
+	PackageLockJson    string
+	PatchArgs          []string
+	Patches            []string
 	Path               string
 	RepositoryRule     string
 	Sha256             string
 	StripPrefix        string
-	SymlinkNodeModules bool
-	FrozenLockfile     bool
 	Sum                string
+	SymlinkNodeModules bool
 	Urls               []string
 	Version            string
 	WorkspaceSnippet   string
-	PackageJson        string
-	PackageLockJson    string
 	YarnLock           string
 }
 

@@ -106,27 +106,32 @@ proto_dependency(
 )
 
 # Branch: master
-# Commit: 425d85daecb9aeffa1ae24b83df7b97b534dcf05
-# Date: 2021-10-29 00:25:25 +0000 UTC
-# URL: https://github.com/bazelbuild/bazel-gazelle/commit/425d85daecb9aeffa1ae24b83df7b97b534dcf05
+# Commit: 1dbcd58297322ddeeafbfd006b288cede1892352
+# Date: 2022-06-01 23:16:26 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-gazelle/commit/1dbcd58297322ddeeafbfd006b288cede1892352
 #
-# Stardoc generates repository.md (#1123)
+# Respect .bazelignore (#1245)
 #
-# * Stardoc generates repository.md
+# * Respect .bazelignore
 #
-# This is a mirror of the content in repository.rst, allowing us to manually inspect the delta between them.
-# As soon as we are satisfied that the generated content is correct, we'll delete repository.rst and update any links to it.
+# Fixes #318
 #
-# Technique: copied doc strings out of existing rst file into the starlark files. Transcribed rst syntax to markdown.
+# The code for this re-purposes the original PR #1022 but makes a few
+# modifications for performance and correctness.
 #
-# * Replace repository.rst content with link to markdown version
-# Size: 1416940 (1.4 MB)
+# First we only load the .bazelignore once when `rel == ""` since that means
+# we're in the root; the previous implementation seemed to do the same load
+# for every directory visited. Next we only match files relative to repo
+# root to have parity with how Bazel itself parses the ignore file.
+#
+# * Update walk/config.go
+# Size: 1492846 (1.5 MB)
 proto_dependency(
     name = "bazel_gazelle",
     repository_rule = "http_archive",
-    sha256 = "cb05501bd37e2cbfdea8e23b28e5a7fe4ff4f12cef30eeb1924a0b8c3c0cea61",
-    strip_prefix = "bazel-gazelle-42f5d85daecb9aeffa1ae24b83df7b97b534dcf05",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/425d85daecb9aeffa1ae24b83df7b97b534dcf05.tar.gz"],
+    sha256 = "f09b77a3fa22ea467b98cbdd0387573705076dc7463da5481a5d5fd37c9deae6",
+    strip_prefix = "bazel-gazelle-1dbcd58297322ddeeafbfd006b288cede1892352",
+    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/1dbcd58297322ddeeafbfd006b288cede1892352.tar.gz"],
     deps = [":io_bazel_rules_go"],
 )
 

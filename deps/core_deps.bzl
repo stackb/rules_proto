@@ -2,7 +2,6 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
-
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def _maybe(repo_rule, name, **kwargs):
@@ -13,7 +12,6 @@ def core_deps():
     io_bazel_rules_go()  # via bazel_gazelle
     bazel_gazelle()  # via <TOP>
     rules_proto()  # via <TOP>
-
 
 def io_bazel_rules_go():
     _maybe(
@@ -30,10 +28,10 @@ def bazel_gazelle():
     _maybe(
         http_archive,
         name = "bazel_gazelle",
-        sha256 = "cb05501bd37e2cbfdea8e23b28e5a7fe4ff4f12cef30eeb1924a0b8c3c0cea61",
-        strip_prefix = "bazel-gazelle-425d85daecb9aeffa1ae24b83df7b97b534dcf05",
+        sha256 = "f09b77a3fa22ea467b98cbdd0387573705076dc7463da5481a5d5fd37c9deae6",
+        strip_prefix = "bazel-gazelle-1dbcd58297322ddeeafbfd006b288cede1892352",
         urls = [
-            "https://github.com/bazelbuild/bazel-gazelle/archive/425d85daecb9aeffa1ae24b83df7b97b534dcf05.tar.gz",
+            "https://github.com/bazelbuild/bazel-gazelle/archive/1dbcd58297322ddeeafbfd006b288cede1892352.tar.gz",
         ],
     )
 
