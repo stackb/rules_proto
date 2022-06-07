@@ -101,8 +101,14 @@ proto_nodejs_library(
 
 proto_compile(
     name = "place_python_compile",
-    outputs = ["place_pb2.py"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
+    outputs = [
+        "place_pb2.py",
+        "place_pb2.pyi",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:python",
+        "@build_stack_rules_proto//plugin/builtin:pyi",
+    ],
     proto = "place_proto",
 )
 

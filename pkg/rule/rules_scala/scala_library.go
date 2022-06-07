@@ -1,6 +1,7 @@
 package rules_scala
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"sort"
@@ -10,6 +11,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
+	"github.com/bmatcuk/doublestar"
 	"github.com/emicklei/proto"
 
 	"github.com/stackb/rules_proto/pkg/plugin/akka/akka_grpc"
@@ -73,8 +75,7 @@ func (s *scalaLibrary) Name() string {
 func (s *scalaLibrary) KindInfo() rule.KindInfo {
 	return rule.KindInfo{
 		MergeableAttrs: map[string]bool{
-			"srcs":    true,
-			"exports": true,
+			"srcs": true,
 		},
 		ResolveAttrs: map[string]bool{"deps": true},
 	}
@@ -90,6 +91,11 @@ func (s *scalaLibrary) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
+	options := parseScalaLibraryOptions(s.kindName, cfg.GetOptions())
+
+	//
+	// output preparation
+	//
 	plugin := pc.GetPluginConfiguration(scalapb.ScalaPBPluginName)
 	if plugin == nil {
 		log.Fatalf("expected plugin configuration for %q to be defined", scalapb.ScalaPBPluginName)
@@ -100,14 +106,17 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 	if !s.shouldProvideRule(pc.Library, plugin) {
 		return nil
 	}
-	outputs := plugin.Outputs
 
-	// include akka outputs here as well: TODO, gather all srcjars
-	outputs = append(outputs, pc.GetPluginOutputs(akka_grpc.AkkaGrpcPluginName)...)
+	outputs := append(plugin.Outputs, pc.GetPluginOutputs(akka_grpc.AkkaGrpcPluginName)...)
+	outputs = options.filterOutputs(outputs)
+	if len(outputs) == 0 {
+		return nil
+	}
 
 	return &scalaLibraryRule{
 		kindName:       s.kindName,
 		ruleNameSuffix: scalaLibraryRuleSuffix,
+		options:        options,
 		outputs:        outputs,
 		ruleConfig:     cfg,
 		config:         pc,
@@ -121,6 +130,7 @@ type scalaLibraryRule struct {
 	outputs        []string
 	config         *protoc.ProtocConfiguration
 	ruleConfig     *protoc.LanguageRuleConfig
+	options        *scalaLibraryOptions
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -239,6 +249,8 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 
 // Resolve implements part of the RuleProvider interface.
 func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
+	imports = s.options.filterImports(imports)
+
 	resolveFn := protoc.ResolveDepsAttr("deps", true)
 	resolveFn(c, ix, r, imports, from)
 
@@ -387,4 +399,62 @@ func provideScalaImports(files []*protoc.File, resolver protoc.ImportResolver, f
 			// }
 		}
 	}
+}
+
+// scalaLibraryOptions represents the parsed flag configuration for a scalaLibrary
+type scalaLibraryOptions struct {
+	noResolve map[string]bool
+	noOutput  []string
+}
+
+func parseScalaLibraryOptions(kindName string, args []string) *scalaLibraryOptions {
+	flags := flag.NewFlagSet(kindName, flag.ExitOnError)
+
+	var noresolveFlagValue string
+	flags.StringVar(&noresolveFlagValue, "noresolve", "", "--noresolve=<path>.proto suppresses deps resolution of <path>.proto")
+
+	var nooutputFlagValue string
+	flags.StringVar(&nooutputFlagValue, "nooutput", "", "--nooutput=<file>.proto suppresses rule output for <file>.proto.  If after removing all matching files, no outputs remain, the rule will not be emitted.")
+
+	if err := flags.Parse(args); err != nil {
+		log.Fatalf("failed to parse flags for %q: %v", kindName, err)
+	}
+
+	config := &scalaLibraryOptions{
+		noResolve: make(map[string]bool),
+		noOutput:  make([]string, 0),
+	}
+	for _, value := range strings.Split(noresolveFlagValue, ",") {
+		config.noResolve[value] = true
+	}
+	config.noOutput = strings.Split(nooutputFlagValue, ",")
+
+	return config
+}
+
+func (o *scalaLibraryOptions) filterOutputs(in []string) (out []string) {
+next:
+	for _, value := range in {
+		for _, pattern := range o.noOutput {
+			match, err := doublestar.PathMatch(pattern, value)
+			if err != nil {
+				log.Fatalf("bad --nooutput pattern %q: %v", pattern, err)
+			}
+			if match {
+				continue next
+			}
+		}
+		out = append(out, value)
+	}
+	return
+}
+
+func (o *scalaLibraryOptions) filterImports(in []string) (out []string) {
+	for _, value := range in {
+		if o.noResolve[value] {
+			continue
+		}
+		out = append(out, value)
+	}
+	return
 }

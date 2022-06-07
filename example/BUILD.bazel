@@ -74,6 +74,7 @@
 
 ## Python ##
 # gazelle:proto_plugin python implementation builtin:python
+# gazelle:proto_plugin pyi implementation builtin:pyi
 # gazelle:proto_plugin protoc-gen-grpc-python implementation grpc:grpc:protoc-gen-grpc-python
 # gazelle:proto_rule proto_python_library implementation stackb:rules_proto:proto_py_library
 # gazelle:proto_rule proto_python_library deps @com_google_protobuf//:protobuf_python
@@ -82,6 +83,7 @@
 # TODO: add grpc_py_library deps
 # gazelle:proto_rule grpc_py_library visibility //visibility:public
 # gazelle:proto_language python plugin python
+# gazelle:proto_language python plugin pyi
 # gazelle:proto_language python plugin protoc-gen-grpc-python
 # gazelle:proto_language python rule proto_compile
 # gazelle:proto_language python rule proto_python_library

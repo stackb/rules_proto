@@ -102,8 +102,14 @@ proto_nodejs_library(
 
 proto_compile(
     name = "person_python_compile",
-    outputs = ["person_pb2.py"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
+    outputs = [
+        "person_pb2.py",
+        "person_pb2.pyi",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:python",
+        "@build_stack_rules_proto//plugin/builtin:pyi",
+    ],
     proto = "person_proto",
 )
 

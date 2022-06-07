@@ -12,6 +12,7 @@ go_library(
         "js_common_plugin.go",
         "objc_plugin.go",
         "php_plugin.go",
+        "pyi_plugin.go",
         "python_plugin.go",
         "ruby_plugin.go",
     ],
@@ -33,6 +34,7 @@ go_test(
         "js_common_plugin_test.go",
         "objc_plugin_test.go",
         "php_plugin_test.go",
+        "pyi_plugin_test.go",
         "python_plugin_test.go",
         "ruby_plugin_test.go",
     ],
@@ -46,9 +48,9 @@ go_test(
 genrule(
     name = "protoc_tool",
     outs = ["protoc"],
-    cmd = "cp $(location @com_google_protobuf//:protoc) $@",
+    cmd = "cp $(location //toolchain:protoc_exe) $@",
     executable = True,
-    tools = ["@com_google_protobuf//:protoc"],
+    tools = ["//toolchain:protoc_exe"],
 )
 
 filegroup(
