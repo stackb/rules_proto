@@ -170,7 +170,7 @@ func (p *starlarkLanguageRule) ProvideRule(rc *LanguageRuleConfig, pc *ProtocCon
 	}
 
 	thread := new(starlark.Thread)
-	thread.Print = p.reporter
+	// thread.Print = p.reporter
 	value, err := starlark.Call(thread, callable, starlark.Tuple{
 		newLanguageRuleConfigStruct(rc),
 		newProtocConfigurationStruct(pc),

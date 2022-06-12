@@ -85,9 +85,9 @@ protoc.Rule(
 				Options: map[string]bool{"grpc": true},
 			},
 			pc: &ProtocConfiguration{},
-			wantPrinted: `LanguageRuleConfig(config = Config(repo_name = "", repo_root = "", work_dir = ""), deps = {}, enabled = False, implementation = "", name = "test", options = {"grpc": True}, visibility = {})
-ProtocConfiguration(imports = [], language_config = LanguageConfig(enabled = False, name = "", plugins = {}, protoc = "", rules = {}), mappings = {}, outputs = [], package_config = PackageConfig(config = Config(repo_name = "", repo_root = "", work_dir = "")), plugins = [], prefix = "", rel = "")
-`,
+			// 			wantPrinted: `LanguageRuleConfig(config = Config(repo_name = "", repo_root = "", work_dir = ""), deps = {}, enabled = False, implementation = "", name = "test", options = {"grpc": True}, visibility = {})
+			// ProtocConfiguration(imports = [], language_config = LanguageConfig(enabled = False, name = "", plugins = {}, protoc = "", rules = {}), mappings = {}, outputs = [], package_config = PackageConfig(config = Config(repo_name = "", repo_root = "", work_dir = "")), plugins = [], prefix = "", rel = "")
+			// `,
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
