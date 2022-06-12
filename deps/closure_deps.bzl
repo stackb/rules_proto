@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def closure_deps():
+    """closure dependency macro
+    """
     io_bazel_rules_closure()  # via <TOP>
 
 def io_bazel_rules_closure():

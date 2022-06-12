@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def prebuilt_protoc_deps():
+    """prebuilt_protoc dependency macro
+    """
     prebuilt_protoc_linux()  # via <TOP>
     prebuilt_protoc_osx()  # via <TOP>
     prebuilt_protoc_windows()  # via <TOP>

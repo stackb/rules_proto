@@ -10,6 +10,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def example_routeguide_nodejs_deps():
+    """example_routeguide_nodejs dependency macro
+    """
     build_bazel_rules_nodejs()  # via npm_example_routeguide_nodejs
     npm_example_routeguide_nodejs()  # via <TOP>
 

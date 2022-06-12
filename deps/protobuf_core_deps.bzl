@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def protobuf_core_deps():
+    """protobuf_core dependency macro
+    """
     bazel_skylib()  # via com_google_protobuf
     rules_pkg()  # via com_google_protobuf
     rules_python()  # via com_google_protobuf

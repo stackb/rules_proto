@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def grpc_js_deps():
+    """grpc_js dependency macro
+    """
     com_github_stackb_grpc_js()  # via <TOP>
 
 def com_github_stackb_grpc_js():

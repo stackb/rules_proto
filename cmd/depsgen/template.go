@@ -18,7 +18,9 @@ def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def {{ .Name }}_deps():{{ range .Deps }}{{ if ne .Dep.RepositoryRule "phony" }}
+def {{ .Name }}_deps():
+    """{{ .Name }} dependency macro
+    """{{ range .Deps }}{{ if ne .Dep.RepositoryRule "phony" }}
     {{ .Dep.Name }}()  # via {{ .ParentName }}{{ end }}{{ end }}
 {{ range .Deps }}{{ if ne .Dep.RepositoryRule "phony" }}
 

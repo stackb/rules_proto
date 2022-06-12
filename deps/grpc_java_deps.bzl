@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def grpc_java_deps():
+    """grpc_java dependency macro
+    """
     rules_jvm_external()  # via io_grpc_grpc_java
     io_grpc_grpc_java()  # via <TOP>
 

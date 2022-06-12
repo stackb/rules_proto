@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def core_deps():
+    """core dependency macro
+    """
     io_bazel_rules_go()  # via bazel_gazelle
     bazel_gazelle()  # via <TOP>
     rules_proto()  # via <TOP>

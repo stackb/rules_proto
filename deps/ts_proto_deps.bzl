@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def ts_proto_deps():
+    """ts_proto dependency macro
+    """
     npm_ts_proto()  # via <TOP>
     npm_tsc()  # via <TOP>
 

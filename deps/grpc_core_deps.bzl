@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def grpc_core_deps():
+    """grpc_core dependency macro
+    """
     build_bazel_rules_swift()  # via com_github_grpc_grpc
     bazel_skylib()  # via com_google_protobuf
     rules_pkg()  # via com_google_protobuf
