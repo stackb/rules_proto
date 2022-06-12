@@ -2,6 +2,7 @@ package protoc
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -75,6 +76,8 @@ func newStarlarkLanguageRuleFunction(rules map[string]*starlarkstruct.Struct) go
 			Symbol("Rule"),
 			starlark.StringDict{
 				"name":         starlark.String(name),
+				"load_info":    loadInfo,
+				"kind_info":    kindInfo,
 				"provide_rule": provideRule,
 			},
 		)
@@ -101,7 +104,7 @@ func (p *starlarkLanguageRule) Name() string {
 func (p *starlarkLanguageRule) LoadInfo() (result rule.LoadInfo) {
 	callable, err := p.rule.Attr("load_info")
 	if err != nil {
-		p.errorReporter("rule %q has no load_info function", p.name)
+		log.Fatalf("LoadInfo() called on rule %q with no load_info function: %v", p.name, p.rule)
 		return result
 	}
 
@@ -109,7 +112,7 @@ func (p *starlarkLanguageRule) LoadInfo() (result rule.LoadInfo) {
 	thread.Print = p.reporter
 	value, err := starlark.Call(thread, callable, starlark.Tuple{}, []starlark.Tuple{})
 	if err != nil {
-		p.errorReporter("rule %q load_info failed: %w", p.name, err)
+		log.Fatalf("rule %q load_info failed: %v", p.name, err)
 		return result
 	}
 

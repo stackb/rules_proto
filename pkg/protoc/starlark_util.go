@@ -142,7 +142,7 @@ func loadStarlarkProgram(filename string, src interface{}, predeclared starlark.
 func newGazelleRuleFunction() goStarlarkFunction {
 	return func(thread *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, kwargs []starlark.Tuple) (starlark.Value, error) {
 		var name, kind string
-		var attrs *starlark.Dict
+		attrs := new(starlark.Dict)
 
 		if err := starlark.UnpackArgs("Rule", args, kwargs,
 			"name", &name,
@@ -168,12 +168,13 @@ func newGazelleRuleFunction() goStarlarkFunction {
 func newGazelleLoadInfoFunction() goStarlarkFunction {
 	return func(thread *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, kwargs []starlark.Tuple) (starlark.Value, error) {
 		var name string
-		var symbols, after starlark.List
+		symbols := new(starlark.List)
+		after := new(starlark.List)
 
 		if err := starlark.UnpackArgs("LoadInfo", args, kwargs,
 			"name", &name,
 			"symbols", &symbols,
-			"after", &after,
+			"after?", &after,
 		); err != nil {
 			return nil, err
 		}
@@ -182,8 +183,8 @@ func newGazelleLoadInfoFunction() goStarlarkFunction {
 			Symbol("LoadInfo"),
 			starlark.StringDict{
 				"name":    starlark.String(name),
-				"symbols": &symbols,
-				"after":   &after,
+				"symbols": symbols,
+				"after":   after,
 			},
 		)
 
@@ -194,8 +195,11 @@ func newGazelleLoadInfoFunction() goStarlarkFunction {
 func newGazelleKindInfoFunction() goStarlarkFunction {
 	return func(thread *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, kwargs []starlark.Tuple) (starlark.Value, error) {
 		var matchAny bool
-		var matchAttrs starlark.List
-		var nonEmptyAttrs, substituteAttrs, mergeableAttrs, resolveAttrs starlark.Dict
+		matchAttrs := new(starlark.List)
+		nonEmptyAttrs := new(starlark.Dict)
+		substituteAttrs := new(starlark.Dict)
+		mergeableAttrs := new(starlark.Dict)
+		resolveAttrs := new(starlark.Dict)
 
 		if err := starlark.UnpackArgs("KindInfo", args, kwargs,
 			"match_any?", &matchAny,
@@ -212,11 +216,11 @@ func newGazelleKindInfoFunction() goStarlarkFunction {
 			Symbol("KindInfo"),
 			starlark.StringDict{
 				"match_any":        starlark.Bool(matchAny),
-				"match_attrs":      &matchAttrs,
-				"non_empty_attrs":  &nonEmptyAttrs,
-				"substitute_attrs": &substituteAttrs,
-				"mergeable_attrs":  &mergeableAttrs,
-				"resolve_attrs":    &resolveAttrs,
+				"match_attrs":      matchAttrs,
+				"non_empty_attrs":  nonEmptyAttrs,
+				"substitute_attrs": substituteAttrs,
+				"mergeable_attrs":  mergeableAttrs,
+				"resolve_attrs":    resolveAttrs,
 			},
 		)
 

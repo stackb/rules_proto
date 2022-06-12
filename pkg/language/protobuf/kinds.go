@@ -48,6 +48,9 @@ func (pl *protobufLang) Loads() []rule.LoadInfo {
 			log.Fatal(err)
 		}
 		load := rule.LoadInfo()
+		if load.Name == "" {
+			log.Fatal("Loads: empty load name for rule:", name)
+		}
 		symbolsByLoadName[load.Name] = append(symbolsByLoadName[load.Name], load.Symbols...)
 	}
 
@@ -70,7 +73,7 @@ func (pl *protobufLang) Loads() []rule.LoadInfo {
 		})
 	}
 
-	log.Println("Loads() DONE")
+	log.Printf("Loads(): %#+v", loads)
 
 	return loads
 }
