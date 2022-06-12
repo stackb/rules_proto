@@ -96,12 +96,16 @@ func (p *starlarkPlugin) Configure(ctx *PluginContext) *PluginConfiguration {
 			p.errorReporter("PluginConfiguration.label get value: %v", err)
 			return nil
 		}
-		lbl, err := label.Parse(labelValue.(starlark.String).GoString())
-		if err != nil {
-			p.errorReporter("PluginConfiguration.label parse: %v", err)
-			return nil
+		lbl := label.NoLabel
+		labelStr := labelValue.(starlark.String).GoString()
+		if labelStr != "" {
+			var err error
+			lbl, err = label.Parse(labelStr)
+			if err != nil {
+				p.errorReporter("PluginConfiguration.label parse: %v", err)
+				return nil
+			}
 		}
-
 		outputsValue, err := value.Attr("outputs")
 		if err != nil {
 			p.errorReporter("PluginConfiguration.outputs get value: %v", err)
