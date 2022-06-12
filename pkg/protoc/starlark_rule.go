@@ -170,7 +170,7 @@ func (p *starlarkLanguageRule) ProvideRule(rc *LanguageRuleConfig, pc *ProtocCon
 	}
 
 	thread := new(starlark.Thread)
-	// thread.Print = p.reporter
+	thread.Print = p.reporter
 	value, err := starlark.Call(thread, callable, starlark.Tuple{
 		newLanguageRuleConfigStruct(rc),
 		newProtocConfigurationStruct(pc),
@@ -234,7 +234,7 @@ func (s *starlarkRuleProvider) Rule(othergen ...*rule.Rule) *rule.Rule {
 	thread.Print = s.reporter
 	value, err := starlark.Call(thread, callable, starlark.Tuple{}, []starlark.Tuple{})
 	if err != nil {
-		err = s.errorReporter("provider %q rule() failed: %w", s.name, err)
+		s.errorReporter("provider %q rule() failed: %w", s.name, err)
 		return nil
 	}
 
