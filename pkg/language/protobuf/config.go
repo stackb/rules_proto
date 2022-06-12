@@ -63,47 +63,15 @@ func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 	}
 
 	for _, starlarkPlugin := range pl.starlarkPlugins {
-		parts := strings.Split(starlarkPlugin, ":")
-		if len(parts) != 2 {
-			return fmt.Errorf("invalid starlark plugin name %q", starlarkPlugin)
+		if err := registerStarlarkPlugin(starlarkPlugin); err != nil {
+			return err
 		}
-		fileName := parts[0]
-		ruleName := parts[1]
-		var configureError error
-		impl, err := protoc.LoadStarlarkPluginFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
-		}, func(err error) {
-			configureError = err
-		})
-		if err != nil {
-			log.Fatalf("%s: plugin loading failed: %v", starlarkPlugin, err)
-		}
-		if configureError != nil {
-			return configureError
-		}
-		configureError = err
-		protoc.Plugins().MustRegisterPlugin(impl)
 	}
 
 	for _, starlarkRule := range pl.starlarkRules {
-		parts := strings.Split(starlarkRule, ":")
-		if len(parts) != 2 {
-			return fmt.Errorf("invalid starlark rule name %q", starlarkRule)
+		if err := registerStarlarkRule(starlarkRule); err != nil {
+			return err
 		}
-		fileName := parts[0]
-		ruleName := parts[1]
-		var configureError error
-		impl, err := protoc.LoadStarlarkLanguageRuleFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
-		}, func(err error) {
-			configureError = err
-		})
-		if err != nil {
-			log.Fatalf("%s: rule loading failed: %v", starlarkRule, err)
-		}
-		if configureError != nil {
-			return configureError
-		}
-		configureError = err
-		protoc.Rules().MustRegisterRule(starlarkRule, impl)
 	}
 
 	return nil
@@ -158,6 +126,52 @@ func (pl *protobufLang) getOrCreatePackageConfig(config *config.Config) *protoc.
 	}
 	config.Exts[pl.name] = cfg
 	return cfg
+}
+
+func registerStarlarkPlugin(starlarkPlugin string) error {
+	parts := strings.Split(starlarkPlugin, ":")
+	if len(parts) != 2 {
+		return fmt.Errorf("invalid starlark plugin name %q", starlarkPlugin)
+	}
+	fileName := parts[0]
+	ruleName := parts[1]
+	var configureError error
+	impl, err := protoc.LoadStarlarkPluginFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
+	}, func(err error) {
+		configureError = err
+	})
+	if err != nil {
+		log.Fatalf("%s: plugin loading failed: %v", starlarkPlugin, err)
+	}
+	if configureError != nil {
+		return configureError
+	}
+	configureError = err
+	protoc.Plugins().MustRegisterPlugin(impl)
+	return nil
+}
+
+func registerStarlarkRule(starlarkRule string) error {
+	parts := strings.Split(starlarkRule, ":")
+	if len(parts) != 2 {
+		return fmt.Errorf("invalid starlark rule name %q", starlarkRule)
+	}
+	fileName := parts[0]
+	ruleName := parts[1]
+	var configureError error
+	impl, err := protoc.LoadStarlarkLanguageRuleFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
+	}, func(err error) {
+		configureError = err
+	})
+	if err != nil {
+		log.Fatalf("%s: rule loading failed: %v", starlarkRule, err)
+	}
+	if configureError != nil {
+		return configureError
+	}
+	configureError = err
+	protoc.Rules().MustRegisterRule(starlarkRule, impl)
+	return nil
 }
 
 func registerWellKnownProtos(resolver protoc.ImportResolver) {
