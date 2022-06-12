@@ -49,7 +49,7 @@ protoc.Plugin(
 		"simple": {
 			code: `
 def configure(ctx):
-	print(ctx)
+	#print(ctx)
 	return protoc.PluginConfiguration(
 		label = "//%s:python_plugin" % ctx.rel,
 		outputs = ["foo.py", "bar.py"],

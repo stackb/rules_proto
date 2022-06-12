@@ -64,8 +64,8 @@ def make_py_library_rule(self):
 	return rule
 
 def provide_rule(rctx, pctx):
-	print(rctx)
-	print(pctx)
+	#print(rctx)
+	#print(pctx)
 	return struct(
 		name = rctx.name,
 		kind = "py_library",

@@ -80,7 +80,7 @@ func (p *starlarkPlugin) Configure(ctx *PluginContext) *PluginConfiguration {
 	}
 
 	thread := new(starlark.Thread)
-	// thread.Print = p.reporter
+	thread.Print = p.reporter
 	value, err := starlark.Call(thread, configure, starlark.Tuple{
 		newPluginContextStruct(ctx),
 	}, []starlark.Tuple{})
