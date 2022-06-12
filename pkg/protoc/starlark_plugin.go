@@ -140,15 +140,10 @@ func newStarlarkPluginConfiguration() goStarlarkFunction {
 			return nil, err
 		}
 
-		lbl, err := label.Parse(labelStr)
-		if err != nil {
-			return nil, fmt.Errorf("invalid label: %w", err)
-		}
-
 		return starlarkstruct.FromStringDict(
 			Symbol("PluginConfiguration"),
 			starlark.StringDict{
-				"label":   starlark.String(lbl.String()),
+				"label":   starlark.String(labelStr),
 				"outputs": outputs,
 				"out":     starlark.String(out),
 				"options": options,
@@ -195,12 +190,16 @@ func newPluginContextStruct(ctx *PluginContext) *starlarkstruct.Struct {
 }
 
 func newLanguagePluginConfigStruct(cfg LanguagePluginConfig) *starlarkstruct.Struct {
+	var labelStr string
+	if cfg.Label != label.NoLabel {
+		labelStr = cfg.Label.String()
+	}
 	return starlarkstruct.FromStringDict(
 		Symbol("LanguagePluginConfig"),
 		starlark.StringDict{
 			"name":           starlark.String(cfg.Name),
 			"implementation": starlark.String(cfg.Implementation),
-			"label":          starlark.String(cfg.Label.String()),
+			"label":          starlark.String(labelStr),
 			"options":        newStringList(cfg.GetOptions()),
 			"deps":           newStringList(cfg.GetDeps()),
 			"enabled":        starlark.Bool(cfg.Enabled),
