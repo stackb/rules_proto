@@ -32,6 +32,12 @@ func (pl *protobufLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Co
 	fs.BoolVar(&pl.overrideGoGooleapis,
 		"override_go_googleapis", false,
 		"if true, remove hardcoded proto_library deps on go_googleapis")
+	fs.Var(&pl.starlarkRules,
+		"proto_rule",
+		"register custom starlark rule of the form `<file_name>:<rule_name>`")
+	fs.Var(&pl.starlarkRules,
+		"proto_plugin",
+		"register custom starlark plugin of the form `<file_name>:<plugin_name>`")
 
 	registerWellKnownProtos(protoc.GlobalResolver())
 }
@@ -54,6 +60,50 @@ func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 				return fmt.Errorf("loading %s: %w", filename, err)
 			}
 		}
+	}
+
+	for _, starlarkPlugin := range pl.starlarkPlugins {
+		parts := strings.Split(starlarkPlugin, ":")
+		if len(parts) != 2 {
+			return fmt.Errorf("invalid starlark plugin name %q", starlarkPlugin)
+		}
+		fileName := parts[0]
+		ruleName := parts[1]
+		var configureError error
+		impl, err := protoc.LoadStarlarkPluginFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
+		}, func(err error) {
+			configureError = err
+		})
+		if err != nil {
+			log.Fatalf("%s: plugin loading failed: %v", starlarkPlugin, err)
+		}
+		if configureError != nil {
+			return configureError
+		}
+		configureError = err
+		protoc.Plugins().MustRegisterPlugin(impl)
+	}
+
+	for _, starlarkRule := range pl.starlarkRules {
+		parts := strings.Split(starlarkRule, ":")
+		if len(parts) != 2 {
+			return fmt.Errorf("invalid starlark rule name %q", starlarkRule)
+		}
+		fileName := parts[0]
+		ruleName := parts[1]
+		var configureError error
+		impl, err := protoc.LoadStarlarkLanguageRuleFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
+		}, func(err error) {
+			configureError = err
+		})
+		if err != nil {
+			log.Fatalf("%s: rule loading failed: %v", starlarkRule, err)
+		}
+		if configureError != nil {
+			return configureError
+		}
+		configureError = err
+		protoc.Rules().MustRegisterRule(starlarkRule, impl)
 	}
 
 	return nil
@@ -127,4 +177,15 @@ func registerWellKnownProtos(resolver protoc.ImportResolver) {
 	} {
 		resolver.Provide("proto", "proto", k, v)
 	}
+}
+
+type arrayFlags []string
+
+func (i *arrayFlags) String() string {
+	return strings.Join(*i, ",")
+}
+
+func (i *arrayFlags) Set(value string) error {
+	*i = append(*i, value)
+	return nil
 }

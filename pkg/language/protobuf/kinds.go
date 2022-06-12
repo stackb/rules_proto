@@ -13,6 +13,7 @@ import (
 // match and merge attributes that may be found in rules of those kinds. All
 // kinds of rules generated for this language may be found here.
 func (*protobufLang) Kinds() map[string]rule.KindInfo {
+	log.Println("protobuf.Kinds() called")
 	registry := protoc.Rules()
 
 	kinds := make(map[string]rule.KindInfo)

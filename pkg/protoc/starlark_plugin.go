@@ -3,7 +3,6 @@ package protoc
 import (
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -13,11 +12,7 @@ import (
 	"go.starlark.net/starlarkstruct"
 )
 
-func isStarlarkPlugin(filename string) bool {
-	return strings.HasSuffix(filename, ".star")
-}
-
-func loadStarlarkPluginFromFile(workDir, filename, name string, reporter func(msg string), errorReporter func(err error)) (Plugin, error) {
+func LoadStarlarkPluginFromFile(workDir, filename, name string, reporter func(msg string), errorReporter func(err error)) (Plugin, error) {
 	filename, err := resolveStarlarkFilename(workDir, filename)
 	if err != nil {
 		return nil, err

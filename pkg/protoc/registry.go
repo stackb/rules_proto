@@ -1,6 +1,7 @@
 package protoc
 
 import (
+	"log"
 	"sort"
 )
 
@@ -43,6 +44,8 @@ func (p *registry) MustRegisterRule(name string, rule LanguageRule) RuleRegistry
 		panic("duplicate proto_rule registration: " + name)
 	}
 	p.rules[name] = rule
+	log.Println("registered proto_rule:", name)
+	// debug.PrintStack()
 	return p
 }
 
