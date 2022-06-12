@@ -22,6 +22,8 @@ def _proto_dependency_impl(ctx):
             version = ctx.attr.version,
             packageJson = ctx.attr.package_json,
             packageLockJson = ctx.attr.package_lock_json,
+            patches = ctx.attr.patches,
+            patchArgs = ctx.attr.patch_args,
             yarnLock = ctx.attr.yarn_lock,
             workspaceSnippet = ctx.attr.workspace_snippet,
             frozenLockfile = ctx.attr.frozen_lockfile,
@@ -56,6 +58,12 @@ proto_dependency = rule(
         ),
         "package_lock_json": attr.string(
             doc = "The package_lock_json attribute for npm_install",
+        ),
+        "patches": attr.string_list(
+            doc = "The patches argument to http_archive",
+        ),
+        "patch_args": attr.string_list(
+            doc = "The patch_args argument to http_archive",
         ),
         "frozen_lockfile": attr.bool(
             doc = "The frozen_lockfile attribute for yarn_install",

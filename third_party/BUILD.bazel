@@ -6,3 +6,5 @@ filegroup(
     ],
     visibility = ["//:__pkg__"],
 )
+
+exports_files(["bazel-gazelle-PR1274.patch"])

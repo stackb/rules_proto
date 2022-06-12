@@ -40,6 +40,12 @@ def {{ .Dep.Name }}():
         build_file_proto_mode = "{{ .Dep.BuildFileProtoMode }}",{{ end }}{{ if .Dep.Urls }}
         urls = [{{ range .Dep.Urls }}
             "{{ . }}",{{ end }}
+        ],{{ end }}{{ if .Dep.Patches }}
+        patches = [{{ range .Dep.Patches }}
+            "{{ . }}",{{ end }}
+        ],{{ end }}{{ if .Dep.PatchArgs }}
+        patch_args = [{{ range .Dep.PatchArgs }}
+            "{{ . }}",{{ end }}
         ],{{ end }}{{ if .Dep.BuildFile }}
         build_file = "{{ .Dep.BuildFile }}",{{ end }}{{ if .Dep.BuildFileContent }}
         build_file_content = """{{ .Dep.BuildFileContent }}""",{{ end }}

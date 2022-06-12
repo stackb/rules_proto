@@ -49,6 +49,8 @@ type ProtoDependencyInfo struct {
 	WorkspaceSnippet   string
 	PackageJson        string
 	PackageLockJson    string
+	PatchArgs          []string
+	Patches            []string
 	YarnLock           string
 }
 

@@ -1,7 +1,6 @@
 package protoc
 
 import (
-	"log"
 	"sort"
 )
 
@@ -39,13 +38,13 @@ func (p *registry) RuleNames() []string {
 
 // MustRegisterRule implements part of the RuleRegistry interface.
 func (p *registry) MustRegisterRule(name string, rule LanguageRule) RuleRegistry {
+	// log.Println("Registering rule:", name)
+	// debug.PrintStack()
 	_, ok := p.rules[name]
 	if ok {
 		panic("duplicate proto_rule registration: " + name)
 	}
 	p.rules[name] = rule
-	log.Println("registered proto_rule:", name)
-	// debug.PrintStack()
 	return p
 }
 
@@ -68,14 +67,19 @@ func (p *registry) PluginNames() []string {
 	return names
 }
 
+// RegisterPlugin implements part of the PluginRegistry interface.
+func (p *registry) RegisterPlugin(name string, plugin Plugin) PluginRegistry {
+	_, ok := p.plugins[name]
+	if ok {
+		panic("duplicate proto_plugin registration: " + name)
+	}
+	p.plugins[name] = plugin
+	return p
+}
+
 // MustRegisterPlugin implements part of the PluginRegistry interface.
 func (p *registry) MustRegisterPlugin(plugin Plugin) PluginRegistry {
-	_, ok := p.plugins[plugin.Name()]
-	if ok {
-		panic("duplicate proto_plugin registration: " + plugin.Name())
-	}
-	p.plugins[plugin.Name()] = plugin
-	return p
+	return p.RegisterPlugin(plugin.Name(), plugin)
 }
 
 // LookupPlugin implements part of the PluginRegistry interface.

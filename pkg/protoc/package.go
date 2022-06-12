@@ -139,8 +139,6 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 			continue
 		}
 
-		var configureError error
-
 		impl, err := globalRegistry.LookupRule(ruleConfig.Implementation)
 		if err == ErrUnknownRule {
 			log.Fatalf(
@@ -153,9 +151,6 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		ruleConfig.Impl = impl
 
 		rule := impl.ProvideRule(ruleConfig, pc)
-		if configureError != nil {
-			log.Fatalf("%s: rule configuration failed: %v", name, configureError)
-		}
 		if rule == nil {
 			continue
 		}
