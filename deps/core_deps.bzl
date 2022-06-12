@@ -34,7 +34,7 @@ def bazel_gazelle():
             "https://github.com/bazelbuild/bazel-gazelle/archive/425d85daecb9aeffa1ae24b83df7b97b534dcf05.tar.gz",
         ],
         patches = [
-            "//third_party:bazel-gazelle-PR1274.patch",
+            "@build_stack_rules_proto//third_party:bazel-gazelle-PR1274.patch",
         ],
         patch_args = [
             "-p1",
