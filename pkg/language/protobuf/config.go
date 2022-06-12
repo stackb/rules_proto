@@ -40,8 +40,6 @@ func (pl *protobufLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Co
 		"register custom starlark plugin of the form `<file_name>%<plugin_name>`")
 
 	registerWellKnownProtos(protoc.GlobalResolver())
-
-	log.Println("Register Flags DONE")
 }
 
 func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
@@ -75,8 +73,6 @@ func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 			return err
 		}
 	}
-
-	log.Println("Check Flags DONE")
 
 	return nil
 }

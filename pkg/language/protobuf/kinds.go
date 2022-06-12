@@ -27,10 +27,7 @@ func (*protobufLang) Kinds() map[string]rule.KindInfo {
 			log.Fatal("Kinds: duplicate rule name:", rule.Name())
 		}
 		kinds[rule.Name()] = rule.KindInfo()
-		log.Println("Registered rule kind for:", name, rule.Name())
 	}
-
-	log.Println("Kinds() DONE")
 
 	return kinds
 }
@@ -72,8 +69,6 @@ func (pl *protobufLang) Loads() []rule.LoadInfo {
 			Symbols: symbols,
 		})
 	}
-
-	log.Printf("Loads(): %#+v", loads)
 
 	return loads
 }
