@@ -18,7 +18,9 @@ def _maybe(repo_rule, name, **kwargs):
     if name not in native.existing_rules():
         repo_rule(name = name, **kwargs)
 
-def {{ .Name }}_deps():{{ range .Deps }}{{ if ne .Dep.RepositoryRule "phony" }}
+def {{ .Name }}_deps():
+    """{{ .Name }} dependency macro
+    """{{ range .Deps }}{{ if ne .Dep.RepositoryRule "phony" }}
     {{ .Dep.Name }}()  # via {{ .ParentName }}{{ end }}{{ end }}
 {{ range .Deps }}{{ if ne .Dep.RepositoryRule "phony" }}
 
@@ -39,6 +41,12 @@ def {{ .Dep.Name }}():
         importpath = "{{ .Dep.Importpath }}",{{ end }}{{ if .Dep.BuildFileProtoMode }}
         build_file_proto_mode = "{{ .Dep.BuildFileProtoMode }}",{{ end }}{{ if .Dep.Urls }}
         urls = [{{ range .Dep.Urls }}
+            "{{ . }}",{{ end }}
+        ],{{ end }}{{ if .Dep.Patches }}
+        patches = [{{ range .Dep.Patches }}
+            "{{ . }}",{{ end }}
+        ],{{ end }}{{ if .Dep.PatchArgs }}
+        patch_args = [{{ range .Dep.PatchArgs }}
             "{{ . }}",{{ end }}
         ],{{ end }}{{ if .Dep.BuildFile }}
         build_file = "{{ .Dep.BuildFile }}",{{ end }}{{ if .Dep.BuildFileContent }}

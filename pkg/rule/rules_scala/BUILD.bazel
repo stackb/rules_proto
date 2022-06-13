@@ -16,7 +16,7 @@ go_library(
         "@bazel_gazelle//label:go_default_library",
         "@bazel_gazelle//resolve:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
-        "@com_github_bmatcuk_doublestar//:doublestar",
+        "@com_github_bmatcuk_doublestar//:go_default_library",
         "@com_github_emicklei_proto//:proto",
     ],
 )

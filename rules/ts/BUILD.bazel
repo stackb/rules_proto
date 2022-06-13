@@ -1,3 +1,5 @@
+# gazelle:exclude node_modules
+
 exports_files([
     "package.json",
     "yarn.lock",

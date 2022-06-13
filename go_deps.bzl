@@ -177,8 +177,8 @@ def go_deps():
         name = "com_github_google_go_cmp",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/google/go-cmp",
-        sum = "h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=",
-        version = "v0.5.5",
+        sum = "h1:e6P7q2lk1O+qJJb4BtCQXlK8vWEO8V1ZeuEdJNOqZyg=",
+        version = "v0.5.8",
     )
 
     go_repository(
@@ -272,8 +272,8 @@ def go_deps():
         name = "net_starlark_go",
         build_file_proto_mode = "disable_global",
         importpath = "go.starlark.net",
-        sum = "h1:xwwDQW5We85NaTk2APgoN9202w/l0DVGp+GZMfsrh7s=",
-        version = "v0.0.0-20210223155950-e043a3d3c984",
+        sum = "h1:Uo/x0Ir5vQJ+683GXB9Ug+4fcjsbp7z7Ul8UaZbhsRM=",
+        version = "v0.0.0-20220328144851-d1966c6b9fcd",
     )
     go_repository(
         name = "org_golang_google_appengine",
@@ -356,8 +356,8 @@ def go_deps():
         name = "org_golang_x_sys",
         build_file_proto_mode = "disable_global",
         importpath = "golang.org/x/sys",
-        sum = "h1:+Nyd8tzPX9R7BWHguqsrbFdRx3WQ/1ib8I44HXV5yTA=",
-        version = "v0.0.0-20200930185726-fdedc70b468f",
+        sum = "h1:N2T1jUrTQE9Re6TFF5PhvEHXHCguynGhKjWVsIUt5cY=",
+        version = "v0.0.0-20220513210249-45d2b4557a2a",
     )
     go_repository(
         name = "org_golang_x_text",

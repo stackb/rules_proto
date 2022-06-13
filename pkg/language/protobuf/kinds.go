@@ -23,6 +23,9 @@ func (*protobufLang) Kinds() map[string]rule.KindInfo {
 		if err != nil {
 			log.Fatal("Kinds:", err)
 		}
+		if _, ok := kinds[rule.Name()]; ok {
+			log.Fatal("Kinds: duplicate rule name:", rule.Name())
+		}
 		kinds[rule.Name()] = rule.KindInfo()
 	}
 
@@ -33,6 +36,7 @@ func (*protobufLang) Kinds() map[string]rule.KindInfo {
 // GenerateRules, now or in the past, should be loadable from one of these
 // files.
 func (pl *protobufLang) Loads() []rule.LoadInfo {
+
 	// Merge symbols
 	symbolsByLoadName := make(map[string][]string)
 	for _, name := range pl.rules.RuleNames() {
@@ -41,6 +45,9 @@ func (pl *protobufLang) Loads() []rule.LoadInfo {
 			log.Fatal(err)
 		}
 		load := rule.LoadInfo()
+		if load.Name == "" {
+			log.Fatal("Loads: empty load name for rule:", name)
+		}
 		symbolsByLoadName[load.Name] = append(symbolsByLoadName[load.Name], load.Symbols...)
 	}
 
@@ -62,5 +69,6 @@ func (pl *protobufLang) Loads() []rule.LoadInfo {
 			Symbols: symbols,
 		})
 	}
+
 	return loads
 }

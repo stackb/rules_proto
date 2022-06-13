@@ -65,14 +65,19 @@ func (p *registry) PluginNames() []string {
 	return names
 }
 
+// RegisterPlugin implements part of the PluginRegistry interface.
+func (p *registry) RegisterPlugin(name string, plugin Plugin) PluginRegistry {
+	_, ok := p.plugins[name]
+	if ok {
+		panic("duplicate proto_plugin registration: " + name)
+	}
+	p.plugins[name] = plugin
+	return p
+}
+
 // MustRegisterPlugin implements part of the PluginRegistry interface.
 func (p *registry) MustRegisterPlugin(plugin Plugin) PluginRegistry {
-	_, ok := p.plugins[plugin.Name()]
-	if ok {
-		panic("duplicate proto_plugin registration: " + plugin.Name())
-	}
-	p.plugins[plugin.Name()] = plugin
-	return p
+	return p.RegisterPlugin(plugin.Name(), plugin)
 }
 
 // LookupPlugin implements part of the PluginRegistry interface.

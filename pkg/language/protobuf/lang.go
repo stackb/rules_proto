@@ -36,6 +36,10 @@ type protobufLang struct {
 	overrideGoGooleapis bool
 	// the resolver instance used for cross-resolution
 	resolver protoc.ImportResolver
+	// starlarkRules stores custom starlark proto rule names in the form filename%rulename
+	starlarkRules arrayFlags
+	// starlarkPlugins stores custom starlark proto plugin names in the form filename%pluginname
+	starlarkPlugins arrayFlags
 }
 
 // Name implements part of the language.Language interface.

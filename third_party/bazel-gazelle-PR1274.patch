@@ -1,0 +1,88 @@
+From c669d88155d0ac752841ef2aa2e6933f66a5d5cd Mon Sep 17 00:00:00 2001
+From: Paul Johnston <pcj@stack.build>
+Date: Sun, 12 Jun 2022 15:20:35 -0600
+Subject: [PATCH 1/2] Defer construction of metaresolver after CheckFlags
+
+---
+ cmd/gazelle/fix-update.go | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/cmd/gazelle/fix-update.go b/cmd/gazelle/fix-update.go
+index 1f26c4ef..9f24970d 100644
+--- a/cmd/gazelle/fix-update.go
++++ b/cmd/gazelle/fix-update.go
+@@ -241,6 +241,12 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
+ 		&updateConfigurer{},
+ 		&walk.Configurer{},
+ 		&resolve.Configurer{})
++
++	c, err := newFixUpdateConfiguration(wd, cmd, args, cexts)
++	if err != nil {
++		return err
++	}
++
+ 	mrslv := newMetaResolver()
+ 	kinds := make(map[string]rule.KindInfo)
+ 	loads := genericLoads
+@@ -256,11 +262,6 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
+ 	}
+ 	ruleIndex := resolve.NewRuleIndex(mrslv.Resolver, exts...)
+ 
+-	c, err := newFixUpdateConfiguration(wd, cmd, args, cexts)
+-	if err != nil {
+-		return err
+-	}
+-
+ 	if err := fixRepoFiles(c, loads); err != nil {
+ 		return err
+ 	}
+
+From aa57fa1a7ef4361fe5dee034b80430f9dd53bb56 Mon Sep 17 00:00:00 2001
+From: Paul Johnston <pcj@stack.build>
+Date: Sun, 12 Jun 2022 15:49:28 -0600
+Subject: [PATCH 2/2] Initialize cexts
+
+---
+ cmd/gazelle/fix-update.go | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/cmd/gazelle/fix-update.go b/cmd/gazelle/fix-update.go
+index 9f24970d..065978c9 100644
+--- a/cmd/gazelle/fix-update.go
++++ b/cmd/gazelle/fix-update.go
+@@ -235,12 +235,15 @@ var genericLoads = []rule.LoadInfo{
+ }
+ 
+ func runFixUpdate(wd string, cmd command, args []string) (err error) {
+-	cexts := make([]config.Configurer, 0, len(languages)+3)
++	cexts := make([]config.Configurer, 0, len(languages)+4)
+ 	cexts = append(cexts,
+ 		&config.CommonConfigurer{},
+ 		&updateConfigurer{},
+ 		&walk.Configurer{},
+ 		&resolve.Configurer{})
++	for _, lang := range languages {
++		cexts = append(cexts, lang)
++	}
+ 
+ 	c, err := newFixUpdateConfiguration(wd, cmd, args, cexts)
+ 	if err != nil {
+@@ -250,15 +253,14 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
+ 	mrslv := newMetaResolver()
+ 	kinds := make(map[string]rule.KindInfo)
+ 	loads := genericLoads
+-	exts := make([]interface{}, 0, len(languages))
+-	for _, lang := range languages {
+-		cexts = append(cexts, lang)
++	exts := make([]interface{}, len(languages))
++	for i, lang := range languages {
+ 		for kind, info := range lang.Kinds() {
+ 			mrslv.AddBuiltin(kind, lang)
+ 			kinds[kind] = info
+ 		}
+ 		loads = append(loads, lang.Loads()...)
+-		exts = append(exts, lang)
++		exts[i] = lang
+ 	}
+ 	ruleIndex := resolve.NewRuleIndex(mrslv.Resolver, exts...)
+ 

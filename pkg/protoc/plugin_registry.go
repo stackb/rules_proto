@@ -16,4 +16,10 @@ type PluginRegistry interface {
 	// in the global plugin registry.  Panic will occur if the same plugin is
 	// registered multiple times.
 	MustRegisterPlugin(plugin Plugin) PluginRegistry
+	// RegisterPlugin installs a Plugin implementation under the given name.
+	// Panic will occur if the same plugin is registered multiple times.  The
+	// original PluginRegistry API had only the `MustRegisterPlugin` function
+	// that always used the plugin.Name(), the newer `RegisterPlugin` allows one
+	// to customize the name.
+	RegisterPlugin(name string, plugin Plugin) PluginRegistry
 }

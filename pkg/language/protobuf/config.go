@@ -32,6 +32,12 @@ func (pl *protobufLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Co
 	fs.BoolVar(&pl.overrideGoGooleapis,
 		"override_go_googleapis", false,
 		"if true, remove hardcoded proto_library deps on go_googleapis")
+	fs.Var(&pl.starlarkRules,
+		"proto_rule",
+		"register custom starlark rule of the form `<file_name>%<rule_name>`")
+	fs.Var(&pl.starlarkPlugins,
+		"proto_plugin",
+		"register custom starlark plugin of the form `<file_name>%<plugin_name>`")
 
 	registerWellKnownProtos(protoc.GlobalResolver())
 }
@@ -53,6 +59,18 @@ func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 			if err := protoc.GlobalResolver().LoadFile(filename); err != nil {
 				return fmt.Errorf("loading %s: %w", filename, err)
 			}
+		}
+	}
+
+	for _, starlarkPlugin := range pl.starlarkPlugins {
+		if err := registerStarlarkPlugin(c, starlarkPlugin); err != nil {
+			return err
+		}
+	}
+
+	for _, starlarkRule := range pl.starlarkRules {
+		if err := registerStarlarkRule(c, starlarkRule); err != nil {
+			return err
 		}
 	}
 
@@ -110,6 +128,52 @@ func (pl *protobufLang) getOrCreatePackageConfig(config *config.Config) *protoc.
 	return cfg
 }
 
+func registerStarlarkPlugin(c *config.Config, starlarkPlugin string) error {
+	parts := strings.Split(starlarkPlugin, "%")
+	if len(parts) != 2 {
+		return fmt.Errorf("invalid starlark plugin name %q", starlarkPlugin)
+	}
+	fileName := parts[0]
+	ruleName := parts[1]
+	var configureError error
+	impl, err := protoc.LoadStarlarkPluginFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
+	}, func(err error) {
+		configureError = err
+	})
+	if err != nil {
+		return err
+	}
+	if configureError != nil {
+		return configureError
+	}
+	configureError = err
+	protoc.Plugins().RegisterPlugin(starlarkPlugin, impl)
+	return nil
+}
+
+func registerStarlarkRule(c *config.Config, starlarkRule string) error {
+	parts := strings.Split(starlarkRule, "%")
+	if len(parts) != 2 {
+		return fmt.Errorf("invalid starlark rule name %q", starlarkRule)
+	}
+	fileName := parts[0]
+	ruleName := parts[1]
+	var configureError error
+	impl, err := protoc.LoadStarlarkLanguageRuleFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
+	}, func(err error) {
+		configureError = err
+	})
+	if err != nil {
+		return err
+	}
+	if configureError != nil {
+		return configureError
+	}
+	configureError = err
+	protoc.Rules().MustRegisterRule(starlarkRule, impl)
+	return nil
+}
+
 func registerWellKnownProtos(resolver protoc.ImportResolver) {
 	for k, v := range map[string]label.Label{
 		"google/protobuf/any.proto":             label.New("com_google_protobuf", "", "any_proto"),
@@ -127,4 +191,15 @@ func registerWellKnownProtos(resolver protoc.ImportResolver) {
 	} {
 		resolver.Provide("proto", "proto", k, v)
 	}
+}
+
+type arrayFlags []string
+
+func (i *arrayFlags) String() string {
+	return strings.Join(*i, ",")
+}
+
+func (i *arrayFlags) Set(value string) error {
+	*i = append(*i, value)
+	return nil
 }

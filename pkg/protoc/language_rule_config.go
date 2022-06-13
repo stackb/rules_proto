@@ -53,28 +53,17 @@ func NewLanguageRuleConfig(config *config.Config, name string) *LanguageRuleConf
 
 // GetDeps returns the sorted list of dependencies
 func (c *LanguageRuleConfig) GetDeps() []string {
-	deps := make([]string, 0)
-	for dep, want := range c.Deps {
-		if !want {
-			continue
-		}
-		deps = append(deps, dep)
-	}
-	sort.Strings(deps)
-	return deps
+	return ForIntent(c.Deps, true)
 }
 
 // GetOptions returns the rule options having positive intent.
 func (c *LanguageRuleConfig) GetOptions() []string {
-	opts := make([]string, 0)
-	for opt, want := range c.Options {
-		if !want {
-			continue
-		}
-		opts = append(opts, opt)
-	}
-	sort.Strings(opts)
-	return opts
+	return ForIntent(c.Options, true)
+}
+
+// GetVisibility returns the sorted list of visibility attrs
+func (c *LanguageRuleConfig) GetVisibility() []string {
+	return ForIntent(c.Visibility, true)
 }
 
 // GetAttrNames returns the names of attributes that have configuration.
@@ -89,15 +78,7 @@ func (c *LanguageRuleConfig) GetAttrNames() []string {
 
 // GetAttr returns the positive-intent attr values under the given key.
 func (c *LanguageRuleConfig) GetAttr(name string) []string {
-	vals := make([]string, 0)
-	for val, want := range c.Attrs[name] {
-		if !want {
-			continue
-		}
-		vals = append(vals, val)
-	}
-	sort.Strings(vals)
-	return vals
+	return ForIntent(c.Attrs[name], true)
 }
 
 // GetRewrites returns a copy of the resolve mappings

@@ -29,6 +29,9 @@ go_library(
         "rule_provider.go",
         "rule_registry.go",
         "ruleindex.go",
+        "starlark_plugin.go",
+        "starlark_rule.go",
+        "starlark_util.go",
         "syntaxutil.go",
         "yconfig.go",
     ],
@@ -42,6 +45,8 @@ go_library(
         "@com_github_bazelbuild_buildtools//build:go_default_library",
         "@com_github_emicklei_proto//:proto",
         "@in_gopkg_yaml_v3//:yaml_v3",
+        "@net_starlark_go//starlark",
+        "@net_starlark_go//starlarkstruct",
     ],
 )
 
@@ -61,6 +66,8 @@ go_test(
         "protoc_configuration_test.go",
         "resolver_test.go",
         "rewrite_test.go",
+        "starlark_plugin_test.go",
+        "starlark_rule_test.go",
     ],
     embed = [":protoc"],
     deps = [
@@ -70,6 +77,7 @@ go_test(
         "@bazel_gazelle//rule:go_default_library",
         "@com_github_emicklei_proto//:proto",
         "@com_github_google_go_cmp//cmp",
+        "@com_github_google_go_cmp//cmp/cmpopts",
         "@com_github_stretchr_testify//assert",
     ],
 )

@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def go_core_deps():
+    """go_core dependency macro
+    """
     com_github_golang_protobuf()  # via <TOP>
     org_golang_google_grpc()  # via <TOP>
     org_golang_google_grpc_cmd_protoc_gen_go_grpc()  # via <TOP>

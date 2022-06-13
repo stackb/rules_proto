@@ -122,6 +122,13 @@ gazelle_testdata_example(
     workspace_template = "prebuilt.WORKSPACE",
 )
 
+gazelle_testdata_example(
+    name = "starlark_java",
+    srcs = glob(["testdata/starlark_java/**/*"]),
+    strip_prefix = "example/golden/testdata/starlark_java",
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
 filegroup(
     name = "all_files",
     srcs = ["BUILD.bazel"] + glob(["*.go"]),

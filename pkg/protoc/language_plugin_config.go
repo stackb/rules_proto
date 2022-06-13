@@ -2,7 +2,6 @@ package protoc
 
 import (
 	"fmt"
-	"sort"
 	"strconv"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -38,28 +37,12 @@ func newLanguagePluginConfig(name string) *LanguagePluginConfig {
 
 // GetOptions returns the sorted list of options with positive intent.
 func (c *LanguagePluginConfig) GetOptions() []string {
-	opts := make([]string, 0)
-	for opt, want := range c.Options {
-		if !want {
-			continue
-		}
-		opts = append(opts, opt)
-	}
-	sort.Strings(opts)
-	return opts
+	return ForIntent(c.Options, true)
 }
 
 // GetDeps returns the sorted list of deps with positive intent.
 func (c *LanguagePluginConfig) GetDeps() []string {
-	deps := make([]string, 0)
-	for dep, want := range c.Deps {
-		if !want {
-			continue
-		}
-		deps = append(deps, dep)
-	}
-	sort.Strings(deps)
-	return deps
+	return ForIntent(c.Deps, true)
 }
 
 func (c *LanguagePluginConfig) clone() *LanguagePluginConfig {

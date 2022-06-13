@@ -8,6 +8,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 )
 
 func TestLoadResolver(t *testing.T) {
@@ -222,9 +223,45 @@ func TestProvided(t *testing.T) {
 				known: tc.known,
 			}
 			got := resolver.Provided(tc.lang, tc.impLang)
-			if diff := cmp.Diff(tc.want, got); diff != "" {
+			if diff := cmp.Diff(tc.want, got, cmpopts.SortMaps(compareImportLabels)); diff != "" {
 				t.Errorf("Resolve() mismatch (-want +got):\n%s", diff)
 			}
 		})
 	}
+}
+
+func compareImportLabels(x, y importLabels) bool {
+	if len(x) != len(y) {
+		return len(x) < len(y)
+	}
+	a := importLabelEntries(x)
+	b := importLabelEntries(y)
+
+	for i := 0; i < len(a); i++ {
+		r := a[i]
+		s := b[i]
+		if r.key != s.key {
+			return r.key < s.key
+		}
+		for j := 0; j < len(r.values); j++ {
+			if r.values[j].String() != s.values[j].String() {
+				return r.values[j].String() < s.values[j].String()
+			}
+		}
+	}
+
+	return true
+}
+
+func importLabelEntries(x importLabels) []importLabelEntry {
+	var a []importLabelEntry
+	for k, v := range x {
+		a = append(a, importLabelEntry{k, v})
+	}
+	return a
+}
+
+type importLabelEntry struct {
+	key    string
+	values []label.Label
 }

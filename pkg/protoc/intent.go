@@ -1,6 +1,7 @@
 package protoc
 
 import (
+	"sort"
 	"strings"
 )
 
@@ -20,4 +21,17 @@ func parseIntent(value string) *intent {
 		value = value[1:]
 	}
 	return &intent{Value: value, Want: !negative}
+}
+
+// ForIntent reduces a dict to a list by the given intent.
+func ForIntent(in map[string]bool, want bool) []string {
+	vals := make([]string, 0)
+	for val, intent := range in {
+		if intent != want {
+			continue
+		}
+		vals = append(vals, val)
+	}
+	sort.Strings(vals)
+	return vals
 }

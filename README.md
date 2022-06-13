@@ -1,3 +1,31 @@
+<!-- vscode-markdown-toc -->
+* 1. [`WORKSPACE` Boilerplate](#WORKSPACEBoilerplate)
+* 2. [Gazelle Setup](#GazelleSetup)
+* 3. [Gazelle Configuration](#GazelleConfiguration)
+	* 3.1. [Build Directives](#BuildDirectives)
+	* 3.2. [YAML Configuration](#YAMLConfiguration)
+* 4. [Running Gazelle](#RunningGazelle)
+* 5. [Build Rules](#BuildRules)
+	* 5.1. [proto_compile](#proto_compile)
+	* 5.2. [proto_plugin](#proto_plugin)
+	* 5.3. [proto_compiled_sources](#proto_compiled_sources)
+	* 5.4. [proto_compile_assets](#proto_compile_assets)
+	* 5.5. [The `output_mappings` attribute](#Theoutput_mappingsattribute)
+* 6. [Repository Rules](#RepositoryRules)
+* 7. [proto_repository](#proto_repository)
+* 8. [proto_gazelle](#proto_gazelle)
+* 9. [golden_filegroup](#golden_filegroup)
+* 10. [Plugin Implementations](#PluginImplementations)
+* 11. [Rule Implementations](#RuleImplementations)
+* 12. [+/- of golang implementations](#-ofgolangimplementations)
+* 13. [+/- of starlark implementations](#-ofstarlarkimplementations)
+
+<!-- vscode-markdown-toc-config
+	numbering=true
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
 # `rules_proto (v2)`
 
 [![Build status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/stackb-rules-proto)
@@ -47,11 +75,12 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
   - [proto_gazelle](#proto_gazelle)
 - [Plugin Implementations](#plugin-implementations)
 - [Rule Implementations](#rule-implementations)
+- [Writing Custom Plugins & Rules](#writing_custom_plugins___rules)
 - [History of this repository](#history)
 
 # Getting Started
 
-## `WORKSPACE` Boilerplate
+##  1. <a name='WORKSPACEBoilerplate'></a>`WORKSPACE` Boilerplate
 
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
@@ -149,7 +178,7 @@ protobuf_core_deps()
 > This brings in `@com_google_protobuf` and friends if you don't already have
 > them.
 
-## Gazelle Setup
+##  2. <a name='GazelleSetup'></a>Gazelle Setup
 
 ```python
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
@@ -174,12 +203,12 @@ gazelle(
 
 ---
 
-## Gazelle Configuration
+##  3. <a name='GazelleConfiguration'></a>Gazelle Configuration
 
 The gazelle extension can be configured using "build directives" and/or a YAML
 file.
 
-### Build Directives
+###  3.1. <a name='BuildDirectives'></a>Build Directives
 
 Gazelle is configured by special comments in BUILD files called _directives_.
 
@@ -245,7 +274,7 @@ Let's unpack this a bit:
 > suppress the language entirely, use
 > `gazelle:proto_language cpp enabled false`.
 
-### YAML Configuration
+###  3.2. <a name='YAMLConfiguration'></a>YAML Configuration
 
 You can also configure the extension using a YAML file. This is semantically
 similar to adding gazelle directives to the root `BUILD` file; the YAML
@@ -304,7 +333,7 @@ gazelle(
 )
 ```
 
-## Running Gazelle
+##  4. <a name='RunningGazelle'></a>Running Gazelle
 
 Now that we have the `WORKSPACE` setup and gazelle configured, we can run
 gazelle:
@@ -386,7 +415,7 @@ extensions should not _claim_ the same load namespace, so in order to prevent
 potential conflicts with other possible gazelle extensions, using the name
 `@rules_cc//cc:defs.bzl%cc_library` is undesirable.
 
-## Build Rules
+##  5. <a name='BuildRules'></a>Build Rules
 
 The core of `stackb/rules_proto` contains two build rules:
 
@@ -395,7 +424,7 @@ The core of `stackb/rules_proto` contains two build rules:
 | `proto_compile` | Executes the `protoc` tool.                             |
 | `proto_plugin`  | Provides static `protoc` plugin-specific configuration. |
 
-### proto_compile
+###  5.1. <a name='proto_compile'></a>proto_compile
 
 Example:
 
@@ -437,7 +466,7 @@ Takeaways:
   extension provided by [bazel-gazelle] is responsible for generating
   `proto_library`.
 
-### proto_plugin
+###  5.2. <a name='proto_plugin'></a>proto_plugin
 
 `proto_plugin` primarily provides the plugin tool executable. The example seen
 above is the simplest case where the plugin is builtin to `protoc` itself; no
@@ -450,7 +479,7 @@ for this is narrow. Generally it is preferred to say
 `# gazelle:proto_plugin foo option bar` such that the option can be interpreted
 during a gazelle run.
 
-### proto_compiled_sources
+###  5.3. <a name='proto_compiled_sources'></a>proto_compiled_sources
 
 `proto_compiled_sources` is used when you prefer to check the generated files
 into source control. This may be necessary for legacy reasons, during an initial
@@ -475,7 +504,7 @@ will be committed under source control. `3.` is used to prevent drift: if a
 developer modifies `thing.proto` and neglects to run the `.update` the test will
 fail in CI.
 
-### proto_compile_assets
+###  5.4. <a name='proto_compile_assets'></a>proto_compile_assets
 
 The macro `proto_compile_assets` aggregates a list of dependencies (which
 provide `ProtoCompileInfo`) into a single runnable target that copies files in
@@ -497,7 +526,7 @@ proto_compile_assets(
 )
 ```
 
-### The `output_mappings` attribute
+###  5.5. <a name='Theoutput_mappingsattribute'></a>The `output_mappings` attribute
 
 Consider the following rule within the package `example/thing`:
 
@@ -575,9 +604,9 @@ the actual output location does not match the desired location. This can occur
 if the proto `package` statement does not match the Bazel package path, or in
 special circumstances specific to the plugin itself (like `go_package`).
 
-## Repository Rules
+##  6. <a name='RepositoryRules'></a>Repository Rules
 
-## proto_repository
+##  7. <a name='proto_repository'></a>proto_repository
 
 From an implementation standpoint, this is very similar to the `go_repository`
 rule. Both can download external files and then run the gazelle generator over
@@ -693,7 +722,7 @@ imports. Therefore, when gazelle is preparing a `go_library` rule and finds a
 To take advantage of this mechanism in the default workspace, use the
 `proto_gazelle` rule.
 
-## proto_gazelle
+##  8. <a name='proto_gazelle'></a>proto_gazelle
 
 `proto_gazelle` is not a repository rule: it's just like the typical `gazelle`
 rule, but with extra deps resolution superpowers. But, we discuss it here since
@@ -728,7 +757,7 @@ figure out the import dependency tree spanning `@bazelapis`, `@remoteapis`,
 
 This works for any `proto_language`, with any set of custom protoc plugins.
 
-## golden_filegroup
+##  9. <a name='golden_filegroup'></a>golden_filegroup
 
 `golden_filegroup` is a utility macro for golden file testing. It works like a
 native filegroup, but adds `.update` and `.test` targets. Example:
@@ -757,7 +786,7 @@ golden_filegroup(
 )
 ```
 
-## Plugin Implementations
+##  10. <a name='PluginImplementations'></a>Plugin Implementations
 
 The plugin name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/plugin_name convention.
@@ -792,7 +821,7 @@ artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 | [stackb:grpc.js:protoc-gen-grpc-js](pkg/plugin/stackb/grpc_js/protoc-gen-grpc-js.go)                                   |
 | [stephenh:ts-proto:protoc-gen-ts-proto](pkg/plugin/stephenh/ts-proto/protoc-gen-ts-proto.go)                           |
 
-## Rule Implementations
+##  11. <a name='RuleImplementations'></a>Rule Implementations
 
 The rule name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/rule_name convention.
@@ -817,6 +846,38 @@ artifact identifiers that follow a GitHub org/repo/rule_name convention.
 
 Please consult the `example/` directory and unit tests for more additional
 detail.
+
+# Writing Custom Plugins & Rules
+
+Custom plugin implementations and rule implementations can be written in golang
+or starlark.  Golang implementations are statically compiled into the final
+`gazelle_binary` whereas starlark plugins are evaluated at gazelle runtime.
+
+##  12. <a name='-ofgolangimplementations'></a>+/- of golang implementations
+
+- `+` Full power of a statically compiled language, the golang stdlib, and
+  external dependencies.
+- `+` Easier to test.
+- `+` API not experimental.
+- `-` Cannot be used in a `proto_repository` rule without forking
+  stackb/rules_proto.
+- `-` Initial setup harder, often housed within your own custom gazelle
+  extension.
+
+Until a dedicated tutorial is available, please consult the source code for
+examples.
+
+##  13. <a name='-ofstarlarkimplementations'></a>+/- of starlark implementations
+
+- `+` More familiar to developer with starlark experience but not golang.
+- `+` Easier setup (*.star files in your gazelle repository)
+- `+` Possible to use in conjunction with the `proto_repository` rule.
+- `-` Limited API: can only reference state that has been already configured via gazelle directives.
+- `-` Not possible to implement stateful design.
+- `-` No standard library.
+
+Until a dedicated tutorial is available, please consult the reference example in
+`example/testdata/starlark_java`.
 
 # History
 

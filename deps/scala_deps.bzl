@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def scala_deps():
+    """scala dependency macro
+    """
     rules_jvm_external()  # via <TOP>
     bazel_skylib()  # via io_bazel_rules_scala
     io_bazel_rules_scala()  # via <TOP>

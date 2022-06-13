@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def nodejs_deps():
+    """nodejs dependency macro
+    """
     build_bazel_rules_nodejs()  # via <TOP>
 
 def build_bazel_rules_nodejs():

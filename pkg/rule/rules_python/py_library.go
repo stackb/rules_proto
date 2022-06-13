@@ -1,7 +1,6 @@
 package rules_python
 
 import (
-	"sort"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -59,15 +58,7 @@ func (s *PyLibrary) Deps() []string {
 
 // Visibility provides visibility labels.
 func (s *PyLibrary) Visibility() []string {
-	visibility := make([]string, 0)
-	for k, want := range s.RuleConfig.Visibility {
-		if !want {
-			continue
-		}
-		visibility = append(visibility, k)
-	}
-	sort.Strings(visibility)
-	return visibility
+	return s.RuleConfig.GetVisibility()
 }
 
 // Rule implements part of the ruleProvider interface.
