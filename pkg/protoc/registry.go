@@ -38,8 +38,6 @@ func (p *registry) RuleNames() []string {
 
 // MustRegisterRule implements part of the RuleRegistry interface.
 func (p *registry) MustRegisterRule(name string, rule LanguageRule) RuleRegistry {
-	// log.Println("Registering rule:", name)
-	// debug.PrintStack()
 	_, ok := p.rules[name]
 	if ok {
 		panic("duplicate proto_rule registration: " + name)

@@ -2,6 +2,7 @@ filegroup(
     name = "all_files",
     srcs = [
         "BUILD.bazel",
+        "bazel-gazelle-PR1274.patch",
         "zlib.BUILD",
     ],
     visibility = ["//:__pkg__"],
