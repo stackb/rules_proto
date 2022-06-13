@@ -64,8 +64,9 @@ def make_py_library_rule(self):
 	return rule
 
 def provide_rule(rctx, pctx):
-	#print(rctx)
-	#print(pctx)
+	print(rctx)
+	print("---")
+	print(pctx)
 	return struct(
 		name = rctx.name,
 		kind = "py_library",
@@ -85,9 +86,10 @@ protoc.Rule(
 				Options: map[string]bool{"grpc": true},
 			},
 			pc: &ProtocConfiguration{},
-			// 			wantPrinted: `LanguageRuleConfig(config = Config(repo_name = "", repo_root = "", work_dir = ""), deps = {}, enabled = False, implementation = "", name = "test", options = {"grpc": True}, visibility = {})
-			// ProtocConfiguration(imports = [], language_config = LanguageConfig(enabled = False, name = "", plugins = {}, protoc = "", rules = {}), mappings = {}, outputs = [], package_config = PackageConfig(config = Config(repo_name = "", repo_root = "", work_dir = "")), plugins = [], prefix = "", rel = "")
-			// `,
+			wantPrinted: `LanguageRuleConfig(attrs = {}, config = Config(repo_name = "", repo_root = "", work_dir = ""), deps = [], enabled = False, implementation = "", name = "test", options = ["grpc"], visibility = [])` +
+				"\n---\n" +
+				`ProtocConfiguration(imports = [], language_config = LanguageConfig(enabled = False, name = "", plugins = {}, protoc = "", rules = {}), mappings = {}, outputs = [], package_config = PackageConfig(config = Config(repo_name = "", repo_root = "", work_dir = "")), plugins = [], prefix = "", proto_library = ProtoLibrary(base_name = "", deps = [], files = [], imports = [], name = "", srcs = [], strip_import_prefix = ""), rel = "")` +
+				"\n",
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
