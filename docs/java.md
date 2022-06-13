@@ -16,7 +16,6 @@ parent: Examples
 ~~~python
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
-load("@rules_proto//proto:defs.bzl", "proto_library")
 
 # "proto_rule" instantiates the proto_compile rule
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
