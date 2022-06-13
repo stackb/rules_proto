@@ -18,7 +18,8 @@ func init() {
 	protoc.Rules().MustRegisterRule("stackb:rules_proto:grpc_web_js_library", &grpcWebJsLibrary{})
 }
 
-// grpcWebJsLibrary implements LanguageRule for the 'grpc_web_js_library' rule from @rules_proto.
+// grpcWebJsLibrary implements LanguageRule for the 'grpc_web_js_library' rule from @build_stack_rules_proto.
+// (which is essentially a wrapper for 'js_library' rule from @build_bazel_rules_nodejs)
 type grpcWebJsLibrary struct{}
 
 // Name implements part of the LanguageRule interface.
