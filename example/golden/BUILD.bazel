@@ -101,13 +101,13 @@ gazelle_testdata_example(
 gazelle_testdata_example(
     name = "grpc_gateway",
     srcs = glob(["testdata/grpc_gateway/**/*"]),
-    workspace_template = "builtin.WORKSPACE",
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "grpc_openapiv2",
     srcs = glob(["testdata/grpc_openapiv2/**/*"]),
-    workspace_template = "builtin.WORKSPACE",
+    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
