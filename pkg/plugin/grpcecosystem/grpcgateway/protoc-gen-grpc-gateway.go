@@ -32,12 +32,7 @@ func (p *protocGenGrpcGatewayPlugin) Configure(ctx *protoc.PluginContext) *proto
 }
 
 func (p *protocGenGrpcGatewayPlugin) shouldApply(lib protoc.ProtoLibrary) bool {
-	for _, f := range lib.Files() {
-		if f.HasServices() {
-			return true
-		}
-	}
-	return false
+	return protoc.HasServices(lib.Files()...)
 }
 
 func (p *protocGenGrpcGatewayPlugin) outputs(rel string, lib protoc.ProtoLibrary) []string {

@@ -32,12 +32,7 @@ func (p *protocGenGrpcOpenapiv2Plugin) Configure(ctx *protoc.PluginContext) *pro
 }
 
 func (p *protocGenGrpcOpenapiv2Plugin) shouldApply(lib protoc.ProtoLibrary) bool {
-	for _, f := range lib.Files() {
-		if f.HasServices() {
-			return true
-		}
-	}
-	return false
+	return protoc.HasServices(lib.Files()...)
 }
 
 func (p *protocGenGrpcOpenapiv2Plugin) outputs(rel string, lib protoc.ProtoLibrary) []string {
