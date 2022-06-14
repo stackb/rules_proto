@@ -45,3 +45,13 @@ prebuilt_protoc_deps()
 load("@build_stack_rules_proto//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
 protobuf_core_deps()
+
+# == gRPC Gateway ==
+
+load("@build_stack_rules_proto//deps:grpc_gateway_deps.bzl", "grpc_gateway_deps")
+
+grpc_gateway_deps()
+
+load("@build_stack_rules_proto//deps:grpc_gateway_openapiv2_deps.bzl", "grpc_gateway_openapiv2_deps")
+
+grpc_gateway_openapiv2_deps()
