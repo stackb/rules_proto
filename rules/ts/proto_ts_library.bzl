@@ -37,9 +37,9 @@ def _proto_ts_library_impl(ctx):
         dts_outputs.append(
             ctx.actions.declare_file(base + ".d.ts", sibling = f),
         )
-        # js_outputs.append(
-        #     ctx.actions.declare_file(base + ".js", sibling = f),
-        # )
+        js_outputs.append(
+            ctx.actions.declare_file(base + ".js", sibling = f),
+        )
 
     # all outputs (.d.ts + .js)
     outputs = js_outputs + dts_outputs
@@ -98,7 +98,7 @@ proto_ts_library = rule(
         ),
         "tsc": attr.label(
             allow_files = True,
-            cfg = "host",
+            cfg = "exec",
             mandatory = True,
             doc = "typescript compiler executable",
             executable = True,
