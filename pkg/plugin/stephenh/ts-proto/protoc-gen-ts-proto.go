@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -25,10 +26,11 @@ func (p *ProtocGenTsProto) Name() string {
 // Configure implements part of the Plugin interface.
 func (p *ProtocGenTsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	options := parseProtoTsLibraryOptions(p.Name(), ctx.PluginConfig.GetFlags())
+
 	tsFiles := make([]string, 0)
 	for _, file := range ctx.ProtoLibrary.Files() {
 		tsFile := file.Name + ".ts"
-		if options.excludeOutput[tsFile] {
+		if options.excludeOutput[filepath.Base(tsFile)] {
 			continue
 		}
 		if ctx.Rel != "" {

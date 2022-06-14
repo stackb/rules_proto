@@ -61,6 +61,9 @@ func (c *LanguagePluginConfig) clone() *LanguagePluginConfig {
 	for k, v := range c.Options {
 		clone.Options[k] = v
 	}
+	for k, v := range c.Flags {
+		clone.Flags[k] = v
+	}
 	for k, v := range c.Deps {
 		clone.Deps[k] = v
 	}
