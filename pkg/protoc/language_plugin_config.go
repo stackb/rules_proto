@@ -17,9 +17,11 @@ type LanguagePluginConfig struct {
 	Label label.Label
 	// Options is a set of option strings.
 	Options map[string]bool
+	// Flags is a set of flag strings.
+	Flags map[string]bool
 	// Deps is a set of dep labels.  For example, consider a plugin config for
 	// 'protoc-gen-go'.  That plugin produces .go files.  The 'Deps' field can
-	// be used by downstream Rule implmentations to gather necessary
+	// be used by downstream Rule implementations to gather necessary
 	// dependencies for the .go files produced by that plugin.
 	Deps map[string]bool
 	// Enabled flag
@@ -30,6 +32,7 @@ func newLanguagePluginConfig(name string) *LanguagePluginConfig {
 	return &LanguagePluginConfig{
 		Name:    name,
 		Options: make(map[string]bool),
+		Flags:   make(map[string]bool),
 		Deps:    make(map[string]bool),
 		Enabled: true,
 	}
@@ -43,6 +46,11 @@ func (c *LanguagePluginConfig) GetOptions() []string {
 // GetDeps returns the sorted list of deps with positive intent.
 func (c *LanguagePluginConfig) GetDeps() []string {
 	return ForIntent(c.Deps, true)
+}
+
+// GetFlags returns the list of Flags configured for the plugin.
+func (c *LanguagePluginConfig) GetFlags() []string {
+	return ForIntent(c.Flags, true)
 }
 
 func (c *LanguagePluginConfig) clone() *LanguagePluginConfig {
@@ -77,6 +85,8 @@ func (c *LanguagePluginConfig) parseDirective(cfg *PackageConfig, d, param, valu
 		c.Label = l
 	case "implementation":
 		c.Implementation = value
+	case "flag":
+		c.Flags[value] = intent.Want
 	case "option":
 		c.Options[value] = intent.Want
 	case "deps", "dep":
@@ -95,6 +105,9 @@ func (c *LanguagePluginConfig) fromYAML(y *YPlugin) error {
 	}
 	c.Implementation = y.Implementation
 	// only true intent is supported via yaml
+	for _, flag := range y.Flag {
+		c.Flags[flag] = true
+	}
 	for _, option := range y.Option {
 		c.Options[option] = true
 	}

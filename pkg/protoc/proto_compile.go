@@ -89,12 +89,16 @@ func (s *protoCompileRule) Visibility() []string {
 	return s.ruleConfig.GetVisibility()
 }
 
+func (s *protoCompileRule) Outputs() []string {
+	outputs := s.config.Outputs
+	sort.Strings(outputs)
+	return outputs
+}
+
 // Rule implements part of the ruleProvider interface.
 func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
-
-	outputs := s.config.Outputs
-	sort.Strings(outputs)
+	outputs := s.Outputs()
 
 	newRule.SetAttr(s.outputsAttrName, outputs)
 	newRule.SetAttr("plugins", GetPluginLabels(s.config.Plugins))
