@@ -16,7 +16,6 @@ tasks:
       - -//pkg/plugin/grpc/grpc:grpc_test # TODO(pcj): error "bazel_testing: read-only filesystem"
     test_flags:
       - --config=bazelci
-      - --deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
   default_workspace_macos:
     platform: macos
     test_targets:
@@ -27,4 +26,3 @@ tasks:
       - //rules/...
       - //toolchain/...
     test_flags:
-      - --deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
