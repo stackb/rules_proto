@@ -117,16 +117,23 @@
 # gazelle:proto_language closure_js rule proto_closure_js_library
 # gazelle:proto_language closure_js rule grpc_closure_js_library
 
-## node_js ##
+## Javascript ##
 # gazelle:proto_plugin node_js implementation builtin:js:common
 # gazelle:proto_plugin protoc-gen-grpc-node implementation grpc:grpc-node:protoc-gen-grpc-node
 # gazelle:proto_plugin protoc-gen-grpc-node option grpc_js
+# gazelle:proto_plugin protoc-gen-grpc-web implementation grpc:grpc-web:protoc-gen-grpc-web
+# gazelle:proto_plugin protoc-gen-grpc-web option mode=grpcwebtext
+# gazelle:proto_plugin protoc-gen-grpc-web option import_style=commonjs+dts
 # gazelle:proto_rule proto_nodejs_library implementation stackb:rules_proto:proto_nodejs_library
 # gazelle:proto_rule proto_nodejs_library visibility //visibility:public
 # gazelle:proto_rule grpc_nodejs_library implementation stackb:rules_proto:grpc_nodejs_library
 # gazelle:proto_rule grpc_nodejs_library visibility //visibility:public
+# gazelle:proto_rule grpc_web_js_library implementation stackb:rules_proto:grpc_web_js_library
+# gazelle:proto_rule grpc_web_js_library visibility //visibility:public
 # gazelle:proto_language node_js plugin node_js
 # gazelle:proto_language node_js plugin protoc-gen-grpc-node
+# gazelle:proto_language node_js plugin protoc-gen-grpc-web
 # gazelle:proto_language node_js rule proto_compile
 # gazelle:proto_language node_js rule proto_nodejs_library
 # gazelle:proto_language node_js rule grpc_nodejs_library
+# gazelle:proto_language node_js rule grpc_web_js_library

@@ -52,6 +52,10 @@ load("//deps:grpc_node_deps.bzl", "grpc_node_deps")
 
 grpc_node_deps()
 
+load("//deps:grpc_web_deps.bzl", "grpc_web_deps")
+
+grpc_web_deps()
+
 load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 
 ts_proto_deps()

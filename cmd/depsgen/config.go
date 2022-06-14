@@ -34,6 +34,7 @@ type ProtoDependencyInfo struct {
 	BuildFileContent   string
 	BuildFileProtoMode string
 	Deps               []*ProtoDependencyInfo
+	Executable         bool
 	Importpath         string
 	Label              string
 	Name               string

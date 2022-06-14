@@ -10,6 +10,7 @@ filegroup(
         "//pkg/plugin/grpc/grpcgo:all_files",
         "//pkg/plugin/grpc/grpcjava:all_files",
         "//pkg/plugin/grpc/grpcnode:all_files",
+        "//pkg/plugin/grpc/grpcweb:all_files",
         "//pkg/plugin/grpcecosystem/grpcgateway:all_files",
         "//pkg/plugin/scalapb/scalapb:all_files",
         "//pkg/plugin/stackb/grpc_js:all_files",

@@ -1,4 +1,4 @@
-"""proto_dependency.bzl 
+"""proto_dependency.bzl
 """
 
 load("//rules:providers.bzl", "ProtoDependencyInfo")
@@ -10,6 +10,7 @@ def _proto_dependency_impl(ctx):
             buildFileContent = ctx.attr.build_file_content,
             buildFileProtoMode = ctx.attr.build_file_proto_mode,
             deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
+            executable = ctx.attr.executable if ctx.attr.repository_rule == "http_file" else None,
             importpath = ctx.attr.importpath,
             label = str(ctx.label),
             name = ctx.attr.name,
@@ -46,6 +47,9 @@ proto_dependency = rule(
         "deps": attr.label_list(
             doc = "Additional transitive dependencies",
             providers = [ProtoDependencyInfo],
+        ),
+        "executable": attr.bool(
+            doc = "The executable attribute for http_file",
         ),
         "importpath": attr.string(
             doc = "The importpath attribute for go_repository",

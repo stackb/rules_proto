@@ -4,6 +4,7 @@ go_library(
     name = "rules_nodejs",
     srcs = [
         "grpc_nodejs_library.go",
+        "grpc_web_js_library.go",
         "js_library.go",
         "proto_nodejs_library.go",
         "proto_ts_library.go",
