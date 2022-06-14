@@ -1,0 +1,14 @@
+# gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go
+# gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
+# gazelle:proto_rule proto_go_library implementation stackb:rules_proto:proto_go_library
+# gazelle:proto_plugin protoc-gen-go dep @org_golang_google_protobuf//reflect/protoreflect
+# gazelle:proto_plugin protoc-gen-go dep @org_golang_google_protobuf//runtime/protoimpl
+# gazelle:proto_rule proto_go_library visibility //visibility:public
+# gazelle:proto_language go plugin protoc-gen-go
+# gazelle:proto_language go rule proto_compile
+# gazelle:proto_language go rule proto_go_library
+
+# gazelle:proto_plugin protoc-gen-grpc-openapiv2 implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-openapiv2
+# gazelle:proto_plugin protoc-gen-grpc-openapiv2 option logtostderr=true
+# gazelle:proto_plugin protoc-gen-grpc-openapiv2 option use_go_templates=true
+# gazelle:proto_language go plugin protoc-gen-grpc-openapiv2

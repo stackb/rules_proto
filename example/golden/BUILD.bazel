@@ -105,6 +105,12 @@ gazelle_testdata_example(
 )
 
 gazelle_testdata_example(
+    name = "grpc_openapiv2",
+    srcs = glob(["testdata/grpc_openapiv2/**/*"]),
+    workspace_template = "builtin.WORKSPACE",
+)
+
+gazelle_testdata_example(
     name = "proto_repository",
     srcs = glob(["testdata/proto_repository/**/*"]),
     extra_test_content = """
