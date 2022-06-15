@@ -2,10 +2,20 @@ syntax = "proto3";
 
 option go_package = "./;pb";
 
+import "google/api/annotations.proto";
+
 enum Enum{
   UNKNOWN = 0;
 }
 
 message Message{}
 
-service Service{}
+service Service {
+  rpc Test (Message) returns (Message) {
+    option (google.api.http) = {
+      post: "/test"
+      body: "*"
+    };
+  }
+
+}

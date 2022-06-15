@@ -8,6 +8,12 @@
 # gazelle:proto_language go rule proto_compile
 # gazelle:proto_language go rule proto_go_library
 
+# gazelle:proto_plugin protoc-gen-go-grpc implementation grpc:grpc-go:protoc-gen-go-grpc
+# gazelle:proto_plugin protoc-gen-go-grpc dep @org_golang_google_grpc//:go_default_library
+# gazelle:proto_plugin protoc-gen-go-grpc dep @org_golang_google_grpc//codes
+# gazelle:proto_plugin protoc-gen-go-grpc dep @org_golang_google_grpc//status
+# gazelle:proto_language go plugin protoc-gen-go-grpc
+
 # gazelle:proto_plugin protoc-gen-grpc-gateway implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway
 # gazelle:proto_plugin protoc-gen-grpc-gateway option logtostderr=true
 # gazelle:proto_plugin protoc-gen-grpc-gateway option generate_unbound_methods=true
