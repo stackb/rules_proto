@@ -6,6 +6,7 @@ filegroup(
         "//plugin/builtin:all_files",
         "//plugin/gogo/protobuf:all_files",
         "//plugin/golang/protobuf:all_files",
+        "//plugin/grpc-ecosystem/grpc-gateway:all_files",
         "//plugin/grpc/grpc:all_files",
         "//plugin/grpc/grpc-go:all_files",
         "//plugin/grpc/grpc-java:all_files",
