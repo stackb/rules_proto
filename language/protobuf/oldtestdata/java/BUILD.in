@@ -1,3 +1,0 @@
-# gazelle:proto_language java plugin java_proto
-# gazelle:proto_language java plugin java_grpc
-# gazelle:proto_language java rule proto_compile
