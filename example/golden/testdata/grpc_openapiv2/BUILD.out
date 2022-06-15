@@ -29,7 +29,6 @@ proto_compile(
         "logtostderr=true",
         "use_go_templates=true",
     ]},
-    output_mappings = ["example.pb.go=pb/example.pb.go"],
     outputs = [
         "example.pb.go",
         "example.swagger.json",
@@ -44,6 +43,7 @@ proto_compile(
 proto_go_library(
     name = "pb_go_proto",
     srcs = ["example.pb.go"],
+    importpath = "./",
     visibility = ["//visibility:public"],
     deps = [
         "@org_golang_google_protobuf//reflect/protoreflect",
