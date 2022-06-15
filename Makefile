@@ -23,5 +23,4 @@ site:
 
 .PHONY: test
 test:
-	$(BAZEL) test //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
-		--deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
+	$(BAZEL) test //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/...
