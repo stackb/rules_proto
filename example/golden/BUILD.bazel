@@ -74,6 +74,12 @@ gazelle_testdata_example(
 )
 
 gazelle_testdata_example(
+    name = "go_grpc",
+    srcs = glob(["testdata/go_grpc/*"]),
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
     name = "gogo",
     srcs = glob(["testdata/gogo/*"]),
     workspace_template = "prebuilt.WORKSPACE",
