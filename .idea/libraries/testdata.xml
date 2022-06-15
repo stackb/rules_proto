@@ -1,0 +1,32 @@
+<component name="libraryTable">
+  <library name="testdata">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/utf8-winrar.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/zip64.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/winxp.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/utf8-winzip.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/zip64-2.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/symlink.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/utf8-7zip.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/time-win7.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/time-winrar.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/utf8-infozip.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/crc32-not-streamed.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/time-infozip.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/dd.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/readme.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/utf8-osx.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/time-osx.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/test.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/time-go.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/time-7zip.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/time-22738.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/go-with-datadesc-sig.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/time-winzip.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/unix.zip!/" />
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/archive/zip/testdata/test-trailing-junk.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

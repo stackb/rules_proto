@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a4296fa9-4c60-4ccc-b1ac-4b904d0b8ff6" name="Changes" comment="Add grpc-gateway plugins to filegroup">
+      <change beforePath="$PROJECT_DIR$/example/golden/testdata/grpc_gateway/BUILD.out" beforeDir="false" afterPath="$PROJECT_DIR$/example/golden/testdata/grpc_gateway/BUILD.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/golden/testdata/grpc_gateway/example.proto" beforeDir="false" afterPath="$PROJECT_DIR$/example/golden/testdata/grpc_gateway/example.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/golden/testdata/grpc_openapiv2/BUILD.out" beforeDir="false" afterPath="$PROJECT_DIR$/example/golden/testdata/grpc_openapiv2/BUILD.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/golden/testdata/grpc_openapiv2/example.proto" beforeDir="false" afterPath="$PROJECT_DIR$/example/golden/testdata/grpc_openapiv2/example.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/golden/testdata/proto_repository/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/example/golden/testdata/proto_repository/README.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package.json" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file://$USER_HOME$/go1.18.3" />
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="grpc-gateway-ts" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="SOFT" />
+  </component>
+  <component name="GitRewordedCommitMessages">
+    <option name="onto" value="970a8ee6759b0dd97ee2b3ec2c0eb46746716619" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/.bazelci/presubmit.yml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/.gitignore" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/.idea/vcs.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/WORKSPACE" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/bazel-bin/example/golden/grpc_gateway.json" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/bazel-bin/example/golden/grpc_gateway_test.go" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/bazel-bin/example/golden/grpc_openapiv2_test_/grpc_openapiv2_test.runfiles_manifest" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/bazel-bin/example/golden/grpc_openapiv2_test_/testmain.go" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/deps/BUILD.bazel" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/BUILD.bazel" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/BUILD.bazel" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/builtin.WORKSPACE" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/golden_test.go" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/prebuilt.WORKSPACE" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/csharp/.bazelrc" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/csharp/BUILD.in" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/csharp/BUILD.out" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/csharp/WORKSPACE" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/csharp/example.proto" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/go/.bazelrc" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/go/BUILD.in" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/go/BUILD.out" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/go/WORKSPACE" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/go/example.proto" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/grpc_gateway/BUILD.in" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/grpc_gateway/BUILD.out" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/golden/testdata/grpc_gateway/example.proto" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/routeguide/BUILD.bazel" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/routeguide/closure/BUILD.bazel" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/pkg/plugin/grpcecosystem/grpcgateway/protoc-gen-grpc-gateway.go" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/plugin/BUILD.bazel" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/plugin/golang/protobuf/BUILD.bazel" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/plugin/grpc-ecosystem/grpc-gateway/BUILD.bazel" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/plugin/stackb/grpc_js/BUILD.bazel" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/plugin/stephenh/ts-proto/BUILD.bazel" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/rules/example.bzl" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2AZRscs29sqcKIv0GElIz7NeA9q" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.vendoring.notification.had.been.shown&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;11&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/default/Workspaces/heartless-clown/rules_proto/example/golden/testdata/grpc_openapiv2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example/golden/testdata/grpc_openapiv2" />
+      <recent name="$PROJECT_DIR$/example/golden/testdata/grpc_gateway" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="rules_proto" />
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-i" />
+      <kind value="FILE" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestGoldens in github.com/stackb/rules_proto/example/golden" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="rules_proto" />
+      <working_directory value="$PROJECT_DIR$/example/golden" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/stackb/rules_proto/example/golden" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestGoldens\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="rules_proto" />
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-i" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestGoldens in github.com/stackb/rules_proto/example/golden" />
+        <item itemvalue="Go Test.TestGoldens in github.com/stackb/rules_proto/example/golden" />
+        <item itemvalue="Go Test.TestGoldens in github.com/stackb/rules_proto/example/golden" />
+        <item itemvalue="Go Test.TestGoldens in github.com/stackb/rules_proto/example/golden" />
+        <item itemvalue="Go Test.TestGoldens in github.com/stackb/rules_proto/example/golden" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a4296fa9-4c60-4ccc-b1ac-4b904d0b8ff6" name="Changes" comment="" />
+      <created>1655215332838</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1655215332838</updated>
+      <workItem from="1655215340779" duration="13404000" />
+      <workItem from="1655229166434" duration="15454000" />
+    </task>
+    <task id="LOCAL-00001" summary="Add //plugin/grpc-ecosystem/grpc-gateway to CI">
+      <created>1655219849570</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1655219849570</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fixme! initial tests for grpc-gateway">
+      <created>1655224601317</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1655224601317</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fixme! initial tests for grpc-gateway">
+      <created>1655224788004</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1655224788004</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add golden test for grpc-gateway plugin">
+      <created>1655227329365</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1655227329365</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add golden test for grpc-openapiv2 plugin">
+      <created>1655228075304</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1655228075304</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Change workspace template in golden tests for grpc-gateway and grpc-openapiv2 plugins">
+      <created>1655229467449</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1655229467449</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Change workspace template in golden tests for grpc-gateway and grpc-openapiv2 plugins">
+      <created>1655229888310</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1655229888310</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add grpc-gateway deps to prebuilt.WORKSPACE">
+      <created>1655230960694</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1655230960694</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Refactor shouldApply() implementation for grpc-gateway and grpc-openapiv2">
+      <created>1655234798450</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1655234798450</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Lint bzl files">
+      <created>1655245437280</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1655245437280</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Lint bzl files">
+      <created>1655255200075</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1655255200075</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Add grpc-ecosystem plugins to filegroup">
+      <created>1655257282497</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1655257282497</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add grpc-gateway plugins to filegroup">
+      <created>1655257480827</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1655257480827</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Add grpc-gateway plugins to filegroup">
+      <created>1655257643709</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1655257643709</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/bazel-bin/any.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/any.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/timestamp.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/timestamp.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/type.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/type.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/duration.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/duration.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/struct.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/struct.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/source_context.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/source_context.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/empty.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/empty.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/field_mask.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/field_mask.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/descriptor.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/descriptor.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/wrappers.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/wrappers.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/source_context.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/source_context.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/any.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/any.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/timestamp.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/timestamp.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/type.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/type.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/empty.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/empty.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/duration.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/duration.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/field_mask.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/field_mask.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/struct.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/struct.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/descriptor.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/descriptor.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/wrappers.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/wrappers.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/api.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/api.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/compiler/plugin.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/google/protobuf/compiler/plugin.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-bin/example/thing/thing.js" />
+        <option value="$PROJECT_DIR$/bazel-bin/example/thing/thing.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/any.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/any.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/timestamp.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/timestamp.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/type.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/type.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/duration.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/duration.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/struct.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/struct.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/source_context.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/source_context.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/empty.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/empty.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/field_mask.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/field_mask.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/descriptor.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/descriptor.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/wrappers.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/wrappers.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/source_context.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/source_context.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/any.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/any.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/timestamp.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/timestamp.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/type.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/type.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/empty.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/empty.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/duration.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/duration.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/field_mask.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/field_mask.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/struct.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/struct.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/descriptor.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/descriptor.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/wrappers.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/wrappers.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/api.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/api.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/compiler/plugin.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/google/protobuf/compiler/plugin.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/example/thing/thing.js" />
+        <option value="$PROJECT_DIR$/bazel-out/k8-fastbuild/bin/example/thing/thing.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/any.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/any.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/timestamp.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/timestamp.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/type.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/type.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/duration.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/duration.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/struct.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/struct.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/source_context.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/source_context.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/empty.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/empty.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/field_mask.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/field_mask.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/descriptor.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/descriptor.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/wrappers.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/wrappers.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/source_context.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/source_context.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/any.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/any.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/timestamp.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/timestamp.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/type.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/type.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/empty.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/empty.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/duration.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/duration.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/field_mask.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/field_mask.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/struct.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/struct.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/descriptor.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/descriptor.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/wrappers.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/wrappers.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/api.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/api.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/compiler/plugin.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/google/protobuf/compiler/plugin.d.ts" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/example/thing/thing.js" />
+        <option value="$PROJECT_DIR$/bazel-rules_proto/bazel-out/k8-fastbuild/bin/example/thing/thing.d.ts" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                        <option value="master" />
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add //plugin/grpc-ecosystem/grpc-gateway to CI" />
+    <MESSAGE value="fixme! initial tests for grpc-gateway" />
+    <MESSAGE value="Add golden test for grpc-gateway plugin" />
+    <MESSAGE value="Add golden test for grpc-openapiv2 plugin" />
+    <MESSAGE value="Change workspace template in golden tests for grpc-gateway and grpc-openapiv2 plugins" />
+    <MESSAGE value="Add grpc-gateway deps to prebuilt.WORKSPACE" />
+    <MESSAGE value="Refactor shouldApply() implementation for grpc-gateway and grpc-openapiv2" />
+    <MESSAGE value="Lint bzl files" />
+    <MESSAGE value="Add grpc-ecosystem plugins to filegroup" />
+    <MESSAGE value="Add grpc-gateway plugins to filegroup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add grpc-gateway plugins to filegroup" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>

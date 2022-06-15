@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jrt-fs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/bazel_tools/jdk/lib/jrt-fs.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

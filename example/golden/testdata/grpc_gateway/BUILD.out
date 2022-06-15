@@ -35,7 +35,6 @@ proto_compile(
         "generate_unbound_methods=true",
         "logtostderr=true",
     ]},
-    output_mappings = ["example.pb.go=pb/example.pb.go"],
     outputs = [
         "example.pb.go",
         "example.pb.gw.go",
@@ -53,6 +52,7 @@ proto_go_library(
         "example.pb.go",
         "example.pb.gw.go",
     ],
+    importpath = "./",
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options",

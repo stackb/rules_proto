@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="fs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/src/html/template/testdata/fs.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

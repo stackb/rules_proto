@@ -1,0 +1,24 @@
+Index: example/golden/testdata/proto_repository/README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># proto_repository\n\nThis test demonstrates the use of proto_repository and go language generation.\nA few notes about the test:\n\n- The files are used in both \"//example/golden:golden_test\" (a golden test) and\n  \"//example/golden:proto_repository_test\" (go_bazel_test).\n- The proto mode is \"file\", so the proto_library rule for \"app.proto\" has two\n  dependencies: one for annotations.proto and another for field_behavior.proto.\n  Yet, the proto_go_library has only a single dependency on\n  annotations_go_proto.  This is because go sources that share the same\n  \"importpath\" must be compiled together under a single go_library rule.\n  Therefore, there is logic that merges proto_go_library rules when they share\n  the same importpath.  The relationship of annotations.proto and\n  field_behavior.proto tests this merge behavior.\n\n## //example/golden:golden_test (golden test)\n\n- Only the \".gazelle.args and \"imports.csv\" file is used in the golden test.\n  This simulates the existence of the \"@googleapis\" repo and the imports.csv\n  file file that it would produce.  Only the two relevant entries of the file\n  are included for deps resolution of the proto_library and proto_go_library\n  rules.\n\n## //example/golden:proto_repository_test\" (go_bazel_test)\n\n- This runs \"bazel build ...\" and then \"bazel run //:gazelle\", \"bazel build\n  //...\".\n- The effective WORKSPACE file is a concatenation of \"prebuilt.WORKSPACE\" and\n  the \"WORKSPACE\" file here.\n- The order of loads in that effective workspace are important, namely we need\n  to load newer versions of @org_golang_google_grpc before rules_go or gazelle\n  try and do that.\n- proto file mode is used.\n- override_go_googleapis = True is needed to rewrite labels that would normally\n  be in the \"go_googleapis\" external workspace.\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/example/golden/testdata/proto_repository/README.md b/example/golden/testdata/proto_repository/README.md
+--- a/example/golden/testdata/proto_repository/README.md	(revision 80f8fd7551af6c442438c334c6cda7391ae85975)
++++ b/example/golden/testdata/proto_repository/README.md	(date 1655258762002)
+@@ -18,11 +18,11 @@
+ 
+ - Only the ".gazelle.args and "imports.csv" file is used in the golden test.
+   This simulates the existence of the "@googleapis" repo and the imports.csv
+-  file file that it would produce.  Only the two relevant entries of the file
++  file that it would produce.  Only the two relevant entries of the file
+   are included for deps resolution of the proto_library and proto_go_library
+   rules.
+ 
+-## //example/golden:proto_repository_test" (go_bazel_test)
++## //example/golden:proto_repository_test (go_bazel_test)
+ 
+ - This runs "bazel build ..." and then "bazel run //:gazelle", "bazel build
+   //...".

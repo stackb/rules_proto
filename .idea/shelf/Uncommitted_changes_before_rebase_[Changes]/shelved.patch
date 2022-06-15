@@ -1,0 +1,112 @@
+Index: example/golden/testdata/grpc_gateway/example.proto
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>syntax = \"proto3\";\n\noption go_package = \"pb\";\n\nenum Enum{\n  UNKNOWN = 0;\n}\n\nmessage Message{}\n\nservice Service{}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/example/golden/testdata/grpc_gateway/example.proto b/example/golden/testdata/grpc_gateway/example.proto
+--- a/example/golden/testdata/grpc_gateway/example.proto	(revision 5534b64b667dc9c5e66ea2b1b1293fb2309bbb0d)
++++ b/example/golden/testdata/grpc_gateway/example.proto	(date 1655258505338)
+@@ -1,6 +1,6 @@
+ syntax = "proto3";
+ 
+-option go_package = "pb";
++option go_package = "./;pb";
+ 
+ enum Enum{
+   UNKNOWN = 0;
+Index: example/golden/testdata/grpc_openapiv2/example.proto
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>syntax = \"proto3\";\n\noption go_package = \"pb\";\n\nenum Enum{\n  UNKNOWN = 0;\n}\n\nmessage Message{}\n\nservice Service{}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/example/golden/testdata/grpc_openapiv2/example.proto b/example/golden/testdata/grpc_openapiv2/example.proto
+--- a/example/golden/testdata/grpc_openapiv2/example.proto	(revision 5534b64b667dc9c5e66ea2b1b1293fb2309bbb0d)
++++ b/example/golden/testdata/grpc_openapiv2/example.proto	(date 1655258665342)
+@@ -1,6 +1,6 @@
+ syntax = "proto3";
+ 
+-option go_package = "pb";
++option go_package = "./;pb";
+ 
+ enum Enum{
+   UNKNOWN = 0;
+Index: example/golden/testdata/grpc_openapiv2/BUILD.out
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>load(\"@rules_proto//proto:defs.bzl\", \"proto_library\")\nload(\"@build_stack_rules_proto//rules/go:proto_go_library.bzl\", \"proto_go_library\")\nload(\"@build_stack_rules_proto//rules:proto_compile.bzl\", \"proto_compile\")\n\n# gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go\n# gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile\n# gazelle:proto_rule proto_go_library implementation stackb:rules_proto:proto_go_library\n# gazelle:proto_plugin protoc-gen-go dep @org_golang_google_protobuf//reflect/protoreflect\n# gazelle:proto_plugin protoc-gen-go dep @org_golang_google_protobuf//runtime/protoimpl\n# gazelle:proto_rule proto_go_library visibility //visibility:public\n# gazelle:proto_language go plugin protoc-gen-go\n# gazelle:proto_language go rule proto_compile\n# gazelle:proto_language go rule proto_go_library\n\n# gazelle:proto_plugin protoc-gen-grpc-openapiv2 implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-openapiv2\n# gazelle:proto_plugin protoc-gen-grpc-openapiv2 option logtostderr=true\n# gazelle:proto_plugin protoc-gen-grpc-openapiv2 option use_go_templates=true\n# gazelle:proto_language go plugin protoc-gen-grpc-openapiv2\n\nproto_library(\n    name = \"pb_proto\",\n    srcs = [\"example.proto\"],\n    visibility = [\"//visibility:public\"],\n)\n\nproto_compile(\n    name = \"pb_go_compile\",\n    options = {\"@build_stack_rules_proto//plugin/grpc-ecosystem/grpc-gateway:protoc-gen-grpc-openapiv2\": [\n        \"logtostderr=true\",\n        \"use_go_templates=true\",\n    ]},\n    output_mappings = [\"example.pb.go=pb/example.pb.go\"],\n    outputs = [\n        \"example.pb.go\",\n        \"example.swagger.json\",\n    ],\n    plugins = [\n        \"@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go\",\n        \"@build_stack_rules_proto//plugin/grpc-ecosystem/grpc-gateway:protoc-gen-grpc-openapiv2\",\n    ],\n    proto = \"pb_proto\",\n)\n\nproto_go_library(\n    name = \"pb_go_proto\",\n    srcs = [\"example.pb.go\"],\n    visibility = [\"//visibility:public\"],\n    deps = [\n        \"@org_golang_google_protobuf//reflect/protoreflect\",\n        \"@org_golang_google_protobuf//runtime/protoimpl\",\n    ],\n)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/example/golden/testdata/grpc_openapiv2/BUILD.out b/example/golden/testdata/grpc_openapiv2/BUILD.out
+--- a/example/golden/testdata/grpc_openapiv2/BUILD.out	(revision 5534b64b667dc9c5e66ea2b1b1293fb2309bbb0d)
++++ b/example/golden/testdata/grpc_openapiv2/BUILD.out	(date 1655258716558)
+@@ -29,7 +29,6 @@
+         "logtostderr=true",
+         "use_go_templates=true",
+     ]},
+-    output_mappings = ["example.pb.go=pb/example.pb.go"],
+     outputs = [
+         "example.pb.go",
+         "example.swagger.json",
+@@ -44,6 +43,7 @@
+ proto_go_library(
+     name = "pb_go_proto",
+     srcs = ["example.pb.go"],
++    importpath = "./",
+     visibility = ["//visibility:public"],
+     deps = [
+         "@org_golang_google_protobuf//reflect/protoreflect",
+Index: example/golden/testdata/grpc_gateway/BUILD.out
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>load(\"@rules_proto//proto:defs.bzl\", \"proto_library\")\nload(\"@build_stack_rules_proto//rules/go:proto_go_library.bzl\", \"proto_go_library\")\nload(\"@build_stack_rules_proto//rules:proto_compile.bzl\", \"proto_compile\")\n\n# gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go\n# gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile\n# gazelle:proto_rule proto_go_library implementation stackb:rules_proto:proto_go_library\n# gazelle:proto_plugin protoc-gen-go dep @org_golang_google_protobuf//reflect/protoreflect\n# gazelle:proto_plugin protoc-gen-go dep @org_golang_google_protobuf//runtime/protoimpl\n# gazelle:proto_rule proto_go_library visibility //visibility:public\n# gazelle:proto_language go plugin protoc-gen-go\n# gazelle:proto_language go rule proto_compile\n# gazelle:proto_language go rule proto_go_library\n\n# gazelle:proto_plugin protoc-gen-grpc-gateway implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway\n# gazelle:proto_plugin protoc-gen-grpc-gateway option logtostderr=true\n# gazelle:proto_plugin protoc-gen-grpc-gateway option generate_unbound_methods=true\n# gazelle:proto_plugin protoc-gen-grpc-gateway dep @org_golang_google_grpc//grpclog\n# gazelle:proto_plugin protoc-gen-grpc-gateway dep @org_golang_google_grpc//metadata\n# gazelle:proto_plugin protoc-gen-grpc-gateway dep @org_golang_google_protobuf//proto\n# gazelle:proto_plugin protoc-gen-grpc-gateway dep @com_github_grpc_ecosystem_grpc_gateway_v2//runtime\n# gazelle:proto_plugin protoc-gen-grpc-gateway dep @com_github_grpc_ecosystem_grpc_gateway_v2//utilities\n# gazelle:proto_plugin protoc-gen-grpc-gateway dep @com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options\n# gazelle:proto_language go plugin protoc-gen-grpc-gateway\n\nproto_library(\n    name = \"pb_proto\",\n    srcs = [\"example.proto\"],\n    visibility = [\"//visibility:public\"],\n)\n\nproto_compile(\n    name = \"pb_go_compile\",\n    options = {\"@build_stack_rules_proto//plugin/grpc-ecosystem/grpc-gateway:protoc-gen-grpc-gateway\": [\n        \"generate_unbound_methods=true\",\n        \"logtostderr=true\",\n    ]},\n    output_mappings = [\"example.pb.go=pb/example.pb.go\"],\n    outputs = [\n        \"example.pb.go\",\n        \"example.pb.gw.go\",\n    ],\n    plugins = [\n        \"@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go\",\n        \"@build_stack_rules_proto//plugin/grpc-ecosystem/grpc-gateway:protoc-gen-grpc-gateway\",\n    ],\n    proto = \"pb_proto\",\n)\n\nproto_go_library(\n    name = \"pb_go_proto\",\n    srcs = [\n        \"example.pb.go\",\n        \"example.pb.gw.go\",\n    ],\n    visibility = [\"//visibility:public\"],\n    deps = [\n        \"@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options\",\n        \"@com_github_grpc_ecosystem_grpc_gateway_v2//runtime\",\n        \"@com_github_grpc_ecosystem_grpc_gateway_v2//utilities\",\n        \"@org_golang_google_grpc//grpclog\",\n        \"@org_golang_google_grpc//metadata\",\n        \"@org_golang_google_protobuf//proto\",\n        \"@org_golang_google_protobuf//reflect/protoreflect\",\n        \"@org_golang_google_protobuf//runtime/protoimpl\",\n    ],\n)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/example/golden/testdata/grpc_gateway/BUILD.out b/example/golden/testdata/grpc_gateway/BUILD.out
+--- a/example/golden/testdata/grpc_gateway/BUILD.out	(revision 5534b64b667dc9c5e66ea2b1b1293fb2309bbb0d)
++++ b/example/golden/testdata/grpc_gateway/BUILD.out	(date 1655258684368)
+@@ -35,7 +35,6 @@
+         "generate_unbound_methods=true",
+         "logtostderr=true",
+     ]},
+-    output_mappings = ["example.pb.go=pb/example.pb.go"],
+     outputs = [
+         "example.pb.go",
+         "example.pb.gw.go",
+@@ -53,6 +52,7 @@
+         "example.pb.go",
+         "example.pb.gw.go",
+     ],
++    importpath = "./",
+     visibility = ["//visibility:public"],
+     deps = [
+         "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options",
+Index: example/golden/testdata/proto_repository/README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># proto_repository\n\nThis test demonstrates the use of proto_repository and go language generation.\nA few notes about the test:\n\n- The files are used in both \"//example/golden:golden_test\" (a golden test) and\n  \"//example/golden:proto_repository_test\" (go_bazel_test).\n- The proto mode is \"file\", so the proto_library rule for \"app.proto\" has two\n  dependencies: one for annotations.proto and another for field_behavior.proto.\n  Yet, the proto_go_library has only a single dependency on\n  annotations_go_proto.  This is because go sources that share the same\n  \"importpath\" must be compiled together under a single go_library rule.\n  Therefore, there is logic that merges proto_go_library rules when they share\n  the same importpath.  The relationship of annotations.proto and\n  field_behavior.proto tests this merge behavior.\n\n## //example/golden:golden_test (golden test)\n\n- Only the \".gazelle.args and \"imports.csv\" file is used in the golden test.\n  This simulates the existence of the \"@googleapis\" repo and the imports.csv\n  file file that it would produce.  Only the two relevant entries of the file\n  are included for deps resolution of the proto_library and proto_go_library\n  rules.\n\n## //example/golden:proto_repository_test\" (go_bazel_test)\n\n- This runs \"bazel build ...\" and then \"bazel run //:gazelle\", \"bazel build\n  //...\".\n- The effective WORKSPACE file is a concatenation of \"prebuilt.WORKSPACE\" and\n  the \"WORKSPACE\" file here.\n- The order of loads in that effective workspace are important, namely we need\n  to load newer versions of @org_golang_google_grpc before rules_go or gazelle\n  try and do that.\n- proto file mode is used.\n- override_go_googleapis = True is needed to rewrite labels that would normally\n  be in the \"go_googleapis\" external workspace.\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/example/golden/testdata/proto_repository/README.md b/example/golden/testdata/proto_repository/README.md
+--- a/example/golden/testdata/proto_repository/README.md	(revision 5534b64b667dc9c5e66ea2b1b1293fb2309bbb0d)
++++ b/example/golden/testdata/proto_repository/README.md	(date 1655256794296)
+@@ -18,11 +18,11 @@
+ 
+ - Only the ".gazelle.args and "imports.csv" file is used in the golden test.
+   This simulates the existence of the "@googleapis" repo and the imports.csv
+-  file file that it would produce.  Only the two relevant entries of the file
++  file that it would produce.  Only the two relevant entries of the file
+   are included for deps resolution of the proto_library and proto_go_library
+   rules.
+ 
+-## //example/golden:proto_repository_test" (go_bazel_test)
++## //example/golden:proto_repository_test (go_bazel_test)
+ 
+ - This runs "bazel build ..." and then "bazel run //:gazelle", "bazel build
+   //...".

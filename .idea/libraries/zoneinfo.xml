@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="zoneinfo">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bazel-rules_proto/external/go_sdk/lib/time/zoneinfo.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
