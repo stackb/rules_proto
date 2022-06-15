@@ -15,7 +15,7 @@ deps:
 	cp -f ./bazel-bin/deps/*.bzl deps/
 	chmod 0644 deps/*.bzl
 	$(BAZEL) run //:buildifier -- deps/
-		
+
 .PHONY: site
 site:
 	$(BAZEL) build //example/golden:*
@@ -24,4 +24,3 @@ site:
 .PHONY: test
 test:
 	$(BAZEL) test //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
-		--deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
