@@ -25,7 +25,7 @@ func (p *ProtocGenTsProto) Name() string {
 
 // Configure implements part of the Plugin interface.
 func (p *ProtocGenTsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
-	flags := parseProtoTsLibraryOptions(p.Name(), ctx.PluginConfig.GetFlags())
+	flags := parseProtocGenTsProtoOptions(p.Name(), ctx.PluginConfig.GetFlags())
 
 	var emitImportedFiles bool
 	options := ctx.PluginConfig.GetOptions()
@@ -69,7 +69,7 @@ type protocGenTsProtoOptions struct {
 	excludeOutput map[string]bool
 }
 
-func parseProtoTsLibraryOptions(kindName string, args []string) *protocGenTsProtoOptions {
+func parseProtocGenTsProtoOptions(kindName string, args []string) *protocGenTsProtoOptions {
 	flags := flag.NewFlagSet(kindName, flag.ExitOnError)
 
 	var excludeOutput string

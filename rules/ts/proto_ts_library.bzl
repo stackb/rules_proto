@@ -77,7 +77,13 @@ def _proto_ts_library_impl(ctx):
         ),
         # default info contains all files, in case someone wanted it for a
         # filegroup etc.
-        DefaultInfo(files = depset(direct = outputs)),
+        DefaultInfo(
+            files = depset(direct = outputs),
+            runfiles = ctx.runfiles(
+                collect_default = True,
+                collect_data = True,
+            ),
+        ),
         # js files, in the event someone would like this for js_library etc.
         JSModuleInfo(
             direct_sources = js_module,
@@ -95,6 +101,10 @@ proto_ts_library = rule(
         "srcs": attr.label_list(
             allow_files = True,
             doc = "source .ts files",
+        ),
+        "data": attr.label_list(
+            allow_files = True,
+            doc = "additional data dependencies",
         ),
         "tsc": attr.label(
             allow_files = True,
