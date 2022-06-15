@@ -70,7 +70,6 @@ func (s *protoTsLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver:       protoc.ResolveDepsAttr("deps", true),
 	}
 }
 
@@ -81,7 +80,6 @@ type tsLibrary struct {
 	Outputs        []string
 	Config         *protoc.ProtocConfiguration
 	RuleConfig     *protoc.LanguageRuleConfig
-	Resolver       protoc.DepsResolver
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -151,8 +149,5 @@ func (s *tsLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []r
 
 // Resolve implements part of the RuleProvider interface.
 func (s *tsLibrary) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-	if s.Resolver == nil {
-		return
-	}
-	s.Resolver(c, ix, r, imports, from)
+	protoc.ResolveDepsAttr("deps", false /* resolve wkts */)(c, ix, r, imports, from)
 }
