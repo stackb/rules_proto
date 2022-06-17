@@ -91,6 +91,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 grpc_cc_library(
@@ -126,6 +127,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-cpp",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_compile(
@@ -157,6 +159,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go-grpc",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_go_library(
@@ -212,6 +215,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/grpc/grpc-java:protoc-gen-grpc-java",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_java_library(
@@ -257,6 +261,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/grpc/grpc-web:protoc-gen-grpc-web",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_nodejs_library(
@@ -285,6 +290,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_py_library(
@@ -328,6 +334,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_compile(
@@ -340,6 +347,7 @@ proto_compile(
     outputs = ["routeguide.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_ts_library(

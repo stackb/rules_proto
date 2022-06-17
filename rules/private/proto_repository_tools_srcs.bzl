@@ -42,8 +42,6 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//language/example:BUILD.bazel",
     "@build_stack_rules_proto//language/example:example.go",
     "@build_stack_rules_proto//language/protobuf:BUILD.bazel",
-    "@build_stack_rules_proto//language/protobuf/oldtestdata/gogo:BUILD.bazel",
-    "@build_stack_rules_proto//language/protobuf/oldtestdata/java:BUILD.bazel",
     "@build_stack_rules_proto//language/protobuf:protobuf.go",
     "@build_stack_rules_proto//pkg:BUILD.bazel",
     "@build_stack_rules_proto//pkg/goldentest:BUILD.bazel",
@@ -185,7 +183,5 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//rules/py:BUILD.bazel",
     "@build_stack_rules_proto//rules/scala:BUILD.bazel",
     "@build_stack_rules_proto//rules/ts:BUILD.bazel",
-    "@build_stack_rules_proto//rules/ts/node_modules/protobufjs/google/api:BUILD.bazel",
-    "@build_stack_rules_proto//rules/ts/node_modules/protobufjs/google/protobuf:BUILD.bazel",
     "@build_stack_rules_proto//toolchain:BUILD.bazel",
 ]
