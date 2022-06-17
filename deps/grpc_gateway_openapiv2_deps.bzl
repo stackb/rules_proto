@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def grpc_gateway_openapiv2_deps():
+    """grpc_gateway_openapiv2 dependency macro
+    """
     com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_darwin_x86_64()  # via <TOP>
     com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_linux_x86_64()  # via <TOP>
     com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_windows_x86_64()  # via <TOP>
