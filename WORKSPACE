@@ -92,6 +92,14 @@ load("//:go_deps.bzl", "go_deps")
 go_deps()
 
 # ----------------------------------------------------
+# Third-party proto dependencies
+# ----------------------------------------------------
+
+load("//deps:proto_repositories.bzl", "proto_repositories")
+
+proto_repositories()
+
+# ----------------------------------------------------
 # Core gRPC
 # ----------------------------------------------------
 

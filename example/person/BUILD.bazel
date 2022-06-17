@@ -43,6 +43,7 @@ proto_compile(
     outputs = ["person.js"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_cc_library(
@@ -64,6 +65,7 @@ proto_compile(
     ],
     plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_compile(
@@ -72,6 +74,7 @@ proto_compile(
     outputs = ["person.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_go_library(
@@ -92,6 +95,7 @@ proto_compile(
     outputs = ["person.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_java_library(
@@ -114,6 +118,7 @@ proto_compile(
     outputs = ["person_pb.js"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_nodejs_library(
@@ -133,6 +138,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/builtin:python",
     ],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_py_library(
@@ -150,6 +156,7 @@ proto_compile(
     outputs = ["person_scala.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_scala_library(
@@ -177,6 +184,7 @@ proto_compile(
     outputs = ["person.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_ts_library(
