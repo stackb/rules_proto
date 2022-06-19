@@ -13,6 +13,7 @@ proto_plugin(
 
 proto_plugin(
     name = "protoc-gen-grpc-openapiv2",
+    direct_mode = True,
     tool = select({
         "@bazel_tools//src/conditions:darwin_x86_64": "@com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_darwin_x86_64//file",
         "@bazel_tools//src/conditions:linux_x86_64": "@com_github_grpc_ecosystem_grpc_gateway_releases_download_v2_10_0_protoc_gen_openapiv2_2_10_0_linux_x86_64//file",

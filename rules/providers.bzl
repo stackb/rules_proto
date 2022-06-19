@@ -14,6 +14,7 @@ ProtoPluginInfo = provider(
         "exclusions": "Exclusion filters to apply when generating outputs with this plugin. Used to prevent generating files that are included in the protobuf library, for example. Can exclude either by proto name prefix or by proto folder prefix",
         "mods": "awk expressions to apply to the output files",
         "data": "Additional files required for running the plugin",
+        "direct_mode": "Whether the plugin add import roots and direct source files to protoc",
         "out": "The format for the --x_out argument.  Defaults to to {BIN_DIR}",
         "supplementary_proto_deps": "Additional proto dependencies whose descriptors/files should be included in all protoc invocations",
         "deps": "The list of workspace dependencies for this plugin",
