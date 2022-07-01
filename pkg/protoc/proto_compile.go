@@ -56,6 +56,9 @@ func (s *protoCompile) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *protoCompile) ProvideRule(cfg *LanguageRuleConfig, config *ProtocConfiguration) RuleProvider {
+	if len(config.Outputs) == 0 {
+		return nil
+	}
 	return &protoCompileRule{
 		kind:            "proto_compile",
 		nameSuffix:      "compile",
