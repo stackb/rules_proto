@@ -32,6 +32,7 @@ func TestProtoGenAkkaGrpcPlugin(t *testing.T) {
 			),
 			PluginName: "akka",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/akka/akka-grpc:protoc-gen-akka-grpc"),
 				plugintest.WithOutputs("test_akka_grpc.srcjar"),
 			),
 			SkipIntegration: true,

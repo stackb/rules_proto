@@ -16,6 +16,7 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			),
 			PluginName: "protoc-gen-go",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"),
 				plugintest.WithOutputs("test.pb.go"),
 			),
 			SkipIntegration: true,
@@ -27,6 +28,7 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			),
 			PluginName: "protoc-gen-go",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"),
 				plugintest.WithOutputs("github.com/example.com/test/test.pb.go"),
 			),
 			SkipIntegration: true,
@@ -39,6 +41,7 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			),
 			PluginName: "protoc-gen-go",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"),
 				plugintest.WithOptions("Mtest.proto=github.com/example.com/test"),
 				plugintest.WithOutputs("github.com/example.com/test/test.pb.go"),
 			),
@@ -53,6 +56,7 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			),
 			PluginName: "protoc-gen-go",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"),
 				plugintest.WithOptions(
 					"Mfoo.proto=github.com/example.com/foo",
 					"Mtest.proto=github.com/example.com/test",

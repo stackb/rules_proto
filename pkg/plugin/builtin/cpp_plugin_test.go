@@ -16,6 +16,7 @@ func TestCppPlugin(t *testing.T) {
 			),
 			PluginName: "cpp",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:cpp"),
 				plugintest.WithOutputs("test.pb.cc", "test.pb.h"),
 			),
 		},
@@ -26,6 +27,7 @@ func TestCppPlugin(t *testing.T) {
 				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:cpp"),
 				plugintest.WithOutputs("test.pb.cc", "test.pb.h"),
 			),
 		},
@@ -36,6 +38,7 @@ func TestCppPlugin(t *testing.T) {
 				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:cpp"),
 				plugintest.WithOutputs("test.pb.cc", "test.pb.h"),
 			),
 		},
@@ -47,6 +50,7 @@ func TestCppPlugin(t *testing.T) {
 				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:cpp"),
 				plugintest.WithOutputs("rel/test.pb.cc", "rel/test.pb.h"),
 			),
 		},
@@ -58,6 +62,7 @@ func TestCppPlugin(t *testing.T) {
 				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:cpp"),
 				plugintest.WithOutputs("snake_case.pb.cc", "snake_case.pb.h"),
 			),
 		},
@@ -69,6 +74,7 @@ func TestCppPlugin(t *testing.T) {
 				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:cpp"),
 				plugintest.WithOutputs("PascalCase.pb.cc", "PascalCase.pb.h"),
 			),
 		},
@@ -80,6 +86,7 @@ func TestCppPlugin(t *testing.T) {
 				"proto_plugin", "cpp implementation builtin:cpp",
 			),
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:cpp"),
 				plugintest.WithOutputs("camelCase.pb.cc", "camelCase.pb.h"),
 			),
 		},

@@ -16,6 +16,7 @@ func TestProtoGenScalaPlugin(t *testing.T) {
 			),
 			PluginName: "scala",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"),
 				plugintest.WithOutputs("test_scala.srcjar"),
 			),
 			SkipIntegration: true,
@@ -27,6 +28,7 @@ func TestProtoGenScalaPlugin(t *testing.T) {
 			),
 			PluginName: "scala",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"),
 				plugintest.WithOutputs("test_scala.srcjar"),
 			),
 			SkipIntegration: true,
@@ -39,6 +41,7 @@ func TestProtoGenScalaPlugin(t *testing.T) {
 			),
 			PluginName: "scala",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"),
 				plugintest.WithOutputs("rel/test_scala.srcjar"),
 			),
 			SkipIntegration: true,

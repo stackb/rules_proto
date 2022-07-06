@@ -39,6 +39,13 @@ func WithOptions(options ...string) PluginConfigurationOption {
 	}
 }
 
+// WithOut assigns the Out field.
+func WithOut(out string) PluginConfigurationOption {
+	return func(c *protoc.PluginConfiguration) {
+		c.Out = out
+	}
+}
+
 // WithLabel assigns the Label field.
 func WithLabel(t *testing.T, raw string) PluginConfigurationOption {
 	return func(c *protoc.PluginConfiguration) {

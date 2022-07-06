@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 
 	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/stackb/rules_proto/pkg/protoc"
@@ -79,7 +80,7 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 	got := subject.Configure(ctx)
 	want := tc.Configuration
 
-	if diff := cmp.Diff(want, got); diff != "" {
+	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty()); diff != "" {
 		t.Errorf("output configuration mismatch (-want +got): %s", diff)
 	}
 

@@ -75,7 +75,7 @@ func (p *ProtocGenTsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginCo
 	pc := &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/stephenh/ts-proto", "protoc-gen-ts-proto"),
 		Outputs: protoc.DeduplicateAndSort(tsFiles),
-		Options: options,
+		Options: protoc.DeduplicateAndSort(options),
 	}
 	if len(pc.Outputs) == 0 {
 		pc.Outputs = nil

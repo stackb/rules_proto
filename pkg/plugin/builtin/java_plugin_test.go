@@ -16,7 +16,9 @@ func TestJavaPlugin(t *testing.T) {
 			),
 			PluginName: "java",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:java"),
 				plugintest.WithOutputs("test.srcjar"),
+				plugintest.WithOut("test.srcjar"),
 			),
 		},
 		"message with a package": {
@@ -26,7 +28,9 @@ func TestJavaPlugin(t *testing.T) {
 			),
 			PluginName: "java",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:java"),
 				plugintest.WithOutputs("test.srcjar"),
+				plugintest.WithOut("test.srcjar"),
 			),
 		},
 		"relative package location": {
@@ -37,7 +41,9 @@ func TestJavaPlugin(t *testing.T) {
 			),
 			PluginName: "java",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:java"),
 				plugintest.WithOutputs("src/main/java/foo/test.srcjar"),
+				plugintest.WithOut("src/main/java/foo/test.srcjar"),
 			),
 		},
 	})
