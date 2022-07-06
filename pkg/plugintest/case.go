@@ -8,6 +8,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
+
 	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
@@ -66,7 +68,7 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 		t.Fatalf("configuration for plugin '%s' was not found", tc.PluginName)
 	}
 	r := rule.NewRule("proto_library", basename+"_proto")
-	lib := protoc.NewOtherProtoLibrary(nil, r, f) // File is nil, not needed for the test
+	lib := protoc.NewOtherProtoLibrary(nil /* File is nil, not needed for the test */, r, f)
 	ctx := &protoc.PluginContext{
 		Rel:           tc.Rel,
 		ProtoLibrary:  lib,
@@ -75,36 +77,10 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 	}
 
 	got := subject.Configure(ctx)
-	if got == nil && tc.Configuration == nil {
-		return
-	}
-	if got == nil && tc.Configuration != nil {
-		t.Fatalf("expected non-nil return value from %T.Configure()", subject)
-	}
-	if got != nil && tc.Configuration == nil {
-		t.Fatalf("unexpected non-nil return value from %T.Configure()", subject)
-	}
+	want := tc.Configuration
 
-	outputs := got.Outputs
-	if len(tc.Configuration.Outputs) != len(outputs) {
-		t.Fatalf("%T.Outputs: want %d, got %d (%v)", subject, len(tc.Configuration.Outputs), len(outputs), outputs)
-	}
-	for i, got := range outputs {
-		want := tc.Configuration.Outputs[i]
-		if want != got {
-			t.Errorf("%T.Outputs[%d]: want %q, got %q", subject, i, want, got)
-		}
-	}
-
-	options := got.Options
-	if len(tc.Configuration.Options) != len(options) {
-		t.Fatalf("%T.Options: want %d, got %d (%v)", subject, len(tc.Configuration.Options), len(options), options)
-	}
-	for i, got := range options {
-		want := tc.Configuration.Options[i]
-		if want != got {
-			t.Errorf("%T.Options[%d]: want %q, got %q", subject, i, want, got)
-		}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("output configuration mismatch (-want +got): %s", diff)
 	}
 
 	if tc.SkipIntegration {

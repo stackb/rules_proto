@@ -26,13 +26,29 @@ func (p *ProtocGenTsProto) Name() string {
 // Configure implements part of the Plugin interface.
 func (p *ProtocGenTsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	flags := parseProtocGenTsProtoOptions(p.Name(), ctx.PluginConfig.GetFlags())
-
+	imports := make(map[string]bool)
+	for _, file := range ctx.ProtoLibrary.Files() {
+		for _, imp := range file.Imports() {
+			imports[imp.Filename] = true
+		}
+	}
 	var emitImportedFiles bool
-	options := ctx.PluginConfig.GetOptions()
-	for _, option := range options {
+	var options []string
+	for _, option := range ctx.PluginConfig.GetOptions() {
+		// options may be configured to include many "M=" options, but only
+		// include the relevant ones to avoid BUILD file clutter.
+		if strings.HasPrefix(option, "M=") {
+			keyVal := option[len("M="):]
+			parts := strings.SplitN(keyVal, "=", 2)
+			filename := parts[0]
+			if !imports[filename] {
+				continue
+			}
+		}
 		if option == "emitImportedFiles=true" {
 			emitImportedFiles = true
 		}
+		options = append(options, option)
 	}
 
 	tsFiles := make([]string, 0)
@@ -56,11 +72,15 @@ func (p *ProtocGenTsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginCo
 		tsFiles = append(tsFiles, tsFile)
 	}
 
-	return &protoc.PluginConfiguration{
+	pc := &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/stephenh/ts-proto", "protoc-gen-ts-proto"),
 		Outputs: protoc.DeduplicateAndSort(tsFiles),
 		Options: options,
 	}
+	if len(pc.Outputs) == 0 {
+		pc.Outputs = nil
+	}
+	return pc
 }
 
 // protocGenTsProtoOptions represents the parsed flag configuration for the
