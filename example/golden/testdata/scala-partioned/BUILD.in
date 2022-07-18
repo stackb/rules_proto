@@ -1,5 +1,5 @@
 exports_files(["config.yaml"])
 
 # gazelle:proto_language scala enabled true
-# gazelle:proto_rule proto_scala_library flag --partition_services
-# gazelle:proto_rule grpc_scala_library flag --partition_services
+# gazelle:proto_rule proto_scala_library option --partition_services
+# gazelle:proto_rule grpc_scala_library option --partition_services

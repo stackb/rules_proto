@@ -117,6 +117,10 @@ func (s *scalaLibrary) LoadInfo() rule.LoadInfo {
 func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
 	options := parseScalaLibraryOptions(s.kindName, cfg.GetOptions())
 
+	// FIXME: find a different way to discover the scala plugin than the
+	// hardcoded name.  One option is to use all plugins, or seek outputs of a
+	// certain type.
+
 	//
 	// output preparation
 	//
@@ -216,6 +220,12 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	if len(deps) > 0 {
 		newRule.SetAttr("deps", deps)
 	}
+
+	srcs := make([]string, len(s.files))
+	for i, f := range s.files {
+		srcs[i] = f.Basename
+	}
+	newRule.SetAttr("srcs", srcs)
 
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
@@ -446,7 +456,7 @@ func parseScalaLibraryOptions(kindName string, args []string) *scalaLibraryOptio
 	flags.StringVar(&nooutputFlagValue, "nooutput", "", "--nooutput=<file>.proto suppresses rule output for <file>.proto.  If after removing all matching files, no outputs remain, the rule will not be emitted.")
 
 	var partitionServicesFlagValue bool
-	flags.BoolVar(&partitionServicesFlagValue, "partion_services", false, "--partition_services filters proto_scala_library and grpc_scala_library into separate rules")
+	flags.BoolVar(&partitionServicesFlagValue, "partition_services", false, "--partition_services filters proto_scala_library and grpc_scala_library into separate rules")
 
 	if err := flags.Parse(args); err != nil {
 		log.Fatalf("failed to parse flags for %q: %v", kindName, err)
