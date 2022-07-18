@@ -16,6 +16,7 @@ func TestRubyPlugin(t *testing.T) {
 			),
 			PluginName: "ruby",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:ruby"),
 				plugintest.WithOutputs("test_pb.rb"),
 			),
 		},
@@ -26,6 +27,7 @@ func TestRubyPlugin(t *testing.T) {
 			),
 			PluginName: "ruby",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:ruby"),
 				plugintest.WithOutputs("test_pb.rb"),
 			),
 		},
@@ -36,6 +38,7 @@ func TestRubyPlugin(t *testing.T) {
 			),
 			PluginName: "ruby",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:ruby"),
 				plugintest.WithOutputs("test_pb.rb"),
 			),
 		},
@@ -47,6 +50,7 @@ func TestRubyPlugin(t *testing.T) {
 			),
 			PluginName: "ruby",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:ruby"),
 				plugintest.WithOutputs("rel/test_pb.rb"),
 			),
 		},

@@ -16,6 +16,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			),
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:commonjs"),
 				plugintest.WithOutputs("test_pb.js"),
 				plugintest.WithOptions("import_style=commonjs"),
 			),
@@ -27,6 +28,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			),
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:commonjs"),
 				plugintest.WithOutputs("test_pb.js"),
 				plugintest.WithOptions("import_style=commonjs"),
 			),
@@ -38,6 +40,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			),
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:commonjs"),
 				plugintest.WithOutputs("test_pb.js"),
 				plugintest.WithOptions("import_style=commonjs"),
 			),
@@ -49,6 +52,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			),
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:commonjs"),
 				plugintest.WithOutputs("test_pb.js"),
 				plugintest.WithOptions("import_style=commonjs"),
 			),
@@ -61,6 +65,7 @@ func TestJsCommonPlugin(t *testing.T) {
 			),
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:commonjs"),
 				plugintest.WithOutputs("rel/test_pb.js"),
 				plugintest.WithOptions("import_style=commonjs"),
 			),

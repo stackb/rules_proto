@@ -56,6 +56,9 @@ func (s *protoCompile) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *protoCompile) ProvideRule(cfg *LanguageRuleConfig, config *ProtocConfiguration) RuleProvider {
+	if len(config.Outputs) == 0 {
+		return nil
+	}
 	return &protoCompileRule{
 		kind:            "proto_compile",
 		nameSuffix:      "compile",
@@ -89,12 +92,16 @@ func (s *protoCompileRule) Visibility() []string {
 	return s.ruleConfig.GetVisibility()
 }
 
+func (s *protoCompileRule) Outputs() []string {
+	outputs := s.config.Outputs
+	sort.Strings(outputs)
+	return outputs
+}
+
 // Rule implements part of the ruleProvider interface.
 func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
-
-	outputs := s.config.Outputs
-	sort.Strings(outputs)
+	outputs := s.Outputs()
 
 	newRule.SetAttr(s.outputsAttrName, outputs)
 	newRule.SetAttr("plugins", GetPluginLabels(s.config.Plugins))

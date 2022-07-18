@@ -1,7 +1,10 @@
 package builtin
 
 import (
+	"flag"
+	"log"
 	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -22,13 +25,25 @@ func (p *PythonPlugin) Name() string {
 
 // Configure implements part of the Plugin interface.
 func (p *PythonPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	flags := parsePythonPluginOptions(p.Name(), ctx.PluginConfig.GetFlags())
+
+	pyFiles := protoc.FlatMapFiles(
+		pythonGeneratedFileName(ctx.Rel),
+		protoc.Always,
+		ctx.ProtoLibrary.Files()...,
+	)
+
+	pyOutputs := make([]string, 0, len(pyFiles))
+	for _, pyFile := range pyFiles {
+		if flags.excludeOutput[filepath.Base(pyFile)] {
+			continue
+		}
+		pyOutputs = append(pyOutputs, pyFile)
+	}
+
 	return &protoc.PluginConfiguration{
-		Label: label.New("build_stack_rules_proto", "plugin/builtin", "python"),
-		Outputs: protoc.FlatMapFiles(
-			pythonGeneratedFileName(ctx.Rel),
-			protoc.Always,
-			ctx.ProtoLibrary.Files()...,
-		),
+		Label:   label.New("build_stack_rules_proto", "plugin/builtin", "python"),
+		Outputs: pyOutputs,
 		Options: ctx.PluginConfig.GetOptions(),
 	}
 }
@@ -44,4 +59,29 @@ func pythonGeneratedFileName(reldir string) func(f *protoc.File) []string {
 		}
 		return []string{name + "_pb2.py"}
 	}
+}
+
+// pythonPluginOptions represents the parsed flag configuration for the
+// ProtocGenTsProto implementation.
+type pythonPluginOptions struct {
+	excludeOutput map[string]bool
+}
+
+func parsePythonPluginOptions(kindName string, args []string) *pythonPluginOptions {
+	flags := flag.NewFlagSet(kindName, flag.ExitOnError)
+
+	var excludeOutput string
+	flags.StringVar(&excludeOutput, "exclude_output", "", "--exclude_output=pythonPluginOptions suppresses the file 'foo_pb2.py' from the output list")
+
+	if err := flags.Parse(args); err != nil {
+		log.Fatalf("failed to parse flags for %q: %v", kindName, err)
+	}
+	config := &pythonPluginOptions{
+		excludeOutput: make(map[string]bool),
+	}
+	for _, value := range strings.Split(excludeOutput, ",") {
+		config.excludeOutput[value] = true
+	}
+
+	return config
 }

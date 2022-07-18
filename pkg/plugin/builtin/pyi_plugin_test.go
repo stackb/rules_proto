@@ -16,6 +16,7 @@ func TestPyiPlugin(t *testing.T) {
 			),
 			PluginName: "pyi",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:pyi"),
 				plugintest.WithOutputs("test_pb2.pyi"),
 			),
 		},
@@ -26,6 +27,7 @@ func TestPyiPlugin(t *testing.T) {
 			),
 			PluginName: "pyi",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:pyi"),
 				plugintest.WithOutputs("test_pb2.pyi"),
 			),
 		},
@@ -36,6 +38,7 @@ func TestPyiPlugin(t *testing.T) {
 			),
 			PluginName: "pyi",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:pyi"),
 				plugintest.WithOutputs("test_pb2.pyi"),
 			),
 		},
@@ -47,6 +50,7 @@ func TestPyiPlugin(t *testing.T) {
 			),
 			PluginName: "pyi",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:pyi"),
 				plugintest.WithOutputs("rel/test_pb2.pyi"),
 			),
 		},
@@ -58,6 +62,7 @@ func TestPyiPlugin(t *testing.T) {
 			),
 			PluginName: "pyi",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:pyi"),
 				plugintest.WithOutputs("a_b*c+d=e|g!h#i_pb2.pyi"),
 			),
 		},

@@ -16,6 +16,7 @@ func TestObjcPlugin(t *testing.T) {
 			),
 			PluginName: "objc",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:objc"),
 				plugintest.WithOutputs("Test.pbobjc.h", "Test.pbobjc.m"),
 			),
 		},
@@ -26,6 +27,7 @@ func TestObjcPlugin(t *testing.T) {
 			),
 			PluginName: "objc",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:objc"),
 				plugintest.WithOutputs("Test.pbobjc.h", "Test.pbobjc.m"),
 			),
 		},
@@ -36,6 +38,7 @@ func TestObjcPlugin(t *testing.T) {
 			),
 			PluginName: "objc",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:objc"),
 				plugintest.WithOutputs("Test.pbobjc.h", "Test.pbobjc.m"),
 			),
 		},
@@ -46,6 +49,7 @@ func TestObjcPlugin(t *testing.T) {
 			),
 			PluginName: "objc",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:objc"),
 				plugintest.WithOutputs("Test.pbobjc.h", "Test.pbobjc.m"),
 			),
 		},
@@ -57,6 +61,7 @@ func TestObjcPlugin(t *testing.T) {
 			),
 			PluginName: "objc",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:objc"),
 				plugintest.WithOutputs("rel/Test.pbobjc.h", "rel/Test.pbobjc.m"),
 			),
 		},
@@ -68,6 +73,7 @@ func TestObjcPlugin(t *testing.T) {
 			),
 			PluginName: "objc",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:objc"),
 				plugintest.WithOutputs("FooBarBaz.pbobjc.h", "FooBarBaz.pbobjc.m"),
 			),
 		},

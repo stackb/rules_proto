@@ -17,6 +17,7 @@ func TestCsharpPlugin(t *testing.T) {
 			),
 			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:csharp"),
 				plugintest.WithOutputs("Test.cs"),
 			),
 		},
@@ -28,6 +29,7 @@ func TestCsharpPlugin(t *testing.T) {
 			),
 			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:csharp"),
 				plugintest.WithOutputs("Test.cs"),
 			),
 		},
@@ -39,6 +41,7 @@ func TestCsharpPlugin(t *testing.T) {
 			),
 			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:csharp"),
 				plugintest.WithOutputs("Test.cs"),
 			),
 		},
@@ -49,6 +52,7 @@ func TestCsharpPlugin(t *testing.T) {
 			),
 			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:csharp"),
 				plugintest.WithOutputs("Test.cs"),
 			),
 		},
@@ -60,7 +64,9 @@ func TestCsharpPlugin(t *testing.T) {
 			),
 			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:csharp"),
 				plugintest.WithOutputs("rel/Test.cs"),
+				plugintest.WithOut("rel"),
 			),
 		},
 		"basename converted to pascal": {
@@ -71,6 +77,7 @@ func TestCsharpPlugin(t *testing.T) {
 			),
 			PluginName: "csharp",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:csharp"),
 				plugintest.WithOutputs("FooBarBaz.cs"),
 			),
 		},

@@ -24,6 +24,7 @@ type YPlugin struct {
 	Implementation string   `yaml:"implementation"`
 	Enabled        *bool    `yaml:"enabled,omitempty"`
 	Option         []string `yaml:"options"`
+	Flag           []string `yaml:"flags"`
 	Dep            []string `yaml:"deps"`
 	Label          string   `yaml:"label"`
 }

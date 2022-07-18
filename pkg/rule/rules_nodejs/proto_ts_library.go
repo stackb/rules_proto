@@ -1,6 +1,7 @@
 package rules_nodejs
 
 import (
+	"flag"
 	"log"
 	"strings"
 
@@ -37,6 +38,7 @@ func (s *protoTsLibrary) KindInfo() rule.KindInfo {
 			"srcs": true,
 			"tsc":  true,
 			"args": true,
+			"data": true,
 		},
 		ResolveAttrs: map[string]bool{
 			"deps": true,
@@ -55,6 +57,8 @@ func (s *protoTsLibrary) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *protoTsLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
+	flags := parseProtoTsLibraryFlags(ProtoTsLibraryRuleName, cfg.GetOptions())
+
 	outputs := make([]string, 0)
 	for _, out := range pc.Outputs {
 		if strings.HasSuffix(out, ".ts") {
@@ -65,23 +69,23 @@ func (s *protoTsLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.
 		return nil
 	}
 	return &tsLibrary{
+		flags:          flags,
 		KindName:       ProtoTsLibraryRuleName,
 		RuleNameSuffix: ProtoTsLibraryRuleSuffix,
 		Outputs:        outputs,
 		RuleConfig:     cfg,
 		Config:         pc,
-		Resolver:       protoc.ResolveDepsAttr("deps", true),
 	}
 }
 
 // tsLibrary implements RuleProvider for 'ts_library'-like rules.
 type tsLibrary struct {
+	flags          *protoTsLibraryFlags
 	KindName       string
 	RuleNameSuffix string
 	Outputs        []string
 	Config         *protoc.ProtocConfiguration
 	RuleConfig     *protoc.LanguageRuleConfig
-	Resolver       protoc.DepsResolver
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -133,6 +137,10 @@ func (s *tsLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		newRule.SetAttr("args", args)
 	}
 
+	if s.flags.includeProtoLibraryData {
+		newRule.SetAttr("data", []string{s.Config.Library.Name()})
+	}
+
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)
@@ -151,8 +159,26 @@ func (s *tsLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []r
 
 // Resolve implements part of the RuleProvider interface.
 func (s *tsLibrary) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-	if s.Resolver == nil {
-		return
+	protoc.ResolveDepsAttr("deps", false /* resolve wkts */)(c, ix, r, imports, from)
+}
+
+// protoTsLibraryFlags represents the parsed flag configuration for the
+// proto_ts_library rule.
+type protoTsLibraryFlags struct {
+	// includeProtoLibraryData is true if the rule should populate the data
+	// attribute with the proto_library rule.
+	includeProtoLibraryData bool
+}
+
+func parseProtoTsLibraryFlags(kindName string, args []string) *protoTsLibraryFlags {
+	flags := flag.NewFlagSet(kindName, flag.ExitOnError)
+
+	var includeProtoLibraryData bool
+	flags.BoolVar(&includeProtoLibraryData, "include_proto_library_data", false, "--include_proto_library_data=true populates the data attribute with the proto_library rule")
+
+	if err := flags.Parse(args); err != nil {
+		log.Fatalf("failed to parse flags for %q: %v", kindName, err)
 	}
-	s.Resolver(c, ix, r, imports, from)
+
+	return &protoTsLibraryFlags{includeProtoLibraryData}
 }

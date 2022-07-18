@@ -31,6 +31,7 @@ func TestProtocGenGrpcPython(t *testing.T) {
 				"proto_plugin", "python implementation grpc:grpc:protoc-gen-grpc-python",
 			),
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python"),
 				plugintest.WithOutputs("test_pb2_grpc.py"),
 			),
 			PluginName:      "python",
@@ -42,6 +43,7 @@ func TestProtocGenGrpcPython(t *testing.T) {
 				"proto_plugin", "python implementation grpc:grpc:protoc-gen-grpc-python",
 			),
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python"),
 				plugintest.WithOutputs("test_pb2_grpc.py"),
 			),
 			PluginName:      "python",

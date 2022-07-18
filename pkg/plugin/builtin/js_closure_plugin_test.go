@@ -16,6 +16,7 @@ func TestJsClosurePlugin(t *testing.T) {
 			),
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:closurejs"),
 				plugintest.WithOutputs("test.js"),
 				plugintest.WithOptions("import_style=closure", "library=test"),
 			),
@@ -27,6 +28,7 @@ func TestJsClosurePlugin(t *testing.T) {
 			),
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:closurejs"),
 				plugintest.WithOutputs("test.js"),
 				plugintest.WithOptions("import_style=closure", "library=test"),
 			),
@@ -38,6 +40,7 @@ func TestJsClosurePlugin(t *testing.T) {
 			),
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:closurejs"),
 				plugintest.WithOutputs("test.js"),
 				plugintest.WithOptions("import_style=closure", "library=test"),
 			),
@@ -49,6 +52,7 @@ func TestJsClosurePlugin(t *testing.T) {
 			),
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:closurejs"),
 				plugintest.WithOutputs("test.js"),
 				plugintest.WithOptions("import_style=closure", "library=test"),
 			),
@@ -61,6 +65,7 @@ func TestJsClosurePlugin(t *testing.T) {
 			),
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:closurejs"),
 				plugintest.WithOutputs("rel/test.js"),
 				plugintest.WithOptions("import_style=closure", "library=rel/test"),
 			),

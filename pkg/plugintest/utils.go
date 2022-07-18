@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/stackb/rules_proto/pkg/protoc"
 )
@@ -35,6 +36,24 @@ func WithOutputs(outputs ...string) PluginConfigurationOption {
 func WithOptions(options ...string) PluginConfigurationOption {
 	return func(c *protoc.PluginConfiguration) {
 		c.Options = options
+	}
+}
+
+// WithOut assigns the Out field.
+func WithOut(out string) PluginConfigurationOption {
+	return func(c *protoc.PluginConfiguration) {
+		c.Out = out
+	}
+}
+
+// WithLabel assigns the Label field.
+func WithLabel(t *testing.T, raw string) PluginConfigurationOption {
+	return func(c *protoc.PluginConfiguration) {
+		lbl, err := label.Parse(raw)
+		if err != nil {
+			t.Fatalf("bad label %q: %v", raw, err)
+		}
+		c.Label = lbl
 	}
 }
 
