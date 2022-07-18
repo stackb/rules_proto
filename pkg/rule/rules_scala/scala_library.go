@@ -33,18 +33,42 @@ func init() {
 	protoc.Rules().MustRegisterRule("stackb:rules_proto:"+ProtoscalaLibraryRuleName,
 		&scalaLibrary{
 			kindName: ProtoscalaLibraryRuleName,
-			shouldProvideRule: func(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration) bool {
-				return !hasServicesAndGrpcOption(library, plugin)
+			shouldProvideRule: func(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration, options *scalaLibraryOptions) bool {
+				return !hasServicesAndGrpcOption(library, plugin, options)
 			},
+			partitionFilter: messageFiles,
 		})
 	protoc.Rules().MustRegisterRule("stackb:rules_proto:"+GrpcscalaLibraryRuleName,
 		&scalaLibrary{
 			kindName:          GrpcscalaLibraryRuleName,
 			shouldProvideRule: hasServicesAndGrpcOption,
+			partitionFilter:   serviceFiles,
 		})
 }
 
-func hasServicesAndGrpcOption(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration) bool {
+func messageFiles(in []*protoc.File) []*protoc.File {
+	return filterFiles(in, func(f *protoc.File) bool {
+		return !f.HasServices()
+	})
+}
+
+func serviceFiles(in []*protoc.File) []*protoc.File {
+	return filterFiles(in, func(f *protoc.File) bool {
+		return f.HasServices()
+	})
+}
+
+func filterFiles(in []*protoc.File, want func(f *protoc.File) bool) []*protoc.File {
+	out := make([]*protoc.File, 0, len(in))
+	for _, file := range in {
+		if want(file) {
+			out = append(out, file)
+		}
+	}
+	return out
+}
+
+func hasServicesAndGrpcOption(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration, options *scalaLibraryOptions) bool {
 	// if any of the proto_library files have grpc service definitions AND the
 	// grpc option is configured, emit a grpc_scala_library rule instead.
 	if !protoc.HasServices(library.Files()...) {
@@ -62,7 +86,8 @@ func hasServicesAndGrpcOption(library protoc.ProtoLibrary, plugin *protoc.Plugin
 // @rules_proto.
 type scalaLibrary struct {
 	kindName          string
-	shouldProvideRule func(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration) bool
+	shouldProvideRule func(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration, options *scalaLibraryOptions) bool
+	partitionFilter   func(in []*protoc.File) []*protoc.File
 }
 
 // Name implements part of the LanguageRule interface.
@@ -102,8 +127,18 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 	if len(plugin.Outputs) == 0 {
 		return nil
 	}
-	if !s.shouldProvideRule(pc.Library, plugin) {
-		return nil
+
+	files := pc.Library.Files()
+	if options.partitionServices {
+		want := s.partitionFilter(files)
+		if len(want) == 0 {
+			return nil
+		}
+		files = want
+	} else {
+		if !s.shouldProvideRule(pc.Library, plugin, options) {
+			return nil
+		}
 	}
 
 	outputs := append(plugin.Outputs, pc.GetPluginOutputs(akka_grpc.AkkaGrpcPluginName)...)
@@ -119,6 +154,7 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		outputs:        outputs,
 		ruleConfig:     cfg,
 		config:         pc,
+		files:          files,
 	}
 }
 
@@ -130,6 +166,7 @@ type scalaLibraryRule struct {
 	config         *protoc.ProtocConfiguration
 	ruleConfig     *protoc.LanguageRuleConfig
 	options        *scalaLibraryOptions
+	files          []*protoc.File
 }
 
 // Kind implements part of the ruleProvider interface.
@@ -189,7 +226,7 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	// option (scalapb.options) = {
 	// 	import: "com.foo.Bar"
 	// };
-	scalaImports := getScalapbImports(s.config.Library.Files())
+	scalaImports := getScalapbImports(s.files)
 	if len(scalaImports) > 0 {
 		newRule.SetPrivateAttr(config.GazelleImportsKey, scalaImports)
 	}
@@ -231,11 +268,11 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 		}
 	}
 	from := label.New("", file.Pkg, r.Name())
-	provideScalaImports(s.config.Library.Files(), protoc.GlobalResolver(), from, pluginOptions)
+	provideScalaImports(s.files, protoc.GlobalResolver(), from, pluginOptions)
 
 	// 2. create import specs for 'protobuf scala'.  This allows
 	// proto_scala_library and grpc_scala_library to resolve deps.
-	return protoc.ProtoLibraryImportSpecsForKind("scala", s.config.Library)
+	return protoc.ProtoFilesImportSpecsForKind("scala", s.files)
 }
 
 // Resolve implements part of the RuleProvider interface.
@@ -394,8 +431,9 @@ func provideScalaImports(files []*protoc.File, resolver protoc.ImportResolver, f
 
 // scalaLibraryOptions represents the parsed flag configuration for a scalaLibrary
 type scalaLibraryOptions struct {
-	noResolve map[string]bool
-	noOutput  []string
+	noResolve         map[string]bool
+	noOutput          []string
+	partitionServices bool
 }
 
 func parseScalaLibraryOptions(kindName string, args []string) *scalaLibraryOptions {
@@ -407,13 +445,17 @@ func parseScalaLibraryOptions(kindName string, args []string) *scalaLibraryOptio
 	var nooutputFlagValue string
 	flags.StringVar(&nooutputFlagValue, "nooutput", "", "--nooutput=<file>.proto suppresses rule output for <file>.proto.  If after removing all matching files, no outputs remain, the rule will not be emitted.")
 
+	var partitionServicesFlagValue bool
+	flags.BoolVar(&partitionServicesFlagValue, "partion_services", false, "--partition_services filters proto_scala_library and grpc_scala_library into separate rules")
+
 	if err := flags.Parse(args); err != nil {
 		log.Fatalf("failed to parse flags for %q: %v", kindName, err)
 	}
 
 	config := &scalaLibraryOptions{
-		noResolve: make(map[string]bool),
-		noOutput:  make([]string, 0),
+		noResolve:         make(map[string]bool),
+		noOutput:          make([]string, 0),
+		partitionServices: partitionServicesFlagValue,
 	}
 	for _, value := range strings.Split(noresolveFlagValue, ",") {
 		config.noResolve[value] = true

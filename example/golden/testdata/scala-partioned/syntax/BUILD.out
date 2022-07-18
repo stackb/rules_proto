@@ -1,0 +1,57 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+proto_library(
+    name = "syntax_proto",
+    srcs = [
+        "noun.proto",
+        "package.proto",
+        "pronoun.proto",
+        "service.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//proto:proto_proto",
+        "@scalaapis//scalapb:scalapb_proto",
+    ],
+)
+
+grpc_scala_library(
+    name = "syntax_scala_library",
+    srcs = [
+        "syntax_akka_grpc.srcjar",
+        "syntax_scala.srcjar",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib:scala",
+        "//proto:proto_scala_library",
+        "@com_google_protobuf//:protobuf_java",
+        "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12",
+        "@maven_akka//:com_typesafe_akka_akka_actor_2_12",
+        "@maven_akka//:com_typesafe_akka_akka_http_core_2_12",
+        "@maven_akka//:com_typesafe_akka_akka_stream_2_12",
+        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
+        "@maven_scala//:io_grpc_grpc_api",
+        "@maven_scala//:io_grpc_grpc_protobuf",
+        "@maven_scala//:io_grpc_grpc_stub",
+        "@scalaapis//scalapb:scalapb_scala_library",
+    ],
+)
+
+proto_compile(
+    name = "syntax_scala_compile",
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
+    outputs = [
+        "syntax_akka_grpc.srcjar",
+        "syntax_scala.srcjar",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/akka/akka-grpc:protoc-gen-akka-grpc",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
+    ],
+    proto = "syntax_proto",
+)

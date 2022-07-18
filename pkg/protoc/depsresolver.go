@@ -190,13 +190,20 @@ func StripRel(rel string, filename string) string {
 func ProtoLibraryImportSpecsForKind(kind string, libs ...ProtoLibrary) []resolve.ImportSpec {
 	specs := make([]resolve.ImportSpec, 0)
 	for _, lib := range libs {
-		files := lib.Files()
-		for _, file := range files {
-			imp := path.Join(file.Dir, file.Basename)
-			spec := resolve.ImportSpec{Lang: kind, Imp: imp}
-			specs = append(specs, spec)
-		}
+		specs = append(specs, ProtoFilesImportSpecsForKind(kind, lib.Files())...)
 	}
 
+	return specs
+}
+
+// ProtoLibraryImportSpecsForKind generates an ImportSpec for each file in the
+// set of given proto_library.
+func ProtoFilesImportSpecsForKind(kind string, files []*File) []resolve.ImportSpec {
+	specs := make([]resolve.ImportSpec, 0)
+	for _, file := range files {
+		imp := path.Join(file.Dir, file.Basename)
+		spec := resolve.ImportSpec{Lang: kind, Imp: imp}
+		specs = append(specs, spec)
+	}
 	return specs
 }
