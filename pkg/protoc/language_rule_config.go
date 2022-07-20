@@ -19,7 +19,7 @@ type LanguageRuleConfig struct {
 	Attrs map[string]map[string]bool
 	// Options is a generic key -> value string mapping.  Various rule
 	// implementations are free to document/interpret options in an
-	// implementation-dependenct manner.  TODO: deprecate this and rename to 'Flags'
+	// implementation-dependent manner.  TODO: deprecate this and rename to 'Flags'
 	Options map[string]bool
 	// Resolves is a mapping from resolve mapping spec to rewrite.  Negative
 	// intent is represented by the empty rewrite value.

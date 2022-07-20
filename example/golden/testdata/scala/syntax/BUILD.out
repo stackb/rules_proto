@@ -1,5 +1,6 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
+load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 proto_library(
@@ -18,15 +19,12 @@ proto_library(
 )
 
 grpc_scala_library(
-    name = "syntax_scala_library",
-    srcs = [
-        "syntax_akka_grpc.srcjar",
-        "syntax_scala.srcjar",
-    ],
+    name = "syntax_grpc_scala_library",
+    srcs = ["syntax_akka_grpc.srcjar"],
     visibility = ["//visibility:public"],
     deps = [
         "//lib:scala",
-        "//proto:proto_scala_library",
+        "//proto:proto_proto_scala_library",
         "@com_google_protobuf//:protobuf_java",
         "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12",
         "@maven_akka//:com_typesafe_akka_akka_actor_2_12",
@@ -54,4 +52,18 @@ proto_compile(
         "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
     ],
     proto = "syntax_proto",
+)
+
+proto_scala_library(
+    name = "syntax_proto_scala_library",
+    srcs = ["syntax_scala.srcjar"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib:scala",
+        "//proto:proto_proto_scala_library",
+        "@com_google_protobuf//:protobuf_java",
+        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+        "@scalaapis//scalapb:scalapb_scala_library",
+    ],
 )

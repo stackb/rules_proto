@@ -1,2 +1,0 @@
-build --proto_compiler=@build_stack_rules_proto//toolchain:protoc.exe
-build --incompatible_java_common_parameters=false

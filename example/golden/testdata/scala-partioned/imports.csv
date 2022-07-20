@@ -1,3 +1,0 @@
-proto,proto,scalapb/scalapb.proto,@scalaapis//scalapb:scalapb_proto
-protobuf,scala,scalapb/scalapb.proto,@scalaapis//scalapb:scalapb_scala_library
-protobuf,scala,lib.WithSnapshot,//lib:scala

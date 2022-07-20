@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package syntax;
-
-import "syntax/pronoun.proto";
-
-message Noun {
-  repeated Pronoun pronoun = 1;
-}

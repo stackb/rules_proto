@@ -21,7 +21,8 @@ import (
 const (
 	GrpcscalaLibraryRuleName        = "grpc_scala_library"
 	ProtoscalaLibraryRuleName       = "proto_scala_library"
-	scalaLibraryRuleSuffix          = "_scala_library"
+	protoScalaLibraryRuleSuffix     = "_proto_scala_library"
+	grpcScalaLibraryRuleSuffix      = "_grpc_scala_library"
 	scalaPbPluginOptionsPrivateKey  = "_scalapb_plugin"
 	akkaGrpcPluginOptionsPrivateKey = "_akka_grpc_plugin"
 	scalapbOptionsName              = "(scalapb.options)"
@@ -32,62 +33,21 @@ const (
 func init() {
 	protoc.Rules().MustRegisterRule("stackb:rules_proto:"+ProtoscalaLibraryRuleName,
 		&scalaLibrary{
-			kindName: ProtoscalaLibraryRuleName,
-			shouldProvideRule: func(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration, options *scalaLibraryOptions) bool {
-				return !hasServicesAndGrpcOption(library, plugin, options)
-			},
-			partitionFilter: messageFiles,
+			kindName:   ProtoscalaLibraryRuleName,
+			ruleSuffix: protoScalaLibraryRuleSuffix,
 		})
 	protoc.Rules().MustRegisterRule("stackb:rules_proto:"+GrpcscalaLibraryRuleName,
 		&scalaLibrary{
-			kindName:          GrpcscalaLibraryRuleName,
-			shouldProvideRule: hasServicesAndGrpcOption,
-			partitionFilter:   serviceFiles,
+			kindName:   GrpcscalaLibraryRuleName,
+			ruleSuffix: grpcScalaLibraryRuleSuffix,
 		})
-}
-
-func messageFiles(in []*protoc.File) []*protoc.File {
-	return filterFiles(in, func(f *protoc.File) bool {
-		return !f.HasServices()
-	})
-}
-
-func serviceFiles(in []*protoc.File) []*protoc.File {
-	return filterFiles(in, func(f *protoc.File) bool {
-		return f.HasServices()
-	})
-}
-
-func filterFiles(in []*protoc.File, want func(f *protoc.File) bool) []*protoc.File {
-	out := make([]*protoc.File, 0, len(in))
-	for _, file := range in {
-		if want(file) {
-			out = append(out, file)
-		}
-	}
-	return out
-}
-
-func hasServicesAndGrpcOption(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration, options *scalaLibraryOptions) bool {
-	// if any of the proto_library files have grpc service definitions AND the
-	// grpc option is configured, emit a grpc_scala_library rule instead.
-	if !protoc.HasServices(library.Files()...) {
-		return false
-	}
-	for option, want := range plugin.Config.Options {
-		if option == "grpc" && want {
-			return true
-		}
-	}
-	return false
 }
 
 // scalaLibrary implements LanguageRule for the 'proto_scala_library' rule from
 // @rules_proto.
 type scalaLibrary struct {
-	kindName          string
-	shouldProvideRule func(library protoc.ProtoLibrary, plugin *protoc.PluginConfiguration, options *scalaLibraryOptions) bool
-	partitionFilter   func(in []*protoc.File) []*protoc.File
+	kindName   string
+	ruleSuffix string
 }
 
 // Name implements part of the LanguageRule interface.
@@ -115,51 +75,49 @@ func (s *scalaLibrary) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
-	options := parseScalaLibraryOptions(s.kindName, cfg.GetOptions())
+	ruleName := pc.Library.BaseName() + s.ruleSuffix
+	log.Printf("%s: ProvideRule <begin> %s", ruleName, pc.Rel)
 
-	// FIXME: find a different way to discover the scala plugin than the
-	// hardcoded name.  One option is to use all plugins, or seek outputs of a
-	// certain type.
+	options := parseScalaLibraryOptions(s.kindName, cfg.GetOptions())
 
 	//
 	// output preparation
 	//
-	plugin := pc.GetPluginConfiguration(scalapb.ScalaPBPluginName)
-	if plugin == nil {
-		log.Fatalf("expected plugin configuration for %q to be defined", scalapb.ScalaPBPluginName)
-	}
-	if len(plugin.Outputs) == 0 {
-		return nil
+
+	// the list of output files
+	outputs := make([]string, 0)
+
+	for _, implementationName := range options.plugins {
+		plugin := pc.GetPluginConfiguration(implementationName)
+		if plugin == nil {
+			log.Printf("%s: plugin implementation not found: %q (invalid scala_library --plugins flag option, must be one of %v)", ruleName, implementationName, getPluginImplNames(pc.Plugins))
+			continue
+			// log.Fatalf("%s: plugin implementation not found: %q (invalid scala_library --plugins flag option, must be one of %v)", ruleName, implementationName, getPluginImplNames(pc.Plugins))
+		}
+		log.Printf("adding plugin outputs: %s: %v", plugin.Config.Implementation, plugin.Outputs)
+
+		outputs = append(outputs, plugin.Outputs...)
 	}
 
-	files := pc.Library.Files()
-	if options.partitionServices {
-		want := s.partitionFilter(files)
-		if len(want) == 0 {
-			return nil
-		}
-		files = want
-	} else {
-		if !s.shouldProvideRule(pc.Library, plugin, options) {
-			return nil
-		}
-	}
+	// outputs = options.filterOutputs(outputs)
+	log.Printf("filtered plugin outputs: %s: %v", ruleName, outputs)
 
-	outputs := append(plugin.Outputs, pc.GetPluginOutputs(akka_grpc.AkkaGrpcPluginName)...)
-	outputs = options.filterOutputs(outputs)
 	if len(outputs) == 0 {
+		log.Printf("%s: skipping provide, no outputs (%s)", ruleName, s.kindName)
 		return nil
 	}
 
-	return &scalaLibraryRule{
+	rule := &scalaLibraryRule{
 		kindName:       s.kindName,
-		ruleNameSuffix: scalaLibraryRuleSuffix,
+		ruleNameSuffix: s.ruleSuffix,
 		options:        options,
 		outputs:        outputs,
 		ruleConfig:     cfg,
 		config:         pc,
-		files:          files,
+		files:          pc.Library.Files(),
 	}
+	log.Printf("%s:%s%%%s: ProvideRule <%s>", pc.Rel, s.kindName, ruleName, rule.Name())
+	return rule
 }
 
 // scalaLibraryRule implements RuleProvider for 'scala_library'-derived rules.
@@ -220,12 +178,6 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	if len(deps) > 0 {
 		newRule.SetAttr("deps", deps)
 	}
-
-	srcs := make([]string, len(s.files))
-	for i, f := range s.files {
-		srcs[i] = f.Basename
-	}
-	newRule.SetAttr("srcs", srcs)
 
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
@@ -441,9 +393,9 @@ func provideScalaImports(files []*protoc.File, resolver protoc.ImportResolver, f
 
 // scalaLibraryOptions represents the parsed flag configuration for a scalaLibrary
 type scalaLibraryOptions struct {
-	noResolve         map[string]bool
-	noOutput          []string
-	partitionServices bool
+	noResolve        map[string]bool
+	exclude, include []string
+	plugins          []string
 }
 
 func parseScalaLibraryOptions(kindName string, args []string) *scalaLibraryOptions {
@@ -452,36 +404,68 @@ func parseScalaLibraryOptions(kindName string, args []string) *scalaLibraryOptio
 	var noresolveFlagValue string
 	flags.StringVar(&noresolveFlagValue, "noresolve", "", "--noresolve=<path>.proto suppresses deps resolution of <path>.proto")
 
-	var nooutputFlagValue string
-	flags.StringVar(&nooutputFlagValue, "nooutput", "", "--nooutput=<file>.proto suppresses rule output for <file>.proto.  If after removing all matching files, no outputs remain, the rule will not be emitted.")
+	var excludeFlagValue string
+	flags.StringVar(&excludeFlagValue, "exclude", "", "--exclude=<file>.srcjar suppresses rule output for <glob>.srcjar.  If after removing all matching files, no outputs remain, the rule will not be emitted.")
 
-	var partitionServicesFlagValue bool
-	flags.BoolVar(&partitionServicesFlagValue, "partition_services", false, "--partition_services filters proto_scala_library and grpc_scala_library into separate rules")
+	var includeFlagValue string
+	flags.StringVar(&includeFlagValue, "include", "", "--include=<file>.srcjar keeps only rule output for <glob>.srcjar.  If after removing all matching files, no outputs remain, the rule will not be emitted.")
+
+	var pluginsFlagValue string
+	flags.StringVar(&pluginsFlagValue, "plugins", strings.Join([]string{
+		scalapb.ScalaPBPluginName,
+		akka_grpc.AkkaGrpcPluginName,
+	}, ","), "--plugins=name1,name2 includes only those files generated by the given plugin implementation names")
 
 	if err := flags.Parse(args); err != nil {
 		log.Fatalf("failed to parse flags for %q: %v", kindName, err)
 	}
 
 	config := &scalaLibraryOptions{
-		noResolve:         make(map[string]bool),
-		noOutput:          make([]string, 0),
-		partitionServices: partitionServicesFlagValue,
+		noResolve: make(map[string]bool),
+		exclude:   make([]string, 0),
+		include:   make([]string, 0),
+		plugins:   make([]string, 0),
 	}
 	for _, value := range strings.Split(noresolveFlagValue, ",") {
 		config.noResolve[value] = true
 	}
-	config.noOutput = strings.Split(nooutputFlagValue, ",")
+	config.exclude = strings.Split(excludeFlagValue, ",")
+	config.include = strings.Split(includeFlagValue, ",")
+	config.plugins = strings.Split(pluginsFlagValue, ",")
 
 	return config
 }
 
 func (o *scalaLibraryOptions) filterOutputs(in []string) (out []string) {
+	if len(o.include) > 0 {
+		files := make([]string, 0)
+
+		for _, value := range in {
+			var shouldInclude bool
+			for _, pattern := range o.include {
+				match, err := doublestar.PathMatch(pattern, value)
+				if err != nil {
+					log.Fatalf("bad --include pattern %q: %v", pattern, err)
+				}
+				if match {
+					shouldInclude = true
+					break
+				}
+			}
+			if shouldInclude {
+				files = append(files, value)
+			}
+		}
+
+		in = files
+	}
+
 next:
 	for _, value := range in {
-		for _, pattern := range o.noOutput {
+		for _, pattern := range o.exclude {
 			match, err := doublestar.PathMatch(pattern, value)
 			if err != nil {
-				log.Fatalf("bad --nooutput pattern %q: %v", pattern, err)
+				log.Fatalf("bad --exclude pattern %q: %v", pattern, err)
 			}
 			if match {
 				continue next
@@ -489,6 +473,7 @@ next:
 		}
 		out = append(out, value)
 	}
+
 	return
 }
 
@@ -498,6 +483,13 @@ func (o *scalaLibraryOptions) filterImports(in []string) (out []string) {
 			continue
 		}
 		out = append(out, value)
+	}
+	return
+}
+
+func getPluginImplNames(plugins []*protoc.PluginConfiguration) (names []string) {
+	for _, plugin := range plugins {
+		names = append(names, plugin.Plugin.Name())
 	}
 	return
 }
