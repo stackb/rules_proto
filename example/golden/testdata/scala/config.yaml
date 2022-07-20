@@ -1,6 +1,9 @@
 plugins:
   - name: protoc-gen-scala
     implementation: scalapb:scalapb:protoc-gen-scala
+  - name: protoc-gen-scala-grpc
+    implementation: scalapb:scalapb:protoc-gen-scala
+    label: "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc"
     options:
       - grpc
   - name: protoc-gen-akka-grpc
@@ -35,8 +38,9 @@ rules:
 languages:
   - name: scala
     plugins:
-      - protoc-gen-akka-grpc
       - protoc-gen-scala
+      - protoc-gen-scala-grpc
+      - protoc-gen-akka-grpc
     rules:
       - proto_compile
       - proto_scala_library

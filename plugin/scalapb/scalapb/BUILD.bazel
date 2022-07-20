@@ -8,6 +8,17 @@ proto_plugin(
     visibility = ["//visibility:public"],
 )
 
+proto_plugin(
+    name = "protoc-gen-scala-grpc",
+    out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}_scala_grpc.srcjar",
+    options = [
+        "flat_package",
+        "grpc",
+    ],
+    tool = ":protoc-gen-scala_bin",
+    visibility = ["//visibility:public"],
+)
+
 java_binary(
     name = "protoc-gen-scala_bin",
     main_class = "scalapb.ScalaPbCodeGenerator",

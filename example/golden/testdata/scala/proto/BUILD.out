@@ -10,8 +10,15 @@ proto_library(
 
 proto_compile(
     name = "proto_scala_compile",
-    outputs = ["proto_scala.srcjar"],
-    plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
+    outputs = [
+        "proto_scala.srcjar",
+        "proto_scala_grpc.srcjar",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
+    ],
     proto = "proto_proto",
 )
 

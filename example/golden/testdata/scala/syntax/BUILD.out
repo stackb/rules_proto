@@ -42,14 +42,16 @@ grpc_scala_library(
 
 proto_compile(
     name = "syntax_scala_compile",
-    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
     outputs = [
         "syntax_akka_grpc.srcjar",
         "syntax_scala.srcjar",
+        "syntax_scala_grpc.srcjar",
     ],
     plugins = [
         "@build_stack_rules_proto//plugin/akka/akka-grpc:protoc-gen-akka-grpc",
         "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
     ],
     proto = "syntax_proto",
 )

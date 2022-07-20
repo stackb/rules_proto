@@ -23,18 +23,16 @@ func (p *ProtocGenScalaPlugin) Name() string {
 
 // Configure implements part of the Plugin interface.
 func (p *ProtocGenScalaPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
-	srcjar := ctx.ProtoLibrary.BaseName() + "_scala.srcjar"
+	options := ctx.PluginConfig.GetOptions()
+	hasGrpc := containsOption(options, "grpc")
+
+	srcjar := ctx.ProtoLibrary.BaseName() + "_scala"
+	if hasGrpc {
+		srcjar += "_grpc"
+	}
+	srcjar += ".srcjar"
 	if ctx.Rel != "" {
 		srcjar = path.Join(ctx.Rel, srcjar)
-	}
-	options := ctx.PluginConfig.GetOptions()
-
-	// if the plugin has 'grpc' statically configured, but the proto_library
-	// does not contain services, remove it.
-	if filtered, ok := removeAll(options, "grpc"); ok {
-		if !protoc.HasServices(ctx.ProtoLibrary.Files()...) {
-			options = filtered
-		}
 	}
 
 	return &protoc.PluginConfiguration{
@@ -44,17 +42,13 @@ func (p *ProtocGenScalaPlugin) Configure(ctx *protoc.PluginContext) *protoc.Plug
 	}
 }
 
-// removeAll returns a copy of the slice will all elements matching 'key'
+// containsOption returns a copy of the slice will all elements matching 'key'
 // removed.  If at least item was removed, return true.
-func removeAll(src []string, key string) ([]string, bool) {
-	dst := make([]string, 0)
-	found := false
+func containsOption(src []string, key string) bool {
 	for _, item := range src {
 		if item == key {
-			found = true
-			continue
+			return true
 		}
-		dst = append(dst, item)
 	}
-	return dst, found
+	return false
 }
