@@ -5,15 +5,13 @@ permalink: examples/scala
 parent: Examples
 ---
 
-
 # scala example
 
 `bazel test //example/golden:scala_test`
 
-
 ## `BUILD.bazel` (after gazelle)
 
-~~~python
+```python
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
@@ -54,7 +52,7 @@ grpc_scala_library(
         "@maven_scala//:io_grpc_grpc_api",
         "@maven_scala//:io_grpc_grpc_protobuf",
         "@maven_scala//:io_grpc_grpc_stub",
-        "@scalaapis//scalapb:scalapb_scala_library",
+        "@scalaapis//scalapb:scalapb_proto_scala_library",
     ],
 )
 
@@ -71,18 +69,16 @@ proto_compile(
     ],
     proto = "syntax_proto",
 )
-~~~
-
+```
 
 ## `BUILD.bazel` (before gazelle)
 
-~~~python
-~~~
-
+```python
+```
 
 ## `WORKSPACE`
 
-~~~python
+```python
 # ----------------------------------------------------
 # scala
 # ----------------------------------------------------
@@ -159,5 +155,4 @@ proto_repository(
     type = "zip",
     urls = ["https://codeload.github.com/scalapb/ScalaPB/zip/a4e0e02c0f5b160877d5f97f6902dbec4c633afe"],
 )
-~~~
-
+```
