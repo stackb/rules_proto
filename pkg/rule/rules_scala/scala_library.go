@@ -33,21 +33,24 @@ const (
 func init() {
 	protoc.Rules().MustRegisterRule("stackb:rules_proto:"+ProtoscalaLibraryRuleName,
 		&scalaLibrary{
-			kindName:   ProtoscalaLibraryRuleName,
-			ruleSuffix: protoScalaLibraryRuleSuffix,
+			kindName:        ProtoscalaLibraryRuleName,
+			ruleSuffix:      protoScalaLibraryRuleSuffix,
+			protoFileFilter: messageFiles,
 		})
 	protoc.Rules().MustRegisterRule("stackb:rules_proto:"+GrpcscalaLibraryRuleName,
 		&scalaLibrary{
-			kindName:   GrpcscalaLibraryRuleName,
-			ruleSuffix: grpcScalaLibraryRuleSuffix,
+			kindName:        GrpcscalaLibraryRuleName,
+			ruleSuffix:      grpcScalaLibraryRuleSuffix,
+			protoFileFilter: serviceFiles,
 		})
 }
 
 // scalaLibrary implements LanguageRule for the 'proto_scala_library' rule from
 // @rules_proto.
 type scalaLibrary struct {
-	kindName   string
-	ruleSuffix string
+	kindName        string
+	ruleSuffix      string
+	protoFileFilter func([]*protoc.File) []*protoc.File
 }
 
 // Name implements part of the LanguageRule interface.
@@ -105,7 +108,7 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		outputs:        outputs,
 		ruleConfig:     cfg,
 		config:         pc,
-		files:          pc.Library.Files(),
+		files:          s.protoFileFilter(pc.Library.Files()),
 	}
 }
 
@@ -479,4 +482,26 @@ func (o *scalaLibraryOptions) filterImports(in []string) (out []string) {
 		out = append(out, value)
 	}
 	return
+}
+
+func messageFiles(in []*protoc.File) []*protoc.File {
+	return filterFiles(in, func(f *protoc.File) bool {
+		return !f.HasServices()
+	})
+}
+
+func serviceFiles(in []*protoc.File) []*protoc.File {
+	return filterFiles(in, func(f *protoc.File) bool {
+		return f.HasServices()
+	})
+}
+
+func filterFiles(in []*protoc.File, want func(f *protoc.File) bool) []*protoc.File {
+	out := make([]*protoc.File, 0, len(in))
+	for _, file := range in {
+		if want(file) {
+			out = append(out, file)
+		}
+	}
+	return out
 }
