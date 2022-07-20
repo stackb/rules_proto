@@ -75,9 +75,6 @@ func (s *scalaLibrary) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
-	ruleName := pc.Library.BaseName() + s.ruleSuffix
-	log.Printf("%s: ProvideRule <begin> %s", ruleName, pc.Rel)
-
 	options := parseScalaLibraryOptions(s.kindName, cfg.GetOptions())
 
 	//
@@ -90,24 +87,18 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 	for _, implementationName := range options.plugins {
 		plugin := pc.GetPluginConfiguration(implementationName)
 		if plugin == nil {
-			log.Printf("%s: plugin implementation not found: %q (invalid scala_library --plugins flag option, must be one of %v)", ruleName, implementationName, getPluginImplNames(pc.Plugins))
 			continue
-			// log.Fatalf("%s: plugin implementation not found: %q (invalid scala_library --plugins flag option, must be one of %v)", ruleName, implementationName, getPluginImplNames(pc.Plugins))
 		}
-		log.Printf("adding plugin outputs: %s: %v", plugin.Config.Implementation, plugin.Outputs)
-
 		outputs = append(outputs, plugin.Outputs...)
 	}
 
-	// outputs = options.filterOutputs(outputs)
-	log.Printf("filtered plugin outputs: %s: %v", ruleName, outputs)
+	outputs = options.filterOutputs(outputs)
 
 	if len(outputs) == 0 {
-		log.Printf("%s: skipping provide, no outputs (%s)", ruleName, s.kindName)
 		return nil
 	}
 
-	rule := &scalaLibraryRule{
+	return &scalaLibraryRule{
 		kindName:       s.kindName,
 		ruleNameSuffix: s.ruleSuffix,
 		options:        options,
@@ -116,8 +107,6 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		config:         pc,
 		files:          pc.Library.Files(),
 	}
-	log.Printf("%s:%s%%%s: ProvideRule <%s>", pc.Rel, s.kindName, ruleName, rule.Name())
-	return rule
 }
 
 // scalaLibraryRule implements RuleProvider for 'scala_library'-derived rules.
@@ -422,22 +411,27 @@ func parseScalaLibraryOptions(kindName string, args []string) *scalaLibraryOptio
 
 	config := &scalaLibraryOptions{
 		noResolve: make(map[string]bool),
-		exclude:   make([]string, 0),
-		include:   make([]string, 0),
-		plugins:   make([]string, 0),
 	}
+
 	for _, value := range strings.Split(noresolveFlagValue, ",") {
 		config.noResolve[value] = true
 	}
-	config.exclude = strings.Split(excludeFlagValue, ",")
-	config.include = strings.Split(includeFlagValue, ",")
-	config.plugins = strings.Split(pluginsFlagValue, ",")
+	if len(excludeFlagValue) > 0 {
+		config.exclude = strings.Split(excludeFlagValue, ",")
+	}
+	if len(includeFlagValue) > 0 {
+		config.include = strings.Split(includeFlagValue, ",")
+	}
+	if len(pluginsFlagValue) > 0 {
+		config.plugins = strings.Split(pluginsFlagValue, ",")
+	}
 
 	return config
 }
 
 func (o *scalaLibraryOptions) filterOutputs(in []string) (out []string) {
 	if len(o.include) > 0 {
+		log.Printf("filtering includes %v %d %q", o.include, len(o.include), o.include[0])
 		files := make([]string, 0)
 
 		for _, value := range in {
@@ -483,13 +477,6 @@ func (o *scalaLibraryOptions) filterImports(in []string) (out []string) {
 			continue
 		}
 		out = append(out, value)
-	}
-	return
-}
-
-func getPluginImplNames(plugins []*protoc.PluginConfiguration) (names []string) {
-	for _, plugin := range plugins {
-		names = append(names, plugin.Plugin.Name())
 	}
 	return
 }
