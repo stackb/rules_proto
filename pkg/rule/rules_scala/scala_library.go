@@ -61,10 +61,8 @@ func (s *scalaLibrary) Name() string {
 // KindInfo implements part of the LanguageRule interface.
 func (s *scalaLibrary) KindInfo() rule.KindInfo {
 	return rule.KindInfo{
-		MergeableAttrs: map[string]bool{
-			"srcs": true,
-		},
-		ResolveAttrs: map[string]bool{"deps": true},
+		MergeableAttrs: map[string]bool{"srcs": true},
+		ResolveAttrs:   map[string]bool{"deps": true},
 	}
 }
 
@@ -78,11 +76,12 @@ func (s *scalaLibrary) LoadInfo() rule.LoadInfo {
 
 // ProvideRule implements part of the LanguageRule interface.
 func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.ProtocConfiguration) protoc.RuleProvider {
-	options := parseScalaLibraryOptions(s.kindName, cfg.GetOptions())
+	files := s.protoFileFilter(pc.Library.Files())
+	if len(files) == 0 {
+		return nil
+	}
 
-	//
-	// output preparation
-	//
+	options := parseScalaLibraryOptions(s.kindName, cfg.GetOptions())
 
 	// the list of output files
 	outputs := make([]string, 0)
@@ -90,6 +89,7 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 	for _, name := range options.plugins {
 		plugin := getPluginConfiguration(pc.Plugins, name)
 		if plugin == nil {
+			// TODO: warn here?
 			continue
 		}
 		outputs = append(outputs, plugin.Outputs...)
@@ -108,7 +108,7 @@ func (s *scalaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *protoc.Pr
 		outputs:        outputs,
 		ruleConfig:     cfg,
 		config:         pc,
-		files:          s.protoFileFilter(pc.Library.Files()),
+		files:          files,
 	}
 }
 
@@ -176,11 +176,19 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		newRule.SetAttr("visibility", visibility)
 	}
 
-	// add any imports from proto options.  Example:
-	// option (scalapb.options) = {
-	// 	import: "com.foo.Bar"
+	// add any imports from proto options.  Example: option (scalapb.options) =
+	// {
+	//  import: "com.foo.Bar"
 	// };
-	scalaImports := getScalapbImports(s.files)
+	//
+	// NOTE: we pass *all* files from the proto_library.  Although the
+	// fileFilter has reduced the set into grpc or non-grpc ones, in practice
+	// protoc-gen-scala only has the "grpc" option.  When OFF, it will produce a
+	// srcjar with only messages. When that is ON, the compiler will produce a
+	// srcjar with both messages and services.  There is no way to tell the
+	// compiler to generate ONLY services (and not messages).  Therefore, we
+	// need all dependencies in order to compile the messages.
+	scalaImports := getScalapbImports(s.config.Library.Files())
 	if len(scalaImports) > 0 {
 		newRule.SetPrivateAttr(config.GazelleImportsKey, scalaImports)
 	}
@@ -289,11 +297,11 @@ func getScalapbImports(files []*protoc.File) []string {
 			if option.Name != scalapbOptionsName {
 				continue
 			}
-			for _, constant := range option.AggregatedConstants {
-				switch constant.Name {
+			for _, namedLiteral := range option.Constant.OrderedMap {
+				switch namedLiteral.Name {
 				case "import":
-					if constant.Source != "" {
-						imps = append(imps, constant.Source)
+					if namedLiteral.Source != "" {
+						imps = append(imps, namedLiteral.Source)
 					}
 				}
 			}
