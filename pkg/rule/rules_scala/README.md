@@ -28,7 +28,7 @@ gazelle:proto_rule proto_scala_library deps @maven//:com_google_protobuf_protobu
 gazelle:proto_rule proto_scala_library deps @maven//:com_thesamet_scalapb_lenses_2_12
 gazelle:proto_rule proto_scala_library deps @maven//:com_thesamet_scalapb_scalapb_runtime_2_12
 gazelle:proto_rule proto_scala_library options --noresolve=scalapb/scalapb.proto
-gazelle:proto_rule proto_scala_library options --nooutput=package_scala.srcjar
+gazelle:proto_rule proto_scala_library options --exclude=package_scala.srcjar
 gazelle:proto_rule proto_scala_library visibility //visibility:public
 ```
 
@@ -74,4 +74,4 @@ However, in this case we do not want to emit a `proto_scala_library`. Why?
 Because the `package_scala.srcjar` in this case will be empty, as the scalapbc
 plugin does not emit and corresponding JVM code for this degenerate case.
 
-Therefore, the `--nooutput` means "suppress this output from the output list".
+Therefore, the `--exclude` means "suppress this output from the output list".

@@ -5,7 +5,7 @@ scala_library(
     srcs = ["WithSnapshot.scala"],
     visibility = ["//visibility:public"],
     deps = [
-        "//proto:proto_scala_library",
+        "//proto:proto_proto_scala_library",
         "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
     ],

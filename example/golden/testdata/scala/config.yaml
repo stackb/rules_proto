@@ -1,23 +1,13 @@
 plugins:
   - name: protoc-gen-scala
     implementation: scalapb:scalapb:protoc-gen-scala
+  - name: protoc-gen-scala-grpc
+    implementation: scalapb:scalapb:protoc-gen-scala
+    label: "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc"
     options:
       - grpc
-    deps:
-      - "@com_google_protobuf//:protobuf_java"
-      - "@maven_scala//:com_thesamet_scalapb_lenses_2_12"
-      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12"
-      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12"
-      - "@maven_scala//:io_grpc_grpc_api"
-      - "@maven_scala//:io_grpc_grpc_stub"
-      - "@maven_scala//:io_grpc_grpc_protobuf"
   - name: protoc-gen-akka-grpc
     implementation: akka:akka-grpc:protoc-gen-akka-grpc
-    deps:
-      - "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12"
-      - "@maven_akka//:com_typesafe_akka_akka_actor_2_12"
-      - "@maven_akka//:com_typesafe_akka_akka_http_core_2_12"
-      - "@maven_akka//:com_typesafe_akka_akka_stream_2_12"
 rules:
   - name: proto_compile
     implementation: stackb:rules_proto:proto_compile
@@ -25,15 +15,32 @@ rules:
     implementation: stackb:rules_proto:proto_scala_library
     visibility:
       - //visibility:public
+    deps:
+      - "@com_google_protobuf//:protobuf_java"
+      - "@maven_scala//:com_thesamet_scalapb_lenses_2_12"
+      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12"
   - name: grpc_scala_library
     implementation: stackb:rules_proto:grpc_scala_library
     visibility:
       - //visibility:public
+    deps:
+      - "@com_google_protobuf//:protobuf_java"
+      - "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12"
+      - "@maven_akka//:com_typesafe_akka_akka_actor_2_12"
+      - "@maven_akka//:com_typesafe_akka_akka_http_core_2_12"
+      - "@maven_akka//:com_typesafe_akka_akka_stream_2_12"
+      - "@maven_scala//:com_thesamet_scalapb_lenses_2_12"
+      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12"
+      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12"
+      - "@maven_scala//:io_grpc_grpc_api"
+      - "@maven_scala//:io_grpc_grpc_protobuf"
+      - "@maven_scala//:io_grpc_grpc_stub"
 languages:
   - name: scala
     plugins:
-      - protoc-gen-akka-grpc
       - protoc-gen-scala
+      - protoc-gen-scala-grpc
+      - protoc-gen-akka-grpc
     rules:
       - proto_compile
       - proto_scala_library

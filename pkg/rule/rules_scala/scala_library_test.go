@@ -232,17 +232,17 @@ func TestScalaLibraryOptionsNoOutput(t *testing.T) {
 	}{
 		"degenerate case": {},
 		"prototypical": {
-			args:    []string{"--nooutput=package_scala.srcjar"},
+			args:    []string{"--exclude=package_scala.srcjar"},
 			outputs: []string{"package_scala.srcjar"},
 			want:    nil,
 		},
 		"csv": {
-			args:    []string{"--nooutput=a.srcjar,b.srcjar"},
+			args:    []string{"--exclude=a.srcjar,b.srcjar"},
 			outputs: []string{"a.srcjar", "b.srcjar"},
 			want:    nil,
 		},
 		"pattern": {
-			args:    []string{"--nooutput=**/*.srcjar"},
+			args:    []string{"--exclude=**/*.srcjar"},
 			outputs: []string{"a.srcjar", "lib/b.srcjar", "lib/c.jar"},
 			want:    []string{"lib/c.jar"},
 		},
