@@ -10,6 +10,8 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
+const debug = false
+
 // Package provides a set of proto_library derived rules for the package.
 type Package struct {
 	// relative path of build file
@@ -61,8 +63,6 @@ func (s *Package) generateRules(enabled bool) []RuleProvider {
 func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvider {
 	// list of plugin configurations that apply to this proto_library
 	configs := make([]*PluginConfiguration, 0)
-
-	debug := s.rel == "trumid/common/utils/state/snapshot/proto"
 
 	for name, want := range p.Plugins {
 		if !want {

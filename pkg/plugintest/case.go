@@ -37,7 +37,6 @@ type Case struct {
 	Directives []rule.Directive
 	// The input proto file source.  "syntax = proto3" will be automatically prepended.
 	Input string
-
 	// The expected value for the final configuration state
 	Configuration *protoc.PluginConfiguration
 	// Whether to perform integration test portion of the test
@@ -58,7 +57,6 @@ func (tc *Case) Run(t *testing.T, subject protoc.Plugin) {
 	if err := f.ParseReader(strings.NewReader(in)); err != nil {
 		t.Fatalf("unparseable proto file: %s: %v", tc.Input, err)
 	}
-	// TODO: support additional files here.
 	c := protoc.NewPackageConfig(nil)
 	if err := c.ParseDirectives(tc.Rel, tc.Directives); err != nil {
 		t.Fatalf("bad directives: %v", err)

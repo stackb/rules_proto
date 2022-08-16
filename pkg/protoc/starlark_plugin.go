@@ -72,7 +72,6 @@ func (p *starlarkPlugin) Name() string {
 }
 
 func (p *starlarkPlugin) Configure(ctx *PluginContext) *PluginConfiguration {
-	log.Println("configure:", p.name, ctx.Rel)
 	var result *PluginConfiguration
 
 	configure, err := p.plugin.Attr("configure")
