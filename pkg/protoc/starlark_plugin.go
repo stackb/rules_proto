@@ -2,6 +2,7 @@ package protoc
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -30,6 +31,7 @@ func LoadStarlarkPluginFromFile(workDir, filename, name string, reporter func(ms
 func loadStarlarkPlugin(name, filename string, src interface{}, reporter func(msg string), errorReporter func(err error)) (Plugin, error) {
 
 	newErrorf := func(msg string, args ...interface{}) error {
+		log.Printf(filename+" error: "+msg, args...)
 		err := fmt.Errorf(filename+": "+msg, args...)
 		errorReporter(err)
 		return err
@@ -56,7 +58,7 @@ func loadStarlarkPlugin(name, filename string, src interface{}, reporter func(ms
 	}
 }
 
-// starlarkPlugin is a plugin implemented in starlark that implements the protoc
+// starlarkPlugin is an adapter for starlark code that implements the protoc
 // plugin interface.
 type starlarkPlugin struct {
 	name          string
@@ -70,7 +72,7 @@ func (p *starlarkPlugin) Name() string {
 }
 
 func (p *starlarkPlugin) Configure(ctx *PluginContext) *PluginConfiguration {
-
+	log.Println("configure:", p.name, ctx.Rel)
 	var result *PluginConfiguration
 
 	configure, err := p.plugin.Attr("configure")
@@ -85,7 +87,7 @@ func (p *starlarkPlugin) Configure(ctx *PluginContext) *PluginConfiguration {
 		newPluginContextStruct(ctx),
 	}, []starlark.Tuple{})
 	if err != nil {
-		p.errorReporter("plugin %q configure failed: %w", p.name, err)
+		p.errorReporter("plugin %q configure failed: %v", p.name, err)
 		return nil
 	}
 
@@ -116,9 +118,29 @@ func (p *starlarkPlugin) Configure(ctx *PluginContext) *PluginConfiguration {
 			outputs[i] = outputsList.Index(i).(starlark.String).GoString()
 		}
 
+		optionsValue, err := value.Attr("options")
+		if err != nil {
+			p.errorReporter("PluginConfiguration.options get value: %v", err)
+		}
+		optionsList := optionsValue.(*starlark.List)
+		options := make([]string, optionsList.Len())
+		for i := 0; i < optionsList.Len(); i++ {
+			options[i] = optionsList.Index(i).(starlark.String).GoString()
+		}
+
+		outValue, err := value.Attr("out")
+		if err != nil {
+			p.errorReporter("PluginConfiguration.out get value: %v", err)
+		}
+		var out string
+		if outString, ok := outValue.(starlark.String); ok {
+			out = outString.GoString()
+		}
 		result = &PluginConfiguration{
 			Label:   lbl,
 			Outputs: outputs,
+			Out:     out,
+			Options: options,
 		}
 	default:
 		p.errorReporter("plugin %q configure returned invalid type: %T", p.name, value)

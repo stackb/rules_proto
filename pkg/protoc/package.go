@@ -62,6 +62,8 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 	// list of plugin configurations that apply to this proto_library
 	configs := make([]*PluginConfiguration, 0)
 
+	debug := s.rel == "trumid/common/utils/state/snapshot/proto"
+
 	for name, want := range p.Plugins {
 		if !want {
 			continue
@@ -100,8 +102,12 @@ func (s *Package) libraryRules(p *LanguageConfig, lib ProtoLibrary) []RuleProvid
 		// Delegate to the implementation for configuration
 		config := impl.Configure(ctx)
 		if config == nil {
+			if debug {
+				log.Println("visiting:", s.rel, "no plugin config", name)
+			}
 			continue
 		}
+
 		config.Plugin = impl
 		config.Config = plugin.clone()
 		config.Options = DeduplicateAndSort(config.Options)

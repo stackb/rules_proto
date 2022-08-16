@@ -30,9 +30,33 @@ func (p *JsCommonPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConf
 		library = path.Join(ctx.Rel, library)
 	}
 
+	jsOutputs := protoc.FlatMapFiles(
+		jsGeneratedFileName(ctx.Rel),
+		protoc.Always,
+		ctx.ProtoLibrary.Files()...,
+	)
+
+	outputs := []string{library}
+	if true {
+		outputs = jsOutputs
+	}
+
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/builtin", "commonjs"),
-		Outputs: []string{library},
+		Outputs: outputs,
 		Options: append(ctx.PluginConfig.GetOptions(), "import_style=commonjs"),
+	}
+}
+
+// jsGeneratedFileName is a utility function that returns a function that
+// computes the name of a predicted generated file having the given extension(s)
+// relative to the given dir.
+func jsGeneratedFileName(reldir string) func(f *protoc.File) []string {
+	return func(f *protoc.File) []string {
+		name := strings.ReplaceAll(f.Name, "-", "_")
+		if reldir != "" {
+			name = path.Join(reldir, name)
+		}
+		return []string{name + "_pb.js"}
 	}
 }

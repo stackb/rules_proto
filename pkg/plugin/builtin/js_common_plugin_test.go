@@ -70,5 +70,18 @@ func TestJsCommonPlugin(t *testing.T) {
 				plugintest.WithOptions("import_style=commonjs"),
 			),
 		},
+		"multiple files": {
+			Rel:   "rel",
+			Input: "message M{}",
+			Directives: plugintest.WithDirectives(
+				"proto_plugin", "js implementation builtin:js:common",
+			),
+			PluginName: "js",
+			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:commonjs"),
+				plugintest.WithOutputs("rel/test_pb.js"),
+				plugintest.WithOptions("import_style=commonjs"),
+			),
+		},
 	})
 }
