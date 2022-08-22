@@ -109,30 +109,24 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Branch: master
-# Commit: 425d85daecb9aeffa1ae24b83df7b97b534dcf05
-# Date: 2021-10-29 00:25:25 +0000 UTC
-# URL: https://github.com/bazelbuild/bazel-gazelle/commit/425d85daecb9aeffa1ae24b83df7b97b534dcf05
+# Commit: 984e821189ddd636fc097bca59bccc5217ee24c5
+# Date: 2022-08-22 00:05:46 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-gazelle/commit/984e821189ddd636fc097bca59bccc5217ee24c5
 #
-# Stardoc generates repository.md (#1123)
+# Register and parse flags before calling Kinds/Loads (#1318)
 #
-# * Stardoc generates repository.md
+# This allows languages to configure their Kinds/Loads calls based on
+# command line flags.
 #
-# This is a mirror of the content in repository.rst, allowing us to manually inspect the delta between them.
-# As soon as we are satisfied that the generated content is correct, we'll delete repository.rst and update any links to it.
-#
-# Technique: copied doc strings out of existing rst file into the starlark files. Transcribed rst syntax to markdown.
-#
-# * Replace repository.rst content with link to markdown version
-# Size: 1416940 (1.4 MB)
+# Closes #1274
+# Fixes #1275
+# Size: 1517496 (1.5 MB
 proto_dependency(
     name = "bazel_gazelle",
-    patch_args = ["-p1"],
-    patches = ["@build_stack_rules_proto//third_party:bazel-gazelle-PR1274.patch"],
     repository_rule = "http_archive",
-    sha256 = "cb05501bd37e2cbfdea8e23b28e5a7fe4ff4f12cef30eeb1924a0b8c3c0cea61",
-    strip_prefix = "bazel-gazelle-425d85daecb9aeffa1ae24b83df7b97b534dcf05",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/425d85daecb9aeffa1ae24b83df7b97b534dcf05.tar.gz"],
+    sha256 = "cb05501bd37e2cbfdea8e23b28e5a7fe4ff4f12cef30eeb1924a0b8c3c0cea62",
+    strip_prefix = "bazel-gazelle-984e821189ddd636fc097bca59bccc5217ee24c5",
+    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/984e821189ddd636fc097bca59bccc5217ee24c5.tar.gz"],
     deps = [":io_bazel_rules_go"],
 )
 
