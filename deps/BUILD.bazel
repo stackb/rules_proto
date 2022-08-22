@@ -124,7 +124,7 @@ proto_dependency(
 proto_dependency(
     name = "bazel_gazelle",
     repository_rule = "http_archive",
-    sha256 = "cb05501bd37e2cbfdea8e23b28e5a7fe4ff4f12cef30eeb1924a0b8c3c0cea62",
+    sha256 = "1a5f9dc893288848f36373f99e85df89bb644e1fe7a6f98934f776c098b0cc1e",
     strip_prefix = "bazel-gazelle-984e821189ddd636fc097bca59bccc5217ee24c5",
     urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/984e821189ddd636fc097bca59bccc5217ee24c5.tar.gz"],
     deps = [":io_bazel_rules_go"],
