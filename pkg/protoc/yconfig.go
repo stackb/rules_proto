@@ -17,6 +17,7 @@ type YConfig struct {
 	Rule           []*YRule     `yaml:"rules"`
 	Language       []*YLanguage `yaml:"languages"`
 	StarlarkPlugin []string     `yaml:"starlarkPlugins"`
+	StarlarkRule   []string     `yaml:"starlarkRules"`
 }
 
 // YPlugin represents a LanguagePluginConfig in YAML.

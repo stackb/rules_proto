@@ -51,6 +51,7 @@ func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 			return err
 		}
 	}
+
 	for _, starlarkRule := range pl.starlarkRules {
 		if err := protoc.RegisterStarlarkRule(c, starlarkRule); err != nil {
 			return err

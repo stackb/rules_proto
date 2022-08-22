@@ -195,6 +195,11 @@ func (c *PackageConfig) LoadYConfig(y *YConfig) error {
 			return err
 		}
 	}
+	for _, starlarkRule := range y.StarlarkRule {
+		if err := c.loadYStarlarkRule(starlarkRule); err != nil {
+			return err
+		}
+	}
 
 	for _, plugin := range y.Plugin {
 		if err := c.loadYPlugin(plugin); err != nil {
@@ -216,6 +221,10 @@ func (c *PackageConfig) LoadYConfig(y *YConfig) error {
 
 func (c *PackageConfig) loadYStarlarkPlugin(y string) error {
 	return RegisterStarlarkPlugin(c.Config, y)
+}
+
+func (c *PackageConfig) loadYStarlarkRule(y string) error {
+	return RegisterStarlarkRule(c.Config, y)
 }
 
 func (c *PackageConfig) loadYPlugin(y *YPlugin) error {
@@ -282,6 +291,7 @@ func RegisterStarlarkRule(c *config.Config, starlarkRule string) error {
 	}
 	fileName := parts[0]
 	ruleName := parts[1]
+
 	var configureError error
 	impl, err := LoadStarlarkLanguageRuleFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
 	}, func(err error) {
