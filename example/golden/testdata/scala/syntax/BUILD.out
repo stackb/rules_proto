@@ -60,6 +60,7 @@ proto_scala_library(
     name = "syntax_proto_scala_library",
     srcs = ["syntax_scala.srcjar"],
     visibility = ["//visibility:public"],
+    exports = ["@com_google_protobuf//:protobuf_java"],
     deps = [
         "//lib:scala",
         "//proto:proto_proto_scala_library",

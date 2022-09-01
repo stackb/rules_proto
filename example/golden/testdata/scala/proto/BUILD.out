@@ -26,6 +26,7 @@ proto_scala_library(
     name = "proto_proto_scala_library",
     srcs = ["proto_scala.srcjar"],
     visibility = ["//visibility:public"],
+    exports = ["@com_google_protobuf//:protobuf_java"],
     deps = [
         "@com_google_protobuf//:protobuf_java",
         "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
