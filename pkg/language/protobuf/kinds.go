@@ -13,6 +13,8 @@ import (
 // match and merge attributes that may be found in rules of those kinds. All
 // kinds of rules generated for this language may be found here.
 func (*protobufLang) Kinds() map[string]rule.KindInfo {
+	log.Println("Kinds!")
+
 	registry := protoc.Rules()
 
 	kinds := make(map[string]rule.KindInfo)
@@ -36,7 +38,7 @@ func (*protobufLang) Kinds() map[string]rule.KindInfo {
 // GenerateRules, now or in the past, should be loadable from one of these
 // files.
 func (pl *protobufLang) Loads() []rule.LoadInfo {
-
+	log.Println("Loads!")
 	// Merge symbols
 	symbolsByLoadName := make(map[string][]string)
 	for _, name := range pl.rules.RuleNames() {
@@ -68,6 +70,10 @@ func (pl *protobufLang) Loads() []rule.LoadInfo {
 			Name:    name,
 			Symbols: symbols,
 		})
+	}
+
+	for i, v := range loads {
+		log.Printf("kind: %d: %+v", i, v)
 	}
 
 	return loads

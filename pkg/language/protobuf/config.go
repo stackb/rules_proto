@@ -17,6 +17,8 @@ import (
 // https://pkg.go.dev/github.com/bazelbuild/bazel-gazelle/resolve?tab=doc#Resolver
 // interface, but are otherwise unused.
 func (pl *protobufLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
+	log.Println("RegisterFlags!")
+
 	fs.StringVar(&pl.configFiles,
 		"proto_configs", "",
 		"optional config.yaml file(s) that provide preconfiguration")
@@ -43,6 +45,8 @@ func (pl *protobufLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Co
 }
 
 func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
+	log.Println("CheckFlags!")
+
 	cfg := protoc.NewPackageConfig(c)
 	c.Exts[pl.name] = cfg
 
