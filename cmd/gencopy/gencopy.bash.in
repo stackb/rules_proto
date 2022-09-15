@@ -17,8 +17,12 @@ CONFIG_SHORT_PATH=@@CONFIG_SHORT_PATH@@
 # either by reading the symbolic link or reading the runfiles manifest.
 function find_runfile {
   local runfile=$1
-  if [ -f "$runfile" ]; then
+  if [ -L "$runfile" ]; then
     readlink "$runfile"
+    return
+  fi
+  if [ -f "$runfile" ]; then
+    echo "$runfile"
     return
   fi
   runfile=$(echo "$runfile" | sed -e 's!^\(\.\./\|external/\)!!')
