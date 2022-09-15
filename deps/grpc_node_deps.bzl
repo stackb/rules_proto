@@ -11,7 +11,6 @@ def _maybe(repo_rule, name, **kwargs):
 def grpc_node_deps():
     """grpc_node dependency macro
     """
-    build_bazel_rules_swift()  # via com_github_grpc_grpc
     bazel_skylib()  # via com_google_protobuf
     rules_pkg()  # via com_google_protobuf
     rules_python()  # via com_google_protobuf
@@ -20,17 +19,6 @@ def grpc_node_deps():
     rules_jvm_external()  # via com_github_grpc_grpc
     com_github_grpc_grpc()  # via com_github_grpc_grpc_node_packages_grpc_tools_src
     com_github_grpc_grpc_node_packages_grpc_tools_src()  # via <TOP>
-
-def build_bazel_rules_swift():
-    _maybe(
-        http_archive,
-        name = "build_bazel_rules_swift",
-        sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
-        strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
-        urls = [
-            "https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz",
-        ],
-    )
 
 def bazel_skylib():
     _maybe(
@@ -104,10 +92,10 @@ def com_github_grpc_grpc():
     _maybe(
         http_archive,
         name = "com_github_grpc_grpc",
-        sha256 = "e6c6b1ac9ba2257c93e49c98ef4fc96b2e2a1cdd90782a919f60e23fa8c2428b",
-        strip_prefix = "grpc-5f759fcd1f602b38004b948b071f8b5726a9a4b1",
+        sha256 = "b2f2620c762427bfeeef96a68c1924319f384e877bc0e084487601e4cc6e434c",
+        strip_prefix = "grpc-1.42.0",
         urls = [
-            "https://github.com/grpc/grpc/archive/5f759fcd1f602b38004b948b071f8b5726a9a4b1.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.42.0.tar.gz",
         ],
     )
 
