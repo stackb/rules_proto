@@ -61,8 +61,11 @@ func (s *scalaLibrary) Name() string {
 // KindInfo implements part of the LanguageRule interface.
 func (s *scalaLibrary) KindInfo() rule.KindInfo {
 	return rule.KindInfo{
-		MergeableAttrs: map[string]bool{"srcs": true},
-		ResolveAttrs:   map[string]bool{"deps": true},
+		MergeableAttrs: map[string]bool{
+			"srcs":    true,
+			"exports": true,
+		},
+		ResolveAttrs: map[string]bool{"deps": true},
 	}
 }
 
@@ -169,6 +172,11 @@ func (s *scalaLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	deps := s.Deps()
 	if len(deps) > 0 {
 		newRule.SetAttr("deps", deps)
+	}
+
+	exports := s.ruleConfig.GetAttr("exports")
+	if len(exports) > 0 {
+		newRule.SetAttr("exports", exports)
 	}
 
 	visibility := s.Visibility()

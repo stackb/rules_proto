@@ -1,5 +1,6 @@
 exports_files(["config.yaml"])
 
 # gazelle:proto_language scala enabled true
+# gazelle:proto_rule proto_scala_library attr exports @com_google_protobuf//:protobuf_java
 # gazelle:proto_rule proto_scala_library option --plugins=protoc-gen-scala
 # gazelle:proto_rule grpc_scala_library option --plugins=protoc-gen-akka-grpc
