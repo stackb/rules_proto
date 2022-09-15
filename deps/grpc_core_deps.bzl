@@ -11,6 +11,8 @@ def _maybe(repo_rule, name, **kwargs):
 def grpc_core_deps():
     """grpc_core dependency macro
     """
+    build_bazel_rules_swift()  # via build_bazel_rules_apple
+    build_bazel_rules_apple()  # via com_github_grpc_grpc
     bazel_skylib()  # via com_google_protobuf
     rules_pkg()  # via com_google_protobuf
     rules_python()  # via com_google_protobuf
@@ -18,6 +20,28 @@ def grpc_core_deps():
     com_google_protobuf()  # via com_github_grpc_grpc
     rules_jvm_external()  # via com_github_grpc_grpc
     com_github_grpc_grpc()  # via <TOP>
+
+def build_bazel_rules_swift():
+    _maybe(
+        http_archive,
+        name = "build_bazel_rules_swift",
+        sha256 = "802c094df1642909833b59a9507ed5f118209cf96d13306219461827a00992da",
+        strip_prefix = "rules_swift-0.21.0",
+        urls = [
+            "https://github.com/bazelbuild/rules_swift/archive/0.21.0.tar.gz",
+        ],
+    )
+
+def build_bazel_rules_apple():
+    _maybe(
+        http_archive,
+        name = "build_bazel_rules_apple",
+        sha256 = "d6735ed25754dbcb4fce38e6d72c55b55f6afa91408e0b72f1357640b88bb49c",
+        strip_prefix = "rules_apple-0.31.3",
+        urls = [
+            "https://github.com/bazelbuild/rules_apple/archive/0.31.3.tar.gz",
+        ],
+    )
 
 def bazel_skylib():
     _maybe(

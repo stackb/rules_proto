@@ -239,7 +239,7 @@ proto_dependency(
     strip_prefix = "grpc-1.42.0",
     urls = ["https://github.com/grpc/grpc/archive/v1.42.0.tar.gz"],
     deps = [
-        # ":build_bazel_rules_swift",
+        ":build_bazel_rules_apple",
         ":com_google_protobuf",
         ":rules_jvm_external",
     ],
@@ -256,6 +256,22 @@ proto_dependency(
     sha256 = "d6735ed25754dbcb4fce38e6d72c55b55f6afa91408e0b72f1357640b88bb49c",
     strip_prefix = "rules_apple-0.31.3",
     urls = ["https://github.com/bazelbuild/rules_apple/archive/0.31.3.tar.gz"],
+    deps = [
+        ":build_bazel_rules_swift",
+    ],
+)
+
+# Release: 0.21.0
+# TargetCommitish: master
+# Date: 2021-05-04 01:42:51 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_swift/releases/tag/0.21.0
+# Size: 163116 (163 kB)
+proto_dependency(
+    name = "build_bazel_rules_swift",
+    repository_rule = "http_archive",
+    sha256 = "802c094df1642909833b59a9507ed5f118209cf96d13306219461827a00992da",
+    strip_prefix = "rules_swift-0.21.0",
+    urls = ["https://github.com/bazelbuild/rules_swift/archive/0.21.0.tar.gz"],
 )
 
 # Release: v1.35.0
