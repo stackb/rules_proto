@@ -23,7 +23,7 @@ grpc_scala_library(
     srcs = ["syntax_akka_grpc.srcjar"],
     visibility = ["//visibility:public"],
     deps = [
-        ":syntax_proto_scala_library",
+        "//lib:scala",
         "//proto:proto_proto_scala_library",
         "@com_google_protobuf//:protobuf_java",
         "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12",
