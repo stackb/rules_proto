@@ -106,24 +106,18 @@ proto_dependency(
     urls = ["https://github.com/bazelbuild/rules_go/archive/v0.35.0.tar.gz"],
 )
 
-# Commit: 984e821189ddd636fc097bca59bccc5217ee24c5
-# Date: 2022-08-22 00:05:46 +0000 UTC
-# URL: https://github.com/bazelbuild/bazel-gazelle/commit/984e821189ddd636fc097bca59bccc5217ee24c5
+# Commit: cf0c17e6a4d864543e976d0e5d16db0ef75364a0
+# Date: 2022-09-16 19:17:48 +0000 UTC
+# URL: https://github.com/pcj/bazel-gazelle/commit/cf0c17e6a4d864543e976d0e5d16db0ef75364a0
 #
-# Register and parse flags before calling Kinds/Loads (#1318)
-#
-# This allows languages to configure their Kinds/Loads calls based on
-# command line flags.
-#
-# Closes #1274
-# Fixes #1275
-# Size: 1517496 (1.5 MB
+# Replace strings.Cut with internal version
+# Size: 1570069 (1.6 MB)
 proto_dependency(
     name = "bazel_gazelle",
     repository_rule = "http_archive",
-    sha256 = "1a5f9dc893288848f36373f99e85df89bb644e1fe7a6f98934f776c098b0cc1e",
-    strip_prefix = "bazel-gazelle-984e821189ddd636fc097bca59bccc5217ee24c5",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/984e821189ddd636fc097bca59bccc5217ee24c5.tar.gz"],
+    sha256 = "40ef0692f7ff73357495ff49646b181e3d881e7e89893c421bcfae8c44add9a8",
+    strip_prefix = "bazel-gazelle-cf0c17e6a4d864543e976d0e5d16db0ef75364a0",
+    urls = ["https://github.com/pcj/bazel-gazelle/archive/cf0c17e6a4d864543e976d0e5d16db0ef75364a0.tar.gz"],
     deps = [":io_bazel_rules_go"],
 )
 
