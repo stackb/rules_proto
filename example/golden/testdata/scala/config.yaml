@@ -13,6 +13,9 @@ rules:
     implementation: stackb:rules_proto:proto_compile
   - name: proto_scala_library
     implementation: stackb:rules_proto:proto_scala_library
+    options:
+      # the --plugins flag informs which set of plugins the rule should collect outputs for.
+      - "--plugins=protoc-gen-scala"
     visibility:
       - //visibility:public
     deps:
@@ -21,6 +24,9 @@ rules:
       - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12"
   - name: grpc_scala_library
     implementation: stackb:rules_proto:grpc_scala_library
+    options:
+      # the --plugins flag informs which set of plugins the rule should collect outputs for.
+      - "--plugins=protoc-gen-scala-grpc,protoc-gen-akka-grpc"
     visibility:
       - //visibility:public
     deps:

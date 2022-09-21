@@ -35,7 +35,7 @@ func init() {
 		&scalaLibrary{
 			kindName:        ProtoscalaLibraryRuleName,
 			ruleSuffix:      protoScalaLibraryRuleSuffix,
-			protoFileFilter: messageFiles,
+			protoFileFilter: messageOrEnumFiles,
 		})
 	protoc.Rules().MustRegisterRule("stackb:rules_proto:"+GrpcscalaLibraryRuleName,
 		&scalaLibrary{
@@ -497,9 +497,9 @@ func (o *scalaLibraryOptions) filterImports(in []string) (out []string) {
 	return
 }
 
-func messageFiles(in []*protoc.File) []*protoc.File {
+func messageOrEnumFiles(in []*protoc.File) []*protoc.File {
 	return filterFiles(in, func(f *protoc.File) bool {
-		return !f.HasServices()
+		return f.HasMessages() || f.HasEnums()
 	})
 }
 
