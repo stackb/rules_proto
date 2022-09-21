@@ -14,3 +14,5 @@ require (
 	go.starlark.net v0.0.0-20220328144851-d1966c6b9fcd
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
+
+replace github.com/bazelbuild/bazel-gazelle => github.com/pcj/bazel-gazelle v0.0.0-20220916192132-cf0c17e6a4d8

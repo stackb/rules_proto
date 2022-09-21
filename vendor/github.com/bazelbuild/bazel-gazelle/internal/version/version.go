@@ -70,3 +70,15 @@ func ParseVersion(vs string) (Version, error) {
 	}
 	return v, nil
 }
+
+// Cut is a drop-in replacement for strings.Cut to, to avoid go1.18 dependency.
+func Cut(s, sep string) (before, after string, found bool) {
+	if sep == "" {
+		return "", s, true
+	}
+	elts := strings.SplitN(s, sep, 2)
+	if len(elts) == 2 {
+		return elts[0], elts[1], true
+	}
+	return s, "", false
+}

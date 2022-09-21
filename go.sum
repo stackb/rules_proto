@@ -1,7 +1,5 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/bazelbuild/bazel-gazelle v0.27.0 h1:+/ZhUxlDy4XnyMIGeKkbRZoIGssy1eO51GijwIvvuwE=
-github.com/bazelbuild/bazel-gazelle v0.27.0/go.mod h1:2K6B42/loq8ext4JObmam4gTYx4En1MUSzHFKQF8hPM=
 github.com/bazelbuild/buildtools v0.0.0-20220907133145-b9bfff5d7f91 h1:7xSt0nPZ74liqR8jjBYmjentrQVrdQEhoW4/+4BrmoM=
 github.com/bazelbuild/buildtools v0.0.0-20220907133145-b9bfff5d7f91/go.mod h1:689QdV3hBP7Vo9dJMmzhoYIyo/9iMhEmHkJcnaPRCbo=
 github.com/bazelbuild/rules_go v0.35.0 h1:ViPR65vOrg74JKntAUFY6qZkheBKGB6to7wFd8gCRU4=
@@ -45,6 +43,8 @@ github.com/google/go-cmp v0.5.1/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
 github.com/google/go-cmp v0.5.9/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
+github.com/pcj/bazel-gazelle v0.0.0-20220916192132-cf0c17e6a4d8 h1:8U2ygKAfWUnInWNfBnKQuDGSDXZ3Jsig9pCehrvCSdM=
+github.com/pcj/bazel-gazelle v0.0.0-20220916192132-cf0c17e6a4d8/go.mod h1:2K6B42/loq8ext4JObmam4gTYx4En1MUSzHFKQF8hPM=
 github.com/pelletier/go-toml v1.9.5 h1:4yBQzkHv+7BHq2PQUZF3Mx0IYxG7LsP222s7Agd3ve8=
 github.com/pelletier/go-toml v1.9.5/go.mod h1:u1nR/EPcESfeI/szUZKdtJ0xRNbUoANCkoOuaOx1Y+c=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

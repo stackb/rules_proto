@@ -54,8 +54,9 @@ def go_deps():
         name = "com_github_bazelbuild_bazel_gazelle",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/bazelbuild/bazel-gazelle",
-        sum = "h1:+/ZhUxlDy4XnyMIGeKkbRZoIGssy1eO51GijwIvvuwE=",
-        version = "v0.27.0",
+        replace = "github.com/pcj/bazel-gazelle",
+        sum = "h1:8U2ygKAfWUnInWNfBnKQuDGSDXZ3Jsig9pCehrvCSdM=",
+        version = "v0.0.0-20220916192132-cf0c17e6a4d8",
     )
     go_repository(
         name = "com_github_bazelbuild_buildtools",

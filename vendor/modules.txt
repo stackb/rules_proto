@@ -1,4 +1,4 @@
-# github.com/bazelbuild/bazel-gazelle v0.27.0
+# github.com/bazelbuild/bazel-gazelle v0.27.0 => github.com/pcj/bazel-gazelle v0.0.0-20220916192132-cf0c17e6a4d8
 ## explicit
 github.com/bazelbuild/bazel-gazelle/config
 github.com/bazelbuild/bazel-gazelle/flag
@@ -72,3 +72,4 @@ golang.org/x/tools/go/vcs
 # gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 ## explicit
 gopkg.in/yaml.v3
+# github.com/bazelbuild/bazel-gazelle => github.com/pcj/bazel-gazelle v0.0.0-20220916192132-cf0c17e6a4d8
