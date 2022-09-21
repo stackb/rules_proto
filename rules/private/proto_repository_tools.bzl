@@ -81,7 +81,7 @@ def _proto_repository_tools_impl(ctx):
         go_tool,
         "install",
         "-ldflags",
-        "-w -s",
+        "-w -s",  # w -> turn off DWARF debugging information, s -> turn off go symbol debug table
         "-gcflags",
         "all=-trimpath=" + env["GOPATH"],
         "-asmflags",
