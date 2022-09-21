@@ -225,3 +225,19 @@ load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 node_repositories()
 
 register_toolchains("//toolchain:nodejs")
+
+load("@build_stack_rules_proto//rules/proto:proto_repository.bzl", "proto_repository")
+
+proto_repository(
+    name = "scalaapis",
+    build_directives = ["gazelle:proto_language scala enabled true"],
+    build_file_generation = "on",
+    build_file_proto_mode = "file",
+    cfgs = ["//example:config.yaml"],
+    sha256 = "1ac039f79b0825fe2e7e5ddf24e330632d63b70a7a42bfd39ded5bb1fb648811",
+    # the typical importpath is 'scalapb/scalapb.proto', so strip the prefix up
+    # to that directory.
+    strip_prefix = "ScalaPB-a4e0e02c0f5b160877d5f97f6902dbec4c633afe/protobuf",
+    type = "zip",
+    urls = ["https://codeload.github.com/scalapb/ScalaPB/zip/a4e0e02c0f5b160877d5f97f6902dbec4c633afe"],
+)
