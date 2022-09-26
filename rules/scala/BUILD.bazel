@@ -1,3 +1,5 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
 filegroup(
     name = "all_files",
     srcs = [
@@ -7,4 +9,25 @@ filegroup(
         "scala_proto_library.bzl",
     ],
     visibility = ["//rules:__pkg__"],
+)
+
+bzl_library(
+    name = "grpc_scala_library",
+    srcs = ["grpc_scala_library.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@io_bazel_rules_scala//scala"],
+)
+
+bzl_library(
+    name = "proto_scala_library",
+    srcs = ["proto_scala_library.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@io_bazel_rules_scala//scala"],
+)
+
+bzl_library(
+    name = "scala_proto_library",
+    srcs = ["scala_proto_library.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@io_bazel_rules_scala//scala_proto"],
 )

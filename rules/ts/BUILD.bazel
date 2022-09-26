@@ -1,6 +1,15 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
 # gazelle:exclude node_modules
 
 exports_files([
     "package.json",
     "yarn.lock",
 ])
+
+bzl_library(
+    name = "proto_ts_library",
+    srcs = ["proto_ts_library.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@build_bazel_rules_nodejs//:providers"],
+)

@@ -14,6 +14,7 @@ def core_deps():
     io_bazel_rules_go()  # via bazel_gazelle
     bazel_gazelle()  # via <TOP>
     rules_proto()  # via <TOP>
+    bazel_skylib_sources()
 
 def io_bazel_rules_go():
     _maybe(
@@ -51,5 +52,19 @@ def rules_proto():
         strip_prefix = "rules_proto-f7a30f6f80006b591fa7c437fe5a951eb10bcbcf",
         urls = [
             "https://github.com/bazelbuild/rules_proto/archive/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf.tar.gz",
+        ],
+    )
+
+def bazel_skylib_sources():
+    # Override bazel_skylib distribution to fetch sources instead
+    # so that the gazelle extension is included
+    # see https://github.com/bazelbuild/bazel-skylib/issues/250
+    http_archive(
+        name = "bazel_skylib_sources",
+        # sha256 = "07b4117379dde7ab382345c3b0f5edfc6b7cff6c93756eac63da121e0bbcc5de",
+        strip_prefix = "bazel-skylib-1.3.0",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/archive/1.3.0.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/archive/refs/tags/1.3.0.tar.gz",
         ],
     )

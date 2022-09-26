@@ -1,3 +1,5 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
 filegroup(
     name = "all_files",
     srcs = [
@@ -6,4 +8,18 @@ filegroup(
         "proto_py_library.bzl",
     ],
     visibility = ["//rules:__pkg__"],
+)
+
+bzl_library(
+    name = "grpc_py_library",
+    srcs = ["grpc_py_library.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@rules_python//python:defs"],
+)
+
+bzl_library(
+    name = "proto_py_library",
+    srcs = ["proto_py_library.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@rules_python//python:defs"],
 )

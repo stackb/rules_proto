@@ -1,3 +1,5 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
 filegroup(
     name = "all_files",
     srcs = [
@@ -25,4 +27,116 @@ filegroup(
         "//rules/scala:all_files",
     ],
     visibility = ["//:__pkg__"],
+)
+
+bzl_library(
+    name = "depsgen",
+    srcs = ["depsgen.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@build_stack_rules_proto//rules:providers"],
+)
+
+bzl_library(
+    name = "example",
+    srcs = ["example.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@io_bazel_rules_go//go/tools/bazel_testing:def"],
+)
+
+bzl_library(
+    name = "golden_filegroup",
+    srcs = ["golden_filegroup.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@build_stack_rules_proto//rules:proto_compile_gencopy",
+        "@build_stack_rules_proto//rules:providers",
+    ],
+)
+
+bzl_library(
+    name = "proto_compile",
+    srcs = ["proto_compile.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":providers",
+        "@rules_proto//proto:defs",
+    ],
+)
+
+bzl_library(
+    name = "proto_compile_assets",
+    srcs = ["proto_compile_assets.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [":proto_compile_gencopy"],
+)
+
+bzl_library(
+    name = "proto_compile_gencopy",
+    srcs = ["proto_compile_gencopy.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [":providers"],
+)
+
+bzl_library(
+    name = "proto_compiled_source_update",
+    srcs = ["proto_compiled_source_update.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [":proto_compile_gencopy"],
+)
+
+bzl_library(
+    name = "proto_compiled_sources",
+    srcs = ["proto_compiled_sources.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":proto_compile",
+        ":proto_compile_gencopy",
+    ],
+)
+
+bzl_library(
+    name = "proto_dependency",
+    srcs = ["proto_dependency.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [":providers"],
+)
+
+bzl_library(
+    name = "proto_descriptor_set",
+    srcs = ["proto_descriptor_set.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@rules_proto//proto:defs"],
+)
+
+bzl_library(
+    name = "proto_gazelle",
+    srcs = ["proto_gazelle.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_skylib//lib:shell"],
+)
+
+bzl_library(
+    name = "proto_plugin",
+    srcs = ["proto_plugin.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@build_stack_rules_proto//rules:providers",
+        "@rules_proto//proto:defs",
+    ],
+)
+
+bzl_library(
+    name = "protogenrule",
+    srcs = ["protogenrule.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@build_stack_rules_proto//rules:proto_compile_gencopy",
+        "@build_stack_rules_proto//rules:providers",
+    ],
+)
+
+bzl_library(
+    name = "providers",
+    srcs = ["providers.bzl"],
+    visibility = ["//visibility:public"],
 )

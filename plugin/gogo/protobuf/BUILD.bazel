@@ -1,3 +1,4 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 load(
     "@io_bazel_rules_go//proto/wkt:well_known_types.bzl",
@@ -19,4 +20,10 @@ filegroup(
         "variants.bzl",
     ],
     visibility = ["//plugin:__pkg__"],
+)
+
+bzl_library(
+    name = "variants",
+    srcs = ["variants.bzl"],
+    visibility = ["//visibility:public"],
 )

@@ -1,3 +1,4 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
 load("@build_stack_rules_proto//rules:depsgen.bzl", "depsgen")
 
@@ -548,4 +549,119 @@ filegroup(
         "BUILD.bazel",
     ] + glob(["*.bzl"]),
     visibility = ["//:__pkg__"],
+)
+
+bzl_library(
+    name = "closure_deps",
+    srcs = ["closure_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "core_deps",
+    srcs = ["core_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "example_routeguide_nodejs_deps",
+    srcs = ["example_routeguide_nodejs_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bazel_tools//tools/build_defs/repo:http.bzl",
+        "@build_bazel_rules_nodejs//:index",
+    ],
+)
+
+bzl_library(
+    name = "go_core_deps",
+    srcs = ["go_core_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_gazelle//:deps"],
+)
+
+bzl_library(
+    name = "grpc_core_deps",
+    srcs = ["grpc_core_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "grpc_deps",
+    srcs = ["grpc_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "grpc_java_deps",
+    srcs = ["grpc_java_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "grpc_js_deps",
+    srcs = ["grpc_js_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "grpc_node_deps",
+    srcs = ["grpc_node_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "grpc_web_deps",
+    srcs = ["grpc_web_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "nodejs_deps",
+    srcs = ["nodejs_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "prebuilt_protoc_deps",
+    srcs = ["prebuilt_protoc_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "protobuf_core_deps",
+    srcs = ["protobuf_core_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "protobuf_deps",
+    srcs = ["protobuf_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "scala_deps",
+    srcs = ["scala_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
+bzl_library(
+    name = "ts_proto_deps",
+    srcs = ["ts_proto_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@build_bazel_rules_nodejs//:index"],
 )

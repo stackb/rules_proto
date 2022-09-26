@@ -1,3 +1,5 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
 exports_files(
     ["list_repository_tools_srcs.go"],
     visibility = ["//visibility:public"],
@@ -13,4 +15,27 @@ filegroup(
         "proto_repository_tools_srcs.bzl",
     ],
     visibility = ["//rules:__pkg__"],
+)
+
+bzl_library(
+    name = "execution",
+    srcs = ["execution.bzl"],
+    visibility = ["//rules:__subpackages__"],
+)
+
+bzl_library(
+    name = "proto_repository_tools",
+    srcs = ["proto_repository_tools.bzl"],
+    visibility = ["//rules:__subpackages__"],
+    deps = [
+        ":execution",
+        "@bazel_gazelle//internal:go_repository_cache",
+        "@build_stack_rules_proto//rules/private:proto_repository_tools_srcs",
+    ],
+)
+
+bzl_library(
+    name = "proto_repository_tools_srcs",
+    srcs = ["proto_repository_tools_srcs.bzl"],
+    visibility = ["//rules:__subpackages__"],
 )

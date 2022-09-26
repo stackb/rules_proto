@@ -1,3 +1,5 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
 filegroup(
     name = "all_files",
     srcs = [
@@ -6,4 +8,16 @@ filegroup(
         "proto_java_library.bzl",
     ],
     visibility = ["//rules:__pkg__"],
+)
+
+bzl_library(
+    name = "grpc_java_library",
+    srcs = ["grpc_java_library.bzl"],
+    visibility = ["//visibility:public"],
+)
+
+bzl_library(
+    name = "proto_java_library",
+    srcs = ["proto_java_library.bzl"],
+    visibility = ["//visibility:public"],
 )

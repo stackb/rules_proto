@@ -1,3 +1,4 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 
@@ -23,6 +24,7 @@ gazelle_binary(
         "@bazel_gazelle//language/go",
         "@bazel_gazelle//language/proto",
         "//language/protobuf",
+        "@bazel_skylib_sources//gazelle/bzl",
     ],
     visibility = ["//visibility:public"],
 )
@@ -63,4 +65,14 @@ filegroup(
         "//toolchain:all_files",
     ] + glob(["vendor/**/*"]),
     visibility = ["//visibility:public"],
+)
+
+bzl_library(
+    name = "go_deps",
+    srcs = ["go_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//rules/private:proto_repository_tools",
+        "@bazel_gazelle//:deps",
+    ],
 )
