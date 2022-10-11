@@ -20,7 +20,10 @@ proto_library(
 
 grpc_scala_library(
     name = "syntax_grpc_scala_library",
-    srcs = ["syntax_akka_grpc.srcjar"],
+    srcs = [
+        "syntax_akka_grpc.srcjar",
+        "syntax_scala_grpc.srcjar",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//lib:scala",
