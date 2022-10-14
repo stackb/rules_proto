@@ -15,7 +15,7 @@ github.com/bazelbuild/bazel-gazelle/resolve
 github.com/bazelbuild/bazel-gazelle/rule
 github.com/bazelbuild/bazel-gazelle/testtools
 github.com/bazelbuild/bazel-gazelle/walk
-# github.com/bazelbuild/buildtools v0.0.0-20210408102303-2b0a1af1a898
+# github.com/bazelbuild/buildtools v0.0.0-20221004120235-7186f635531b
 ## explicit
 github.com/bazelbuild/buildtools/build
 github.com/bazelbuild/buildtools/tables

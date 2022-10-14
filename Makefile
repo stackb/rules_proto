@@ -7,7 +7,7 @@ tidy: deps
 	find vendor -name 'BUILD.bazel' | xargs rm
 	$(BAZEL) run //:update_go_deps
 	$(BAZEL) run //:buildifier
-	$(BAZEL) run //:gazelle
+	# $(BAZEL) run //:gazelle
 
 .PHONY: deps
 deps:

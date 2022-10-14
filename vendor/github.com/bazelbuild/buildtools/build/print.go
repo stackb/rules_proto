@@ -44,8 +44,19 @@ func Format(f *File) []byte {
 	return FormatWithoutRewriting(f)
 }
 
+// FormatWithRewriter rewites the file with custom rewriter and returns the formatted form of it
+func FormatWithRewriter(w *Rewriter, f *File) []byte {
+	w.Rewrite(f)
+	return FormatWithoutRewriting(f)
+}
+
 // FormatString returns the string form of the given expression.
 func FormatString(x Expr) string {
+	// Expr is an interface and can be nil
+	if x == nil {
+		return ""
+	}
+
 	fileType := TypeBuild // for compatibility
 	if file, ok := x.(*File); ok {
 		fileType = file.Type
@@ -70,6 +81,17 @@ type printer struct {
 	depth        int       // nesting depth inside ( ) [ ] { }
 	level        int       // nesting level of def-, if-else- and for-blocks
 	needsNewLine bool      // true if the next statement needs a new line before it
+}
+
+// formattingMode returns the current file formatting mode.
+// Can be only TypeBuild or TypeDefault.
+func (p *printer) formattingMode() FileType {
+	switch p.fileType {
+	case TypeBuild, TypeWorkspace, TypeModule:
+		return TypeBuild
+	default: // TypeDefault, TypeBzl
+		return TypeDefault
+	}
 }
 
 // printf prints to the buffer.
@@ -114,10 +136,10 @@ func (p *printer) newline() {
 // If softNewline is called several times, just one newline is printed.
 // Usecase: if there are several nested blocks ending at the same time, for instance
 //
-//     if True:
-//         for a in b:
-//             pass
-//     foo()
+//	if True:
+//	    for a in b:
+//	        pass
+//	foo()
 //
 // the last statement (`pass`) doesn't end with a newline, each block ends with a lazy newline
 // which actually gets printed only once when right before the next statement (`foo()`) is printed.
@@ -196,13 +218,7 @@ func (p *printer) statements(rawStmts []Expr) {
 	}
 
 	for i, stmt := range stmts {
-		switch stmt := stmt.(type) {
-		case *CommentBlock:
-			// comments already handled
-
-		default:
-			p.expr(stmt, precLow)
-		}
+		p.expr(stmt, precLow)
 
 		// A CommentBlock is an empty statement without a body,
 		// it doesn't need an line break after the body
@@ -241,10 +257,13 @@ func (p *printer) compactStmt(s1, s2 Expr) bool {
 	} else if isLoad(s1) || isLoad(s2) {
 		// Load statements should be separated from anything else
 		return false
+	} else if p.fileType == TypeModule && isBazelDep(s1) && isBazelDep(s2) {
+		// bazel_dep statements in MODULE files should be compressed
+		return true
 	} else if isCommentBlock(s1) || isCommentBlock(s2) {
 		// Standalone comment blocks shouldn't be attached to other statements
 		return false
-	} else if (p.fileType == TypeBuild || p.fileType == TypeWorkspace) && p.level == 0 {
+	} else if (p.formattingMode() == TypeBuild) && p.level == 0 {
 		// Top-level statements in a BUILD or WORKSPACE file
 		return false
 	} else if isFunctionDefinition(s1) || isFunctionDefinition(s2) {
@@ -262,6 +281,17 @@ func (p *printer) compactStmt(s1, s2 Expr) bool {
 func isLoad(x Expr) bool {
 	_, ok := x.(*LoadStmt)
 	return ok
+}
+
+func isBazelDep(x Expr) bool {
+	call, ok := x.(*CallExpr)
+	if !ok {
+		return false
+	}
+	if ident, ok := call.X.(*Ident); ok && ident.Name == "bazel_dep" {
+		return true
+	}
+	return false
 }
 
 // isCommentBlock reports whether x is a comment block node.
@@ -293,10 +323,12 @@ func isDifferentLines(p1, p2 *Position) bool {
 // input, so extra parentheses are only needed if we have edited the tree.
 //
 // For example consider these expressions:
+//
 //	(1) "x" "y" % foo
 //	(2) "x" + "y" % foo
 //	(3) "x" + ("y" % foo)
 //	(4) ("x" + "y") % foo
+//
 // When we parse (1), we represent the concatenation as an addition.
 // However, if we print the addition back out without additional parens,
 // as in (2), it has the same meaning as (3), which is not the original
@@ -406,6 +438,9 @@ func (p *printer) expr(v Expr, outerPrec int) {
 	switch v := v.(type) {
 	default:
 		panic(fmt.Errorf("printer: unexpected type %T", v))
+
+	case *CommentBlock:
+		// CommentBlock has no body
 
 	case *LiteralExpr:
 		p.printf("%s", v.Token)
@@ -580,9 +615,14 @@ func (p *printer) expr(v Expr, outerPrec int) {
 		p.seq("()", &v.Start, &[]Expr{v.X}, &v.End, modeParen, false, v.ForceMultiLine)
 
 	case *CallExpr:
+		forceCompact := v.ForceCompact
+		if p.fileType == TypeModule && isBazelDep(v) {
+			start, end := v.Span()
+			forceCompact = start.Line == end.Line
+		}
 		addParen(precSuffix)
 		p.expr(v.X, precSuffix)
-		p.seq("()", &v.ListStart, &v.List, &v.End, modeCall, v.ForceCompact, v.ForceMultiLine)
+		p.seq("()", &v.ListStart, &v.List, &v.End, modeCall, forceCompact, v.ForceMultiLine)
 
 	case *LoadStmt:
 		addParen(precSuffix)
@@ -773,7 +813,7 @@ func (p *printer) useCompactMode(start *Position, list *[]Expr, end *End, mode s
 	// In the Default and .bzl printing modes try to keep the original printing style.
 	// Non-top-level statements and lists of arguments of a function definition
 	// should also keep the original style regardless of the mode.
-	if (p.level != 0 || p.fileType == TypeDefault || p.fileType == TypeBzl || mode == modeDef) && mode != modeLoad {
+	if (p.level != 0 || p.formattingMode() == TypeDefault || mode == modeDef) && mode != modeLoad {
 		// If every element (including the brackets) ends on the same line where the next element starts,
 		// use the compact mode, otherwise use multiline mode.
 		// If an node's line number is 0, it means it doesn't appear in the original file,
@@ -821,6 +861,15 @@ func (p *printer) useCompactMode(start *Position, list *[]Expr, end *End, mode s
 // If multiLine is true, seq avoids the compact form even
 // for 0- and 1-element sequences.
 func (p *printer) seq(brack string, start *Position, list *[]Expr, end *End, mode seqMode, forceCompact, forceMultiLine bool) {
+	args := &[]Expr{}
+	for _, x := range *list {
+		// nil arguments may be added by some linter checks, filter them out because
+		// they may cause NPE.
+		if x != nil {
+			*args = append(*args, x)
+		}
+	}
+
 	if mode != modeSeq {
 		p.printf("%s", brack[:1])
 	}
@@ -832,15 +881,15 @@ func (p *printer) seq(brack string, start *Position, list *[]Expr, end *End, mod
 		}
 	}()
 
-	if p.useCompactMode(start, list, end, mode, forceCompact, forceMultiLine) {
-		for i, x := range *list {
+	if p.useCompactMode(start, args, end, mode, forceCompact, forceMultiLine) {
+		for i, x := range *args {
 			if i > 0 {
 				p.printf(", ")
 			}
 			p.expr(x, precLow)
 		}
 		// Single-element tuple must end with comma, to mark it as a tuple.
-		if len(*list) == 1 && mode == modeTuple {
+		if len(*args) == 1 && mode == modeTuple {
 			p.printf(",")
 		}
 		return
@@ -852,7 +901,7 @@ func (p *printer) seq(brack string, start *Position, list *[]Expr, end *End, mod
 	}
 	p.margin += indentation
 
-	for i, x := range *list {
+	for i, x := range *args {
 		// If we are about to break the line before the first
 		// element and there are trailing end-of-line comments
 		// waiting to be printed, delay them and print them as
@@ -867,7 +916,7 @@ func (p *printer) seq(brack string, start *Position, list *[]Expr, end *End, mod
 		p.newline()
 		p.expr(x, precLow)
 
-		if i+1 < len(*list) || needsTrailingComma(mode, x) {
+		if i+1 < len(*args) || needsTrailingComma(mode, x) {
 			p.printf(",")
 		}
 	}
@@ -905,15 +954,16 @@ func needsTrailingComma(mode seqMode, v Expr) bool {
 
 // listFor formats a ListForExpr (list comprehension).
 // The single-line form is:
+//
 //	[x for y in z if c]
 //
 // and the multi-line form is:
+//
 //	[
 //	    x
 //	    for y in z
 //	    if c
 //	]
-//
 func (p *printer) listFor(v *Comprehension) {
 	multiLine := v.ForceMultiLine || len(v.End.Before) > 0
 
