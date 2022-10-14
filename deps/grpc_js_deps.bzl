@@ -2,6 +2,7 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def _maybe(repo_rule, name, **kwargs):
@@ -12,6 +13,7 @@ def grpc_js_deps():
     """grpc_js dependency macro
     """
     com_github_stackb_grpc_js()  # via <TOP>
+
 
 def com_github_stackb_grpc_js():
     _maybe(

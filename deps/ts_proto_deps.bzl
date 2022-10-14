@@ -2,6 +2,7 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
+
 load("@build_bazel_rules_nodejs//:index.bzl", "npm_install", "yarn_install")
 
 def _maybe(repo_rule, name, **kwargs):
@@ -13,6 +14,7 @@ def ts_proto_deps():
     """
     npm_ts_proto()  # via <TOP>
     npm_tsc()  # via <TOP>
+
 
 def npm_ts_proto():
     _maybe(
