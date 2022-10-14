@@ -74,6 +74,14 @@ def go_deps():
         version = "v0.27.0",
     )
     go_repository(
+        name = "com_github_bmatcuk_doublestar",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/bmatcuk/doublestar",
+        sum = "h1:oC24CykoSAB8zd7XgruHo33E0cHJf/WhQA/7BeXj+x0=",
+        version = "v1.2.2",
+    )
+
+    go_repository(
         name = "com_github_burntsushi_toml",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/BurntSushi/toml",

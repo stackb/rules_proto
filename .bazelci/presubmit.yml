@@ -2,7 +2,7 @@
 buildifier:
   version: 4.2.3
   warnings: "-function-docstring,-function-docstring-header,-module-docstring,-function-docstring-args,-list-append"
-bazel: 4.0.0
+bazel: 5.1.1
 tasks:
   default_workspace_ubuntu1804:
     platform: ubuntu1804

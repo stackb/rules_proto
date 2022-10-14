@@ -9,6 +9,8 @@ def _maybe(repo_rule, name, **kwargs):
         repo_rule(name = name, **kwargs)
 
 def grpc_web_deps():
+    """grpc_web dependency macro
+    """
     com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_darwin_x86_64()  # via <TOP>
     com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_linux_x86_64()  # via <TOP>
     com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_windows_x86_64()  # via <TOP>

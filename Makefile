@@ -1,4 +1,4 @@
-BAZEL := bazel
+BAZEL := bzl
 
 .PHONY: tidy
 tidy: deps
