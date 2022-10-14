@@ -63,8 +63,8 @@ def go_deps():
         name = "com_github_bazelbuild_buildtools",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/bazelbuild/buildtools",
-        sum = "h1:V8cZmvXo+hTRtwbaMUOAJoU4ZYBF/tS2wzwx+ywWV1E=",
-        version = "v0.0.0-20210408102303-2b0a1af1a898",
+        sum = "h1:jhiMzJ+8unnLRtV8rpbWBFE9pFNzIqgUTyZU5aA++w8=",
+        version = "v0.0.0-20221004120235-7186f635531b",
     )
     go_repository(
         name = "com_github_bazelbuild_rules_go",
