@@ -13,16 +13,16 @@ rules:
     implementation: stackb:rules_proto:proto_compile
   - name: proto_scala_library
     implementation: stackb:rules_proto:proto_scala_library
-    visibility:
-      - //visibility:public
     deps:
       - "@com_google_protobuf//:protobuf_java"
       - "@maven_scala//:com_thesamet_scalapb_lenses_2_12"
       - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12"
-  - name: grpc_scala_library
-    implementation: stackb:rules_proto:grpc_scala_library
+    options:
+      - "--plugins=protoc-gen-scala"
     visibility:
       - //visibility:public
+  - name: grpc_scala_library
+    implementation: stackb:rules_proto:grpc_scala_library
     deps:
       - "@com_google_protobuf//:protobuf_java"
       - "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12"
@@ -35,6 +35,10 @@ rules:
       - "@maven_scala//:io_grpc_grpc_api"
       - "@maven_scala//:io_grpc_grpc_protobuf"
       - "@maven_scala//:io_grpc_grpc_stub"
+    options:
+      - "--plugins=protoc-gen-akka-grpc"
+    visibility:
+      - //visibility:public
 languages:
   - name: scala
     plugins:
