@@ -1,4 +1,4 @@
-// Copyright 2012 The Go Authors.  All rights reserved.
+// Copyright 2012 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -11,7 +11,6 @@
 // for developers who want to write tools with similar semantics.
 // It needs to be manually kept in sync with upstream when changes are
 // made to cmd/go/internal/get; see https://golang.org/issue/11490.
-//
 package vcs // import "golang.org/x/tools/go/vcs"
 
 import (
@@ -19,10 +18,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	exec "golang.org/x/sys/execabs"
 	"log"
 	"net/url"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strconv"

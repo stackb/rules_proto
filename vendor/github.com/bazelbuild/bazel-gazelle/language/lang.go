@@ -96,6 +96,18 @@ type Language interface {
 	Fix(c *config.Config, f *rule.File)
 }
 
+// FinishableLanguage allows a Language to be notified when Generate is finished
+// being called.
+type FinishableLanguage interface {
+	// DoneGeneratingRules is called when all calls to GenerateRules have been
+	// completed.
+	// This allows for hooks to be called, for instance to release resources
+	// such as shutting down a background server.
+	// No further calls will be made to GenerateRules on this Language instance
+	// after this method has been called.
+	DoneGeneratingRules()
+}
+
 // GenerateArgs contains arguments for language.GenerateRules. Arguments are
 // passed in a struct value so that new fields may be added in the future
 // without breaking existing implementations.
@@ -140,7 +152,7 @@ type GenerateResult struct {
 
 	// Empty is a list of rules that cannot be built with the files found in the
 	// directory GenerateRules was asked to process. These will be merged with
-	// existing rules. If ther merged rules are empty, they will be deleted.
+	// existing rules. If the merged rules are empty, they will be deleted.
 	Empty []*rule.Rule
 
 	// Imports contains information about the imported libraries for each

@@ -18,8 +18,8 @@ std_package_list = rule(
     attrs = {
         "out": attr.output(mandatory = True),
         "_gen_std_package_list": attr.label(
-            default = "@bazel_gazelle//language/go/gen_std_package_list",
-            cfg = "exec",
+            default = "//language/go/gen_std_package_list",
+            cfg = "host",
             executable = True,
         ),
         "_go_context_data": attr.label(

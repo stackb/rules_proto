@@ -26,7 +26,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-func (_ *protoLang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
+func (*protoLang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
 	c := args.Config
 	pc := GetProtoConfig(c)
 	if !pc.Mode.ShouldGenerateRules() {
@@ -53,7 +53,7 @@ func (_ *protoLang) GenerateRules(args language.GenerateArgs) language.GenerateR
 		}
 	}
 
-	// genProtoFilesNotConsumed represents only not consumed generetad files.
+	// genProtoFilesNotConsumed represents only not consumed generated files.
 	// genProtoFiles represents all generated files.
 	// This is required for not generating empty rules for consumed generated
 	// files.

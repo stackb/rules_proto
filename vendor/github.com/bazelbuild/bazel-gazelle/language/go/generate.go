@@ -110,7 +110,8 @@ func (gl *goLang) GenerateRules(args language.GenerateArgs) language.GenerateRes
 	var hasTestdata bool
 	for _, sub := range args.Subdirs {
 		if sub == "testdata" {
-			hasTestdata = !gl.goPkgRels[path.Join(args.Rel, "testdata")]
+			_, ok := gl.goPkgRels[path.Join(args.Rel, "testdata")]
+			hasTestdata = !ok
 			break
 		}
 	}
@@ -180,7 +181,7 @@ func (gl *goLang) GenerateRules(args language.GenerateArgs) language.GenerateRes
 	g := &generator{
 		c:                   c,
 		rel:                 args.Rel,
-		shouldSetVisibility: args.File == nil || !args.File.HasDefaultVisibility(),
+		shouldSetVisibility: shouldSetVisibility(args),
 	}
 	var res language.GenerateResult
 	var rules []*rule.Rule
@@ -273,13 +274,12 @@ func (gl *goLang) GenerateRules(args language.GenerateArgs) language.GenerateRes
 			libName = lib.Name()
 		}
 		rules = append(rules, lib)
-		if r := g.maybeGenerateToolLib(lib, pkg); r != nil {
-			rules = append(rules, r)
-		}
+		g.maybePublishToolLib(lib, pkg)
 		if r := g.maybeGenerateExtraLib(lib, pkg); r != nil {
 			rules = append(rules, r)
 		}
 		if r := g.maybeGenerateAlias(pkg, libName); r != nil {
+			g.maybePublishToolLib(r, pkg)
 			rules = append(rules, r)
 		}
 		rules = append(rules,
@@ -301,7 +301,7 @@ func (gl *goLang) GenerateRules(args language.GenerateArgs) language.GenerateRes
 	} else {
 		for _, sub := range args.Subdirs {
 			if gl.goPkgRels[path.Join(args.Rel, sub)] {
-				gl.goPkgRels[args.Rel] = true
+				gl.goPkgRels[args.Rel] = false
 				break
 			}
 		}
@@ -404,7 +404,7 @@ func emptyPackage(c *config.Config, dir, rel string, f *rule.File) *goPackage {
 		dir:  dir,
 		rel:  rel,
 	}
-	pkg.inferImportPath(c)
+
 	return pkg
 }
 
@@ -535,65 +535,12 @@ func (g *generator) generateTest(pkg *goPackage, library string) *rule.Rule {
 	return goTest
 }
 
-// maybeGenerateToolLib generates a go_tool_library target equivalent to the
-// go_library in the same directory. maybeGenerateToolLib returns nil for
-// packages outside golang.org/x/tools and for packages that aren't known
-// dependencies of nogo.
-//
-// HACK(#834): This is only needed by golang.org/x/tools for dependencies of
-// nogo. go_tool_library should be removed when bazelbuild/rules_go#2374 is
-// resolved, so these targets shouldn't be generated in other repositories.
-// Generating them here automatically makes it easier to upgrade
-// org_golang_x_tools.
-func (g *generator) maybeGenerateToolLib(lib *rule.Rule, pkg *goPackage) *rule.Rule {
-	// Check whether we should generate go_tool_library.
-	gc := getGoConfig(g.c)
-	if gc.prefix != "golang.org/x/tools" || gc.prefixRel != "" || !isToolLibImportPath(pkg.importPath) {
-		return nil
-	}
-
-	// Generate the target.
-	toolLib := rule.NewRule("go_tool_library", "go_tool_library")
-	var visibility []string
+// maybePublishToolLib makes the given go_library rule public if needed for nogo.
+// Updating it here automatically makes it easier to upgrade org_golang_x_tools.
+func (g *generator) maybePublishToolLib(lib *rule.Rule, pkg *goPackage) {
 	if pkg.importPath == "golang.org/x/tools/go/analysis/internal/facts" {
 		// Imported by nogo main. We add a visibility exception.
-		visibility = []string{"//visibility:public"}
-	} else {
-		visibility = g.commonVisibility(pkg.importPath)
-	}
-	g.setCommonAttrs(toolLib, pkg.rel, visibility, pkg.library, "")
-	g.setImportAttrs(toolLib, pkg.importPath)
-	return toolLib
-}
-
-func isToolLibImportPath(imp string) bool {
-	if !strings.HasPrefix(imp, "golang.org/x/tools/") {
-		return false
-	}
-	pass := strings.TrimPrefix(imp, "golang.org/x/tools/go/analysis/passes/")
-	if pass != imp && strings.Index(pass, "/") < 0 {
-		// Direct dependency of nogo
-		return true
-	}
-	switch imp {
-	case "golang.org/x/tools/go/analysis",
-		"golang.org/x/tools/go/analysis/internal/facts",
-		"golang.org/x/tools/go/analysis/passes/internal/analysisutil",
-		"golang.org/x/tools/go/ast/astutil",
-		"golang.org/x/tools/go/ast/inspector",
-		"golang.org/x/tools/go/cfg",
-		"golang.org/x/tools/go/gcexportdata",
-		"golang.org/x/tools/go/internal/gcimporter",
-		"golang.org/x/tools/go/ssa",
-		"golang.org/x/tools/go/types/objectpath",
-		"golang.org/x/tools/go/types/typeutil",
-		"golang.org/x/tools/internal/analysisinternal",
-		"golang.org/x/tools/internal/typeparams",
-		"golang.org/x/tools/internal/lsp/fuzzy":
-		// Indirect dependency of nogo.
-		return true
-	default:
-		return false
+		lib.SetAttr("visibility", []string{"//visibility:public"})
 	}
 }
 
@@ -825,5 +772,22 @@ func escapeOption(opt string) string {
 		"\t", "\\\t",
 		"\n", "\\\n",
 		"\r", "\\\r",
+		"$(", "$(",
+		"$", "$$",
 	).Replace(opt)
+}
+
+func shouldSetVisibility(args language.GenerateArgs) bool {
+	if args.File != nil && args.File.HasDefaultVisibility() {
+		return false
+	}
+
+	for _, r := range args.OtherGen {
+		// This is kind of the same test as *File.HasDefaultVisibility(),
+		// but for previously defined rules.
+		if r.Kind() == "package" && r.Attr("default_visibility") != nil {
+			return false
+		}
+	}
+	return true
 }
