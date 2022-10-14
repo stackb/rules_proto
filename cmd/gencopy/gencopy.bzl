@@ -28,7 +28,7 @@ gencopy_attrs = {
         doc = "The gencopy binary",
         default = str(Label("//cmd/gencopy")),
         allow_single_file = True,
-        cfg = "host",
+        cfg = "exec",
         executable = True,
     ),
 }
