@@ -109,6 +109,7 @@ proto_dependency(
 # Commit: cf0c17e6a4d864543e976d0e5d16db0ef75364a0
 # Date: 2022-09-16 19:17:48 +0000 UTC
 # URL: https://github.com/pcj/bazel-gazelle/commit/cf0c17e6a4d864543e976d0e5d16db0ef75364a0
+# https://github.com/pcj/bazel-gazelle/tree/remove-cut
 #
 # Replace strings.Cut with internal version
 # Size: 1570069 (1.6 MB)
