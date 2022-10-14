@@ -2,7 +2,6 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
-
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def _maybe(repo_rule, name, **kwargs):
@@ -17,7 +16,6 @@ def protobuf_core_deps():
     rules_python()  # via com_google_protobuf
     zlib()  # via com_google_protobuf
     com_google_protobuf()  # via <TOP>
-
 
 def bazel_skylib():
     _maybe(

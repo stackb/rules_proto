@@ -2,7 +2,6 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
-
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def _maybe(repo_rule, name, **kwargs):
@@ -21,7 +20,6 @@ def grpc_node_deps():
     rules_jvm_external()  # via com_github_grpc_grpc
     com_github_grpc_grpc()  # via com_github_grpc_grpc_node_packages_grpc_tools_src
     com_github_grpc_grpc_node_packages_grpc_tools_src()  # via <TOP>
-
 
 def build_bazel_rules_swift():
     _maybe(
