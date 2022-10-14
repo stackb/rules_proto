@@ -112,7 +112,7 @@ load(
 
 go_rules_dependencies()
 
-go_register_toolchains(version = "1.16.2")
+go_register_toolchains(version = "1.18.2")
 ```
 
 > Standard biolerplate for `@io_bazel_rules_go`.
@@ -392,7 +392,7 @@ potential conflicts with other possible gazelle extensions, using the name
 The core of `stackb/rules_proto` contains two build rules:
 
 | Rule            | Description                                             |
-| --------------- | ------------------------------------------------------- |
+|-----------------|---------------------------------------------------------|
 | `proto_compile` | Executes the `protoc` tool.                             |
 | `proto_plugin`  | Provides static `protoc` plugin-specific configuration. |
 
@@ -764,7 +764,7 @@ The plugin name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 
 | Plugin                                                                                                                 |
-| ---------------------------------------------------------------------------------------------------------------------- |
+|------------------------------------------------------------------------------------------------------------------------|
 | [builtin:cpp](pkg/plugin/builtin/cpp_plugin.go)                                                                        |
 | [builtin:csharp](pkg/plugin/builtin/csharp_plugin.go)                                                                  |
 | [builtin:java](pkg/plugin/builtin/java_plugin.go)                                                                      |
@@ -800,7 +800,7 @@ The rule name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/rule_name convention.
 
 | Plugin                                                                                            |
-| ------------------------------------------------------------------------------------------------- |
+|---------------------------------------------------------------------------------------------------|
 | [stackb:rules_proto:grpc_cc_library](pkg/rule/rules_cc/grpc_cc_library.go)                        |
 | [stackb:rules_proto:grpc_closure_js_library](pkg/rule/rules_closure/grpc_closure_js_library.go)   |
 | [stackb:rules_proto:grpc_java_library](pkg/rule/rules_java/grpc_java_library.go)                  |

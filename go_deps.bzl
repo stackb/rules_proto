@@ -63,8 +63,8 @@ def go_deps():
         name = "com_github_bazelbuild_buildtools",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/bazelbuild/buildtools",
-        sum = "h1:V8cZmvXo+hTRtwbaMUOAJoU4ZYBF/tS2wzwx+ywWV1E=",
-        version = "v0.0.0-20210408102303-2b0a1af1a898",
+        sum = "h1:jhiMzJ+8unnLRtV8rpbWBFE9pFNzIqgUTyZU5aA++w8=",
+        version = "v0.0.0-20221004120235-7186f635531b",
     )
     go_repository(
         name = "com_github_bazelbuild_rules_go",
@@ -364,8 +364,8 @@ def go_deps():
         name = "org_golang_x_sys",
         build_file_proto_mode = "disable_global",
         importpath = "golang.org/x/sys",
-        sum = "h1:N2T1jUrTQE9Re6TFF5PhvEHXHCguynGhKjWVsIUt5cY=",
-        version = "v0.0.0-20220513210249-45d2b4557a2a",
+        sum = "h1:OK7RB6t2WQX54srQQYSXMW8dF5C6/8+oA/s5QBmmto4=",
+        version = "v0.0.0-20221013171732-95e765b1cc43",
     )
     go_repository(
         name = "org_golang_x_text",
