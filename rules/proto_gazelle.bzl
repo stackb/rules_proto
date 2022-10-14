@@ -79,7 +79,7 @@ _gazelle_runner = rule(
         "gazelle": attr.label(
             default = "@bazel_gazelle//cmd/gazelle",
             executable = True,
-            cfg = "host",
+            cfg = "exec",
         ),
         "command": attr.string(
             values = [

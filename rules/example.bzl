@@ -59,7 +59,7 @@ _examplegen = rule(
             default = "//cmd/examplegen",
             allow_single_file = True,
             executable = True,
-            cfg = "host",
+            cfg = "exec",
         ),
     },
     outputs = {
