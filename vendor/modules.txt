@@ -1,4 +1,4 @@
-# github.com/bazelbuild/bazel-gazelle v0.25.0 => github.com/wolfd/bazel-gazelle v0.0.0-20210917215910-a5bd0e0069da
+# github.com/bazelbuild/bazel-gazelle v0.25.0
 ## explicit
 github.com/bazelbuild/bazel-gazelle/config
 github.com/bazelbuild/bazel-gazelle/flag
@@ -27,7 +27,9 @@ github.com/bazelbuild/rules_go/go/tools/internal/txtar
 # github.com/bmatcuk/doublestar v1.2.2
 ## explicit
 github.com/bmatcuk/doublestar
-# github.com/davecgh/go-spew v1.1.1
+# github.com/bmatcuk/doublestar/v4 v4.0.2
+github.com/bmatcuk/doublestar/v4
+# github.com/davecgh/go-spew v1.1.0
 github.com/davecgh/go-spew/spew
 # github.com/emicklei/proto v1.9.0
 ## explicit
@@ -40,7 +42,7 @@ github.com/google/go-cmp/cmp/internal/diff
 github.com/google/go-cmp/cmp/internal/flags
 github.com/google/go-cmp/cmp/internal/function
 github.com/google/go-cmp/cmp/internal/value
-# github.com/pelletier/go-toml v1.2.0
+# github.com/pelletier/go-toml v1.9.4
 github.com/pelletier/go-toml
 # github.com/pmezard/go-difflib v1.0.0
 ## explicit
@@ -56,7 +58,8 @@ go.starlark.net/resolve
 go.starlark.net/starlark
 go.starlark.net/starlarkstruct
 go.starlark.net/syntax
-# golang.org/x/mod v0.4.2
+# golang.org/x/mod v0.6.0-dev.0.20220106191415-9b9b3d81d5e3
+golang.org/x/mod/internal/lazyregexp
 golang.org/x/mod/module
 golang.org/x/mod/semver
 # golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
@@ -65,7 +68,7 @@ golang.org/x/sync/errgroup
 ## explicit
 golang.org/x/sys/execabs
 golang.org/x/sys/unix
-# golang.org/x/tools v0.1.1
+# golang.org/x/tools v0.1.10
 golang.org/x/tools/go/vcs
 # golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
 golang.org/x/xerrors
@@ -73,4 +76,3 @@ golang.org/x/xerrors/internal
 # gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 ## explicit
 gopkg.in/yaml.v3
-# github.com/bazelbuild/bazel-gazelle => github.com/wolfd/bazel-gazelle v0.0.0-20210917215910-a5bd0e0069da
