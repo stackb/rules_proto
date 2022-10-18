@@ -18,11 +18,13 @@ package proto
 import (
 	"fmt"
 	"log"
+	"path"
 	"sort"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/language"
+	"github.com/bazelbuild/bazel-gazelle/pathtools"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
@@ -53,7 +55,7 @@ func (_ *protoLang) GenerateRules(args language.GenerateArgs) language.GenerateR
 		}
 	}
 
-	// genProtoFilesNotConsumed represents only not consumed generetad files.
+	// genProtoFilesNotConsumed represents only not consumed generated files.
 	// genProtoFiles represents all generated files.
 	// This is required for not generating empty rules for consumed generated
 	// files.
@@ -233,6 +235,12 @@ func generateProto(pc *ProtoConfig, rel string, pkg *Package, shouldSetVisibilit
 	r.SetPrivateAttr(PackageKey, *pkg)
 	imports := make([]string, 0, len(pkg.Imports))
 	for i := range pkg.Imports {
+		// If FileMode isn't enabled and the proto import is a self import
+		// (an import between the same package), skip it
+		if pc.Mode != FileMode && getPrefix(pc, path.Dir(i)) == getPrefix(pc, rel) {
+			delete(pkg.Imports, i)
+			continue
+		}
 		imports = append(imports, i)
 	}
 	sort.Strings(imports)
@@ -253,6 +261,19 @@ func generateProto(pc *ProtoConfig, rel string, pkg *Package, shouldSetVisibilit
 		r.SetAttr("import_prefix", pc.ImportPrefix)
 	}
 	return r
+}
+
+func getPrefix(pc *ProtoConfig, rel string) string {
+	prefix := rel
+	if strings.HasPrefix(pc.StripImportPrefix, "/") {
+		prefix = pathtools.TrimPrefix(rel, pc.StripImportPrefix[len("/"):])
+	} else if pc.StripImportPrefix != "" {
+		prefix = pathtools.TrimPrefix(rel, path.Join(rel, pc.StripImportPrefix))
+	}
+	if pc.ImportPrefix != "" {
+		return path.Join(pc.ImportPrefix, prefix)
+	}
+	return prefix
 }
 
 // generateEmpty generates a list of proto_library rules that may be deleted.

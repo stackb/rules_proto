@@ -28,9 +28,5 @@ test:
 
 .PHONY: get
 get:
-	$(BAZEL) run @go_sdk//:bin/go -- get github.com/bazelbuild/rules_go@v0.35.0
-	$(BAZEL) run @go_sdk//:bin/go -- mod download github.com/golang/mock
-	$(BAZEL) run @go_sdk//:bin/go -- get github.com/bazelbuild/bazel-gazelle/language/go@v0.24.0
-	$(BAZEL) run @go_sdk//:bin/go -- get github.com/bazelbuild/bazel-gazelle/repo@v0.24.0
+	$(BAZEL) run @go_sdk//:bin/go -- get github.com/bazelbuild/bazel-gazelle@v0.25.0
 	$(BAZEL) run @go_sdk//:bin/go -- mod vendor
-	find vendor -name 'BUILD.bazel' | xargs rm
