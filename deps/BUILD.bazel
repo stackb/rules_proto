@@ -109,18 +109,12 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Commit: ba090ac841ca2a1211a21ce3dee38ea597b00099
-# Date: 2022-01-19 22:51:32 +0000 UTC
-# URL: https://github.com/bazelbuild/bazel-gazelle/commit/ba090ac841ca2a1211a21ce3dee38ea597b00099
+# Commit: 6adf61901eee7e6de7d8ab3af0fc15d06982ad34
+# Date: 2022-03-16 21:48:10 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-gazelle/commit/6adf61901eee7e6de7d8ab3af0fc15d06982ad34
 #
-# language/proto: don't skip same-package imports in per-file mode (#1158)
-#
-# * Don't skip same-package imports in per-file mode
-#
-# * Adds test to ensure that same-package imports are retained in file mode
-#
-# * Add comment to file mode test.
-# Size: 1420584 (1.4 MB)
+# ci: Add gazelle check (#1203)
+# Size: 1432187 (1.4 MB)
 proto_dependency(
     name = "bazel_gazelle",
     patch_args = ["-p1"],
@@ -129,9 +123,9 @@ proto_dependency(
         "@build_stack_rules_proto//third_party:bazel-gazelle-revert-1152.patch",
     ],
     repository_rule = "http_archive",
-    sha256 = "fd86cd74ceaa68f0a6998c255d5f570a6cc20c345652da9d757352ac9e8c6cc9",
-    strip_prefix = "bazel-gazelle-ba090ac841ca2a1211a21ce3dee38ea597b00099",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/ba090ac841ca2a1211a21ce3dee38ea597b00099.tar.gz"],
+    sha256 = "9a67de0258804915cda489cf0925d9b5894ee77c021a83cee9a2f405b2a95048",
+    strip_prefix = "bazel-gazelle-6adf61901eee7e6de7d8ab3af0fc15d06982ad34",
+    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/6adf61901eee7e6de7d8ab3af0fc15d06982ad34.tar.gz"],
     deps = [":io_bazel_rules_go"],
 )
 
