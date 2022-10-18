@@ -109,14 +109,18 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Commit: 6ce3318b09d545b0f4fb689e715a5fdb237abf26
-# Date: 2021-12-01 19:18:30 +0000 UTC
-# URL: https://github.com/bazelbuild/bazel-gazelle/commit/6ce3318b09d545b0f4fb689e715a5fdb237abf26
+# Commit: ba090ac841ca2a1211a21ce3dee38ea597b00099
+# Date: 2022-01-19 22:51:32 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-gazelle/commit/ba090ac841ca2a1211a21ce3dee38ea597b00099
 #
-# README: recommend putting dependencies prior to rules_go/gazelle deps (#1142)
+# language/proto: don't skip same-package imports in per-file mode (#1158)
 #
-# Updates #1115
-# Size: 1419181 (1.4 MB)
+# * Don't skip same-package imports in per-file mode
+#
+# * Adds test to ensure that same-package imports are retained in file mode
+#
+# * Add comment to file mode test.
+# Size: 1420584 (1.4 MB)
 proto_dependency(
     name = "bazel_gazelle",
     patch_args = ["-p1"],
