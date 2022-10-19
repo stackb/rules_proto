@@ -161,7 +161,6 @@ proto_compile(
     options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
     outputs = [
         "place_scala.srcjar",
-        "place_scala.srcjar",
         "place_scala_grpc.srcjar",
     ],
     plugins = [
