@@ -66,6 +66,7 @@ protoc.Plugin(
 			want: &PluginConfiguration{
 				Label:   label.New("", "mypkg", "python_plugin"),
 				Outputs: []string{"foo.py", "bar.py"},
+				Options: []string{},
 			},
 			wantPrinted: `PluginContext(package_config = PackageConfig(config = Config(repo_name = "", repo_root = "", work_dir = "")), plugin_config = LanguagePluginConfig(deps = [], enabled = False, implementation = "", label = "", name = "", options = []), proto_library = ProtoLibrary(base_name = "", deps = [], files = [], imports = [], name = "", srcs = [], strip_import_prefix = ""), rel = "mypkg")` + "\n",
 		},
