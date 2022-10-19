@@ -117,9 +117,7 @@ proto_dependency(
 proto_dependency(
     name = "bazel_gazelle",
     patch_args = ["-p1"],
-    patches = [
-        "@build_stack_rules_proto//third_party:bazel-gazelle-revert-1152.patch",
-    ],
+    patches = ["@build_stack_rules_proto//third_party:bazel-gazelle-revert-1152.patch"],
     repository_rule = "http_archive",
     sha256 = "fdfa7f0969e997d26378dd283fab89379403bd4379051da81f7268d5c04398f7",
     strip_prefix = "bazel-gazelle-06b821c9b085f3d7c21af06a33a990513351431c",
@@ -129,6 +127,8 @@ proto_dependency(
 
 proto_dependency(
     name = "com_google_protobuf",
+    patch_args = ["-p1"],
+    patches = ["@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch"],
     repository_rule = "http_archive",
     sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
     strip_prefix = "protobuf-3.20.1",
