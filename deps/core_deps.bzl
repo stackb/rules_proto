@@ -30,10 +30,10 @@ def bazel_gazelle():
     _maybe(
         http_archive,
         name = "bazel_gazelle",
-        sha256 = "8d52c5444ac9efd8f9e5d449540c5ced2fdf05a29aed821e372d6e7f8ebca259",
-        strip_prefix = "bazel-gazelle-9c475138e6c118b55309a55dbf28de77bcf77621",
+        sha256 = "0c1095995d8f1a574a4c06f5fd8d9aeb8c4b91d6f294d55d6517fc916e90f1bd",
+        strip_prefix = "bazel-gazelle-530a2c7ae6077778fcf4d8df0695b94cd93951d0",
         urls = [
-            "https://github.com/bazelbuild/bazel-gazelle/archive/9c475138e6c118b55309a55dbf28de77bcf77621.tar.gz",
+            "https://github.com/bazelbuild/bazel-gazelle/archive/530a2c7ae6077778fcf4d8df0695b94cd93951d0.tar.gz",
         ],
         patches = [
             "@build_stack_rules_proto//third_party:bazel-gazelle-PR1274.patch",

@@ -109,12 +109,12 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Commit: 9c475138e6c118b55309a55dbf28de77bcf77621
-# Date: 2022-03-17 20:17:55 +0000 UTC
-# URL: https://github.com/bazelbuild/bazel-gazelle/commit/9c475138e6c118b55309a55dbf28de77bcf77621
+# Commit: 530a2c7ae6077778fcf4d8df0695b94cd93951d0
+# Date: 2022-06-26 19:39:41 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-gazelle/commit/530a2c7ae6077778fcf4d8df0695b94cd93951d0
 #
-# language/go: introduce static dependency resolution mode (#1201)
-# Size: 1432641 (1.4 MB)
+# Preparing release 0.26.0 (#1284)
+# Size: 1504536 (1.5 MB)
 proto_dependency(
     name = "bazel_gazelle",
     patch_args = ["-p1"],
@@ -123,9 +123,9 @@ proto_dependency(
         "@build_stack_rules_proto//third_party:bazel-gazelle-revert-1152.patch",
     ],
     repository_rule = "http_archive",
-    sha256 = "8d52c5444ac9efd8f9e5d449540c5ced2fdf05a29aed821e372d6e7f8ebca259",
-    strip_prefix = "bazel-gazelle-9c475138e6c118b55309a55dbf28de77bcf77621",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/9c475138e6c118b55309a55dbf28de77bcf77621.tar.gz"],
+    sha256 = "0c1095995d8f1a574a4c06f5fd8d9aeb8c4b91d6f294d55d6517fc916e90f1bd",
+    strip_prefix = "bazel-gazelle-530a2c7ae6077778fcf4d8df0695b94cd93951d0",
+    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/530a2c7ae6077778fcf4d8df0695b94cd93951d0.tar.gz"],
     deps = [":io_bazel_rules_go"],
 )
 
