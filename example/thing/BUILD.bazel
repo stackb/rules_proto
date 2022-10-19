@@ -5,7 +5,6 @@ load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "pr
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
-load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 proto_library(
@@ -115,28 +114,6 @@ proto_py_library(
     srcs = ["thing_pb2.py"],
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:protobuf_python"],
-)
-
-proto_compile(
-    name = "thing_scala_compile",
-    outputs = ["thing_scala.srcjar"],
-    plugins = ["@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala"],
-    proto = "thing_proto",
-)
-
-proto_scala_library(
-    name = "thing_scala_library",
-    srcs = ["thing_scala.srcjar"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "@com_google_protobuf//:protobuf_java",
-        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
-        "@maven_scala//:io_grpc_grpc_api",
-        "@maven_scala//:io_grpc_grpc_protobuf",
-        "@maven_scala//:io_grpc_grpc_stub",
-    ],
 )
 
 proto_compile(
