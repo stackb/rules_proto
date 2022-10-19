@@ -2,6 +2,12 @@
 # proto_repository
 # ----------------------------------------------------
 
+# gazelle:repository go_repository name=org_golang_google_protobuf importpath=google.golang.org/protobuf
+# gazelle:repository go_repository name=org_golang_x_net importpath=golang.org/x/net
+# gazelle:repository go_repository name=org_golang_x_sys importpath=golang.org/x/sys
+# gazelle:repository go_repository name=org_golang_x_text importpath=golang.org/x/text
+# gazelle:repository go_repository name=org_golang_x_xerrors importpath=golang.org/x/xerrors
+
 load("@build_stack_rules_proto//rules/proto:proto_repository.bzl", "proto_repository")
 
 proto_repository(
