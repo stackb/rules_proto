@@ -45,7 +45,6 @@
 
 ## Scala ##
 # gazelle:proto_plugin scala implementation scalapb:scalapb:protoc-gen-scala
-# gazelle:proto_plugin scala option grpc
 # gazelle:proto_plugin scala deps @com_google_protobuf//:protobuf_java
 # gazelle:proto_plugin scala deps @maven_scala//:com_thesamet_scalapb_lenses_2_12
 # gazelle:proto_plugin scala deps @maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12

@@ -1,1 +1,3 @@
 build:bazelci --deleted_packages=docs
+# workaround for scala
+build --incompatible_java_common_parameters=false

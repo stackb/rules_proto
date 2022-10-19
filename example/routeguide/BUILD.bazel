@@ -282,7 +282,6 @@ grpc_scala_library(
 
 proto_compile(
     name = "routeguide_scala_compile",
-    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala": ["grpc"]},
     outputs = [
         "routeguide_scala.srcjar",
         "routeguide_akka_grpc.srcjar",
