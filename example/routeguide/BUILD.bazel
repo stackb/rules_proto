@@ -286,17 +286,20 @@ proto_ts_library(
 
 grpc_scala_library(
     name = "routeguide_grpc_scala_library",
-    srcs = ["routeguide_scala.srcjar"],
+    srcs = [
+        "routeguide_akka_grpc.srcjar",
+        "routeguide_scala.srcjar",
+    ],
     visibility = ["//visibility:public"],
     deps = [
-        "@com_google_protobuf//:protobuf_java",
-        "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12",
-        "@maven_akka//:com_typesafe_akka_akka_actor_2_12",
-        "@maven_akka//:com_typesafe_akka_akka_http_core_2_12",
-        "@maven_akka//:com_typesafe_akka_akka_stream_2_12",
-        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+        "@maven_scala//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_4",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
+        "@maven_scala//:com_typesafe_akka_akka_actor_2_12",
+        "@maven_scala//:com_typesafe_akka_akka_http_core_2_12",
+        "@maven_scala//:com_typesafe_akka_akka_stream_2_12",
+        "@maven_scala//:io_grpc_grpc_api",
+        "@maven_scala//:io_grpc_grpc_protobuf",
+        "@maven_scala//:io_grpc_grpc_stub",
     ],
 )
 
@@ -305,7 +308,6 @@ proto_compile(
     outputs = [
         "routeguide_akka_grpc.srcjar",
         "routeguide_scala.srcjar",
-        "routeguide_scala_grpc.srcjar",
     ],
     plugins = [
         "@build_stack_rules_proto//plugin/akka/akka-grpc:protoc-gen-akka-grpc",

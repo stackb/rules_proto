@@ -159,9 +159,8 @@ proto_scala_library(
     srcs = ["thing_scala.srcjar"],
     visibility = ["//visibility:public"],
     deps = [
-        "@com_google_protobuf//:protobuf_java",
+        "@maven_scala//:com_google_protobuf_protobuf_java",
         "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
     ],
 )
