@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -153,5 +154,31 @@ proto_ts_library(
         "//example/place:place_ts_proto",
         "@npm_tsc//long",
         "@npm_tsc//protobufjs",
+    ],
+)
+
+proto_compile(
+    name = "person_scala_compile",
+    outputs = [
+        "person_scala.srcjar",
+        "person_scala.srcjar",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
+    ],
+    proto = "person_proto",
+)
+
+proto_scala_library(
+    name = "person_proto_scala_library",
+    srcs = ["person_scala.srcjar"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//example/place:place_proto_scala_library",
+        "@com_google_protobuf//:protobuf_java",
+        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
     ],
 )
