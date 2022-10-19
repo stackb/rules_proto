@@ -37,6 +37,7 @@ def bazel_gazelle():
         ],
         patches = [
             "@build_stack_rules_proto//third_party:bazel-gazelle-PR1274.patch",
+            "@build_stack_rules_proto//third_party:bazel-gazelle-revert-1152.patch",
         ],
         patch_args = [
             "-p1",

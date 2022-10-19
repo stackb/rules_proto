@@ -120,7 +120,7 @@ proto_dependency(
     patch_args = ["-p1"],
     patches = [
         "@build_stack_rules_proto//third_party:bazel-gazelle-PR1274.patch",
-        # "@build_stack_rules_proto//third_party:bazel-gazelle-revert-1152.patch",
+        "@build_stack_rules_proto//third_party:bazel-gazelle-revert-1152.patch",
     ],
     repository_rule = "http_archive",
     sha256 = "0c1095995d8f1a574a4c06f5fd8d9aeb8c4b91d6f294d55d6517fc916e90f1bd",
