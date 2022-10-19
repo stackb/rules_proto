@@ -2,6 +2,7 @@ package protoc
 
 import (
 	"fmt"
+	"log"
 	"sort"
 	"strings"
 
@@ -189,6 +190,16 @@ func (c *PackageConfig) configuredLangs() []*LanguageConfig {
 }
 
 func (c *PackageConfig) LoadYConfig(y *YConfig) error {
+	for _, starlarkPlugin := range y.StarlarkPlugin {
+		if err := c.loadYStarlarkPlugin(starlarkPlugin); err != nil {
+			return err
+		}
+	}
+	for _, starlarkRule := range y.StarlarkRule {
+		if err := c.loadYStarlarkRule(starlarkRule); err != nil {
+			return err
+		}
+	}
 	for _, plugin := range y.Plugin {
 		if err := c.loadYPlugin(plugin); err != nil {
 			return err
@@ -205,6 +216,14 @@ func (c *PackageConfig) LoadYConfig(y *YConfig) error {
 		}
 	}
 	return nil
+}
+
+func (c *PackageConfig) loadYStarlarkPlugin(y string) error {
+	return RegisterStarlarkPlugin(c.Config, y)
+}
+
+func (c *PackageConfig) loadYStarlarkRule(y string) error {
+	return RegisterStarlarkRule(c.Config, y)
 }
 
 func (c *PackageConfig) loadYPlugin(y *YPlugin) error {
@@ -239,4 +258,52 @@ func (c *PackageConfig) loadYLanguage(y *YLanguage) error {
 		c.langs[y.Name] = lang
 	}
 	return lang.fromYAML(y)
+}
+
+func RegisterStarlarkPlugin(c *config.Config, starlarkPlugin string) error {
+	parts := strings.Split(starlarkPlugin, "%")
+	if len(parts) != 2 {
+		return fmt.Errorf("invalid starlark plugin name %q", starlarkPlugin)
+	}
+	fileName := parts[0]
+	ruleName := parts[1]
+	var configureError error
+	impl, err := LoadStarlarkPluginFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
+		log.Printf("%s: %v", starlarkPlugin, msg)
+	}, func(err error) {
+		configureError = err
+	})
+	if err != nil {
+		return err
+	}
+	if configureError != nil {
+		return configureError
+	}
+	Plugins().RegisterPlugin(starlarkPlugin, impl)
+	return nil
+}
+
+func RegisterStarlarkRule(c *config.Config, starlarkRule string) error {
+	parts := strings.Split(starlarkRule, "%")
+	if len(parts) != 2 {
+		return fmt.Errorf("invalid starlark rule name %q", starlarkRule)
+	}
+	fileName := parts[0]
+	ruleName := parts[1]
+
+	var configureError error
+	impl, err := LoadStarlarkLanguageRuleFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
+	}, func(err error) {
+		configureError = err
+	})
+	if err != nil {
+		return err
+	}
+	if configureError != nil {
+		return configureError
+	}
+	configureError = err
+	Rules().MustRegisterRule(starlarkRule, impl)
+	log.Println("Registered rule:", starlarkRule, impl.Name())
+	return nil
 }
