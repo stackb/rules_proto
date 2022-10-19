@@ -1,10 +1,15 @@
+starlarkPlugins:
+  # protoc-gen-java duplicates the functionality of the
+  # builtin 'java' one, we have it here to test that it can
+  # be loaded via the YAML config.
+  # The format is IMPLEMENTATION_FILENAME%PLUGIN_NAME.
+  - starlark/plugins.star%protoc-gen-java
 plugins:
   - name: protoc-gen-go
     implementation: golang:protobuf:protoc-gen-go
     deps:
       - "@org_golang_google_protobuf//reflect/protoreflect"
       - "@org_golang_google_protobuf//runtime/protoimpl"
-
   - name: protoc-gen-go-grpc
     implementation: grpc:grpc-go:protoc-gen-go-grpc
     deps:
@@ -14,13 +19,13 @@ plugins:
 
   - name: java
     implementation: builtin:java
-
+  - name: protoc-gen-java
+    implementation: starlark/plugins.star%protoc-gen-java
   - name: protoc-gen-grpc-java
     implementation: grpc:grpc-java:protoc-gen-grpc-java
 
   - name: python
     implementation: builtin:python
-
   - name: protoc-gen-grpc-python
     implementation: grpc:grpc:protoc-gen-grpc-python
 
@@ -44,7 +49,6 @@ rules:
       - "//visibility:public"
     deps:
       - "@com_google_protobuf//:protobuf_java"
-
   - name: grpc_java_library
     implementation: stackb:rules_proto:grpc_java_library
     visibility:
@@ -58,7 +62,6 @@ rules:
       - "//visibility:public"
     deps:
       - "@tms_py_deps_protobuf//:pkg"
-
   - name: grpc_py_library
     implementation: stackb:rules_proto:grpc_py_library
     visibility:
@@ -80,6 +83,7 @@ languages:
     enabled: false
     plugins:
       - java
+      - protoc-gen-java
       - protoc-gen-grpc-java
     rules:
       - proto_compile
