@@ -44,14 +44,22 @@
 # gazelle:proto_language java rule grpc_java_library
 
 ## Scala ##
-# gazelle:proto_plugin scala implementation scalapb:scalapb:protoc-gen-scala
-# gazelle:proto_plugin scala deps @com_google_protobuf//:protobuf_java
-# gazelle:proto_plugin scala deps @maven_scala//:com_thesamet_scalapb_lenses_2_12
-# gazelle:proto_plugin scala deps @maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12
-# gazelle:proto_plugin scala deps @maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12
-# gazelle:proto_plugin scala deps @maven_scala//:io_grpc_grpc_api
-# gazelle:proto_plugin scala deps @maven_scala//:io_grpc_grpc_stub
-# gazelle:proto_plugin scala deps @maven_scala//:io_grpc_grpc_protobuf
+# gazelle:proto_plugin protoc-gen-scala implementation scalapb:scalapb:protoc-gen-scala
+# gazelle:proto_plugin protoc-gen-scala deps @com_google_protobuf//:protobuf_java
+# gazelle:proto_plugin protoc-gen-scala deps @maven_scala//:com_thesamet_scalapb_lenses_2_12
+# gazelle:proto_plugin protoc-gen-scala deps @maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12
+# gazelle:proto_plugin protoc-gen-scala deps @maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12
+
+# gazelle:proto_plugin protoc-gen-scala-grpc implementation scalapb:scalapb:protoc-gen-scala
+# gazelle:proto_plugin protoc-gen-scala-grpc label //plugin/scalapb/scalapb:protoc-gen-scala-grpc
+# gazelle:proto_plugin protoc-gen-scala-grpc options grpc
+# gazelle:proto_plugin protoc-gen-scala-grpc deps @com_google_protobuf//:protobuf_java
+# gazelle:proto_plugin protoc-gen-scala-grpc deps @maven_scala//:com_thesamet_scalapb_lenses_2_12
+# gazelle:proto_plugin protoc-gen-scala-grpc deps @maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12
+# gazelle:proto_plugin protoc-gen-scala-grpc deps @maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12
+# gazelle:proto_plugin protoc-gen-scala-grpc deps @maven_scala//:io_grpc_grpc_api
+# gazelle:proto_plugin protoc-gen-scala-grpc deps @maven_scala//:io_grpc_grpc_stub
+# gazelle:proto_plugin protoc-gen-scala-grpc deps @maven_scala//:io_grpc_grpc_protobuf
 
 # gazelle:proto_plugin akka-grpc implementation akka:akka-grpc:protoc-gen-akka-grpc
 # gazelle:proto_plugin akka-grpc deps @maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12
@@ -65,7 +73,8 @@
 # gazelle:proto_rule grpc_scala_library implementation stackb:rules_proto:grpc_scala_library
 # gazelle:proto_rule grpc_scala_library visibility //visibility:public
 
-# gazelle:proto_language scala plugin scala
+# gazelle:proto_language scala plugin protoc-gen-scala
+# gazelle:proto_language scala plugin protoc-gen-scala-grpc
 # gazelle:proto_language scala plugin akka-grpc
 # gazelle:proto_language scala rule proto_compile
 # gazelle:proto_language scala rule proto_scala_library
