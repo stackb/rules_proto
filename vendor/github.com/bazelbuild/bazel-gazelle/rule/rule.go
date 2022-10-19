@@ -390,23 +390,25 @@ func (f *File) Format() []byte {
 	return bzl.Format(f.File)
 }
 
-// SortMacro sorts rules in the macro of this File. It doesn't sort the rules if
+// SortMacro sorts rules and loads in the macro of this File. It doesn't sort the rules if
 // this File does not have a macro, e.g., WORKSPACE.
 // This method calls Sync internally.
 func (f *File) SortMacro() {
 	f.Sync()
-	if f.function != nil {
-		sort.Stable(byName{f.Rules, f.function.stmt.Body})
-	} else {
+
+	if f.function == nil {
 		panic(fmt.Sprintf("%s: not loaded as macro file", f.Path))
 	}
+
+	sort.Stable(loadsByName{f.Loads, f.File.Stmt})
+	sort.Stable(rulesByKindAndName{f.Rules, f.function.stmt.Body})
 }
 
 // Save writes the build file to disk. This method calls Sync internally.
 func (f *File) Save(path string) error {
 	f.Sync()
 	f.Content = bzl.Format(f.File)
-	return ioutil.WriteFile(path, f.Content, 0666)
+	return ioutil.WriteFile(path, f.Content, 0o666)
 }
 
 // HasDefaultVisibility returns whether the File contains a "package" rule with
@@ -490,26 +492,51 @@ func (s byIndex) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 
-type byName struct {
+type rulesByKindAndName struct {
 	rules []*Rule
 	exprs []bzl.Expr
 }
 
 // type checking
-var _ sort.Interface = byName{}
+var _ sort.Interface = rulesByKindAndName{}
 
-func (s byName) Len() int {
+func (s rulesByKindAndName) Len() int {
 	return len(s.rules)
 }
 
-func (s byName) Less(i, j int) bool {
-	return s.rules[i].Name() < s.rules[j].Name()
+func (s rulesByKindAndName) Less(i, j int) bool {
+	if s.rules[i].Kind() == s.rules[j].Kind() {
+		return s.rules[i].Name() < s.rules[j].Name()
+	}
+	return s.rules[i].Kind() < s.rules[j].Kind()
 }
 
-func (s byName) Swap(i, j int) {
+func (s rulesByKindAndName) Swap(i, j int) {
 	s.exprs[s.rules[i].index], s.exprs[s.rules[j].index] = s.exprs[s.rules[j].index], s.exprs[s.rules[i].index]
 	s.rules[i].index, s.rules[j].index = s.rules[j].index, s.rules[i].index
 	s.rules[i], s.rules[j] = s.rules[j], s.rules[i]
+}
+
+type loadsByName struct {
+	loads []*Load
+	exprs []bzl.Expr
+}
+
+// type checking
+var _ sort.Interface = loadsByName{}
+
+func (s loadsByName) Len() int {
+	return len(s.loads)
+}
+
+func (s loadsByName) Less(i, j int) bool {
+	return s.loads[i].Name() < s.loads[j].Name()
+}
+
+func (s loadsByName) Swap(i, j int) {
+	s.exprs[s.loads[i].index], s.exprs[s.loads[j].index] = s.exprs[s.loads[j].index], s.exprs[s.loads[i].index]
+	s.loads[i].index, s.loads[j].index = s.loads[j].index, s.loads[i].index
+	s.loads[i], s.loads[j] = s.loads[j], s.loads[i]
 }
 
 // identPair represents one symbol, with or without remapping, in a load
@@ -878,6 +905,11 @@ func (r *Rule) SetPrivateAttr(key string, value interface{}) {
 // Args returns positional arguments passed to a rule.
 func (r *Rule) Args() []bzl.Expr {
 	return r.args
+}
+
+// AddArg adds a positional argument to the rule.
+func (r *Rule) AddArg(value bzl.Expr) {
+	r.args = append(r.args, value)
 }
 
 // Insert marks this statement for insertion at the end of the file. Multiple
