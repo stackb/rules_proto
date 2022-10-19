@@ -87,6 +87,12 @@ def com_google_protobuf():
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz",
         ],
+        patches = [
+            "@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch",
+        ],
+        patch_args = [
+            "-p1",
+        ],
     )
 
 def rules_jvm_external():

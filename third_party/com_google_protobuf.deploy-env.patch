@@ -1,0 +1,12 @@
+diff --git a/java/util/BUILD b/java/util/BUILD
+index 753fabb..8646e20 100644
+--- a/java/util/BUILD
++++ b/java/util/BUILD
+@@ -27,7 +27,6 @@ java_export(
+     pom_template = "pom_template.xml",
+     visibility = ["//java:__pkg__"],
+     runtime_deps = [":util"],
+-    deploy_env = ["//java/core"],
+ )
+ 
+ filegroup(
