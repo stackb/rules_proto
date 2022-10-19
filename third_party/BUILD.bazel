@@ -2,7 +2,6 @@ filegroup(
     name = "all_files",
     srcs = [
         "BUILD.bazel",
-        "bazel-gazelle-PR1274.patch",
         "bazel-gazelle-revert-1152.patch",
         "zlib.BUILD",
     ],
@@ -10,6 +9,5 @@ filegroup(
 )
 
 exports_files([
-    "bazel-gazelle-PR1274.patch",
     "bazel-gazelle-revert-1152.patch",
 ])

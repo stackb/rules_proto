@@ -60,26 +60,36 @@ func FixLoads(f *rule.File, knownLoads []rule.LoadInfo) {
 	// Make a map of all the symbols from known files used in this file.
 	usedSymbols := make(map[string]map[string]bool)
 	bzl.Walk(f.File, func(x bzl.Expr, stk []bzl.Expr) {
-        ce, ok := x.(*bzl.CallExpr)
-        if !ok {
-            return
-        }
+		ce, ok := x.(*bzl.CallExpr)
+		if !ok {
+			return
+		}
 
-        id, ok := ce.X.(*bzl.Ident)
-        if !ok {
-            return
-        }
+		functionIdent, ok := ce.X.(*bzl.Ident)
+		if !ok {
+			return
+		}
 
-        file, ok := knownSymbols[id.Name]
-        if !ok || otherLoadedKinds[id.Name] {
-            return
-        }
+		idents := []*bzl.Ident{functionIdent}
 
-        if usedSymbols[file] == nil {
-            usedSymbols[file] = make(map[string]bool)
-        }
-        usedSymbols[file][id.Name] = true
-    })
+		for _, arg := range ce.List {
+			if argIdent, ok := arg.(*bzl.Ident); ok {
+				idents = append(idents, argIdent)
+			}
+		}
+
+		for _, id := range idents {
+			file, ok := knownSymbols[id.Name]
+			if !ok || otherLoadedKinds[id.Name] {
+				continue
+			}
+
+			if usedSymbols[file] == nil {
+				usedSymbols[file] = make(map[string]bool)
+			}
+			usedSymbols[file][id.Name] = true
+		}
+	})
 
 	// Fix the load statements. The order is important, so we iterate over
 	// knownLoads instead of knownFiles.

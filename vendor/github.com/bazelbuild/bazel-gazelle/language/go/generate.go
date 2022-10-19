@@ -404,7 +404,7 @@ func emptyPackage(c *config.Config, dir, rel string, f *rule.File) *goPackage {
 		dir:  dir,
 		rel:  rel,
 	}
-	pkg.inferImportPath(c)
+
 	return pkg
 }
 
