@@ -47,6 +47,7 @@
 # gazelle:proto_plugin protoc-gen-scala implementation scalapb:scalapb:protoc-gen-scala
 # gazelle:proto_plugin protoc-gen-scala-grpc implementation scalapb:scalapb:protoc-gen-scala
 # gazelle:proto_plugin protoc-gen-scala-grpc label @build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc
+# gazelle:proto_plugin protoc-gen-scala-grpc option grpc
 # gazelle:proto_plugin protoc-gen-akka-grpc implementation akka:akka-grpc:protoc-gen-akka-grpc
 
 # gazelle:proto_rule proto_scala_library implementation stackb:rules_proto:proto_scala_library

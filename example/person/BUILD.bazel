@@ -159,9 +159,11 @@ proto_ts_library(
 
 proto_compile(
     name = "person_scala_compile",
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
     outputs = [
         "person_scala.srcjar",
         "person_scala.srcjar",
+        "person_scala_grpc.srcjar",
     ],
     plugins = [
         "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",

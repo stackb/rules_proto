@@ -288,7 +288,7 @@ grpc_scala_library(
     name = "routeguide_grpc_scala_library",
     srcs = [
         "routeguide_akka_grpc.srcjar",
-        "routeguide_scala.srcjar",
+        "routeguide_scala_grpc.srcjar",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -305,9 +305,11 @@ grpc_scala_library(
 
 proto_compile(
     name = "routeguide_scala_compile",
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
     outputs = [
         "routeguide_akka_grpc.srcjar",
         "routeguide_scala.srcjar",
+        "routeguide_scala_grpc.srcjar",
     ],
     plugins = [
         "@build_stack_rules_proto//plugin/akka/akka-grpc:protoc-gen-akka-grpc",
