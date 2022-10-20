@@ -52,18 +52,21 @@
 
 # gazelle:proto_rule proto_scala_library implementation stackb:rules_proto:proto_scala_library
 # gazelle:proto_rule proto_scala_library option --plugins=protoc-gen-scala
-# gazelle:proto_rule proto_scala_library visibility //visibility:public
 # gazelle:proto_rule proto_scala_library deps @maven_scala//:com_google_protobuf_protobuf_java
 # gazelle:proto_rule proto_scala_library deps @maven_scala//:com_thesamet_scalapb_lenses_2_12
 # gazelle:proto_rule proto_scala_library deps @maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12
+# gazelle:proto_rule proto_scala_library visibility //visibility:public
 
 # gazelle:proto_rule grpc_scala_library implementation stackb:rules_proto:grpc_scala_library
 # gazelle:proto_rule grpc_scala_library option --plugins=protoc-gen-scala-grpc,protoc-gen-akka-grpc
-# gazelle:proto_rule grpc_scala_library deps @maven_scala//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_4
+# gazelle:proto_rule grpc_scala_library deps @maven_scala//:com_google_protobuf_protobuf_java
+# gazelle:proto_rule grpc_scala_library deps @maven_scala//:com_thesamet_scalapb_lenses_2_12
+# gazelle:proto_rule grpc_scala_library deps @maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12
 # gazelle:proto_rule grpc_scala_library deps @maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12
-# gazelle:proto_rule grpc_scala_library deps @maven_scala//:com_typesafe_akka_akka_actor_2_12
-# gazelle:proto_rule grpc_scala_library deps @maven_scala//:com_typesafe_akka_akka_http_core_2_12
-# gazelle:proto_rule grpc_scala_library deps @maven_scala//:com_typesafe_akka_akka_stream_2_12
+# gazelle:proto_rule grpc_scala_library deps @maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3
+# gazelle:proto_rule grpc_scala_library deps @maven_akka//:com_typesafe_akka_akka_actor_2_12
+# gazelle:proto_rule grpc_scala_library deps @maven_akka//:com_typesafe_akka_akka_http_core_2_12
+# gazelle:proto_rule grpc_scala_library deps @maven_akka//:com_typesafe_akka_akka_stream_2_12
 # gazelle:proto_rule grpc_scala_library deps @maven_scala//:io_grpc_grpc_api
 # gazelle:proto_rule grpc_scala_library deps @maven_scala//:io_grpc_grpc_protobuf
 # gazelle:proto_rule grpc_scala_library deps @maven_scala//:io_grpc_grpc_stub

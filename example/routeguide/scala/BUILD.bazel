@@ -4,9 +4,8 @@ scala_library(
     name = "util",
     srcs = ["RouteGuideUtil.scala"],
     resources = ["//example/routeguide:feature_db"],
-    exports = ["//example/routeguide:routeguide_scala_library"],
     deps = [
-        "//example/routeguide:routeguide_scala_library",
+        "//example/routeguide:routeguide_grpc_scala_library",
         "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
         "@maven_scala//:com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
@@ -19,12 +18,11 @@ scala_binary(
     main_class = "example.routeguide.scala.RouteGuideClient",
     deps = [
         ":util",
-        "//example/routeguide:routeguide_grpc_java_library",
+        "//example/routeguide:routeguide_grpc_scala_library",
         "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
         "@maven_scala//:io_grpc_grpc_api",
-        "@maven_scala//:io_grpc_grpc_protobuf",
         "@maven_scala//:io_grpc_grpc_stub",
     ],
 )
@@ -37,5 +35,13 @@ scala_binary(
         "RouteGuideService.scala",
     ],
     main_class = "example.routeguide.scala.RouteGuideServer",
-    deps = [":util"],
+    deps = [
+        ":util",
+        "//example/routeguide:routeguide_grpc_scala_library",
+        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
+        "@maven_scala//:io_grpc_grpc_api",
+        "@maven_scala//:io_grpc_grpc_stub",
+    ],
 )
