@@ -24,10 +24,9 @@ func (p *ProtocGenScalaPlugin) Name() string {
 // Configure implements part of the Plugin interface.
 func (p *ProtocGenScalaPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	options := ctx.PluginConfig.GetOptions()
-	hasGrpc := containsOption(options, "grpc")
 
 	srcjar := ctx.ProtoLibrary.BaseName() + "_scala"
-	if hasGrpc {
+	if containsOption(options, "grpc") {
 		srcjar += "_grpc"
 	}
 	srcjar += ".srcjar"
