@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"path/filepath"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -242,6 +243,15 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 		}
 	}
 	from := label.New("", file.Pkg, r.Name())
+	// files := s.files
+	// if from.Name == "trader_or_team_id_proto_scala_library" {
+	// 	log.Println("scalaLibraryRule.Imports from:", from)
+	// 	for _, file := range files {
+	// 		log.Printf(" -file: %s/%s", file.Dir, file.Basename)
+	// 	}
+	// 	// files = removeSelfImports(s.config.Library.Files(), files)
+	// }
+	// files = removeSelfImports(s.config.Library.Files(), files)
 	provideScalaImports(s.files, protoc.GlobalResolver(), from, pluginOptions)
 
 	// 2. create import specs for 'protobuf scala'.  This allows
@@ -252,11 +262,21 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 // Resolve implements part of the RuleProvider interface.
 func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 	imports = s.options.filterImports(imports)
+	// if from.Name == "trader_or_team_id_proto_scala_library" {
+	// 	log.Println("scalaLibraryRule.Resolve from:", from)
+	// 	for _, imp := range imports {
+	// 		log.Printf(" -import: %s", imp)
+	// 	}
+	// 	imports = removeSelfImports(s.config.Library.Files(), imports)
+	// }
 
 	resolveFn := protoc.ResolveDepsAttr("deps", true)
 	resolveFn(c, ix, r, imports, from)
 
 	if unresolvedDeps, ok := r.PrivateAttr(protoc.UnresolvedDepsPrivateKey).(map[string]error); ok {
+		if from.Repo == c.RepoName {
+			from.Repo = ""
+		}
 		resolveScalaDeps(c, ix, r, unresolvedDeps, from)
 
 		for imp, err := range unresolvedDeps {
@@ -275,14 +295,24 @@ func resolveScalaDeps(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, unr
 	lang := "scala"
 
 	resolvedDeps := make([]string, 0)
+
+	markResolved := func(imp string, to label.Label) {
+		if to == from {
+			log.Println(from, "skipped", imp, "=>", to)
+			return
+		}
+		log.Println(from, "resolved", imp, "=>", to)
+		resolvedDeps = append(resolvedDeps, to.String())
+		unresolvedDeps[imp] = nil
+	}
+
 	for imp, err := range unresolvedDeps {
 		if err != protoc.ErrNoLabel {
 			continue
 		}
 		importSpec := resolve.ImportSpec{Lang: lang, Imp: imp}
 		if l, ok := resolve.FindRuleWithOverride(c, importSpec, lang); ok {
-			resolvedDeps = append(resolvedDeps, l.String())
-			unresolvedDeps[imp] = nil
+			markResolved(imp, l)
 			continue
 		}
 		result := ix.FindRulesByImportWithConfig(c, importSpec, lang)
@@ -293,8 +323,10 @@ func resolveScalaDeps(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, unr
 			log.Println(from, "multiple rules matched for scala import %q: %v", imp, result)
 			continue
 		}
-		resolvedDeps = append(resolvedDeps, result[0].Label.String())
-		unresolvedDeps[imp] = nil
+		if result[0].Label == from {
+			continue
+		}
+		markResolved(imp, result[0].Label)
 	}
 	if len(resolvedDeps) > 0 {
 		r.SetAttr("deps", protoc.DeduplicateAndSort(append(r.AttrStrings("deps"), resolvedDeps...)))
@@ -335,6 +367,43 @@ func getScalapbImports(files []*protoc.File) []string {
 	}
 
 	return protoc.DeduplicateAndSort(imps)
+}
+
+func removeSelfImports2(srcs, imports []*protoc.File) (out []*protoc.File) {
+	self := make(map[string]bool)
+	for _, src := range srcs {
+		filename := filepath.Join(src.Dir, src.Basename)
+		self[filename] = true
+		log.Println("self:", filename)
+	}
+	for _, imp := range imports {
+		filename := filepath.Join(imp.Dir, imp.Basename)
+		log.Println("check:", filename)
+		if self[filename] {
+			log.Println("skip:", filename)
+			continue
+		}
+		out = append(out, imp)
+	}
+	return
+}
+
+func removeSelfImports(srcs []*protoc.File, imports []string) (out []string) {
+	self := make(map[string]bool)
+	for _, src := range srcs {
+		filename := filepath.Join(src.Dir, src.Basename)
+		self[filename] = true
+		log.Println("self:", filename)
+	}
+	for _, imp := range imports {
+		log.Println("check:", imp)
+		if self[imp] {
+			log.Println("skip:", imp)
+			continue
+		}
+		out = append(out, imp)
+	}
+	return
 }
 
 // javaPackageOption is a utility function to seek for the java_package option.
