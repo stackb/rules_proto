@@ -302,9 +302,6 @@ func resolveScalaDeps(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, unr
 			log.Println(from, "multiple rules matched for scala import %q: %v", imp, result)
 			continue
 		}
-		if result[0].Label == from {
-			continue
-		}
 		markResolved(imp, result[0].Label)
 	}
 	if len(resolvedDeps) > 0 {
