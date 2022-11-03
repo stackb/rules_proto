@@ -295,11 +295,11 @@ func resolveScalaDeps(
 	resolvedDeps := make([]string, 0)
 
 	markResolved := func(imp string, to label.Label) {
+		delete(unresolvedDeps, imp)
 		if to == from {
 			return
 		}
 		resolvedDeps = append(resolvedDeps, to.String())
-		unresolvedDeps[imp] = nil
 	}
 
 	for imp, err := range unresolvedDeps {
