@@ -261,7 +261,7 @@ func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *r
 		if from.Repo == c.RepoName {
 			from.Repo = ""
 		}
-		resolveScalaDeps(c, ix, r, unresolvedDeps, from)
+		resolveScalaDeps(resolve.FindRuleWithOverride, ix.FindRulesByImportWithConfig, c, r, unresolvedDeps, from)
 
 		for imp, err := range unresolvedDeps {
 			if err == nil {
@@ -272,11 +272,25 @@ func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *r
 	}
 }
 
+// findRuleWithOverride is the same shape of resolve.FindRuleWithOverride.
+type findRuleWithOverride func(c *config.Config, imp resolve.ImportSpec, lang string) (label.Label, bool)
+
+// findRulesByImportWithConfig is the same shape of resolve.RuleIndex.FindRulesByImportWithConfig.
+// For testability want to avoid the RuleIndex as it is fundamentally tied to the resolve.resolveConfig,
+// which is private and not easily mocked.
+type findRulesByImportWithConfig func(c *config.Config, imp resolve.ImportSpec, lang string) []resolve.FindResult
+
 // resolveScalaDeps attempts to resolve labels for the given deps under the
 // "scala" language.  Only unresolved deps of type ErrNoLabel are considered.
 // Typically these unresolved dependencies arise from (scalapb.options) imports.
-func resolveScalaDeps(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, unresolvedDeps map[string]error, from label.Label) {
-	lang := "scala"
+func resolveScalaDeps(
+	findRuleWithOverride findRuleWithOverride,
+	findRulesByImportWithConfig findRulesByImportWithConfig,
+	c *config.Config,
+	r *rule.Rule,
+	unresolvedDeps map[string]error,
+	from label.Label,
+) {
 
 	resolvedDeps := make([]string, 0)
 
@@ -292,12 +306,12 @@ func resolveScalaDeps(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, unr
 		if err != protoc.ErrNoLabel {
 			continue
 		}
-		importSpec := resolve.ImportSpec{Lang: lang, Imp: imp}
-		if l, ok := resolve.FindRuleWithOverride(c, importSpec, lang); ok {
+		importSpec := resolve.ImportSpec{Lang: scalaLangName, Imp: imp}
+		if l, ok := findRuleWithOverride(c, importSpec, scalaLangName); ok {
 			markResolved(imp, l)
 			continue
 		}
-		result := ix.FindRulesByImportWithConfig(c, importSpec, lang)
+		result := findRulesByImportWithConfig(c, importSpec, scalaLangName)
 		if len(result) == 0 {
 			continue
 		}
