@@ -262,13 +262,13 @@ func TestScalaLibraryOptionsNoOutput(t *testing.T) {
 
 func TestResolveScalaDeps(t *testing.T) {
 	for name, tc := range map[string]struct {
-		overrideFn     findRuleWithOverride
-		byImportFn     findRulesByImportWithConfig
-		r              *rule.Rule
-		from           label.Label
-		unresolvedDeps map[string]error
-		wantUnresolved map[string]error
-		wantDeps       []string
+		overrideFn         findRuleWithOverride
+		byImportFn         findRulesByImportWithConfig
+		r                  *rule.Rule
+		from               label.Label
+		unresolvedDeps     map[string]error
+		wantUnresolvedDeps map[string]error
+		wantDeps           []string
 	}{
 		"degenerate case": {
 			overrideFn: func(c *config.Config, imp resolve.ImportSpec, lang string) (label.Label, bool) {
@@ -277,7 +277,7 @@ func TestResolveScalaDeps(t *testing.T) {
 			byImportFn: func(c *config.Config, imp resolve.ImportSpec, lang string) []resolve.FindResult {
 				return nil
 			},
-			wantUnresolved: map[string]error{},
+			wantUnresolvedDeps: map[string]error{},
 		},
 		"resolve from cross-resolver": {
 			from: label.New("", "proto", "foo_proto_scala_library"),
@@ -293,8 +293,8 @@ func TestResolveScalaDeps(t *testing.T) {
 			unresolvedDeps: map[string]error{
 				"foo.bar.baz.mapper": protoc.ErrNoLabel,
 			},
-			wantUnresolved: map[string]error{},
-			wantDeps:       []string{"//mapper:scala_lib"},
+			wantUnresolvedDeps: map[string]error{},
+			wantDeps:           []string{"//mapper:scala_lib"},
 		},
 		"resolve from overrideFn": {
 			from: label.New("", "proto", "foo_proto_scala_library"),
@@ -310,8 +310,8 @@ func TestResolveScalaDeps(t *testing.T) {
 			unresolvedDeps: map[string]error{
 				"foo.bar.baz.mapper": protoc.ErrNoLabel,
 			},
-			wantUnresolved: map[string]error{},
-			wantDeps:       []string{"//mapper:scala_lib"},
+			wantUnresolvedDeps: map[string]error{},
+			wantDeps:           []string{"//mapper:scala_lib"},
 		},
 		"does not resolve self-label": {
 			from: label.New("", "proto", "foo_proto_scala_library"),
@@ -327,26 +327,27 @@ func TestResolveScalaDeps(t *testing.T) {
 			unresolvedDeps: map[string]error{
 				"foo.bar.baz.mapper": protoc.ErrNoLabel,
 			},
-			wantUnresolved: map[string]error{
-				"foo.bar.baz.mapper": protoc.ErrNoLabel,
-			},
-			wantDeps: nil,
+			wantUnresolvedDeps: map[string]error{},
+			wantDeps:           nil,
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
 			c := &config.Config{}
 			r := rule.NewRule("proto_scala_library", "bar_proto_scala_library")
 
-			got := make(map[string]error)
+			gotUnresolvedDeps := make(map[string]error)
 			for k, v := range tc.unresolvedDeps {
-				got[k] = v
+				gotUnresolvedDeps[k] = v
 			}
-			resolveScalaDeps(tc.overrideFn, tc.byImportFn, c, r, got, tc.from)
+			resolveScalaDeps(tc.overrideFn, tc.byImportFn, c, r, gotUnresolvedDeps, tc.from)
 
 			gotDeps := r.AttrStrings("deps")
 
 			if diff := cmp.Diff(tc.wantDeps, gotDeps); diff != "" {
-				t.Errorf("(-want +got):\n%s", diff)
+				t.Errorf("deps (-want +got):\n%s", diff)
+			}
+			if diff := cmp.Diff(tc.wantUnresolvedDeps, gotUnresolvedDeps); diff != "" {
+				t.Errorf("unresolved deps (-want +got):\n%s", diff)
 			}
 		})
 	}
