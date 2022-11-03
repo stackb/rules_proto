@@ -242,6 +242,7 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 		}
 	}
 	from := label.New("", file.Pkg, r.Name())
+
 	provideScalaImports(s.files, protoc.GlobalResolver(), from, pluginOptions)
 
 	// 2. create import specs for 'protobuf scala'.  This allows
@@ -257,7 +258,10 @@ func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *r
 	resolveFn(c, ix, r, imports, from)
 
 	if unresolvedDeps, ok := r.PrivateAttr(protoc.UnresolvedDepsPrivateKey).(map[string]error); ok {
-		resolveScalaDeps(c, ix, r, unresolvedDeps, from)
+		if from.Repo == c.RepoName {
+			from.Repo = ""
+		}
+		resolveScalaDeps(resolve.FindRuleWithOverride, ix.FindRulesByImportWithConfig, c, r, unresolvedDeps, from)
 
 		for imp, err := range unresolvedDeps {
 			if err == nil {
@@ -268,24 +272,46 @@ func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *r
 	}
 }
 
+// findRuleWithOverride is the same shape of resolve.FindRuleWithOverride.
+type findRuleWithOverride func(c *config.Config, imp resolve.ImportSpec, lang string) (label.Label, bool)
+
+// findRulesByImportWithConfig is the same shape of resolve.RuleIndex.FindRulesByImportWithConfig.
+// For testability want to avoid the RuleIndex as it is fundamentally tied to the resolve.resolveConfig,
+// which is private and not easily mocked.
+type findRulesByImportWithConfig func(c *config.Config, imp resolve.ImportSpec, lang string) []resolve.FindResult
+
 // resolveScalaDeps attempts to resolve labels for the given deps under the
 // "scala" language.  Only unresolved deps of type ErrNoLabel are considered.
 // Typically these unresolved dependencies arise from (scalapb.options) imports.
-func resolveScalaDeps(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, unresolvedDeps map[string]error, from label.Label) {
-	lang := "scala"
+func resolveScalaDeps(
+	findRuleWithOverride findRuleWithOverride,
+	findRulesByImportWithConfig findRulesByImportWithConfig,
+	c *config.Config,
+	r *rule.Rule,
+	unresolvedDeps map[string]error,
+	from label.Label,
+) {
 
 	resolvedDeps := make([]string, 0)
+
+	markResolved := func(imp string, to label.Label) {
+		if to == from {
+			return
+		}
+		resolvedDeps = append(resolvedDeps, to.String())
+		unresolvedDeps[imp] = nil
+	}
+
 	for imp, err := range unresolvedDeps {
 		if err != protoc.ErrNoLabel {
 			continue
 		}
-		importSpec := resolve.ImportSpec{Lang: lang, Imp: imp}
-		if l, ok := resolve.FindRuleWithOverride(c, importSpec, lang); ok {
-			resolvedDeps = append(resolvedDeps, l.String())
-			unresolvedDeps[imp] = nil
+		importSpec := resolve.ImportSpec{Lang: scalaLangName, Imp: imp}
+		if l, ok := findRuleWithOverride(c, importSpec, scalaLangName); ok {
+			markResolved(imp, l)
 			continue
 		}
-		result := ix.FindRulesByImportWithConfig(c, importSpec, lang)
+		result := findRulesByImportWithConfig(c, importSpec, scalaLangName)
 		if len(result) == 0 {
 			continue
 		}
@@ -293,8 +319,7 @@ func resolveScalaDeps(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, unr
 			log.Println(from, "multiple rules matched for scala import %q: %v", imp, result)
 			continue
 		}
-		resolvedDeps = append(resolvedDeps, result[0].Label.String())
-		unresolvedDeps[imp] = nil
+		markResolved(imp, result[0].Label)
 	}
 	if len(resolvedDeps) > 0 {
 		r.SetAttr("deps", protoc.DeduplicateAndSort(append(r.AttrStrings("deps"), resolvedDeps...)))
