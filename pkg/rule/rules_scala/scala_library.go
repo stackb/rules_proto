@@ -383,14 +383,14 @@ func provideScalaImports(files []*protoc.File, resolver protoc.ImportResolver, f
 			pkgName = javaPackageName
 		}
 		if pkgName != "" {
-			resolver.Provide(lang, lang, pkgName, from)
+			resolver.Provide(lang, "package", pkgName, from)
 		}
 		for _, e := range file.Enums() {
 			name := e.Name
 			if pkgName != "" {
 				name = pkgName + "." + name
 			}
-			resolver.Provide(lang, lang, name, from)
+			resolver.Provide(lang, "enum", name, from)
 			for _, value := range e.Elements {
 				if field, ok := value.(*proto.EnumField); ok {
 					fieldName := name + "." + field.Name
@@ -403,26 +403,26 @@ func provideScalaImports(files []*protoc.File, resolver protoc.ImportResolver, f
 			if pkgName != "" {
 				name = pkgName + "." + name
 			}
-			resolver.Provide(lang, lang, name, from)
-			resolver.Provide(lang, lang, name+"Proto", from)
+			resolver.Provide(lang, "message", name, from)
+			resolver.Provide(lang, "message", name+"Proto", from)
 		}
 		for _, s := range file.Services() {
 			name := s.Name
 			if pkgName != "" {
 				name = pkgName + "." + name
 			}
-			resolver.Provide(lang, lang, name, from)
-			resolver.Provide(lang, lang, name+"Grpc", from)
-			resolver.Provide(lang, lang, name+"Proto", from)
-			resolver.Provide(lang, lang, name+"Client", from)
-			resolver.Provide(lang, lang, name+"Handler", from)
-			resolver.Provide(lang, lang, name+"Server", from)
+			resolver.Provide(lang, "service", name, from)
+			resolver.Provide(lang, "service", name+"Grpc", from)
+			resolver.Provide(lang, "service", name+"Proto", from)
+			resolver.Provide(lang, "service", name+"Client", from)
+			resolver.Provide(lang, "service", name+"Handler", from)
+			resolver.Provide(lang, "service", name+"Server", from)
 			// TOOD: if this is configured on the proto_plugin, we won't know
 			// about the plugin option.  Advertise them anyway.
 			// if options["server_power_apis"] {
-			resolver.Provide(lang, lang, name+"PowerApi", from)
-			resolver.Provide(lang, lang, name+"PowerApiHandler", from)
-			resolver.Provide(lang, lang, name+"ClientPowerApi", from)
+			resolver.Provide(lang, "service", name+"PowerApi", from)
+			resolver.Provide(lang, "service", name+"PowerApiHandler", from)
+			resolver.Provide(lang, "service", name+"ClientPowerApi", from)
 			// }
 		}
 	}
