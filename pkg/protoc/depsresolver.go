@@ -27,6 +27,8 @@ var (
 	ErrNoLabel    = errors.New("no label")
 )
 
+var resolveAnyKindCache = make(map[string]label.Label)
+
 type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label)
 
 // ResolveDepsAttr returns a function that implements the DepsResolver
@@ -123,13 +125,25 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 	}
 }
 
+func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, lang, impLang, imp string, from label.Label) (label.Label, error) {
+	key := fmt.Sprintf("%s/%s/%s", lang, impLang, imp)
+	if from, ok := resolveAnyKindCache[key]; ok {
+		return from, nil
+	}
+	from, err := resolveAnyKindInternal(c, ix, lang, impLang, imp, from)
+	if err != nil {
+		resolveAnyKindCache[key] = from
+	}
+	return from, nil
+}
+
 // resolveAnyKind answers the question "what bazel label provides a rule for the
 // given import?" (having the same rule kind as the given rule argument).  The
 // algorithm first consults the override list (configured either via gazelle
 // resolve directives, or via a YAML config).  If no override is found, the
 // RuleIndex is consulted, which contains all rules indexed by gazelle in the
 // generation phase.   If no match is found, return label.NoLabel.
-func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, lang, impLang, imp string, from label.Label) (label.Label, error) {
+func resolveAnyKindInternal(c *config.Config, ix *resolve.RuleIndex, lang, impLang, imp string, from label.Label) (label.Label, error) {
 	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Lang: impLang, Imp: imp}, lang); ok {
 		// log.Println(from, "override hit:", l)
 		return l, nil
