@@ -389,8 +389,16 @@ proto_dependency(
 proto_dependency(
     name = "build_bazel_rules_nodejs",
     repository_rule = "http_archive",
-    sha256 = "4501158976b9da216295ac65d872b1be51e3eeb805273e68c516d2eb36ae1fbb",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/4.4.1/rules_nodejs-4.4.1.tar.gz"],
+    sha256 = "dcc55f810142b6cf46a44d0180a5a7fb923c04a5061e2e8d8eb05ccccc60864b",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.0/rules_nodejs-5.8.0.tar.gz"],
+    deps = ["rules_nodejs"],
+)
+
+proto_dependency(
+    name = "rules_nodejs",
+    repository_rule = "http_archive",
+    sha256 = "08337d4fffc78f7fe648a93be12ea2fc4e8eb9795a4e6aa48595b66b34555626",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.0/rules_nodejs-core-5.8.0.tar.gz"],
 )
 
 proto_dependency(
@@ -399,6 +407,7 @@ proto_dependency(
     package_lock_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package-lock.json",
     repository_rule = "npm_install",
     symlink_node_modules = False,
+    deps = ["build_bazel_rules_nodejs"],
 )
 
 proto_dependency(
@@ -408,6 +417,7 @@ proto_dependency(
     repository_rule = "yarn_install",
     symlink_node_modules = False,
     yarn_lock = "@build_stack_rules_proto//rules/ts:yarn.lock",
+    deps = ["build_bazel_rules_nodejs"],
 )
 
 # Commit: 42195b5ca136f78d28819ef486e3a7b02ad45146
