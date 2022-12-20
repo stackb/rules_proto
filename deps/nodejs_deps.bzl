@@ -11,14 +11,25 @@ def _maybe(repo_rule, name, **kwargs):
 def nodejs_deps():
     """nodejs dependency macro
     """
+    rules_nodejs()  # via build_bazel_rules_nodejs
     build_bazel_rules_nodejs()  # via <TOP>
+
+def rules_nodejs():
+    _maybe(
+        http_archive,
+        name = "rules_nodejs",
+        sha256 = "08337d4fffc78f7fe648a93be12ea2fc4e8eb9795a4e6aa48595b66b34555626",
+        urls = [
+            "https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.0/rules_nodejs-core-5.8.0.tar.gz",
+        ],
+    )
 
 def build_bazel_rules_nodejs():
     _maybe(
         http_archive,
         name = "build_bazel_rules_nodejs",
-        sha256 = "4501158976b9da216295ac65d872b1be51e3eeb805273e68c516d2eb36ae1fbb",
+        sha256 = "dcc55f810142b6cf46a44d0180a5a7fb923c04a5061e2e8d8eb05ccccc60864b",
         urls = [
-            "https://github.com/bazelbuild/rules_nodejs/releases/download/4.4.1/rules_nodejs-4.4.1.tar.gz",
+            "https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.0/rules_nodejs-5.8.0.tar.gz",
         ],
     )

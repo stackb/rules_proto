@@ -3,10 +3,10 @@ load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "protoc-gen-ts-proto",
     data = [
-        "@build_bazel_rules_nodejs//toolchains/node:node_bin",
+        "@nodejs_host//:npm",
         "@npm_ts_proto//:node_modules",
     ],
-    tool = ":ts-proto.sh",
+    tool = "@npm_ts_proto//ts-proto/bin:protoc-gen-ts_proto",
     visibility = ["//visibility:public"],
 )
 
@@ -26,7 +26,7 @@ $(location @build_bazel_rules_nodejs//toolchains/node:node_bin) \
 EOF
 """,
     executable = True,
-    tools = ["@build_bazel_rules_nodejs//toolchains/node:node_bin"],
+    tools = ["@nodejs_host//:npm"],
 )
 
 filegroup(
