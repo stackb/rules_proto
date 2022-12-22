@@ -35,10 +35,10 @@ func (p *ProtocGenTsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginCo
 	var emitImportedFiles bool
 	var options []string
 	for _, option := range ctx.PluginConfig.GetOptions() {
-		// options may be configured to include many "M=" options, but only
+		// options may be configured to include many "M" options, but only
 		// include the relevant ones to avoid BUILD file clutter.
-		if strings.HasPrefix(option, "M=") {
-			keyVal := option[len("M="):]
+		if strings.HasPrefix(option, "M") {
+			keyVal := option[len("M"):]
 			parts := strings.SplitN(keyVal, "=", 2)
 			filename := parts[0]
 			if !imports[filename] {
