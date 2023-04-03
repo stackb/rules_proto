@@ -53,8 +53,6 @@ def golden_filegroup(
 
     tags = kwargs.pop("tags", [])
     srcs = kwargs.pop("srcs", [])
-    package = kwargs.pop("package", "")
-
     goldens = [src + extension for src in srcs]
     native.filegroup(name = name, srcs = srcs, tags = tags, **kwargs)
 
@@ -62,7 +60,6 @@ def golden_filegroup(
 
     proto_compile_gencopy_test(
         name = name_test,
-        package = package,
         srcs = goldens,
         deps = [name_sources],
         mode = "check",
@@ -73,7 +70,6 @@ def golden_filegroup(
 
     proto_compile_gencopy_run(
         name = name_run,
-        package = package,
         deps = [name_sources],
         mode = "update",
         extension = extension,
