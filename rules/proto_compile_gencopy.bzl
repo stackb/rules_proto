@@ -58,14 +58,10 @@ def _proto_compile_gencopy_impl(ctx):
             else:
                 srcs.append(f.short_path)
 
-        package = info.label.package
-        if ctx.attr.package:
-            package = "/".join([ctx.label.package, package])
-
         config.packageConfigs.append(
             struct(
                 targetLabel = str(info.label),
-                targetPackage = package,
+                targetPackage = info.label.package,
                 targetWorkspaceRoot = info.label.workspace_root,
                 generatedFiles = [f.short_path for f in info.outputs],
                 sourceFiles = srcs,
@@ -96,9 +92,6 @@ def _proto_compile_gencopy_rule(is_test):
             extension = attr.string(
                 doc = "optional file extension to add to the copied file",
                 mandatory = False,
-            ),
-            package = attr.string(
-                doc = "The package dir to which the generated files should belong",
             ),
         ),
         executable = True,
