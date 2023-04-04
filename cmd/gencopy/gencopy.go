@@ -185,9 +185,6 @@ func makePkgSrcDstPairs(cfg *Config, pkg *PackageConfig) []*SrcDst {
 }
 
 func makePkgSrcDstPair(cfg *Config, pkg *PackageConfig, src, dst string) *SrcDst {
-	if pkg.TargetPackage != "" {
-		dst = filepath.Join(pkg.TargetPackage, dst)
-	}
 	if pkg.TargetWorkspaceRoot != "" {
 		src = filepath.Join("external", strings.TrimPrefix(src, ".."))
 		dst = filepath.Join(pkg.TargetWorkspaceRoot, dst)

@@ -63,13 +63,6 @@ func TestMakePkgSrcDstPair(t *testing.T) {
 			dst:  "file.txt",
 			want: SrcDst{Src: "external/foo/file.txt", Dst: "/home/external/foo/file.txt"},
 		},
-		"TargetPackage": {
-			cfg:  Config{WorkspaceRootDirectory: "/home"},
-			pkg:  PackageConfig{TargetPackage: "pkg"},
-			src:  "file.txt",
-			dst:  "file.txt",
-			want: SrcDst{Src: "file.txt", Dst: "/home/pkg/file.txt"},
-		},
 	} {
 		t.Run(name, func(t *testing.T) {
 			got := makePkgSrcDstPair(&tc.cfg, &tc.pkg, tc.src, tc.dst)
