@@ -46,6 +46,42 @@ func TestGetJavaPackageOption(t *testing.T) {
 	}
 }
 
+// TestParseScalaImportNamedLiteral asserts the ability to parse
+// a subset of scala import expressions.
+func TestParseScalaImportNamedLiteral(t *testing.T) {
+	for name, tc := range map[string]struct {
+		imp  string
+		want []string
+	}{
+		"degenerate": {
+			want: []string{""},
+		},
+		"single import": {
+			imp:  "a.b.c.Foo",
+			want: []string{"a.b.c.Foo"},
+		},
+		"multiple import": {
+			imp:  "a.b.c.{Foo,Bar}",
+			want: []string{"a.b.c.Foo", "a.b.c.Bar"},
+		},
+		"multiple import +ws": {
+			imp:  "a.b.c.{ Foo  , Bar  }  ",
+			want: []string{"a.b.c.Foo", "a.b.c.Bar"},
+		},
+		"alias import": {
+			imp:  "a.b.c.{ Foo => Fog , Bar => Baz }",
+			want: []string{"a.b.c.Foo", "a.b.c.Bar"},
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			got := parseScalaImportNamedLiteral(tc.imp)
+			if diff := cmp.Diff(tc.want, got); diff != "" {
+				t.Errorf("(-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
 // TestGetScalapbImports shows that an import named in (scalapb.options) works as expected.
 func TestGetScalapbImports(t *testing.T) {
 	for name, tc := range map[string]struct {
@@ -74,6 +110,18 @@ option (scalapb.options) = {
 			},
 			want: []string{"corp.common.utils.WithORM"},
 		},
+		"with scalapb import (aliased)": {
+			in: map[string]string{
+				"foo.proto": `syntax = "proto3";
+import "scalapb/scalapb.proto";
+
+option (scalapb.options) = {
+	import: "corp.common.utils.{WithORM => WithORMAlias}"
+};`,
+			},
+			want: []string{"corp.common.utils.WithORM"},
+		},
+
 		"with field type": {
 			in: map[string]string{
 				"foo.proto": `

@@ -338,7 +338,7 @@ func getScalapbImports(files []*protoc.File) []string {
 				switch namedLiteral.Name {
 				case "import":
 					if namedLiteral.Source != "" {
-						imps = append(imps, namedLiteral.Source)
+						imps = append(imps, parseScalaImportNamedLiteral(namedLiteral.Source)...)
 					}
 				}
 			}
@@ -360,6 +360,28 @@ func getScalapbImports(files []*protoc.File) []string {
 	}
 
 	return protoc.DeduplicateAndSort(imps)
+}
+
+func parseScalaImportNamedLiteral(lit string) (imports []string) {
+	ob := strings.Index(lit, "{")
+	cb := strings.Index(lit, "}")
+	if ob == -1 || cb == -1 {
+		return []string{lit}
+	}
+	prefix := strings.TrimRight(lit[:ob], ".")
+	exprs := strings.Split(lit[ob+1:cb], ",")
+	for _, expr := range exprs {
+		expr = strings.TrimSpace(expr)
+		parts := strings.Split(expr, "=>")
+		if len(parts) == 2 {
+			source := strings.TrimSpace(parts[0])
+			imports = append(imports, prefix+"."+source)
+		} else {
+			imports = append(imports, prefix+"."+expr)
+
+		}
+	}
+	return
 }
 
 // javaPackageOption is a utility function to seek for the java_package option.
