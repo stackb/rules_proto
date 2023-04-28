@@ -1,6 +1,20 @@
 # gazelle:exclude node_modules
 
+load("@aspect_bazel_lib//lib:copy_to_bin.bzl", "copy_to_bin")
+load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
+
+npm_link_all_packages("node_modules")
+
 exports_files([
     "package.json",
     "yarn.lock",
+    "tsconfig.json",
 ])
+
+copy_to_bin(
+    name = "tsconfig",
+    srcs = ["tsconfig.json"],
+    visibility = [
+        "//visibility:public",
+    ],
+)

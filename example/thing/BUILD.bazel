@@ -131,13 +131,11 @@ proto_compile(
 proto_ts_library(
     name = "thing_ts_proto",
     srcs = ["thing.ts"],
-    args = ["--lib ES2015"],
-    tags = ["manual"],
-    tsc = "@npm_tsc//typescript/bin:tsc",
+    out_dir = "ts",
     visibility = ["//visibility:public"],
     deps = [
-        "@npm_tsc//long",
-        "@npm_tsc//protobufjs",
+        "//:node_modules/long",
+        "//:node_modules/protobufjs",
     ],
 )
 

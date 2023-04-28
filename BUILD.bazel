@@ -1,5 +1,7 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
+load("@pnpm__links//:defs.bzl", npm_link_pnpm = "npm_link_imported_package")
 
 # ----------------------------------------------------
 # Buildifier
@@ -63,4 +65,14 @@ filegroup(
         "//toolchain:all_files",
     ] + glob(["vendor/**/*"]),
     visibility = ["//visibility:public"],
+)
+
+# Link all packages from the /WORKSPACE npm_translate_lock(name = "npm") and also packages from
+# manual /WORKSPACE npm_import rules to bazel-bin/node_modules as well as the virtual store
+# bazel-bin/node_modules/.aspect_rules_js since /pnpm-lock.yaml is the root of the pnpm workspace
+npm_link_all_packages(
+    name = "node_modules",
+    imported_links = [
+        npm_link_pnpm,
+    ],
 )

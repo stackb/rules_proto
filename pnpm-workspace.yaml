@@ -1,0 +1,3 @@
+packages:
+  - 'rules/ts'
+  - 'plugin/stephenh/ts-proto'

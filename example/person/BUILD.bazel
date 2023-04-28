@@ -146,14 +146,13 @@ proto_compile(
 proto_ts_library(
     name = "person_ts_proto",
     srcs = ["person.ts"],
-    args = ["--lib ES2015"],
+    out_dir = "ts",
     tags = ["manual"],
-    tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],
     deps = [
+        "//:node_modules/long",
+        "//:node_modules/protobufjs",
         "//example/place:place_ts_proto",
-        "@npm_tsc//long",
-        "@npm_tsc//protobufjs",
     ],
 )
 

@@ -1,32 +1,14 @@
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+load("@npm_ts_proto//plugin/stephenh/ts-proto:ts-proto/package_json.bzl", ts_proto = "bin")
+
+ts_proto.protoc_gen_ts_proto_binary(
+    name = "ts-proto",
+)
 
 proto_plugin(
     name = "protoc-gen-ts-proto",
-    data = [
-        "@nodejs_host//:npm",
-        "@npm_ts_proto//:node_modules",
-    ],
-    tool = "@npm_ts_proto//ts-proto/bin:protoc-gen-ts_proto",
+    tool = ":ts-proto",
     visibility = ["//visibility:public"],
-)
-
-genrule(
-    name = "ts-proto",
-    srcs = [
-        "@npm_ts_proto//:BUILD.bazel",
-        "@npm_ts_proto//:node_modules",
-    ],
-    outs = ["ts-proto.sh"],
-    cmd = """
-    cat << EOF > $@
-#!/bin/bash
-set -euo pipefail
-$(location @build_bazel_rules_nodejs//toolchains/node:node_bin) \
-    --eval "require('./$$(dirname $(location @npm_ts_proto//:BUILD.bazel))/node_modules/ts-proto/build/plugin.js')"
-EOF
-""",
-    executable = True,
-    tools = ["@nodejs_host//:npm"],
 )
 
 filegroup(
@@ -34,7 +16,6 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "package.json",
-        "package-lock.json",
     ],
     visibility = ["//plugin:__pkg__"],
 )

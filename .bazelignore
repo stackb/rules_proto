@@ -1,0 +1,4 @@
+docs/
+plugin/stephenh/ts-proto/node_modules
+rules/ts/node_modules
+node_modules

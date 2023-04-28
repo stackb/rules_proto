@@ -47,8 +47,7 @@ depsgen(
 depsgen(
     name = "ts_proto",
     deps = [
-        ":npm_ts_proto",
-        ":npm_tsc",
+        ":aspect_rules_ts",
     ],
 )
 
@@ -387,6 +386,19 @@ proto_dependency(
 )
 
 proto_dependency(
+    name = "aspect_rules_ts",
+    repository_rule = "http_archive",
+    sha256 = "e81f37c4fe014fc83229e619360d51bfd6cb8ac405a7e8018b4a362efa79d000",
+    strip_prefix = "rules_ts-1.0.4",
+    urls = ["https://github.com/aspect-build/rules_ts/archive/refs/tags/v1.0.4.tar.gz"],
+    deps = [
+        "aspect_bazel_lib",
+        "aspect_rules_js",
+        "rules_nodejs",
+    ],
+)
+
+proto_dependency(
     name = "build_bazel_rules_nodejs",
     repository_rule = "http_archive",
     sha256 = "dcc55f810142b6cf46a44d0180a5a7fb923c04a5061e2e8d8eb05ccccc60864b",
@@ -395,29 +407,27 @@ proto_dependency(
 )
 
 proto_dependency(
+    name = "aspect_rules_js",
+    repository_rule = "http_archive",
+    sha256 = "66ecc9f56300dd63fb86f11cfa1e8affcaa42d5300e2746dba08541916e913fd",
+    strip_prefix = "rules_js-1.13.0",
+    urls = ["https://github.com/aspect-build/rules_js/archive/refs/tags/v1.13.0.tar.gz"],
+    deps = ["aspect_bazel_lib"],
+)
+
+proto_dependency(
+    name = "aspect_bazel_lib",
+    repository_rule = "http_archive",
+    sha256 = "a7bfc7aed7b86a4caaba382116e0214ebbaa623f393a9e716d87a3e1bab29d78",
+    strip_prefix = "bazel-lib-1.19.0",
+    urls = ["https://github.com/aspect-build/bazel-lib/archive/refs/tags/v1.19.0.tar.gz"],
+)
+
+proto_dependency(
     name = "rules_nodejs",
     repository_rule = "http_archive",
     sha256 = "08337d4fffc78f7fe648a93be12ea2fc4e8eb9795a4e6aa48595b66b34555626",
     urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.0/rules_nodejs-core-5.8.0.tar.gz"],
-)
-
-proto_dependency(
-    name = "npm_ts_proto",
-    package_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package.json",
-    package_lock_json = "@build_stack_rules_proto//plugin/stephenh/ts-proto:package-lock.json",
-    repository_rule = "npm_install",
-    symlink_node_modules = False,
-    deps = ["build_bazel_rules_nodejs"],
-)
-
-proto_dependency(
-    name = "npm_tsc",
-    frozen_lockfile = True,
-    package_json = "@build_stack_rules_proto//rules/ts:package.json",
-    repository_rule = "yarn_install",
-    symlink_node_modules = False,
-    yarn_lock = "@build_stack_rules_proto//rules/ts:yarn.lock",
-    deps = ["build_bazel_rules_nodejs"],
 )
 
 # Commit: 42195b5ca136f78d28819ef486e3a7b02ad45146

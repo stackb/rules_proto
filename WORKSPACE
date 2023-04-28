@@ -223,3 +223,46 @@ rules_closure_dependencies()
 load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 
 node_repositories()
+
+# ----------------------------------------------------
+# Typescript
+# ----------------------------------------------------
+load("@aspect_rules_ts//ts:repositories.bzl", "rules_ts_dependencies")
+load("@aspect_rules_ts//ts:repositories.bzl", "LATEST_VERSION")
+
+rules_ts_dependencies(
+    # This keeps the TypeScript version in-sync with the editor, which is typically best.
+    # ts_version_from = "//:package.json",
+
+    # Alternatively, you could pick a specific version, or use
+    ts_version = LATEST_VERSION,
+)
+
+# Fetch and register node, if you haven't already
+load("@rules_nodejs//nodejs:repositories.bzl", "DEFAULT_NODE_VERSION", "nodejs_register_toolchains")
+
+nodejs_register_toolchains(
+    name = "node",
+    node_version = DEFAULT_NODE_VERSION,
+)
+
+load("@aspect_rules_js//npm:npm_import.bzl", "npm_translate_lock")
+
+npm_translate_lock(
+    name = "npm_ts_proto",
+    data = [
+        "//:package.json",
+        "//:pnpm-workspace.yaml",
+        "//plugin/stephenh/ts-proto:package.json",
+        "//rules/ts:package.json",
+    ],
+    generate_bzl_library_targets = True,
+    npmrc = "//:.npmrc",
+    pnpm_lock = "//:pnpm-lock.yaml",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+
+load("@npm_ts_proto//:repositories.bzl", "npm_repositories")
+
+# Declares npm_import rules from the pnpm-lock.yaml file
+npm_repositories()
