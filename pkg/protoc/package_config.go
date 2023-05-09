@@ -304,6 +304,5 @@ func RegisterStarlarkRule(c *config.Config, starlarkRule string) error {
 	}
 	configureError = err
 	Rules().MustRegisterRule(starlarkRule, impl)
-	log.Println("Registered rule:", starlarkRule, impl.Name())
 	return nil
 }
