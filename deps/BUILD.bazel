@@ -242,8 +242,20 @@ proto_dependency(
     urls = ["https://github.com/grpc/grpc/archive/v1.54.1.tar.gz"],
     deps = [
         ":build_bazel_rules_swift",
+        ":com_google_absl",
         ":com_google_protobuf",
         ":rules_jvm_external",
+    ],
+)
+
+proto_dependency(
+    name = "com_google_absl",
+    repository_rule = "http_archive",
+    sha256 = "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+    strip_prefix = "abseil-cpp-20230125.2",
+    urls = [
+        "https://storage.googleapis.com/grpc-bazel-mirror/github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
+        "https://github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
     ],
 )
 

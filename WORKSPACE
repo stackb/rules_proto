@@ -8,8 +8,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # Toolchain-Related
 # ----------------------------------------------------
 
-# register_toolchains("//toolchain:standard")
-register_toolchains("//toolchain:prebuilt")
+register_toolchains("//toolchain:standard")
+# alternatively:
+# register_toolchains("//toolchain:prebuilt")
 
 # ----------------------------------------------------
 # Top-Level Dependency Trees
