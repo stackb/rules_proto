@@ -36,8 +36,8 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/bazelbuild/bazel-gazelle/walk"
-	"github.com/stackb/rules_proto/pkg/gazelle/module"
-	"github.com/stackb/rules_proto/pkg/gazelle/wspace"
+	"github.com/stackb/rules_proto/cmd/gazelle/internal/module"
+	"github.com/stackb/rules_proto/cmd/gazelle/internal/wspace"
 )
 
 // updateConfig holds configuration information needed to run the fix and

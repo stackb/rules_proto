@@ -67,7 +67,7 @@ def _proto_repository_tools_impl(ctx):
                 "run",
                 ctx.path(ctx.attr._list_repository_tools_srcs),
                 "-dir=src/github.com/stackb/rules_proto",
-                #"-check=rules/private/proto_repository_tools_srcs.bzl",
+                # "-check=rules/private/proto_repository_tools_srcs.bzl",
                 # Run it under 'generate' to recreate the list'
                 "-generate=rules/private/proto_repository_tools_srcs.bzl",
             ],

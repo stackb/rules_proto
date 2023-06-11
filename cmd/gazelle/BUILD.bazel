@@ -17,9 +17,9 @@ go_library(
     tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
+        "//cmd/gazelle/internal/module",
+        "//cmd/gazelle/internal/wspace",
         "//language/protobuf",
-        "//pkg/gazelle/module",
-        "//pkg/gazelle/wspace",
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//flag:go_default_library",
         "@bazel_gazelle//label:go_default_library",
