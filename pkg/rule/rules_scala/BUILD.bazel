@@ -27,8 +27,10 @@ go_test(
     embed = [":rules_scala"],
     deps = [
         "//pkg/protoc",
+        "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//label:go_default_library",
         "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
         "@com_github_google_go_cmp//cmp",
     ],
 )
