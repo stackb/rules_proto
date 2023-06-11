@@ -31,7 +31,6 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/merger"
 	"github.com/bazelbuild/bazel-gazelle/repo"
 	"github.com/bazelbuild/bazel-gazelle/rule"
-
 	"github.com/stackb/rules_proto/pkg/gazelle/module"
 	"github.com/stackb/rules_proto/pkg/gazelle/wspace"
 )
