@@ -112,6 +112,7 @@ func newEmbedResolver(dir, rel string, validBuildFileNames []string, pkgRels map
 				return err
 			}
 			fileRel, _ := filepath.Rel(dir, p)
+			fileRel = filepath.ToSlash(fileRel)
 			base := filepath.Base(p)
 			if !info.IsDir() {
 				if !isBadEmbedName(base) {
@@ -129,7 +130,7 @@ func newEmbedResolver(dir, rel string, validBuildFileNames []string, pkgRels map
 				return filepath.SkipDir
 			}
 			for _, name := range validBuildFileNames {
-				if _, err := os.Stat(filepath.Join(p, name)); err == nil {
+				if bFileInfo, err := os.Stat(filepath.Join(p, name)); err == nil && !bFileInfo.IsDir() {
 					// Directory already contains a build file.
 					return filepath.SkipDir
 				}
@@ -155,15 +156,21 @@ func (er *embedResolver) resolve(embed fileEmbed) (list []string, err error) {
 		}
 	}()
 
+	glob := embed.path
+	all := strings.HasPrefix(embed.path, "all:")
+	if all {
+		glob = strings.TrimPrefix(embed.path, "all:")
+	}
+
 	// Check whether the pattern is valid at all.
-	if _, err := path.Match(embed.path, ""); err != nil || !validEmbedPattern(embed.path) {
+	if _, err := path.Match(glob, ""); err != nil || !validEmbedPattern(glob) {
 		return nil, fmt.Errorf("invalid pattern syntax")
 	}
 
 	// Match the pattern against each path in the tree. If the pattern matches a
 	// directory, we need to include each file in that directory, even if the file
-	// doesn't match the pattern separate, unless it is a hidden file (starting
-	// with . or _).
+	// doesn't match the pattern separate. By default, hidden files (starting
+	// with . or _) are excluded but all: prefix forces them to be included.
 	//
 	// For example, the pattern "*" matches "a", ".b", and "_c". If "a" is a
 	// directory, we would include "a/d", even though it doesn't match "*". We
@@ -171,8 +178,8 @@ func (er *embedResolver) resolve(embed fileEmbed) (list []string, err error) {
 	var visit func(*embeddableNode, bool)
 	visit = func(f *embeddableNode, add bool) {
 		convertedPath := filepath.ToSlash(f.path)
-		match, _ := path.Match(embed.path, convertedPath)
-		add = match || (add && !f.isHidden())
+		match, _ := path.Match(glob, convertedPath)
+		add = match || (add && (!f.isHidden() || all))
 		if !f.isDir() {
 			if add {
 				list = append(list, convertedPath)

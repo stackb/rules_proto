@@ -1,5 +1,7 @@
 workspace(name = "build_stack_rules_proto")
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 # gazelle:repo bazel_gazelle
 
 # ----------------------------------------------------
@@ -7,6 +9,8 @@ workspace(name = "build_stack_rules_proto")
 # ----------------------------------------------------
 
 register_toolchains("//toolchain:standard")
+# alternatively:
+# register_toolchains("//toolchain:prebuilt")
 
 # ----------------------------------------------------
 # Top-Level Dependency Trees
@@ -95,6 +99,18 @@ go_deps()
 # Core gRPC
 # ----------------------------------------------------
 
+http_archive(
+    name = "com_google_absl",
+    generator_function = "grpc_deps",
+    generator_name = "com_google_absl",
+    sha256 = "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+    strip_prefix = "abseil-cpp-20230125.2",
+    urls = [
+        "https://storage.googleapis.com/grpc-bazel-mirror/github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
+        "https://github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
+    ],
+)
+
 load(
     "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
     "grpc_deps",
@@ -120,6 +136,7 @@ load(
 maven_install(
     artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
     generate_compat_repositories = True,
+    maven_install_json = "//:maven_install.json",
     override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
     repositories = [
         "https://repo.maven.apache.org/maven2/",
@@ -225,3 +242,11 @@ load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 node_repositories()
 
 register_toolchains("//toolchain:nodejs")
+
+# ----------------------------------------------------
+# proto_repositories
+# ----------------------------------------------------
+
+load("//:proto_repositories.bzl", "proto_repositories")
+
+proto_repositories()

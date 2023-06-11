@@ -1,5 +1,6 @@
 filegroup(
     name = "all_files",
+    testonly = True,
     srcs = [
         "BUILD.bazel",
         "bazel-gazelle-revert-1152.patch",

@@ -25,7 +25,6 @@ import (
 //	func NewLanguage() language.Language {
 //		return &MyLang{}
 //	}
-//
 type BaseLang struct{}
 
 func (b *BaseLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {}

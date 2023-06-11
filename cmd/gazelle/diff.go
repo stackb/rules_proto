@@ -27,7 +27,7 @@ import (
 	"github.com/pmezard/go-difflib/difflib"
 )
 
-var exitError = fmt.Errorf("encountered changes while running diff")
+var errExit = fmt.Errorf("encountered changes while running diff")
 
 func diffFile(c *config.Config, f *rule.File) error {
 	rel, err := filepath.Rel(c.RepoRoot, f.Path)
@@ -36,7 +36,11 @@ func diffFile(c *config.Config, f *rule.File) error {
 	}
 	rel = filepath.ToSlash(rel)
 
-	date := "1970-01-01 00:00:00.000000000 +0000"
+	// The epoch timestamp is assumed to represent file creation/deletion events
+	// by some tools, so use a dummy timestamp that is one ns past the epoch.
+	// See https://github.com/bazelbuild/bazel-gazelle/issues/1528.
+	date := "1970-01-01 00:00:00.000000001 +0000"
+
 	diff := difflib.UnifiedDiff{
 		Context:  3,
 		FromDate: date,
@@ -60,7 +64,7 @@ func diffFile(c *config.Config, f *rule.File) error {
 	}
 
 	if len(f.Content) != 0 {
-    		diff.A = difflib.SplitLines(string(f.Content))
+		diff.A = difflib.SplitLines(string(f.Content))
 	}
 
 	diff.B = difflib.SplitLines(string(newContent))
@@ -80,7 +84,7 @@ func diffFile(c *config.Config, f *rule.File) error {
 		return fmt.Errorf("error diffing %s: %v", f.Path, err)
 	}
 	if ds, _ := difflib.GetUnifiedDiffString(diff); ds != "" {
-		return exitError
+		return errExit
 	}
 
 	return nil

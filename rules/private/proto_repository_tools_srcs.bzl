@@ -17,6 +17,10 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//cmd/gazelle:fix-update.go",
     "@build_stack_rules_proto//cmd/gazelle:fix.go",
     "@build_stack_rules_proto//cmd/gazelle:gazelle.go",
+    "@build_stack_rules_proto//cmd/gazelle/internal/module:BUILD.bazel",
+    "@build_stack_rules_proto//cmd/gazelle/internal/module:module.go",
+    "@build_stack_rules_proto//cmd/gazelle/internal/wspace:BUILD.bazel",
+    "@build_stack_rules_proto//cmd/gazelle/internal/wspace:finder.go",
     "@build_stack_rules_proto//cmd/gazelle:langs.go",
     "@build_stack_rules_proto//cmd/gazelle:metaresolver.go",
     "@build_stack_rules_proto//cmd/gazelle:print.go",
@@ -184,7 +188,5 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//rules/py:BUILD.bazel",
     "@build_stack_rules_proto//rules/scala:BUILD.bazel",
     "@build_stack_rules_proto//rules/ts:BUILD.bazel",
-    "@build_stack_rules_proto//rules/ts/node_modules/protobufjs/google/api:BUILD.bazel",
-    "@build_stack_rules_proto//rules/ts/node_modules/protobufjs/google/protobuf:BUILD.bazel",
     "@build_stack_rules_proto//toolchain:BUILD.bazel",
 ]

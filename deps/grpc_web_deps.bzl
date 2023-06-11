@@ -11,39 +11,63 @@ def _maybe(repo_rule, name, **kwargs):
 def grpc_web_deps():
     """grpc_web dependency macro
     """
-    com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_darwin_x86_64()  # via <TOP>
-    com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_linux_x86_64()  # via <TOP>
-    com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_windows_x86_64()  # via <TOP>
+    github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_aarch64()  # via <TOP>
+    github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_x86_64()  # via <TOP>
+    github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_aarch64()  # via <TOP>
+    github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_x86_64()  # via <TOP>
+    github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_windows_x86_64_exe()  # via <TOP>
 
-def com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_darwin_x86_64():
+def github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_aarch64():
     _maybe(
         http_file,
-        name = "com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_darwin_x86_64",
+        name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_aarch64",
         executable = True,
-        sha256 = "466ffe6d2096a2e09823ad02170a90a3e9f79d24094ec8ddcaf6c6d4e673aa2c",
+        sha256 = "87263950cd36ec875c86b1e50625215727264c5495d6625ddf9e4f79aeef727e",
         urls = [
-            "https://github.com/grpc/grpc-web/releases/download/1.3.1/protoc-gen-grpc-web-1.3.1-darwin-x86_64",
+            "https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-darwin-aarch64",
         ],
     )
 
-def com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_linux_x86_64():
+def github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_x86_64():
     _maybe(
         http_file,
-        name = "com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_linux_x86_64",
+        name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_x86_64",
         executable = True,
-        sha256 = "12d3cfefb22e077251e6d1fae2aeaafd7a66518898397c667ba69cdd1260e72a",
+        sha256 = "6b73e8e9ef2deb114d39c9eea177ff8450d92e7154b5e47dea668a43499a2383",
         urls = [
-            "https://github.com/grpc/grpc-web/releases/download/1.3.1/protoc-gen-grpc-web-1.3.1-linux-x86_64",
+            "https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-darwin-x86_64",
         ],
     )
 
-def com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_windows_x86_64():
+def github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_aarch64():
     _maybe(
         http_file,
-        name = "com_github_grpc_grpc_web_releases_download_v1_3_1_protoc_gen_grpc_web_1_3_1_windows_x86_64",
+        name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_aarch64",
         executable = True,
-        sha256 = "f7f3d3b8ddcc7f0f8e432e744768682c070491fc1dcacb922343ec8f39c0d115",
+        sha256 = "db3b1e18284a157b1361ecb79502e5f4623a212daf7185f17e35bd8e239055a4",
         urls = [
-            "https://github.com/grpc/grpc-web/releases/download/1.3.1/protoc-gen-grpc-web-1.3.1-windows-x86_64.exe",
+            "https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-linux-aarch64",
+        ],
+    )
+
+def github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_x86_64():
+    _maybe(
+        http_file,
+        name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_x86_64",
+        executable = True,
+        sha256 = "5e82c3f1f435e176c94b94de9669911ab3bfb891608b7e80adff358f777ff857",
+        urls = [
+            "https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-linux-x86_64",
+        ],
+    )
+
+def github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_windows_x86_64_exe():
+    _maybe(
+        http_file,
+        name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_windows_x86_64_exe",
+        executable = True,
+        sha256 = "3a0fc44662cb89a5c101b632e3e8841d04d9bea3103512deae82591e2acdff93",
+        urls = [
+            "https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-windows-x86_64.exe",
         ],
     )

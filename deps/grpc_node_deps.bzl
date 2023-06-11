@@ -12,6 +12,7 @@ def grpc_node_deps():
     """grpc_node dependency macro
     """
     build_bazel_rules_swift()  # via com_github_grpc_grpc
+    com_google_absl()  # via com_github_grpc_grpc
     bazel_skylib()  # via com_google_protobuf
     rules_pkg()  # via com_google_protobuf
     rules_python()  # via com_google_protobuf
@@ -29,6 +30,18 @@ def build_bazel_rules_swift():
         strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
         urls = [
             "https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz",
+        ],
+    )
+
+def com_google_absl():
+    _maybe(
+        http_archive,
+        name = "com_google_absl",
+        sha256 = "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+        strip_prefix = "abseil-cpp-20230125.2",
+        urls = [
+            "https://storage.googleapis.com/grpc-bazel-mirror/github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
+            "https://github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
         ],
     )
 
@@ -110,10 +123,10 @@ def com_github_grpc_grpc():
     _maybe(
         http_archive,
         name = "com_github_grpc_grpc",
-        sha256 = "3db6da6500312cf011ecea4231cdb75ba1dd40440a10c9f807cee805448fc82b",
-        strip_prefix = "grpc-11f00485aa5ad422cfe2d9d90589158f46954101",
+        sha256 = "79e3ff93f7fa3c8433e2165f2550fa14889fce147c15d9828531cbfc7ad11e01",
+        strip_prefix = "grpc-1.54.1",
         urls = [
-            "https://github.com/grpc/grpc/archive/11f00485aa5ad422cfe2d9d90589158f46954101.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.54.1.tar.gz",
         ],
     )
 

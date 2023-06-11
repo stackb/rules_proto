@@ -28,6 +28,6 @@ test:
 
 .PHONY: get
 get:
-	$(BAZEL) run @go_sdk//:bin/go -- get github.com/bazelbuild/bazel-gazelle@v0.27.0
+	$(BAZEL) run @go_sdk//:bin/go -- get github.com/bazelbuild/bazel-gazelle@v0.31.0
 	$(BAZEL) run @go_sdk//:bin/go -- mod download github.com/bazelbuild/buildtools
 	$(BAZEL) run @go_sdk//:bin/go -- mod vendor
