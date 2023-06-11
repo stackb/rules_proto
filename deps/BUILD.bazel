@@ -229,19 +229,17 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Release: v1.42.0
-# Commit: 11f00485aa5ad422cfe2d9d90589158f46954101
-# Date: 2021-11-16 23:39:48 +0000 UTC
-# URL: https://github.com/grpc/grpc/commit/11f00485aa5ad422cfe2d9d90589158f46954101
-#
-# internal_ci: rename grpc_xds_k8s to psm-security as part of tech-debt cleanup and name clarity (#28034) (#28098)
-# Size: 8463684 (8.5 MB)
+# Release: v1.54.1
+# TargetCommitish: v1.54.x
+# Date: 2023-05-02 04:01:25 +0000 UTC
+# URL: https://github.com/grpc/grpc/releases/tag/v1.54.1
+# Size: 8901937 (8.9 MB)
 proto_dependency(
     name = "com_github_grpc_grpc",
     repository_rule = "http_archive",
-    sha256 = "3db6da6500312cf011ecea4231cdb75ba1dd40440a10c9f807cee805448fc82b",
-    strip_prefix = "grpc-11f00485aa5ad422cfe2d9d90589158f46954101",
-    urls = ["https://github.com/grpc/grpc/archive/11f00485aa5ad422cfe2d9d90589158f46954101.tar.gz"],
+    sha256 = "79e3ff93f7fa3c8433e2165f2550fa14889fce147c15d9828531cbfc7ad11e01",
+    strip_prefix = "grpc-1.54.1",
+    urls = ["https://github.com/grpc/grpc/archive/v1.54.1.tar.gz"],
     deps = [
         ":build_bazel_rules_swift",
         ":com_google_protobuf",
