@@ -18,6 +18,8 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//language/protobuf",
+        "//pkg/gazelle/module",
+        "//pkg/gazelle/wspace",
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//flag:go_default_library",
         "@bazel_gazelle//label:go_default_library",
