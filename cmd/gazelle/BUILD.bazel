@@ -60,6 +60,11 @@ go_test(
 
 filegroup(
     name = "all_files",
-    srcs = ["BUILD.bazel"] + glob(["*.go"]),
+    testonly = True,
+    srcs = glob(["*.go"]) + [
+        "BUILD.bazel",
+        "//cmd/gazelle/internal/module:all_files",
+        "//cmd/gazelle/internal/wspace:all_files",
+    ],
     visibility = ["//:__pkg__"],
 )

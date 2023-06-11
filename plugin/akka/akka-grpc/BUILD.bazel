@@ -26,6 +26,7 @@ java_binary(
 
 filegroup(
     name = "all_files",
+    testonly = True,
     srcs = ["BUILD.bazel"],
     visibility = ["//plugin:__pkg__"],
 )

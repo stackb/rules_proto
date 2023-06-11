@@ -1,5 +1,6 @@
 filegroup(
     name = "all_files",
+    testonly = True,
     srcs = [
         "//pkg/language/protobuf:all_files",
         "//pkg/plugin/akka/akka_grpc:all_files",

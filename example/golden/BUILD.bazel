@@ -131,6 +131,7 @@ gazelle_testdata_example(
 
 filegroup(
     name = "all_files",
+    testonly = True,
     srcs = ["BUILD.bazel"] + glob(["*.go"]),
     visibility = ["//:__pkg__"],
 )
