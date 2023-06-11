@@ -225,3 +225,11 @@ load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 node_repositories()
 
 register_toolchains("//toolchain:nodejs")
+
+# ----------------------------------------------------
+# proto_repositories
+# ----------------------------------------------------
+
+load("//:proto_repositories.bzl", "proto_repositories")
+
+proto_repositories()
