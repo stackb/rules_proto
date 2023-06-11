@@ -181,7 +181,7 @@ func (gl *goLang) GenerateRules(args language.GenerateArgs) language.GenerateRes
 	g := &generator{
 		c:                   c,
 		rel:                 args.Rel,
-		shouldSetVisibility: args.File == nil || !args.File.HasDefaultVisibility(),
+		shouldSetVisibility: shouldSetVisibility(args),
 	}
 	var res language.GenerateResult
 	var rules []*rule.Rule
@@ -206,7 +206,7 @@ func (gl *goLang) GenerateRules(args language.GenerateArgs) language.GenerateRes
 		rules = append(rules, rs...)
 	}
 	for _, name := range emptyProtoRuleNames {
-		goProtoName := strings.TrimSuffix(name, "_proto") + "_go_proto"
+		goProtoName := strings.TrimSuffix(name, "_proto") + goProtoSuffix
 		res.Empty = append(res.Empty, rule.NewRule("go_proto_library", goProtoName))
 	}
 	if pkg != nil && pcMode == proto.PackageMode && pkg.firstGoFile() == "" {
@@ -300,7 +300,7 @@ func (gl *goLang) GenerateRules(args language.GenerateArgs) language.GenerateRes
 		gl.goPkgRels[args.Rel] = true
 	} else {
 		for _, sub := range args.Subdirs {
-			if gl.goPkgRels[path.Join(args.Rel, sub)] {
+			if _, ok := gl.goPkgRels[path.Join(args.Rel, sub)]; ok {
 				gl.goPkgRels[args.Rel] = false
 				break
 			}
@@ -433,7 +433,7 @@ func (g *generator) generateProto(mode proto.Mode, target protoTarget, importPat
 		importPath := InferImportPath(g.c, g.rel)
 		protoName = proto.RuleName(importPath)
 	}
-	goProtoName := strings.TrimSuffix(protoName, "_proto") + "_go_proto"
+	goProtoName := strings.TrimSuffix(protoName, "_proto") + goProtoSuffix
 	visibility := g.commonVisibility(importPath)
 
 	if mode == proto.LegacyMode {
@@ -538,7 +538,7 @@ func (g *generator) generateTest(pkg *goPackage, library string) *rule.Rule {
 // maybePublishToolLib makes the given go_library rule public if needed for nogo.
 // Updating it here automatically makes it easier to upgrade org_golang_x_tools.
 func (g *generator) maybePublishToolLib(lib *rule.Rule, pkg *goPackage) {
-	if pkg.importPath == "golang.org/x/tools/go/analysis/internal/facts" {
+	if pkg.importPath == "golang.org/x/tools/go/analysis/internal/facts" || pkg.importPath == "golang.org/x/tools/internal/facts" {
 		// Imported by nogo main. We add a visibility exception.
 		lib.SetAttr("visibility", []string{"//visibility:public"})
 	}
@@ -775,4 +775,19 @@ func escapeOption(opt string) string {
 		"$(", "$(",
 		"$", "$$",
 	).Replace(opt)
+}
+
+func shouldSetVisibility(args language.GenerateArgs) bool {
+	if args.File != nil && args.File.HasDefaultVisibility() {
+		return false
+	}
+
+	for _, r := range args.OtherGen {
+		// This is kind of the same test as *File.HasDefaultVisibility(),
+		// but for previously defined rules.
+		if r.Kind() == "package" && r.Attr("default_visibility") != nil {
+			return false
+		}
+	}
+	return true
 }

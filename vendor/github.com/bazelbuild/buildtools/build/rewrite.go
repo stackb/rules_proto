@@ -128,6 +128,7 @@ var rewrites = []struct {
 	{"listsort", sortStringLists, scopeBoth},
 	{"multiplus", fixMultilinePlus, scopeBuild},
 	{"loadsort", sortAllLoadArgs, scopeBoth},
+	{"useRepoPositionalsSort", sortUseRepoPositionals, TypeModule},
 	{"formatdocstrings", formatDocstrings, scopeBoth},
 	{"reorderarguments", reorderArguments, scopeBoth},
 	{"editoctal", editOctals, scopeBoth},
@@ -261,6 +262,33 @@ func fixLabels(f *File, w *Rewriter) {
 		}
 	}
 
+	// Join and shorten labels within a container of labels (which can be a single
+	// label, e.g. a single string expression or a concatenation of them).
+	// Gracefully finish if the argument is of a different type.
+	fixLabelsWithinAContainer := func(e *Expr) {
+		if list, ok := (*e).(*ListExpr); ok {
+			for i := range list.List {
+				if leaveAlone1(list.List[i]) {
+					continue
+				}
+				joinLabel(&list.List[i])
+				shortenLabel(list.List[i])
+			}
+		}
+		if set, ok := (*e).(*SetExpr); ok {
+			for i := range set.List {
+				if leaveAlone1(set.List[i]) {
+					continue
+				}
+				joinLabel(&set.List[i])
+				shortenLabel(set.List[i])
+			}
+		} else {
+			joinLabel(e)
+			shortenLabel(*e)
+		}
+	}
+
 	Walk(f, func(v Expr, stk []Expr) {
 		switch v := v.(type) {
 		case *CallExpr:
@@ -282,27 +310,8 @@ func fixLabels(f *File, w *Rewriter) {
 				if leaveAlone1(as.RHS) {
 					continue
 				}
-				if list, ok := as.RHS.(*ListExpr); ok {
-					for i := range list.List {
-						if leaveAlone1(list.List[i]) {
-							continue
-						}
-						joinLabel(&list.List[i])
-						shortenLabel(list.List[i])
-					}
-				}
-				if set, ok := as.RHS.(*SetExpr); ok {
-					for i := range set.List {
-						if leaveAlone1(set.List[i]) {
-							continue
-						}
-						joinLabel(&set.List[i])
-						shortenLabel(set.List[i])
-					}
-				} else {
-					joinLabel(&as.RHS)
-					shortenLabel(as.RHS)
-				}
+
+				findAndModifyStrings(&as.RHS, fixLabelsWithinAContainer)
 			}
 		}
 	})
@@ -419,8 +428,12 @@ func (x namedArgs) Less(i, j int) bool {
 
 // sortStringLists sorts lists of string literals used as specific rule arguments.
 func sortStringLists(f *File, w *Rewriter) {
-	Walk(f, func(v Expr, stk []Expr) {
-		switch v := v.(type) {
+	sortStringList := func(x *Expr) {
+		SortStringList(*x)
+	}
+
+	Walk(f, func(e Expr, stk []Expr) {
+		switch v := e.(type) {
 		case *CallExpr:
 			if f.Type == TypeDefault || f.Type == TypeBzl {
 				// Rule parameters, not applicable to .bzl or default file types
@@ -447,12 +460,12 @@ func sortStringLists(f *File, w *Rewriter) {
 					continue
 				}
 				if w.IsSortableListArg[key.Name] ||
-					w.SortableAllowlist[context] ||
-					(!disabled("unsafesort") && allowedSort(context)) {
+						w.SortableAllowlist[context] ||
+						(!disabled("unsafesort") && allowedSort(context)) {
 					if doNotSort(as) {
 						deduplicateStringList(as.RHS)
 					} else {
-						SortStringList(as.RHS)
+						findAndModifyStrings(&as.RHS, sortStringList)
 					}
 				}
 			}
@@ -462,7 +475,7 @@ func sortStringLists(f *File, w *Rewriter) {
 			}
 			// "keep sorted" comment on x = list forces sorting of list.
 			if keepSorted(v) {
-				SortStringList(v.RHS)
+				findAndModifyStrings(&v.RHS, sortStringList)
 			}
 		case *KeyValueExpr:
 			if disabled("unsafesort") {
@@ -470,7 +483,7 @@ func sortStringLists(f *File, w *Rewriter) {
 			}
 			// "keep sorted" before key: list also forces sorting of list.
 			if keepSorted(v) {
-				SortStringList(v.Value)
+				findAndModifyStrings(&v.Value, sortStringList)
 			}
 		case *ListExpr:
 			if disabled("unsafesort") {
@@ -478,13 +491,13 @@ func sortStringLists(f *File, w *Rewriter) {
 			}
 			// "keep sorted" comment above first list element also forces sorting of list.
 			if len(v.List) > 0 && (keepSorted(v) || keepSorted(v.List[0])) {
-				SortStringList(v)
+				findAndModifyStrings(&e, sortStringList)
 			}
 		}
 	})
 }
 
-// deduplicateStingList removes duplicates from a list with string expressions
+// deduplicateStringList removes duplicates from a list with string expressions
 // without reordering its elements.
 // Any suffix-comments are lost, any before- and after-comments are preserved.
 func deduplicateStringList(x Expr) {
@@ -493,10 +506,17 @@ func deduplicateStringList(x Expr) {
 		return
 	}
 
+	list.List = deduplicateStringExprs(list.List)
+}
+
+// deduplicateStringExprs removes duplicate string expressions from a slice
+// without reordering its elements.
+// Any suffix-comments are lost, any before- and after-comments are preserved.
+func deduplicateStringExprs(list []Expr) []Expr {
 	var comments []Comment
 	alreadySeen := make(map[string]bool)
 	var deduplicated []Expr
-	for _, value := range list.List {
+	for _, value := range list {
 		str, ok := value.(*StringExpr)
 		if !ok {
 			deduplicated = append(deduplicated, value)
@@ -518,7 +538,7 @@ func deduplicateStringList(x Expr) {
 		}
 		deduplicated = append(deduplicated, value)
 	}
-	list.List = deduplicated
+	return deduplicated
 }
 
 // SortStringList sorts x, a list of strings.
@@ -529,8 +549,9 @@ func SortStringList(x Expr) {
 	if !ok || len(list.List) < 2 {
 		return
 	}
+
 	if doNotSort(list.List[0]) {
-		deduplicateStringList(list)
+		list.List = deduplicateStringExprs(list.List)
 		return
 	}
 
@@ -548,22 +569,63 @@ func SortStringList(x Expr) {
 		}
 	}
 
+	list.List = sortStringExprs(list.List)
+}
+
+// findAndModifyStrings finds and modifies string lists with a callback
+// function recursively within  the given expression. It doesn't touch all
+// string lists it can find, but only top-level lists, lists that are parts of
+// concatenated expressions and lists within select statements.
+// It calls the callback on the root node and on all relevant inner lists.
+// The callback function should gracefully return if called with not appropriate
+// arguments.
+func findAndModifyStrings(x *Expr, callback func(*Expr)) {
+	callback(x)
+	switch x := (*x).(type) {
+	case *BinaryExpr:
+		if x.Op != "+" {
+			return
+		}
+		findAndModifyStrings(&x.X, callback)
+		findAndModifyStrings(&x.Y, callback)
+	case *CallExpr:
+		if ident, ok := x.X.(*Ident); !ok || ident.Name != "select" {
+			return
+		}
+		if len(x.List) == 0 {
+			return
+		}
+		dict, ok := x.List[0].(*DictExpr)
+		if !ok {
+			return
+		}
+		for _, kv := range dict.List {
+			findAndModifyStrings(&kv.Value, callback)
+		}
+	}
+}
+
+func sortStringExprs(list []Expr) []Expr {
+	if len(list) < 2 {
+		return list
+	}
+
 	// Sort chunks of the list with no intervening blank lines or comments.
-	for i := 0; i < len(list.List); {
-		if _, ok := list.List[i].(*StringExpr); !ok {
+	for i := 0; i < len(list); {
+		if _, ok := list[i].(*StringExpr); !ok {
 			i++
 			continue
 		}
 
 		j := i + 1
-		for ; j < len(list.List); j++ {
-			if str, ok := list.List[j].(*StringExpr); !ok || len(str.Before) > 0 {
+		for ; j < len(list); j++ {
+			if str, ok := list[j].(*StringExpr); !ok || len(str.Before) > 0 {
 				break
 			}
 		}
 
 		var chunk []stringSortKey
-		for index, x := range list.List[i:j] {
+		for index, x := range list[i:j] {
 			chunk = append(chunk, makeSortKey(index, x.(*StringExpr)))
 		}
 		if !sort.IsSorted(byStringExpr(chunk)) || !isUniq(chunk) {
@@ -575,13 +637,15 @@ func SortStringList(x Expr) {
 
 			chunk[0].x.Comment().Before = before
 			for offset, key := range chunk {
-				list.List[i+offset] = key.x
+				list[i+offset] = key.x
 			}
-			list.List = append(list.List[:(i+len(chunk))], list.List[j:]...)
+			list = append(list[:(i+len(chunk))], list[j:]...)
 		}
 
 		i = j
 	}
+
+	return list
 }
 
 // uniq removes duplicates from a list, which must already be sorted.
@@ -852,6 +916,27 @@ func sortAllLoadArgs(f *File, _ *Rewriter) {
 	Walk(f, func(v Expr, stk []Expr) {
 		if load, ok := v.(*LoadStmt); ok {
 			SortLoadArgs(load)
+		}
+	})
+}
+
+func sortUseRepoPositionals(f *File, _ *Rewriter) {
+	Walk(f, func(v Expr, stk []Expr) {
+		if call, ok := v.(*CallExpr); ok {
+			// The first argument of a valid use_repo call is always a module extension proxy, so we
+			// do not need to sort calls with less than three arguments.
+			if ident, ok := call.X.(*Ident); !ok || ident.Name != "use_repo" || len(call.List) < 3 {
+				return
+			}
+			// Respect the "do not sort" comment on both the first argument and the first repository
+			// name.
+			if doNotSort(call) || doNotSort(call.List[0]) || doNotSort(call.List[1]) {
+				call.List = deduplicateStringExprs(call.List)
+			} else {
+				// Keyword arguments do not have to be sorted here as this has already been done by
+				// the generic callsort rewriter pass.
+				call.List = sortStringExprs(call.List)
+			}
 		}
 	})
 }
