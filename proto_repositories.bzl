@@ -54,10 +54,9 @@ def proto_repositories():
             "google/protobuf/compiler/cpp/test_bad_identifiers.proto",
         ],
         reresolve_known_proto_imports = True,
+        sha256 = "087c2ec84a07308318d35e0e39717e2037e05d14e628244602a2c78fbe203fa5",
         strip_prefix = "protobuf-a74f54b724bdc2fe0bfc271f4dc0ceb159805625/src",
-        type = "zip",
-        # https://github.com/protocolbuffers/protobuf/releases/tag/v23.2
-        urls = ["https://codeload.github.com/protocolbuffers/protobuf/zip/a74f54b724bdc2fe0bfc271f4dc0ceb159805625"],
+        urls = ["https://github.com/protocolbuffers/protobuf/archive/a74f54b724bdc2fe0bfc271f4dc0ceb159805625.tar.gz"],
     )
 
     proto_repository(
