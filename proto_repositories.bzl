@@ -66,7 +66,7 @@ def proto_repositories():
             "gazelle:exclude google/ads/googleads/v12/services",
             "gazelle:exclude google/ads/googleads/v13/services",
             "gazelle:exclude google/ads/googleads/v14/services",
-            "gazelle:proto_language go enable true",
+            "gazelle:proto_language go enable false",
             "gazelle:proto_language cpp enable false",
             "gazelle:proto_language descriptor enable true",
         ],
