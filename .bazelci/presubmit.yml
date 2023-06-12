@@ -8,6 +8,7 @@ tasks:
     platform: ubuntu1804
     build_targets:
       - "@protoapis//..."
+      - "@googleaapis//..."
     test_targets:
       - //example/...
       - //language/...
@@ -23,6 +24,7 @@ tasks:
     platform: macos
     build_targets:
       - "@protoapis//..."
+      - "@googleaapis//..."
     test_targets:
       - //example/...
       - //language/...
