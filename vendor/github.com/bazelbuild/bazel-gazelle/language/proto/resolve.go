@@ -113,7 +113,8 @@ func resolveProto(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp str
 	if !strings.HasSuffix(imp, ".proto") {
 		return label.NoLabel, fmt.Errorf("can't import non-proto: %q", imp)
 	}
-
+	// panic("yello!")
+	log.Println(from, "resolveProto", imp)
 	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Imp: imp, Lang: "proto"}, "proto"); ok {
 		return l, nil
 	}

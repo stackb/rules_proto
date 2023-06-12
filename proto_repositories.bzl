@@ -58,3 +58,20 @@ def proto_repositories():
         # https://github.com/protocolbuffers/protobuf/releases/tag/v23.2
         urls = ["https://codeload.github.com/protocolbuffers/protobuf/zip/a74f54b724bdc2fe0bfc271f4dc0ceb159805625"],
     )
+
+    proto_repository(
+        name = "googleapis",
+        build_directives = [
+            "gazelle:proto_language go enable false",
+            "gazelle:proto_language cpp enable false",
+            "gazelle:proto_language descriptor enable true",
+        ],
+        imports = ["@protoapis//:imports.csv"],
+        build_file_expunge = True,
+        build_file_proto_mode = "file",
+        override_go_googleapis = True,
+        cfgs = ["//example:config.yaml"],
+        sha256 = "e5b59ae2c0c812e3867158eca8e484fddb96dff03b8e2073bf44242b708fa919",
+        strip_prefix = "googleapis-e115ab1839cb6e1bd953e40337b7e84001291766",
+        urls = ["https://github.com/googleapis/googleapis/archive/e115ab1839cb6e1bd953e40337b7e84001291766.tar.gz"],
+    )

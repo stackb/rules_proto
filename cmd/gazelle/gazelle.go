@@ -56,7 +56,7 @@ func (cmd command) String() string {
 }
 
 func main() {
-	log.SetPrefix("gazelle: ")
+	log.SetPrefix("gazelle2: ")
 	log.SetFlags(0) // don't print timestamps
 
 	var wd string
