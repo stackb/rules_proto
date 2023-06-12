@@ -62,7 +62,6 @@ func main() {
 			return err
 		}
 		base := filepath.Base(path)
-		// if base == "vendor" || base == "third_party" || base == "testdata" {
 		if base == "third_party" || base == "testdata" {
 			return filepath.SkipDir
 		}
