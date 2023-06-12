@@ -108,14 +108,20 @@ var (
 	errNotFound   = errors.New("not found")
 )
 
+var debugImp = "google/logging/type/log_severity.proto"
+
 func resolveProto(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp string, from label.Label) (label.Label, error) {
 	pc := GetProtoConfig(c)
 	if !strings.HasSuffix(imp, ".proto") {
 		return label.NoLabel, fmt.Errorf("can't import non-proto: %q", imp)
 	}
-	// panic("yello!")
-	log.Println(from, "resolveProto", imp)
+	if imp == debugImp {
+		log.Println(from, "resolveProto!", imp)
+	}
 	if l, ok := resolve.FindRuleWithOverride(c, resolve.ImportSpec{Imp: imp, Lang: "proto"}, "proto"); ok {
+		if imp == debugImp {
+			log.Println(from, "resolveProto from override!", imp, "==>", l)
+		}
 		return l, nil
 	}
 
@@ -123,11 +129,17 @@ func resolveProto(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp str
 		if l.Equal(from) {
 			return label.NoLabel, errSkipImport
 		} else {
+			if imp == debugImp {
+				log.Println(from, "resolveProto from known imports!", imp, "==>", l)
+			}
 			return l, nil
 		}
 	}
 
 	if l, err := resolveWithIndex(c, ix, imp, from); err == nil || err == errSkipImport {
+		if imp == debugImp {
+			log.Println(from, "resolveProto from index!", imp, "==>", l)
+		}
 		return l, err
 	} else if err != errNotFound {
 		return label.NoLabel, err
@@ -138,7 +150,13 @@ func resolveProto(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imp str
 		rel = ""
 	}
 	name := RuleName(rel)
-	return label.New("", rel, name), nil
+
+	l := label.New("", rel, name)
+	if imp == debugImp {
+		log.Println(from, "resolveProto from name!", imp, "==>", l)
+	}
+
+	return l, nil
 }
 
 func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, imp string, from label.Label) (label.Label, error) {

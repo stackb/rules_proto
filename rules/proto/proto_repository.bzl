@@ -168,6 +168,12 @@ def _proto_repository_impl(ctx):
 
     # remove any existing build files
     if ctx.attr.build_file_expunge:
+        # fail("we are expunging BUILD files!")
+        # result = env_execute(ctx, ["find", "."], environment = env)
+        # if result.return_code:
+        #     fail("failed to pre-list files: " + result.stderr)
+        # print("> pre-files:", result.stdout)
+
         cmd = ["find", ".", "-type", "f", "("]
         for i, name in enumerate(build_file_names):
             cmd += ["-name", name]
@@ -177,6 +183,16 @@ def _proto_repository_impl(ctx):
         result = env_execute(ctx, cmd, environment = env)
         if result.return_code:
             fail("failed to expunge build files: " + result.stderr)
+
+        # print("> removed-files:", result.stdout)
+
+        # result = env_execute(ctx, ["find", "."], environment = env)
+        # if result.return_code:
+        #     fail("failed to post-list files: " + result.stderr)
+        # print("> post-files:", result.stdout)
+
+    else:
+        fail("are we not expunging BUILD files?")
 
     # remove any other files
     if ctx.attr.deleted_files:

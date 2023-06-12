@@ -53,10 +53,11 @@ func TestOverrideRule(t *testing.T) {
 			for k, v := range tc.known {
 				resolver.Provide("proto", "proto", k, v)
 			}
+			c := config.New()
 			r := makeProtoLibraryRule("test_proto", tc.deps, tc.imps)
 			lib := makeOtherProtoLibrary(r)
 			overrideRule := makeProtoOverrideRule([]protoc.ProtoLibrary{lib})
-			resolveOverrideRule(tc.rel, overrideRule, resolver)
+			resolveOverrideRule(c, tc.rel, overrideRule, resolver)
 
 			got := r.AttrStrings("deps")
 			if diff := cmp.Diff(tc.want, got); diff != "" {
