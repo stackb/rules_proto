@@ -32,5 +32,5 @@ A few notes about the test:
   to load newer versions of @org_golang_google_grpc before rules_go or gazelle
   try and do that.
 - proto file mode is used.
-- override_go_googleapis = True is needed to rewrite labels that would normally
-  be in the "go_googleapis" external workspace.
+- reresolve_known_proto_imports = True is needed to rewrite labels that would normally
+  be in the "go_googleapis" and "com_google_protobuf" external workspace.

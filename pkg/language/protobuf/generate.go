@@ -91,8 +91,9 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 
 	rules := pkg.Rules()
 
-	// special case if we want to override go_googleapis deps.
-	if pl.overrideGoGooleapis && len(protoLibraries) > 0 {
+	// special case if we want to override com_google_protobuf or go_googleapis
+	// deps.
+	if pl.reresolveKnownProtoImports && len(protoLibraries) > 0 {
 		rules = append(rules, makeProtoOverrideRule(protoLibraries))
 	}
 

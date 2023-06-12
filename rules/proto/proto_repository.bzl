@@ -239,8 +239,8 @@ def _proto_repository_impl(ctx):
         if ctx.attr.imports:
             protoimports = ",".join([str(ctx.path(lbl).realpath) for lbl in ctx.attr.imports])
             cmd.extend(["-proto_imports_in", protoimports])
-        if ctx.attr.override_go_googleapis:
-            cmd.extend(["-override_go_googleapis"])
+        if ctx.attr.reresolve_known_proto_imports:
+            cmd.extend(["-reresolve_known_proto_imports"])
 
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
@@ -347,7 +347,7 @@ go_repository = repository_rule(
         ),
         "imports_out": attr.string(default = "imports.csv"),
         "deleted_files": attr.string_list(),
-        "override_go_googleapis": attr.bool(),
+        "reresolve_known_proto_imports": attr.bool(),
     },
 )
 

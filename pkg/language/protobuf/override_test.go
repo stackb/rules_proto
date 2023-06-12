@@ -26,22 +26,23 @@ func TestOverrideRule(t *testing.T) {
 		deps, imps, want []string
 		known            map[string]label.Label
 	}{
-		// "empty": {
-		// 	rel:  "",
-		// 	want: []string{},
-		// },
-		// "no go_googleapis deps": {
-		// 	rel:  "",
-		// 	deps: []string{"@com_google_protobuf//:any_proto"},
-		// 	want: []string{"@com_google_protobuf//:any_proto"},
-		// },
 		"has go_googleapis dep": {
-			rel:  "",
-			deps: []string{"@com_google_protobuf//:any_proto", "@go_googleapis//google/api:api_proto"},
-			want: []string{"//google/api:http_proto", "@com_google_protobuf//:any_proto"},
-			imps: []string{"google/api/http.proto"},
+			rel: "",
+			deps: []string{
+				"@com_google_protobuf//:any_proto",
+				"@go_googleapis//google/api:api_proto",
+			},
+			want: []string{
+				"//google/api:http_proto",
+				"@protoapis//google/protobuf:any_proto",
+			},
+			imps: []string{
+				"google/protobuf/any.proto",
+				"google/api/http.proto",
+			},
 			known: map[string]label.Label{
-				"google/api/http.proto": label.New("", "google/api", "http_proto"),
+				"google/protobuf/any.proto": label.New("protoapis", "google/protobuf", "any_proto"),
+				"google/api/http.proto":     label.New("", "google/api", "http_proto"),
 			},
 		},
 	} {
@@ -53,10 +54,11 @@ func TestOverrideRule(t *testing.T) {
 			for k, v := range tc.known {
 				resolver.Provide("proto", "proto", k, v)
 			}
+			c := config.New()
 			r := makeProtoLibraryRule("test_proto", tc.deps, tc.imps)
 			lib := makeOtherProtoLibrary(r)
 			overrideRule := makeProtoOverrideRule([]protoc.ProtoLibrary{lib})
-			resolveOverrideRule(tc.rel, overrideRule, resolver)
+			resolveOverrideRule(c, tc.rel, overrideRule, resolver)
 
 			got := r.AttrStrings("deps")
 			if diff := cmp.Diff(tc.want, got); diff != "" {

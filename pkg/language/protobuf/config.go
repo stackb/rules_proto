@@ -29,9 +29,9 @@ func (pl *protobufLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Co
 	fs.StringVar(&pl.repoName,
 		"proto_repo_name", "",
 		"external name of this repository")
-	fs.BoolVar(&pl.overrideGoGooleapis,
-		"override_go_googleapis", false,
-		"if true, remove hardcoded proto_library deps on go_googleapis")
+	fs.BoolVar(&pl.reresolveKnownProtoImports,
+		"reresolve_known_proto_imports", false,
+		"if true, re-resolve hardcoded proto_library deps on go_googleapis and com_google_protobuf from language/proto from the index")
 	fs.Var(&pl.starlarkRules,
 		"proto_rule",
 		"register custom starlark rule of the form `<file_name>%<rule_name>`")
