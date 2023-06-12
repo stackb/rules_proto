@@ -32,8 +32,8 @@ type protobufLang struct {
 	// importsInFiles is a comma-separated list of files that contains proto
 	// index csv content.
 	importsInFiles string
-	// overrideGoGooleapis performs special processing for go_googleapis deps
-	overrideGoGooleapis bool
+	// reresolveKnownProtoImports performs an additional resolve step for go_googleapis deps
+	reresolveKnownProtoImports bool
 	// the resolver instance used for cross-resolution
 	resolver protoc.ImportResolver
 	// starlarkRules stores custom starlark proto rule names in the form filename%rulename

@@ -1,9 +1,7 @@
 package protobuf
 
 import (
-	"fmt"
 	"log"
-	"os"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -19,7 +17,7 @@ const (
 	// overrideKindName is the name of the kind
 	overrideKindName = "proto_library_override"
 	// debugOverrides is a developer-flag.
-	debugOverrides = true
+	debugOverrides = false
 )
 
 var overrideKind = rule.KindInfo{
@@ -48,45 +46,24 @@ func resolveOverrideRule(c *config.Config, rel string, overrideRule *rule.Rule, 
 		// filter out go_googleapis dependencies and re-resolve them anew.
 		keep := make([]label.Label, 0)
 
-		// log.Printf("override resolve //%s:%s", rel, r.Name())
-
-		debug := rel == "google/api/servicecontrol/v1" && r.Name() == "log_entry_proto"
-
-		// if debug {
-		// 	printRules(r)
-		// }
 		for _, dep := range r.AttrStrings("deps") {
 			lbl, _ := label.Parse(dep)
-			if debug {
-				log.Printf("override resolve dep rel=%s, r.Name()=%s, lbl=%s, c.RepoName=%s", rel, r.Name(), lbl, c.RepoName)
+			if lbl.Repo == "go_googleapis" {
+				continue
+			}
+			if lbl.Repo == "com_google_protobuf" {
+				continue
 			}
 			if lbl.Relative {
 				// relative labels will be repopulated via resolution (below)
 				continue
 			}
-			// if lbl.Repo == "go_googleapis" || (lbl.Repo == "" && c.RepoName == "googleapis") {
-			if lbl.Repo == "go_googleapis" {
-				if debug {
-					log.Printf("override resolve //%s:%s dep %v", rel, r.Name(), lbl)
-				}
-				continue
-			}
-			if lbl.Repo == "com_google_protobuf" {
-				if debug {
-					log.Printf("override resolve //%s:%s dep %v", rel, r.Name(), lbl)
-				}
-				continue
-			}
 			// keep = append(keep, lbl)
 		}
 
-		var hasLogSeverityProto bool
 		imports := r.PrivateAttr(config.GazelleImportsKey)
 		if imps, ok := imports.([]string); ok {
 			for _, imp := range imps {
-				if imp == "XXX google/logging/type/log_severity.proto" {
-					hasLogSeverityProto = true
-				}
 				result := resolver.Resolve("proto", "proto", imp)
 				if len(result) > 0 {
 					first := result[0]
@@ -102,12 +79,6 @@ func resolveOverrideRule(c *config.Config, rel string, overrideRule *rule.Rule, 
 			}
 		}
 
-		if hasLogSeverityProto {
-			log.Println("deps before:")
-			printRules(r)
-			log.Println("deps keep:", keep)
-		}
-
 		if len(keep) > 0 {
 			ss := make([]string, len(keep))
 			for i, lbl := range keep {
@@ -115,19 +86,7 @@ func resolveOverrideRule(c *config.Config, rel string, overrideRule *rule.Rule, 
 			}
 			r.SetAttr("deps", protoc.DeduplicateAndSort(ss))
 		}
-		if hasLogSeverityProto {
-			log.Println("deps after:")
-			printRules(r)
-		}
 	}
 
 	overrideRule.Delete()
-}
-
-func printRules(rules ...*rule.Rule) {
-	file := rule.EmptyFile("", "")
-	for _, r := range rules {
-		r.Insert(file)
-	}
-	fmt.Fprintln(os.Stderr, string(file.Format()))
 }

@@ -195,14 +195,15 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 		return nil
 	}
 	if got, ok := known[imp]; ok {
-		return []resolve.FindResult{{Label: got[len(got)-1]}}
-		// res := make([]resolve.FindResult, len(got))
-		// // use last-wins semantics by providing FindResults in reverse to how
-		// // they were provided.
-		// for i := len(got) - 1; i >= 0; i-- {
-		// 	res[i] = resolve.FindResult{Label: got[i]}
-		// }
-		// return res
+		res := make([]resolve.FindResult, len(got))
+		// use last-wins semantics by providing FindResults in reverse to how
+		// they were provided.
+		var index int
+		for i := len(got) - 1; i >= 0; i-- {
+			res[index] = resolve.FindResult{Label: got[i]}
+			index++
+		}
+		return res
 	}
 	return nil
 }
@@ -223,7 +224,6 @@ func (r *resolver) Provide(lang, impLang, imp string, from label.Label) {
 	if r.options.Debug {
 		r.options.Printf("resolver %v provides %s %s", from, key, imp)
 	}
-	log.Println("known:", lang, impLang, imp, from)
 	known[imp] = append(known[imp], from)
 }
 

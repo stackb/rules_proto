@@ -89,7 +89,7 @@ proto_repository(
     build_file_generation = "on",
     build_file_proto_mode = "file",
     cfgs = ["//:config.yaml"],
-    override_go_googleapis = True,
+    reresolve_known_proto_imports = True,
     sha256 = "b9dbc65ebc738a486265ef7b708e9449bf361541890091983e946557ee0a4bfc",
     strip_prefix = "googleapis-66759bdf6a5ebb898c2a51c8649aefd1ee0b7ffe",
     type = "zip",

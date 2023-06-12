@@ -168,12 +168,6 @@ def _proto_repository_impl(ctx):
 
     # remove any existing build files
     if ctx.attr.build_file_expunge:
-        # fail("we are expunging BUILD files!")
-        # result = env_execute(ctx, ["find", "."], environment = env)
-        # if result.return_code:
-        #     fail("failed to pre-list files: " + result.stderr)
-        # print("> pre-files:", result.stdout)
-
         cmd = ["find", ".", "-type", "f", "("]
         for i, name in enumerate(build_file_names):
             cmd += ["-name", name]
@@ -183,16 +177,6 @@ def _proto_repository_impl(ctx):
         result = env_execute(ctx, cmd, environment = env)
         if result.return_code:
             fail("failed to expunge build files: " + result.stderr)
-
-        # print("> removed-files:", result.stdout)
-
-        # result = env_execute(ctx, ["find", "."], environment = env)
-        # if result.return_code:
-        #     fail("failed to post-list files: " + result.stderr)
-        # print("> post-files:", result.stdout)
-
-    else:
-        fail("are we not expunging BUILD files?")
 
     # remove any other files
     if ctx.attr.deleted_files:
@@ -255,8 +239,8 @@ def _proto_repository_impl(ctx):
         if ctx.attr.imports:
             protoimports = ",".join([str(ctx.path(lbl).realpath) for lbl in ctx.attr.imports])
             cmd.extend(["-proto_imports_in", protoimports])
-        if ctx.attr.override_go_googleapis:
-            cmd.extend(["-override_go_googleapis"])
+        if ctx.attr.reresolve_known_proto_imports:
+            cmd.extend(["-reresolve_known_proto_imports"])
 
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
@@ -363,7 +347,7 @@ go_repository = repository_rule(
         ),
         "imports_out": attr.string(default = "imports.csv"),
         "deleted_files": attr.string_list(),
-        "override_go_googleapis": attr.bool(),
+        "reresolve_known_proto_imports": attr.bool(),
     },
 )
 

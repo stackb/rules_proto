@@ -423,21 +423,13 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 	if err := maybePopulateRemoteCacheFromGoMod(c, rc); err != nil {
 		log.Print(err)
 	}
-	// var debugRules []*rule.Rule
 	for _, v := range visits {
 		for i, r := range v.rules {
 			from := label.New(c.RepoName, v.pkgRel, r.Name())
 			if rslv := mrslv.Resolver(r, v.pkgRel); rslv != nil {
-				// if from.String() == "@go_googleapis//google/api/servicecontrol/v1:metric_value_proto" {
-				// 	// log.Println("resolve!!!", from)
-				// 	debugRules = append(debugRules, r)
-				// }
 				rslv.Resolve(v.c, ruleIndex, rc, r, v.imports[i], from)
 			}
 		}
-		// if false && len(debugRules) > 0 {
-		// 	printRules(debugRules...)
-		// }
 		merger.MergeFile(v.file, v.empty, v.rules, merger.PostResolve,
 			unionKindInfoMaps(kinds, v.mappedKindInfo))
 	}
@@ -736,12 +728,4 @@ func appendOrMergeKindMapping(mappedLoads []rule.LoadInfo, mappedKind config.Map
 		Name:    mappedKind.KindLoad,
 		Symbols: []string{mappedKind.KindName},
 	})
-}
-
-func printRules(rules ...*rule.Rule) {
-	file := rule.EmptyFile("", "")
-	for _, r := range rules {
-		r.Insert(file)
-	}
-	log.Println(string(file.Format()))
 }

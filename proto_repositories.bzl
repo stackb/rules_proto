@@ -53,6 +53,7 @@ def proto_repositories():
             "google/protobuf/unittest_well_known_types.proto",
             "google/protobuf/compiler/cpp/test_bad_identifiers.proto",
         ],
+        reresolve_known_proto_imports = True,
         strip_prefix = "protobuf-a74f54b724bdc2fe0bfc271f4dc0ceb159805625/src",
         type = "zip",
         # https://github.com/protocolbuffers/protobuf/releases/tag/v23.2
@@ -73,7 +74,7 @@ def proto_repositories():
         imports = ["@protoapis//:imports.csv"],
         build_file_expunge = True,
         build_file_proto_mode = "file",
-        override_go_googleapis = True,
+        reresolve_known_proto_imports = True,
         cfgs = ["//example:config.yaml"],
         sha256 = "e5b59ae2c0c812e3867158eca8e484fddb96dff03b8e2073bf44242b708fa919",
         strip_prefix = "googleapis-e115ab1839cb6e1bd953e40337b7e84001291766",
