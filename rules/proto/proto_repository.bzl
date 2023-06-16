@@ -256,6 +256,19 @@ def _proto_repository_impl(ctx):
             # buildifier: disable=print
             print("%s: %s" % (ctx.name, result.stderr))
 
+    ctx.file(
+        ".proto_repository.info.json",
+        content = struct(
+            name = ctx.attr.name,
+            commit = ctx.attr.commit,
+            tag = ctx.attr.tag,
+            vcs = ctx.attr.vcs,
+            urls = ctx.attr.urls,
+            sha256 = ctx.attr.sha256,
+            strip_prefix = ctx.attr.strip_prefix,
+        ).to_json(),
+    )
+
     # Apply patches if necessary.
     patch(ctx)
 
