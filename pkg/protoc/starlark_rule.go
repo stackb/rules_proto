@@ -295,11 +295,16 @@ func (s *starlarkRuleProvider) Rule(othergen ...*rule.Rule) *rule.Rule {
 
 // Resolve implements part of the RuleProvider interface.
 func (s *starlarkRuleProvider) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-
+	if r.Attr("deps") != nil {
+		ResolveDepsAttr("deps", false)(c, ix, r, imports, from)
+	}
 }
 
 // Imports implements part of the RuleProvider interface.
 func (s *starlarkRuleProvider) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	if lib, ok := r.PrivateAttr(ProtoLibraryKey).(ProtoLibrary); ok {
+		return ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+	}
 	return nil
 }
 

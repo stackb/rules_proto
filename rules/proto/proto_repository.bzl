@@ -191,6 +191,7 @@ def _proto_repository_impl(ctx):
         # Populate Gazelle directive at root build file and
         lines = ["# " + d for d in ctx.attr.build_directives] + [
             "",
+            'filegroup(name = "proto_repository_info", srcs = ["proto_repository.info.json"], visibility = ["//visibility:public"])',
             'exports_files(["%s"])' % ctx.attr.imports_out,
         ]
         ctx.file(
@@ -257,15 +258,19 @@ def _proto_repository_impl(ctx):
             print("%s: %s" % (ctx.name, result.stderr))
 
     ctx.file(
-        ".proto_repository.info.json",
+        "proto_repository.info.json",
         content = struct(
-            name = ctx.attr.name,
             commit = ctx.attr.commit,
             tag = ctx.attr.tag,
             vcs = ctx.attr.vcs,
             urls = ctx.attr.urls,
             sha256 = ctx.attr.sha256,
             strip_prefix = ctx.attr.strip_prefix,
+            source_host = ctx.attr.source_host,
+            source_owner = ctx.attr.source_owner,
+            source_repo = ctx.attr.source_repo,
+            source_prefix = ctx.attr.source_prefix,
+            source_commit = ctx.attr.source_commit,
         ).to_json(),
     )
 
@@ -275,6 +280,7 @@ def _proto_repository_impl(ctx):
 go_repository = repository_rule(
     implementation = _proto_repository_impl,
     attrs = {
+
         # Fundamental attributes of a go repository
         "importpath": attr.string(mandatory = False),  # True in go_repository
 
@@ -298,6 +304,13 @@ go_repository = repository_rule(
         "strip_prefix": attr.string(),
         "type": attr.string(),
         "sha256": attr.string(),
+
+        # Attributes for a repository that is publically hosted by github
+        "source_host": attr.string(default = "github.com"),
+        "source_owner": attr.string(),
+        "source_repo": attr.string(),
+        "source_prefix": attr.string(),
+        "source_commit": attr.string(),
 
         # Attributes for a module that should be downloaded with the Go toolchain.
         "version": attr.string(),
