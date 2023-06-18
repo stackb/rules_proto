@@ -295,7 +295,6 @@ func (s *starlarkRuleProvider) Rule(othergen ...*rule.Rule) *rule.Rule {
 
 // Resolve implements part of the RuleProvider interface.
 func (s *starlarkRuleProvider) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-
 }
 
 // Imports implements part of the RuleProvider interface.

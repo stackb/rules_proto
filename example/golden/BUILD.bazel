@@ -109,6 +109,9 @@ func TestRunGazelle(t *testing.T) {
 	if err := bazel_testing.RunBazel("build", "..."); err != nil {
 		t.Fatal(err)
 	}
+	if err := bazel_testing.RunBazel("test", "..."); err != nil {
+		t.Fatal(err)
+	}
 }
 """,
     strip_prefix = "example/golden/testdata/proto_repository",

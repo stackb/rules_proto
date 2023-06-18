@@ -56,3 +56,20 @@ ProtoDependencyInfo = provider(
         "patchArgs": "The patch_args argument to http_archive",
     },
 )
+
+ProtoRepositoryInfo = provider(
+    "Provider for a proto_repository rule",
+    fields = {
+        "commit": "The repository commit attr value",
+        "tag": "The proto_repository tag attr value",
+        "vcs": "The proto_repository vcs attr value",
+        "urls": "The proto_repository urls attr value",
+        "sha256": "The proto_repository sha256 attr value",
+        "strip_prefix": "The proto_repository strip_prefix attr value",
+        "source_host": "The proto_repository source_host attr value",
+        "source_owner": "The proto_repository source_owner attr value",
+        "source_repo": "The proto_repository source_repo attr value",
+        "source_prefix": "The proto_repository source_prefix attr value",
+        "source_commit": "The proto_repository source_commit attr value",
+    },
+)

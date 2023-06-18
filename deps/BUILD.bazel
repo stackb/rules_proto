@@ -97,17 +97,17 @@ depsgen(
     deps = ["//deps:io_grpc_grpc_java"],
 )
 
-# Release: v0.35.0
-# TargetCommitish: release-0.35
-# Date: 2022-09-11 15:59:49 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.35.0
-# Size: 931734 (932 kB)
+# Release: v0.39.1
+# TargetCommitish: release-0.39
+# Date: 2023-04-20 04:35:08 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.39.1
+# Size: 1759832 (1.8 MB)
 proto_dependency(
     name = "io_bazel_rules_go",
     repository_rule = "http_archive",
-    sha256 = "cc027f11f98aef8bc52c472ced0714994507a16ccd3a0820b2df2d6db695facd",
-    strip_prefix = "rules_go-0.35.0",
-    urls = ["https://github.com/bazelbuild/rules_go/archive/v0.35.0.tar.gz"],
+    sha256 = "473a064d502e89d11c497a59f9717d1846e01515a3210bd169f22323161c076e",
+    strip_prefix = "rules_go-0.39.1",
+    urls = ["https://github.com/bazelbuild/rules_go/archive/v0.39.1.tar.gz"],
     visibility = ["//visibility:public"],
 )
 
