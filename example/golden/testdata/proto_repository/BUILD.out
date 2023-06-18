@@ -23,11 +23,11 @@ proto_gazelle(
 proto_repository_info_test(
     name = "proto_repository_info_test",
     info = "@googleapis//:proto_repository",
+    want_source_commit = "66759bdf6a5ebb898c2a51c8649aefd1ee0b7ffe",
     want_source_host = "github.com",
     want_source_owner = "googleapis",
-    want_source_repo = "googleapis",
-    want_source_commit = "66759bdf6a5ebb898c2a51c8649aefd1ee0b7ffe",
     want_source_prefix = "",
+    want_source_repo = "googleapis",
 )
 
 exports_files(["config.yaml"])
