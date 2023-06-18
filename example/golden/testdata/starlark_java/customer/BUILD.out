@@ -22,7 +22,6 @@ java_library(
 java_wrapper(
     name = "customer_java_wrap",
     javalib = "customer_java_library",
-    deps = [],
 )
 
 proto_compile(

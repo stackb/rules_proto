@@ -184,7 +184,7 @@ func (p *starlarkLanguageRule) ProvideRule(rc *LanguageRuleConfig, pc *ProtocCon
 	case *starlarkstruct.Struct:
 		var experimentalResolveDepsAttr string
 		if attr, err := value.Attr("experimental_resolve_attr"); err == nil {
-			if str, ok := attr.(*starlark.String); ok {
+			if str, ok := attr.(starlark.String); ok {
 				experimentalResolveDepsAttr = str.GoString()
 			}
 		}
