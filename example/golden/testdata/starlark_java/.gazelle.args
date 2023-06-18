@@ -1,2 +1,3 @@
 -proto_plugin=lib/plugins.star%java
 -proto_rule=lib/rules.star%java_library
+-proto_rule=lib/rules.star%java_wrapper

@@ -32,7 +32,6 @@ func loadStarlarkLanguageRule(name, filename string, src interface{}, reporter f
 	newErrorf := func(msg string, args ...interface{}) error {
 		err := fmt.Errorf(filename+": "+msg, args...)
 		errorReporter(err)
-		reporter(err.Error())
 		return err
 	}
 

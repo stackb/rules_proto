@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package order;
+
+import "customer/customer.proto";
+
+message Order {
+    customer.Customer customer = 1;
+}

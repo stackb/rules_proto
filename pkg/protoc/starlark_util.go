@@ -261,12 +261,15 @@ func structAttrBool(in *starlarkstruct.Struct, name string, errorReporter errorR
 		errorReporter("getting struct attr %s: %w", err)
 		return
 	}
-	b, ok := value.(*starlark.Bool)
-	if !ok {
-		errorReporter("%s is not a bool", name)
-		return
+	if value == nil {
+		return false
 	}
-	out = bool(*b)
+	switch t := value.(type) {
+	case starlark.Bool:
+		out = bool(t.Truth())
+	default:
+		errorReporter("attr %q: want bool, got %T", name, value)
+	}
 	return
 }
 
@@ -299,12 +302,12 @@ func structAttrMapStringBool(in *starlarkstruct.Struct, name string, errorReport
 	out = make(map[string]bool, dict.Len())
 	for _, key := range dict.Keys() {
 		if value, ok, err := dict.Get(key); ok && err == nil {
-			b, ok := value.(*starlark.Bool)
+			b, ok := value.(starlark.Bool)
 			if !ok {
-				errorReporter("%s is not a bool", name)
+				errorReporter("dict %q value for %q: want bool, got %T", name, key, value)
 				return
 			}
-			out[name] = bool(*b)
+			out[name] = bool(b.Truth())
 		}
 	}
 	return
