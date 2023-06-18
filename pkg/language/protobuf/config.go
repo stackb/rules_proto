@@ -43,7 +43,6 @@ func (pl *protobufLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Co
 }
 
 func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
-
 	cfg := protoc.NewPackageConfig(c)
 	c.Exts[pl.name] = cfg
 

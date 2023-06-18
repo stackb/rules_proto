@@ -193,11 +193,11 @@ def _proto_repository_impl(ctx):
             'load("@build_stack_rules_proto//rules:proto_repository_info.bzl", "proto_repository_info")',
             'exports_files(["%s"])' % ctx.attr.imports_out,
             "proto_repository_info(",
-            "    name = 'proto_repository_info',",
+            "    name = 'proto_repository',",
             "    commit = '%s'," % ctx.attr.commit,
             "    tag = '%s'," % ctx.attr.tag,
             "    vcs = '%s'," % ctx.attr.vcs,
-            "    urls = '%s'," % ctx.attr.urls,
+            "    urls = %s," % ctx.attr.urls,
             "    sha256 = '%s'," % ctx.attr.sha256,
             "    strip_prefix = '%s'," % ctx.attr.strip_prefix,
             "    source_host = '%s'," % ctx.attr.source_host,
@@ -270,23 +270,6 @@ def _proto_repository_impl(ctx):
         if result.stderr:
             # buildifier: disable=print
             print("%s: %s" % (ctx.name, result.stderr))
-
-    ctx.file(
-        "proto_repository.info.json",
-        content = struct(
-            commit = ctx.attr.commit,
-            tag = ctx.attr.tag,
-            vcs = ctx.attr.vcs,
-            urls = ctx.attr.urls,
-            sha256 = ctx.attr.sha256,
-            strip_prefix = ctx.attr.strip_prefix,
-            source_host = ctx.attr.source_host,
-            source_owner = ctx.attr.source_owner,
-            source_repo = ctx.attr.source_repo,
-            source_prefix = ctx.attr.source_prefix,
-            source_commit = ctx.attr.source_commit,
-        ).to_json(),
-    )
 
     # Apply patches if necessary.
     patch(ctx)
@@ -424,7 +407,7 @@ def patch(ctx):
             fail("Error applying patch command %s:\n%s%s" %
                  (cmd, st.stdout, st.stderr))
 
-def github_proto_repository(name, owner, repo, prefix = "", commit, build_file_expunge = True, build_file_proto_mode = "file", **kwargs):
+def github_proto_repository(name, owner, repo, commit, prefix = "", build_file_expunge = True, build_file_proto_mode = "file", **kwargs):
     """github_proto_repository is a macro for a proto_repository hosted at github.com
 
     Args:
@@ -441,14 +424,17 @@ def github_proto_repository(name, owner, repo, prefix = "", commit, build_file_e
     strip_prefix = "%s-%s" % (repo, commit)
     if prefix:
         strip_prefix += "/" + prefix
+
     proto_repository(
         name = name,
         source_host = "github.com",
         source_owner = owner,
         source_repo = repo,
         source_commit = commit,
-        source_prefix = "",
+        source_prefix = prefix,
         strip_prefix = strip_prefix,
+        build_file_expunge = build_file_expunge,
+        build_file_proto_mode = build_file_proto_mode,
         urls = ["https://%s/%s/archive/%s.tar.gz" % (owner, repo, commit)],
         **kwargs
     )
