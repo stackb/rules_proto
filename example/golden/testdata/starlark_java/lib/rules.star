@@ -16,6 +16,7 @@ def _provide_java_library(rctx, pctx):
     return struct(
         name = "java_library",
         rule = lambda: _make_java_library_rule(rctx, pctx),
+        experimental_resolve_attr = "deps",
     )
 
 protoc.Rule(
