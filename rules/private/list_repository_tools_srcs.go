@@ -91,8 +91,15 @@ func main() {
 	fmt.Fprintln(buf, "]")
 
 	if *generate != "" {
-		if err := ioutil.WriteFile(*generate, buf.Bytes(), 0666); err != nil {
+		got, err := ioutil.ReadFile(*generate)
+		if err != nil {
 			log.Fatal(err)
+		}
+
+		if !bytes.Equal(got, buf.Bytes()) {
+			if err := ioutil.WriteFile(*generate, buf.Bytes(), 0666); err != nil {
+				log.Fatal(err)
+			}
 		}
 	} else {
 		got, err := ioutil.ReadFile(*check)

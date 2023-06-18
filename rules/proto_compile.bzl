@@ -35,7 +35,7 @@ def _ctx_replace_arg(ctx, arg):
     return arg
 
 def _plugin_label_key(label):
-    """_plugin_label_key converts a label into a string.  
+    """_plugin_label_key converts a label into a string.
 
     This is needed due to an edge case about how Labels are parsed and
     represented. Consider the label
@@ -239,6 +239,11 @@ def _proto_compile_impl(ctx):
         ### Part 2.4: setup awk modifications if any
         for k, v in plugin.mods.items():
             mods[k] = v
+
+        ### Part 2.5: add import roots and files if required by plugin
+        if plugin.direct_mode:
+            args.append("--proto_path={}".format(proto_info.proto_source_root))
+            inputs += protos
 
     ###
     ### Part 3: trailing args
