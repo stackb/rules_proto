@@ -190,9 +190,23 @@ def _proto_repository_impl(ctx):
 
         # Populate Gazelle directive at root build file and
         lines = ["# " + d for d in ctx.attr.build_directives] + [
-            "",
-            'filegroup(name = "proto_repository_info", srcs = ["proto_repository.info.json"], visibility = ["//visibility:public"])',
+            'load("@build_stack_rules_proto//rules:proto_repository_info.bzl", "proto_repository_info")',
             'exports_files(["%s"])' % ctx.attr.imports_out,
+            "proto_repository_info(",
+            "    name = 'proto_repository_info',",
+            "    commit = '%s'," % ctx.attr.commit,
+            "    tag = '%s'," % ctx.attr.tag,
+            "    vcs = '%s'," % ctx.attr.vcs,
+            "    urls = '%s'," % ctx.attr.urls,
+            "    sha256 = '%s'," % ctx.attr.sha256,
+            "    strip_prefix = '%s'," % ctx.attr.strip_prefix,
+            "    source_host = '%s'," % ctx.attr.source_host,
+            "    source_owner = '%s'," % ctx.attr.source_owner,
+            "    source_repo = '%s'," % ctx.attr.source_repo,
+            "    source_prefix = '%s'," % ctx.attr.source_prefix,
+            "    source_commit = '%s'," % ctx.attr.source_commit,
+            "    visibility = ['//visibility:public'],",
+            ")",
         ]
         ctx.file(
             build_file_name,
@@ -409,3 +423,32 @@ def patch(ctx):
         if st.return_code:
             fail("Error applying patch command %s:\n%s%s" %
                  (cmd, st.stdout, st.stderr))
+
+def github_proto_repository(name, owner, repo, prefix = "", commit, build_file_expunge = True, build_file_proto_mode = "file", **kwargs):
+    """github_proto_repository is a macro for a proto_repository hosted at github.com
+
+    Args:
+        name: the name of the rule
+        owner: the github owner (e.g. 'protocolbuffers')
+        repo: the github repo name (e.g. 'protobuf')
+        prefix: the strip_prefix value for the repo (e.g. 'src')
+        commit: the git commit (required for this macro)
+        build_file_expunge: defaults to true for this macro.
+        build_file_proto_mode: defaults to 'file' for this macro.
+        **kwargs: the kwargs accumulator
+
+    """
+    strip_prefix = "%s-%s" % (repo, commit)
+    if prefix:
+        strip_prefix += "/" + prefix
+    proto_repository(
+        name = name,
+        source_host = "github.com",
+        source_owner = owner,
+        source_repo = repo,
+        source_commit = commit,
+        source_prefix = "",
+        strip_prefix = strip_prefix,
+        urls = ["https://%s/%s/archive/%s.tar.gz" % (owner, repo, commit)],
+        **kwargs
+    )
