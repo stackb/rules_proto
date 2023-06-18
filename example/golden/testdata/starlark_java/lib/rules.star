@@ -9,6 +9,7 @@ def _make_java_library_rule(rctx, pctx):
             "deps": rctx.deps,
             "visibility": rctx.visibility,
         },
+        experimental_resolve_attr = "deps",
     )
     return r
 
