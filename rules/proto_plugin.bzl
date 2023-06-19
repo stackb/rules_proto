@@ -20,6 +20,7 @@ def _proto_plugin_impl(ctx):
             exclusions = ctx.attr.exclusions,
             mods = ctx.attr.mods,
             data = ctx.files.data,
+            direct_mode = ctx.attr.direct_mode,
             supplementary_proto_deps = [dep[ProtoInfo] for dep in ctx.attr.supplementary_proto_deps],
             deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
         ),
@@ -45,7 +46,7 @@ proto_plugin = rule(
             doc = "A list of options to pass to the compiler for this plugin",
         ),
         "out": attr.string(
-            doc = "The output scheme for the plugin.  Can be a string like '.' or a symbol such as {BIN_DIR} or {PACKAGE}.",
+            doc = "The output scheme for the plugin. Can be a string like '.' or a symbol such as {BIN_DIR} or {PACKAGE}.",
             default = "{BIN_DIR}",
         ),
         "exclusions": attr.string_list(
@@ -65,7 +66,11 @@ proto_plugin = rule(
             providers = [ProtoDependencyInfo],
         ),
         "mods": attr.string_dict(
-            doc = "content modifications to apply to the output files",
+            doc = "Content modifications to apply to the output files",
+        ),
+        "direct_mode": attr.bool(
+            doc = "Whether the plugin add import roots and direct source files to protoc",
+            default = False,
         ),
     },
 )

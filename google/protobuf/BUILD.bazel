@@ -1,0 +1,15 @@
+load("@build_stack_rules_proto//rules/ts:well_known_types.bzl", "well_known_ts_proto_compile", "well_known_ts_proto_library")
+
+well_known_ts_proto_compile()
+
+well_known_ts_proto_library(
+    args = [
+        "--lib ES2015",
+    ],
+    tsc = "@npm_tsc//typescript/bin:tsc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@npm_tsc//long",
+        "@npm_tsc//protobufjs",
+    ],
+)
