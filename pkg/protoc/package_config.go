@@ -267,17 +267,13 @@ func RegisterStarlarkPlugin(c *config.Config, starlarkPlugin string) error {
 	}
 	fileName := parts[0]
 	ruleName := parts[1]
-	var configureError error
 	impl, err := LoadStarlarkPluginFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
 		log.Printf("%s: %v", starlarkPlugin, msg)
 	}, func(err error) {
-		configureError = err
+		log.Fatalf("starlark plugin configuration error (plugin %q will not be registered): %v", starlarkPlugin, err)
 	})
 	if err != nil {
 		return err
-	}
-	if configureError != nil {
-		return configureError
 	}
 	Plugins().RegisterPlugin(starlarkPlugin, impl)
 	return nil
@@ -291,18 +287,13 @@ func RegisterStarlarkRule(c *config.Config, starlarkRule string) error {
 	fileName := parts[0]
 	ruleName := parts[1]
 
-	var configureError error
 	impl, err := LoadStarlarkLanguageRuleFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
 	}, func(err error) {
-		configureError = err
+		log.Panicf("starlark rule configuration error (rule %q will not be registered): %v", starlarkRule, err)
 	})
 	if err != nil {
 		return err
 	}
-	if configureError != nil {
-		return configureError
-	}
-	configureError = err
 	Rules().MustRegisterRule(starlarkRule, impl)
 	return nil
 }

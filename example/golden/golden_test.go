@@ -7,5 +7,7 @@ import (
 )
 
 func TestGoldens(t *testing.T) {
-	goldentest.FromDir("example/golden").Run(t, "gazelle")
+	goldentest.
+		FromDir("example/golden").
+		Run(t, "gazelle")
 }

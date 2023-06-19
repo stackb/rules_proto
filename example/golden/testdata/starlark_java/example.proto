@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-enum Enum{
-  UNKNOWN = 0;
-}
-
-message Message{}
-
-service Service{}

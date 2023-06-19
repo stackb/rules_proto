@@ -1,0 +1,36 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("//:defs.bzl", "java_wrapper")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+load("@rules_java//java:defs.bzl", "java_library")
+
+proto_library(
+    name = "order_proto",
+    srcs = ["order.proto"],
+    visibility = ["//visibility:public"],
+    deps = ["//customer:customer_proto"],
+)
+
+java_library(
+    name = "order_java_library",
+    srcs = ["order.srcjar"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//customer:customer_java_library",
+        "@com_google_protobuf//:protobuf_java",
+        "@com_google_protobuf//java/core",
+    ],
+)
+
+java_wrapper(
+    name = "order_java_wrap",
+    javalib = "order_java_library",
+    deps = ["//customer:customer_java_wrap"],
+)
+
+proto_compile(
+    name = "order_java_compile",
+    outs = {"@build_stack_rules_proto//plugin/builtin:java": "order/order.srcjar"},
+    outputs = ["order.srcjar"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
+    proto = "order_proto",
+)
