@@ -407,7 +407,7 @@ def patch(ctx):
             fail("Error applying patch command %s:\n%s%s" %
                  (cmd, st.stdout, st.stderr))
 
-def github_proto_repository(name, owner, repo, commit, prefix = "", build_file_expunge = True, build_file_proto_mode = "file", **kwargs):
+def github_proto_repository(name, owner, repo, commit, prefix = "", host = "github.com", build_file_expunge = True, build_file_proto_mode = "file", **kwargs):
     """github_proto_repository is a macro for a proto_repository hosted at github.com
 
     Args:
@@ -415,6 +415,7 @@ def github_proto_repository(name, owner, repo, commit, prefix = "", build_file_e
         owner: the github owner (e.g. 'protocolbuffers')
         repo: the github repo name (e.g. 'protobuf')
         prefix: the strip_prefix value for the repo (e.g. 'src')
+        host: the source host (default 'github.com')
         commit: the git commit (required for this macro)
         build_file_expunge: defaults to true for this macro.
         build_file_proto_mode: defaults to 'file' for this macro.
@@ -427,7 +428,7 @@ def github_proto_repository(name, owner, repo, commit, prefix = "", build_file_e
 
     proto_repository(
         name = name,
-        source_host = "github.com",
+        source_host = host,
         source_owner = owner,
         source_repo = repo,
         source_commit = commit,
@@ -435,6 +436,6 @@ def github_proto_repository(name, owner, repo, commit, prefix = "", build_file_e
         strip_prefix = strip_prefix,
         build_file_expunge = build_file_expunge,
         build_file_proto_mode = build_file_proto_mode,
-        urls = ["https://%s/%s/archive/%s.tar.gz" % (owner, repo, commit)],
+        urls = ["https://%s/%s/%s/archive/%s.tar.gz" % (host, owner, repo, commit)],
         **kwargs
     )
