@@ -15,34 +15,6 @@ proto_library(
     deps = ["//example/thing:thing_proto"],
 )
 
-proto_closure_js_library(
-    name = "place_closure_js_library",
-    srcs = ["place.js"],
-    internal_descriptors = [
-        "//example/place:place_proto",
-        "//example/thing:thing_proto",
-        "@com_google_protobuf//:timestamp_proto",
-    ],
-    suppress = [
-        "JSC_IMPLICITLY_NONNULL_JSDOC",
-        "JSC_UNUSED_LOCAL_ASSIGNMENT",
-    ],
-    visibility = ["//visibility:public"],
-    exports = ["//example/thing:thing_closure_js_library"],
-    deps = ["//example/thing:thing_closure_js_library"],
-)
-
-proto_compile(
-    name = "place_closure_js_compile",
-    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
-        "import_style=closure",
-        "library=example/place/place",
-    ]},
-    outputs = ["place.js"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
-    proto = "place_proto",
-)
-
 proto_cc_library(
     name = "place_cc_library",
     srcs = ["place.pb.cc"],
@@ -135,7 +107,6 @@ proto_compile(
     name = "place_ts_proto_compile",
     options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
         "emitImportedFiles=false",
-        "esModuleInterop=true",
     ]},
     outputs = ["place.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
@@ -145,14 +116,12 @@ proto_compile(
 proto_ts_library(
     name = "place_ts_proto",
     srcs = ["place.ts"],
-    args = ["--lib ES2015"],
     tags = ["manual"],
-    tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],
     deps = [
+        "//:node_modules/long",
+        "//:node_modules/protobufjs",
         "//example/thing:thing_ts_proto",
-        "@npm_tsc//long",
-        "@npm_tsc//protobufjs",
     ],
 )
 

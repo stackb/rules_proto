@@ -61,38 +61,6 @@ grpc_closure_js_library(
     deps = [":routeguide_closure_js_library"],
 )
 
-proto_closure_js_library(
-    name = "routeguide_closure_js_library",
-    srcs = ["routeguide.js"],
-    internal_descriptors = ["//example/routeguide:routeguide_proto"],
-    suppress = [
-        "JSC_IMPLICITLY_NONNULL_JSDOC",
-        "JSC_UNUSED_LOCAL_ASSIGNMENT",
-    ],
-    visibility = ["//visibility:public"],
-    exports = [],
-)
-
-proto_compile(
-    name = "routeguide_closure_js_compile",
-    options = {
-        "@build_stack_rules_proto//plugin/builtin:closurejs": [
-            "import_style=closure",
-            "library=example/routeguide/routeguide",
-        ],
-        "@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js": ["out=example/routeguide/routeguide.grpc.js"],
-    },
-    outputs = [
-        "routeguide.grpc.js",
-        "routeguide.js",
-    ],
-    plugins = [
-        "@build_stack_rules_proto//plugin/builtin:closurejs",
-        "@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js",
-    ],
-    proto = "routeguide_proto",
-)
-
 grpc_cc_library(
     name = "routeguide_grpc_cc_library",
     srcs = ["routeguide.grpc.pb.cc"],
@@ -273,14 +241,12 @@ proto_compile(
 proto_ts_library(
     name = "routeguide_ts_proto",
     srcs = ["routeguide.ts"],
-    args = ["--lib ES2015"],
     tags = ["manual"],
-    tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],
     deps = [
+        "//:node_modules/long",
+        "//:node_modules/protobufjs",
         "@npm_tsc//@nestjs/microservices",
-        "@npm_tsc//long",
-        "@npm_tsc//protobufjs",
     ],
 )
 

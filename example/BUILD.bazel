@@ -102,10 +102,10 @@
 # gazelle:proto_plugin ts_proto option esModuleInterop=true
 # gazelle:proto_rule proto_ts_library implementation stackb:rules_proto:proto_ts_library
 # gazelle:proto_rule proto_ts_library visibility //visibility:public
-# gazelle:proto_rule proto_ts_library attr tsc @npm_tsc//typescript/bin:tsc
-# gazelle:proto_rule proto_ts_library attr args --lib ES2015
-# gazelle:proto_rule proto_ts_library deps @npm_tsc//protobufjs
-# gazelle:proto_rule proto_ts_library deps @npm_tsc//long
+# gazelle:proto_rule proto_ts_library deps //:node_modules/protobufjs
+# gazelle:proto_rule proto_ts_library deps //:node_modules/long
+# Set an out_dir so that we don't conflict with the closurejs output
+# gazelle:proto_rule proto_ts_library attr out_dir ts
 
 # gazelle:proto_language ts_proto plugin ts_proto
 # gazelle:proto_language ts_proto rule proto_compile

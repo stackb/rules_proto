@@ -62,10 +62,6 @@ load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 
 ts_proto_deps()
 
-load("//deps:example_routeguide_nodejs_deps.bzl", "example_routeguide_nodejs_deps")
-
-example_routeguide_nodejs_deps()
-
 # ----------------------------------------------------
 # Go Tools
 # ----------------------------------------------------
@@ -227,8 +223,6 @@ load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 
 node_repositories()
 
-register_toolchains("//toolchain:nodejs")
-
 # ----------------------------------------------------
 # proto_repositories
 # ----------------------------------------------------
@@ -236,3 +230,36 @@ register_toolchains("//toolchain:nodejs")
 load("//:proto_repositories.bzl", "proto_repositories")
 
 proto_repositories()
+
+# ----------------------------------------------------
+# Typescript
+# ----------------------------------------------------
+load("@aspect_rules_ts//ts:repositories.bzl", "rules_ts_dependencies")
+
+rules_ts_dependencies(
+    # This keeps the TypeScript version in-sync with the editor, which is typically best.
+    ts_version_from = "//:package.json",
+)
+
+# Fetch and register node, if you haven't already
+load("@rules_nodejs//nodejs:repositories.bzl", "DEFAULT_NODE_VERSION", "nodejs_register_toolchains")
+
+nodejs_register_toolchains(
+    name = "node",
+    node_version = DEFAULT_NODE_VERSION,
+)
+
+load("@aspect_rules_js//npm:npm_import.bzl", "npm_translate_lock")
+
+npm_translate_lock(
+    name = "npm_ts_proto",
+    generate_bzl_library_targets = True,
+    npmrc = "//:.npmrc",
+    pnpm_lock = "//:pnpm-lock.yaml",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+
+load("@npm_ts_proto//:repositories.bzl", "npm_repositories")
+
+# Declares npm_import rules from the pnpm-lock.yaml file
+npm_repositories()
