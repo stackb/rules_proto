@@ -1,5 +1,9 @@
 # `rules_proto (v2)`
 
+> **Warning**
+> This is *not* a true fork of stackb/rules_proto -- depend on that repo, not
+> this one. Changes here should flow upstream.
+
 [![Build status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/stackb-rules-proto)
 [![Go Reference](https://pkg.go.dev/badge/github.com/stackb/rules_proto.svg)](https://pkg.go.dev/github.com/stackb/rules_proto)
 
