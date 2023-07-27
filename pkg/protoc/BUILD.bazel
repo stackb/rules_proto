@@ -68,6 +68,7 @@ go_test(
         "rewrite_test.go",
         "starlark_plugin_test.go",
         "starlark_rule_test.go",
+        "starlark_util_test.go",
     ],
     embed = [":protoc"],
     deps = [

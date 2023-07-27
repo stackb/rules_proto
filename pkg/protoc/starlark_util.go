@@ -291,23 +291,34 @@ func structAttrString(in *starlarkstruct.Struct, name string, errorReporter erro
 func structAttrMapStringBool(in *starlarkstruct.Struct, name string, errorReporter errorReporter) (out map[string]bool) {
 	value, err := in.Attr(name)
 	if err != nil {
-		errorReporter("getting struct attr %s: %w", err)
+		if _, ok := err.(starlark.NoSuchAttrError); ok {
+			return
+		}
+		errorReporter("%v", err)
+		return
+	}
+	if value == nil {
 		return
 	}
 	dict, ok := value.(*starlark.Dict)
 	if !ok {
-		errorReporter("%s is not a dict", name)
+		errorReporter("%v.%s: value must have type starlark.Dict (got %T)", in.Constructor(), name, value)
 		return
 	}
 	out = make(map[string]bool, dict.Len())
 	for _, key := range dict.Keys() {
+		k, ok := key.(starlark.String)
+		if !ok {
+			errorReporter("%v.%s: dict keys must have type string (got %T)", in.Constructor(), name, key)
+			return
+		}
 		if value, ok, err := dict.Get(key); ok && err == nil {
 			b, ok := value.(starlark.Bool)
 			if !ok {
-				errorReporter("dict %q value for %q: want bool, got %T", name, key, value)
+				errorReporter("%v.%s: dict value for %q must have type bool (got %T)", in.Constructor(), name, k.GoString(), value)
 				return
 			}
-			out[name] = bool(b.Truth())
+			out[k.GoString()] = bool(b.Truth())
 		}
 	}
 	return
