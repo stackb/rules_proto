@@ -7,6 +7,8 @@ workspace(name = "build_stack_rules_proto")
 # ----------------------------------------------------
 
 register_toolchains("//toolchain:standard")
+# alternatively:
+# register_toolchains("//toolchain:prebuilt")
 
 # ----------------------------------------------------
 # Top-Level Dependency Trees
@@ -120,6 +122,7 @@ load(
 maven_install(
     artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
     generate_compat_repositories = True,
+    maven_install_json = "//:maven_install.json",
     override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
     repositories = [
         "https://repo.maven.apache.org/maven2/",
@@ -266,3 +269,11 @@ load("@npm_ts_proto//:repositories.bzl", "npm_repositories")
 
 # Declares npm_import rules from the pnpm-lock.yaml file
 npm_repositories()
+
+# ----------------------------------------------------
+# proto_repositories
+# ----------------------------------------------------
+
+load("//:proto_repositories.bzl", "proto_repositories")
+
+proto_repositories()

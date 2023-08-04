@@ -1,19 +1,8 @@
 filegroup(
     name = "all_files",
-    srcs = [
+    testonly = True,
+    srcs = glob(["*.bzl"]) + [
         "BUILD.bazel",
-        "depsgen.bzl",
-        "example.bzl",
-        "proto_compile.bzl",
-        "proto_compile_gencopy.bzl",
-        "proto_compiled_source_update.bzl",
-        "proto_compiled_sources.bzl",
-        "proto_dependency.bzl",
-        "proto_descriptor_set.bzl",
-        "proto_gazelle.bzl",
-        "proto_plugin.bzl",
-        "protogenrule.bzl",
-        "providers.bzl",
         "//rules/cc:all_files",
         "//rules/closure:all_files",
         "//rules/go:all_files",

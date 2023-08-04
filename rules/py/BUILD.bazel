@@ -1,5 +1,6 @@
 filegroup(
     name = "all_files",
+    testonly = True,
     srcs = [
         "BUILD.bazel",
         "grpc_py_library.bzl",

@@ -35,6 +35,8 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
+const cmdTimeoutOrInterruptExitCode = -1
+
 // FileSpec specifies the content of a test file.
 type FileSpec struct {
 	// Path is a slash-separated path relative to the test directory. If Path
@@ -160,6 +162,9 @@ type TestGazelleGenerationArgs struct {
 	// BuildOutSuffix is the suffix for all test output build files. Includes the ".".
 	// Default: ".out", so out BUILD files should be named BUILD.out.
 	BuildOutSuffix string
+
+	// Timeout is the duration after which the generation process will be killed.
+	Timeout time.Duration
 }
 
 var (
@@ -296,7 +301,7 @@ func TestGazelleGenerationOnPath(t *testing.T, args *TestGazelleGenerationArgs) 
 							}
 
 							if info.Name() == "BUILD.bazel" {
-								destFile := strings.TrimSuffix(path.Join(buildWorkspaceDirectory, path.Dir(args.TestDataPathRelative)+relativePath), ".bazel") + ".out"
+								destFile := strings.TrimSuffix(path.Join(buildWorkspaceDirectory, path.Dir(args.TestDataPathRelative)+relativePath), ".bazel") + args.BuildOutSuffix
 
 								err := copyFile(walkedPath, destFile)
 								if err != nil {
@@ -322,7 +327,7 @@ Run %s to update BUILD.out and expected{Stdout,Stderr,ExitCode}.txt files.
 			}
 		}()
 
-		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), args.Timeout)
 		defer cancel()
 		cmd := exec.CommandContext(ctx, args.GazelleBinaryPath, config.Args...)
 		cmd.Stdout = &stdout
@@ -338,9 +343,14 @@ Run %s to update BUILD.out and expected{Stdout,Stderr,ExitCode}.txt files.
 		errs := make([]error, 0)
 		actualExitCode = cmd.ProcessState.ExitCode()
 		if config.ExitCode != actualExitCode {
-			errs = append(errs, fmt.Errorf("expected gazelle exit code: %d\ngot: %d",
-				config.ExitCode, actualExitCode,
-			))
+			if actualExitCode == cmdTimeoutOrInterruptExitCode {
+				errs = append(errs, fmt.Errorf("gazelle exceeded the timeout or was interrupted"))
+			} else {
+
+				errs = append(errs, fmt.Errorf("expected gazelle exit code: %d\ngot: %d",
+					config.ExitCode, actualExitCode,
+				))
+			}
 		}
 		actualStdout := redactWorkspacePath(stdout.String(), workspaceRoot)
 		if strings.TrimSpace(config.Stdout) != strings.TrimSpace(actualStdout) {

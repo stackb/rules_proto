@@ -20,7 +20,7 @@ def _configure_java(ctx):
     # }
     srcjar = ctx.proto_library.base_name + ".srcjar"
     if ctx.rel:
-        srcjar = "/".join(ctx.rel, srcjar)
+        srcjar = "/".join([ctx.rel, srcjar])
 
     config = protoc.PluginConfiguration(
         label = "@build_stack_rules_proto//plugin/builtin:java",

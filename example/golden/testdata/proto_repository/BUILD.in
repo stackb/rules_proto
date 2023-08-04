@@ -1,6 +1,7 @@
 
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@build_stack_rules_proto//rules:proto_gazelle.bzl", "DEFAULT_LANGUAGES", "proto_gazelle")
+load("//:proto_repository_info_test.bzl", "proto_repository_info_test")
 
 # gazelle:prefix github.com/corp/repo
 # gazelle:go_generate_proto false
@@ -17,6 +18,16 @@ proto_gazelle(
     command = "update",
     gazelle = ":gazelle-protobuf",
     imports = ["@googleapis//:imports.csv"],
+)
+
+proto_repository_info_test(
+    name = "proto_repository_info_test",
+    info = "@googleapis//:proto_repository",
+    want_source_host = "github.com",
+    want_source_owner = "googleapis",
+    want_source_repo = "googleapis",
+    want_source_commit = "66759bdf6a5ebb898c2a51c8649aefd1ee0b7ffe",
+    want_source_prefix = "",
 )
 
 exports_files(["config.yaml"])

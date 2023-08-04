@@ -1,8 +1,5 @@
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
-load("@rules_java//java:defs.bzl", "java_library")
-
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
+# gazelle:proto_rule java_wrapper implementation lib/rules.star%java_wrapper
 # gazelle:proto_rule java_library implementation lib/rules.star%java_library
 # gazelle:proto_rule java_library deps @com_google_protobuf//:protobuf_java
 # gazelle:proto_rule java_library deps @com_google_protobuf//java/core
@@ -10,28 +7,6 @@ load("@rules_java//java:defs.bzl", "java_library")
 # gazelle:proto_plugin java implementation lib/plugins.star%java
 # gazelle:proto_language java rule proto_compile
 # gazelle:proto_language java rule java_library
+# gazelle:proto_language java rule java_wrapper
 # gazelle:proto_language java plugin java
-
-proto_library(
-    name = "example_proto",
-    srcs = ["example.proto"],
-    visibility = ["//visibility:public"],
-)
-
-java_library(
-    name = "example_java_library",
-    srcs = ["example.srcjar"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "@com_google_protobuf//:protobuf_java",
-        "@com_google_protobuf//java/core",
-    ],
-)
-
-proto_compile(
-    name = "example_java_compile",
-    outs = {"@build_stack_rules_proto//plugin/builtin:java": "example.srcjar"},
-    outputs = ["example.srcjar"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
-    proto = "example_proto",
-)
+# gazelle:proto_language java enabled true

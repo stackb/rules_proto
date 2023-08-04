@@ -1,4 +1,5 @@
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
+# gazelle:proto_rule java_wrapper implementation lib/rules.star%java_wrapper
 # gazelle:proto_rule java_library implementation lib/rules.star%java_library
 # gazelle:proto_rule java_library deps @com_google_protobuf//:protobuf_java
 # gazelle:proto_rule java_library deps @com_google_protobuf//java/core
@@ -6,4 +7,6 @@
 # gazelle:proto_plugin java implementation lib/plugins.star%java
 # gazelle:proto_language java rule proto_compile
 # gazelle:proto_language java rule java_library
+# gazelle:proto_language java rule java_wrapper
 # gazelle:proto_language java plugin java
+# gazelle:proto_language java enabled true

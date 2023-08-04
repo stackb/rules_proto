@@ -1,4 +1,4 @@
-# github.com/bazelbuild/bazel-gazelle v0.27.0
+# github.com/bazelbuild/bazel-gazelle v0.31.0
 ## explicit
 github.com/bazelbuild/bazel-gazelle/config
 github.com/bazelbuild/bazel-gazelle/flag
@@ -15,11 +15,11 @@ github.com/bazelbuild/bazel-gazelle/resolve
 github.com/bazelbuild/bazel-gazelle/rule
 github.com/bazelbuild/bazel-gazelle/testtools
 github.com/bazelbuild/bazel-gazelle/walk
-# github.com/bazelbuild/buildtools v0.0.0-20221004120235-7186f635531b
+# github.com/bazelbuild/buildtools v0.0.0-20230510134650-37bd1811516d
 ## explicit
 github.com/bazelbuild/buildtools/build
 github.com/bazelbuild/buildtools/tables
-# github.com/bazelbuild/rules_go v0.35.0
+# github.com/bazelbuild/rules_go v0.39.1
 ## explicit
 github.com/bazelbuild/rules_go/go/tools/bazel
 github.com/bazelbuild/rules_go/go/tools/bazel_testing
@@ -27,7 +27,7 @@ github.com/bazelbuild/rules_go/go/tools/internal/txtar
 # github.com/bmatcuk/doublestar v1.2.2
 ## explicit
 github.com/bmatcuk/doublestar
-# github.com/bmatcuk/doublestar/v4 v4.2.0
+# github.com/bmatcuk/doublestar/v4 v4.6.0
 github.com/bmatcuk/doublestar/v4
 # github.com/davecgh/go-spew v1.1.0
 github.com/davecgh/go-spew/spew
@@ -42,8 +42,6 @@ github.com/google/go-cmp/cmp/internal/diff
 github.com/google/go-cmp/cmp/internal/flags
 github.com/google/go-cmp/cmp/internal/function
 github.com/google/go-cmp/cmp/internal/value
-# github.com/pelletier/go-toml v1.9.5
-github.com/pelletier/go-toml
 # github.com/pmezard/go-difflib v1.0.0
 ## explicit
 github.com/pmezard/go-difflib/difflib
@@ -58,17 +56,17 @@ go.starlark.net/resolve
 go.starlark.net/starlark
 go.starlark.net/starlarkstruct
 go.starlark.net/syntax
-# golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4
+# golang.org/x/mod v0.10.0
 golang.org/x/mod/internal/lazyregexp
+golang.org/x/mod/modfile
 golang.org/x/mod/module
 golang.org/x/mod/semver
-# golang.org/x/sync v0.0.0-20220907140024-f12130a52804
+# golang.org/x/sync v0.2.0
 golang.org/x/sync/errgroup
-# golang.org/x/sys v0.0.0-20221013171732-95e765b1cc43
-## explicit
+# golang.org/x/sys v0.8.0
 golang.org/x/sys/execabs
 golang.org/x/sys/unix
-# golang.org/x/tools v0.1.12
+# golang.org/x/tools v0.9.1
 golang.org/x/tools/go/vcs
 # gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 ## explicit

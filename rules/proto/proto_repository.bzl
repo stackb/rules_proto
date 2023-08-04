@@ -190,8 +190,23 @@ def _proto_repository_impl(ctx):
 
         # Populate Gazelle directive at root build file and
         lines = ["# " + d for d in ctx.attr.build_directives] + [
-            "",
+            'load("@build_stack_rules_proto//rules:proto_repository_info.bzl", "proto_repository_info")',
             'exports_files(["%s"])' % ctx.attr.imports_out,
+            "proto_repository_info(",
+            "    name = 'proto_repository',",
+            "    commit = '%s'," % ctx.attr.commit,
+            "    tag = '%s'," % ctx.attr.tag,
+            "    vcs = '%s'," % ctx.attr.vcs,
+            "    urls = %s," % ctx.attr.urls,
+            "    sha256 = '%s'," % ctx.attr.sha256,
+            "    strip_prefix = '%s'," % ctx.attr.strip_prefix,
+            "    source_host = '%s'," % ctx.attr.source_host,
+            "    source_owner = '%s'," % ctx.attr.source_owner,
+            "    source_repo = '%s'," % ctx.attr.source_repo,
+            "    source_prefix = '%s'," % ctx.attr.source_prefix,
+            "    source_commit = '%s'," % ctx.attr.source_commit,
+            "    visibility = ['//visibility:public'],",
+            ")",
         ]
         ctx.file(
             build_file_name,
@@ -239,8 +254,8 @@ def _proto_repository_impl(ctx):
         if ctx.attr.imports:
             protoimports = ",".join([str(ctx.path(lbl).realpath) for lbl in ctx.attr.imports])
             cmd.extend(["-proto_imports_in", protoimports])
-        if ctx.attr.override_go_googleapis:
-            cmd.extend(["-override_go_googleapis"])
+        if ctx.attr.reresolve_known_proto_imports:
+            cmd.extend(["-reresolve_known_proto_imports"])
 
         cmd.extend(ctx.attr.build_extra_args)
         cmd.append(ctx.path(""))
@@ -262,6 +277,7 @@ def _proto_repository_impl(ctx):
 go_repository = repository_rule(
     implementation = _proto_repository_impl,
     attrs = {
+
         # Fundamental attributes of a go repository
         "importpath": attr.string(mandatory = False),  # True in go_repository
 
@@ -285,6 +301,13 @@ go_repository = repository_rule(
         "strip_prefix": attr.string(),
         "type": attr.string(),
         "sha256": attr.string(),
+
+        # Attributes for a repository that is publically hosted by github
+        "source_host": attr.string(default = "github.com"),
+        "source_owner": attr.string(),
+        "source_repo": attr.string(),
+        "source_prefix": attr.string(),
+        "source_commit": attr.string(),
 
         # Attributes for a module that should be downloaded with the Go toolchain.
         "version": attr.string(),
@@ -347,7 +370,7 @@ go_repository = repository_rule(
         ),
         "imports_out": attr.string(default = "imports.csv"),
         "deleted_files": attr.string_list(),
-        "override_go_googleapis": attr.bool(),
+        "reresolve_known_proto_imports": attr.bool(),
     },
 )
 
@@ -383,3 +406,35 @@ def patch(ctx):
         if st.return_code:
             fail("Error applying patch command %s:\n%s%s" %
                  (cmd, st.stdout, st.stderr))
+
+def github_proto_repository(name, owner, repo, commit, prefix = "", build_file_expunge = True, build_file_proto_mode = "file", **kwargs):
+    """github_proto_repository is a macro for a proto_repository hosted at github.com
+
+    Args:
+        name: the name of the rule
+        owner: the github owner (e.g. 'protocolbuffers')
+        repo: the github repo name (e.g. 'protobuf')
+        prefix: the strip_prefix value for the repo (e.g. 'src')
+        commit: the git commit (required for this macro)
+        build_file_expunge: defaults to true for this macro.
+        build_file_proto_mode: defaults to 'file' for this macro.
+        **kwargs: the kwargs accumulator
+
+    """
+    strip_prefix = "%s-%s" % (repo, commit)
+    if prefix:
+        strip_prefix += "/" + prefix
+
+    proto_repository(
+        name = name,
+        source_host = "github.com",
+        source_owner = owner,
+        source_repo = repo,
+        source_commit = commit,
+        source_prefix = prefix,
+        strip_prefix = strip_prefix,
+        build_file_expunge = build_file_expunge,
+        build_file_proto_mode = build_file_proto_mode,
+        urls = ["https://%s/%s/archive/%s.tar.gz" % (owner, repo, commit)],
+        **kwargs
+    )

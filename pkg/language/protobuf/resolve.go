@@ -56,7 +56,7 @@ func (pl *protobufLang) Resolve(
 	from label.Label,
 ) {
 	if r.Kind() == overrideKindName {
-		resolveOverrideRule(from.Pkg, r, protoc.GlobalResolver())
+		resolveOverrideRule(c, from.Pkg, r, protoc.GlobalResolver())
 		return
 	}
 

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package order;
+
+import "customer/customer.proto";
+
+option java_multiple_files = true;
+option java_package = "com.github.stackb.rules_proto.example.golden.testdata.starlark_java.order";
+
+message Order {
+    customer.Customer customer = 1;
+}

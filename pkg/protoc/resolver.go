@@ -196,8 +196,12 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 	}
 	if got, ok := known[imp]; ok {
 		res := make([]resolve.FindResult, len(got))
-		for i, l := range got {
-			res[i] = resolve.FindResult{Label: l}
+		// use last-wins semantics by providing FindResults in reverse to how
+		// they were provided.
+		var index int
+		for i := len(got) - 1; i >= 0; i-- {
+			res[index] = resolve.FindResult{Label: got[i]}
+			index++
 		}
 		return res
 	}

@@ -33,25 +33,31 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 
 # Table of Contents
 
+- [`rules_proto (v2)`](#rules_proto-v2)
+- [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
-  - [Workspace Boilerplate](#workspace-boilerplate)
+  - [`WORKSPACE` Boilerplate](#workspace-boilerplate)
   - [Gazelle Setup](#gazelle-setup)
   - [Gazelle Configuration](#gazelle-configuration)
     - [Build Directives](#build-directives)
-    - [YAML Config File](#yaml-configuration)
+    - [YAML Configuration](#yaml-configuration)
   - [Running Gazelle](#running-gazelle)
-- [Build Rules](#build-rules)
-  - [proto_compile](#proto_compile)
-  - [proto_plugin](#proto_plugin)
-  - [proto_compiled_sources](#proto_compiled_sources)
-  - [Deep dive on the mappings attribute](#the-output_mappings-attribute)
-- [Repository Rules](#repository-rules)
-  - [proto_repository](#proto_repository)
-  - [proto_gazelle](#proto_gazelle)
-- [Plugin Implementations](#plugin-implementations)
-- [Rule Implementations](#rule-implementations)
-- [Writing Custom Plugins & Rules](#writing-custom-plugins-and-rules)
-- [History of this repository](#history)
+  - [Build Rules](#build-rules)
+    - [proto\_compile](#proto_compile)
+    - [proto\_plugin](#proto_plugin)
+    - [proto\_compiled\_sources](#proto_compiled_sources)
+    - [proto\_compile\_assets](#proto_compile_assets)
+    - [The `output_mappings` attribute](#the-output_mappings-attribute)
+  - [Repository Rules](#repository-rules)
+  - [proto\_repository](#proto_repository)
+  - [proto\_gazelle](#proto_gazelle)
+  - [golden\_filegroup](#golden_filegroup)
+  - [Plugin Implementations](#plugin-implementations)
+  - [Rule Implementations](#rule-implementations)
+- [Writing Custom Plugins and Rules](#writing-custom-plugins-and-rules)
+  - [+/- of golang implementations](#--of-golang-implementations)
+  - [+/- of starlark implementations](#--of-starlark-implementations)
+- [History](#history)
 
 # Getting Started
 
@@ -393,7 +399,7 @@ potential conflicts with other possible gazelle extensions, using the name
 The core of `stackb/rules_proto` contains two build rules:
 
 | Rule            | Description                                             |
-|-----------------|---------------------------------------------------------|
+| --------------- | ------------------------------------------------------- |
 | `proto_compile` | Executes the `protoc` tool.                             |
 | `proto_plugin`  | Provides static `protoc` plugin-specific configuration. |
 
@@ -593,7 +599,7 @@ proto_repository(
     ],
     build_file_generation = "clean",
     build_file_proto_mode = "file",
-    override_go_googleapis = True,
+    reresolve_known_proto_imports = True,
     proto_language_config_file = "//example:config.yaml",
     strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
     type = "zip",
@@ -618,7 +624,7 @@ Takeaways:
   external workspace.
 - `proto_language_config_file` is an optional label pointing to a valid
   `config.yaml` file to configure this extension.
-- `override_go_googleapis` is a boolean attribute that has special meaning for
+- `reresolve_known_proto_imports` is a boolean attribute that has special meaning for
   the googleapis repository. Due to the fact that the builtin gazelle "proto"
   extension has
   [hardcoded logic](https://github.com/bazelbuild/bazel-gazelle/blob/master/language/proto/known_proto_imports.go)
@@ -765,7 +771,7 @@ The plugin name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 
 | Plugin                                                                                                                 |
-|------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------------------------------------------------------------------------------------- |
 | [builtin:cpp](pkg/plugin/builtin/cpp_plugin.go)                                                                        |
 | [builtin:csharp](pkg/plugin/builtin/csharp_plugin.go)                                                                  |
 | [builtin:java](pkg/plugin/builtin/java_plugin.go)                                                                      |
@@ -801,7 +807,7 @@ The rule name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/rule_name convention.
 
 | Plugin                                                                                            |
-|---------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------- |
 | [stackb:rules_proto:grpc_cc_library](pkg/rule/rules_cc/grpc_cc_library.go)                        |
 | [stackb:rules_proto:grpc_closure_js_library](pkg/rule/rules_closure/grpc_closure_js_library.go)   |
 | [stackb:rules_proto:grpc_java_library](pkg/rule/rules_java/grpc_java_library.go)                  |

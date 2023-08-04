@@ -17,6 +17,10 @@ plugins:
       - "@org_golang_google_grpc//codes"
       - "@org_golang_google_grpc//status"
 rules:
+  - name: proto_descriptor_set
+    implementation: stackb:rules_proto:proto_descriptor_set
+    visibility:
+      - //visibility:public
   - name: proto_compile
     implementation: stackb:rules_proto:proto_compile
     visibility:
@@ -63,3 +67,9 @@ languages:
       - proto_compile
       - proto_go_library
     enabled: true
+  - name: descriptor
+    plugins:
+      - protoc-gen-go
+    rules:
+      - proto_descriptor_set
+    enabled: false

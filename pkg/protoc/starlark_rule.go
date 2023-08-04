@@ -32,7 +32,6 @@ func loadStarlarkLanguageRule(name, filename string, src interface{}, reporter f
 	newErrorf := func(msg string, args ...interface{}) error {
 		err := fmt.Errorf(filename+": "+msg, args...)
 		errorReporter(err)
-		reporter(err.Error())
 		return err
 	}
 
@@ -183,11 +182,18 @@ func (p *starlarkLanguageRule) ProvideRule(rc *LanguageRuleConfig, pc *ProtocCon
 	var result RuleProvider
 	switch value := value.(type) {
 	case *starlarkstruct.Struct:
+		var experimentalResolveDepsAttr string
+		if attr, err := value.Attr("experimental_resolve_attr"); err == nil {
+			if str, ok := attr.(starlark.String); ok {
+				experimentalResolveDepsAttr = str.GoString()
+			}
+		}
 		result = &starlarkRuleProvider{
-			name:          p.name,
-			provider:      value,
-			reporter:      p.reporter,
-			errorReporter: p.errorReporter,
+			name:                        p.name,
+			provider:                    value,
+			reporter:                    p.reporter,
+			errorReporter:               p.errorReporter,
+			experimentalResolveDepsAttr: experimentalResolveDepsAttr,
 		}
 	default:
 		p.errorReporter("rule %q provide_rule returned invalid type: %T", p.name, value)
@@ -199,10 +205,11 @@ func (p *starlarkLanguageRule) ProvideRule(rc *LanguageRuleConfig, pc *ProtocCon
 
 // starlarkRuleProvider implements RuleProvider via a starlark struct.
 type starlarkRuleProvider struct {
-	name          string
-	provider      *starlarkstruct.Struct
-	reporter      func(thread *starlark.Thread, msg string)
-	errorReporter func(msg string, args ...interface{}) error
+	name                        string
+	provider                    *starlarkstruct.Struct
+	reporter                    func(thread *starlark.Thread, msg string)
+	errorReporter               func(msg string, args ...interface{}) error
+	experimentalResolveDepsAttr string
 }
 
 // Kind implements part of the RuleProvider interface.
@@ -218,7 +225,6 @@ func (s *starlarkRuleProvider) Kind() string {
 // Name implements part of the RuleProvider interface.
 func (s *starlarkRuleProvider) Name() string {
 	return structAttrString(s.provider, "name", s.errorReporter)
-
 }
 
 // Rule implements part of the RuleProvider interface.
@@ -295,11 +301,20 @@ func (s *starlarkRuleProvider) Rule(othergen ...*rule.Rule) *rule.Rule {
 
 // Resolve implements part of the RuleProvider interface.
 func (s *starlarkRuleProvider) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-
+	if s.experimentalResolveDepsAttr != "" {
+		if r.Attr(s.experimentalResolveDepsAttr) != nil {
+			ResolveDepsAttr(s.experimentalResolveDepsAttr, false)(c, ix, r, imports, from)
+		}
+	}
 }
 
 // Imports implements part of the RuleProvider interface.
 func (s *starlarkRuleProvider) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
+	if s.experimentalResolveDepsAttr != "" {
+		if lib, ok := r.PrivateAttr(ProtoLibraryKey).(ProtoLibrary); ok {
+			return ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+		}
+	}
 	return nil
 }
 

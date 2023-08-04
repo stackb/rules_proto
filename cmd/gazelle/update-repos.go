@@ -16,6 +16,7 @@ limitations under the License.
 package main
 
 import (
+	"bytes"
 	"errors"
 	"flag"
 	"fmt"
@@ -30,6 +31,8 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/merger"
 	"github.com/bazelbuild/bazel-gazelle/repo"
 	"github.com/bazelbuild/bazel-gazelle/rule"
+	"github.com/stackb/rules_proto/cmd/gazelle/internal/module"
+	"github.com/stackb/rules_proto/cmd/gazelle/internal/wspace"
 )
 
 type updateReposConfig struct {
@@ -77,7 +80,7 @@ func (*updateReposConfigurer) RegisterFlags(fs *flag.FlagSet, cmd string, c *con
 	c.Exts[updateReposName] = uc
 	fs.StringVar(&uc.repoFilePath, "from_file", "", "Gazelle will translate repositories listed in this file into repository rules in WORKSPACE or a .bzl macro function. Gopkg.lock and go.mod files are supported")
 	fs.Var(macroFlag{macroFileName: &uc.macroFileName, macroDefName: &uc.macroDefName}, "to_macro", "Tells Gazelle to write repository rules into a .bzl macro function rather than the WORKSPACE file. . The expected format is: macroFile%defName")
-	fs.BoolVar(&uc.pruneRules, "prune", false, "When enabled, Gazelle will remove rules that no longer have equivalent repos in the Gopkg.lock/go.mod file. Can only used with -from_file.")
+	fs.BoolVar(&uc.pruneRules, "prune", false, "When enabled, Gazelle will remove rules that no longer have equivalent repos in the go.mod file. Can only used with -from_file.")
 }
 
 func (*updateReposConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
@@ -102,7 +105,7 @@ func (*updateReposConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) err
 	}
 
 	var err error
-	workspacePath := FindWORKSPACEFile(c.RepoRoot)
+	workspacePath := wspace.FindWORKSPACEFile(c.RepoRoot)
 	uc.workspace, err = rule.LoadWorkspaceFile(workspacePath, "")
 	if err != nil {
 		return fmt.Errorf("loading WORKSPACE file: %v", err)
@@ -123,24 +126,44 @@ func updateRepos(wd string, args []string) (err error) {
 	// Build configuration with all languages.
 	cexts := make([]config.Configurer, 0, len(languages)+2)
 	cexts = append(cexts, &config.CommonConfigurer{}, &updateReposConfigurer{})
-	kinds := make(map[string]rule.KindInfo)
-	loads := []rule.LoadInfo{}
+
 	for _, lang := range languages {
 		cexts = append(cexts, lang)
-		loads = append(loads, lang.Loads()...)
-		for kind, info := range lang.Kinds() {
-			kinds[kind] = info
-		}
 	}
+
 	c, err := newUpdateReposConfiguration(wd, args, cexts)
 	if err != nil {
 		return err
 	}
 	uc := getUpdateReposConfig(c)
 
+	moduleToApparentName, err := module.ExtractModuleToApparentNameMapping(c.RepoRoot)
+	if err != nil {
+		return err
+	}
+
+	kinds := make(map[string]rule.KindInfo)
+	loads := []rule.LoadInfo{}
+	for _, lang := range languages {
+		if moduleAwareLang, ok := lang.(language.ModuleAwareLanguage); ok {
+			loads = append(loads, moduleAwareLang.ApparentLoads(moduleToApparentName)...)
+		} else {
+			loads = append(loads, lang.Loads()...)
+		}
+		for kind, info := range lang.Kinds() {
+			kinds[kind] = info
+		}
+	}
+
 	// TODO(jayconrod): move Go-specific RemoteCache logic to language/go.
 	var knownRepos []repo.Repo
+
+	reposFromDirectives := make(map[string]bool)
 	for _, r := range c.Repos {
+		if repo.IsFromDirective(r) {
+			reposFromDirectives[r.Name()] = true
+		}
+
 		if r.Kind() == "go_repository" {
 			knownRepos = append(knownRepos, repo.Repo{
 				Name:     r.Name(),
@@ -181,6 +204,12 @@ func updateRepos(wd string, args []string) (err error) {
 	emptyForFiles := make(map[*rule.File][]*rule.Rule)
 	genNames := make(map[string]*rule.Rule)
 	for _, r := range gen {
+
+		// Skip generation of rules that are defined as directives.
+		if reposFromDirectives[r.Name()] {
+			continue
+		}
+
 		if existingRule := genNames[r.Name()]; existingRule != nil {
 			import1 := existingRule.AttrString("importpath")
 			import2 := r.AttrString("importpath")
@@ -210,7 +239,7 @@ func updateRepos(wd string, args []string) (err error) {
 		macroPath = filepath.Join(c.RepoRoot, filepath.Clean(uc.macroFileName))
 	}
 	for f := range genForFiles {
-		if macroPath == "" && IsWORKSPACE(f.Path) ||
+		if macroPath == "" && wspace.IsWORKSPACE(f.Path) ||
 			macroPath != "" && f.Path == macroPath && f.DefName == uc.macroDefName {
 			newGenFile = f
 			break
@@ -290,8 +319,11 @@ func updateRepos(wd string, args []string) (err error) {
 			if f.DefName != "" {
 				uf.SortMacro()
 			}
-			if err := uf.Save(uf.Path); err != nil {
-				return err
+			newContent := f.Format()
+			if !bytes.Equal(f.Content, newContent) {
+				if err := uf.Save(uf.Path); err != nil {
+					return err
+				}
 			}
 			delete(updatedFiles, f.Path)
 		}
@@ -480,8 +512,10 @@ func ensureMacroInWorkspace(uc *updateReposConfig, insertIndex int) (updated boo
 	// be called somewhere else.
 	macroValue := uc.macroFileName + "%" + uc.macroDefName
 	for _, d := range uc.workspace.Directives {
-		if d.Key == "repository_macro" && d.Value == macroValue {
-			return false
+		if d.Key == "repository_macro" {
+			if parsed, _ := repo.ParseRepositoryMacroDirective(d.Value); parsed != nil && parsed.Path == uc.macroFileName && parsed.DefName == uc.macroDefName {
+				return false
+			}
 		}
 	}
 

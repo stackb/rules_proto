@@ -26,6 +26,20 @@ DEFAULT_LANGUAGES = [
     "@build_stack_rules_proto//language/protobuf",
 ]
 
+def _valid_env_variable_name(name):
+    """ Returns if a string is in the regex [a-zA-Z_][a-zA-Z0-9_]*
+
+    Given that bazel lacks support of regex, we need to implement
+    a poor man validation
+    """
+    if not name:
+        return False
+    for i, c in enumerate(name.elems()):
+        if c.isalpha() or c == "_" or (i > 0 and c.isdigit()):
+            continue
+        return False
+    return True
+
 def _gazelle_runner_impl(ctx):
     args = [ctx.attr.command]
     if ctx.attr.mode:
@@ -44,6 +58,13 @@ def _gazelle_runner_impl(ctx):
         args.extend(["-proto_imports_in", imports])
 
     args.extend([ctx.expand_location(arg, ctx.attr.data) for arg in ctx.attr.extra_args])
+
+    for key in ctx.attr.env:
+        if not _valid_env_variable_name(key):
+            fail("Invalid environmental variable name: '%s'" % key)
+
+    env = "\n".join(["export %s=%s" % (x, shell.quote(y)) for (x, y) in ctx.attr.env.items()])
+
     out_file = ctx.actions.declare_file(ctx.label.name + ".bash")
     go_tool = ctx.toolchains["@io_bazel_rules_go//go:toolchain"].sdk.go
     substitutions = {
@@ -56,6 +77,8 @@ def _gazelle_runner_impl(ctx):
 """.format(label = str(ctx.label)),
         "@@RUNNER_LABEL@@": shell.quote(str(ctx.label)),
         "@@GOTOOL@@": shell.quote(go_tool.path),
+        "@@ENV@@": env,
+        "@@REPO_CONFIG_SHORT_PATH@@": "",
     }
     ctx.actions.expand_template(
         template = ctx.file._template,
@@ -63,10 +86,16 @@ def _gazelle_runner_impl(ctx):
         substitutions = substitutions,
         is_executable = True,
     )
-    runfiles = ctx.runfiles(files = [
+
+    runfiles = ctx.runfiles(files = ctx.files.cfgs + ctx.files.imports + [
         ctx.executable.gazelle,
         go_tool,
-    ] + ctx.files.cfgs + ctx.files.imports + ctx.files.data)
+    ]).merge(
+        ctx.attr.gazelle[DefaultInfo].default_runfiles,
+    )
+    for d in ctx.attr.data:
+        runfiles = runfiles.merge(d[DefaultInfo].default_runfiles)
+
     return [DefaultInfo(
         files = depset([out_file]),
         runfiles = runfiles,
@@ -93,7 +122,7 @@ _gazelle_runner = rule(
             default = "",
         ),
         "external": attr.string(
-            values = ["", "external", "vendored"],
+            values = ["", "external", "vendored", "static"],
             default = "",
         ),
         "build_tags": attr.string_list(),
@@ -102,6 +131,7 @@ _gazelle_runner = rule(
         "data": attr.label_list(allow_files = True),
         "imports": attr.label_list(allow_files = True),
         "cfgs": attr.label_list(allow_files = True),
+        "env": attr.string_dict(),
         "_template": attr.label(
             default = "@bazel_gazelle//internal:gazelle.bash.in",
             allow_single_file = True,

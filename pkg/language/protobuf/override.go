@@ -33,7 +33,8 @@ func makeProtoOverrideRule(libs []protoc.ProtoLibrary) *rule.Rule {
 	return overrideRule
 }
 
-func resolveOverrideRule(rel string, overrideRule *rule.Rule, resolver protoc.ImportResolver) {
+func resolveOverrideRule(c *config.Config, rel string, overrideRule *rule.Rule, resolver protoc.ImportResolver) {
+
 	libs := overrideRule.PrivateAttr(protoLibrariesRuleKey).([]protoc.ProtoLibrary)
 	if len(libs) == 0 {
 		return
@@ -42,21 +43,8 @@ func resolveOverrideRule(rel string, overrideRule *rule.Rule, resolver protoc.Im
 	for _, lib := range libs {
 		r := lib.Rule()
 
-		// filter out go_googleapis dependencies and re-resolve them anew.
-		keep := make([]label.Label, 0)
-
-		for _, dep := range r.AttrStrings("deps") {
-			lbl, _ := label.Parse(dep)
-			// log.Printf("override resolve //%s:%s dep %v", rel, r.Name(), lbl)
-			if lbl.Repo == "go_googleapis" {
-				continue
-			}
-			if lbl.Relative {
-				// relative labels will be repopulated via resolution (below)
-				continue
-			}
-			keep = append(keep, lbl)
-		}
+		// re-resolve dependencies.
+		deps := make([]label.Label, 0)
 
 		imports := r.PrivateAttr(config.GazelleImportsKey)
 		if imps, ok := imports.([]string); ok {
@@ -64,9 +52,9 @@ func resolveOverrideRule(rel string, overrideRule *rule.Rule, resolver protoc.Im
 				result := resolver.Resolve("proto", "proto", imp)
 				if len(result) > 0 {
 					first := result[0]
-					keep = append(keep, first.Label)
+					deps = append(deps, first.Label)
 					if debugOverrides {
-						log.Println("go_googleapis resolve imports HIT", first.Label)
+						log.Println("go_googleapis resolve imports HIT", imp, first.Label)
 					}
 				} else {
 					if debugOverrides {
@@ -76,9 +64,9 @@ func resolveOverrideRule(rel string, overrideRule *rule.Rule, resolver protoc.Im
 			}
 		}
 
-		if len(keep) > 0 {
-			ss := make([]string, len(keep))
-			for i, lbl := range keep {
+		if len(deps) > 0 {
+			ss := make([]string, len(deps))
+			for i, lbl := range deps {
 				ss[i] = lbl.Rel("", rel).String()
 			}
 			r.SetAttr("deps", protoc.DeduplicateAndSort(ss))

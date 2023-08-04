@@ -58,6 +58,7 @@ toolchain(
 
 filegroup(
     name = "all_files",
+    testonly = True,
     srcs = [
         "BUILD.bazel",
         "toolchain.bzl",

@@ -2,10 +2,13 @@
 buildifier:
   version: 5.1.0
   warnings: "-function-docstring,-function-docstring-header,-module-docstring,-function-docstring-args,-list-append"
-bazel: 5.1.1
+bazel: 5.4.0
 tasks:
   default_workspace_ubuntu1804:
     platform: ubuntu1804
+    build_targets:
+      - "@protoapis//..."
+      - "@googleapis//..."
     test_targets:
       - //example/...
       - //language/...
@@ -19,6 +22,9 @@ tasks:
       - --deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
   default_workspace_macos:
     platform: macos
+    build_targets:
+      - "@protoapis//..."
+      - "@googleapis//..."
     test_targets:
       - //example/...
       - //language/...

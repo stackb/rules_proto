@@ -1,3 +1,5 @@
+/bazel-*
+/.vscode
 __pycache__
 docs/vendor
 node_modules
