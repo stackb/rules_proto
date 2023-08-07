@@ -50,6 +50,7 @@ def _proto_ts_library_impl(ctx):
 
     # build the tsc command
     command = [ctx.executable.tsc.path, " --declaration"]
+    command += ctx.attr.default_args
     command += ctx.attr.args
     command += [f.path for f in ctx.files.srcs]
 
@@ -112,6 +113,10 @@ proto_ts_library = rule(
             mandatory = True,
             doc = "typescript compiler executable",
             executable = True,
+        ),
+        "default_args": attr.string_list(
+            doc = "additional arguments always added to the tsc compile action",
+            default = ["--skipLibCheck"],
         ),
         "args": attr.string_list(
             doc = "additional arguments for the tsc compile action",
