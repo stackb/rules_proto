@@ -55,7 +55,6 @@ rules:
       - "//visibility:public"
     deps:
       - "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java"
-
   - name: proto_py_library
     implementation: stackb:rules_proto:proto_py_library
     visibility:

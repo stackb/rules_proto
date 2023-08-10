@@ -35,7 +35,12 @@
 # gazelle:proto_rule proto_java_library deps @com_google_protobuf//:protobuf_java
 # gazelle:proto_rule proto_java_library visibility //visibility:public
 # gazelle:proto_rule grpc_java_library implementation stackb:rules_proto:grpc_java_library
-# gazelle:proto_rule grpc_java_library deps @build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java
+# gazelle:proto_rule grpc_java_library deps @io_grpc_grpc_java//stub
+# gazelle:proto_rule grpc_java_library deps @io_grpc_grpc_java//stub:javax_annotation
+# gazelle:proto_rule grpc_java_library deps @io_grpc_grpc_java//context
+# gazelle:proto_rule grpc_java_library deps @io_grpc_grpc_java//protobuf
+# gazelle:proto_rule grpc_java_library deps @com_google_guava_guava//jar
+
 # gazelle:proto_rule grpc_java_library visibility //visibility:public
 # gazelle:proto_language java plugin java
 # gazelle:proto_language java plugin protoc-gen-grpc-java
@@ -102,8 +107,12 @@
 # gazelle:proto_plugin ts_proto option esModuleInterop=true
 # gazelle:proto_rule proto_ts_library implementation stackb:rules_proto:proto_ts_library
 # gazelle:proto_rule proto_ts_library visibility //visibility:public
-# gazelle:proto_rule proto_ts_library deps //:node_modules/protobufjs
+# gazelle:proto_rule proto_ts_library deps //:node_modules/@nestjs/microservices
+# gazelle:proto_rule proto_ts_library deps //:node_modules/@types/node
 # gazelle:proto_rule proto_ts_library deps //:node_modules/long
+# gazelle:proto_rule proto_ts_library deps //:node_modules/protobufjs
+# gazelle:proto_rule proto_ts_library deps //:node_modules/rxjs
+
 # Set an out_dir so that we don't conflict with the closurejs output
 # gazelle:proto_rule proto_ts_library attr out_dir ts
 

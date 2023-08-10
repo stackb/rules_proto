@@ -1,8 +1,8 @@
 load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
+load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
-load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
@@ -13,6 +13,31 @@ proto_library(
     srcs = ["thing.proto"],
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:timestamp_proto"],
+)
+
+proto_closure_js_library(
+    name = "thing_closure_js_library",
+    srcs = ["thing_closure.js"],
+    internal_descriptors = [
+        "//example/thing:thing_proto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+    suppress = [
+        "JSC_IMPLICITLY_NONNULL_JSDOC",
+        "JSC_UNUSED_LOCAL_ASSIGNMENT",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "thing_closure_js_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
+        "import_style=closure",
+        "library=example/thing/thing_closure",
+    ]},
+    outputs = ["thing_closure.js"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
+    proto = "thing_proto",
 )
 
 proto_cc_library(

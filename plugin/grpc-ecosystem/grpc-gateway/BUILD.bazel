@@ -8,8 +8,8 @@ proto_plugin(
 )
 
 proto_plugin(
-    name = "protoc-gen-grpc-openapiv2",
-    tool = "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-openapiv2",
+    name = "protoc-gen-swagger",
+    tool = "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-swagger",
     visibility = ["//visibility:public"],
 )
 

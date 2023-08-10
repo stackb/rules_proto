@@ -114,21 +114,23 @@ load(
     "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS",
     "grpc_java_repositories",
 )
+load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
+
+protobuf_deps()
 
 maven_install(
-    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
+    name = "maven",
+    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS + PROTOBUF_MAVEN_ARTIFACTS,
     generate_compat_repositories = True,
-    maven_install_json = "//:maven_install.json",
+    # TODO(pcj): why does pinning of this repository cause such problems?
+    # example: no such package '@com_google_errorprone_error_prone_annotations_2_18_0//file': The repository '@com_google_errorprone_error_prone_annotations_2_18_0' could not be resolved: Repository '@com_google_errorprone_error_prone_annotations_2_18_0' is not defined and referenced by '@maven//:com_google_errorprone_error_prone_annotations_2_18_0_extension'
+    # maven_install_json = "//:maven_install.json",
     override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
-    repositories = [
-        "https://repo.maven.apache.org/maven2/",
-    ],
+    repositories = ["https://repo.maven.apache.org/maven2/"],
+    strict_visibility = True,
 )
 
-load(
-    "@maven//:compat.bzl",
-    "compat_repositories",
-)
+load("@maven//:compat.bzl", "compat_repositories")
 
 compat_repositories()
 
@@ -219,6 +221,10 @@ rules_closure_dependencies()
 # NodeJS
 # ----------------------------------------------------
 
+load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
+
+build_bazel_rules_nodejs_dependencies()
+
 load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 
 node_repositories()
@@ -232,7 +238,7 @@ load("//:proto_repositories.bzl", "proto_repositories")
 proto_repositories()
 
 # ----------------------------------------------------
-# Typescript
+# @aspect_rules_ts
 # ----------------------------------------------------
 load("@aspect_rules_ts//ts:repositories.bzl", "rules_ts_dependencies")
 
@@ -241,7 +247,10 @@ rules_ts_dependencies(
     ts_version_from = "//:package.json",
 )
 
-# Fetch and register node, if you haven't already
+# ----------------------------------------------------
+# @rules_nodejs
+# ----------------------------------------------------
+
 load("@rules_nodejs//nodejs:repositories.bzl", "DEFAULT_NODE_VERSION", "nodejs_register_toolchains")
 
 nodejs_register_toolchains(
@@ -259,7 +268,6 @@ npm_translate_lock(
     verify_node_modules_ignored = "//:.bazelignore",
 )
 
-load("@npm_ts_proto//:repositories.bzl", "npm_repositories")
+load("@npm_ts_proto//:repositories.bzl", npm_ts_proto_repositories = "npm_repositories")
 
-# Declares npm_import rules from the pnpm-lock.yaml file
-npm_repositories()
+npm_ts_proto_repositories()

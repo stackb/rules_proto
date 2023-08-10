@@ -1,0 +1,23 @@
+load("@aspect_rules_js//js:defs.bzl", "js_binary")
+
+js_binary(
+    name = "client",
+    data = [
+        "//:node_modules/@grpc/grpc-js",
+        "//:node_modules/google-protobuf",
+        "//example/routeguide:features_json",
+        "//example/routeguide:routeguide_grpc_nodejs_library",
+    ],
+    entry_point = "client.js",
+)
+
+js_binary(
+    name = "server",
+    data = [
+        "//:node_modules/@grpc/grpc-js",
+        "//:node_modules/google-protobuf",
+        "//example/routeguide:features_json",
+        "//example/routeguide:routeguide_grpc_nodejs_library",
+    ],
+    entry_point = "server.js",
+)

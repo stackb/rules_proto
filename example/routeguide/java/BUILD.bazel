@@ -5,20 +5,28 @@ java_library(
     srcs = ["RouteGuideUtil.java"],
     resources = ["//example/routeguide:feature_db"],
     exports = ["//example/routeguide:routeguide_grpc_java_library"],
-    runtime_deps = ["@io_grpc_grpc_java//netty"],
-    deps = ["//example/routeguide:routeguide_grpc_java_library"],
+    deps = [
+        "//example/routeguide:routeguide_grpc_java_library",
+        "@com_google_protobuf//java/util",
+    ],
 )
 
 java_binary(
     name = "client",
     srcs = ["RouteGuideClient.java"],
     main_class = "example.routeguide.java.RouteGuideClient",
-    deps = [":util"],
+    deps = [
+        ":util",
+        "@io_grpc_grpc_java//netty",
+    ],
 )
 
 java_binary(
     name = "server",
     srcs = ["RouteGuideServer.java"],
     main_class = "example.routeguide.java.RouteGuideServer",
-    deps = [":util"],
+    deps = [
+        ":util",
+        "@io_grpc_grpc_java//netty",
+    ],
 )

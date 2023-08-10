@@ -32,17 +32,17 @@ proto_compile(
     options = {
         "@build_stack_rules_proto//plugin/builtin:closurejs": [
             "import_style=closure",
-            "library=test",
+            "library=test_closure",
         ],
         "@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"],
     },
     outputs = [
         "Test.pbobjc.h",
         "Test.pbobjc.m",
-        "test.js",
         "test.pb.cc",
         "test.pb.h",
         "test.srcjar",
+        "test_closure.js",
         "test_pb.js",
         "test_pb.rb",
         "test_pb2.py",

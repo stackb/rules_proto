@@ -28,7 +28,7 @@ def proto_ts_library(
         name = name,
         tsconfig = tsconfig or {
             "compilerOptions": {
-                "declaration": True,
+                "declaration": declaration,
             },
         },
         **kwargs

@@ -46,9 +46,7 @@ depsgen(
 
 depsgen(
     name = "ts_proto",
-    deps = [
-        ":aspect_rules_ts",
-    ],
+    deps = [":aspect_rules_ts"],
 )
 
 depsgen(
@@ -277,32 +275,33 @@ proto_dependency(
     urls = ["https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"],
 )
 
-# Release: v1.35.0
-# Commit: master
-# Date: 2021-01-12 23:05:49 +0000 UTC
-# URL: https://github.com/grpc/grpc-java/releases/tag/v1.35.0
-# Branch: master
-# Commit: 7f7821c616598ce4e33d2045c5641b2348728cb8
-# Date: 2021-02-10 00:56:26 +0000 UTC
-# URL: https://github.com/grpc/grpc-java/commit/7f7821c616598ce4e33d2045c5641b2348728cb8
-#
-# interop-testing: add fake altsHandshakerService for test (#7847)
-# Size: 2337953 (2.3 MB)
+# Release: v1.57.1
+# TargetCommitish: master
+# Date: 2023-08-01 17:05:26 +0000 UTC
+# URL: https://github.com/grpc/grpc-java/releases/tag/v1.57.1
+# Size: 2962849 (3.0 MB)
 proto_dependency(
     name = "io_grpc_grpc_java",
     repository_rule = "http_archive",
-    sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
-    strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
-    urls = ["https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz"],
+    sha256 = "4a021ea9ebb96f5841a135c168209cf2413587a0f8ce71a2bf37b3aad847b0d0",
+    strip_prefix = "grpc-java-1.57.1",
+    urls = ["https://github.com/grpc/grpc-java/archive/v1.57.1.tar.gz"],
     deps = [":rules_jvm_external"],
 )
 
+# Branch: 5.3
+# Commit: e6c1ff21e002bf97a7b1c07d63edd508a8dc9659
+# Date: 2023-06-23 14:48:11 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_jvm_external/commit/e6c1ff21e002bf97a7b1c07d63edd508a8dc9659
+#
+# Prepare for 5.3 release (#922)
+# Size: 6964597 (7.0 MB)
 proto_dependency(
     name = "rules_jvm_external",
     repository_rule = "http_archive",
-    sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
-    strip_prefix = "rules_jvm_external-4.0",
-    urls = ["https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip"],
+    sha256 = "1ce86ffee65725300dc1f0017b7df89715c832de550137432dc1985d60a13155",
+    strip_prefix = "rules_jvm_external-e6c1ff21e002bf97a7b1c07d63edd508a8dc9659",
+    urls = ["https://github.com/bazelbuild/rules_jvm_external/archive/e6c1ff21e002bf97a7b1c07d63edd508a8dc9659.tar.gz"],
 )
 
 proto_dependency(
@@ -435,9 +434,8 @@ proto_dependency(
 proto_dependency(
     name = "rules_nodejs",
     repository_rule = "http_archive",
-    sha256 = "a833b08fc846e27a73ac2b7062e4f48cace0e72a072c6c3fa756847dc44246dd",
-    strip_prefix = "rules_nodejs-6.0.0",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/v6.0.0/rules_nodejs-v6.0.0.tar.gz"],
+    sha256 = "08337d4fffc78f7fe648a93be12ea2fc4e8eb9795a4e6aa48595b66b34555626",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.0/rules_nodejs-core-5.8.0.tar.gz"],
 )
 
 proto_dependency(

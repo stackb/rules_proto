@@ -15,6 +15,34 @@ proto_library(
     deps = ["//example/thing:thing_proto"],
 )
 
+proto_closure_js_library(
+    name = "place_closure_js_library",
+    srcs = ["place_closure.js"],
+    internal_descriptors = [
+        "//example/place:place_proto",
+        "//example/thing:thing_proto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+    suppress = [
+        "JSC_IMPLICITLY_NONNULL_JSDOC",
+        "JSC_UNUSED_LOCAL_ASSIGNMENT",
+    ],
+    visibility = ["//visibility:public"],
+    exports = ["//example/thing:thing_closure_js_library"],
+    deps = ["//example/thing:thing_closure_js_library"],
+)
+
+proto_compile(
+    name = "place_closure_js_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
+        "import_style=closure",
+        "library=example/place/place_closure",
+    ]},
+    outputs = ["place_closure.js"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
+    proto = "place_proto",
+)
+
 proto_cc_library(
     name = "place_cc_library",
     srcs = ["place.pb.cc"],

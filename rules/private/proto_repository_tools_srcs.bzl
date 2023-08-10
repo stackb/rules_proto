@@ -43,6 +43,7 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//example/thing:BUILD.bazel",
     "@build_stack_rules_proto//example/toolchain/prebuilt:BUILD.bazel",
     "@build_stack_rules_proto//example/toolchain/standard:BUILD.bazel",
+    "@build_stack_rules_proto//google/protobuf:BUILD",
     "@build_stack_rules_proto//language/example:BUILD.bazel",
     "@build_stack_rules_proto//language/example:example.go",
     "@build_stack_rules_proto//language/protobuf:BUILD.bazel",

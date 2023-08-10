@@ -42,10 +42,9 @@ def rules_nodejs():
     _maybe(
         http_archive,
         name = "rules_nodejs",
-        sha256 = "a833b08fc846e27a73ac2b7062e4f48cace0e72a072c6c3fa756847dc44246dd",
-        strip_prefix = "rules_nodejs-6.0.0",
+        sha256 = "08337d4fffc78f7fe648a93be12ea2fc4e8eb9795a4e6aa48595b66b34555626",
         urls = [
-            "https://github.com/bazelbuild/rules_nodejs/releases/download/v6.0.0/rules_nodejs-v6.0.0.tar.gz",
+            "https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.0/rules_nodejs-core-5.8.0.tar.gz",
         ],
     )
 

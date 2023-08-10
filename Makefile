@@ -31,3 +31,7 @@ get:
 	$(BAZEL) run @go_sdk//:bin/go -- get github.com/bazelbuild/bazel-gazelle@v0.31.0
 	$(BAZEL) run @go_sdk//:bin/go -- mod download github.com/bazelbuild/buildtools
 	$(BAZEL) run @go_sdk//:bin/go -- mod vendor
+
+update_pnpm_lock:
+	# nvm use 18
+	pnpm install --lockfile-only

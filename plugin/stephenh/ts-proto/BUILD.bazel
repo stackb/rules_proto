@@ -13,9 +13,6 @@ proto_plugin(
 
 filegroup(
     name = "all_files",
-    srcs = [
-        "BUILD.bazel",
-        "package.json",
-    ],
+    srcs = ["BUILD.bazel"],
     visibility = ["//plugin:__pkg__"],
 )
