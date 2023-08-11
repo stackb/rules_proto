@@ -51,7 +51,7 @@ func (s *ClosureJsLibrary) Name() string {
 func (s *ClosureJsLibrary) Srcs() []string {
 	srcs := make([]string, 0)
 	for _, output := range s.Outputs {
-		if strings.HasSuffix(output, ".js") {
+		if strings.HasSuffix(output, "_closure.js") {
 			srcs = append(srcs, protoc.StripRel(s.Config.Rel, output))
 		}
 	}

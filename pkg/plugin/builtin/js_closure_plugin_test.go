@@ -17,8 +17,8 @@ func TestJsClosurePlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:closurejs"),
-				plugintest.WithOutputs("test.js"),
-				plugintest.WithOptions("import_style=closure", "library=test"),
+				plugintest.WithOutputs("test_closure.js"),
+				plugintest.WithOptions("import_style=closure", "library=test_closure"),
 			),
 		},
 		"only services": {
@@ -29,8 +29,8 @@ func TestJsClosurePlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:closurejs"),
-				plugintest.WithOutputs("test.js"),
-				plugintest.WithOptions("import_style=closure", "library=test"),
+				plugintest.WithOutputs("test_closure.js"),
+				plugintest.WithOptions("import_style=closure", "library=test_closure"),
 			),
 		},
 		"single message & enum": {
@@ -41,8 +41,8 @@ func TestJsClosurePlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:closurejs"),
-				plugintest.WithOutputs("test.js"),
-				plugintest.WithOptions("import_style=closure", "library=test"),
+				plugintest.WithOutputs("test_closure.js"),
+				plugintest.WithOptions("import_style=closure", "library=test_closure"),
 			),
 		},
 		"with a package": {
@@ -53,8 +53,8 @@ func TestJsClosurePlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:closurejs"),
-				plugintest.WithOutputs("test.js"),
-				plugintest.WithOptions("import_style=closure", "library=test"),
+				plugintest.WithOutputs("test_closure.js"),
+				plugintest.WithOptions("import_style=closure", "library=test_closure"),
 			),
 		},
 		"relative directory": {
@@ -66,8 +66,8 @@ func TestJsClosurePlugin(t *testing.T) {
 			PluginName: "js",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/builtin:closurejs"),
-				plugintest.WithOutputs("rel/test.js"),
-				plugintest.WithOptions("import_style=closure", "library=rel/test"),
+				plugintest.WithOutputs("rel/test_closure.js"),
+				plugintest.WithOptions("import_style=closure", "library=rel/test_closure"),
 			),
 		},
 	})

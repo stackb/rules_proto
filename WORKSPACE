@@ -62,10 +62,6 @@ load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 
 ts_proto_deps()
 
-load("//deps:example_routeguide_nodejs_deps.bzl", "example_routeguide_nodejs_deps")
-
-example_routeguide_nodejs_deps()
-
 # ----------------------------------------------------
 # Go Tools
 # ----------------------------------------------------
@@ -118,21 +114,23 @@ load(
     "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS",
     "grpc_java_repositories",
 )
+load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
+
+protobuf_deps()
 
 maven_install(
-    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS,
+    name = "maven",
+    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS + PROTOBUF_MAVEN_ARTIFACTS,
     generate_compat_repositories = True,
-    maven_install_json = "//:maven_install.json",
+    # TODO(pcj): why does pinning of this repository cause such problems?
+    # example: no such package '@com_google_errorprone_error_prone_annotations_2_18_0//file': The repository '@com_google_errorprone_error_prone_annotations_2_18_0' could not be resolved: Repository '@com_google_errorprone_error_prone_annotations_2_18_0' is not defined and referenced by '@maven//:com_google_errorprone_error_prone_annotations_2_18_0_extension'
+    # maven_install_json = "//:maven_install.json",
     override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
-    repositories = [
-        "https://repo.maven.apache.org/maven2/",
-    ],
+    repositories = ["https://repo.maven.apache.org/maven2/"],
+    strict_visibility = True,
 )
 
-load(
-    "@maven//:compat.bzl",
-    "compat_repositories",
-)
+load("@maven//:compat.bzl", "compat_repositories")
 
 compat_repositories()
 
@@ -223,11 +221,13 @@ rules_closure_dependencies()
 # NodeJS
 # ----------------------------------------------------
 
+load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
+
+build_bazel_rules_nodejs_dependencies()
+
 load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 
 node_repositories()
-
-register_toolchains("//toolchain:nodejs")
 
 # ----------------------------------------------------
 # proto_repositories
@@ -236,3 +236,38 @@ register_toolchains("//toolchain:nodejs")
 load("//:proto_repositories.bzl", "proto_repositories")
 
 proto_repositories()
+
+# ----------------------------------------------------
+# @aspect_rules_ts
+# ----------------------------------------------------
+load("@aspect_rules_ts//ts:repositories.bzl", "rules_ts_dependencies")
+
+rules_ts_dependencies(
+    # This keeps the TypeScript version in-sync with the editor, which is typically best.
+    ts_version_from = "//:package.json",
+)
+
+# ----------------------------------------------------
+# @rules_nodejs
+# ----------------------------------------------------
+
+load("@rules_nodejs//nodejs:repositories.bzl", "DEFAULT_NODE_VERSION", "nodejs_register_toolchains")
+
+nodejs_register_toolchains(
+    name = "node",
+    node_version = DEFAULT_NODE_VERSION,
+)
+
+load("@aspect_rules_js//npm:npm_import.bzl", "npm_translate_lock")
+
+npm_translate_lock(
+    name = "npm_ts_proto",
+    generate_bzl_library_targets = True,
+    npmrc = "//:.npmrc",
+    pnpm_lock = "//:pnpm-lock.yaml",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+
+load("@npm_ts_proto//:repositories.bzl", npm_ts_proto_repositories = "npm_repositories")
+
+npm_ts_proto_repositories()

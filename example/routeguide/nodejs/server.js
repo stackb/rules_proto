@@ -12,7 +12,7 @@ function checkFeature(point) {
     // Check if there is already a feature object for the given point
     for (const feature of feature_list) {
         if (feature.getLocation().getLatitude() === point.getLatitude() &&
-        feature.getLocation().getLongitude() === point.getLongitude()) {
+            feature.getLocation().getLongitude() === point.getLongitude()) {
             return feature;
         }
     }
@@ -43,9 +43,9 @@ function listFeatures(call) {
     feature_list.forEach((feature) => {
         if (feature.getName() === '') return;
         if (feature.getLocation().getLongitude() >= left &&
-        feature.getLocation().getLongitude() <= right &&
-        feature.getLocation().getLatitude() >= bottom &&
-        feature.getLocation().getLatitude() <= top) {
+            feature.getLocation().getLongitude() <= right &&
+            feature.getLocation().getLatitude() >= bottom &&
+            feature.getLocation().getLatitude() <= top) {
             call.write(feature);
         }
     });
@@ -65,8 +65,8 @@ function getDistance(start, end) {
     const lon1 = toRadians(start.getLongitude() / COORD_FACTOR);
     const lon2 = toRadians(end.getLongitude() / COORD_FACTOR);
 
-    const deltalat = lat2-lat1;
-    const deltalon = lon2-lon1;
+    const deltalat = lat2 - lat1;
+    const deltalon = lon2 - lon1;
     const a = Math.sin(deltalat / 2) * Math.sin(deltalat / 2) +
         Math.cos(lat1) * Math.cos(lat2) *
         Math.sin(deltalon / 2) * Math.sin(deltalon / 2);
@@ -94,7 +94,7 @@ function recordRoute(call, callback) {
         const summary = new messages.RouteSummary();
         summary.setPointCount(pointCount);
         summary.setFeatureCount(featureCount);
-        summary.setDistance(distance|0);
+        summary.setDistance(distance | 0);
         summary.setElapsedTime(process.hrtime(start_time)[0]);
         callback(null, summary);
     });
@@ -104,12 +104,12 @@ function recordRoute(call, callback) {
 const route_notes = new Map();
 
 function pointKey(point) {
-  return point.getLatitude() + ' ' + point.getLongitude();
+    return point.getLatitude() + ' ' + point.getLongitude();
 }
 
 
 function routeChat(call) {
-    call.on('data', function(note) {
+    call.on('data', function (note) {
         const key = pointKey(note.getLocation());
         if (route_notes.has(key)) {
             route_notes[key].forEach((note) => {
@@ -141,7 +141,7 @@ if (require.main === module) {
 
     routeServer.bindAsync(addr, grpc.ServerCredentials.createInsecure(), () => {
         // Transform the loaded features to Feature objects
-        feature_list = features.map(function(value) {
+        feature_list = features.map(function (value) {
             const feature = new messages.Feature();
             feature.setName(value.name);
             const location = new messages.Point();

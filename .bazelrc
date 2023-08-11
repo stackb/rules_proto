@@ -13,3 +13,7 @@ build:bazelci --deleted_packages=docs
 
 # workaround for scala
 build --incompatible_java_common_parameters=false
+
+# HOME appears to be required by //pkg/plugin/grpc/grpc:grpc_test
+# (for github.com/bazelbuild/rules_go/go/tools/bazel_testing)
+test --action_env=HOME

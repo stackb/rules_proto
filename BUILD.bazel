@@ -1,5 +1,6 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 
 # ----------------------------------------------------
 # Buildifier
@@ -64,4 +65,8 @@ filegroup(
         "//toolchain:all_files",
     ] + glob(["vendor/**/*"]),
     visibility = ["//visibility:public"],
+)
+
+npm_link_all_packages(
+    name = "node_modules",
 )

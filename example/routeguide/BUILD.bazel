@@ -1,3 +1,4 @@
+load("@aspect_rules_js//js:defs.bzl", "js_library")
 load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
@@ -22,6 +23,12 @@ filegroup(
     name = "features",
     srcs = ["features.json"],
     visibility = ["//visibility:public"],
+)
+
+js_library(
+    name = "features_json",
+    srcs = ["features.json"],
+    visibility = ["//example/routeguide/nodejs:__pkg__"],
 )
 
 genrule(
@@ -63,7 +70,7 @@ grpc_closure_js_library(
 
 proto_closure_js_library(
     name = "routeguide_closure_js_library",
-    srcs = ["routeguide.js"],
+    srcs = ["routeguide_closure.js"],
     internal_descriptors = ["//example/routeguide:routeguide_proto"],
     suppress = [
         "JSC_IMPLICITLY_NONNULL_JSDOC",
@@ -78,13 +85,13 @@ proto_compile(
     options = {
         "@build_stack_rules_proto//plugin/builtin:closurejs": [
             "import_style=closure",
-            "library=example/routeguide/routeguide",
+            "library=example/routeguide/routeguide_closure",
         ],
         "@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js": ["out=example/routeguide/routeguide.grpc.js"],
     },
     outputs = [
         "routeguide.grpc.js",
-        "routeguide.js",
+        "routeguide_closure.js",
     ],
     plugins = [
         "@build_stack_rules_proto//plugin/builtin:closurejs",
@@ -153,11 +160,19 @@ grpc_java_library(
     visibility = ["//visibility:public"],
     exports = [
         ":routeguide_java_library",
-        "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java",
+        "@com_google_guava_guava//jar",
+        "@io_grpc_grpc_java//context",
+        "@io_grpc_grpc_java//protobuf",
+        "@io_grpc_grpc_java//stub",
+        "@io_grpc_grpc_java//stub:javax_annotation",
     ],
     deps = [
         ":routeguide_java_library",
-        "@build_stack_rules_proto//plugin/grpc/grpc-java:grpc_java",
+        "@com_google_guava_guava//jar",
+        "@io_grpc_grpc_java//context",
+        "@io_grpc_grpc_java//protobuf",
+        "@io_grpc_grpc_java//stub",
+        "@io_grpc_grpc_java//stub:javax_annotation",
     ],
 )
 
@@ -273,14 +288,14 @@ proto_compile(
 proto_ts_library(
     name = "routeguide_ts_proto",
     srcs = ["routeguide.ts"],
-    args = ["--lib ES2015"],
     tags = ["manual"],
-    tsc = "@npm_tsc//typescript/bin:tsc",
     visibility = ["//visibility:public"],
     deps = [
-        "@npm_tsc//@nestjs/microservices",
-        "@npm_tsc//long",
-        "@npm_tsc//protobufjs",
+        "//:node_modules/@nestjs/microservices",
+        "//:node_modules/@types/node",
+        "//:node_modules/long",
+        "//:node_modules/protobufjs",
+        "//:node_modules/rxjs",
     ],
 )
 

@@ -46,15 +46,7 @@ depsgen(
 
 depsgen(
     name = "ts_proto",
-    deps = [
-        ":npm_ts_proto",
-        ":npm_tsc",
-    ],
-)
-
-depsgen(
-    name = "example_routeguide_nodejs",
-    deps = [":npm_example_routeguide_nodejs"],
+    deps = [":aspect_rules_ts"],
 )
 
 depsgen(
@@ -283,32 +275,33 @@ proto_dependency(
     urls = ["https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"],
 )
 
-# Release: v1.35.0
-# Commit: master
-# Date: 2021-01-12 23:05:49 +0000 UTC
-# URL: https://github.com/grpc/grpc-java/releases/tag/v1.35.0
-# Branch: master
-# Commit: 7f7821c616598ce4e33d2045c5641b2348728cb8
-# Date: 2021-02-10 00:56:26 +0000 UTC
-# URL: https://github.com/grpc/grpc-java/commit/7f7821c616598ce4e33d2045c5641b2348728cb8
-#
-# interop-testing: add fake altsHandshakerService for test (#7847)
-# Size: 2337953 (2.3 MB)
+# Release: v1.57.1
+# TargetCommitish: master
+# Date: 2023-08-01 17:05:26 +0000 UTC
+# URL: https://github.com/grpc/grpc-java/releases/tag/v1.57.1
+# Size: 2962849 (3.0 MB)
 proto_dependency(
     name = "io_grpc_grpc_java",
     repository_rule = "http_archive",
-    sha256 = "82b3cf09f98a5932e1b55175aaec91b2a3f424eec811e47b2a3be533044d9afb",
-    strip_prefix = "grpc-java-7f7821c616598ce4e33d2045c5641b2348728cb8",
-    urls = ["https://github.com/grpc/grpc-java/archive/7f7821c616598ce4e33d2045c5641b2348728cb8.tar.gz"],
+    sha256 = "4a021ea9ebb96f5841a135c168209cf2413587a0f8ce71a2bf37b3aad847b0d0",
+    strip_prefix = "grpc-java-1.57.1",
+    urls = ["https://github.com/grpc/grpc-java/archive/v1.57.1.tar.gz"],
     deps = [":rules_jvm_external"],
 )
 
+# Branch: 5.3
+# Commit: e6c1ff21e002bf97a7b1c07d63edd508a8dc9659
+# Date: 2023-06-23 14:48:11 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_jvm_external/commit/e6c1ff21e002bf97a7b1c07d63edd508a8dc9659
+#
+# Prepare for 5.3 release (#922)
+# Size: 6964597 (7.0 MB)
 proto_dependency(
     name = "rules_jvm_external",
     repository_rule = "http_archive",
-    sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
-    strip_prefix = "rules_jvm_external-4.0",
-    urls = ["https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip"],
+    sha256 = "1ce86ffee65725300dc1f0017b7df89715c832de550137432dc1985d60a13155",
+    strip_prefix = "rules_jvm_external-e6c1ff21e002bf97a7b1c07d63edd508a8dc9659",
+    urls = ["https://github.com/bazelbuild/rules_jvm_external/archive/e6c1ff21e002bf97a7b1c07d63edd508a8dc9659.tar.gz"],
 )
 
 proto_dependency(
@@ -399,10 +392,50 @@ proto_dependency(
 )
 
 proto_dependency(
+    name = "aspect_rules_ts",
+    repository_rule = "http_archive",
+    sha256 = "4c3f34fff9f96ffc9c26635d8235a32a23a6797324486c7d23c1dfa477e8b451",
+    strip_prefix = "rules_ts-1.4.5",
+    urls = ["https://github.com/aspect-build/rules_ts/releases/download/v1.4.5/rules_ts-v1.4.5.tar.gz"],
+    deps = [
+        "aspect_bazel_lib",
+        "aspect_rules_js",
+        "rules_nodejs",
+    ],
+)
+
+proto_dependency(
     name = "build_bazel_rules_nodejs",
     repository_rule = "http_archive",
-    sha256 = "4501158976b9da216295ac65d872b1be51e3eeb805273e68c516d2eb36ae1fbb",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/4.4.1/rules_nodejs-4.4.1.tar.gz"],
+    sha256 = "dcc55f810142b6cf46a44d0180a5a7fb923c04a5061e2e8d8eb05ccccc60864b",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.0/rules_nodejs-5.8.0.tar.gz"],
+    deps = ["rules_nodejs"],
+)
+
+proto_dependency(
+    name = "aspect_rules_js",
+    repository_rule = "http_archive",
+    sha256 = "e3e6c3d42491e2938f4239a3d04259a58adc83e21e352346ad4ef62f87e76125",
+    strip_prefix = "rules_js-1.30.0",
+    urls = ["https://github.com/aspect-build/rules_js/releases/download/v1.30.0/rules_js-v1.30.0.tar.gz"],
+    deps = ["aspect_bazel_lib"],
+)
+
+proto_dependency(
+    name = "aspect_bazel_lib",
+    repository_rule = "http_archive",
+    sha256 = "d488d8ecca98a4042442a4ae5f1ab0b614f896c0ebf6e3eafff363bcc51c6e62",
+    strip_prefix = "bazel-lib-1.33.0",
+    urls = [
+        "https://github.com/aspect-build/bazel-lib/releases/download/v1.33.0/bazel-lib-v1.33.0.tar.gz",
+    ],
+)
+
+proto_dependency(
+    name = "rules_nodejs",
+    repository_rule = "http_archive",
+    sha256 = "08337d4fffc78f7fe648a93be12ea2fc4e8eb9795a4e6aa48595b66b34555626",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.0/rules_nodejs-core-5.8.0.tar.gz"],
 )
 
 proto_dependency(
@@ -492,15 +525,6 @@ cc_binary(
     strip_prefix = "grpc-node-aeb42733d861883b82323e2dc6d1aba0e3a12aa0/packages/grpc-tools/src",
     urls = ["https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz"],
     deps = [":com_github_grpc_grpc"],
-)
-
-proto_dependency(
-    name = "npm_example_routeguide_nodejs",
-    package_json = "//example/routeguide/nodejs:package.json",
-    package_lock_json = "//example/routeguide/nodejs:package-lock.json",
-    repository_rule = "npm_install",
-    symlink_node_modules = False,
-    deps = ["build_bazel_rules_nodejs"],
 )
 
 proto_dependency(

@@ -111,10 +111,10 @@ def rules_jvm_external():
     _maybe(
         http_archive,
         name = "rules_jvm_external",
-        sha256 = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169",
-        strip_prefix = "rules_jvm_external-4.0",
+        sha256 = "1ce86ffee65725300dc1f0017b7df89715c832de550137432dc1985d60a13155",
+        strip_prefix = "rules_jvm_external-e6c1ff21e002bf97a7b1c07d63edd508a8dc9659",
         urls = [
-            "https://github.com/bazelbuild/rules_jvm_external/archive/4.0.zip",
+            "https://github.com/bazelbuild/rules_jvm_external/archive/e6c1ff21e002bf97a7b1c07d63edd508a8dc9659.tar.gz",
         ],
     )
 

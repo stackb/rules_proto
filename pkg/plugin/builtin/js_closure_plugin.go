@@ -27,11 +27,15 @@ func (p *JsClosurePlugin) Name() string {
 // Configure implements part of the Plugin interface.
 func (p *JsClosurePlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	basename := strings.ToLower(ctx.ProtoLibrary.BaseName())
-	library := path.Join(ctx.Rel, basename+".js")
+	library := path.Join(ctx.Rel, basename+"_closure.js")
 
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/builtin", "closurejs"),
 		Outputs: []string{library},
-		Options: append(ctx.PluginConfig.GetOptions(), "import_style=closure", fmt.Sprintf("library=%s", strings.TrimSuffix(library, filepath.Ext(library)))),
+		Options: append(
+			ctx.PluginConfig.GetOptions(),
+			"import_style=closure",
+			fmt.Sprintf("library=%s", strings.TrimSuffix(library, filepath.Ext(library))),
+		),
 	}
 }

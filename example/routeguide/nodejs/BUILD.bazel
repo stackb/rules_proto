@@ -1,21 +1,23 @@
-load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+load("@aspect_rules_js//js:defs.bzl", "js_binary")
 
-nodejs_binary(
+js_binary(
     name = "client",
     data = [
-        "//example/routeguide:features",
+        "//:node_modules/@grpc/grpc-js",
+        "//:node_modules/google-protobuf",
+        "//example/routeguide:features_json",
         "//example/routeguide:routeguide_grpc_nodejs_library",
-        "@npm_example_routeguide_nodejs//:node_modules",
     ],
     entry_point = "client.js",
 )
 
-nodejs_binary(
+js_binary(
     name = "server",
     data = [
-        "//example/routeguide:features",
+        "//:node_modules/@grpc/grpc-js",
+        "//:node_modules/google-protobuf",
+        "//example/routeguide:features_json",
         "//example/routeguide:routeguide_grpc_nodejs_library",
-        "@npm_example_routeguide_nodejs//:node_modules",
     ],
     entry_point = "server.js",
 )

@@ -340,6 +340,7 @@ def _proto_compile_impl(ctx):
         progress_message = "Compiling protoc outputs for %r" % [f.basename for f in protos],
         tools = tools,
         input_manifests = input_manifests,
+        env = {"BAZEL_BINDIR": ctx.bin_dir.path},
     )
 
     return [
