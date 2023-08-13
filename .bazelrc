@@ -17,3 +17,7 @@ build --incompatible_java_common_parameters=false
 # HOME appears to be required by //pkg/plugin/grpc/grpc:grpc_test
 # (for github.com/bazelbuild/rules_go/go/tools/bazel_testing)
 test --action_env=HOME
+
+# Don't depend on a JAVA_HOME pointing at a system JDK
+# see https://github.com/bazelbuild/rules_jvm_external/issues/445
+build --repo_env=JAVA_HOME=../bazel_tools/jdk
