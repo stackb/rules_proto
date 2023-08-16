@@ -21,6 +21,19 @@ func TestProtocGenTsProtoPlugin(t *testing.T) {
 			),
 			SkipIntegration: true,
 		},
+		"flag --exclude_output": {
+			Input: "message M{}",
+			Directives: plugintest.WithDirectives(
+				"proto_plugin", "es implementation bufbuild:connect-es",
+				"proto_plugin", "es flag --exclude_output=test.pb.ts",
+			),
+			PluginName: "es",
+			Configuration: plugintest.WithConfiguration(
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/bufbuild:es"),
+				plugintest.WithOutputs(),
+			),
+			SkipIntegration: true,
+		},
 		"includes only relevant M options": {
 			Input: `
 syntax = "proto3";

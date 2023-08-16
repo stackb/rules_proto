@@ -17,3 +17,9 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
+
+alias(
+    name = "go_default_library",
+    actual = ":module",
+    visibility = ["//:__subpackages__"],
+)

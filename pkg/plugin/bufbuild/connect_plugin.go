@@ -44,9 +44,6 @@ func (p *ConnectProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfig
 				continue
 			}
 		}
-		// if option == "emitImportedFiles=true" {
-		// 	emitImportedFiles = true
-		// }
 		options = append(options, option)
 	}
 
