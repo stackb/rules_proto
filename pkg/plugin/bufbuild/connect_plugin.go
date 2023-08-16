@@ -32,7 +32,6 @@ func (p *ConnectProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfig
 			imports[imp.Filename] = true
 		}
 	}
-	var emitImportedFiles bool
 	var options []string
 	for _, option := range ctx.PluginConfig.GetOptions() {
 		// options may be configured to include many "M" options, but only
@@ -53,16 +52,7 @@ func (p *ConnectProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfig
 
 	tsFiles := make([]string, 0)
 	for _, file := range ctx.ProtoLibrary.Files() {
-		if emitImportedFiles {
-			for _, imp := range file.Imports() {
-				if !strings.HasPrefix(imp.Filename, "google/protobuf") {
-					continue
-				}
-				tsFiles = append(tsFiles, strings.TrimSuffix(imp.Filename, ".proto")+".ts")
-			}
-		}
-
-		tsFile := file.Name + ".ts"
+		tsFile := file.Name + ".pb.ts"
 		if flags.excludeOutput[filepath.Base(tsFile)] {
 			continue
 		}

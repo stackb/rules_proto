@@ -124,23 +124,10 @@ bufbuild_opts = [
 ]
 
 proto_compile(
-    name = "thing_node_es_compile",
-    options = {
-        "@build_stack_rules_proto//plugin/bufbuild:connect-es": bufbuild_opts,
-        "@build_stack_rules_proto//plugin/bufbuild:es": bufbuild_opts,
-    },
-    # Does not work due to https://github.com/bufbuild/protobuf-es/issues/553
-    # outs = {"@build_stack_rules_proto//plugin/bufbuild:es": "gen"},
-    outputs = [
-        "thing_pb.js",
-        "thing_pb.d.ts",
-        "thing_connect.js",
-        "thing_connect.d.ts",
-    ],
-    plugins = [
-        "@build_stack_rules_proto//plugin/bufbuild:connect-es",
-        "@build_stack_rules_proto//plugin/bufbuild:es",
-    ],
+    name = "thing_node_js_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"]},
+    outputs = ["thing_pb.js"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
     proto = "thing_proto",
 )
 

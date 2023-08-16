@@ -4,6 +4,7 @@ filegroup(
     srcs = [
         "//pkg/language/protobuf:all_files",
         "//pkg/plugin/akka/akka_grpc:all_files",
+        "//pkg/plugin/bufbuild:all_files",
         "//pkg/plugin/builtin:all_files",
         "//pkg/plugin/gogo/protobuf:all_files",
         "//pkg/plugin/golang/protobuf:all_files",
@@ -15,7 +16,6 @@ filegroup(
         "//pkg/plugin/grpcecosystem/grpcgateway:all_files",
         "//pkg/plugin/scalapb/scalapb:all_files",
         "//pkg/plugin/stackb/grpc_js:all_files",
-        "//pkg/plugin/bufbuild:all_files",
         "//pkg/plugin/stephenh/ts-proto:all_files",
         "//pkg/plugintest:all_files",
         "//pkg/protoc:all_files",

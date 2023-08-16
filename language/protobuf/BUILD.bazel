@@ -7,6 +7,7 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/language/protobuf",
+        "//pkg/plugin/bufbuild",
         "//pkg/plugin/builtin",
         "//pkg/plugin/gogo/protobuf",
         "//pkg/plugin/golang/protobuf",
@@ -19,7 +20,6 @@ go_library(
         "//pkg/plugin/scalapb/scalapb",
         "//pkg/plugin/stackb/grpc_js",
         "//pkg/plugin/stephenh/ts-proto",
-        "//pkg/plugin/bufbuild",
         "//pkg/rule/rules_cc",
         "//pkg/rule/rules_closure",
         "//pkg/rule/rules_go",
