@@ -1,0 +1,30 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "bufbuild",
+    srcs = ["connect_plugin.go"],
+    importpath = "github.com/stackb/rules_proto/pkg/plugin/bufbuild",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label:go_default_library",
+    ],
+)
+
+go_test(
+    name = "bufbuild_test",
+    srcs = ["connect_plugin_test.go"],
+    deps = [
+        ":bufbuild",
+        "//pkg/plugintest",
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = [
+        "BUILD.bazel",
+    ] + glob(["*.go"]),
+    visibility = ["//pkg:__pkg__"],
+)

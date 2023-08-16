@@ -119,7 +119,7 @@ proto_compile(
 )
 
 bufbuild_opts = [
-    "target=js", # https://github.com/bufbuild/protobuf-es/tree/main/packages/protoc-gen-es#target
+    "target=js+dts", # https://github.com/bufbuild/protobuf-es/tree/main/packages/protoc-gen-es#target
     "keep_empty_files=true", # https://github.com/bufbuild/protobuf-es/tree/main/packages/protoc-gen-es#keep_empty_filestrue
 ]
 
@@ -131,7 +131,12 @@ proto_compile(
     },
     # Does not work due to https://github.com/bufbuild/protobuf-es/issues/553
     # outs = {"@build_stack_rules_proto//plugin/bufbuild:es": "gen"},
-    outputs = ["thing_pb.js", "thing_connect.js"],
+    outputs = [
+        "thing_pb.js",
+        "thing_pb.d.ts",
+        "thing_connect.js",
+        "thing_connect.d.ts",
+    ],
     plugins = [
         "@build_stack_rules_proto//plugin/bufbuild:connect-es",
         "@build_stack_rules_proto//plugin/bufbuild:es",
