@@ -20,13 +20,14 @@ proto_closure_js_library(
     srcs = ["thing_closure.js"],
     internal_descriptors = [
         "//example/thing:thing_proto",
-        "@com_google_protobuf//:timestamp_proto",
+        "//google/protobuf:timestamppb_proto",
     ],
     suppress = [
         "JSC_IMPLICITLY_NONNULL_JSDOC",
         "JSC_UNUSED_LOCAL_ASSIGNMENT",
     ],
     visibility = ["//visibility:public"],
+    exports = [],
 )
 
 proto_compile(
@@ -120,6 +121,7 @@ proto_compile(
     name = "thing_ts_proto_compile",
     options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
         "emitImportedFiles=false",
+        "esModuleInterop=true",
     ]},
     outputs = ["thing.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
@@ -129,11 +131,14 @@ proto_compile(
 proto_ts_library(
     name = "thing_ts_proto",
     srcs = ["thing.ts"],
+    out_dir = "ts",
     visibility = ["//visibility:public"],
     deps = [
+        "//:node_modules/@nestjs/microservices",
+        "//:node_modules/@types/node",
         "//:node_modules/long",
         "//:node_modules/protobufjs",
-        "//google/protobuf:timestamp_ts_proto",
+        "//:node_modules/rxjs",
     ],
 )
 
