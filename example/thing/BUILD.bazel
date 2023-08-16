@@ -146,6 +146,7 @@ proto_py_library(
         "@com_google_protobuf//:protobuf_python",
         "@protoapis//google/protobuf:timestamp_py_library",
     ],
+    proto = "thing_proto",
 )
 
 proto_compile(

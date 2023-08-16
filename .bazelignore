@@ -1,4 +1,5 @@
 docs/
 node_modules
+plugin/bufbuild/node_modules
 plugin/stephenh/ts-proto/node_modules
 rules/ts/node_modules
