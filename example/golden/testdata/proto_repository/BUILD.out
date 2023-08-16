@@ -2,6 +2,7 @@
 load("@bazel_gazelle//:def.bzl", "gazelle_binary")
 load("@build_stack_rules_proto//rules:proto_gazelle.bzl", "DEFAULT_LANGUAGES", "proto_gazelle")
 load("//:proto_repository_info_test.bzl", "proto_repository_info_test")
+load("//:proto_gazelle_data_test.bzl", "proto_gazelle_data_test")
 
 # gazelle:prefix github.com/corp/repo
 # gazelle:go_generate_proto false
@@ -18,6 +19,7 @@ proto_gazelle(
     command = "update",
     gazelle = ":gazelle-protobuf",
     imports = ["@googleapis//:imports.csv"],
+    data = [":generated_data"],
 )
 
 proto_repository_info_test(
@@ -28,6 +30,19 @@ proto_repository_info_test(
     want_source_owner = "googleapis",
     want_source_prefix = "",
     want_source_repo = "googleapis",
+)
+
+proto_gazelle_data_test(
+    name = "proto_repository_data_test",
+    gazelle = ":gazelle",
+)
+
+genrule(
+    name = "generated_data",
+    outs = ["foo.txt"],
+    cmd = """
+echo -n 'hello, world!' > $@
+    """,
 )
 
 exports_files(["config.yaml"])
