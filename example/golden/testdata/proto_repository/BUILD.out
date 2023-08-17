@@ -1,4 +1,3 @@
-
 load("@bazel_gazelle//:def.bzl", "gazelle_binary")
 load("@build_stack_rules_proto//rules:proto_gazelle.bzl", "DEFAULT_LANGUAGES", "proto_gazelle")
 load("//:proto_repository_info_test.bzl", "proto_repository_info_test")
@@ -17,9 +16,9 @@ proto_gazelle(
     name = "gazelle",
     cfgs = ["//:config.yaml"],
     command = "update",
+    data = [":generated_data"],
     gazelle = ":gazelle-protobuf",
     imports = ["@googleapis//:imports.csv"],
-    data = [":generated_data"],
 )
 
 proto_repository_info_test(
@@ -39,7 +38,7 @@ proto_gazelle_data_test(
 
 genrule(
     name = "generated_data",
-    outs = ["foo.txt"],
+    outs = ["genfile_should_be_present_in_gazelle_data_runfiles.txt"],
     cmd = """
 echo -n 'hello, world!' > $@
     """,

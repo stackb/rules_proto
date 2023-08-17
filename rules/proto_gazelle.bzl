@@ -90,11 +90,16 @@ def _gazelle_runner_impl(ctx):
     runfiles = ctx.runfiles(files = ctx.files.cfgs + ctx.files.imports + [
         ctx.executable.gazelle,
         go_tool,
-    ]).merge(
+    ])
+    runfiles = runfiles.merge_all([
         ctx.attr.gazelle[DefaultInfo].default_runfiles,
-    )
+        ctx.attr.gazelle[DefaultInfo].data_runfiles,
+    ])
     for d in ctx.attr.data:
-        runfiles = runfiles.merge(d[DefaultInfo].default_runfiles)
+        runfiles = runfiles.merge_all([
+            d[DefaultInfo].default_runfiles,
+            d[DefaultInfo].data_runfiles,
+        ])
 
     return [DefaultInfo(
         files = depset([out_file]),

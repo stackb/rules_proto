@@ -17,6 +17,7 @@ proto_gazelle(
     name = "gazelle",
     cfgs = ["//:config.yaml"],
     command = "update",
+    data = [":generated_data"],
     gazelle = ":gazelle-protobuf",
     imports = ["@googleapis//:imports.csv"],
 )
@@ -34,6 +35,14 @@ proto_repository_info_test(
 proto_gazelle_data_test(
     name = "proto_repository_data_test",
     gazelle = ":gazelle",
+)
+
+genrule(
+    name = "generated_data",
+    outs = ["genfile_should_be_present_in_gazelle_data_runfiles.txt"],
+    cmd = """
+echo -n 'hello, world!' > $@
+    """,
 )
 
 exports_files(["config.yaml"])

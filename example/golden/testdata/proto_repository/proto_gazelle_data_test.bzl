@@ -4,34 +4,47 @@ See https://github.com/stackb/rules_proto/issues/342.
 
 """
 
-def _proto_gazelle_data_test_impl(ctx):
-    info = ctx.attr.gazelle[DefaultInfo]
+# This test script asserts that all expected files are present in runfiles.
+# Specifically, as a regression test that items listed in gazelle.data are
+# present (./genfile_should_be_present_in_gazelle_data_runfiles.txt).
+SCRIPT = """
+set -x
 
-    ctx.actions.write(ctx.outputs.json, struct(
-        data_files = [f.short_path for f in info.files.to_list()],
-    ).to_json())
+read -r -d '' WANT <<'EOF'
+.
+./config.yaml
+./external
+./external/go_sdk
+./external/go_sdk/bin
+./external/go_sdk/bin/go
+./external/googleapis
+./external/googleapis/imports.csv
+./gazelle
+./gazelle-protobuf_
+./gazelle-protobuf_/gazelle-protobuf
+./gazelle-runner.bash
+./genfile_should_be_present_in_gazelle_data_runfiles.txt
+./proto_repository_data_test
+EOF
 
-    # we're checking attr values in the provider, so the script really does not
-    # need to do anything
-    ctx.actions.write(ctx.outputs.executable, """
-set -euox pipefail
-find .
-got=$(cat {json_file})
-want='{{"data_files":["gazelle-runner.bash","gazelle"]}}'
+GOT=$(find . | sort)
 
-if [ "$want" == "$got" ]; then
+if [ "$WANT" == "$GOT" ]; then
     echo 'PASS'
 else
+    echo "WANT:\n$WANT"
+    echo "GOT:\n$GOT"
     exit 1
 fi
-""".format(
-        json_file = ctx.outputs.json.short_path,
-    ))
+"""
 
-    runfiles = ctx.runfiles(files = [ctx.outputs.json], collect_data = True)
+def _proto_gazelle_data_test_impl(ctx):
+    ctx.actions.write(ctx.outputs.executable, SCRIPT)
+
+    runfiles = ctx.runfiles().merge(ctx.attr.gazelle[DefaultInfo].default_runfiles)
 
     return [DefaultInfo(
-        files = depset([ctx.outputs.json, ctx.outputs.executable]),
+        files = depset([ctx.outputs.executable]),
         runfiles = runfiles,
     )]
 
@@ -45,9 +58,6 @@ proto_gazelle_data_test = rule(
         "data": attr.label_list(
             allow_files = True,
         ),
-    },
-    outputs = {
-        "json": "%{name}.json",
     },
     test = True,
 )
