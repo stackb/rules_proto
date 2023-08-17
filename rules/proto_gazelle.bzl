@@ -95,11 +95,14 @@ def _gazelle_runner_impl(ctx):
         ctx.attr.gazelle[DefaultInfo].default_runfiles,
         ctx.attr.gazelle[DefaultInfo].data_runfiles,
     ])
+    data_files = []
     for d in ctx.attr.data:
+        data_files = d[DefaultInfo].files.to_list()
         runfiles = runfiles.merge_all([
             d[DefaultInfo].default_runfiles,
             d[DefaultInfo].data_runfiles,
         ])
+    runfiles = ctx.runfiles(files = data_files).merge(runfiles)
 
     return [DefaultInfo(
         files = depset([out_file]),
