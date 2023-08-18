@@ -27,6 +27,7 @@ proto_closure_js_library(
         "JSC_UNUSED_LOCAL_ASSIGNMENT",
     ],
     visibility = ["//visibility:public"],
+    exports = [],
 )
 
 proto_compile(
@@ -120,7 +121,7 @@ proto_compile(
     name = "thing_ts_proto_compile",
     options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
         "emitImportedFiles=false",
-        "Mgoogle/protobuf/timestamp.proto=../../external/protoapis/google/protobuf/timestamp",
+        "Mgoogle/protobuf/timestamp.proto=../../external/protoapis/google/protobuf/timestamp",  # keep
     ]},
     outputs = ["thing.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
@@ -134,7 +135,7 @@ proto_ts_library(
     deps = [
         "//:node_modules/long",
         "//:node_modules/protobufjs",
-        "@protoapis//google/protobuf:timestamp_ts_proto",
+        "@protoapis//google/protobuf:timestamp_ts_proto",  # keep
     ],
 )
 

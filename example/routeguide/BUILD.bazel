@@ -17,7 +17,8 @@ load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_librar
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 # gazelle:proto_plugin ts_proto option nestJs=true
-# gazelle:proto_rule proto_ts_library deps @npm_tsc//@nestjs/microservices
+# gazelle:proto_rule proto_ts_library deps //:node_modules/@nestjs/microservices
+# gazelle:proto_rule proto_ts_library deps //:node_modules/rxjs
 
 filegroup(
     name = "features",
@@ -58,7 +59,7 @@ proto_library(
 
 grpc_closure_js_library(
     name = "routeguide_grpc_closure_js_library",
-    srcs = ["routeguide.grpc.js"],
+    srcs = [],
     suppress = [
         "JSC_IMPLICITLY_NONNULL_JSDOC",
         "JSC_UNUSED_LOCAL_ASSIGNMENT",

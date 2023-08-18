@@ -151,7 +151,7 @@ proto_ts_library(
         "//:node_modules/long",
         "//:node_modules/protobufjs",
         "//example/place:place_ts_proto",
-        "@protoapis//google/protobuf:timestamp_ts_proto",
+        "@protoapis//google/protobuf:timestamp_ts_proto",  # keep
     ],
 )
 
