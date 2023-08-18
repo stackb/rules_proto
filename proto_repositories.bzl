@@ -11,7 +11,6 @@ def proto_repositories():
             "gazelle:proto_language cpp enable false",
             "gazelle:proto_language ts enable true",
             "gazelle:proto_language descriptor enable true",
-            "gazelle:proto_rule proto_ts_library attr out_dir ts",
         ],
         build_file_expunge = True,
         build_file_proto_mode = "file",

@@ -10,7 +10,6 @@ plugins:
     implementation: stephenh:ts-proto:protoc-gen-ts-proto
     options:
       - "emitImportedFiles=false"
-      - "esModuleInterop=true"
   - name: protoc-gen-go
     implementation: golang:protobuf:protoc-gen-go
     deps:
