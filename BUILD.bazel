@@ -69,7 +69,4 @@ filegroup(
 
 npm_link_all_packages(
     name = "node_modules",
-    # imported_links = [
-    #     "@protoapis//google/protobuf:timestamp_ts_proto_pkg",
-    # ],
 )
