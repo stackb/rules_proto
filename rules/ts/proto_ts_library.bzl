@@ -26,6 +26,7 @@ def proto_ts_library(
     """
     ts_project(
         name = name,
+        declaration = declaration,
         tsconfig = tsconfig or {
             "compilerOptions": {
                 "declaration": declaration,
