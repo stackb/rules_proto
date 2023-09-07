@@ -12,20 +12,20 @@ import (
 )
 
 func init() {
-	protoc.Plugins().MustRegisterPlugin(&ConnectProto{})
+	protoc.Plugins().MustRegisterPlugin(&ConnectEsProto{})
 }
 
-// ConnectProto implements Plugin for the bufbuild/connect-es plugin.
-type ConnectProto struct{}
+// ConnectEsProto implements Plugin for the bufbuild/connect-es plugin.
+type ConnectEsProto struct{}
 
 // Name implements part of the Plugin interface.
-func (p *ConnectProto) Name() string {
+func (p *ConnectEsProto) Name() string {
 	return "bufbuild:connect-es"
 }
 
 // Configure implements part of the Plugin interface.
-func (p *ConnectProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
-	flags := parseConnectProtoOptions(p.Name(), ctx.PluginConfig.GetFlags())
+func (p *ConnectEsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
+	flags := parseConnectEsProtoOptions(p.Name(), ctx.PluginConfig.GetFlags())
 	imports := make(map[string]bool)
 	for _, file := range ctx.ProtoLibrary.Files() {
 		for _, imp := range file.Imports() {
@@ -49,7 +49,7 @@ func (p *ConnectProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfig
 
 	tsFiles := make([]string, 0)
 	for _, file := range ctx.ProtoLibrary.Files() {
-		tsFile := file.Name + ".pb.ts"
+		tsFile := file.Name + "_connect.ts"
 		if flags.excludeOutput[filepath.Base(tsFile)] {
 			continue
 		}
@@ -60,7 +60,7 @@ func (p *ConnectProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfig
 	}
 
 	pc := &protoc.PluginConfiguration{
-		Label:   label.New("build_stack_rules_proto", "plugin/bufbuild", "es"),
+		Label:   label.New("build_stack_rules_proto", "plugin/bufbuild", "connect-es"),
 		Outputs: protoc.DeduplicateAndSort(tsFiles),
 		Options: protoc.DeduplicateAndSort(options),
 	}
@@ -70,13 +70,13 @@ func (p *ConnectProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfig
 	return pc
 }
 
-// ConnectProtoOptions represents the parsed flag configuration for the
-// ConnectProto implementation.
-type ConnectProtoOptions struct {
+// ConnectEsProtoOptions represents the parsed flag configuration for the
+// ConnectEsProto implementation.
+type ConnectEsProtoOptions struct {
 	excludeOutput map[string]bool
 }
 
-func parseConnectProtoOptions(kindName string, args []string) *ConnectProtoOptions {
+func parseConnectEsProtoOptions(kindName string, args []string) *ConnectEsProtoOptions {
 	flags := flag.NewFlagSet(kindName, flag.ExitOnError)
 
 	var excludeOutput string
@@ -85,7 +85,7 @@ func parseConnectProtoOptions(kindName string, args []string) *ConnectProtoOptio
 	if err := flags.Parse(args); err != nil {
 		log.Fatalf("failed to parse flags for %q: %v", kindName, err)
 	}
-	config := &ConnectProtoOptions{
+	config := &ConnectEsProtoOptions{
 		excludeOutput: make(map[string]bool),
 	}
 	for _, value := range strings.Split(excludeOutput, ",") {

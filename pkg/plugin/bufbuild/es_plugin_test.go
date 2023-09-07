@@ -8,7 +8,7 @@ import (
 )
 
 func TestProtocGenTsProtoPlugin(t *testing.T) {
-	plugintest.Cases(t, &bufbuild.ConnectProto{}, map[string]plugintest.Case{
+	plugintest.Cases(t, &bufbuild.EsProto{}, map[string]plugintest.Case{
 		"simple": {
 			Input: "message M{}",
 			Directives: plugintest.WithDirectives(
@@ -17,7 +17,7 @@ func TestProtocGenTsProtoPlugin(t *testing.T) {
 			PluginName: "es",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/bufbuild:es"),
-				plugintest.WithOutputs("test.pb.ts"),
+				plugintest.WithOutputs("test_pb.ts"),
 			),
 			SkipIntegration: true,
 		},
@@ -25,7 +25,7 @@ func TestProtocGenTsProtoPlugin(t *testing.T) {
 			Input: "message M{}",
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "es implementation bufbuild:connect-es",
-				"proto_plugin", "es flag --exclude_output=test.pb.ts",
+				"proto_plugin", "es flag --exclude_output=test_pb.ts",
 			),
 			PluginName: "es",
 			Configuration: plugintest.WithConfiguration(
@@ -56,7 +56,7 @@ message M {}
 			PluginName: "es",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/bufbuild:es"),
-				plugintest.WithOutputs("test.pb.ts"),
+				plugintest.WithOutputs("test_pb.ts"),
 				plugintest.WithOptions(
 					"Mgoogle/protobuf/duration.proto=./external/protobufapis/google/protobuf/duration",
 					"Mgoogle/type/datetime.proto=./external/googleapis/google/type/datetime",

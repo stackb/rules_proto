@@ -2,7 +2,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "bufbuild",
-    srcs = ["connect_plugin.go"],
+    srcs = [
+        "connect_es_plugin.go",
+        "es_plugin.go",
+    ],
     importpath = "github.com/stackb/rules_proto/pkg/plugin/bufbuild",
     visibility = ["//visibility:public"],
     deps = [
@@ -13,7 +16,7 @@ go_library(
 
 go_test(
     name = "bufbuild_test",
-    srcs = ["connect_plugin_test.go"],
+    srcs = ["es_plugin_test.go"],
     deps = [
         ":bufbuild",
         "//pkg/plugintest",
