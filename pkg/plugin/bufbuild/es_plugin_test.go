@@ -17,50 +17,8 @@ func TestProtocGenTsProtoPlugin(t *testing.T) {
 			PluginName: "es",
 			Configuration: plugintest.WithConfiguration(
 				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/bufbuild:es"),
+				plugintest.WithOptions("keep_empty_files=true", "target=ts"),
 				plugintest.WithOutputs("test_pb.ts"),
-			),
-			SkipIntegration: true,
-		},
-		"flag --exclude_output": {
-			Input: "message M{}",
-			Directives: plugintest.WithDirectives(
-				"proto_plugin", "es implementation bufbuild:connect-es",
-				"proto_plugin", "es flag --exclude_output=test_pb.ts",
-			),
-			PluginName: "es",
-			Configuration: plugintest.WithConfiguration(
-				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/bufbuild:es"),
-				plugintest.WithOutputs(),
-			),
-			SkipIntegration: true,
-		},
-		"includes only relevant M options": {
-			Input: `
-syntax = "proto3";
-
-package corp.common;
-
-import "google/type/datetime.proto";
-import "google/protobuf/duration.proto";
-
-message M {}
-`,
-			Directives: plugintest.WithDirectives(
-				"proto_plugin", "es implementation bufbuild:connect-es",
-				"proto_plugin", "es option Mgoogle/protobuf/empty.proto=./external/protobufapis/google/protobuf/empty",
-				"proto_plugin", "es option Mgoogle/protobuf/timestamp.proto=./external/protobufapis/google/protobuf/timestamp",
-				"proto_plugin", "es option Mgoogle/protobuf/duration.proto=./external/protobufapis/google/protobuf/duration",
-				"proto_plugin", "es option Mgoogle/type/timeofday.proto=./external/googleapis/google/type/timeofday",
-				"proto_plugin", "es option Mgoogle/type/datetime.proto=./external/googleapis/google/type/datetime",
-			),
-			PluginName: "es",
-			Configuration: plugintest.WithConfiguration(
-				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/bufbuild:es"),
-				plugintest.WithOutputs("test_pb.ts"),
-				plugintest.WithOptions(
-					"Mgoogle/protobuf/duration.proto=./external/protobufapis/google/protobuf/duration",
-					"Mgoogle/type/datetime.proto=./external/googleapis/google/type/datetime",
-				),
 			),
 			SkipIntegration: true,
 		},

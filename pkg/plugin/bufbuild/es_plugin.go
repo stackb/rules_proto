@@ -32,23 +32,11 @@ func (p *EsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigurati
 			imports[imp.Filename] = true
 		}
 	}
-	var options []string
-	for _, option := range ctx.PluginConfig.GetOptions() {
-		// options may be configured to include many "M" options, but only
-		// include the relevant ones to avoid BUILD file clutter.
-		if strings.HasPrefix(option, "M") {
-			keyVal := option[len("M"):]
-			parts := strings.SplitN(keyVal, "=", 2)
-			filename := parts[0]
-			if !imports[filename] {
-				continue
-			}
-		}
-		options = append(options, option)
-	}
-
+	// TODO: get target option from directive
+	var options = []string{"keep_empty_files=true", "target=ts"}
 	tsFiles := make([]string, 0)
 	for _, file := range ctx.ProtoLibrary.Files() {
+		// TODO: outputs should be conditional on which target= value is used
 		tsFile := file.Name + "_pb.ts"
 		if flags.excludeOutput[filepath.Base(tsFile)] {
 			continue
