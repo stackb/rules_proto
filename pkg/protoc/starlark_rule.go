@@ -245,6 +245,8 @@ func (s *starlarkRuleProvider) Rule(othergen ...*rule.Rule) *rule.Rule {
 	}
 
 	switch value := value.(type) {
+	case starlark.NoneType:
+		return nil
 	case *starlarkstruct.Struct:
 		rKind := structAttrString(value, "kind", s.errorReporter)
 		if rKind == "" {
