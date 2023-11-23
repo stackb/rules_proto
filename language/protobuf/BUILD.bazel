@@ -17,6 +17,7 @@ go_library(
         "//pkg/plugin/grpc/grpcweb",
         "//pkg/plugin/grpcecosystem/grpcgateway",
         "//pkg/plugin/scalapb/scalapb",
+        "//pkg/plugin/scalapb/zio_grpc",
         "//pkg/plugin/stackb/grpc_js",
         "//pkg/plugin/stephenh/ts-proto",
         "//pkg/rule/rules_cc",
