@@ -35,6 +35,7 @@ type File struct {
 	messages    []proto.Message
 	enums       []proto.Enum
 	enumOptions []proto.Option
+	rpcOptions  []proto.Option
 }
 
 // Relname returns the relative path of the proto file.
@@ -106,6 +107,17 @@ func (f *File) HasEnumOption(name string) bool {
 	return false
 }
 
+// HasRPCOption returns true if the proto file has at least one rpc annotated
+// with the given named field extension.
+func (f *File) HasRPCOption(name string) bool {
+	for _, option := range f.rpcOptions {
+		if option.Name == name {
+			return true
+		}
+	}
+	return false
+}
+
 // Parse reads the proto file and parses the source.
 func (f *File) Parse() error {
 	wd, err := os.Getwd()
@@ -158,8 +170,22 @@ func (f *File) handlePackage(p *proto.Package) {
 	f.pkg = *p
 }
 
+type optionParentVisitor struct {
+	proto.NoopVisitor
+	visitedRPC bool
+}
+
+func (v *optionParentVisitor) VisitRPC(r *proto.RPC) {
+	v.visitedRPC = true
+}
+
 func (f *File) handleOption(o *proto.Option) {
 	f.options = append(f.options, *o)
+	var parentVisitor optionParentVisitor
+	o.Parent.Accept(&parentVisitor)
+	if parentVisitor.visitedRPC {
+		f.rpcOptions = append(f.rpcOptions, *o)
+	}
 }
 
 func (f *File) handleImport(i *proto.Import) {

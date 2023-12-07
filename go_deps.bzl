@@ -170,8 +170,8 @@ def go_deps():
         name = "com_github_emicklei_proto",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/emicklei/proto",
-        sum = "h1:l0QiNT6Qs7Yj0Mb4X6dnWBQer4ebei2BFcgQLbGqUDc=",
-        version = "v1.9.0",
+        sum = "h1:ZDyDzrfMt7ncmyor/j07uoOCGLKtU5F87vTPwIzLe/o=",
+        version = "v1.12.2",
     )
 
     go_repository(
