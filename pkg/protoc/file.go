@@ -155,14 +155,6 @@ func (f *File) ParseReader(in io.Reader) error {
 		proto.WithMessage(f.handleMessage),
 		proto.WithEnum(f.handleEnum))
 
-	// NOTE: f.options only holds top-level options.  To introspect the enum and
-	// enum field options we need to do extra work.
-	collector := &protoEnumOptionCollector{}
-	for _, enum := range f.enums {
-		collector.VisitEnum(&enum)
-	}
-	f.enumOptions = collector.options
-
 	return nil
 }
 
@@ -172,17 +164,30 @@ func (f *File) handlePackage(p *proto.Package) {
 
 type optionParentVisitor struct {
 	proto.NoopVisitor
-	visitedRPC bool
+	visitedRPC       bool
+	visitedEnum      bool
+	visitedEnumField bool
 }
 
 func (v *optionParentVisitor) VisitRPC(r *proto.RPC) {
 	v.visitedRPC = true
 }
 
+func (v *optionParentVisitor) VisitEnum(e *proto.Enum) {
+	v.visitedEnum = true
+}
+
+func (v *optionParentVisitor) VisitEnumField(f *proto.EnumField) {
+	v.visitedEnumField = true
+}
+
 func (f *File) handleOption(o *proto.Option) {
 	f.options = append(f.options, *o)
 	var parentVisitor optionParentVisitor
 	o.Parent.Accept(&parentVisitor)
+	if parentVisitor.visitedEnum || parentVisitor.visitedEnumField {
+		f.enumOptions = append(f.enumOptions, *o)
+	}
 	if parentVisitor.visitedRPC {
 		f.rpcOptions = append(f.rpcOptions, *o)
 	}
