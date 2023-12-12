@@ -14,8 +14,8 @@ def gazelle_protobuf_extension_go_deps():
         name = "com_github_emicklei_proto",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/emicklei/proto",
-        sum = "h1:YX2MPuUfUi/h8v+yt4WD8cdj6bt9P3475d2zrL0iogM=",
-        version = "v1.9.2",
+        sum = "h1:YtC/om6EdkJ0me1JPw4h2g10k+ELITjYFb7tpzm8i8k=",
+        version = "v1.13.0",
     )
     go_repository(
         name = "in_gopkg_yaml_v3",
