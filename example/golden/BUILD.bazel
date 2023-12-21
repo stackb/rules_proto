@@ -138,3 +138,17 @@ filegroup(
     srcs = ["BUILD.bazel"] + glob(["*.go"]),
     visibility = ["//:__pkg__"],
 )
+
+gazelle_testdata_example(
+    name = "strip_import_prefix",
+    srcs = glob(["testdata/strip_import_prefix/**/*"]),
+    extra_test_content = """
+func TestRunPyApp(t *testing.T) {
+	if err := bazel_testing.RunBazel("run", "//module_app/app:app_py"); err != nil {
+		t.Fatal(err)
+	}
+}
+""",
+    strip_prefix = "example/golden/testdata/strip_import_prefix",
+    workspace_template = "prebuilt.WORKSPACE",
+)

@@ -55,6 +55,7 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
   - [+/- of golang implementations](#--of-golang-implementations)
   - [+/- of starlark implementations](#--of-starlark-implementations)
 - [History](#history)
+  - [Strip Import Prefix](#strip-import-prefix)
 
 # Getting Started
 
@@ -903,3 +904,11 @@ plugins that do things like:
   design, this was near impossible. With the `v2` design, the `protoc.Plugin`
   implementation can trivially perform that evaluation because it is handed the
   complete proto AST during gazelle evaluation.
+
+## Strip Import Prefix
+
+- Bazel `proto_library` supports `strip_import_prefix` and `import_prefix` to
+  adjust the proto library "virtual path" (see
+  https://github.com/bazelbuild/bazel/issues/3867,
+  https://github.com/bazelbuild/bazel/commit/8191c62f71ea99b8f9ebb7816e8cec926f14c888).
+- What does "virtual path" even do?  Why was a change needed within bazel itself?

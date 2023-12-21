@@ -16,6 +16,7 @@ var pyLibraryKindInfo = rule.KindInfo{
 		"srcs":       true,
 		"deps":       true,
 		"visibility": true,
+		"imports":    true,
 	},
 	ResolveAttrs: map[string]bool{"deps": true},
 }
@@ -61,6 +62,29 @@ func (s *PyLibrary) Visibility() []string {
 	return s.RuleConfig.GetVisibility()
 }
 
+// ImportsAttr provides the py_library.imports attribute values.
+func (s *PyLibrary) ImportsAttr() (imps []string) {
+	// if we have a strip_import_prefix on the proto_library, the python search
+	// path should include the directory N parents above the current package,
+	// where N is the number of segments in an absolute strip_import_prefix
+	if s.Config.Library.StripImportPrefix() == "" {
+		return
+	}
+	prefix := s.Config.Library.StripImportPrefix()
+	if !strings.HasPrefix(prefix, "/") {
+		return // deal with relative-imports at another time
+	}
+	prefix = strings.TrimPrefix(prefix, "/")
+	prefix = strings.TrimSuffix(prefix, "/")
+	parts := strings.Split(prefix, "/")
+	for i := 0; i < len(parts); i++ {
+		parts[i] = ".."
+	}
+	imp := strings.Join(parts, "/")
+	imps = append(imps, imp)
+	return
+}
+
 // Rule implements part of the ruleProvider interface.
 func (s *PyLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
@@ -71,6 +95,12 @@ func (s *PyLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	if len(deps) > 0 {
 		newRule.SetAttr("deps", deps)
 	}
+
+	imports := s.ImportsAttr()
+	if len(imports) > 0 {
+		newRule.SetAttr("imports", imports)
+	}
+
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)
@@ -82,7 +112,9 @@ func (s *PyLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 // Imports implements part of the RuleProvider interface.
 func (s *PyLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
 	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
-		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+		specs := protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+		specs = maybeStripImportPrefix(specs, lib.StripImportPrefix())
+		return specs
 	}
 	return nil
 }
@@ -90,4 +122,22 @@ func (s *PyLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []r
 // Resolve implements part of the RuleProvider interface.
 func (s *PyLibrary) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 	s.Resolver(c, ix, r, imports, from)
+}
+
+func maybeStripImportPrefix(specs []resolve.ImportSpec, stripImportPrefix string) []resolve.ImportSpec {
+	if stripImportPrefix == "" {
+		return specs
+	}
+
+	prefix := stripImportPrefix
+	if strings.HasPrefix(prefix, "/") {
+		prefix = strings.TrimPrefix(prefix, "/")
+	}
+	for i, spec := range specs {
+		spec.Imp = strings.TrimPrefix(spec.Imp, prefix)
+		spec.Imp = strings.TrimPrefix(spec.Imp, "/") // should never be absolute
+		specs[i] = spec
+	}
+
+	return specs
 }

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package app;
+
+import "util/date.proto";
+
+message ApiRequest {
+    repeated string resource_names = 1;
+    util.Date date = 2;
+}
+
+message ApiResponse {
+    message Resource {
+        string name = 1;
+    }
+    repeated Resource resources = 1;
+}

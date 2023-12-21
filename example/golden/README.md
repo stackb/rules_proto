@@ -37,17 +37,20 @@ $ (cd /private/var/tmp/_bazel_pcj/092d6dadaf86f07590903c45033f576e/external/io_b
 $ code go/tools/bazel_testing/bazel_testing.go
 ```
 
-```go
-	workspaceDir, cleanup, err := setupWorkspace(args, files)
-	defer func() {
-      < add premature return here to skip cleanup >
-		if err := cleanup(); err != nil {
-			fmt.Fprintf(os.Stderr, "cleanup error: %v\n", err)
-			// Don't fail the test on a cleanup error.
-			// Some operating systems (windows, maybe also darwin) can't reliably
-			// delete executable files after they're run.
-		}
-	}()
+```diff
+    workspaceDir, cleanup, err := setupWorkspace(args, files)
+    defer func() {
++       if err == nil {
++           log.Println("NOTE: skipping cleanup")
++           return
++       }
+        if err := cleanup(); err != nil {
+            fmt.Fprintf(os.Stderr, "cleanup error: %v\n", err)
+            // Don't fail the test on a cleanup error.
+            // Some operating systems (windows, maybe also darwin) can't reliably
+            // delete executable files after they're run.
+        }
+    }()
 ```
 
 Then, go into the directory that the `go_bazel_test` creates and run bazel there directly:

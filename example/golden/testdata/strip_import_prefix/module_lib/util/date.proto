@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package util;
+
+// import "google/protobuf/timestamp.proto";
+
+message Date {
+    string year = 1;
+    string month = 2;
+    string day = 3;
+    // google.protobuf.Timestamp created_at = 2;
+}

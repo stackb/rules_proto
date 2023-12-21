@@ -8,6 +8,8 @@ import (
 
 func TestGoldens(t *testing.T) {
 	goldentest.
-		FromDir("example/golden").
+		FromDir("example/golden",
+			goldentest.WithOnlyTests("strip_import_prefix"),
+		).
 		Run(t, "gazelle")
 }

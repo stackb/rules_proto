@@ -99,6 +99,7 @@ func (g *GoldenTests) Run(t *testing.T, gazelleName string) {
 			if len(parts) < 2 {
 				// This file is not a part of a testcase since it must be in a dir that
 				// is the test case and then have a path inside of that.
+				t.Logf("excluding file %s (not part of testcase dir)", relativePath)
 				continue
 			}
 
