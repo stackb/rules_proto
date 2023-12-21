@@ -136,7 +136,6 @@ proto_compile(
     name = "person_ts_proto_compile",
     options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
         "emitImportedFiles=false",
-        "esModuleInterop=true",
     ]},
     outputs = ["person.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
@@ -146,16 +145,13 @@ proto_compile(
 proto_ts_library(
     name = "person_ts_proto",
     srcs = ["person.ts"],
-    out_dir = "ts",
     tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
-        "//:node_modules/@nestjs/microservices",
-        "//:node_modules/@types/node",
         "//:node_modules/long",
         "//:node_modules/protobufjs",
-        "//:node_modules/rxjs",
         "//example/place:place_ts_proto",
+        "//google/protobuf:timestamp_ts_proto",
     ],
 )
 

@@ -27,7 +27,6 @@ proto_closure_js_library(
         "JSC_UNUSED_LOCAL_ASSIGNMENT",
     ],
     visibility = ["//visibility:public"],
-    exports = [],
 )
 
 proto_compile(
@@ -121,7 +120,6 @@ proto_compile(
     name = "thing_ts_proto_compile",
     options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
         "emitImportedFiles=false",
-        "esModuleInterop=true",
     ]},
     outputs = ["thing.ts"],
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
@@ -131,14 +129,11 @@ proto_compile(
 proto_ts_library(
     name = "thing_ts_proto",
     srcs = ["thing.ts"],
-    out_dir = "ts",
     visibility = ["//visibility:public"],
     deps = [
-        "//:node_modules/@nestjs/microservices",
-        "//:node_modules/@types/node",
         "//:node_modules/long",
         "//:node_modules/protobufjs",
-        "//:node_modules/rxjs",
+        "//google/protobuf:timestamp_ts_proto",
     ],
 )
 

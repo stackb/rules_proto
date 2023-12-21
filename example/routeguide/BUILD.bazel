@@ -58,7 +58,7 @@ proto_library(
 
 grpc_closure_js_library(
     name = "routeguide_grpc_closure_js_library",
-    srcs = [],
+    srcs = ["routeguide.grpc.js"],
     suppress = [
         "JSC_IMPLICITLY_NONNULL_JSDOC",
         "JSC_UNUSED_LOCAL_ASSIGNMENT",
@@ -288,7 +288,6 @@ proto_compile(
 proto_ts_library(
     name = "routeguide_ts_proto",
     srcs = ["routeguide.ts"],
-    out_dir = "ts",
     tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
@@ -297,7 +296,6 @@ proto_ts_library(
         "//:node_modules/long",
         "//:node_modules/protobufjs",
         "//:node_modules/rxjs",
-        "@npm_tsc//@nestjs/microservices",
     ],
 )
 
