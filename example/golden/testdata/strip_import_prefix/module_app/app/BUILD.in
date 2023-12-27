@@ -1,0 +1,8 @@
+# gazelle:proto_strip_import_prefix /module_app
+
+py_binary(
+    name = "app_py",
+    srcs = ["app_py.py"],
+    deps = ["app_py_library"],
+)
+

@@ -136,6 +136,7 @@ func generateTest(c *Config) error {
 		if _, err := f.Write(data); err != nil {
 			return fmt.Errorf("write %q: %v", dst, err)
 		}
+		f.WriteString("\n")
 	}
 
 	fmt.Fprintln(f, "`")

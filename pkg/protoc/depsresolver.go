@@ -27,6 +27,8 @@ var (
 	ErrNoLabel    = errors.New("no label")
 )
 
+const debug = true
+
 type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label)
 
 // ResolveDepsAttr returns a function that implements the DepsResolver
@@ -44,8 +46,6 @@ type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, im
 // individual import is delegated to the `resolveAnyKind` function.
 func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 	return func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-		debug := false
-
 		if debug {
 			log.Printf("%v (%s.%s): resolving %d imports: %v", from, r.Kind(), attrName, len(imports), imports)
 		}
@@ -139,13 +139,15 @@ func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, lang, impLang, imp 
 	} else if err != errNotFound {
 		return label.NoLabel, err
 	}
-	// // if debug {
-	// log.Println(from, "fallback miss:", imp)
-	// // }
+	if debug {
+		log.Println(from, "fallback miss:", imp)
+	}
 	return label.NoLabel, nil
 }
 
 func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, lang, impLang, imp string, from label.Label) (label.Label, error) {
+	log.Println(from, "resolveWithIndex:", lang, impLang, imp)
+
 	matches := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{Lang: impLang, Imp: imp}, lang)
 	if len(matches) == 0 {
 		// log.Println(from, "no matches:", imp)

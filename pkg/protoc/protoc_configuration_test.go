@@ -1,22 +1,31 @@
 package protoc
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/google/go-cmp/cmp"
+)
 
 func TestMergeSources(t *testing.T) {
 	for name, tc := range map[string]struct {
-		workDir      string
-		rel          string
-		plugins      []*PluginConfiguration
-		wantOutputs  []string
-		wantMappings map[string]string
+		workDir           string
+		rel               string
+		plugins           []*PluginConfiguration
+		stripImportPrefix string
+		wantOutputs       []string
+		wantMappings      map[string]string
 	}{
-		"empty": {},
+		"empty": {
+			wantOutputs:  []string{},
+			wantMappings: map[string]string{},
+		},
 		"root package, simple case": {
 			rel: "",
 			plugins: withPluginConfigurations(&PluginConfiguration{
 				Outputs: listOf("foo.py"),
 			}),
-			wantOutputs: listOf("foo.py"),
+			wantOutputs:  listOf("foo.py"),
+			wantMappings: map[string]string{},
 		},
 		"root package, go_package case": {
 			rel: "",
@@ -32,7 +41,8 @@ func TestMergeSources(t *testing.T) {
 			plugins: withPluginConfigurations(&PluginConfiguration{
 				Outputs: listOf("test/proto/foo.py"),
 			}),
-			wantOutputs: listOf("foo.py"),
+			wantOutputs:  listOf("foo.py"),
+			wantMappings: map[string]string{},
 		},
 		"child package, mapped case": {
 			rel: "test/proto",
@@ -51,26 +61,25 @@ func TestMergeSources(t *testing.T) {
 			wantOutputs:  listOf("foo.py"),
 			wantMappings: map[string]string{"foo.py": "foo.py"},
 		},
+		"child package, with strip_import_prefix": {
+			rel: "test/proto",
+			plugins: withPluginConfigurations(&PluginConfiguration{
+				Outputs: listOf("test/proto/foo.py"),
+			}),
+			stripImportPrefix: "/test",
+			wantOutputs:       listOf("foo.py"),
+			wantMappings:      map[string]string{"foo.py": "/proto/foo.py"},
+		},
 	} {
 		t.Run(name, func(t *testing.T) {
-			srcs, mappings := mergeSources(tc.workDir, tc.rel, tc.plugins)
-			if len(tc.wantOutputs) != len(srcs) {
-				t.Fatalf("srcs: want %d, got %d", len(tc.wantOutputs), len(srcs))
+			srcs, mappings := mergeSources(tc.workDir, tc.rel, tc.plugins, tc.stripImportPrefix)
+
+			if diff := cmp.Diff(tc.wantOutputs, srcs); diff != "" {
+				t.Errorf("srcs (-want +got):\n%s", diff)
 			}
-			if len(tc.wantMappings) != len(mappings) {
-				t.Fatalf("mappings: want %d, got %d", len(tc.wantMappings), len(mappings))
-			}
-			for i, got := range srcs {
-				want := tc.wantOutputs[i]
-				if want != got {
-					t.Errorf("srcs %d: want %s, got %s", i, want, got)
-				}
-			}
-			for name, got := range mappings {
-				want := tc.wantMappings[name]
-				if want != got {
-					t.Errorf("mappings %q: want %s, got %s", name, want, got)
-				}
+
+			if diff := cmp.Diff(tc.wantMappings, mappings); diff != "" {
+				t.Errorf("mappings (-want +got):\n%s", diff)
 			}
 		})
 	}

@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "rules_python",
@@ -15,6 +15,21 @@ go_library(
         "@bazel_gazelle//label:go_default_library",
         "@bazel_gazelle//resolve:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
+    ],
+)
+
+go_test(
+    name = "rules_python_test",
+    srcs = [
+        "proto_py_library_test.go",
+        "py_library_test.go",
+    ],
+    embed = [":rules_python"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+        "@com_github_google_go_cmp//cmp",
     ],
 )
 
