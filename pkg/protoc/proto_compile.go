@@ -163,6 +163,7 @@ func (s *protoCompileRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 // Resolve implements part of the RuleProvider interface.
 func (s *protoCompileRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 	options := GetPluginOptions(s.config.Plugins, r, from)
+	log.Println("protoCompileRule.Resolve", options)
 	if len(options) > 0 {
 		r.SetAttr("options", MakeStringListDict(options))
 	}
