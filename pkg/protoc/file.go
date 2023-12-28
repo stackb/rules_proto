@@ -32,6 +32,7 @@ type File struct {
 	imports     []proto.Import
 	options     []proto.Option
 	services    []proto.Service
+	rpcs        []proto.RPC
 	messages    []proto.Message
 	enums       []proto.Enum
 	enumOptions []proto.Option
@@ -96,6 +97,11 @@ func (f *File) HasServices() bool {
 	return len(f.services) > 0
 }
 
+// HasRPCs returns true if the proto file has at least one service.
+func (f *File) HasRPCs() bool {
+	return len(f.rpcs) > 0
+}
+
 // HasEnumOption returns true if the proto file has at least one enum or enum
 // field annotated with the given named field extension.
 func (f *File) HasEnumOption(name string) bool {
@@ -152,6 +158,7 @@ func (f *File) ParseReader(in io.Reader) error {
 		proto.WithOption(f.handleOption),
 		proto.WithImport(f.handleImport),
 		proto.WithService(f.handleService),
+		proto.WithRPC(f.handleRPC),
 		proto.WithMessage(f.handleMessage),
 		proto.WithEnum(f.handleEnum))
 
@@ -203,6 +210,10 @@ func (f *File) handleEnum(i *proto.Enum) {
 
 func (f *File) handleService(s *proto.Service) {
 	f.services = append(f.services, *s)
+}
+
+func (f *File) handleRPC(r *proto.RPC) {
+	f.rpcs = append(f.rpcs, *r)
 }
 
 func (f *File) handleMessage(m *proto.Message) {

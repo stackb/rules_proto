@@ -6,13 +6,17 @@ import (
 	"github.com/stackb/rules_proto/pkg/plugintest"
 )
 
-const serviceWithoutBindings = `
+const serviceEmpty = `
+service S{}
+`
+
+const serviceWithUnboundMethods = `
 service S{rpc R (I) returns (O) {}}
 message I{}
 message O{}
 `
 
-const serviceWithBindings = `
+const serviceWithBoundMethods = `
 import "google/api/annotations.proto";
 service S{rpc R (I) returns (O) {
   option (google.api.http) = {
@@ -34,8 +38,8 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			Configuration:   nil,
 			SkipIntegration: true,
 		},
-		"service without bindings": {
-			Input: serviceWithoutBindings,
+		"empty service": {
+			Input: serviceEmpty,
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "protoc-gen-grpc-gateway implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway",
 			),
@@ -43,8 +47,27 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			Configuration:   nil,
 			SkipIntegration: true,
 		},
-		"service without bindings and generate_unbound_methods": {
-			Input: serviceWithoutBindings,
+		"empty service and generate_unbound_methods": {
+			Input: serviceEmpty,
+			Directives: plugintest.WithDirectives(
+				"proto_plugin", "protoc-gen-grpc-gateway implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway",
+				"proto_plugin", "protoc-gen-grpc-gateway option generate_unbound_methods=true",
+			),
+			PluginName:      "protoc-gen-grpc-gateway",
+			Configuration:   nil,
+			SkipIntegration: true,
+		},
+		"service with unbound methods": {
+			Input: serviceWithUnboundMethods,
+			Directives: plugintest.WithDirectives(
+				"proto_plugin", "protoc-gen-grpc-gateway implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway",
+			),
+			PluginName:      "protoc-gen-grpc-gateway",
+			Configuration:   nil,
+			SkipIntegration: true,
+		},
+		"service with unbound methods and generate_unbound_methods": {
+			Input: serviceWithUnboundMethods,
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "protoc-gen-grpc-gateway implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway",
 				"proto_plugin", "protoc-gen-grpc-gateway option generate_unbound_methods=true",
@@ -57,8 +80,8 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			),
 			SkipIntegration: true,
 		},
-		"service with bindings": {
-			Input: serviceWithBindings,
+		"service with bound methods": {
+			Input: serviceWithBoundMethods,
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "protoc-gen-grpc-gateway implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway",
 			),
@@ -69,8 +92,8 @@ func TestProtocGenGoPlugin(t *testing.T) {
 			),
 			SkipIntegration: true,
 		},
-		"service with bindings and generate_unbound_methods": {
-			Input: serviceWithBindings,
+		"service with bound methods and generate_unbound_methods": {
+			Input: serviceWithBoundMethods,
 			Directives: plugintest.WithDirectives(
 				"proto_plugin", "protoc-gen-grpc-gateway implementation grpc-ecosystem:grpc-gateway:protoc-gen-grpc-gateway",
 				"proto_plugin", "protoc-gen-grpc-gateway option generate_unbound_methods=true",

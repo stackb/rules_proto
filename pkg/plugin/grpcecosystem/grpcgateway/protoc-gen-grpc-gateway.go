@@ -57,5 +57,5 @@ func (p *protocGenGrpcGatewayPlugin) outputs(rel string, lib protoc.ProtoLibrary
 }
 
 func (p *protocGenGrpcGatewayPlugin) shouldOutputForFile(f *protoc.File, generateUnbound bool) bool {
-	return f.HasServices() && (generateUnbound || f.HasRPCOption("(google.api.http)"))
+	return f.HasRPCs() && (generateUnbound || f.HasRPCOption("(google.api.http)"))
 }
