@@ -32,9 +32,11 @@ type File struct {
 	imports     []proto.Import
 	options     []proto.Option
 	services    []proto.Service
+	rpcs        []proto.RPC
 	messages    []proto.Message
 	enums       []proto.Enum
 	enumOptions []proto.Option
+	rpcOptions  []proto.Option
 }
 
 // Relname returns the relative path of the proto file.
@@ -95,10 +97,26 @@ func (f *File) HasServices() bool {
 	return len(f.services) > 0
 }
 
+// HasRPCs returns true if the proto file has at least one service.
+func (f *File) HasRPCs() bool {
+	return len(f.rpcs) > 0
+}
+
 // HasEnumOption returns true if the proto file has at least one enum or enum
 // field annotated with the given named field extension.
 func (f *File) HasEnumOption(name string) bool {
 	for _, option := range f.enumOptions {
+		if option.Name == name {
+			return true
+		}
+	}
+	return false
+}
+
+// HasRPCOption returns true if the proto file has at least one rpc annotated
+// with the given named field extension.
+func (f *File) HasRPCOption(name string) bool {
+	for _, option := range f.rpcOptions {
 		if option.Name == name {
 			return true
 		}
@@ -140,16 +158,9 @@ func (f *File) ParseReader(in io.Reader) error {
 		proto.WithOption(f.handleOption),
 		proto.WithImport(f.handleImport),
 		proto.WithService(f.handleService),
+		proto.WithRPC(f.handleRPC),
 		proto.WithMessage(f.handleMessage),
 		proto.WithEnum(f.handleEnum))
-
-	// NOTE: f.options only holds top-level options.  To introspect the enum and
-	// enum field options we need to do extra work.
-	collector := &protoEnumOptionCollector{}
-	for _, enum := range f.enums {
-		collector.VisitEnum(&enum)
-	}
-	f.enumOptions = collector.options
 
 	return nil
 }
@@ -158,8 +169,35 @@ func (f *File) handlePackage(p *proto.Package) {
 	f.pkg = *p
 }
 
+type optionParentVisitor struct {
+	proto.NoopVisitor
+	visitedRPC       bool
+	visitedEnum      bool
+	visitedEnumField bool
+}
+
+func (v *optionParentVisitor) VisitRPC(r *proto.RPC) {
+	v.visitedRPC = true
+}
+
+func (v *optionParentVisitor) VisitEnum(e *proto.Enum) {
+	v.visitedEnum = true
+}
+
+func (v *optionParentVisitor) VisitEnumField(f *proto.EnumField) {
+	v.visitedEnumField = true
+}
+
 func (f *File) handleOption(o *proto.Option) {
 	f.options = append(f.options, *o)
+	var parentVisitor optionParentVisitor
+	o.Parent.Accept(&parentVisitor)
+	if parentVisitor.visitedEnum || parentVisitor.visitedEnumField {
+		f.enumOptions = append(f.enumOptions, *o)
+	}
+	if parentVisitor.visitedRPC {
+		f.rpcOptions = append(f.rpcOptions, *o)
+	}
 }
 
 func (f *File) handleImport(i *proto.Import) {
@@ -172,6 +210,10 @@ func (f *File) handleEnum(i *proto.Enum) {
 
 func (f *File) handleService(s *proto.Service) {
 	f.services = append(f.services, *s)
+}
+
+func (f *File) handleRPC(r *proto.RPC) {
+	f.rpcs = append(f.rpcs, *r)
 }
 
 func (f *File) handleMessage(m *proto.Message) {
