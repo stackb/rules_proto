@@ -1,0 +1,313 @@
+plugins:
+
+  # CLOSURE
+  - name: closure_js
+    implementation: builtin:js:closure
+  - name: protoc-gen-grpc-js
+    implementation: stackb:grpc.js:protoc-gen-grpc-js
+
+  # CPP
+  - name: cpp
+    implementation: builtin:cpp
+  - name: protoc-gen-grpc-cpp
+    implementation: grpc:grpc:cpp
+
+  # GO
+  - name: protoc-gen-go
+    implementation: golang:protobuf:protoc-gen-go
+  - name: protoc-gen-go-grpc
+    implementation: grpc:grpc-go:protoc-gen-go-grpc
+    deps:
+      - "@org_golang_google_grpc//:go_default_library"
+      - "@org_golang_google_grpc//codes"
+      - "@org_golang_google_grpc//status"
+
+  # GRPC-WEB
+  - name: protoc-gen-grpc-web
+    implementation: grpc:grpc-web:protoc-gen-grpc-web
+    options:
+      - mode=grpcwebtext
+      - import_style=commonjs+dts
+
+  # JAVA
+  - name: java
+    implementation: builtin:java
+  - name: protoc-gen-grpc-java
+    implementation: grpc:grpc-java:protoc-gen-grpc-java
+
+  # COMMONJS
+  - name: node_js
+    implementation: builtin:js:common
+  - name: protoc-gen-grpc-node
+    implementation: grpc:grpc-node:protoc-gen-grpc-node
+    options:
+      - grpc_js
+
+  # PYTHON
+  - name: python
+    implementation: builtin:python
+  - name: pyi
+    implementation: builtin:pyi
+  - name: protoc-gen-grpc-python
+    implementation: grpc:grpc:protoc-gen-grpc-python
+
+  # SCALA
+  - name: protoc-gen-scala
+    implementation: scalapb:scalapb:protoc-gen-scala
+  - name: protoc-gen-scala-grpc
+    implementation: scalapb:scalapb:protoc-gen-scala
+    label: @build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc
+    options:
+      - grpc
+  - name: protoc-gen-akka-grpc
+    implementation: akka:akka-grpc:protoc-gen-akka-grpc
+
+  # TS
+  - name: ts_proto
+    implementation: stephenh:ts-proto:protoc-gen-ts-proto
+    options:
+      - "emitImportedFiles=false"
+      - "esModuleInterop=true"
+
+rules:
+
+  # CORE
+  - name: proto_compile
+    implementation: stackb:rules_proto:proto_compile
+    visibility:
+      - //visibility:public
+  - name: proto_descriptor_set
+    implementation: stackb:rules_proto:proto_descriptor_set
+    visibility:
+      - //visibility:public
+
+  # CLOSURE
+  - name: proto_closure_js_library
+    implementation: stackb:rules_proto:proto_closure_js_library
+    visibility:
+      - //visibility:public
+  - name: grpc_closure_js_library
+    implementation: stackb:rules_proto:grpc_closure_js_library
+    visibility:
+      - //visibility:public
+
+  # CPP
+  - name: proto_cc_library
+    implementation: stackb:rules_proto:proto_cc_library
+    deps:
+      - "@com_google_protobuf//:protobuf"
+    visibility:
+      - //visibility:public
+  - name: grpc_cc_library
+    implementation: stackb:rules_proto:grpc_cc_library
+    deps:
+      - "@com_github_grpc_grpc//:grpc++"
+      - "@com_github_grpc_grpc//:grpc++_reflection"
+    visibility:
+      - //visibility:public
+
+  # GO
+  - name: proto_go_library
+    implementation: stackb:rules_proto:proto_go_library
+    deps:
+      - "@org_golang_google_protobuf//reflect/protoreflect"
+      - "@org_golang_google_protobuf//runtime/protoimpl"
+    resolves:
+      - "google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/${1}pb"
+      - "google/protobuf/(descriptor|plugin).proto @org_golang_google_protobuf//types/${1}pb"
+    visibility:
+      - //visibility:public
+
+  # GRPC-WEB
+  - name: grpc_web_js_library
+    implementation: stackb:rules_proto:grpc_web_js_library
+    deps:
+      - "@org_golang_google_protobuf//reflect/protoreflect"
+      - "@org_golang_google_protobuf//runtime/protoimpl"
+    visibility:
+      - //visibility:public
+
+  # JAVA
+  - name: proto_java_library
+    implementation: stackb:rules_proto:proto_java_library
+    deps:
+      - "@com_google_protobuf//:protobuf_java"
+    visibility:
+      - //visibility:public
+  - name: grpc_java_library
+    implementation: stackb:rules_proto:grpc_java_library
+    deps:
+      - "@io_grpc_grpc_java//stub"
+      - "@io_grpc_grpc_java//stub:javax_annotation"
+      - "@io_grpc_grpc_java//context"
+      - "@io_grpc_grpc_java//protobuf"
+      - "@com_google_guava_guava//jar"
+    visibility:
+      - //visibility:public
+
+  # COMMONJS
+  - name: proto_nodejs_library
+    implementation: stackb:rules_proto:proto_nodejs_library
+    visibility:
+      - //visibility:public
+  - name: grpc_nodejs_library
+    implementation: stackb:rules_proto:grpc_nodejs_library
+    visibility:
+      - //visibility:public
+
+  # PYTHON
+  - name: proto_py_library
+    implementation: stackb:rules_proto:proto_py_library
+    deps:
+      - "@com_google_protobuf//:protobuf_python"
+    visibility:
+      - //visibility:public
+  - name: grpc_py_library
+    implementation: stackb:rules_proto:grpc_py_library
+    # TODO: add grpc_py_library deps
+    visibility:
+      - //visibility:public
+
+  # SCALA
+  - name: proto_scala_library
+    implementation: stackb:rules_proto:proto_scala_library
+    options:
+      - --plugins=protoc-gen-scala
+    deps:
+      - "@maven_scala//:com_google_protobuf_protobuf_java"
+      - "@maven_scala//:com_thesamet_scalapb_lenses_2_12"
+      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12"
+    visibility:
+      - //visibility:public
+  - name: grpc_scala_library
+    implementation: stackb:rules_proto:grpc_scala_library
+    options:
+      - --plugins=protoc-gen-scala-grpc,protoc-gen-akka-grpc
+    deps:
+      - "@maven_scala//:com_google_protobuf_protobuf_java"
+      - "@maven_scala//:com_thesamet_scalapb_lenses_2_12"
+      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12"
+      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12"
+      - "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3"
+      - "@maven_akka//:com_typesafe_akka_akka_actor_2_12"
+      - "@maven_akka//:com_typesafe_akka_akka_http_core_2_12"
+      - "@maven_akka//:com_typesafe_akka_akka_stream_2_12"
+      - "@maven_scala//:io_grpc_grpc_api"
+      - "@maven_scala//:io_grpc_grpc_protobuf"
+      - "@maven_scala//:io_grpc_grpc_stub"
+    visibility:
+      - //visibility:public
+
+  # TS
+  - name: proto_ts_library
+    implementation: stackb:rules_proto:proto_ts_library
+    attrs:
+      - out_dir ts # Set an out_dir so that we don't conflict with the closurejs output
+    visibility:
+      - //visibility:public
+    deps:
+      - "@//:node_modules/@nestjs/microservices"
+      - "@//:node_modules/@types/node"
+      - "@//:node_modules/long"
+      - "@//:node_modules/protobufjs"
+      - "@//:node_modules/rxjs"
+
+languages:
+
+  # CLOSURE
+  - name: closure_js
+    plugins:
+      - closure_js
+      - protoc-gen-grpc-js
+    rules:
+      - proto_compile
+      - proto_closure_js_library
+      - grpc_closure_js_library
+    enabled: false
+
+  # CPP
+  - name: cpp
+    plugins:
+      - cpp
+      - protoc-gen-grpc-cpp
+    rules:
+      - proto_compile
+      - proto_cc_library
+      - grpc_cc_library
+    enabled: false
+
+  # DESCRIPTOR
+  - name: descriptor
+    # proto_descriptor_set rule does not require any plugins, but this framework
+    # does, so pick one arbitrarily
+    plugins:
+      - protoc-gen-go
+    rules:
+      - proto_descriptor_set
+    enabled: false
+
+  # GO
+  - name: go
+    plugins:
+      - protoc-gen-go
+      - protoc-gen-go-grpc
+    rules:
+      - proto_compile
+      - proto_go_library
+    enabled: false
+
+  # JAVA
+  - name: java
+    plugins:
+      - java
+      - protoc-gen-grpc-java
+    rules:
+      - proto_compile
+      - proto_java_library
+      - grpc_java_library
+    enabled: false
+
+  # NODE_JS
+  - name: node_js
+    plugins:
+      - node_js
+      - protoc-gen-grpc-node
+      - protoc-gen-grpc-web
+    rules:
+      - proto_compile
+      - proto_nodejs_library
+      - grpc_nodejs_library
+      - grpc_web_js_library
+    enabled: false
+
+  # PYTHON
+  - name: python
+    plugins:
+      - python
+      - pyi
+      - protoc-gen-grpc-python
+    rules:
+      - proto_compile
+      - proto_py_library
+      - grpc_py_library
+    enabled: false
+
+  # SCALA
+  - name: scala
+    plugins:
+      - protoc-gen-scala
+      - protoc-gen-scala-grpc
+      - protoc-gen-akka-grpc
+    rules:
+      - proto_compile
+      - proto_scala_library
+      - grpc_scala_library
+    enabled: false
+
+  # TS
+  - name: ts_proto
+    plugins:
+      - ts_proto
+    rules:
+      - proto_compile
+      - proto_ts_library
