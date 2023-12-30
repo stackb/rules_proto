@@ -311,3 +311,4 @@ languages:
     rules:
       - proto_compile
       - proto_ts_library
+    enabled: false
