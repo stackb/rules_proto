@@ -56,7 +56,7 @@ plugins:
     implementation: scalapb:scalapb:protoc-gen-scala
   - name: protoc-gen-scala-grpc
     implementation: scalapb:scalapb:protoc-gen-scala
-    label: @build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc
+    label: "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc"
     options:
       - grpc
   - name: protoc-gen-akka-grpc
