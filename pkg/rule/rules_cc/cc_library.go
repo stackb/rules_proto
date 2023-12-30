@@ -16,6 +16,9 @@ var ccLibraryKindInfo = rule.KindInfo{
 		"srcs": true,
 		"hdrs": true,
 	},
+	NonEmptyAttrs: map[string]bool{
+		"srcs": true,
+	},
 	ResolveAttrs: map[string]bool{"deps": true},
 }
 

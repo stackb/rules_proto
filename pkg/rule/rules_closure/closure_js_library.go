@@ -24,6 +24,9 @@ var closureJsLibraryKindInfo = rule.KindInfo{
 		"suppress":             true,
 		"lenient":              true,
 	},
+	NonEmptyAttrs: map[string]bool{
+		"srcs": true,
+	},
 	ResolveAttrs: map[string]bool{"deps": true},
 }
 

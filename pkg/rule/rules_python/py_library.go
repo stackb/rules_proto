@@ -18,6 +18,9 @@ var pyLibraryKindInfo = rule.KindInfo{
 		"visibility": true,
 		"imports":    true,
 	},
+	NonEmptyAttrs: map[string]bool{
+		"srcs": true,
+	},
 	ResolveAttrs: map[string]bool{"deps": true},
 }
 

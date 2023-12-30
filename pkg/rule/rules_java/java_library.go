@@ -16,6 +16,9 @@ var javaLibraryKindInfo = rule.KindInfo{
 		"srcs":    true,
 		"exports": true,
 	},
+	NonEmptyAttrs: map[string]bool{
+		"srcs": true,
+	},
 	ResolveAttrs: map[string]bool{"deps": true},
 }
 
