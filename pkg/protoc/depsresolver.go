@@ -146,8 +146,6 @@ func resolveAnyKind(c *config.Config, ix *resolve.RuleIndex, lang, impLang, imp 
 }
 
 func resolveWithIndex(c *config.Config, ix *resolve.RuleIndex, lang, impLang, imp string, from label.Label) (label.Label, error) {
-	log.Println(from, "resolveWithIndex:", lang, impLang, imp)
-
 	matches := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{Lang: impLang, Imp: imp}, lang)
 	if len(matches) == 0 {
 		// log.Println(from, "no matches:", imp)
