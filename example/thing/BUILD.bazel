@@ -20,7 +20,7 @@ proto_closure_js_library(
     srcs = ["thing_closure.js"],
     internal_descriptors = [
         "//example/thing:thing_proto",
-        "@com_google_protobuf//:timestamp_proto",
+        "//google/protobuf:timestamppb_proto",
     ],
     suppress = [
         "JSC_IMPLICITLY_NONNULL_JSDOC",
