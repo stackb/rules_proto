@@ -1,3 +1,5 @@
+load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
@@ -5,4 +7,26 @@ proto_library(
     srcs = ["person.proto"],
     visibility = ["//visibility:public"],
     deps = ["//example/place:place_proto"],
+)
+
+proto_cc_library(
+    name = "person_cc_library",
+    srcs = ["person.pb.cc"],
+    hdrs = ["person.pb.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//example/place:place_cc_library",
+        "@com_google_protobuf//:protobuf",
+    ],
+)
+
+proto_compile(
+    name = "person_cpp_compile",
+    outputs = [
+        "person.pb.cc",
+        "person.pb.h",
+    ],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
+    proto = "person_proto",
+    visibility = ["//visibility:public"],
 )

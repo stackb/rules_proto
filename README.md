@@ -597,7 +597,7 @@ proto_repository(
     build_file_generation = "clean",
     build_file_proto_mode = "file",
     reresolve_known_proto_imports = True,
-    proto_language_config_file = "//example:config.yaml",
+    proto_language_config_file = "@//:rules_proto_config.yaml",
     strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
     type = "zip",
     urls = ["https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9"],

@@ -15,7 +15,7 @@ def proto_repositories():
         ],
         build_file_expunge = True,
         build_file_proto_mode = "file",
-        cfgs = ["//example:config.yaml"],
+        cfgs = ["@//:rules_proto_config.yaml"],
         deleted_files = [
             "google/protobuf/map_lite_unittest.proto",
             "google/protobuf/map_proto2_unittest.proto",
@@ -75,7 +75,7 @@ def proto_repositories():
         build_file_expunge = True,
         build_file_proto_mode = "file",
         reresolve_known_proto_imports = True,
-        cfgs = ["//example:config.yaml"],
+        cfgs = ["@//:rules_proto_config.yaml"],
         sha256 = "e5b59ae2c0c812e3867158eca8e484fddb96dff03b8e2073bf44242b708fa919",
         strip_prefix = "googleapis-e115ab1839cb6e1bd953e40337b7e84001291766",
         urls = ["https://github.com/googleapis/googleapis/archive/e115ab1839cb6e1bd953e40337b7e84001291766.tar.gz"],
