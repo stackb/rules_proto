@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
 load("@build_stack_rules_proto//rules/closure:grpc_closure_js_library.bzl", "grpc_closure_js_library")
 load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
@@ -125,4 +126,43 @@ grpc_closure_js_library(
     visibility = ["//visibility:public"],
     exports = [":routeguide_closure_js_library"],
     deps = [":routeguide_closure_js_library"],
+)
+
+grpc_scala_library(
+    name = "routeguide_grpc_scala_library",
+    srcs = [
+        "routeguide_akka_grpc.srcjar",
+        "routeguide_scala_grpc.srcjar",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3",
+        "@maven_akka//:com_typesafe_akka_akka_actor_2_12",
+        "@maven_akka//:com_typesafe_akka_akka_http_core_2_12",
+        "@maven_akka//:com_typesafe_akka_akka_stream_2_12",
+        "@maven_scala//:com_google_protobuf_protobuf_java",
+        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
+        "@maven_scala//:io_grpc_grpc_api",
+        "@maven_scala//:io_grpc_grpc_protobuf",
+        "@maven_scala//:io_grpc_grpc_stub",
+    ],
+)
+
+proto_compile(
+    name = "routeguide_scala_compile",
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
+    outputs = [
+        "routeguide_akka_grpc.srcjar",
+        "routeguide_scala.srcjar",
+        "routeguide_scala_grpc.srcjar",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/akka/akka-grpc:protoc-gen-akka-grpc",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
+    ],
+    proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )

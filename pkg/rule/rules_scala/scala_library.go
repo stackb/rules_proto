@@ -68,7 +68,9 @@ func (s *scalaLibrary) KindInfo() rule.KindInfo {
 		NonEmptyAttrs: map[string]bool{
 			"srcs": true,
 		},
-		ResolveAttrs: map[string]bool{"deps": true},
+		ResolveAttrs: map[string]bool{
+			"deps": true,
+		},
 	}
 }
 
@@ -257,7 +259,7 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 	imports = s.options.filterImports(imports)
 
-	resolveFn := protoc.ResolveDepsAttr("deps", true)
+	resolveFn := protoc.ResolveDepsAttr("deps", s.options.resolveWKTs)
 	resolveFn(c, ix, r, imports, from)
 
 	if unresolvedDeps, ok := r.PrivateAttr(protoc.UnresolvedDepsPrivateKey).(map[string]error); ok {
@@ -458,6 +460,7 @@ type scalaLibraryOptions struct {
 	noResolve        map[string]bool
 	exclude, include []string
 	plugins          []string
+	resolveWKTs      bool
 }
 
 func parseScalaLibraryOptions(kindName string, args []string) *scalaLibraryOptions {
@@ -465,6 +468,9 @@ func parseScalaLibraryOptions(kindName string, args []string) *scalaLibraryOptio
 
 	var noresolveFlagValue string
 	flags.StringVar(&noresolveFlagValue, "noresolve", "", "--noresolve=<path>.proto suppresses deps resolution of <path>.proto")
+
+	var resolveWKTs bool
+	flags.BoolVar(&resolveWKTs, "resolve_well_known_types", false, "--resolve_well_known_types=true enables resolution of well-known-types")
 
 	var excludeFlagValue string
 	flags.StringVar(&excludeFlagValue, "exclude", "", "--exclude=<file>.srcjar suppresses rule output for <glob>.srcjar.  If after removing all matching files, no outputs remain, the rule will not be emitted.")
@@ -480,7 +486,8 @@ func parseScalaLibraryOptions(kindName string, args []string) *scalaLibraryOptio
 	}
 
 	config := &scalaLibraryOptions{
-		noResolve: make(map[string]bool),
+		noResolve:   make(map[string]bool),
+		resolveWKTs: resolveWKTs,
 	}
 
 	for _, value := range strings.Split(noresolveFlagValue, ",") {

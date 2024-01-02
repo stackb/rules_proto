@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
@@ -59,4 +60,31 @@ proto_compile(
     plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
     proto = "place_proto",
     visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "place_scala_compile",
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
+    outputs = [
+        "place_scala.srcjar",
+        "place_scala_grpc.srcjar",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
+    ],
+    proto = "place_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_scala_library(
+    name = "place_proto_scala_library",
+    srcs = ["place_scala.srcjar"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//example/thing:thing_proto_scala_library",
+        "@maven_scala//:com_google_protobuf_protobuf_java",
+        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+    ],
 )

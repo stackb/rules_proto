@@ -136,10 +136,10 @@ ts_proto_deps()
 # # Java
 # # ----------------------------------------------------
 
-# load(
-#     "@rules_jvm_external//:defs.bzl",
-#     "maven_install",
-# )
+load(
+    "@rules_jvm_external//:defs.bzl",
+    "maven_install",
+)
 # load(
 #     "@io_grpc_grpc_java//:repositories.bzl",
 #     "IO_GRPC_GRPC_JAVA_ARTIFACTS",
@@ -176,68 +176,68 @@ ts_proto_deps()
 
 # go_core_deps()
 
-# # ----------------------------------------------------
-# # Scala
-# # ----------------------------------------------------
+# ----------------------------------------------------
+# Scala
+# ----------------------------------------------------
 
-# load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
+load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
 
-# scala_config(scala_version = "2.12.11")
+scala_config(scala_version = "2.12.11")
 
-# load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
 
-# scala_repositories()
+scala_repositories()
 
-# load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
 
-# scala_register_toolchains()
+scala_register_toolchains()
 
-# # bazel run @maven_scala//:pin, but first comment out the "maven_install_json"
-# # (put it back once pinned again)
-# maven_install(
-#     name = "maven_scala",
-#     artifacts = [
-#         "com.thesamet.scalapb:lenses_2.12:0.11.5",
-#         "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
-#         "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
-#         "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
-#         "com.thesamet.scalapb:scalapbc_2.12:0.11.5",
-#         "io.grpc:grpc-api:1.40.1",
-#         "io.grpc:grpc-core:1.40.1",
-#         "io.grpc:grpc-netty:1.40.1",
-#         "io.grpc:grpc-protobuf:1.40.1",
-#         "io.grpc:grpc-stub:1.40.1",
-#         "org.json4s:json4s-core_2.12:4.0.3",
-#     ],
-#     fetch_sources = True,
-#     maven_install_json = "//:maven_scala_install.json",
-#     repositories = ["https://repo1.maven.org/maven2"],
-# )
+# bazel run @maven_scala//:pin, but first comment out the "maven_install_json"
+# (put it back once pinned again)
+maven_install(
+    name = "maven_scala",
+    artifacts = [
+        "com.thesamet.scalapb:lenses_2.12:0.11.5",
+        "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
+        "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
+        "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
+        "com.thesamet.scalapb:scalapbc_2.12:0.11.5",
+        "io.grpc:grpc-api:1.40.1",
+        "io.grpc:grpc-core:1.40.1",
+        "io.grpc:grpc-netty:1.40.1",
+        "io.grpc:grpc-protobuf:1.40.1",
+        "io.grpc:grpc-stub:1.40.1",
+        "org.json4s:json4s-core_2.12:4.0.3",
+    ],
+    fetch_sources = True,
+    maven_install_json = "//:maven_scala_install.json",
+    repositories = ["https://repo1.maven.org/maven2"],
+)
 
-# load("@maven_scala//:defs.bzl", pinned_maven_scala_install = "pinned_maven_install")
+load("@maven_scala//:defs.bzl", pinned_maven_scala_install = "pinned_maven_install")
 
-# pinned_maven_scala_install()
+pinned_maven_scala_install()
 
-# # ----------------------------------------------------
-# # Scala/Akka
-# # ----------------------------------------------------
+# ----------------------------------------------------
+# Scala/Akka
+# ----------------------------------------------------
 
-# # bazel run @maven_akka//:pin, but first comment out the "maven_install_json"
-# # (put it back once pinned again)
-# maven_install(
-#     name = "maven_akka",
-#     artifacts = [
-#         "com.lightbend.akka.grpc:akka-grpc-codegen_2.12:2.1.3",
-#         "com.lightbend.akka.grpc:akka-grpc-runtime_2.12:2.1.3",
-#     ],
-#     fetch_sources = True,
-#     maven_install_json = "//:maven_akka_install.json",
-#     repositories = ["https://repo1.maven.org/maven2"],
-# )
+# bazel run @maven_akka//:pin, but first comment out the "maven_install_json"
+# (put it back once pinned again)
+maven_install(
+    name = "maven_akka",
+    artifacts = [
+        "com.lightbend.akka.grpc:akka-grpc-codegen_2.12:2.1.3",
+        "com.lightbend.akka.grpc:akka-grpc-runtime_2.12:2.1.3",
+    ],
+    fetch_sources = True,
+    maven_install_json = "//:maven_akka_install.json",
+    repositories = ["https://repo1.maven.org/maven2"],
+)
 
-# load("@maven_akka//:defs.bzl", pinned_maven_akka_install = "pinned_maven_install")
+load("@maven_akka//:defs.bzl", pinned_maven_akka_install = "pinned_maven_install")
 
-# pinned_maven_akka_install()
+pinned_maven_akka_install()
 
 # ----------------------------------------------------
 # Closure
