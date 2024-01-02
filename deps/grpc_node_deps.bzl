@@ -11,9 +11,21 @@ def _maybe(repo_rule, name, **kwargs):
 def grpc_node_deps():
     """grpc_node dependency macro
     """
+    rules_pkg()  # via com_google_protobuf
     com_google_protobuf()  # via com_github_grpc_grpc
     com_github_grpc_grpc()  # via com_github_grpc_grpc_node_packages_grpc_tools_src
     com_github_grpc_grpc_node_packages_grpc_tools_src()  # via <TOP>
+
+def rules_pkg():
+    _maybe(
+        http_archive,
+        name = "rules_pkg",
+        sha256 = "de4cf980e4c5eba24f3897016a71daec6b8d3c36f9ecdfe4e6dbcabb5017ade0",
+        strip_prefix = "rules_pkg-ea8c75a15c4ac9562da29f3d9a633decb384d4a3",
+        urls = [
+            "https://github.com/bazelbuild/rules_pkg/archive/ea8c75a15c4ac9562da29f3d9a633decb384d4a3.tar.gz",
+        ],
+    )
 
 def com_google_protobuf():
     _maybe(
@@ -30,10 +42,10 @@ def com_github_grpc_grpc():
     _maybe(
         http_archive,
         name = "com_github_grpc_grpc",
-        sha256 = "437068b8b777d3b339da94d3498f1dc20642ac9bfa76db43abdd522186b1542b",
-        strip_prefix = "grpc-1.60.0",
+        sha256 = "17e4e1b100657b88027721220cbfb694d86c4b807e9257eaf2fb2d273b41b1b1",
+        strip_prefix = "grpc-1.54.3",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.60.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.54.3.tar.gz",
         ],
     )
 

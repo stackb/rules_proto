@@ -27,9 +27,9 @@ load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
 protobuf_core_deps()
 
-load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+# load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
-protobuf_deps()
+# protobuf_deps()
 
 # ----------------------------------------------------
 # Core gRPC

@@ -11,7 +11,19 @@ def _maybe(repo_rule, name, **kwargs):
 def protobuf_core_deps():
     """protobuf_core dependency macro
     """
+    rules_pkg()  # via com_google_protobuf
     com_google_protobuf()  # via <TOP>
+
+def rules_pkg():
+    _maybe(
+        http_archive,
+        name = "rules_pkg",
+        sha256 = "de4cf980e4c5eba24f3897016a71daec6b8d3c36f9ecdfe4e6dbcabb5017ade0",
+        strip_prefix = "rules_pkg-ea8c75a15c4ac9562da29f3d9a633decb384d4a3",
+        urls = [
+            "https://github.com/bazelbuild/rules_pkg/archive/ea8c75a15c4ac9562da29f3d9a633decb384d4a3.tar.gz",
+        ],
+    )
 
 def com_google_protobuf():
     _maybe(

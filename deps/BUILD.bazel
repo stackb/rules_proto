@@ -140,31 +140,10 @@ proto_dependency(
     strip_prefix = "protobuf-f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",
     urls = ["https://github.com/protocolbuffers/protobuf/archive/f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c.tar.gz"],
     visibility = ["//visibility:public"],
+    deps = [
+        ":rules_pkg",
+    ],
 )
-
-# Branch: v25.0
-# Commit: 6b5d8db01fe47478e8d400f550e797e6230d464e
-# Date: 2023-11-01 20:03:44 +0000 UTC
-# URL: https://github.com/protocolbuffers/protobuf/commit/6b5d8db01fe47478e8d400f550e797e6230d464e
-#
-# Updating version.json and repo version numbers to: 25.0
-# Size: 5879892 (5.9 MB)
-# proto_dependency(
-#     name = "com_google_protobuf",
-#     # TODO(pcj): patch still needed after upgrade?
-#     # patch_args = ["-p1"],
-#     # patches = ["@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch"],
-#     repository_rule = "http_archive",
-#     sha256 = "7ed5fc41fe1614e551025f8e14b79b026a015b3ed337d38920c586f3ea35d818",
-#     strip_prefix = "protobuf-6b5d8db01fe47478e8d400f550e797e6230d464e",
-#     urls = ["https://github.com/protocolbuffers/protobuf/archive/6b5d8db01fe47478e8d400f550e797e6230d464e.tar.gz"],
-#     visibility = ["//visibility:public"],
-#     # deps = [
-#     #     ":bazel_skylib",
-#     #     ":rules_pkg",
-#     #     ":rules_python",
-#     # ],
-# )
 
 # Commit: e1a52f9a897653985b0649cca17615cb1b0eb3b7
 # Date: 2023-11-09 20:28:22 +0000 UTC
@@ -207,22 +186,6 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Branch: master
-# Commit: c7e068d38e2fec1d899e1c150e372f205c220e27
-# Date: 2021-02-02 22:16:45 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_python/commit/c7e068d38e2fec1d899e1c150e372f205c220e27
-#
-# pip: 20.3.3 -> 20.3.4 (#405)
-# Size: 2563550 (2.6 MB)
-proto_dependency(
-    name = "rules_python",
-    repository_rule = "http_archive",
-    sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
-    strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
-    urls = ["https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz"],
-    visibility = ["//visibility:public"],
-)
-
 # Commit: f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5
 # Date: 2023-11-29 16:35:25 +0000 UTC
 # URL: https://github.com/bazelbuild/rules_proto/commit/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5
@@ -259,17 +222,17 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Release: v1.60.0
-# TargetCommitish: v1.60.x
-# Date: 2023-11-28 00:12:30 +0000 UTC
-# URL: https://github.com/grpc/grpc/releases/tag/v1.60.0
-# Size: 17442762 (17 MB)
+# Release: v1.54.3
+# TargetCommitish: v1.54.x
+# Date: 2023-07-25 20:28:39 +0000 UTC
+# URL: https://github.com/grpc/grpc/releases/tag/v1.54.3
+# Size: 8914754 (8.9 MB)
 proto_dependency(
     name = "com_github_grpc_grpc",
     repository_rule = "http_archive",
-    sha256 = "437068b8b777d3b339da94d3498f1dc20642ac9bfa76db43abdd522186b1542b",
-    strip_prefix = "grpc-1.60.0",
-    urls = ["https://github.com/grpc/grpc/archive/v1.60.0.tar.gz"],
+    sha256 = "17e4e1b100657b88027721220cbfb694d86c4b807e9257eaf2fb2d273b41b1b1",
+    strip_prefix = "grpc-1.54.3",
+    urls = ["https://github.com/grpc/grpc/archive/v1.54.3.tar.gz"],
     deps = [
         ":com_google_protobuf",
     ],
