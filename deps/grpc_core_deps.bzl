@@ -122,9 +122,9 @@ def com_github_grpc_grpc():
     _maybe(
         http_archive,
         name = "com_github_grpc_grpc",
-        sha256 = "79e3ff93f7fa3c8433e2165f2550fa14889fce147c15d9828531cbfc7ad11e01",
-        strip_prefix = "grpc-1.54.1",
+        sha256 = "437068b8b777d3b339da94d3498f1dc20642ac9bfa76db43abdd522186b1542b",
+        strip_prefix = "grpc-1.60.0",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.54.1.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.60.0.tar.gz",
         ],
     )
