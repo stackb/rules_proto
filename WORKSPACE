@@ -75,10 +75,12 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 
-load("//:go_deps.bzl", "go_deps")
+load("//:go_deps.bzl", "gazelle_protobuf_extension_go_deps", "go_deps")
 
 # gazelle:repository_macro go_deps.bzl%go_deps
 go_deps()
+
+gazelle_protobuf_extension_go_deps()
 
 # load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
