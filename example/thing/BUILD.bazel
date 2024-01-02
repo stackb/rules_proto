@@ -102,6 +102,12 @@ proto_java_library(
     name = "thing_java_library",
     srcs = ["thing.srcjar"],
     visibility = ["//visibility:public"],
-    exports = ["@com_google_protobuf//:protobuf_java"],
-    deps = ["@com_google_protobuf//:protobuf_java"],
+    exports = [
+        "@com_google_protobuf//:protobuf_java",
+        "@protoapis//google/protobuf:timestamp_java_library",
+    ],
+    deps = [
+        "@com_google_protobuf//:protobuf_java",
+        "@protoapis//google/protobuf:timestamp_java_library",
+    ],
 )

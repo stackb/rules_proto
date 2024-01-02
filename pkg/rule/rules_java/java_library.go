@@ -19,7 +19,9 @@ var javaLibraryKindInfo = rule.KindInfo{
 	NonEmptyAttrs: map[string]bool{
 		"srcs": true,
 	},
-	ResolveAttrs: map[string]bool{"deps": true},
+	ResolveAttrs: map[string]bool{
+		"deps": true,
+	},
 }
 
 // JavaLibrary implements RuleProvider for 'java_library'-derived rules.
