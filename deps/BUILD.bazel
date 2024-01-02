@@ -15,6 +15,11 @@ depsgen(
 )
 
 depsgen(
+    name = "js_core",
+    deps = ["//deps:com_google_protobuf_javascript"],
+)
+
+depsgen(
     name = "go_core",
     deps = [
         ":com_github_golang_protobuf",
@@ -119,21 +124,46 @@ proto_dependency(
     deps = [":io_bazel_rules_go"],
 )
 
+# Branch: v25.0
+# Commit: 6b5d8db01fe47478e8d400f550e797e6230d464e
+# Date: 2023-11-01 20:03:44 +0000 UTC
+# URL: https://github.com/protocolbuffers/protobuf/commit/6b5d8db01fe47478e8d400f550e797e6230d464e
+#
+# Updating version.json and repo version numbers to: 25.0
+# Size: 5879892 (5.9 MB)
 proto_dependency(
     name = "com_google_protobuf",
-    patch_args = ["-p1"],
-    patches = ["@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch"],
+    # TODO(pcj): patch still needed after upgrade?
+    # patch_args = ["-p1"],
+    # patches = ["@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch"],
     repository_rule = "http_archive",
-    sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
-    strip_prefix = "protobuf-3.20.1",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz"],
+    sha256 = "7ed5fc41fe1614e551025f8e14b79b026a015b3ed337d38920c586f3ea35d818",
+    strip_prefix = "protobuf-6b5d8db01fe47478e8d400f550e797e6230d464e",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/6b5d8db01fe47478e8d400f550e797e6230d464e.tar.gz"],
     visibility = ["//visibility:public"],
-    deps = [
-        ":bazel_skylib",
-        ":rules_pkg",
-        ":rules_python",
-        ":zlib",
-    ],
+    # deps = [
+    #     ":bazel_skylib",
+    #     ":rules_pkg",
+    #     ":rules_python",
+    # ],
+)
+
+# Commit: e1a52f9a897653985b0649cca17615cb1b0eb3b7
+# Date: 2023-11-09 20:28:22 +0000 UTC
+# URL: https://github.com/protocolbuffers/protobuf-javascript/commit/e1a52f9a897653985b0649cca17615cb1b0eb3b7
+#
+# Update project status (November 2023) (#178)
+#
+# * Update README.md
+#
+# Co-authored-by: Luke Sandberg <lukesandberg@users.noreply.github.com>
+# Size: 416305 (416 kB)
+proto_dependency(
+    name = "com_google_protobuf_javascript",
+    repository_rule = "http_archive",
+    sha256 = "06fc35c7d35c48bdc99a6ab72211086532d1de2bc4ec28011cde607a4025ea95",
+    strip_prefix = "protobuf-javascript-e1a52f9a897653985b0649cca17615cb1b0eb3b7",
+    urls = ["https://github.com/protocolbuffers/protobuf-javascript/archive/e1a52f9a897653985b0649cca17615cb1b0eb3b7.tar.gz"],
 )
 
 # Commit: ea8c75a15c4ac9562da29f3d9a633decb384d4a3
@@ -175,21 +205,24 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Branch: master
-# Commit: f7a30f6f80006b591fa7c437fe5a951eb10bcbcf
-# Date: 2021-02-09 14:25:06 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_proto/commit/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf
+# Commit: f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5
+# Date: 2023-11-29 16:35:25 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_proto/commit/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5
 #
-# Merge pull request #77 from Yannic/proto_descriptor_set_rule
+# feat: introduce toolchain helper (#194)
 #
-# Create proto_descriptor_set
-# Size: 14397 (14 kB)
+# This is not final yet, I just want to test out with rules_python first.
+# Welcome to review though.
+#
+# Also due to https://github.com/bazelbuild/bazel/issues/20297 i can't
+# write unit tests for the incompatible flag. I'll look for a workaround.
+# Size: 16426 (16 kB)
 proto_dependency(
     name = "rules_proto",
     repository_rule = "http_archive",
-    sha256 = "9fc210a34f0f9e7cc31598d109b5d069ef44911a82f507d5a88716db171615a8",
-    strip_prefix = "rules_proto-f7a30f6f80006b591fa7c437fe5a951eb10bcbcf",
-    urls = ["https://github.com/bazelbuild/rules_proto/archive/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf.tar.gz"],
+    sha256 = "f5ae0e582238fcd4ea3d0146a3f5f3db9517f8fe24491eab3c105ace53aad1bb",
+    strip_prefix = "rules_proto-f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5",
+    urls = ["https://github.com/bazelbuild/rules_proto/archive/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5.tar.gz"],
 )
 
 proto_dependency(
@@ -198,19 +231,6 @@ proto_dependency(
     sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
     strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
     urls = ["https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz"],
-    visibility = ["//visibility:public"],
-)
-
-proto_dependency(
-    name = "zlib",
-    build_file = "@build_stack_rules_proto//third_party:zlib.BUILD",
-    repository_rule = "http_archive",
-    sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
-    strip_prefix = "zlib-1.2.11",
-    urls = [
-        "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
-        "https://zlib.net/zlib-1.2.11.tar.gz",
-    ],
     visibility = ["//visibility:public"],
 )
 

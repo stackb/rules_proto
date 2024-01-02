@@ -340,6 +340,11 @@ func augmentResolveConfigOverrides(rc interface{}, more map[overrideKey]label.La
 	overrides := (*map[overrideKey]label.Label)(ptrToOverrides)
 	existing := *overrides
 
+	if existing == nil {
+		existing = make(map[overrideKey]label.Label)
+		*overrides = existing
+	}
+
 	for k, v := range more {
 		existing[k] = v
 	}

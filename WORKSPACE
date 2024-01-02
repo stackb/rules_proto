@@ -53,6 +53,24 @@ grpc_deps()
 
 # grpc_extra_deps()
 
+load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
+
+apple_rules_dependencies(ignore_version_differences = False)
+
+load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+
+# Initialize Google APIs with only C++ and Python targets
+switched_rules_by_language(
+    name = "com_google_googleapis_imports",
+    cc = True,
+    grpc = True,
+    python = True,
+)
+
+load("@envoy_api//bazel:repositories.bzl", "api_dependencies")
+
+api_dependencies()
+
 # ----------------------------------------------------
 # Go Tools
 # ----------------------------------------------------
@@ -85,6 +103,10 @@ gazelle_protobuf_extension_go_deps()
 # load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
 # prebuilt_protoc_deps()
+
+load("//deps:js_core_deps.bzl", "js_core_deps")
+
+js_core_deps()
 
 load("//deps:grpc_java_deps.bzl", "grpc_java_deps")
 
@@ -217,15 +239,15 @@ ts_proto_deps()
 
 # pinned_maven_akka_install()
 
-# # ----------------------------------------------------
-# # Closure
-# # ----------------------------------------------------
+# ----------------------------------------------------
+# Closure
+# ----------------------------------------------------
 
-# load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
+load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
 
-# rules_closure_toolchains()
+rules_closure_toolchains()
 
-# rules_closure_dependencies()
+rules_closure_dependencies()
 
 # # ----------------------------------------------------
 # # NodeJS

@@ -53,5 +53,6 @@ proto_compile(
     outputs = ["thing_closure.js"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
     proto = "thing_proto",
+    verbose = True,
     visibility = ["//visibility:public"],
 )
