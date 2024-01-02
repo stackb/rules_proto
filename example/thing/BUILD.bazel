@@ -17,7 +17,10 @@ proto_cc_library(
     srcs = ["thing.pb.cc"],
     hdrs = ["thing.pb.h"],
     visibility = ["//visibility:public"],
-    deps = ["@com_google_protobuf//:protobuf"],
+    deps = [
+        "@com_google_protobuf//:protobuf",
+        "@protoapis//google/protobuf:timestamp_cc_library",
+    ],
 )
 
 proto_compile(

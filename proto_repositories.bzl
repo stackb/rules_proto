@@ -9,6 +9,7 @@ def proto_repositories():
             "gazelle:exclude google/protobuf/util",
             "gazelle:proto_language go enable false",
             "gazelle:proto_language cpp enable true",
+            "gazelle:proto_language java enable true",
             "gazelle:proto_language scala enable true",
             "gazelle:proto_language ts enable true",
             "gazelle:proto_language descriptor enable true",

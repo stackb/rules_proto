@@ -19,7 +19,9 @@ var ccLibraryKindInfo = rule.KindInfo{
 	NonEmptyAttrs: map[string]bool{
 		"srcs": true,
 	},
-	ResolveAttrs: map[string]bool{"deps": true},
+	ResolveAttrs: map[string]bool{
+		"deps": true,
+	},
 }
 
 // CcLibrary implements RuleProvider for 'cc_library'-derived rules.
