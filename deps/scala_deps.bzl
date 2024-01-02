@@ -30,10 +30,10 @@ def bazel_skylib():
     _maybe(
         http_archive,
         name = "bazel_skylib",
-        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
+        sha256 = "118e313990135890ee4cc8504e32929844f9578804a1b2f571d69b1dd080cfb8",
+        strip_prefix = "bazel-skylib-1.5.0",
         urls = [
-            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/archive/1.5.0.tar.gz",
         ],
     )
 

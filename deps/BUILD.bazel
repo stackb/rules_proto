@@ -121,7 +121,10 @@ proto_dependency(
     sha256 = "a0ee1d304f7caa46680ba06bdef0e5d9ec8815f6e01ec29398efd13256598c3f",
     strip_prefix = "bazel-gazelle-0.35.0",
     urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/v0.35.0.tar.gz"],
-    deps = [":io_bazel_rules_go"],
+    deps = [
+        ":bazel_skylib",
+        ":io_bazel_rules_go",
+    ],
 )
 
 # Branch: v21.12
@@ -206,12 +209,17 @@ proto_dependency(
     urls = ["https://github.com/bazelbuild/rules_proto/archive/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5.tar.gz"],
 )
 
+# Release: 1.5.0
+# TargetCommitish: main
+# Date: 2023-11-05 16:16:45 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-skylib/releases/tag/1.5.0
+# Size: 112573 (113 kB)
 proto_dependency(
     name = "bazel_skylib",
     repository_rule = "http_archive",
-    sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-    strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
-    urls = ["https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz"],
+    sha256 = "118e313990135890ee4cc8504e32929844f9578804a1b2f571d69b1dd080cfb8",
+    strip_prefix = "bazel-skylib-1.5.0",
+    urls = ["https://github.com/bazelbuild/bazel-skylib/archive/1.5.0.tar.gz"],
     visibility = ["//visibility:public"],
 )
 

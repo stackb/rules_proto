@@ -11,9 +11,21 @@ def _maybe(repo_rule, name, **kwargs):
 def core_deps():
     """core dependency macro
     """
+    bazel_skylib()  # via bazel_gazelle
     io_bazel_rules_go()  # via bazel_gazelle
     bazel_gazelle()  # via <TOP>
     rules_proto()  # via <TOP>
+
+def bazel_skylib():
+    _maybe(
+        http_archive,
+        name = "bazel_skylib",
+        sha256 = "118e313990135890ee4cc8504e32929844f9578804a1b2f571d69b1dd080cfb8",
+        strip_prefix = "bazel-skylib-1.5.0",
+        urls = [
+            "https://github.com/bazelbuild/bazel-skylib/archive/1.5.0.tar.gz",
+        ],
+    )
 
 def io_bazel_rules_go():
     _maybe(

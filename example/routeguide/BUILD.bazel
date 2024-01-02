@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/closure:grpc_closure_js_library.bzl", "grpc_closure_js_library")
 load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -112,4 +113,16 @@ proto_compile(
     ],
     proto = "routeguide_proto",
     visibility = ["//visibility:public"],
+)
+
+grpc_closure_js_library(
+    name = "routeguide_grpc_closure_js_library",
+    srcs = ["routeguide.grpc.js"],
+    suppress = [
+        "JSC_IMPLICITLY_NONNULL_JSDOC",
+        "JSC_UNUSED_LOCAL_ASSIGNMENT",
+    ],
+    visibility = ["//visibility:public"],
+    exports = [":routeguide_closure_js_library"],
+    deps = [":routeguide_closure_js_library"],
 )
