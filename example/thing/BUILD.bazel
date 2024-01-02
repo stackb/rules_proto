@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
@@ -109,5 +110,26 @@ proto_java_library(
     deps = [
         "@com_google_protobuf//:protobuf_java",
         "@protoapis//google/protobuf:timestamp_java_library",
+    ],
+)
+
+proto_compile(
+    name = "thing_go_compile",
+    output_mappings = ["thing.pb.go=github.com/stackb/rules_proto/example/thing/thing.pb.go"],
+    outputs = ["thing.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    proto = "thing_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_go_library(
+    name = "thing_go_proto",
+    srcs = ["thing.pb.go"],
+    importpath = "github.com/stackb/rules_proto/example/thing",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+        "@org_golang_google_protobuf//types/known/timestamppb",
     ],
 )

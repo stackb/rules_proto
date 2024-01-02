@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:grpc_java_library.bzl", "grpc_java_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
@@ -215,4 +216,39 @@ proto_java_library(
     visibility = ["//visibility:public"],
     exports = ["@com_google_protobuf//:protobuf_java"],
     deps = ["@com_google_protobuf//:protobuf_java"],
+)
+
+proto_compile(
+    name = "routeguide_go_compile",
+    output_mappings = [
+        "routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go",
+        "routeguide_grpc.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide_grpc.pb.go",
+    ],
+    outputs = [
+        "routeguide.pb.go",
+        "routeguide_grpc.pb.go",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go",
+        "@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go-grpc",
+    ],
+    proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_go_library(
+    name = "routeguide_go_proto",
+    srcs = [
+        "routeguide.pb.go",
+        "routeguide_grpc.pb.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/example/routeguide",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+    ],
 )

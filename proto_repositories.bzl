@@ -11,6 +11,7 @@ def proto_repositories():
             "gazelle:proto_language cpp enable true",
             "gazelle:proto_language java enable true",
             "gazelle:proto_language scala enable true",
+            "gazelle:proto_language go enable true",
             "gazelle:proto_language ts enable true",
             "gazelle:proto_language descriptor enable true",
             "gazelle:proto_rule proto_ts_library attr out_dir ts",

@@ -2,3 +2,4 @@
 # gazelle:proto_language cpp enable true
 # gazelle:proto_language java enable true
 # gazelle:proto_language scala enable true
+# gazelle:proto_language go enable true
