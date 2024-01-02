@@ -19,6 +19,7 @@ proto_plugin(
         "import_style=commonjs",
     ],
     protoc_plugin_name = "js",
+    tool = "@com_google_protobuf_javascript//generator:protoc-gen-js",
     visibility = ["//visibility:public"],
     deps = ["//deps:com_google_protobuf"],
 )
@@ -30,6 +31,7 @@ proto_plugin(
         "library={PACKAGE}/{PROTO_LIBRARY_BASENAME}",
     ],
     protoc_plugin_name = "js",
+    tool = "@com_google_protobuf_javascript//generator:protoc-gen-js",
     visibility = ["//visibility:public"],
     deps = ["//deps:com_google_protobuf"],
 )

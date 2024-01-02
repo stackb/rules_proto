@@ -124,6 +124,24 @@ proto_dependency(
     deps = [":io_bazel_rules_go"],
 )
 
+# Branch: v21.12
+# Commit: f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c
+# Date: 2022-12-13 00:03:12 +0000 UTC
+# URL: https://github.com/protocolbuffers/protobuf/commit/f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c
+#
+# Updating version.json and repo version numbers to: 21.12
+# Size: 5146983 (5.1 MB)
+proto_dependency(
+    name = "com_google_protobuf",
+    # patch_args = ["-p1"],
+    # patches = ["@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch"],
+    repository_rule = "http_archive",
+    sha256 = "d594b561fb41bf243233d8f411c7f2b7d913e5c9c1be4ca439baf7e48384c893",
+    strip_prefix = "protobuf-f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c.tar.gz"],
+    visibility = ["//visibility:public"],
+)
+
 # Branch: v25.0
 # Commit: 6b5d8db01fe47478e8d400f550e797e6230d464e
 # Date: 2023-11-01 20:03:44 +0000 UTC
@@ -131,22 +149,22 @@ proto_dependency(
 #
 # Updating version.json and repo version numbers to: 25.0
 # Size: 5879892 (5.9 MB)
-proto_dependency(
-    name = "com_google_protobuf",
-    # TODO(pcj): patch still needed after upgrade?
-    # patch_args = ["-p1"],
-    # patches = ["@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch"],
-    repository_rule = "http_archive",
-    sha256 = "7ed5fc41fe1614e551025f8e14b79b026a015b3ed337d38920c586f3ea35d818",
-    strip_prefix = "protobuf-6b5d8db01fe47478e8d400f550e797e6230d464e",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/6b5d8db01fe47478e8d400f550e797e6230d464e.tar.gz"],
-    visibility = ["//visibility:public"],
-    # deps = [
-    #     ":bazel_skylib",
-    #     ":rules_pkg",
-    #     ":rules_python",
-    # ],
-)
+# proto_dependency(
+#     name = "com_google_protobuf",
+#     # TODO(pcj): patch still needed after upgrade?
+#     # patch_args = ["-p1"],
+#     # patches = ["@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch"],
+#     repository_rule = "http_archive",
+#     sha256 = "7ed5fc41fe1614e551025f8e14b79b026a015b3ed337d38920c586f3ea35d818",
+#     strip_prefix = "protobuf-6b5d8db01fe47478e8d400f550e797e6230d464e",
+#     urls = ["https://github.com/protocolbuffers/protobuf/archive/6b5d8db01fe47478e8d400f550e797e6230d464e.tar.gz"],
+#     visibility = ["//visibility:public"],
+#     # deps = [
+#     #     ":bazel_skylib",
+#     #     ":rules_pkg",
+#     #     ":rules_python",
+#     # ],
+# )
 
 # Commit: e1a52f9a897653985b0649cca17615cb1b0eb3b7
 # Date: 2023-11-09 20:28:22 +0000 UTC
