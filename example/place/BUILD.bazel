@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
@@ -132,5 +133,29 @@ proto_go_library(
         "//example/thing:thing_go_proto",
         "@org_golang_google_protobuf//reflect/protoreflect",
         "@org_golang_google_protobuf//runtime/protoimpl",
+    ],
+)
+
+proto_compile(
+    name = "place_python_compile",
+    outputs = [
+        "place_pb2.py",
+        "place_pb2.pyi",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:pyi",
+        "@build_stack_rules_proto//plugin/builtin:python",
+    ],
+    proto = "place_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_py_library(
+    name = "place_py_library",
+    srcs = ["place_pb2.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//example/thing:thing_py_library",
+        "@com_google_protobuf//:protobuf_python",
     ],
 )

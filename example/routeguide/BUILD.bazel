@@ -1,3 +1,5 @@
+load("@build_stack_rules_proto//rules/py:grpc_py_library.bzl", "grpc_py_library")
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:grpc_java_library.bzl", "grpc_java_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
@@ -251,4 +253,34 @@ proto_go_library(
         "@org_golang_google_protobuf//reflect/protoreflect",
         "@org_golang_google_protobuf//runtime/protoimpl",
     ],
+)
+
+grpc_py_library(
+    name = "routeguide_grpc_py_library",
+    srcs = ["routeguide_pb2_grpc.py"],
+    visibility = ["//visibility:public"],
+    deps = [":routeguide_py_library"],
+)
+
+proto_compile(
+    name = "routeguide_python_compile",
+    outputs = [
+        "routeguide_pb2.py",
+        "routeguide_pb2.pyi",
+        "routeguide_pb2_grpc.py",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:pyi",
+        "@build_stack_rules_proto//plugin/builtin:python",
+        "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python",
+    ],
+    proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_py_library(
+    name = "routeguide_py_library",
+    srcs = ["routeguide_pb2.py"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf_python"],
 )
