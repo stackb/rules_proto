@@ -1,3 +1,4 @@
 # gazelle:proto_language closure_js enable true
 # gazelle:proto_language cpp enable true
+# gazelle:proto_language java enable true
 # gazelle:proto_language scala enable true

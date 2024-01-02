@@ -140,33 +140,33 @@ load(
     "@rules_jvm_external//:defs.bzl",
     "maven_install",
 )
-# load(
-#     "@io_grpc_grpc_java//:repositories.bzl",
-#     "IO_GRPC_GRPC_JAVA_ARTIFACTS",
-#     "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS",
-#     "grpc_java_repositories",
-# )
-# load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
+load(
+    "@io_grpc_grpc_java//:repositories.bzl",
+    "IO_GRPC_GRPC_JAVA_ARTIFACTS",
+    "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS",
+    "grpc_java_repositories",
+)
+load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
 
-# protobuf_deps()
+protobuf_deps()
 
-# maven_install(
-#     name = "maven",
-#     artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS + PROTOBUF_MAVEN_ARTIFACTS,
-#     generate_compat_repositories = True,
-#     # TODO(pcj): why does pinning of this repository cause such problems?
-#     # example: no such package '@com_google_errorprone_error_prone_annotations_2_18_0//file': The repository '@com_google_errorprone_error_prone_annotations_2_18_0' could not be resolved: Repository '@com_google_errorprone_error_prone_annotations_2_18_0' is not defined and referenced by '@maven//:com_google_errorprone_error_prone_annotations_2_18_0_extension'
-#     # maven_install_json = "//:maven_install.json",
-#     override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
-#     repositories = ["https://repo.maven.apache.org/maven2/"],
-#     strict_visibility = True,
-# )
+maven_install(
+    name = "maven",
+    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS + PROTOBUF_MAVEN_ARTIFACTS,
+    generate_compat_repositories = True,
+    # TODO(pcj): why does pinning of this repository cause such problems?
+    # example: no such package '@com_google_errorprone_error_prone_annotations_2_18_0//file': The repository '@com_google_errorprone_error_prone_annotations_2_18_0' could not be resolved: Repository '@com_google_errorprone_error_prone_annotations_2_18_0' is not defined and referenced by '@maven//:com_google_errorprone_error_prone_annotations_2_18_0_extension'
+    # maven_install_json = "//:maven_install.json",
+    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
+    repositories = ["https://repo.maven.apache.org/maven2/"],
+    strict_visibility = True,
+)
 
-# load("@maven//:compat.bzl", "compat_repositories")
+load("@maven//:compat.bzl", "compat_repositories")
 
-# compat_repositories()
+compat_repositories()
 
-# grpc_java_repositories()
+grpc_java_repositories()
 
 # # ----------------------------------------------------
 # # Golang
