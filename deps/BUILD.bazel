@@ -233,46 +233,8 @@ proto_dependency(
     strip_prefix = "grpc-1.60.0",
     urls = ["https://github.com/grpc/grpc/archive/v1.60.0.tar.gz"],
     deps = [
-        ":build_bazel_rules_swift",
-        ":com_google_absl",
         ":com_google_protobuf",
-        ":rules_jvm_external",
     ],
-)
-
-proto_dependency(
-    name = "com_google_absl",
-    repository_rule = "http_archive",
-    sha256 = "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
-    strip_prefix = "abseil-cpp-20230125.2",
-    urls = [
-        "https://storage.googleapis.com/grpc-bazel-mirror/github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
-        "https://github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
-    ],
-)
-
-# Release: 0.18.0
-# Commit: master
-# Date: 2021-01-04 23:36:38 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_swift/releases/tag/0.18.0
-# Branch: master
-# Commit: dadd12190182530cf6f91ca7f9e70391644ce502
-# Date: 2021-02-08 21:24:10 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_swift/commit/dadd12190182530cf6f91ca7f9e70391644ce502
-#
-# Don't re-export the modules imported by a Swift generated header.
-#
-# This was an unintentional change in behavior from https://github.com/bazelbuild/rules_swift/commit/5f51ca9c5149122f41cada6122c61788d880fee9; this puts us back to the original behavior, but leaves an API in place for finer-grained control over re-exporting modules in the future. (But the BUILD rules today don't really have the flexibility to support it yet.)
-#
-# PiperOrigin-RevId: 356338982
-# (cherry picked from commit f45eea8c02a87c3077e5209f471fe4a193b5b0ba)
-# Size: 157518 (158 kB)
-proto_dependency(
-    name = "build_bazel_rules_swift",
-    repository_rule = "http_archive",
-    sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
-    strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
-    urls = ["https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"],
 )
 
 # Release: v1.57.1

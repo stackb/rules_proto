@@ -18,6 +18,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"errors"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -26,6 +27,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"syscall"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	gzflag "github.com/bazelbuild/bazel-gazelle/flag"
@@ -52,6 +54,7 @@ type updateConfig struct {
 	patchPath      string
 	patchBuffer    bytes.Buffer
 	print0         bool
+	profile        profiler
 }
 
 type emitFunc func(c *config.Config, f *rule.File) error
@@ -73,6 +76,8 @@ type updateConfigurer struct {
 	recursive      bool
 	knownImports   []string
 	repoConfigPath string
+	cpuProfile     string
+	memProfile     string
 }
 
 func (ucr *updateConfigurer) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
@@ -85,6 +90,8 @@ func (ucr *updateConfigurer) RegisterFlags(fs *flag.FlagSet, cmd string, c *conf
 	fs.BoolVar(&ucr.recursive, "r", true, "when true, gazelle will update subdirectories recursively")
 	fs.StringVar(&uc.patchPath, "patch", "", "when set with -mode=diff, gazelle will write to a file instead of stdout")
 	fs.BoolVar(&uc.print0, "print0", false, "when set with -mode=fix, gazelle will print the names of rewritten files separated with \\0 (NULL)")
+	fs.StringVar(&ucr.cpuProfile, "cpuprofile", "", "write cpu profile to `file`")
+	fs.StringVar(&ucr.memProfile, "memprofile", "", "write memory profile to `file`")
 	fs.Var(&gzflag.MultiFlag{Values: &ucr.knownImports}, "known_import", "import path for which external resolution is skipped (can specify multiple times)")
 	fs.StringVar(&ucr.repoConfigPath, "repo_config", "", "file where Gazelle should load repository configuration. Defaults to WORKSPACE.")
 }
@@ -103,6 +110,11 @@ func (ucr *updateConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) erro
 	if uc.patchPath != "" && !filepath.IsAbs(uc.patchPath) {
 		uc.patchPath = filepath.Join(c.WorkDir, uc.patchPath)
 	}
+	p, err := newProfiler(ucr.cpuProfile, ucr.memProfile)
+	if err != nil {
+		return err
+	}
+	uc.profile = p
 
 	dirs := fs.Args()
 	if len(dirs) == 0 {
@@ -142,7 +154,7 @@ func (ucr *updateConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) erro
 		ucr.repoConfigPath = wspace.FindWORKSPACEFile(c.RepoRoot)
 	}
 	repoConfigFile, err := rule.LoadWorkspaceFile(ucr.repoConfigPath, "")
-	if err != nil && !os.IsNotExist(err) {
+	if err != nil && !os.IsNotExist(err) && !isDirErr(err) {
 		return err
 	} else if err == nil {
 		c.Repos, _, err = repo.ListRepositories(repoConfigFile)
@@ -156,10 +168,22 @@ func (ucr *updateConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) erro
 			GoPrefix: imp,
 		})
 	}
+
+	moduleToApparentName, err := module.ExtractModuleToApparentNameMapping(c.RepoRoot)
+	if err != nil {
+		return err
+	}
+
 	for _, r := range c.Repos {
 		if r.Kind() == "go_repository" {
+			var name string
+			if apparentName := moduleToApparentName(r.AttrString("module_name")); apparentName != "" {
+				name = apparentName
+			} else {
+				name = r.Name()
+			}
 			uc.repos = append(uc.repos, repo.Repo{
-				Name:     r.Name(),
+				Name:     name,
 				GoPrefix: r.AttrString("importpath"),
 			})
 		}
@@ -173,7 +197,7 @@ func (ucr *updateConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) erro
 		workspace = repoConfigFile
 	} else {
 		workspace, err = rule.LoadWorkspaceFile(workspacePath, "")
-		if err != nil && !os.IsNotExist(err) {
+		if err != nil && !os.IsNotExist(err) && !isDirErr(err) {
 			return err
 		}
 	}
@@ -291,12 +315,21 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 	// Visit all directories in the repository.
 	var visits []visitRecord
 	uc := getUpdateConfig(c)
+	defer func() {
+		if err := uc.profile.stop(); err != nil {
+			log.Printf("stopping profiler: %v", err)
+		}
+	}()
+
 	var errorsFromWalk []error
 	walk.Walk(c, cexts, uc.dirs, uc.walkMode, func(dir, rel string, c *config.Config, update bool, f *rule.File, subdirs, regularFiles, genFiles []string) {
 		// If this file is ignored or if Gazelle was not asked to update this
 		// directory, just index the build file and move on.
 		if !update {
 			if c.IndexLibraries && f != nil {
+				for _, repl := range c.KindMap {
+					mrslv.MappedKind(rel, repl)
+				}
 				for _, r := range f.Rules {
 					ruleIndex.AddRule(c, r, f)
 				}
@@ -358,6 +391,14 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 				mappedKindInfo[repl.KindName] = kinds[r.Kind()]
 				mappedKinds = append(mappedKinds, *repl)
 				mrslv.MappedKind(rel, *repl)
+				r.SetKind(repl.KindName)
+			}
+		}
+		for _, r := range empty {
+			if repl, ok := c.KindMap[r.Kind()]; ok {
+				mappedKindInfo[repl.KindName] = kinds[r.Kind()]
+				mappedKinds = append(mappedKinds, repl)
+				mrslv.MappedKind(rel, repl)
 				r.SetKind(repl.KindName)
 			}
 		}
@@ -728,4 +769,15 @@ func appendOrMergeKindMapping(mappedLoads []rule.LoadInfo, mappedKind config.Map
 		Name:    mappedKind.KindLoad,
 		Symbols: []string{mappedKind.KindName},
 	})
+}
+
+func isDirErr(err error) bool {
+	if err == nil {
+		return false
+	}
+	var pe *os.PathError
+	if errors.As(err, &pe) {
+		return pe.Err == syscall.EISDIR
+	}
+	return false
 }

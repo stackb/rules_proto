@@ -11,38 +11,12 @@ def _maybe(repo_rule, name, **kwargs):
 def grpc_core_deps():
     """grpc_core dependency macro
     """
-    build_bazel_rules_swift()  # via com_github_grpc_grpc
-    com_google_absl()  # via com_github_grpc_grpc
     bazel_skylib()  # via com_google_protobuf
     rules_pkg()  # via com_google_protobuf
     rules_python()  # via com_google_protobuf
     zlib()  # via com_google_protobuf
     com_google_protobuf()  # via com_github_grpc_grpc
-    rules_jvm_external()  # via com_github_grpc_grpc
     com_github_grpc_grpc()  # via <TOP>
-
-def build_bazel_rules_swift():
-    _maybe(
-        http_archive,
-        name = "build_bazel_rules_swift",
-        sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
-        strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
-        urls = [
-            "https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz",
-        ],
-    )
-
-def com_google_absl():
-    _maybe(
-        http_archive,
-        name = "com_google_absl",
-        sha256 = "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
-        strip_prefix = "abseil-cpp-20230125.2",
-        urls = [
-            "https://storage.googleapis.com/grpc-bazel-mirror/github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
-            "https://github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
-        ],
-    )
 
 def bazel_skylib():
     _maybe(
@@ -104,17 +78,6 @@ def com_google_protobuf():
         ],
         patch_args = [
             "-p1",
-        ],
-    )
-
-def rules_jvm_external():
-    _maybe(
-        http_archive,
-        name = "rules_jvm_external",
-        sha256 = "1ce86ffee65725300dc1f0017b7df89715c832de550137432dc1985d60a13155",
-        strip_prefix = "rules_jvm_external-e6c1ff21e002bf97a7b1c07d63edd508a8dc9659",
-        urls = [
-            "https://github.com/bazelbuild/rules_jvm_external/archive/e6c1ff21e002bf97a7b1c07d63edd508a8dc9659.tar.gz",
         ],
     )
 
