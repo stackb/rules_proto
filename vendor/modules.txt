@@ -1,7 +1,8 @@
-# github.com/bazelbuild/bazel-gazelle v0.31.0
-## explicit
+# github.com/bazelbuild/bazel-gazelle v0.34.0
+## explicit; go 1.21
 github.com/bazelbuild/bazel-gazelle/config
 github.com/bazelbuild/bazel-gazelle/flag
+github.com/bazelbuild/bazel-gazelle/internal/module
 github.com/bazelbuild/bazel-gazelle/internal/version
 github.com/bazelbuild/bazel-gazelle/internal/wspace
 github.com/bazelbuild/bazel-gazelle/label
@@ -15,27 +16,29 @@ github.com/bazelbuild/bazel-gazelle/resolve
 github.com/bazelbuild/bazel-gazelle/rule
 github.com/bazelbuild/bazel-gazelle/testtools
 github.com/bazelbuild/bazel-gazelle/walk
-# github.com/bazelbuild/buildtools v0.0.0-20230510134650-37bd1811516d
-## explicit
+# github.com/bazelbuild/buildtools v0.0.0-20231115204819-d4c9dccdfbb1
+## explicit; go 1.15
 github.com/bazelbuild/buildtools/build
 github.com/bazelbuild/buildtools/tables
-# github.com/bazelbuild/rules_go v0.39.1
-## explicit
+# github.com/bazelbuild/rules_go v0.42.0
+## explicit; go 1.18
 github.com/bazelbuild/rules_go/go/tools/bazel
 github.com/bazelbuild/rules_go/go/tools/bazel_testing
 github.com/bazelbuild/rules_go/go/tools/internal/txtar
 # github.com/bmatcuk/doublestar v1.2.2
-## explicit
+## explicit; go 1.12
 github.com/bmatcuk/doublestar
-# github.com/bmatcuk/doublestar/v4 v4.6.0
+# github.com/bmatcuk/doublestar/v4 v4.6.1
+## explicit; go 1.16
 github.com/bmatcuk/doublestar/v4
 # github.com/davecgh/go-spew v1.1.0
+## explicit
 github.com/davecgh/go-spew/spew
 # github.com/emicklei/proto v1.13.0
-## explicit
+## explicit; go 1.12
 github.com/emicklei/proto
-# github.com/google/go-cmp v0.5.9
-## explicit
+# github.com/google/go-cmp v0.6.0
+## explicit; go 1.13
 github.com/google/go-cmp/cmp
 github.com/google/go-cmp/cmp/cmpopts
 github.com/google/go-cmp/cmp/internal/diff
@@ -46,27 +49,31 @@ github.com/google/go-cmp/cmp/internal/value
 ## explicit
 github.com/pmezard/go-difflib/difflib
 # github.com/stretchr/testify v1.7.0
-## explicit
+## explicit; go 1.13
 github.com/stretchr/testify/assert
 # go.starlark.net v0.0.0-20220328144851-d1966c6b9fcd
-## explicit
+## explicit; go 1.13
 go.starlark.net/internal/compile
 go.starlark.net/internal/spell
 go.starlark.net/resolve
 go.starlark.net/starlark
 go.starlark.net/starlarkstruct
 go.starlark.net/syntax
-# golang.org/x/mod v0.10.0
+# golang.org/x/mod v0.13.0
+## explicit; go 1.18
 golang.org/x/mod/internal/lazyregexp
 golang.org/x/mod/modfile
 golang.org/x/mod/module
 golang.org/x/mod/semver
-# golang.org/x/sync v0.2.0
+# golang.org/x/sync v0.4.0
+## explicit; go 1.17
 golang.org/x/sync/errgroup
-# golang.org/x/sys v0.8.0
+# golang.org/x/sys v0.13.0
+## explicit; go 1.17
 golang.org/x/sys/execabs
 golang.org/x/sys/unix
-# golang.org/x/tools v0.9.1
+# golang.org/x/tools/go/vcs v0.1.0-deprecated
+## explicit; go 1.19
 golang.org/x/tools/go/vcs
 # gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 ## explicit

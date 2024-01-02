@@ -19,10 +19,10 @@ def io_bazel_rules_go():
     _maybe(
         http_archive,
         name = "io_bazel_rules_go",
-        sha256 = "473a064d502e89d11c497a59f9717d1846e01515a3210bd169f22323161c076e",
-        strip_prefix = "rules_go-0.39.1",
+        sha256 = "9bce3748e7ee751915d68a92021c48a03645f0028b7fbe33eb3560f456233934",
+        strip_prefix = "rules_go-0.44.1",
         urls = [
-            "https://github.com/bazelbuild/rules_go/archive/v0.39.1.tar.gz",
+            "https://github.com/bazelbuild/rules_go/archive/v0.44.1.tar.gz",
         ],
     )
 
@@ -30,10 +30,10 @@ def bazel_gazelle():
     _maybe(
         http_archive,
         name = "bazel_gazelle",
-        sha256 = "984cae72075c83d689fc4f6f5405f713d4ecaee69510717394e1b775ffa269ad",
-        strip_prefix = "bazel-gazelle-0.33.0",
+        sha256 = "a0ee1d304f7caa46680ba06bdef0e5d9ec8815f6e01ec29398efd13256598c3f",
+        strip_prefix = "bazel-gazelle-0.35.0",
         urls = [
-            "https://github.com/bazelbuild/bazel-gazelle/archive/v0.33.0.tar.gz",
+            "https://github.com/bazelbuild/bazel-gazelle/archive/v0.35.0.tar.gz",
         ],
         patches = [
             "@build_stack_rules_proto//third_party:bazel-gazelle-revert-1152.patch",

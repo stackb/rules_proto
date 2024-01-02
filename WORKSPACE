@@ -12,7 +12,7 @@ register_toolchains(
 )
 
 # ----------------------------------------------------
-# Top-Level Dependency Trees
+# Core Deps
 # ----------------------------------------------------
 
 load("//deps:core_deps.bzl", "core_deps")
@@ -20,19 +20,39 @@ load("//deps:core_deps.bzl", "core_deps")
 core_deps()
 
 # ----------------------------------------------------
+# Core gRPC
+# ----------------------------------------------------
+
+load("//deps:grpc_core_deps.bzl", "grpc_core_deps")
+
+grpc_core_deps()
+
+load(
+    "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
+    "grpc_deps",
+)
+
+grpc_deps()
+
+load(
+    "@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl",
+    "grpc_extra_deps",
+)
+
+grpc_extra_deps()
+
+# ----------------------------------------------------
 # Go Tools
 # ----------------------------------------------------
 
 load(
     "@io_bazel_rules_go//go:deps.bzl",
-    # "go_register_toolchains",
     "go_rules_dependencies",
 )
 
 go_rules_dependencies()
 
 # go_register_toolchains(version = "1.18.2")
-# go_register_toolchains()
 
 # ----------------------------------------------------
 # Gazelle
@@ -51,31 +71,9 @@ load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
 protobuf_core_deps()
 
-load("//deps:grpc_core_deps.bzl", "grpc_core_deps")
-
-grpc_core_deps()
-
 # load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
 # prebuilt_protoc_deps()
-
-# # ----------------------------------------------------
-# # Core gRPC
-# # ----------------------------------------------------
-
-load(
-    "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
-    "grpc_deps",
-)
-
-grpc_deps()
-
-load(
-    "@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl",
-    "grpc_extra_deps",
-)
-
-grpc_extra_deps()
 
 load("//deps:grpc_java_deps.bzl", "grpc_java_deps")
 

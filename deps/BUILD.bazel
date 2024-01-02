@@ -89,49 +89,33 @@ depsgen(
     deps = ["//deps:io_grpc_grpc_java"],
 )
 
-# Release: v0.39.1
-# TargetCommitish: release-0.39
-# Date: 2023-04-20 04:35:08 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.39.1
-# Size: 1759832 (1.8 MB)
+# Release: v0.44.1
+# TargetCommitish: release-0.44
+# Date: 2023-12-29 21:55:12 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.44.1
+# Size: 1677071 (1.7 MB)
 proto_dependency(
     name = "io_bazel_rules_go",
     repository_rule = "http_archive",
-    sha256 = "473a064d502e89d11c497a59f9717d1846e01515a3210bd169f22323161c076e",
-    strip_prefix = "rules_go-0.39.1",
-    urls = ["https://github.com/bazelbuild/rules_go/archive/v0.39.1.tar.gz"],
+    sha256 = "9bce3748e7ee751915d68a92021c48a03645f0028b7fbe33eb3560f456233934",
+    strip_prefix = "rules_go-0.44.1",
+    urls = ["https://github.com/bazelbuild/rules_go/archive/v0.44.1.tar.gz"],
     visibility = ["//visibility:public"],
 )
 
-# # Release: v0.31.0
-# # TargetCommitish: master
-# # Date: 2023-05-27 18:23:20 +0000 UTC
-# # URL: https://github.com/bazelbuild/bazel-gazelle/releases/tag/v0.31.0
-# # Size: 1870962 (1.9 MB)
-# proto_dependency(
-#     name = "bazel_gazelle",
-#     patch_args = ["-p1"],
-#     patches = ["@build_stack_rules_proto//third_party:bazel-gazelle-revert-1152.patch"],
-#     repository_rule = "http_archive",
-#     sha256 = "bc9a8c259ad2eb54dd89404979c097451df8f2dc64852c9f38d2b7a248f84f32",
-#     strip_prefix = "bazel-gazelle-0.31.0",
-#     urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/v0.31.0.tar.gz"],
-#     deps = [":io_bazel_rules_go"],
-# )
-
-# Release: v0.33.0
+# Release: v0.35.0
 # TargetCommitish: master
-# Date: 2023-09-06 10:27:00 +0000 UTC
-# URL: https://github.com/bazelbuild/bazel-gazelle/releases/tag/v0.33.0
-# Size: 1762425 (1.8 MB)
+# Date: 2023-12-21 16:38:31 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-gazelle/releases/tag/v0.35.0
+# Size: 1780790 (1.8 MB)
 proto_dependency(
     name = "bazel_gazelle",
     patch_args = ["-p1"],
     patches = ["@build_stack_rules_proto//third_party:bazel-gazelle-revert-1152.patch"],
     repository_rule = "http_archive",
-    sha256 = "984cae72075c83d689fc4f6f5405f713d4ecaee69510717394e1b775ffa269ad",
-    strip_prefix = "bazel-gazelle-0.33.0",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/v0.33.0.tar.gz"],
+    sha256 = "a0ee1d304f7caa46680ba06bdef0e5d9ec8815f6e01ec29398efd13256598c3f",
+    strip_prefix = "bazel-gazelle-0.35.0",
+    urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/v0.35.0.tar.gz"],
     deps = [":io_bazel_rules_go"],
 )
 

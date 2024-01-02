@@ -1,1 +1,2 @@
+# gazelle:proto_language closure_js enable true
 # gazelle:proto_language cpp enable true
