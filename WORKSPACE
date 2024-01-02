@@ -6,8 +6,10 @@ workspace(name = "build_stack_rules_proto")
 # Toolchain-Related
 # ----------------------------------------------------
 
-register_toolchains("//toolchain:standard")
-# register_toolchains("//toolchain:prebuilt") # alternate
+register_toolchains(
+    "//toolchain:standard",
+    # "//toolchain:prebuilt",  # alt
+)
 
 # ----------------------------------------------------
 # Top-Level Dependency Trees
@@ -23,13 +25,14 @@ core_deps()
 
 load(
     "@io_bazel_rules_go//go:deps.bzl",
-    "go_register_toolchains",
+    # "go_register_toolchains",
     "go_rules_dependencies",
 )
 
 go_rules_dependencies()
 
-go_register_toolchains(version = "1.18.2")
+# go_register_toolchains(version = "1.18.2")
+# go_register_toolchains()
 
 # ----------------------------------------------------
 # Gazelle
@@ -44,13 +47,13 @@ load("//:go_deps.bzl", "go_deps")
 # gazelle:repository_macro go_deps.bzl%go_deps
 go_deps()
 
-# load("//deps:grpc_core_deps.bzl", "com_github_grpc_grpc")
+load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
-# com_github_grpc_grpc()
+protobuf_core_deps()
 
-# load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
+load("//deps:grpc_core_deps.bzl", "grpc_core_deps")
 
-# protobuf_core_deps()
+grpc_core_deps()
 
 # load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
@@ -60,51 +63,43 @@ go_deps()
 # # Core gRPC
 # # ----------------------------------------------------
 
-# load(
-#     "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
-#     "grpc_deps",
-# )
+load(
+    "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
+    "grpc_deps",
+)
 
-# grpc_deps()
+grpc_deps()
 
-# load(
-#     "@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl",
-#     "grpc_extra_deps",
-# )
+load(
+    "@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl",
+    "grpc_extra_deps",
+)
 
-# grpc_extra_deps()
+grpc_extra_deps()
 
-# load("//deps:grpc_java_deps.bzl", "grpc_java_deps")
+load("//deps:grpc_java_deps.bzl", "grpc_java_deps")
 
-# grpc_java_deps()
+grpc_java_deps()
 
-# load("//deps:closure_deps.bzl", "closure_deps")
+load("//deps:closure_deps.bzl", "closure_deps")
 
-# closure_deps()
+closure_deps()
 
-# load("//deps:grpc_js_deps.bzl", "grpc_js_deps")
+load("//deps:grpc_js_deps.bzl", "grpc_js_deps")
 
-# grpc_js_deps()
+grpc_js_deps()
 
-# load("//deps:scala_deps.bzl", "scala_deps")
+load("//deps:scala_deps.bzl", "scala_deps")
 
-# scala_deps()
+scala_deps()
 
-# load("//deps:nodejs_deps.bzl", "nodejs_deps")
+load("//deps:nodejs_deps.bzl", "nodejs_deps")
 
-# nodejs_deps()
+nodejs_deps()
 
-# load("//deps:grpc_node_deps.bzl", "grpc_node_deps")
+load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 
-# grpc_node_deps()
-
-# load("//deps:grpc_web_deps.bzl", "grpc_web_deps")
-
-# grpc_web_deps()
-
-# load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
-
-# ts_proto_deps()
+ts_proto_deps()
 
 # # ----------------------------------------------------
 # # Java
@@ -253,27 +248,27 @@ proto_repositories()
 #     ts_version_from = "//:package.json",
 # )
 
-# # ----------------------------------------------------
-# # @rules_nodejs
-# # ----------------------------------------------------
+# ----------------------------------------------------
+# @rules_nodejs
+# ----------------------------------------------------
 
-# load("@rules_nodejs//nodejs:repositories.bzl", "DEFAULT_NODE_VERSION", "nodejs_register_toolchains")
+load("@rules_nodejs//nodejs:repositories.bzl", "DEFAULT_NODE_VERSION", "nodejs_register_toolchains")
 
-# nodejs_register_toolchains(
-#     name = "node",
-#     node_version = DEFAULT_NODE_VERSION,
-# )
+nodejs_register_toolchains(
+    name = "node",
+    node_version = DEFAULT_NODE_VERSION,
+)
 
-# load("@aspect_rules_js//npm:npm_import.bzl", "npm_translate_lock")
+load("@aspect_rules_js//npm:npm_import.bzl", "npm_translate_lock")
 
-# npm_translate_lock(
-#     name = "npm_ts_proto",
-#     generate_bzl_library_targets = True,
-#     npmrc = "//:.npmrc",
-#     pnpm_lock = "//:pnpm-lock.yaml",
-#     verify_node_modules_ignored = "//:.bazelignore",
-# )
+npm_translate_lock(
+    name = "npm_ts_proto",
+    generate_bzl_library_targets = True,
+    npmrc = "//:.npmrc",
+    pnpm_lock = "//:pnpm-lock.yaml",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
 
-# load("@npm_ts_proto//:repositories.bzl", npm_ts_proto_repositories = "npm_repositories")
+load("@npm_ts_proto//:repositories.bzl", npm_ts_proto_repositories = "npm_repositories")
 
-# npm_ts_proto_repositories()
+npm_ts_proto_repositories()

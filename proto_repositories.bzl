@@ -8,7 +8,7 @@ def proto_repositories():
             "gazelle:exclude google/protobuf/compiler/ruby",
             "gazelle:exclude google/protobuf/util",
             "gazelle:proto_language go enable false",
-            "gazelle:proto_language cpp enable false",
+            "gazelle:proto_language cpp enable true",
             "gazelle:proto_language ts enable true",
             "gazelle:proto_language descriptor enable true",
             "gazelle:proto_rule proto_ts_library attr out_dir ts",
