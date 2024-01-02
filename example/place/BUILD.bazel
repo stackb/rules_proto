@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 load("@rules_proto//proto:defs.bzl", "proto_library")
@@ -27,6 +28,35 @@ proto_compile(
         "place.pb.h",
     ],
     plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
+    proto = "place_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_closure_js_library(
+    name = "place_closure_js_library",
+    srcs = ["place_closure.js"],
+    internal_descriptors = [
+        "//example/place:place_proto",
+        "//example/thing:thing_proto",
+        "//google/protobuf:timestamppb_proto",
+    ],
+    suppress = [
+        "JSC_IMPLICITLY_NONNULL_JSDOC",
+        "JSC_UNUSED_LOCAL_ASSIGNMENT",
+    ],
+    visibility = ["//visibility:public"],
+    exports = ["//example/thing:thing_closure_js_library"],
+    deps = ["//example/thing:thing_closure_js_library"],
+)
+
+proto_compile(
+    name = "place_closure_js_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
+        "import_style=closure",
+        "library=example/place/place_closure",
+    ]},
+    outputs = ["place_closure.js"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
     proto = "place_proto",
     visibility = ["//visibility:public"],
 )
