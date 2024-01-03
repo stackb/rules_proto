@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
@@ -173,4 +174,30 @@ proto_nodejs_library(
     name = "thing_nodejs_library",
     srcs = ["thing_pb.js"],
     visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "thing_ts_proto_compile",
+    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
+        "emitImportedFiles=false",
+        "esModuleInterop=true",
+    ]},
+    outputs = ["thing.ts"],
+    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
+    proto = "thing_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_ts_library(
+    name = "thing_ts_proto",
+    srcs = ["thing.ts"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//google/protobuf:timestamppb_ts_proto",
+        "@//:node_modules/@nestjs/microservices",
+        "@//:node_modules/@types/node",
+        "@//:node_modules/long",
+        "@//:node_modules/protobufjs",
+        "@//:node_modules/rxjs",
+    ],
 )

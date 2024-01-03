@@ -97,9 +97,9 @@ go_deps()
 
 gazelle_protobuf_extension_go_deps()
 
-# load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
+load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
-# prebuilt_protoc_deps()
+prebuilt_protoc_deps()
 
 load("//deps:js_core_deps.bzl", "js_core_deps")
 

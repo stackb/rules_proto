@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
@@ -175,4 +176,30 @@ proto_nodejs_library(
     name = "person_nodejs_library",
     srcs = ["person_pb.js"],
     visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "person_ts_proto_compile",
+    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
+        "emitImportedFiles=false",
+        "esModuleInterop=true",
+    ]},
+    outputs = ["person.ts"],
+    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
+    proto = "person_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_ts_library(
+    name = "person_ts_proto",
+    srcs = ["person.ts"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//example/place:place_ts_proto",
+        "@//:node_modules/@nestjs/microservices",
+        "@//:node_modules/@types/node",
+        "@//:node_modules/long",
+        "@//:node_modules/protobufjs",
+        "@//:node_modules/rxjs",
+    ],
 )

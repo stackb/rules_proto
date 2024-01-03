@@ -1,3 +1,4 @@
+load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@build_stack_rules_proto//rules/nodejs:grpc_web_js_library.bzl", "grpc_web_js_library")
 load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@build_stack_rules_proto//rules/nodejs:grpc_nodejs_library.bzl", "grpc_nodejs_library")
@@ -16,7 +17,6 @@ load("@aspect_rules_js//js:defs.bzl", "js_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 # gazelle:proto_plugin ts_proto option nestJs=true
-# gazelle:proto_rule proto_ts_library deps @npm_tsc//@nestjs/microservices
 
 filegroup(
     name = "features",
@@ -334,4 +334,30 @@ proto_nodejs_library(
     name = "routeguide_nodejs_library",
     srcs = ["routeguide_pb.js"],
     visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "routeguide_ts_proto_compile",
+    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
+        "emitImportedFiles=false",
+        "esModuleInterop=true",
+        "nestJs=true",
+    ]},
+    outputs = ["routeguide.ts"],
+    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
+    proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_ts_library(
+    name = "routeguide_ts_proto",
+    srcs = ["routeguide.ts"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@//:node_modules/@nestjs/microservices",
+        "@//:node_modules/@types/node",
+        "@//:node_modules/long",
+        "@//:node_modules/protobufjs",
+        "@//:node_modules/rxjs",
+    ],
 )
