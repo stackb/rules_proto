@@ -30,3 +30,9 @@ gazelle_dependencies()
 load("@build_stack_rules_proto//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
 protobuf_core_deps()
+
+# == Python ==
+
+load("@rules_python//python:repositories.bzl", "py_repositories")
+
+py_repositories()

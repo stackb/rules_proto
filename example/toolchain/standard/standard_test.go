@@ -31,6 +31,10 @@ load("@build_stack_rules_proto//deps:protobuf_core_deps.bzl", "protobuf_core_dep
 
 protobuf_core_deps()
 
+load("@rules_python//python:repositories.bzl", "py_repositories")
+
+py_repositories()
+
 -- BUILD.bazel --
 # empty file
 `

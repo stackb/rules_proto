@@ -49,3 +49,9 @@ protobuf_core_deps()
 load("@build_stack_rules_proto//deps:js_core_deps.bzl", "js_core_deps")
 
 js_core_deps()
+
+# == Python ==
+
+load("@rules_python//python:repositories.bzl", "py_repositories")
+
+py_repositories()

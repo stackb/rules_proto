@@ -137,9 +137,17 @@ load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 
 ts_proto_deps()
 
-# # ----------------------------------------------------
-# # Java
-# # ----------------------------------------------------
+# ----------------------------------------------------
+# Python
+# ----------------------------------------------------
+
+load("@rules_python//python:repositories.bzl", "py_repositories")
+
+py_repositories()
+
+# ----------------------------------------------------
+# Java
+# ----------------------------------------------------
 
 load(
     "@rules_jvm_external//:defs.bzl",
@@ -259,7 +267,9 @@ load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_depende
 
 rules_closure_toolchains()
 
-rules_closure_dependencies()
+rules_closure_dependencies(
+    omit_rules_python = True,
+)
 
 # ----------------------------------------------------
 # NodeJS
