@@ -144,8 +144,24 @@ proto_dependency(
     urls = ["https://github.com/protocolbuffers/protobuf/archive/f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c.tar.gz"],
     visibility = ["//visibility:public"],
     deps = [
+        ":bazel_skylib",
         ":rules_pkg",
+        ":rules_python",
+        ":zlib",
     ],
+)
+
+proto_dependency(
+    name = "zlib",
+    build_file = "@build_stack_rules_proto//third_party:zlib.BUILD",
+    repository_rule = "http_archive",
+    sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
+    strip_prefix = "zlib-1.2.11",
+    urls = [
+        "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
+        "https://zlib.net/zlib-1.2.11.tar.gz",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 # Commit: e1a52f9a897653985b0649cca17615cb1b0eb3b7
@@ -207,6 +223,22 @@ proto_dependency(
     sha256 = "f5ae0e582238fcd4ea3d0146a3f5f3db9517f8fe24491eab3c105ace53aad1bb",
     strip_prefix = "rules_proto-f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5",
     urls = ["https://github.com/bazelbuild/rules_proto/archive/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5.tar.gz"],
+)
+
+# Branch: master
+# Commit: c7e068d38e2fec1d899e1c150e372f205c220e27
+# Date: 2021-02-02 22:16:45 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_python/commit/c7e068d38e2fec1d899e1c150e372f205c220e27
+#
+# pip: 20.3.3 -> 20.3.4 (#405)
+# Size: 2563550 (2.6 MB)
+proto_dependency(
+    name = "rules_python",
+    repository_rule = "http_archive",
+    sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
+    strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
+    urls = ["https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz"],
+    visibility = ["//visibility:public"],
 )
 
 # Release: 1.5.0
