@@ -470,6 +470,9 @@ proto_dependency(
     sha256 = "00d492551233d7548ca2a983f4e19d6aabb0bc716957ade62d691baf1dcef374",
     strip_prefix = "rules_closure-42195b5ca136f78d28819ef486e3a7b02ad45146",
     urls = ["https://github.com/bazelbuild/rules_closure/archive/42195b5ca136f78d28819ef486e3a7b02ad45146.tar.gz"],
+    deps = [
+        ":com_google_protobuf_javascript",
+    ],
 )
 
 # Branch: master
