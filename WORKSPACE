@@ -27,10 +27,6 @@ load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
 protobuf_core_deps()
 
-# load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
-# protobuf_deps()
-
 # ----------------------------------------------------
 # Core gRPC
 # ----------------------------------------------------
@@ -46,11 +42,12 @@ load(
 
 grpc_deps()
 
-# load(
-#     "@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl",
-#     "grpc_extra_deps",
+# NOTE: rather than using the 'grpc_extra_deps' function, we selectively load
+# only the parts of that macro that are needed.  Using the macro as-is for
+# *this* WORKSPACE causes issues with duplicate go_register_toolchains calls.
+#
+# load( "@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps",
 # )
-
 # grpc_extra_deps()
 
 load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
@@ -127,6 +124,14 @@ scala_deps()
 load("//deps:nodejs_deps.bzl", "nodejs_deps")
 
 nodejs_deps()
+
+load("//deps:grpc_node_deps.bzl", "grpc_node_deps")
+
+grpc_node_deps()
+
+load("//deps:grpc_web_deps.bzl", "grpc_web_deps")
+
+grpc_web_deps()
 
 load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 
@@ -249,17 +254,17 @@ rules_closure_toolchains()
 
 rules_closure_dependencies()
 
-# # ----------------------------------------------------
-# # NodeJS
-# # ----------------------------------------------------
+# ----------------------------------------------------
+# NodeJS
+# ----------------------------------------------------
 
-# load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
+load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
 
-# build_bazel_rules_nodejs_dependencies()
+build_bazel_rules_nodejs_dependencies()
 
-# load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
+load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 
-# node_repositories()
+node_repositories()
 
 # ----------------------------------------------------
 # proto_repositories
@@ -269,15 +274,15 @@ load("//:proto_repositories.bzl", "proto_repositories")
 
 proto_repositories()
 
-# # ----------------------------------------------------
-# # @aspect_rules_ts
-# # ----------------------------------------------------
-# load("@aspect_rules_ts//ts:repositories.bzl", "rules_ts_dependencies")
+# ----------------------------------------------------
+# @aspect_rules_ts
+# ----------------------------------------------------
+load("@aspect_rules_ts//ts:repositories.bzl", "rules_ts_dependencies")
 
-# rules_ts_dependencies(
-#     # This keeps the TypeScript version in-sync with the editor, which is typically best.
-#     ts_version_from = "//:package.json",
-# )
+rules_ts_dependencies(
+    # This keeps the TypeScript version in-sync with the editor, which is typically best.
+    ts_version_from = "//:package.json",
+)
 
 # ----------------------------------------------------
 # @rules_nodejs

@@ -81,11 +81,11 @@ depsgen(
 depsgen(
     name = "grpc_web",
     deps = [
-        ":github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_aarch64",
-        ":github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_x86_64",
-        ":github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_aarch64",
-        ":github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_x86_64",
-        ":github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_windows_x86_64_exe",
+        ":github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_aarch64",
+        ":github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_x86_64",
+        ":github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_aarch64",
+        ":github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_x86_64",
+        ":github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_windows_x86_64_exe",
     ],
 )
 
@@ -507,49 +507,49 @@ proto_dependency(
     deps = ["build_bazel_rules_nodejs"],
 )
 
-# URL: https://github.com/grpc/grpc-web/releases/tag/1.4.2
+# URL: https://github.com/grpc/grpc-web/releases/tag/1.5.0
 proto_dependency(
-    name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_aarch64",
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_aarch64",
     executable = True,
     repository_rule = "http_file",
-    sha256 = "87263950cd36ec875c86b1e50625215727264c5495d6625ddf9e4f79aeef727e",
-    urls = ["https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-darwin-aarch64"],
+    sha256 = "a12b759629b943ebac5528f58fac5039d9aa2fb7abb9e9684d1b481b35afbfc6",
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-darwin-aarch64"],
 )
 
-# URL: https://github.com/grpc/grpc-web/releases/tag/1.4.2
+# URL: https://github.com/grpc/grpc-web/releases/tag/1.5.0
 proto_dependency(
-    name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_x86_64",
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_x86_64",
     executable = True,
     repository_rule = "http_file",
-    sha256 = "6b73e8e9ef2deb114d39c9eea177ff8450d92e7154b5e47dea668a43499a2383",
-    urls = ["https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-darwin-x86_64"],
+    sha256 = "1fa3ef92194d06c03448a5cba82759e9773e43d8b188866a1f1d4fc23bb1ecb7",
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-darwin-x86_64"],
 )
 
-# URL: https://github.com/grpc/grpc-web/releases/tag/1.4.2
+# URL: https://github.com/grpc/grpc-web/releases/tag/1.5.0
 proto_dependency(
-    name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_aarch64",
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_aarch64",
     executable = True,
     repository_rule = "http_file",
-    sha256 = "db3b1e18284a157b1361ecb79502e5f4623a212daf7185f17e35bd8e239055a4",
-    urls = ["https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-linux-aarch64"],
+    sha256 = "522e958568cdeabdd20ef3c97394fc067ff8e374a728c08b7410bf5de8f57783",
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-linux-aarch64"],
 )
 
-# URL: https://github.com/grpc/grpc-web/releases/tag/1.4.2
+# URL: https://github.com/grpc/grpc-web/releases/tag/1.5.0
 proto_dependency(
-    name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_x86_64",
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_x86_64",
     executable = True,
     repository_rule = "http_file",
-    sha256 = "5e82c3f1f435e176c94b94de9669911ab3bfb891608b7e80adff358f777ff857",
-    urls = ["https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-linux-x86_64"],
+    sha256 = "2e6e074497b221045a14d5a54e9fc910945bfdd1198b12b9fc23686a95671d64",
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-linux-x86_64"],
 )
 
-# URL: https://github.com/grpc/grpc-web/releases/tag/1.4.2
+# URL: https://github.com/grpc/grpc-web/releases/tag/1.5.0
 proto_dependency(
-    name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_windows_x86_64_exe",
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_windows_x86_64_exe",
     executable = True,
     repository_rule = "http_file",
-    sha256 = "3a0fc44662cb89a5c101b632e3e8841d04d9bea3103512deae82591e2acdff93",
-    urls = ["https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-windows-x86_64.exe"],
+    sha256 = "c8f6191072d09344555fb12d45e82cff9f8b8f29200b0d6497680e696feaf8a1",
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-windows-x86_64.exe"],
 )
 
 filegroup(

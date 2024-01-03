@@ -3,11 +3,11 @@ load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 proto_plugin(
     name = "protoc-gen-grpc-web",
     tool = select({
-        "@bazel_tools//src/conditions:darwin_x86_64": "@github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_x86_64//file",
-        "@bazel_tools//src/conditions:darwin_arm64": "@github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_aarch64//file",
-        "@bazel_tools//src/conditions:linux_x86_64": "@github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_x86_64//file",
-        "@bazel_tools//src/conditions:linux_aarch64": "@github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_aarch64//file",
-        "@bazel_tools//src/conditions:windows": "@github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_windows_x86_64_exe//file",
+        "@bazel_tools//src/conditions:darwin_x86_64": "@github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_x86_64//file",
+        "@bazel_tools//src/conditions:darwin_arm64": "@github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_aarch64//file",
+        "@bazel_tools//src/conditions:linux_x86_64": "@github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_x86_64//file",
+        "@bazel_tools//src/conditions:linux_aarch64": "@github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_aarch64//file",
+        "@bazel_tools//src/conditions:windows": "@github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_windows_x86_64_exe//file",
     }),
     visibility = ["//visibility:public"],
 )

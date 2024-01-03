@@ -1,3 +1,6 @@
+load("@build_stack_rules_proto//rules/nodejs:grpc_web_js_library.bzl", "grpc_web_js_library")
+load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
+load("@build_stack_rules_proto//rules/nodejs:grpc_nodejs_library.bzl", "grpc_nodejs_library")
 load("@build_stack_rules_proto//rules/py:grpc_py_library.bzl", "grpc_py_library")
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
@@ -283,4 +286,52 @@ proto_py_library(
     srcs = ["routeguide_pb2.py"],
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:protobuf_python"],
+)
+
+grpc_nodejs_library(
+    name = "routeguide_grpc_nodejs_library",
+    srcs = ["routeguide_grpc_pb.js"],
+    visibility = ["//visibility:public"],
+    deps = [":routeguide_nodejs_library"],
+)
+
+grpc_web_js_library(
+    name = "routeguide_grpc_web_js_library",
+    srcs = ["routeguide_grpc_web_pb.js"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":routeguide_nodejs_library",
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+    ],
+)
+
+proto_compile(
+    name = "routeguide_node_js_compile",
+    options = {
+        "@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"],
+        "@build_stack_rules_proto//plugin/grpc/grpc-node:protoc-gen-grpc-node": ["grpc_js"],
+        "@build_stack_rules_proto//plugin/grpc/grpc-web:protoc-gen-grpc-web": [
+            "import_style=commonjs+dts",
+            "mode=grpcwebtext",
+        ],
+    },
+    outputs = [
+        "routeguide_grpc_pb.js",
+        "routeguide_grpc_web_pb.js",
+        "routeguide_pb.js",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:commonjs",
+        "@build_stack_rules_proto//plugin/grpc/grpc-node:protoc-gen-grpc-node",
+        "@build_stack_rules_proto//plugin/grpc/grpc-web:protoc-gen-grpc-web",
+    ],
+    proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_nodejs_library(
+    name = "routeguide_nodejs_library",
+    srcs = ["routeguide_pb.js"],
+    visibility = ["//visibility:public"],
 )
