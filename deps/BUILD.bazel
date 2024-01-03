@@ -349,21 +349,17 @@ filegroup(
     urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-win32.zip"],
 )
 
-# Branch: master
-# Commit: 2437e40131072cadc1628726775ff00fa3941a4a
-# Date: 2021-09-06 10:18:08 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_scala/commit/2437e40131072cadc1628726775ff00fa3941a4a
-#
-# Remove customized ijar code (#1285)
-#
-# ijar patch was upstreamed and is available since Bazek 4.1.0
-# Size: 638431 (638 kB)
+# Release: v6.4.0
+# TargetCommitish: master
+# Date: 2023-12-19 10:42:41 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_scala/releases/tag/v6.4.0
+# Size: 680962 (681 kB)
 proto_dependency(
     name = "io_bazel_rules_scala",
     repository_rule = "http_archive",
-    sha256 = "0701ee4e1cfd59702d780acde907ac657752fbb5c7d08a0ec6f58ebea8cd0efb",
-    strip_prefix = "rules_scala-2437e40131072cadc1628726775ff00fa3941a4a",
-    urls = ["https://github.com/bazelbuild/rules_scala/archive/2437e40131072cadc1628726775ff00fa3941a4a.tar.gz"],
+    sha256 = "9a23058a36183a556a9ba7229b4f204d3e68c8c6eb7b28260521016b38ef4e00",
+    strip_prefix = "rules_scala-6.4.0",
+    urls = ["https://github.com/bazelbuild/rules_scala/archive/v6.4.0.tar.gz"],
     deps = [":bazel_skylib"],
 )
 

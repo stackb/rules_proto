@@ -41,9 +41,9 @@ def io_bazel_rules_scala():
     _maybe(
         http_archive,
         name = "io_bazel_rules_scala",
-        sha256 = "0701ee4e1cfd59702d780acde907ac657752fbb5c7d08a0ec6f58ebea8cd0efb",
-        strip_prefix = "rules_scala-2437e40131072cadc1628726775ff00fa3941a4a",
+        sha256 = "9a23058a36183a556a9ba7229b4f204d3e68c8c6eb7b28260521016b38ef4e00",
+        strip_prefix = "rules_scala-6.4.0",
         urls = [
-            "https://github.com/bazelbuild/rules_scala/archive/2437e40131072cadc1628726775ff00fa3941a4a.tar.gz",
+            "https://github.com/bazelbuild/rules_scala/archive/v6.4.0.tar.gz",
         ],
     )

@@ -259,7 +259,7 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 	imports = s.options.filterImports(imports)
 
-	resolveFn := protoc.ResolveDepsAttr("deps", s.options.resolveWKTs)
+	resolveFn := protoc.ResolveDepsAttr("deps", !s.options.resolveWKTs)
 	resolveFn(c, ix, r, imports, from)
 
 	if unresolvedDeps, ok := r.PrivateAttr(protoc.UnresolvedDepsPrivateKey).(map[string]error); ok {

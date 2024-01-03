@@ -177,9 +177,9 @@ grpc_java_repositories()
 # # Golang
 # # ----------------------------------------------------
 
-# load("//deps:go_core_deps.bzl", "go_core_deps")
+load("//deps:go_core_deps.bzl", "go_core_deps")
 
-# go_core_deps()
+go_core_deps()
 
 # ----------------------------------------------------
 # Scala
@@ -187,15 +187,22 @@ grpc_java_repositories()
 
 load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
 
-scala_config(scala_version = "2.12.11")
+scala_config(
+    enable_compiler_dependency_tracking = True,
+    scala_version = "2.12.18",
+)
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
 
 scala_repositories()
 
-load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+register_toolchains(
+    "//toolchain/scala:default_toolchain",
+)
 
-scala_register_toolchains()
+# ----------------------------------------------------
+# Scala/Maven
+# ----------------------------------------------------
 
 # bazel run @maven_scala//:pin, but first comment out the "maven_install_json"
 # (put it back once pinned again)

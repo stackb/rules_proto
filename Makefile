@@ -23,7 +23,7 @@ site:
 
 .PHONY: test
 test:
-	$(BAZEL) test //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
+	$(BAZEL) test --keep_going //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
 		--deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
 
 .PHONY: get
