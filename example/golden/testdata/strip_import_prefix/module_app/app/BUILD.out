@@ -31,5 +31,8 @@ proto_py_library(
     srcs = ["api_pb2.py"],
     imports = [".."],
     visibility = ["//visibility:public"],
-    deps = ["//module_lib/util:util_py_library"],
+    deps = [
+        "//module_lib/util:util_py_library",
+        "@com_google_protobuf//:protobuf_python",
+    ],
 )
