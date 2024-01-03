@@ -244,8 +244,8 @@ func compareImportLabels(x, y importLabels) bool {
 			return r.key < s.key
 		}
 		for j := 0; j < len(r.values); j++ {
-			if r.values[j].String() != s.values[j].String() {
-				return r.values[j].String() < s.values[j].String()
+			if r.values[j] != s.values[j] {
+				return r.values[j] < s.values[j]
 			}
 		}
 	}
@@ -256,12 +256,16 @@ func compareImportLabels(x, y importLabels) bool {
 func importLabelEntries(x importLabels) []importLabelEntry {
 	var a []importLabelEntry
 	for k, v := range x {
-		a = append(a, importLabelEntry{k, v})
+		deps := make([]string, len(v))
+		for i, d := range v {
+			deps[i] = d.String()
+		}
+		a = append(a, importLabelEntry{k, deps})
 	}
 	return a
 }
 
 type importLabelEntry struct {
 	key    string
-	values []label.Label
+	values []string
 }
