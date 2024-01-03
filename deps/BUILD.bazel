@@ -182,6 +182,26 @@ proto_dependency(
     urls = ["https://github.com/protocolbuffers/protobuf-javascript/archive/e1a52f9a897653985b0649cca17615cb1b0eb3b7.tar.gz"],
 )
 
+# Commit: f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5
+# Date: 2023-11-29 16:35:25 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_proto/commit/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5
+#
+# feat: introduce toolchain helper (#194)
+#
+# This is not final yet, I just want to test out with rules_python first.
+# Welcome to review though.
+#
+# Also due to https://github.com/bazelbuild/bazel/issues/20297 i can't
+# write unit tests for the incompatible flag. I'll look for a workaround.
+# Size: 16426 (16 kB)
+proto_dependency(
+    name = "rules_proto",
+    repository_rule = "http_archive",
+    sha256 = "f5ae0e582238fcd4ea3d0146a3f5f3db9517f8fe24491eab3c105ace53aad1bb",
+    strip_prefix = "rules_proto-f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5",
+    urls = ["https://github.com/bazelbuild/rules_proto/archive/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5.tar.gz"],
+)
+
 # Commit: ea8c75a15c4ac9562da29f3d9a633decb384d4a3
 # Date: 2022-05-10 17:40:30 +0000 UTC
 # URL: https://github.com/bazelbuild/rules_pkg/commit/ea8c75a15c4ac9562da29f3d9a633decb384d4a3
@@ -203,26 +223,6 @@ proto_dependency(
     strip_prefix = "rules_pkg-ea8c75a15c4ac9562da29f3d9a633decb384d4a3",
     urls = ["https://github.com/bazelbuild/rules_pkg/archive/ea8c75a15c4ac9562da29f3d9a633decb384d4a3.tar.gz"],
     visibility = ["//visibility:public"],
-)
-
-# Commit: f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5
-# Date: 2023-11-29 16:35:25 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_proto/commit/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5
-#
-# feat: introduce toolchain helper (#194)
-#
-# This is not final yet, I just want to test out with rules_python first.
-# Welcome to review though.
-#
-# Also due to https://github.com/bazelbuild/bazel/issues/20297 i can't
-# write unit tests for the incompatible flag. I'll look for a workaround.
-# Size: 16426 (16 kB)
-proto_dependency(
-    name = "rules_proto",
-    repository_rule = "http_archive",
-    sha256 = "f5ae0e582238fcd4ea3d0146a3f5f3db9517f8fe24491eab3c105ace53aad1bb",
-    strip_prefix = "rules_proto-f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5",
-    urls = ["https://github.com/bazelbuild/rules_proto/archive/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5.tar.gz"],
 )
 
 # Branch: master

@@ -3,6 +3,8 @@ load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 load("@//rules:proto_gazelle.bzl", "proto_gazelle")
 
+exports_files(["rules_proto_config.yaml"])
+
 # ----------------------------------------------------
 # Buildifier
 # ----------------------------------------------------

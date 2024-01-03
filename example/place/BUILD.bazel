@@ -1,41 +1,19 @@
-load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
-load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
-load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
+load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
-load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
-load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
-load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "place_proto",
     srcs = ["place.proto"],
     visibility = ["//visibility:public"],
     deps = ["//example/thing:thing_proto"],
-)
-
-proto_cc_library(
-    name = "place_cc_library",
-    srcs = ["place.pb.cc"],
-    hdrs = ["place.pb.h"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//example/thing:thing_cc_library",
-        "@com_google_protobuf//:protobuf",
-    ],
-)
-
-proto_compile(
-    name = "place_cpp_compile",
-    outputs = [
-        "place.pb.cc",
-        "place.pb.h",
-    ],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
-    proto = "place_proto",
-    visibility = ["//visibility:public"],
 )
 
 proto_closure_js_library(
@@ -67,30 +45,46 @@ proto_compile(
     visibility = ["//visibility:public"],
 )
 
+proto_cc_library(
+    name = "place_cc_library",
+    srcs = ["place.pb.cc"],
+    hdrs = ["place.pb.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//example/thing:thing_cc_library",
+        "@com_google_protobuf//:protobuf",
+    ],
+)
+
 proto_compile(
-    name = "place_scala_compile",
-    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
+    name = "place_cpp_compile",
     outputs = [
-        "place_scala.srcjar",
-        "place_scala_grpc.srcjar",
+        "place.pb.cc",
+        "place.pb.h",
     ],
-    plugins = [
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
-    ],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
     proto = "place_proto",
     visibility = ["//visibility:public"],
 )
 
-proto_scala_library(
-    name = "place_proto_scala_library",
-    srcs = ["place_scala.srcjar"],
+proto_compile(
+    name = "place_go_compile",
+    output_mappings = ["place.pb.go=github.com/stackb/rules_proto/example/place/place.pb.go"],
+    outputs = ["place.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    proto = "place_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_go_library(
+    name = "place_go_proto",
+    srcs = ["place.pb.go"],
+    importpath = "github.com/stackb/rules_proto/example/place",
     visibility = ["//visibility:public"],
     deps = [
-        "//example/thing:thing_proto_scala_library",
-        "@maven_scala//:com_google_protobuf_protobuf_java",
-        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+        "//example/thing:thing_go_proto",
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
     ],
 )
 
@@ -118,24 +112,18 @@ proto_java_library(
 )
 
 proto_compile(
-    name = "place_go_compile",
-    output_mappings = ["place.pb.go=github.com/stackb/rules_proto/example/place/place.pb.go"],
-    outputs = ["place.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    name = "place_node_js_compile",
+    options = {"@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"]},
+    outputs = ["place_pb.js"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
     proto = "place_proto",
     visibility = ["//visibility:public"],
 )
 
-proto_go_library(
-    name = "place_go_proto",
-    srcs = ["place.pb.go"],
-    importpath = "github.com/stackb/rules_proto/example/place",
+proto_nodejs_library(
+    name = "place_nodejs_library",
+    srcs = ["place_pb.js"],
     visibility = ["//visibility:public"],
-    deps = [
-        "//example/thing:thing_go_proto",
-        "@org_golang_google_protobuf//reflect/protoreflect",
-        "@org_golang_google_protobuf//runtime/protoimpl",
-    ],
 )
 
 proto_compile(
@@ -163,18 +151,30 @@ proto_py_library(
 )
 
 proto_compile(
-    name = "place_node_js_compile",
-    options = {"@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"]},
-    outputs = ["place_pb.js"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
+    name = "place_scala_compile",
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
+    outputs = [
+        "place_scala.srcjar",
+        "place_scala_grpc.srcjar",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
+    ],
     proto = "place_proto",
     visibility = ["//visibility:public"],
 )
 
-proto_nodejs_library(
-    name = "place_nodejs_library",
-    srcs = ["place_pb.js"],
+proto_scala_library(
+    name = "place_proto_scala_library",
+    srcs = ["place_scala.srcjar"],
     visibility = ["//visibility:public"],
+    deps = [
+        "//example/thing:thing_proto_scala_library",
+        "@maven_scala//:com_google_protobuf_protobuf_java",
+        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+    ],
 )
 
 proto_compile(

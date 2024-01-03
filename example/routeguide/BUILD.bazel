@@ -1,20 +1,20 @@
-load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
-load("@build_stack_rules_proto//rules/nodejs:grpc_web_js_library.bzl", "grpc_web_js_library")
-load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
-load("@build_stack_rules_proto//rules/nodejs:grpc_nodejs_library.bzl", "grpc_nodejs_library")
-load("@build_stack_rules_proto//rules/py:grpc_py_library.bzl", "grpc_py_library")
-load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
+load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules/closure:grpc_closure_js_library.bzl", "grpc_closure_js_library")
+load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:grpc_java_library.bzl", "grpc_java_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
+load("@build_stack_rules_proto//rules/nodejs:grpc_nodejs_library.bzl", "grpc_nodejs_library")
+load("@build_stack_rules_proto//rules/nodejs:grpc_web_js_library.bzl", "grpc_web_js_library")
+load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
+load("@build_stack_rules_proto//rules/py:grpc_py_library.bzl", "grpc_py_library")
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
-load("@build_stack_rules_proto//rules/closure:grpc_closure_js_library.bzl", "grpc_closure_js_library")
-load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
-load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
-load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 load("@aspect_rules_js//js:defs.bzl", "js_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
 
 # gazelle:proto_plugin ts_proto option nestJs=true
 
@@ -55,6 +55,51 @@ proto_library(
     visibility = ["//visibility:public"],
 )
 
+grpc_closure_js_library(
+    name = "routeguide_grpc_closure_js_library",
+    srcs = ["routeguide.grpc.js"],
+    suppress = [
+        "JSC_IMPLICITLY_NONNULL_JSDOC",
+        "JSC_UNUSED_LOCAL_ASSIGNMENT",
+    ],
+    visibility = ["//visibility:public"],
+    exports = [":routeguide_closure_js_library"],
+    deps = [":routeguide_closure_js_library"],
+)
+
+proto_closure_js_library(
+    name = "routeguide_closure_js_library",
+    srcs = ["routeguide_closure.js"],
+    internal_descriptors = ["//example/routeguide:routeguide_proto"],
+    suppress = [
+        "JSC_IMPLICITLY_NONNULL_JSDOC",
+        "JSC_UNUSED_LOCAL_ASSIGNMENT",
+    ],
+    visibility = ["//visibility:public"],
+    exports = [],
+)
+
+proto_compile(
+    name = "routeguide_closure_js_compile",
+    options = {
+        "@build_stack_rules_proto//plugin/builtin:closurejs": [
+            "import_style=closure",
+            "library=example/routeguide/routeguide_closure",
+        ],
+        "@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js": ["out=example/routeguide/routeguide.grpc.js"],
+    },
+    outputs = [
+        "routeguide.grpc.js",
+        "routeguide_closure.js",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:closurejs",
+        "@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js",
+    ],
+    proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
+)
+
 grpc_cc_library(
     name = "routeguide_grpc_cc_library",
     srcs = ["routeguide.grpc.pb.cc"],
@@ -91,88 +136,39 @@ proto_compile(
     visibility = ["//visibility:public"],
 )
 
-proto_closure_js_library(
-    name = "routeguide_closure_js_library",
-    srcs = ["routeguide_closure.js"],
-    internal_descriptors = ["//example/routeguide:routeguide_proto"],
-    suppress = [
-        "JSC_IMPLICITLY_NONNULL_JSDOC",
-        "JSC_UNUSED_LOCAL_ASSIGNMENT",
-    ],
-    visibility = ["//visibility:public"],
-    exports = [],
-)
-
 proto_compile(
-    name = "routeguide_closure_js_compile",
-    options = {
-        "@build_stack_rules_proto//plugin/builtin:closurejs": [
-            "import_style=closure",
-            "library=example/routeguide/routeguide_closure",
-        ],
-        "@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js": ["out=example/routeguide/routeguide.grpc.js"],
-    },
+    name = "routeguide_go_compile",
+    output_mappings = [
+        "routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go",
+        "routeguide_grpc.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide_grpc.pb.go",
+    ],
     outputs = [
-        "routeguide.grpc.js",
-        "routeguide_closure.js",
+        "routeguide.pb.go",
+        "routeguide_grpc.pb.go",
     ],
     plugins = [
-        "@build_stack_rules_proto//plugin/builtin:closurejs",
-        "@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js",
+        "@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go",
+        "@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go-grpc",
     ],
     proto = "routeguide_proto",
     visibility = ["//visibility:public"],
 )
 
-grpc_closure_js_library(
-    name = "routeguide_grpc_closure_js_library",
-    srcs = ["routeguide.grpc.js"],
-    suppress = [
-        "JSC_IMPLICITLY_NONNULL_JSDOC",
-        "JSC_UNUSED_LOCAL_ASSIGNMENT",
-    ],
-    visibility = ["//visibility:public"],
-    exports = [":routeguide_closure_js_library"],
-    deps = [":routeguide_closure_js_library"],
-)
-
-grpc_scala_library(
-    name = "routeguide_grpc_scala_library",
+proto_go_library(
+    name = "routeguide_go_proto",
     srcs = [
-        "routeguide_akka_grpc.srcjar",
-        "routeguide_scala_grpc.srcjar",
+        "routeguide.pb.go",
+        "routeguide_grpc.pb.go",
     ],
+    importpath = "github.com/stackb/rules_proto/example/routeguide",
     visibility = ["//visibility:public"],
     deps = [
-        "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3",
-        "@maven_akka//:com_typesafe_akka_akka_actor_2_12",
-        "@maven_akka//:com_typesafe_akka_akka_http_core_2_12",
-        "@maven_akka//:com_typesafe_akka_akka_stream_2_12",
-        "@maven_scala//:com_google_protobuf_protobuf_java",
-        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
-        "@maven_scala//:io_grpc_grpc_api",
-        "@maven_scala//:io_grpc_grpc_protobuf",
-        "@maven_scala//:io_grpc_grpc_stub",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
     ],
-)
-
-proto_compile(
-    name = "routeguide_scala_compile",
-    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
-    outputs = [
-        "routeguide_akka_grpc.srcjar",
-        "routeguide_scala.srcjar",
-        "routeguide_scala_grpc.srcjar",
-    ],
-    plugins = [
-        "@build_stack_rules_proto//plugin/akka/akka-grpc:protoc-gen-akka-grpc",
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
-    ],
-    proto = "routeguide_proto",
-    visibility = ["//visibility:public"],
 )
 
 grpc_java_library(
@@ -223,71 +219,6 @@ proto_java_library(
     deps = ["@com_google_protobuf//:protobuf_java"],
 )
 
-proto_compile(
-    name = "routeguide_go_compile",
-    output_mappings = [
-        "routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go",
-        "routeguide_grpc.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide_grpc.pb.go",
-    ],
-    outputs = [
-        "routeguide.pb.go",
-        "routeguide_grpc.pb.go",
-    ],
-    plugins = [
-        "@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go",
-        "@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go-grpc",
-    ],
-    proto = "routeguide_proto",
-    visibility = ["//visibility:public"],
-)
-
-proto_go_library(
-    name = "routeguide_go_proto",
-    srcs = [
-        "routeguide.pb.go",
-        "routeguide_grpc.pb.go",
-    ],
-    importpath = "github.com/stackb/rules_proto/example/routeguide",
-    visibility = ["//visibility:public"],
-    deps = [
-        "@org_golang_google_grpc//:go_default_library",
-        "@org_golang_google_grpc//codes",
-        "@org_golang_google_grpc//status",
-        "@org_golang_google_protobuf//reflect/protoreflect",
-        "@org_golang_google_protobuf//runtime/protoimpl",
-    ],
-)
-
-grpc_py_library(
-    name = "routeguide_grpc_py_library",
-    srcs = ["routeguide_pb2_grpc.py"],
-    visibility = ["//visibility:public"],
-    deps = [":routeguide_py_library"],
-)
-
-proto_compile(
-    name = "routeguide_python_compile",
-    outputs = [
-        "routeguide_pb2.py",
-        "routeguide_pb2.pyi",
-        "routeguide_pb2_grpc.py",
-    ],
-    plugins = [
-        "@build_stack_rules_proto//plugin/builtin:pyi",
-        "@build_stack_rules_proto//plugin/builtin:python",
-        "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python",
-    ],
-    proto = "routeguide_proto",
-    visibility = ["//visibility:public"],
-)
-
-proto_py_library(
-    name = "routeguide_py_library",
-    srcs = ["routeguide_pb2.py"],
-    visibility = ["//visibility:public"],
-    deps = ["@com_google_protobuf//:protobuf_python"],
-)
-
 grpc_nodejs_library(
     name = "routeguide_grpc_nodejs_library",
     srcs = ["routeguide_grpc_pb.js"],
@@ -333,6 +264,75 @@ proto_compile(
 proto_nodejs_library(
     name = "routeguide_nodejs_library",
     srcs = ["routeguide_pb.js"],
+    visibility = ["//visibility:public"],
+)
+
+grpc_py_library(
+    name = "routeguide_grpc_py_library",
+    srcs = ["routeguide_pb2_grpc.py"],
+    visibility = ["//visibility:public"],
+    deps = [":routeguide_py_library"],
+)
+
+proto_compile(
+    name = "routeguide_python_compile",
+    outputs = [
+        "routeguide_pb2.py",
+        "routeguide_pb2.pyi",
+        "routeguide_pb2_grpc.py",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:pyi",
+        "@build_stack_rules_proto//plugin/builtin:python",
+        "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python",
+    ],
+    proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_py_library(
+    name = "routeguide_py_library",
+    srcs = ["routeguide_pb2.py"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf_python"],
+)
+
+grpc_scala_library(
+    name = "routeguide_grpc_scala_library",
+    srcs = [
+        "routeguide_akka_grpc.srcjar",
+        "routeguide_scala_grpc.srcjar",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3",
+        "@maven_akka//:com_typesafe_akka_akka_actor_2_12",
+        "@maven_akka//:com_typesafe_akka_akka_http_core_2_12",
+        "@maven_akka//:com_typesafe_akka_akka_stream_2_12",
+        "@maven_scala//:com_google_protobuf_protobuf_java",
+        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
+        "@maven_scala//:io_grpc_grpc_api",
+        "@maven_scala//:io_grpc_grpc_protobuf",
+        "@maven_scala//:io_grpc_grpc_stub",
+    ],
+)
+
+proto_compile(
+    name = "routeguide_scala_compile",
+    options = {"@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc": ["grpc"]},
+    outputs = [
+        "routeguide_akka_grpc.srcjar",
+        "routeguide_scala.srcjar",
+        "routeguide_scala_grpc.srcjar",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/akka/akka-grpc:protoc-gen-akka-grpc",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala",
+        "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
+    ],
+    proto = "routeguide_proto",
     visibility = ["//visibility:public"],
 )
 
