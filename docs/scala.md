@@ -89,7 +89,7 @@ scala_deps()
 
 load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
 
-scala_config(scala_version = "2.12.11")
+scala_config(scala_version = "2.12.18")
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
 
