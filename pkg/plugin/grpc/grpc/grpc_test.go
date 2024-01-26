@@ -9,7 +9,7 @@ import (
 // TestMain is failing in CI:
 // error: mkdir /home/runner/.cache/bazel/_bazel_runner/43914acf8bee29fb1d82f3e3dee22a49/sandbox/linux-sandbox/789/bazel_testing: read-only file system
 // FIXME(pcj)
-func SkipTestMain(m *testing.M) {
+func TestMain(m *testing.M) {
 	bazel_testing.TestMain(m, bazel_testing.Args{
 		Main: txtar,
 	})
