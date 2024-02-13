@@ -338,6 +338,9 @@ func rewriteResolveConfigOverrides(rc interface{}, more overrideSpec) {
 	for k, v := range *overrides {
 		newOverrides[k] = v
 	}
+
+	// reassign memory value
+	*overrides = newOverrides
 }
 
 type overrideKey struct {
