@@ -136,8 +136,6 @@ proto_dependency(
 # Size: 5146983 (5.1 MB)
 proto_dependency(
     name = "com_google_protobuf",
-    # patch_args = ["-p1"],
-    # patches = ["@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch"],
     repository_rule = "http_archive",
     sha256 = "d594b561fb41bf243233d8f411c7f2b7d913e5c9c1be4ca439baf7e48384c893",
     strip_prefix = "protobuf-f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",
