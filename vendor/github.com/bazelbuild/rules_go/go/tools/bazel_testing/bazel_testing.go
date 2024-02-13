@@ -75,6 +75,11 @@ type Args struct {
 	// of the default generated WORKSPACE file.
 	WorkspaceSuffix string
 
+	// ModuleFileSuffix is a string that should be appended to the end of a
+	// default generated MODULE.bazel file. If this is empty, no such file is
+	// generated.
+	ModuleFileSuffix string
+
 	// SetUp is a function that is executed inside the context of the testing
 	// workspace. It is executed once and only once before the beginning of
 	// all tests. If SetUp returns a non-nil error, execution is halted and
@@ -95,9 +100,9 @@ var outputUserRoot string
 // TestMain should be called by tests using this framework from a function named
 // "TestMain". For example:
 //
-//     func TestMain(m *testing.M) {
-//       os.Exit(bazel_testing.TestMain(m, bazel_testing.Args{...}))
-//     }
+//	func TestMain(m *testing.M) {
+//	  os.Exit(bazel_testing.TestMain(m, bazel_testing.Args{...}))
+//	}
 //
 // TestMain constructs a set of workspaces and changes the working directory to
 // the main workspace.
@@ -165,7 +170,11 @@ func TestMain(m *testing.M, args Args) {
 func BazelCmd(args ...string) *exec.Cmd {
 	cmd := exec.Command("bazel")
 	if outputUserRoot != "" {
-		cmd.Args = append(cmd.Args, "--output_user_root="+outputUserRoot)
+		cmd.Args = append(cmd.Args,
+			"--output_user_root="+outputUserRoot,
+			"--nosystem_rc",
+			"--nohome_rc",
+		)
 	}
 	cmd.Args = append(cmd.Args, args...)
 	for _, e := range os.Environ() {
@@ -202,17 +211,30 @@ func RunBazel(args ...string) error {
 // If the command starts but exits with a non-zero status, a *StderrExitError
 // will be returned which wraps the original *exec.ExitError.
 func BazelOutput(args ...string) ([]byte, error) {
+	stdout, _, err := BazelOutputWithInput(nil, args...)
+	return stdout, err
+}
+
+// BazelOutputWithInput invokes a bazel command with a list of arguments and
+// an input stream and returns the content of stdout.
+//
+// If the command starts but exits with a non-zero status, a *StderrExitError
+// will be returned which wraps the original *exec.ExitError.
+func BazelOutputWithInput(stdin io.Reader, args ...string) ([]byte, []byte, error) {
 	cmd := BazelCmd(args...)
 	stdout := &bytes.Buffer{}
 	stderr := &bytes.Buffer{}
 	cmd.Stdout = stdout
 	cmd.Stderr = stderr
+	if stdin != nil {
+		cmd.Stdin = stdin
+	}
 	err := cmd.Run()
 	if eErr, ok := err.(*exec.ExitError); ok {
 		eErr.Stderr = stderr.Bytes()
 		err = &StderrExitError{Err: eErr}
 	}
-	return stdout.Bytes(), err
+	return stdout.Bytes(), stderr.Bytes(), err
 }
 
 // StderrExitError wraps *exec.ExitError and prints the complete stderr output
@@ -367,8 +389,9 @@ func setupWorkspace(args Args, files []string) (dir string, cleanup func() error
 
 	// If there's no WORKSPACE file, create one.
 	workspacePath := filepath.Join(mainDir, "WORKSPACE")
-	if _, err := os.Stat(workspacePath); os.IsNotExist(err) {
-		w, err := os.Create(workspacePath)
+	if _, err = os.Stat(workspacePath); os.IsNotExist(err) {
+		var w *os.File
+		w, err = os.Create(workspacePath)
 		if err != nil {
 			return "", cleanup, err
 		}
@@ -399,6 +422,46 @@ func setupWorkspace(args Args, files []string) (dir string, cleanup func() error
 		}
 	}
 
+	// If a MODULE.bazel file is requested, create one.
+	if args.ModuleFileSuffix != "" {
+		moduleBazelPath := filepath.Join(mainDir, "MODULE.bazel")
+		if _, err = os.Stat(moduleBazelPath); err == nil {
+			return "", cleanup, fmt.Errorf("ModuleFileSuffix set but MODULE.bazel exists")
+		}
+		var w *os.File
+		w, err = os.Create(moduleBazelPath)
+		if err != nil {
+			return "", cleanup, err
+		}
+		defer func() {
+			if cerr := w.Close(); err == nil && cerr != nil {
+				err = cerr
+			}
+		}()
+		rulesGoAbsPath := filepath.Join(execDir, "io_bazel_rules_go")
+		rulesGoPath, err := filepath.Rel(mainDir, rulesGoAbsPath)
+		if err != nil {
+			return "", cleanup, fmt.Errorf("could not find relative path from %q to %q for io_bazel_rules_go", mainDir, rulesGoAbsPath)
+		}
+		rulesGoPath = filepath.ToSlash(rulesGoPath)
+		info := moduleFileTemplateInfo{
+			RulesGoPath: rulesGoPath,
+			Suffix:      args.ModuleFileSuffix,
+		}
+		if err := defaultModuleBazelTpl.Execute(w, info); err != nil {
+			return "", cleanup, err
+		}
+
+		// Enable Bzlmod.
+		bazelrcPath := filepath.Join(mainDir, ".bazelrc")
+		if _, err = os.Stat(bazelrcPath); os.IsNotExist(err) {
+			err = os.WriteFile(bazelrcPath, []byte("common --enable_bzlmod"), 0666)
+			if err != nil {
+				return "", cleanup, err
+			}
+		}
+	}
+
 	return mainDir, cleanup, nil
 }
 
@@ -419,16 +482,22 @@ func extractTxtar(dir, txt string) error {
 
 func parseLocationArg(arg string) (workspace, shortPath string, err error) {
 	cleanPath := path.Clean(arg)
-	if !strings.HasPrefix(cleanPath, "external/") {
+	// Support both states of --legacy_external_runfiles.
+	if !strings.HasPrefix(cleanPath, "../") && !strings.HasPrefix(cleanPath, "external/") {
 		return "", cleanPath, nil
 	}
-	i := strings.IndexByte(arg[len("external/"):], '/')
-	if i < 0 {
-		return "", "", fmt.Errorf("unexpected file (missing / after external/): %s", arg)
+	var trimmedPath string
+	if strings.HasPrefix(cleanPath, "../") {
+		trimmedPath = cleanPath[len("../"):]
+	} else {
+		trimmedPath = cleanPath[len("external/"):]
 	}
-	i += len("external/")
-	workspace = cleanPath[len("external/"):i]
-	shortPath = cleanPath[i+1:]
+	i := strings.IndexByte(trimmedPath, '/')
+	if i < 0 {
+		return "", "", fmt.Errorf("unexpected file (missing / after ../): %s", arg)
+	}
+	workspace = trimmedPath[:i]
+	shortPath = trimmedPath[i+1:]
 	return workspace, shortPath, nil
 }
 
@@ -491,6 +560,20 @@ go_wrap_sdk(
 
 go_register_toolchains({{if .Nogo}}nogo = "{{.Nogo}}"{{end}})
 {{end}}
+{{.Suffix}}
+`))
+
+type moduleFileTemplateInfo struct {
+	RulesGoPath string
+	Suffix      string
+}
+
+var defaultModuleBazelTpl = template.Must(template.New("").Parse(`
+bazel_dep(name = "rules_go", version = "", repo_name = "io_bazel_rules_go")
+local_path_override(
+    module_name = "rules_go",
+    path = "{{.RulesGoPath}}",
+)
 {{.Suffix}}
 `))
 

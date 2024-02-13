@@ -18,7 +18,12 @@ var pyLibraryKindInfo = rule.KindInfo{
 		"visibility": true,
 		"imports":    true,
 	},
-	ResolveAttrs: map[string]bool{"deps": true},
+	NonEmptyAttrs: map[string]bool{
+		"srcs": true,
+	},
+	ResolveAttrs: map[string]bool{
+		"deps": true,
+	},
 }
 
 // PyLibrary implements RuleProvider for 'py_library'-derived rules.
@@ -129,10 +134,7 @@ func maybeStripImportPrefix(specs []resolve.ImportSpec, stripImportPrefix string
 		return specs
 	}
 
-	prefix := stripImportPrefix
-	if strings.HasPrefix(prefix, "/") {
-		prefix = strings.TrimPrefix(prefix, "/")
-	}
+	prefix := strings.TrimPrefix(stripImportPrefix, "/")
 	for i, spec := range specs {
 		spec.Imp = strings.TrimPrefix(spec.Imp, prefix)
 		spec.Imp = strings.TrimPrefix(spec.Imp, "/") // should never be absolute

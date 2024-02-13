@@ -14,6 +14,11 @@ read -r -d '' WANT <<'EOF'
 .
 ./config.yaml
 ./external
+./external/bazel_tools
+./external/bazel_tools/tools
+./external/bazel_tools/tools/bash
+./external/bazel_tools/tools/bash/runfiles
+./external/bazel_tools/tools/bash/runfiles/runfiles.bash
 ./external/go_sdk
 ./external/go_sdk/bin
 ./external/go_sdk/bin/go

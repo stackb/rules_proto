@@ -10,6 +10,7 @@ go_library(
         "langs.go",  # keep
         "metaresolver.go",
         "print.go",
+        "profiler.go",
         "update-repos.go",
         "wspace.go",
     ],

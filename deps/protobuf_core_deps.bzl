@@ -21,10 +21,10 @@ def bazel_skylib():
     _maybe(
         http_archive,
         name = "bazel_skylib",
-        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
+        sha256 = "118e313990135890ee4cc8504e32929844f9578804a1b2f571d69b1dd080cfb8",
+        strip_prefix = "bazel-skylib-1.5.0",
         urls = [
-            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/archive/1.5.0.tar.gz",
         ],
     )
 
@@ -43,10 +43,10 @@ def rules_python():
     _maybe(
         http_archive,
         name = "rules_python",
-        sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
-        strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
+        sha256 = "e85ae30de33625a63eca7fc40a94fea845e641888e52f32b6beea91e8b1b2793",
+        strip_prefix = "rules_python-0.27.1",
         urls = [
-            "https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz",
+            "https://github.com/bazelbuild/rules_python/archive/0.27.1.tar.gz",
         ],
     )
 
@@ -67,15 +67,9 @@ def com_google_protobuf():
     _maybe(
         http_archive,
         name = "com_google_protobuf",
-        sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
-        strip_prefix = "protobuf-3.20.1",
+        sha256 = "d594b561fb41bf243233d8f411c7f2b7d913e5c9c1be4ca439baf7e48384c893",
+        strip_prefix = "protobuf-f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz",
-        ],
-        patches = [
-            "@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch",
-        ],
-        patch_args = [
-            "-p1",
+            "https://github.com/protocolbuffers/protobuf/archive/f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c.tar.gz",
         ],
     )

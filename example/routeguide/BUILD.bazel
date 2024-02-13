@@ -1,5 +1,3 @@
-load("@aspect_rules_js//js:defs.bzl", "js_library")
-load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:grpc_cc_library.bzl", "grpc_cc_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
@@ -13,11 +11,12 @@ load("@build_stack_rules_proto//rules/nodejs:grpc_web_js_library.bzl", "grpc_web
 load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@build_stack_rules_proto//rules/py:grpc_py_library.bzl", "grpc_py_library")
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
+load("@build_stack_rules_proto//rules/scala:grpc_scala_library.bzl", "grpc_scala_library")
 load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+load("@aspect_rules_js//js:defs.bzl", "js_library")
 
 # gazelle:proto_plugin ts_proto option nestJs=true
-# gazelle:proto_rule proto_ts_library deps @npm_tsc//@nestjs/microservices
 
 filegroup(
     name = "features",
@@ -98,6 +97,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/stackb/grpc_js:protoc-gen-grpc-js",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 grpc_cc_library(
@@ -133,22 +133,39 @@ proto_compile(
         "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-cpp",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_compile(
     name = "routeguide_go_compile",
-    output_mappings = ["routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go"],
-    outputs = ["routeguide.pb.go"],
-    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    output_mappings = [
+        "routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go",
+        "routeguide_grpc.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide_grpc.pb.go",
+    ],
+    outputs = [
+        "routeguide.pb.go",
+        "routeguide_grpc.pb.go",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go",
+        "@build_stack_rules_proto//plugin/grpc/grpc-go:protoc-gen-go-grpc",
+    ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_go_library(
     name = "routeguide_go_proto",
-    srcs = ["routeguide.pb.go"],
+    srcs = [
+        "routeguide.pb.go",
+        "routeguide_grpc.pb.go",
+    ],
     importpath = "github.com/stackb/rules_proto/example/routeguide",
     visibility = ["//visibility:public"],
     deps = [
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
         "@org_golang_google_protobuf//reflect/protoreflect",
         "@org_golang_google_protobuf//runtime/protoimpl",
     ],
@@ -191,6 +208,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/grpc/grpc-java:protoc-gen-grpc-java",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_java_library(
@@ -212,7 +230,11 @@ grpc_web_js_library(
     name = "routeguide_grpc_web_js_library",
     srcs = ["routeguide_grpc_web_pb.js"],
     visibility = ["//visibility:public"],
-    deps = [":routeguide_nodejs_library"],
+    deps = [
+        ":routeguide_nodejs_library",
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+    ],
 )
 
 proto_compile(
@@ -236,6 +258,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/grpc/grpc-web:protoc-gen-grpc-web",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_nodejs_library(
@@ -255,15 +278,16 @@ proto_compile(
     name = "routeguide_python_compile",
     outputs = [
         "routeguide_pb2.py",
-        "routeguide_pb2_grpc.py",
         "routeguide_pb2.pyi",
+        "routeguide_pb2_grpc.py",
     ],
     plugins = [
+        "@build_stack_rules_proto//plugin/builtin:pyi",
         "@build_stack_rules_proto//plugin/builtin:python",
         "@build_stack_rules_proto//plugin/grpc/grpc:protoc-gen-grpc-python",
-        "@build_stack_rules_proto//plugin/builtin:pyi",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_py_library(
@@ -271,32 +295,6 @@ proto_py_library(
     srcs = ["routeguide_pb2.py"],
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:protobuf_python"],
-)
-
-proto_compile(
-    name = "routeguide_ts_proto_compile",
-    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
-        "emitImportedFiles=false",
-        "esModuleInterop=true",
-        "nestJs=true",
-    ]},
-    outputs = ["routeguide.ts"],
-    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
-    proto = "routeguide_proto",
-)
-
-proto_ts_library(
-    name = "routeguide_ts_proto",
-    srcs = ["routeguide.ts"],
-    tags = ["manual"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//:node_modules/@nestjs/microservices",
-        "//:node_modules/@types/node",
-        "//:node_modules/long",
-        "//:node_modules/protobufjs",
-        "//:node_modules/rxjs",
-    ],
 )
 
 grpc_scala_library(
@@ -335,4 +333,31 @@ proto_compile(
         "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
     ],
     proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "routeguide_ts_proto_compile",
+    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
+        "emitImportedFiles=false",
+        "esModuleInterop=true",
+        "nestJs=true",
+    ]},
+    outputs = ["routeguide.ts"],
+    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
+    proto = "routeguide_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_ts_library(
+    name = "routeguide_ts_proto",
+    srcs = ["routeguide.ts"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@//:node_modules/@nestjs/microservices",
+        "@//:node_modules/@types/node",
+        "@//:node_modules/long",
+        "@//:node_modules/protobufjs",
+        "@//:node_modules/rxjs",
+    ],
 )

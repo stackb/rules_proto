@@ -199,6 +199,11 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 		for i, l := range got {
 			res[i] = resolve.FindResult{Label: l}
 		}
+		// reverse results to preserve last-wins semantics of prior
+		// stackb/rules_proto behavior
+		for i, j := 0, len(res)-1; i < j; i, j = i+1, j-1 {
+			res[i], res[j] = res[j], res[i]
+		}
 		return res
 	}
 	return nil
@@ -263,9 +268,6 @@ func (r *resolver) Imports(lang, impLang string, visitor func(imp string, locati
 }
 
 func (r *resolver) Install(c *config.Config) {
-	// The resolve config has already processed resolve directives, and there's
-	// no public API. Take somewhat extreme measures to augment it's internal
-	// override list via unsafe memory reallocation.
 	overrides := make(overrideSpec, 0)
 
 	for key, known := range r.known {
@@ -354,6 +356,9 @@ type overrideKey struct {
 // overrideSpec is a copy of the same private type in resolve/config.go.  It must be
 // kept in sync with the original to avoid discrepancy with the expected memory
 // layout.
+//
+// NOTE: in https://github.com/bazelbuild/bazel-gazelle/pull/1687,
+// []overrideSpec was changed to map[overrideKey]label.Label
 type overrideSpec map[overrideKey]label.Label
 
 func langKey(lang, impLang string) string {
@@ -364,4 +369,3 @@ func keyLang(key string) (string, string) {
 	parts := strings.SplitN(key, " ", 2)
 	return parts[0], parts[1]
 }
-

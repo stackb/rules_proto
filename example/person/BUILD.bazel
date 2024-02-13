@@ -1,11 +1,12 @@
-load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
-load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
 load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
+load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
+load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
+load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 proto_library(
@@ -22,7 +23,7 @@ proto_closure_js_library(
         "//example/person:person_proto",
         "//example/place:place_proto",
         "//example/thing:thing_proto",
-        "@com_google_protobuf//:timestamp_proto",
+        "//google/protobuf:timestamppb_proto",
     ],
     suppress = [
         "JSC_IMPLICITLY_NONNULL_JSDOC",
@@ -42,6 +43,7 @@ proto_compile(
     outputs = ["person_closure.js"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_cc_library(
@@ -63,6 +65,7 @@ proto_compile(
     ],
     plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_compile(
@@ -71,6 +74,19 @@ proto_compile(
     outputs = ["person.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_go_library(
+    name = "person_go_proto",
+    srcs = ["person.pb.go"],
+    importpath = "github.com/stackb/rules_proto/example/person",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//example/place:place_go_proto",
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+    ],
 )
 
 proto_compile(
@@ -79,6 +95,7 @@ proto_compile(
     outputs = ["person.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_java_library(
@@ -101,6 +118,7 @@ proto_compile(
     outputs = ["person_pb.js"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_nodejs_library(
@@ -116,10 +134,11 @@ proto_compile(
         "person_pb2.pyi",
     ],
     plugins = [
-        "@build_stack_rules_proto//plugin/builtin:python",
         "@build_stack_rules_proto//plugin/builtin:pyi",
+        "@build_stack_rules_proto//plugin/builtin:python",
     ],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_py_library(
@@ -129,29 +148,6 @@ proto_py_library(
     deps = [
         "//example/place:place_py_library",
         "@com_google_protobuf//:protobuf_python",
-    ],
-)
-
-proto_compile(
-    name = "person_ts_proto_compile",
-    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
-        "emitImportedFiles=false",
-    ]},
-    outputs = ["person.ts"],
-    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
-    proto = "person_proto",
-)
-
-proto_ts_library(
-    name = "person_ts_proto",
-    srcs = ["person.ts"],
-    tags = ["manual"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//:node_modules/long",
-        "//:node_modules/protobufjs",
-        "//example/place:place_ts_proto",
-        "//google/protobuf:timestamp_ts_proto",
     ],
 )
 
@@ -167,6 +163,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
     ],
     proto = "person_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_scala_library(
@@ -178,5 +175,31 @@ proto_scala_library(
         "@maven_scala//:com_google_protobuf_protobuf_java",
         "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+    ],
+)
+
+proto_compile(
+    name = "person_ts_proto_compile",
+    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
+        "emitImportedFiles=false",
+        "esModuleInterop=true",
+    ]},
+    outputs = ["person.ts"],
+    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
+    proto = "person_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_ts_library(
+    name = "person_ts_proto",
+    srcs = ["person.ts"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//example/place:place_ts_proto",
+        "@//:node_modules/@nestjs/microservices",
+        "@//:node_modules/@types/node",
+        "@//:node_modules/long",
+        "@//:node_modules/protobufjs",
+        "@//:node_modules/rxjs",
     ],
 )

@@ -11,7 +11,19 @@ def _maybe(repo_rule, name, **kwargs):
 def closure_deps():
     """closure dependency macro
     """
+    com_google_protobuf_javascript()  # via io_bazel_rules_closure
     io_bazel_rules_closure()  # via <TOP>
+
+def com_google_protobuf_javascript():
+    _maybe(
+        http_archive,
+        name = "com_google_protobuf_javascript",
+        sha256 = "06fc35c7d35c48bdc99a6ab72211086532d1de2bc4ec28011cde607a4025ea95",
+        strip_prefix = "protobuf-javascript-e1a52f9a897653985b0649cca17615cb1b0eb3b7",
+        urls = [
+            "https://github.com/protocolbuffers/protobuf-javascript/archive/e1a52f9a897653985b0649cca17615cb1b0eb3b7.tar.gz",
+        ],
+    )
 
 def io_bazel_rules_closure():
     _maybe(

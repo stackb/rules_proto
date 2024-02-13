@@ -30,6 +30,7 @@ def proto_ts_library(
         tsconfig = tsconfig or {
             "compilerOptions": {
                 "declaration": declaration,
+                "esModuleInterop": True,
             },
         },
         **kwargs

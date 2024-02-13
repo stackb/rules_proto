@@ -1,18 +1,19 @@
-load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
-load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
-load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
+load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
+load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
 load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
+load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
+load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 
 proto_library(
     name = "thing_proto",
     srcs = ["thing.proto"],
     visibility = ["//visibility:public"],
-    deps = ["@com_google_protobuf//:timestamp_proto"],
+    deps = ["@protoapis//google/protobuf:timestamp_proto"],
 )
 
 proto_closure_js_library(
@@ -20,13 +21,14 @@ proto_closure_js_library(
     srcs = ["thing_closure.js"],
     internal_descriptors = [
         "//example/thing:thing_proto",
-        "@com_google_protobuf//:timestamp_proto",
+        "//google/protobuf:timestamppb_proto",
     ],
     suppress = [
         "JSC_IMPLICITLY_NONNULL_JSDOC",
         "JSC_UNUSED_LOCAL_ASSIGNMENT",
     ],
     visibility = ["//visibility:public"],
+    exports = [],
 )
 
 proto_compile(
@@ -38,6 +40,7 @@ proto_compile(
     outputs = ["thing_closure.js"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
     proto = "thing_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_cc_library(
@@ -45,7 +48,10 @@ proto_cc_library(
     srcs = ["thing.pb.cc"],
     hdrs = ["thing.pb.h"],
     visibility = ["//visibility:public"],
-    deps = ["@com_google_protobuf//:protobuf"],
+    deps = [
+        "@com_google_protobuf//:protobuf",
+        "@protoapis//google/protobuf:timestamp_cc_library",
+    ],
 )
 
 proto_compile(
@@ -56,6 +62,7 @@ proto_compile(
     ],
     plugins = ["@build_stack_rules_proto//plugin/builtin:cpp"],
     proto = "thing_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_compile(
@@ -64,6 +71,19 @@ proto_compile(
     outputs = ["thing.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_go_library(
+    name = "thing_go_proto",
+    srcs = ["thing.pb.go"],
+    importpath = "github.com/stackb/rules_proto/example/thing",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+        "@org_golang_google_protobuf//types/known/timestamppb",
+    ],
 )
 
 proto_compile(
@@ -72,14 +92,21 @@ proto_compile(
     outputs = ["thing.srcjar"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:java"],
     proto = "thing_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_java_library(
     name = "thing_java_library",
     srcs = ["thing.srcjar"],
     visibility = ["//visibility:public"],
-    exports = ["@com_google_protobuf//:protobuf_java"],
-    deps = ["@com_google_protobuf//:protobuf_java"],
+    exports = [
+        "@com_google_protobuf//:protobuf_java",
+        "@protoapis//google/protobuf:timestamp_java_library",
+    ],
+    deps = [
+        "@com_google_protobuf//:protobuf_java",
+        "@protoapis//google/protobuf:timestamp_java_library",
+    ],
 )
 
 proto_compile(
@@ -88,6 +115,7 @@ proto_compile(
     outputs = ["thing_pb.js"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
     proto = "thing_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_nodejs_library(
@@ -103,37 +131,20 @@ proto_compile(
         "thing_pb2.pyi",
     ],
     plugins = [
-        "@build_stack_rules_proto//plugin/builtin:python",
         "@build_stack_rules_proto//plugin/builtin:pyi",
+        "@build_stack_rules_proto//plugin/builtin:python",
     ],
     proto = "thing_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_py_library(
     name = "thing_py_library",
     srcs = ["thing_pb2.py"],
     visibility = ["//visibility:public"],
-    deps = ["@com_google_protobuf//:protobuf_python"],
-)
-
-proto_compile(
-    name = "thing_ts_proto_compile",
-    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
-        "emitImportedFiles=false",
-    ]},
-    outputs = ["thing.ts"],
-    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
-    proto = "thing_proto",
-)
-
-proto_ts_library(
-    name = "thing_ts_proto",
-    srcs = ["thing.ts"],
-    visibility = ["//visibility:public"],
     deps = [
-        "//:node_modules/long",
-        "//:node_modules/protobufjs",
-        "//google/protobuf:timestamp_ts_proto",
+        "@com_google_protobuf//:protobuf_python",
+        "@protoapis//google/protobuf:timestamp_py_library",
     ],
 )
 
@@ -149,6 +160,7 @@ proto_compile(
         "@build_stack_rules_proto//plugin/scalapb/scalapb:protoc-gen-scala-grpc",
     ],
     proto = "thing_proto",
+    visibility = ["//visibility:public"],
 )
 
 proto_scala_library(
@@ -159,5 +171,31 @@ proto_scala_library(
         "@maven_scala//:com_google_protobuf_protobuf_java",
         "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
+    ],
+)
+
+proto_compile(
+    name = "thing_ts_proto_compile",
+    options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
+        "emitImportedFiles=false",
+        "esModuleInterop=true",
+    ]},
+    outputs = ["thing.ts"],
+    plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
+    proto = "thing_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_ts_library(
+    name = "thing_ts_proto",
+    srcs = ["thing.ts"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//google/protobuf:timestamppb_ts_proto",
+        "@//:node_modules/@nestjs/microservices",
+        "@//:node_modules/@types/node",
+        "@//:node_modules/long",
+        "@//:node_modules/protobufjs",
+        "@//:node_modules/rxjs",
     ],
 )

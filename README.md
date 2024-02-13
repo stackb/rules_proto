@@ -1,6 +1,6 @@
 # `rules_proto (v3)`
 
-[![Build status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/stackb-rules-proto)
+![build-status](https://github.com/stackb/rules_proto/actions/workflows/ci.yaml/badge.svg)
 [![Go Reference](https://pkg.go.dev/badge/github.com/stackb/rules_proto.svg)](https://pkg.go.dev/github.com/stackb/rules_proto)
 
 Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
@@ -597,7 +597,7 @@ proto_repository(
     build_file_generation = "clean",
     build_file_proto_mode = "file",
     reresolve_known_proto_imports = True,
-    proto_language_config_file = "//example:config.yaml",
+    proto_language_config_file = "@//:rules_proto_config.yaml",
     strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
     type = "zip",
     urls = ["https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9"],

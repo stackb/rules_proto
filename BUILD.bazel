@@ -1,6 +1,9 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
+load("@//rules:proto_gazelle.bzl", "proto_gazelle")
+
+exports_files(["rules_proto_config.yaml"])
 
 # ----------------------------------------------------
 # Buildifier
@@ -28,9 +31,14 @@ gazelle_binary(
     visibility = ["//visibility:public"],
 )
 
-gazelle(
+proto_gazelle(
     name = "gazelle",
+    cfgs = [":rules_proto_config.yaml"],
     gazelle = ":gazelle-protobuf",
+    imports = [
+        "@googleapis//:imports.csv",
+        "@protoapis//:imports.csv",
+    ],
 )
 
 gazelle(

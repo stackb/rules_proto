@@ -1,4 +1,4 @@
-BAZEL := bzl
+BAZEL := bazel
 
 .PHONY: tidy
 tidy: deps
@@ -7,6 +7,10 @@ tidy: deps
 	find vendor -name 'BUILD.bazel' | xargs rm
 	$(BAZEL) run //:update_go_deps
 	$(BAZEL) run //:buildifier
+	$(BAZEL) run //:gazelle
+
+.PHONY: gazelle
+gazelle:
 	$(BAZEL) run //:gazelle
 
 .PHONY: deps
@@ -21,9 +25,13 @@ site:
 	$(BAZEL) build //example/golden:*
 	cp -f ./bazel-bin/example/golden/*.md docs/
 
+.PHONY: golden_test
+golden_test:
+	$(BAZEL) test //example/golden:golden_test
+
 .PHONY: test
 test:
-	$(BAZEL) test //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
+	$(BAZEL) test --keep_going //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
 		--deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
 
 .PHONY: get

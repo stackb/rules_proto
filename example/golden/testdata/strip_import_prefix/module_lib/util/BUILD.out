@@ -24,4 +24,5 @@ proto_py_library(
     srcs = ["date_pb2.py"],
     imports = [".."],
     visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf_python"],
 )

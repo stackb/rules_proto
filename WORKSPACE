@@ -6,29 +6,104 @@ workspace(name = "build_stack_rules_proto")
 # Toolchain-Related
 # ----------------------------------------------------
 
-register_toolchains("//toolchain:standard")
-# alternatively:
-# register_toolchains("//toolchain:prebuilt")
+register_toolchains(
+    "//toolchain:standard",
+    # "//toolchain:prebuilt",  # alt
+)
 
 # ----------------------------------------------------
-# Top-Level Dependency Trees
+# Core Deps
 # ----------------------------------------------------
 
 load("//deps:core_deps.bzl", "core_deps")
 
 core_deps()
 
+# ----------------------------------------------------
+# Core Protobuf
+# ----------------------------------------------------
+
 load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
 protobuf_core_deps()
+
+# ----------------------------------------------------
+# Core gRPC
+# ----------------------------------------------------
+
+load("//deps:grpc_core_deps.bzl", "grpc_core_deps")
+
+grpc_core_deps()
+
+load(
+    "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
+    "grpc_deps",
+)
+
+grpc_deps()
+
+# NOTE: rather than using the 'grpc_extra_deps' function, we selectively load
+# only the parts of that macro that are needed.  Using the macro as-is for
+# *this* WORKSPACE causes issues with duplicate go_register_toolchains calls.
+#
+# load( "@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps",
+# )
+# grpc_extra_deps()
+
+load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
+
+apple_rules_dependencies(ignore_version_differences = False)
+
+load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+
+# Initialize Google APIs with only C++ and Python targets
+switched_rules_by_language(
+    name = "com_google_googleapis_imports",
+    cc = True,
+    grpc = True,
+    python = True,
+)
+
+load("@envoy_api//bazel:repositories.bzl", "api_dependencies")
+
+api_dependencies()
+
+# ----------------------------------------------------
+# Go Tools
+# ----------------------------------------------------
+
+load(
+    "@io_bazel_rules_go//go:deps.bzl",
+    "go_register_toolchains",
+    "go_rules_dependencies",
+)
+
+go_rules_dependencies()
+
+go_register_toolchains(version = "1.18.2")
+
+# ----------------------------------------------------
+# Gazelle
+# ----------------------------------------------------
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
+gazelle_dependencies()
+
+load("//:go_deps.bzl", "gazelle_protobuf_extension_go_deps", "go_deps")
+
+# gazelle:repository_macro go_deps.bzl%go_deps
+go_deps()
+
+gazelle_protobuf_extension_go_deps()
 
 load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
 prebuilt_protoc_deps()
 
-load("//deps:grpc_core_deps.bzl", "grpc_core_deps")
+load("//deps:js_core_deps.bzl", "js_core_deps")
 
-grpc_core_deps()
+js_core_deps()
 
 load("//deps:grpc_java_deps.bzl", "grpc_java_deps")
 
@@ -63,42 +138,12 @@ load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
 ts_proto_deps()
 
 # ----------------------------------------------------
-# Go Tools
+# Python
 # ----------------------------------------------------
 
-load(
-    "@io_bazel_rules_go//go:deps.bzl",
-    "go_register_toolchains",
-    "go_rules_dependencies",
-)
+load("@rules_python//python:repositories.bzl", "py_repositories")
 
-go_rules_dependencies()
-
-go_register_toolchains(version = "1.18.2")
-
-# ----------------------------------------------------
-# Gazelle
-# ----------------------------------------------------
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-
-gazelle_dependencies()
-
-load("//:go_deps.bzl", "go_deps")
-
-# gazelle:repository_macro go_deps.bzl%go_deps
-go_deps()
-
-# ----------------------------------------------------
-# Core gRPC
-# ----------------------------------------------------
-
-load(
-    "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
-    "grpc_deps",
-)
-
-grpc_deps()
+py_repositories()
 
 # ----------------------------------------------------
 # Java
@@ -136,9 +181,9 @@ compat_repositories()
 
 grpc_java_repositories()
 
-# ----------------------------------------------------
-# Golang
-# ----------------------------------------------------
+# # ----------------------------------------------------
+# # Golang
+# # ----------------------------------------------------
 
 load("//deps:go_core_deps.bzl", "go_core_deps")
 
@@ -150,15 +195,22 @@ go_core_deps()
 
 load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
 
-scala_config(scala_version = "2.12.11")
+scala_config(
+    enable_compiler_dependency_tracking = True,
+    scala_version = "2.12.18",
+)
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
 
 scala_repositories()
 
-load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+register_toolchains(
+    "//toolchain/scala:default_toolchain",
+)
 
-scala_register_toolchains()
+# ----------------------------------------------------
+# Scala/Maven
+# ----------------------------------------------------
 
 # bazel run @maven_scala//:pin, but first comment out the "maven_install_json"
 # (put it back once pinned again)
@@ -215,7 +267,9 @@ load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_depende
 
 rules_closure_toolchains()
 
-rules_closure_dependencies()
+rules_closure_dependencies(
+    omit_rules_python = True,
+)
 
 # ----------------------------------------------------
 # NodeJS

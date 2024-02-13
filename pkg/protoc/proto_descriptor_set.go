@@ -30,6 +30,9 @@ func (s *protoDescriptorSetRule) KindInfo() rule.KindInfo {
 		MergeableAttrs: map[string]bool{
 			"deps": true,
 		},
+		NonEmptyAttrs: map[string]bool{
+			"srcs": true,
+		},
 	}
 }
 

@@ -3,7 +3,6 @@ package rules_closure
 import (
 	"container/list"
 	"path"
-	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -24,7 +23,12 @@ var closureJsLibraryKindInfo = rule.KindInfo{
 		"suppress":             true,
 		"lenient":              true,
 	},
-	ResolveAttrs: map[string]bool{"deps": true},
+	NonEmptyAttrs: map[string]bool{
+		"srcs": true,
+	},
+	ResolveAttrs: map[string]bool{
+		"deps": true,
+	},
 }
 
 // ClosureJsLibrary implements RuleProvider for 'py_library'-derived rules.
@@ -51,9 +55,7 @@ func (s *ClosureJsLibrary) Name() string {
 func (s *ClosureJsLibrary) Srcs() []string {
 	srcs := make([]string, 0)
 	for _, output := range s.Outputs {
-		if strings.HasSuffix(output, "_closure.js") {
-			srcs = append(srcs, protoc.StripRel(s.Config.Rel, output))
-		}
+		srcs = append(srcs, protoc.StripRel(s.Config.Rel, output))
 	}
 	return srcs
 }

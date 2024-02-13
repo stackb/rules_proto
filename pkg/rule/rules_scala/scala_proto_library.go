@@ -31,6 +31,9 @@ func (s *scalaProtoLibrary) KindInfo() rule.KindInfo {
 			"deps":       true,
 			"visibility": true,
 		},
+		NonEmptyAttrs: map[string]bool{
+			"srcs": true,
+		},
 	}
 }
 

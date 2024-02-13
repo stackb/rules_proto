@@ -53,7 +53,7 @@ func (s *protoJavaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *proto
 		RuleConfig:     cfg,
 		Config:         pc,
 		Resolver: func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-			protoc.ResolveDepsAttr("deps", true)(c, ix, r, imports, from)
+			protoc.ResolveDepsAttr("deps", false)(c, ix, r, imports, from)
 			r.SetAttr("exports", r.Attr("deps"))
 		},
 	}

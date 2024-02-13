@@ -15,6 +15,11 @@ depsgen(
 )
 
 depsgen(
+    name = "js_core",
+    deps = ["//deps:com_google_protobuf_javascript"],
+)
+
+depsgen(
     name = "go_core",
     deps = [
         ":com_github_golang_protobuf",
@@ -76,11 +81,11 @@ depsgen(
 depsgen(
     name = "grpc_web",
     deps = [
-        ":github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_aarch64",
-        ":github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_x86_64",
-        ":github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_aarch64",
-        ":github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_x86_64",
-        ":github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_windows_x86_64_exe",
+        ":github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_aarch64",
+        ":github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_x86_64",
+        ":github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_aarch64",
+        ":github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_x86_64",
+        ":github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_windows_x86_64_exe",
     ],
 )
 
@@ -89,25 +94,25 @@ depsgen(
     deps = ["//deps:io_grpc_grpc_java"],
 )
 
-# Release: v0.39.1
-# TargetCommitish: release-0.39
-# Date: 2023-04-20 04:35:08 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.39.1
-# Size: 1759832 (1.8 MB)
+# Release: v0.45.1
+# TargetCommitish: release-0.45
+# Date: 2024-01-19 14:54:08 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_go/releases/tag/v0.45.1
+# Size: 1681865 (1.7 MB)
 proto_dependency(
     name = "io_bazel_rules_go",
     repository_rule = "http_archive",
-    sha256 = "473a064d502e89d11c497a59f9717d1846e01515a3210bd169f22323161c076e",
-    strip_prefix = "rules_go-0.39.1",
-    urls = ["https://github.com/bazelbuild/rules_go/archive/v0.39.1.tar.gz"],
+    sha256 = "aac6e182a9fffa2944fdf8abdca513823e21030bbb854ce74d8abfbccd636459",
+    strip_prefix = "rules_go-0.45.1",
+    urls = ["https://github.com/bazelbuild/rules_go/archive/v0.45.1.tar.gz"],
     visibility = ["//visibility:public"],
 )
 
 # Release: v0.35.0
 # TargetCommitish: master
-# Date: 2023-12-21 18:18:45 +0000 UTC
+# Date: 2023-12-21 16:38:31 +0000 UTC
 # URL: https://github.com/bazelbuild/bazel-gazelle/releases/tag/v0.35.0
-# Size: 1780790 (1.7 MB)
+# Size: 1780790 (1.8 MB)
 proto_dependency(
     name = "bazel_gazelle",
     patch_args = ["-p1"],
@@ -116,17 +121,25 @@ proto_dependency(
     sha256 = "a0ee1d304f7caa46680ba06bdef0e5d9ec8815f6e01ec29398efd13256598c3f",
     strip_prefix = "bazel-gazelle-0.35.0",
     urls = ["https://github.com/bazelbuild/bazel-gazelle/archive/v0.35.0.tar.gz"],
-    deps = [":io_bazel_rules_go"],
+    deps = [
+        ":bazel_skylib",
+        ":io_bazel_rules_go",
+    ],
 )
 
+# Branch: v21.12
+# Commit: f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c
+# Date: 2022-12-13 00:03:12 +0000 UTC
+# URL: https://github.com/protocolbuffers/protobuf/commit/f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c
+#
+# Updating version.json and repo version numbers to: 21.12
+# Size: 5146983 (5.1 MB)
 proto_dependency(
     name = "com_google_protobuf",
-    patch_args = ["-p1"],
-    patches = ["@build_stack_rules_proto//third_party:com_google_protobuf.deploy-env.patch"],
     repository_rule = "http_archive",
-    sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
-    strip_prefix = "protobuf-3.20.1",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz"],
+    sha256 = "d594b561fb41bf243233d8f411c7f2b7d913e5c9c1be4ca439baf7e48384c893",
+    strip_prefix = "protobuf-f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c.tar.gz"],
     visibility = ["//visibility:public"],
     deps = [
         ":bazel_skylib",
@@ -134,6 +147,57 @@ proto_dependency(
         ":rules_python",
         ":zlib",
     ],
+)
+
+proto_dependency(
+    name = "zlib",
+    build_file = "@build_stack_rules_proto//third_party:zlib.BUILD",
+    repository_rule = "http_archive",
+    sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
+    strip_prefix = "zlib-1.2.11",
+    urls = [
+        "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
+        "https://zlib.net/zlib-1.2.11.tar.gz",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Commit: e1a52f9a897653985b0649cca17615cb1b0eb3b7
+# Date: 2023-11-09 20:28:22 +0000 UTC
+# URL: https://github.com/protocolbuffers/protobuf-javascript/commit/e1a52f9a897653985b0649cca17615cb1b0eb3b7
+#
+# Update project status (November 2023) (#178)
+#
+# * Update README.md
+#
+# Co-authored-by: Luke Sandberg <lukesandberg@users.noreply.github.com>
+# Size: 416305 (416 kB)
+proto_dependency(
+    name = "com_google_protobuf_javascript",
+    repository_rule = "http_archive",
+    sha256 = "06fc35c7d35c48bdc99a6ab72211086532d1de2bc4ec28011cde607a4025ea95",
+    strip_prefix = "protobuf-javascript-e1a52f9a897653985b0649cca17615cb1b0eb3b7",
+    urls = ["https://github.com/protocolbuffers/protobuf-javascript/archive/e1a52f9a897653985b0649cca17615cb1b0eb3b7.tar.gz"],
+)
+
+# Commit: f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5
+# Date: 2023-11-29 16:35:25 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_proto/commit/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5
+#
+# feat: introduce toolchain helper (#194)
+#
+# This is not final yet, I just want to test out with rules_python first.
+# Welcome to review though.
+#
+# Also due to https://github.com/bazelbuild/bazel/issues/20297 i can't
+# write unit tests for the incompatible flag. I'll look for a workaround.
+# Size: 16426 (16 kB)
+proto_dependency(
+    name = "rules_proto",
+    repository_rule = "http_archive",
+    sha256 = "f5ae0e582238fcd4ea3d0146a3f5f3db9517f8fe24491eab3c105ace53aad1bb",
+    strip_prefix = "rules_proto-f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5",
+    urls = ["https://github.com/bazelbuild/rules_proto/archive/f9b0b880d1e10e18daeeb168cef9d0f8316fdcb5.tar.gz"],
 )
 
 # Commit: ea8c75a15c4ac9562da29f3d9a633decb384d4a3
@@ -159,58 +223,31 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Branch: master
-# Commit: c7e068d38e2fec1d899e1c150e372f205c220e27
-# Date: 2021-02-02 22:16:45 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_python/commit/c7e068d38e2fec1d899e1c150e372f205c220e27
-#
-# pip: 20.3.3 -> 20.3.4 (#405)
-# Size: 2563550 (2.6 MB)
+# Release: 0.27.1
+# TargetCommitish: main
+# Date: 2023-12-04 23:37:32 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_python/releases/tag/0.27.1
+# Size: 466161 (466 kB)
 proto_dependency(
     name = "rules_python",
     repository_rule = "http_archive",
-    sha256 = "8cc0ad31c8fc699a49ad31628273529ef8929ded0a0859a3d841ce711a9a90d5",
-    strip_prefix = "rules_python-c7e068d38e2fec1d899e1c150e372f205c220e27",
-    urls = ["https://github.com/bazelbuild/rules_python/archive/c7e068d38e2fec1d899e1c150e372f205c220e27.tar.gz"],
+    sha256 = "e85ae30de33625a63eca7fc40a94fea845e641888e52f32b6beea91e8b1b2793",
+    strip_prefix = "rules_python-0.27.1",
+    urls = ["https://github.com/bazelbuild/rules_python/archive/0.27.1.tar.gz"],
     visibility = ["//visibility:public"],
 )
 
-# Branch: master
-# Commit: f7a30f6f80006b591fa7c437fe5a951eb10bcbcf
-# Date: 2021-02-09 14:25:06 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_proto/commit/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf
-#
-# Merge pull request #77 from Yannic/proto_descriptor_set_rule
-#
-# Create proto_descriptor_set
-# Size: 14397 (14 kB)
-proto_dependency(
-    name = "rules_proto",
-    repository_rule = "http_archive",
-    sha256 = "9fc210a34f0f9e7cc31598d109b5d069ef44911a82f507d5a88716db171615a8",
-    strip_prefix = "rules_proto-f7a30f6f80006b591fa7c437fe5a951eb10bcbcf",
-    urls = ["https://github.com/bazelbuild/rules_proto/archive/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf.tar.gz"],
-)
-
+# Release: 1.5.0
+# TargetCommitish: main
+# Date: 2023-11-05 16:16:45 +0000 UTC
+# URL: https://github.com/bazelbuild/bazel-skylib/releases/tag/1.5.0
+# Size: 112573 (113 kB)
 proto_dependency(
     name = "bazel_skylib",
     repository_rule = "http_archive",
-    sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-    strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
-    urls = ["https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz"],
-    visibility = ["//visibility:public"],
-)
-
-proto_dependency(
-    name = "zlib",
-    build_file = "@build_stack_rules_proto//third_party:zlib.BUILD",
-    repository_rule = "http_archive",
-    sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
-    strip_prefix = "zlib-1.2.11",
-    urls = [
-        "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
-        "https://zlib.net/zlib-1.2.11.tar.gz",
-    ],
+    sha256 = "118e313990135890ee4cc8504e32929844f9578804a1b2f571d69b1dd080cfb8",
+    strip_prefix = "bazel-skylib-1.5.0",
+    urls = ["https://github.com/bazelbuild/bazel-skylib/archive/1.5.0.tar.gz"],
     visibility = ["//visibility:public"],
 )
 
@@ -221,58 +258,20 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Release: v1.54.1
+# Release: v1.54.3
 # TargetCommitish: v1.54.x
-# Date: 2023-05-02 04:01:25 +0000 UTC
-# URL: https://github.com/grpc/grpc/releases/tag/v1.54.1
-# Size: 8901937 (8.9 MB)
+# Date: 2023-07-25 20:28:39 +0000 UTC
+# URL: https://github.com/grpc/grpc/releases/tag/v1.54.3
+# Size: 8914754 (8.9 MB)
 proto_dependency(
     name = "com_github_grpc_grpc",
     repository_rule = "http_archive",
-    sha256 = "79e3ff93f7fa3c8433e2165f2550fa14889fce147c15d9828531cbfc7ad11e01",
-    strip_prefix = "grpc-1.54.1",
-    urls = ["https://github.com/grpc/grpc/archive/v1.54.1.tar.gz"],
+    sha256 = "17e4e1b100657b88027721220cbfb694d86c4b807e9257eaf2fb2d273b41b1b1",
+    strip_prefix = "grpc-1.54.3",
+    urls = ["https://github.com/grpc/grpc/archive/v1.54.3.tar.gz"],
     deps = [
-        ":build_bazel_rules_swift",
-        ":com_google_absl",
         ":com_google_protobuf",
-        ":rules_jvm_external",
     ],
-)
-
-proto_dependency(
-    name = "com_google_absl",
-    repository_rule = "http_archive",
-    sha256 = "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
-    strip_prefix = "abseil-cpp-20230125.2",
-    urls = [
-        "https://storage.googleapis.com/grpc-bazel-mirror/github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
-        "https://github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
-    ],
-)
-
-# Release: 0.18.0
-# Commit: master
-# Date: 2021-01-04 23:36:38 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_swift/releases/tag/0.18.0
-# Branch: master
-# Commit: dadd12190182530cf6f91ca7f9e70391644ce502
-# Date: 2021-02-08 21:24:10 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_swift/commit/dadd12190182530cf6f91ca7f9e70391644ce502
-#
-# Don't re-export the modules imported by a Swift generated header.
-#
-# This was an unintentional change in behavior from https://github.com/bazelbuild/rules_swift/commit/5f51ca9c5149122f41cada6122c61788d880fee9; this puts us back to the original behavior, but leaves an API in place for finer-grained control over re-exporting modules in the future. (But the BUILD rules today don't really have the flexibility to support it yet.)
-#
-# PiperOrigin-RevId: 356338982
-# (cherry picked from commit f45eea8c02a87c3077e5209f471fe4a193b5b0ba)
-# Size: 157518 (158 kB)
-proto_dependency(
-    name = "build_bazel_rules_swift",
-    repository_rule = "http_archive",
-    sha256 = "1f5499bb053736cda8905d89aac42e98011bbe9ca93b774a40c04759f045d7bf",
-    strip_prefix = "rules_swift-dadd12190182530cf6f91ca7f9e70391644ce502",
-    urls = ["https://github.com/bazelbuild/rules_swift/archive/dadd12190182530cf6f91ca7f9e70391644ce502.tar.gz"],
 )
 
 # Release: v1.57.1
@@ -346,21 +345,17 @@ filegroup(
     urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-win32.zip"],
 )
 
-# Branch: master
-# Commit: 2437e40131072cadc1628726775ff00fa3941a4a
-# Date: 2021-09-06 10:18:08 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_scala/commit/2437e40131072cadc1628726775ff00fa3941a4a
-#
-# Remove customized ijar code (#1285)
-#
-# ijar patch was upstreamed and is available since Bazek 4.1.0
-# Size: 638431 (638 kB)
+# Release: v6.4.0
+# TargetCommitish: master
+# Date: 2023-12-19 10:42:41 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_scala/releases/tag/v6.4.0
+# Size: 680962 (681 kB)
 proto_dependency(
     name = "io_bazel_rules_scala",
     repository_rule = "http_archive",
-    sha256 = "0701ee4e1cfd59702d780acde907ac657752fbb5c7d08a0ec6f58ebea8cd0efb",
-    strip_prefix = "rules_scala-2437e40131072cadc1628726775ff00fa3941a4a",
-    urls = ["https://github.com/bazelbuild/rules_scala/archive/2437e40131072cadc1628726775ff00fa3941a4a.tar.gz"],
+    sha256 = "9a23058a36183a556a9ba7229b4f204d3e68c8c6eb7b28260521016b38ef4e00",
+    strip_prefix = "rules_scala-6.4.0",
+    urls = ["https://github.com/bazelbuild/rules_scala/archive/v6.4.0.tar.gz"],
     deps = [":bazel_skylib"],
 )
 
@@ -467,6 +462,9 @@ proto_dependency(
     sha256 = "00d492551233d7548ca2a983f4e19d6aabb0bc716957ade62d691baf1dcef374",
     strip_prefix = "rules_closure-42195b5ca136f78d28819ef486e3a7b02ad45146",
     urls = ["https://github.com/bazelbuild/rules_closure/archive/42195b5ca136f78d28819ef486e3a7b02ad45146.tar.gz"],
+    deps = [
+        ":com_google_protobuf_javascript",
+    ],
 )
 
 # Branch: master
@@ -536,49 +534,49 @@ proto_dependency(
     deps = ["build_bazel_rules_nodejs"],
 )
 
-# URL: https://github.com/grpc/grpc-web/releases/tag/1.4.2
+# URL: https://github.com/grpc/grpc-web/releases/tag/1.5.0
 proto_dependency(
-    name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_aarch64",
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_aarch64",
     executable = True,
     repository_rule = "http_file",
-    sha256 = "87263950cd36ec875c86b1e50625215727264c5495d6625ddf9e4f79aeef727e",
-    urls = ["https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-darwin-aarch64"],
+    sha256 = "a12b759629b943ebac5528f58fac5039d9aa2fb7abb9e9684d1b481b35afbfc6",
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-darwin-aarch64"],
 )
 
-# URL: https://github.com/grpc/grpc-web/releases/tag/1.4.2
+# URL: https://github.com/grpc/grpc-web/releases/tag/1.5.0
 proto_dependency(
-    name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_darwin_x86_64",
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_x86_64",
     executable = True,
     repository_rule = "http_file",
-    sha256 = "6b73e8e9ef2deb114d39c9eea177ff8450d92e7154b5e47dea668a43499a2383",
-    urls = ["https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-darwin-x86_64"],
+    sha256 = "1fa3ef92194d06c03448a5cba82759e9773e43d8b188866a1f1d4fc23bb1ecb7",
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-darwin-x86_64"],
 )
 
-# URL: https://github.com/grpc/grpc-web/releases/tag/1.4.2
+# URL: https://github.com/grpc/grpc-web/releases/tag/1.5.0
 proto_dependency(
-    name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_aarch64",
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_aarch64",
     executable = True,
     repository_rule = "http_file",
-    sha256 = "db3b1e18284a157b1361ecb79502e5f4623a212daf7185f17e35bd8e239055a4",
-    urls = ["https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-linux-aarch64"],
+    sha256 = "522e958568cdeabdd20ef3c97394fc067ff8e374a728c08b7410bf5de8f57783",
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-linux-aarch64"],
 )
 
-# URL: https://github.com/grpc/grpc-web/releases/tag/1.4.2
+# URL: https://github.com/grpc/grpc-web/releases/tag/1.5.0
 proto_dependency(
-    name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_linux_x86_64",
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_x86_64",
     executable = True,
     repository_rule = "http_file",
-    sha256 = "5e82c3f1f435e176c94b94de9669911ab3bfb891608b7e80adff358f777ff857",
-    urls = ["https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-linux-x86_64"],
+    sha256 = "2e6e074497b221045a14d5a54e9fc910945bfdd1198b12b9fc23686a95671d64",
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-linux-x86_64"],
 )
 
-# URL: https://github.com/grpc/grpc-web/releases/tag/1.4.2
+# URL: https://github.com/grpc/grpc-web/releases/tag/1.5.0
 proto_dependency(
-    name = "github_com_grpc_grpc_web_releases_download_1_4_2_protoc_gen_grpc_web_1_4_2_windows_x86_64_exe",
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_windows_x86_64_exe",
     executable = True,
     repository_rule = "http_file",
-    sha256 = "3a0fc44662cb89a5c101b632e3e8841d04d9bea3103512deae82591e2acdff93",
-    urls = ["https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-windows-x86_64.exe"],
+    sha256 = "c8f6191072d09344555fb12d45e82cff9f8b8f29200b0d6497680e696feaf8a1",
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-windows-x86_64.exe"],
 )
 
 filegroup(

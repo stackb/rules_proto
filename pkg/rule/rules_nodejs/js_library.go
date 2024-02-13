@@ -15,6 +15,9 @@ var jsLibraryKindInfo = rule.KindInfo{
 	MergeableAttrs: map[string]bool{
 		"srcs": true,
 	},
+	NonEmptyAttrs: map[string]bool{
+		"srcs": true,
+	},
 	ResolveAttrs: map[string]bool{
 		"deps": true,
 	},
