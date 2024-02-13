@@ -63,16 +63,16 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# Release: v3.0.0
+# Release: v3.1.0
 # TargetCommitish: master
-# Date: 2024-02-13 04:33:24 +0000 UTC
-# URL: https://github.com/stackb/rules_proto/releases/tag/v3.0.0
-# Size: 2095448 (2.1 MB)
+# Date: 2024-02-13 05:53:39 +0000 UTC
+# URL: https://github.com/stackb/rules_proto/releases/tag/v3.1.0
+# Size: 1995581 (2.0 MB)
 http_archive(
     name = "build_stack_rules_proto",
-    sha256 = "f8f487e2a1b4a764c0da89c4d4e88797f50392f3b3ab2f8e0c88003dbc6bc382",
-    strip_prefix = "rules_proto-3.0.0",
-    urls = ["https://github.com/stackb/rules_proto/archive/v3.0.0.tar.gz"],
+    sha256 = "ee7a11d66e7bbc5b0f7a35ca3e960cb9a5f8a314b22252e19912dfbc6e22782d",
+    strip_prefix = "rules_proto-3.1.0",
+    urls = ["https://github.com/stackb/rules_proto/archive/v3.1.0.tar.gz"],
 )
 ```
 
