@@ -9,6 +9,10 @@ tidy: deps
 	$(BAZEL) run //:buildifier
 	$(BAZEL) run //:gazelle
 
+.PHONY: gazelle
+gazelle:
+	$(BAZEL) run //:gazelle
+
 .PHONY: deps
 deps:
 	$(BAZEL) build //deps:*

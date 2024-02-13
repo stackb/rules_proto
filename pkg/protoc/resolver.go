@@ -199,6 +199,11 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 		for i, l := range got {
 			res[i] = resolve.FindResult{Label: l}
 		}
+		// reverse results to preserve last-wins semantics of prior
+		// stackb/rules_proto behavior
+		for i, j := 0, len(res)-1; i < j; i, j = i+1, j-1 {
+			res[i], res[j] = res[j], res[i]
+		}
 		return res
 	}
 	return nil
