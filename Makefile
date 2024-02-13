@@ -21,6 +21,10 @@ site:
 	$(BAZEL) build //example/golden:*
 	cp -f ./bazel-bin/example/golden/*.md docs/
 
+.PHONY: golden_test
+golden_test:
+	$(BAZEL) test //example/golden:golden_test
+
 .PHONY: test
 test:
 	$(BAZEL) test --keep_going //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
