@@ -1,4 +1,4 @@
-# `rules_proto (v2)`
+# `rules_proto (v3)`
 
 ![build-status](https://github.com/stackb/rules_proto/actions/workflows/ci.yaml/badge.svg)
 [![Go Reference](https://pkg.go.dev/badge/github.com/stackb/rules_proto.svg)](https://pkg.go.dev/github.com/stackb/rules_proto)
@@ -30,7 +30,7 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 
 # Table of Contents
 
-- [`rules_proto (v2)`](#rules_proto-v2)
+- [`rules_proto (v3)`](#rules_proto-v3)
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
   - [`WORKSPACE` Boilerplate](#workspace-boilerplate)
@@ -63,16 +63,16 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# Release: v2.0.1
+# Release: v3.0.0
 # TargetCommitish: master
-# Date: 2022-10-20 02:38:27 +0000 UTC
-# URL: https://github.com/stackb/rules_proto/releases/tag/v2.0.1
-# Size: 2071295 (2.1 MB)
+# Date: 2024-02-13 04:33:24 +0000 UTC
+# URL: https://github.com/stackb/rules_proto/releases/tag/v3.0.0
+# Size: 2095448 (2.1 MB)
 http_archive(
     name = "build_stack_rules_proto",
-    sha256 = "ac7e2966a78660e83e1ba84a06db6eda9a7659a841b6a7fd93028cd8757afbfb",
-    strip_prefix = "rules_proto-2.0.1",
-    urls = ["https://github.com/stackb/rules_proto/archive/v2.0.1.tar.gz"],
+    sha256 = "f8f487e2a1b4a764c0da89c4d4e88797f50392f3b3ab2f8e0c88003dbc6bc382",
+    strip_prefix = "rules_proto-3.0.0",
+    urls = ["https://github.com/stackb/rules_proto/archive/v3.0.0.tar.gz"],
 )
 ```
 
