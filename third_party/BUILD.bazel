@@ -4,7 +4,6 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "bazel-gazelle-revert-1152.patch",
-        "com_google_protobuf.deploy-env.patch",
         "zlib.BUILD",
     ],
     visibility = ["//:__pkg__"],
@@ -12,5 +11,4 @@ filegroup(
 
 exports_files([
     "bazel-gazelle-revert-1152.patch",
-    "com_google_protobuf.deploy-env.patch",
 ])
