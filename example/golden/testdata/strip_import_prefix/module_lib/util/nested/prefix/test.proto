@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package prefix.test;
+
+message Data {
+    int64 id = 1;
+}
