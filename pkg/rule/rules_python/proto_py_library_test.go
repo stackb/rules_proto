@@ -64,12 +64,13 @@ proto_py_library(
 						Outputs: []string{"test_pb2.py"},
 					},
 				},
+                Rel: "com/foo/baz/qux/v1",
 			},
 			want: `
 proto_py_library(
     name = "test_py_library",
     srcs = ["test_pb2.py"],
-    imports = ["../.."],
+    imports = ["../../.."],
 )
 `,
 		},
