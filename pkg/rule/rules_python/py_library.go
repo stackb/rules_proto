@@ -1,6 +1,7 @@
 package rules_python
 
 import (
+	"path/filepath"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -71,7 +72,8 @@ func (s *PyLibrary) Visibility() []string {
 func (s *PyLibrary) ImportsAttr() (imps []string) {
 	// if we have a strip_import_prefix on the proto_library, the python search
 	// path should include the directory N parents above the current package,
-	// where N is the number of segments in an absolute strip_import_prefix
+	// where N is the number of segments needed to ascend to the prefix from
+	// the dir for the current rule.
 	if s.Config.Library.StripImportPrefix() == "" {
 		return
 	}
@@ -79,9 +81,14 @@ func (s *PyLibrary) ImportsAttr() (imps []string) {
 	if !strings.HasPrefix(prefix, "/") {
 		return // deal with relative-imports at another time
 	}
+
 	prefix = strings.TrimPrefix(prefix, "/")
-	prefix = strings.TrimSuffix(prefix, "/")
-	parts := strings.Split(prefix, "/")
+	rel, err := filepath.Rel(prefix, s.Config.Rel)
+	if err != nil {
+		return // the prefix doesn't prefix the current path, shouldn't happen
+	}
+
+	parts := strings.Split(rel, "/")
 	for i := 0; i < len(parts); i++ {
 		parts[i] = ".."
 	}
