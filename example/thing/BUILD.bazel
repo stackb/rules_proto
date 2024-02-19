@@ -118,19 +118,6 @@ proto_compile(
     visibility = ["//visibility:public"],
 )
 
-bufbuild_opts = [
-    "target=js+dts", # https://github.com/bufbuild/protobuf-es/tree/main/packages/protoc-gen-es#target
-    "keep_empty_files=true", # https://github.com/bufbuild/protobuf-es/tree/main/packages/protoc-gen-es#keep_empty_filestrue
-]
-
-proto_compile(
-    name = "thing_node_js_compile",
-    options = {"@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"]},
-    outputs = ["thing_pb.js"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
-    proto = "thing_proto",
-)
-
 proto_nodejs_library(
     name = "thing_nodejs_library",
     srcs = ["thing_pb.js"],
@@ -158,18 +145,6 @@ proto_py_library(
     deps = [
         "@com_google_protobuf//:protobuf_python",
         "@protoapis//google/protobuf:timestamp_py_library",
-    ],
-    proto = "thing_proto",
-)
-
-proto_ts_library(
-    name = "thing_ts_proto",
-    srcs = ["thing.ts"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//:node_modules/long",
-        "//:node_modules/protobufjs",
-        "//google/protobuf:timestamp_ts_proto",
     ],
 )
 
