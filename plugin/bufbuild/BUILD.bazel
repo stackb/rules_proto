@@ -1,0 +1,30 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+load("@npm_ts_proto//plugin/bufbuild:@bufbuild/protoc-gen-es/package_json.bzl", gen_bin = "bin")
+load("@npm_ts_proto//plugin/bufbuild:@bufbuild/protoc-gen-connect-es/package_json.bzl", connect_bin = "bin")
+
+gen_bin.protoc_gen_es_binary(
+    name = "protoc-gen-es",
+)
+
+connect_bin.protoc_gen_connect_es_binary(
+    name = "protoc-gen-connect",
+)
+
+proto_plugin(
+    name = "connect-es",
+    tool = ":protoc-gen-connect",
+    visibility = ["//visibility:public"],
+)
+
+proto_plugin(
+    name = "es",
+    tool = ":protoc-gen-es",
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = ["BUILD.bazel"],
+    visibility = ["//plugin:__pkg__"],
+)

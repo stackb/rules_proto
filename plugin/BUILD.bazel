@@ -4,6 +4,7 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "//plugin/akka/akka-grpc:all_files",
+        "//plugin/bufbuild:all_files",
         "//plugin/builtin:all_files",
         "//plugin/gogo/protobuf:all_files",
         "//plugin/golang/protobuf:all_files",
