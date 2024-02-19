@@ -11,6 +11,7 @@ def _examplegen_impl(ctx):
         name = ctx.label.name,
         label = str(ctx.label),
         testOut = output_test.path,
+        testContent = ctx.attr.test_content,
         testHeader = ctx.attr.extra_test_content,
         markdownOut = output_markdown.path,
         workspaceIn = ctx.file.workspace_template.path,
@@ -46,8 +47,11 @@ _examplegen = rule(
         "strip_prefix": attr.string(
             doc = "path prefix to remove from test files in the txtar",
         ),
+        "test_content": attr.string(
+            doc = "optional chunk of content that replaces the standard template boilerplate (instead of template.go)",
+        ),
         "extra_test_content": attr.string(
-            doc = "optional chunk of content that will be written into the _test.go file",
+            doc = "optional chunk of content that will be appended to the standard template boilerplate (see template.go)",
         ),
         "workspace_template": attr.label(
             doc = "Template for the test WORKSPACE",

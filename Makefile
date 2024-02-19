@@ -27,7 +27,11 @@ site:
 
 .PHONY: golden_test
 golden_test:
-	$(BAZEL) test //example/golden:golden_test
+	$(BAZEL) test //example/golden:golden_test --test_output=streamed
+
+.PHONY: example_test
+example_test:
+	$(BAZEL) test //example/golden:proto_compiled_sources_test --test_output=streamed
 
 .PHONY: test
 test:

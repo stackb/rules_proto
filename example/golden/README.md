@@ -31,9 +31,7 @@ Try and build from the main test workspace.  To do that, open up rules_go in the
 external tree and disable the cleanup function.  For example:
 
 ```
-$ bazel info output_base
-/private/var/tmp/_bazel_pcj/092d6dadaf86f07590903c45033f576e
-$ (cd /private/var/tmp/_bazel_pcj/092d6dadaf86f07590903c45033f576e/external/io_bazel_rules_go && code .)
+$ (cd $(bazel info output_base)/external/io_bazel_rules_go && code .)
 $ code go/tools/bazel_testing/bazel_testing.go
 ```
 

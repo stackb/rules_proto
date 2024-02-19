@@ -1,0 +1,4 @@
+# gazelle:proto_plugin python implementation builtin:python
+# gazelle:proto_rule proto_compiled_sources implementation stackb:rules_proto:proto_compiled_sources
+# gazelle:proto_language python rule proto_compiled_sources
+# gazelle:proto_language python plugin python

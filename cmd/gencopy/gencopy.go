@@ -1,14 +1,12 @@
 // gencopy is a utility program that copies bazel outputs back into the
 // workspace source tree.  Ideally, you don't have any generated files committed
 // to VCS, but sometimes you do.
-//
 package main
 
 import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -89,7 +87,7 @@ func copyFile(src, dst string, mode os.FileMode) error {
 	// NOTE: for some reason the io.Copy approach was writing an empty file...
 	// for now OK to copy in-memory
 
-	data, err := ioutil.ReadFile(src)
+	data, err := os.ReadFile(src)
 	if err != nil {
 		return err
 	}
@@ -98,26 +96,16 @@ func copyFile(src, dst string, mode os.FileMode) error {
 		return err
 	}
 
-	return ioutil.WriteFile(dst, data, mode)
+	return os.WriteFile(dst, data, mode)
 }
 
 // readFileAsString reads the given file assumed to be text
 func readFileAsString(filename string) (string, error) {
-	bytes, err := ioutil.ReadFile(filename)
+	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		return "", fmt.Errorf("could not read %s: %v", filename, err)
 	}
 	return string(bytes), nil
-}
-
-func usageHint(cfg *Config, pkg *PackageConfig) string {
-	return fmt.Sprintf(`You may need to regenerate the files (bazel run) using the '.%[2]s' target,
-update the 'srcs = [...]' attribute to include the generated files and re-run the test:
-
-$ bazel run %[1]s.%[2]s
-$ bazel test %[1]s
-
-`, pkg.TargetLabel, cfg.UpdateTargetLabelName)
 }
 
 func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
@@ -193,8 +181,12 @@ func makePkgSrcDstPair(cfg *Config, pkg *PackageConfig, src, dst string) *SrcDst
 	return &SrcDst{src, dst}
 }
 
-func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
+func runPkg(cfg *Config, pkg *PackageConfig, printf func(format string, v ...any)) (err error) {
 	pairs := makePkgSrcDstPairs(cfg, pkg)
+
+	for i, pair := range pairs {
+		printf("pair %d: %+v", i, pair)
+	}
 
 	for _, pair := range pairs {
 		if !fileExists(pair.Src) {
@@ -217,9 +209,9 @@ func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
 	return
 }
 
-func run(cfg *Config) error {
+func run(cfg *Config, printf func(format string, v ...any)) error {
 	for _, pkg := range cfg.PackageConfigs {
-		if err := runPkg(cfg, pkg); err != nil {
+		if err := runPkg(cfg, pkg, printf); err != nil {
 			return err
 		}
 	}
@@ -227,7 +219,7 @@ func run(cfg *Config) error {
 }
 
 func readConfig(workspaceRootDirectory string) (*Config, error) {
-	data, err := ioutil.ReadFile(*config)
+	data, err := os.ReadFile(*config)
 	if err != nil {
 		return nil, fmt.Errorf("could not read config file %s: %w", *config, err)
 	}
@@ -245,7 +237,7 @@ func readConfig(workspaceRootDirectory string) (*Config, error) {
 		cfg.FileMode = "0644"
 	}
 
-	// log.Printf("%+v", cfg)
+	log.Printf("%+v", cfg)
 
 	return cfg, nil
 }
@@ -262,7 +254,7 @@ func main() {
 		log.Fatalln("workspace directory is mandatory in update mode")
 	}
 
-	if err := run(cfg); err != nil {
+	if err := run(cfg, log.Printf); err != nil {
 		log.Fatalf("gencopy: %v", err)
 	}
 }

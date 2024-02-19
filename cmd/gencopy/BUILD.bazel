@@ -20,5 +20,21 @@ go_test(
     name = "gencopy_test",
     srcs = ["gencopy_test.go"],
     embed = [":gencopy_lib"],
-    deps = ["@com_github_google_go_cmp//cmp"],
+    deps = [
+        "@bazel_gazelle//testtools:go_default_library",
+        "@com_github_google_go_cmp//cmp",
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = [
+        "BUILD.bazel",
+        "gencopy.bash.in",
+        "gencopy.bzl",
+        "gencopy.go",
+        "gencopy_test.go",
+    ],
+    visibility = ["//:__pkg__"],
 )

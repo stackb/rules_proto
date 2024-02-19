@@ -64,6 +64,7 @@ filegroup(
         "WORKSPACE",
         "go_deps.bzl",
         "//cmd/gazelle:all_files",
+        "//cmd/gencopy:all_files",
         "//deps:all_files",
         "//language/protobuf:all_files",
         "//pkg:all_files",
