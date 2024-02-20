@@ -166,6 +166,10 @@ proto_library rule //api/v1:api_v1_proto
 proto_compile rule //api/v1:api_v1_python_compiled_sources
 proto_compile_gencopy_run rule //api/v1:api_v1_python_compiled_sources.update
 proto_compile_gencopy_test rule //api/v1:api_v1_python_compiled_sources_test
+proto_library rule //src/idl:idl_proto
+proto_compile rule //src/idl:idl_python_compiled_sources
+proto_compile_gencopy_run rule //src/idl:idl_python_compiled_sources.update
+proto_compile_gencopy_test rule //src/idl:idl_python_compiled_sources_test
 `
 
     // document query outputs
@@ -177,8 +181,11 @@ proto_compile_gencopy_test rule //api/v1:api_v1_python_compiled_sources_test
         }
     }
 
-    // generated file should not initially exist
+    // generated files should not initially exist
     if err := os.Remove("api/v1/v1_pb2.py"); err == nil {
+		t.Fatal("remove should have failed")
+    }
+    if err := os.Remove("src/idl/svc_pb2.py"); err == nil {
 		t.Fatal("remove should have failed")
     }
 
@@ -187,28 +194,34 @@ proto_compile_gencopy_test rule //api/v1:api_v1_python_compiled_sources_test
 		t.Fatal("expected initial test to fail!")
 	}
 
-    // copy the file in place
+    // copy the files in place
 	if err := bazel_testing.RunBazel("run", "//api/v1:api_v1_python_compiled_sources.update"); err != nil {
 		t.Fatal(err)
 	}
-
-    // test should now pass
-	if err := bazel_testing.RunBazel("test", "//api/v1:api_v1_python_compiled_sources_test"); err != nil {
+	if err := bazel_testing.RunBazel("run", "//src/idl:idl_python_compiled_sources.update"); err != nil {
 		t.Fatal(err)
 	}
 
-    // delete the generated file
+    // tests should now pass
+	if err := bazel_testing.RunBazel("test", "..."); err != nil {
+		t.Fatal(err)
+	}
+
+    // delete the generated files
     if err := os.Remove("api/v1/v1_pb2.py"); err != nil {
 		t.Fatal(err)
     }
+    if err := os.Remove("src/idl/svc_pb2.py"); err != nil {
+		t.Fatal(err)
+    }
 
-    // document that running the proto_compile_assets rule also copies the file in place
+    // document that running the proto_compile_assets rule also copies both files in place
 	if err := bazel_testing.RunBazel("run", "//:assets"); err != nil {
 		t.Fatal(err)
 	}
 
     // test should still pass
-	if err := bazel_testing.RunBazel("test", "//api/v1:api_v1_python_compiled_sources_test"); err != nil {
+	if err := bazel_testing.RunBazel("test", "..."); err != nil {
 		t.Fatal(err)
 	}
 }

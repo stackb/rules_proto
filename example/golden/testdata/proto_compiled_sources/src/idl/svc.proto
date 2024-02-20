@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package idl;
+
+message Request {
+    string id = 1;
+}
+
+message Response {
+    string id = 1;
+}
