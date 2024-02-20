@@ -4,17 +4,17 @@ load("@build_stack_rules_proto//rules:proto_compiled_sources.bzl", "proto_compil
 # gazelle:proto_strip_import_prefix /src
 
 proto_library(
-    name = "idl_proto",
+    name = "src_idl_proto",
     srcs = ["svc.proto"],
     strip_import_prefix = "/src",
     visibility = ["//visibility:public"],
 )
 
 proto_compiled_sources(
-    name = "idl_python_compiled_sources",
+    name = "src_idl_python_compiled_sources",
     srcs = ["svc_pb2.py"],
     output_mappings = ["svc_pb2.py=/idl/svc_pb2.py"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
-    proto = "idl_proto",
+    proto = "src_idl_proto",
     visibility = ["//visibility:public"],
 )

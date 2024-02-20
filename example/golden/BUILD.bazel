@@ -166,10 +166,10 @@ proto_library rule //api/v1:api_v1_proto
 proto_compile rule //api/v1:api_v1_python_compiled_sources
 proto_compile_gencopy_run rule //api/v1:api_v1_python_compiled_sources.update
 proto_compile_gencopy_test rule //api/v1:api_v1_python_compiled_sources_test
-proto_library rule //src/idl:idl_proto
-proto_compile rule //src/idl:idl_python_compiled_sources
-proto_compile_gencopy_run rule //src/idl:idl_python_compiled_sources.update
-proto_compile_gencopy_test rule //src/idl:idl_python_compiled_sources_test
+proto_library rule //src/idl:src_idl_proto
+proto_compile rule //src/idl:src_idl_python_compiled_sources
+proto_compile_gencopy_run rule //src/idl:src_idl_python_compiled_sources.update
+proto_compile_gencopy_test rule //src/idl:src_idl_python_compiled_sources_test
 `
 
     // document query outputs
@@ -198,7 +198,7 @@ proto_compile_gencopy_test rule //src/idl:idl_python_compiled_sources_test
 	if err := bazel_testing.RunBazel("run", "//api/v1:api_v1_python_compiled_sources.update"); err != nil {
 		t.Fatal(err)
 	}
-	if err := bazel_testing.RunBazel("run", "//src/idl:idl_python_compiled_sources.update"); err != nil {
+	if err := bazel_testing.RunBazel("run", "//src/idl:src_idl_python_compiled_sources.update"); err != nil {
 		t.Fatal(err)
 	}
 
