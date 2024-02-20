@@ -3,7 +3,8 @@
 This test case demonstrates usage of proto_compiled_sources and
 proto_compile_assets.
 
-The `api/v1` subdirectory contains a typical proto.
+The <code>api/v1</code> subdirectory contains a typical proto.
 
-The `src/idl` subdirectory contains a proto that also uses `strip_import_prefix`
-(see [#358](https://github.com/stackb/rules_proto/issues/358)).
+The <code>src/idl</code> subdirectory contains a proto that also uses
+<code>strip_import_prefix</code> (see
+[#358](https://github.com/stackb/rules_proto/issues/358)).
