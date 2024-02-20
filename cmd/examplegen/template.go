@@ -14,10 +14,4 @@ func TestMain(m *testing.M) {
 		Main: txtar,
 	})
 }
-
-func TestBuild(t *testing.T) {
-	if err := bazel_testing.RunBazel("build", "..."); err != nil {
-		t.Fatal(err)
-	}
-}
 `

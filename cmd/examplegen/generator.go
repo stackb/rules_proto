@@ -86,12 +86,8 @@ func generateTest(c *Config) error {
 	}
 	defer f.Close()
 
-	if c.TestContent != "" {
-		fmt.Fprintln(f, c.TestContent)
-	} else {
-		fmt.Fprintln(f, testHeader)
-	}
-	fmt.Fprintln(f, c.TestHeader)
+	fmt.Fprintln(f, testHeader)
+	fmt.Fprintln(f, c.TestContent)
 
 	fmt.Fprintln(f, "var txtar=`")
 

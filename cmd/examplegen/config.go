@@ -10,7 +10,6 @@ type Config struct {
 	Name        string
 	Label       string
 	TestOut     string
-	TestHeader  string
 	TestContent string
 	MarkdownOut string
 	WorkspaceIn string

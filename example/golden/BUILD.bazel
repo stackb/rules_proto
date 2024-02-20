@@ -101,7 +101,14 @@ gazelle_testdata_example(
 gazelle_testdata_example(
     name = "proto_repository",
     srcs = glob(["testdata/proto_repository/**/*"]),
-    extra_test_content = """
+    strip_prefix = "example/golden/testdata/proto_repository",
+    test_content = """
+func TestBuild(t *testing.T) {
+	if err := bazel_testing.RunBazel("build", "..."); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestRunGazelle(t *testing.T) {
 	if err := bazel_testing.RunBazel("run", "//:gazelle"); err != nil {
 		t.Fatal(err)
@@ -114,7 +121,6 @@ func TestRunGazelle(t *testing.T) {
 	}
 }
 """,
-    strip_prefix = "example/golden/testdata/proto_repository",
     workspace_template = "prebuilt.WORKSPACE",
 )
 
@@ -142,22 +148,27 @@ filegroup(
 gazelle_testdata_example(
     name = "strip_import_prefix",
     srcs = glob(["testdata/strip_import_prefix/**/*"]),
-    extra_test_content = """
+    strip_prefix = "example/golden/testdata/strip_import_prefix",
+    test_content = """
+func TestBuild(t *testing.T) {
+	if err := bazel_testing.RunBazel("build", "..."); err != nil {
+		t.Fatal(err)
+	}
+}
 func TestRunPyApp(t *testing.T) {
 	if err := bazel_testing.RunBazel("run", "//module_app/app:app_py"); err != nil {
 		t.Fatal(err)
 	}
 }
 """,
-    strip_prefix = "example/golden/testdata/strip_import_prefix",
     workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "proto_compiled_sources",
     srcs = glob(["testdata/proto_compiled_sources/**/*"]),
-    extra_test_content = """
-
+    strip_prefix = "example/golden/testdata/proto_compiled_sources",
+    test_content = """
 const wantJson = `{"extension":"","fileMode":"0644","mode":"update","packageConfigs":[{"generatedFiles":["api/v1/v1_pb2.py"],"sourceFiles":["api/v1/v1_pb2.py"],"targetLabel":"@//api/v1:api_v1_python_compiled_sources","targetPackage":"api/v1","targetWorkspaceRoot":""}],"updateTargetLabelName":"api_v1_python_compiled_sources.update"}`
 
 func TestRun(t *testing.T) {
@@ -165,13 +176,12 @@ func TestRun(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestTest(t *testing.T) {
+	if err := bazel_testing.RunBazel("test", "//api/v1:api_v1_python_compiled_sources_test"); err != nil {
+		t.Fatal(err)
+	}
+}
 """,
-    strip_prefix = "example/golden/testdata/proto_compiled_sources",
     workspace_template = "prebuilt.WORKSPACE",
 )
-
-# func TestTest(t *testing.T) {
-# 	if err := bazel_testing.RunBazel("test", "//api/v1:api_v1_python_compiled_sources_test"); err != nil {
-# 		t.Fatal(err)
-# 	}
-# }
