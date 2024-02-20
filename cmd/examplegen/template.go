@@ -11,10 +11,14 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
+var (
+	// allow use of os package in other tests
+	_os_Remove = os.Remove
+	// allow use of cmp package in other tests
+	_cmp_Diff = cmp.Diff
+)
+
 func TestMain(m *testing.M) {
-	// allow use of cmp in other tests, justify import here
-	cmp.Diff("", "")
-	
 	bazel_testing.TestMain(m, bazel_testing.Args{
 		Main: txtar,
 	})
