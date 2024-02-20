@@ -1,48 +1,47 @@
-BAZEL := bazel
 
 .PHONY: tidy
 tidy: deps
-	$(BAZEL) run @go_sdk//:bin/go -- mod tidy
-	$(BAZEL) run @go_sdk//:bin/go -- mod vendor
+	bazel run @go_sdk//:bin/go -- mod tidy
+	bazel run @go_sdk//:bin/go -- mod vendor
 	find vendor -name 'BUILD.bazel' | xargs rm
-	$(BAZEL) run //:update_go_deps
-	$(BAZEL) run //:buildifier
-	$(BAZEL) run //:gazelle
+	bazel run //:update_go_deps
+	bazel run //:buildifier
+	bazel run //:gazelle
 
 .PHONY: gazelle
 gazelle:
-	$(BAZEL) run //:gazelle
+	bazel run //:gazelle
 
 .PHONY: deps
 deps:
-	$(BAZEL) build //deps:*
+	bazel build //deps:*
 	cp -f ./bazel-bin/deps/*.bzl deps/
 	chmod 0644 deps/*.bzl
-	$(BAZEL) run //:buildifier -- deps/
+	bazel run //:buildifier -- deps/
 		
 .PHONY: site
 site:
-	$(BAZEL) build //example/golden:*
+	bazel build //example/golden:*
 	cp -f ./bazel-bin/example/golden/*.md docs/
 
 .PHONY: golden_test
 golden_test:
-	$(BAZEL) test //example/golden:golden_test --test_output=streamed
+	bazel test //example/golden:golden_test --test_output=streamed
 
 .PHONY: example_test
 example_test:
-	$(BAZEL) test //example/golden:proto_compiled_sources_test --test_output=streamed
+	bazel test //example/golden:proto_compiled_sources_test --test_output=streamed
 
 .PHONY: test
 test:
-	$(BAZEL) test --keep_going //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
+	bazel test --keep_going //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
 		--deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
 
 .PHONY: get
 get:
-	$(BAZEL) run @go_sdk//:bin/go -- get github.com/bazelbuild/bazel-gazelle@v0.31.0
-	$(BAZEL) run @go_sdk//:bin/go -- mod download github.com/bazelbuild/buildtools
-	$(BAZEL) run @go_sdk//:bin/go -- mod vendor
+	bazel run @go_sdk//:bin/go -- get github.com/bazelbuild/bazel-gazelle@v0.31.0
+	bazel run @go_sdk//:bin/go -- mod download github.com/bazelbuild/buildtools
+	bazel run @go_sdk//:bin/go -- mod vendor
 
 update_pnpm_lock:
 	# nvm use 18
