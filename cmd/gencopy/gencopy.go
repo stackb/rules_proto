@@ -181,12 +181,8 @@ func makePkgSrcDstPair(cfg *Config, pkg *PackageConfig, src, dst string) *SrcDst
 	return &SrcDst{src, dst}
 }
 
-func runPkg(cfg *Config, pkg *PackageConfig, printf func(format string, v ...any)) (err error) {
+func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
 	pairs := makePkgSrcDstPairs(cfg, pkg)
-
-	for i, pair := range pairs {
-		printf("pair %d: %+v", i, pair)
-	}
 
 	for _, pair := range pairs {
 		if !fileExists(pair.Src) {
@@ -209,9 +205,9 @@ func runPkg(cfg *Config, pkg *PackageConfig, printf func(format string, v ...any
 	return
 }
 
-func run(cfg *Config, printf func(format string, v ...any)) error {
+func run(cfg *Config) error {
 	for _, pkg := range cfg.PackageConfigs {
-		if err := runPkg(cfg, pkg, printf); err != nil {
+		if err := runPkg(cfg, pkg); err != nil {
 			return err
 		}
 	}
@@ -237,7 +233,7 @@ func readConfig(workspaceRootDirectory string) (*Config, error) {
 		cfg.FileMode = "0644"
 	}
 
-	log.Printf("%+v", cfg)
+	// log.Printf("%+v", cfg)
 
 	return cfg, nil
 }
@@ -254,7 +250,7 @@ func main() {
 		log.Fatalln("workspace directory is mandatory in update mode")
 	}
 
-	if err := run(cfg, log.Printf); err != nil {
+	if err := run(cfg); err != nil {
 		log.Fatalf("gencopy: %v", err)
 	}
 }
