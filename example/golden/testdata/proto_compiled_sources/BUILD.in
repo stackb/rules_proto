@@ -1,4 +1,14 @@
+load("@build_stack_rules_proto//rules:proto_compile_assets.bzl", "proto_compile_assets")
+
 # gazelle:proto_plugin python implementation builtin:python
 # gazelle:proto_rule proto_compiled_sources implementation stackb:rules_proto:proto_compiled_sources
+# gazelle:proto_rule proto_compiled_sources visibility //visibility:public
 # gazelle:proto_language python rule proto_compiled_sources
 # gazelle:proto_language python plugin python
+
+proto_compile_assets(
+    name = "assets",
+    deps = [
+        "//api/v1:api_v1_python_compiled_sources",
+    ],
+)

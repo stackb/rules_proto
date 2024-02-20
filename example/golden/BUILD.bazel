@@ -159,10 +159,34 @@ gazelle_testdata_example(
     srcs = glob(["testdata/proto_compiled_sources/**/*"]),
     strip_prefix = "example/golden/testdata/proto_compiled_sources",
     test_content = """
+
 func TestUpdate(t *testing.T) {
+    // document query outputs
+    var want = `proto_compile_gencopy_run rule //:assets
+proto_library rule //api/v1:api_v1_proto
+proto_compile rule //api/v1:api_v1_python_compiled_sources
+proto_compile_gencopy_run rule //api/v1:api_v1_python_compiled_sources.update
+proto_compile_gencopy_test rule //api/v1:api_v1_python_compiled_sources_test
+`
+
+    // document query outputs
+	if got, err := bazel_testing.BazelOutput("query", "--output=label_kind", "..."); err != nil {
+		t.Fatal(err)
+	} else {
+        if diff := cmp.Diff(want, string(got)); diff != "" {
+            t.Fatalf("query mismatch (-want +got): %s", diff)
+        }
+    }
+
+    // assert test initially fails
+	if err := bazel_testing.RunBazel("test", "//api/v1:api_v1_python_compiled_sources_test"); err == nil {
+		t.Fatal("expected initial test to fail!")
+	}
+    // copy the file in place
 	if err := bazel_testing.RunBazel("run", "//api/v1:api_v1_python_compiled_sources.update"); err != nil {
 		t.Fatal(err)
 	}
+    // test should now pass
 	if err := bazel_testing.RunBazel("test", "//api/v1:api_v1_python_compiled_sources_test"); err != nil {
 		t.Fatal(err)
 	}

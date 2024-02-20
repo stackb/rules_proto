@@ -85,6 +85,7 @@ def gazelle_testdata_example(**kwargs):
     """
     name = kwargs.pop("name")
     srcs = kwargs.pop("srcs", [])
+    deps = kwargs.pop("deps", [])
     strip_prefix = kwargs.pop("strip_prefix", "")
 
     test_content = kwargs.pop("test_content", None)
@@ -101,6 +102,7 @@ def gazelle_testdata_example(**kwargs):
     go_bazel_test(
         name = name + "_test",
         srcs = [name + "_test.go"],
+        deps = deps + ["@com_github_google_go_cmp//cmp"],
         rule_files = rule_files,
         **kwargs
     )

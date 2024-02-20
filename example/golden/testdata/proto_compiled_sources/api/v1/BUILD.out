@@ -12,4 +12,5 @@ proto_compiled_sources(
     srcs = ["v1_pb2.py"],
     plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
     proto = "api_v1_proto",
+    visibility = ["//visibility:public"],
 )
