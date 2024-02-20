@@ -161,7 +161,6 @@ gazelle_testdata_example(
     test_content = """
 
 func TestUpdate(t *testing.T) {
-    // document query outputs
     var want = `proto_compile_gencopy_run rule //:assets
 proto_library rule //api/v1:api_v1_proto
 proto_compile rule //api/v1:api_v1_python_compiled_sources
@@ -178,15 +177,37 @@ proto_compile_gencopy_test rule //api/v1:api_v1_python_compiled_sources_test
         }
     }
 
+    // generated file should not initially exist
+    if err := os.Remove("api/v1/v1_pb2.py"); err == nil {
+		t.Fatal("remove should have failed")
+    }
+
     // assert test initially fails
 	if err := bazel_testing.RunBazel("test", "//api/v1:api_v1_python_compiled_sources_test"); err == nil {
 		t.Fatal("expected initial test to fail!")
 	}
+
     // copy the file in place
 	if err := bazel_testing.RunBazel("run", "//api/v1:api_v1_python_compiled_sources.update"); err != nil {
 		t.Fatal(err)
 	}
+
     // test should now pass
+	if err := bazel_testing.RunBazel("test", "//api/v1:api_v1_python_compiled_sources_test"); err != nil {
+		t.Fatal(err)
+	}
+
+    // delete the generated file
+    if err := os.Remove("api/v1/v1_pb2.py"); err != nil {
+		t.Fatal(err)
+    }
+
+    // document that running the proto_compile_assets rule also copies the file in place
+	if err := bazel_testing.RunBazel("run", "//:assets"); err != nil {
+		t.Fatal(err)
+	}
+
+    // test should still pass
 	if err := bazel_testing.RunBazel("test", "//api/v1:api_v1_python_compiled_sources_test"); err != nil {
 		t.Fatal(err)
 	}

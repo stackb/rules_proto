@@ -5,6 +5,7 @@ package main
 
 import (
 	"testing"
+	"os"
 
 	"github.com/bazelbuild/rules_go/go/tools/bazel_testing"
 	"github.com/google/go-cmp/cmp"
