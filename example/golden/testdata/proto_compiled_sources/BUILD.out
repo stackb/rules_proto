@@ -10,6 +10,6 @@ proto_compile_assets(
     name = "assets",
     deps = [
         "//api/v1:api_v1_python_compiled_sources",
-        "//src/idl:src_idl_python_compiled_sources",
+        "//src/idl:svc_python_compiled_sources",
     ],
 )

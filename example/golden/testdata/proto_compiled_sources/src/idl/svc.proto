@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-package src.idl;
-
 message Request {
     string id = 1;
 }
