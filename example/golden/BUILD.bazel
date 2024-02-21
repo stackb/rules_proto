@@ -18,11 +18,6 @@ go_test(
     deps = ["//pkg/goldentest"],
 )
 
-# gazelle_testdata_example(
-#     name = "builtins",
-#     srcs = glob(["testdata/builtins/*"]),
-# )
-
 gazelle_testdata_example(
     name = "cpp",
     srcs = glob(["testdata/cpp/*"]),
@@ -101,7 +96,8 @@ gazelle_testdata_example(
 gazelle_testdata_example(
     name = "proto_repository",
     srcs = glob(["testdata/proto_repository/**/*"]),
-    extra_test_content = """
+    strip_prefix = "example/golden/testdata/proto_repository",
+    test_content = """
 func TestRunGazelle(t *testing.T) {
 	if err := bazel_testing.RunBazel("run", "//:gazelle"); err != nil {
 		t.Fatal(err)
@@ -114,7 +110,6 @@ func TestRunGazelle(t *testing.T) {
 	}
 }
 """,
-    strip_prefix = "example/golden/testdata/proto_repository",
     workspace_template = "prebuilt.WORKSPACE",
 )
 
@@ -142,13 +137,94 @@ filegroup(
 gazelle_testdata_example(
     name = "strip_import_prefix",
     srcs = glob(["testdata/strip_import_prefix/**/*"]),
-    extra_test_content = """
+    strip_prefix = "example/golden/testdata/strip_import_prefix",
+    test_content = """
+func TestBuild(t *testing.T) {
+	if err := bazel_testing.RunBazel("build", "..."); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestRunPyApp(t *testing.T) {
 	if err := bazel_testing.RunBazel("run", "//module_app/app:app_py"); err != nil {
 		t.Fatal(err)
 	}
 }
 """,
-    strip_prefix = "example/golden/testdata/strip_import_prefix",
+    workspace_template = "prebuilt.WORKSPACE",
+)
+
+gazelle_testdata_example(
+    name = "proto_compiled_sources",
+    srcs = glob(["testdata/proto_compiled_sources/**/*"]),
+    strip_prefix = "example/golden/testdata/proto_compiled_sources",
+    test_content = """
+
+func TestUpdate(t *testing.T) {
+    var want = `proto_compile_gencopy_run rule //:assets
+proto_library rule //api/v1:api_v1_proto
+proto_compile rule //api/v1:api_v1_python_compiled_sources
+proto_compile_gencopy_run rule //api/v1:api_v1_python_compiled_sources.update
+proto_compile_gencopy_test rule //api/v1:api_v1_python_compiled_sources_test
+proto_library rule //src/idl:svc_proto
+proto_compile rule //src/idl:svc_python_compiled_sources
+proto_compile_gencopy_run rule //src/idl:svc_python_compiled_sources.update
+proto_compile_gencopy_test rule //src/idl:svc_python_compiled_sources_test
+`
+
+    // document query outputs
+	if got, err := bazel_testing.BazelOutput("query", "--output=label_kind", "..."); err != nil {
+		t.Fatal(err)
+	} else {
+        if diff := cmp.Diff(want, string(got)); diff != "" {
+            t.Fatalf("query mismatch (-want +got): %s", diff)
+        }
+    }
+
+    // generated files should not initially exist
+    if err := os.Remove("api/v1/v1_pb2.py"); err == nil {
+		t.Fatal("remove should have failed")
+    }
+    if err := os.Remove("src/idl/svc_pb2.py"); err == nil {
+		t.Fatal("remove should have failed")
+    }
+
+    // assert test initially fails
+	if err := bazel_testing.RunBazel("test", "//api/v1:api_v1_python_compiled_sources_test"); err == nil {
+		t.Fatal("expected initial test to fail!")
+	}
+
+    // copy the files in place
+	if err := bazel_testing.RunBazel("run", "//api/v1:api_v1_python_compiled_sources.update"); err != nil {
+		t.Fatal(err)
+	}
+	if err := bazel_testing.RunBazel("run", "//src/idl:svc_python_compiled_sources.update"); err != nil {
+		t.Fatal(err)
+	}
+
+    // tests should now pass
+	if err := bazel_testing.RunBazel("test", "..."); err != nil {
+		t.Fatal(err)
+	}
+
+    // delete the generated files
+    if err := os.Remove("api/v1/v1_pb2.py"); err != nil {
+		t.Fatal(err)
+    }
+    if err := os.Remove("src/idl/svc_pb2.py"); err != nil {
+		t.Fatal(err)
+    }
+
+    // document that running the proto_compile_assets rule also copies both files in place
+	if err := bazel_testing.RunBazel("run", "//:assets"); err != nil {
+		t.Fatal(err)
+	}
+
+    // test should still pass
+	if err := bazel_testing.RunBazel("test", "..."); err != nil {
+		t.Fatal(err)
+	}
+}
+""",
     workspace_template = "prebuilt.WORKSPACE",
 )
