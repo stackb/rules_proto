@@ -14,7 +14,10 @@ go_library(
 
 go_test(
     name = "grpc_test",
-    srcs = ["protoc-gen-grpc-python_test.go"],
+    srcs = [
+        "grpc_test.go",
+        "protoc-gen-grpc-python_test.go",
+    ],
     data = [
         ":protoc",
         ":protoc-gen-grpc-python",
