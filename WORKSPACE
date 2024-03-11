@@ -1,5 +1,20 @@
 workspace(name = "build_stack_rules_proto")
 
+# Override transitives with Minimal versions that support Bazel 7
+# FIXME: figure out where these are being transitively loaded and update those sites instead
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "build_bazel_rules_apple",
+    sha256 = "20da675977cb8249919df14d0ce6165d7b00325fb067f0b06696b893b90a55e8",
+    url = "https://github.com/bazelbuild/rules_apple/releases/download/3.0.0/rules_apple.3.0.0.tar.gz",
+)
+http_archive(
+    name = "build_bazel_apple_support",
+    sha256 = "9f7bb62c3ae889e0eae8c18458fd8764e2e537687d9a1d85885d6af980e4fc31",
+    url = "https://github.com/bazelbuild/apple_support/releases/download/1.6.0/apple_support.1.6.0.tar.gz",
+)
+
 # gazelle:repo bazel_gazelle
 
 # ----------------------------------------------------
