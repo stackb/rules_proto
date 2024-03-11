@@ -283,6 +283,10 @@ load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 
 node_repositories()
 
+load("@aspect_rules_js//js:repositories.bzl", "rules_js_dependencies")
+
+rules_js_dependencies()
+
 # ----------------------------------------------------
 # proto_repositories
 # ----------------------------------------------------
