@@ -1,0 +1,20 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules:proto_compiled_sources.bzl", "proto_compiled_sources")
+
+# gazelle:proto_strip_import_prefix /src
+
+proto_library(
+    name = "svc_proto",
+    srcs = ["svc.proto"],
+    strip_import_prefix = "/src",
+    visibility = ["//visibility:public"],
+)
+
+proto_compiled_sources(
+    name = "svc_python_compiled_sources",
+    srcs = ["svc_pb2.py"],
+    output_mappings = ["svc_pb2.py=/idl/svc_pb2.py"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
+    proto = "svc_proto",
+    visibility = ["//visibility:public"],
+)

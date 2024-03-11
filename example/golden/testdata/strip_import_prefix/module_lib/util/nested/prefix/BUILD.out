@@ -1,0 +1,28 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+# gazelle:proto_strip_import_prefix /module_lib/util/nested
+
+proto_library(
+    name = "prefix_test_proto",
+    srcs = ["test.proto"],
+    strip_import_prefix = "/module_lib/util/nested",
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "prefix_test_python_compile",
+    output_mappings = ["test_pb2.py=/prefix/test_pb2.py"],
+    outputs = ["test_pb2.py"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
+    proto = "prefix_test_proto",
+)
+
+proto_py_library(
+    name = "prefix_test_py_library",
+    srcs = ["test_pb2.py"],
+    imports = [".."],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf_python"],
+)

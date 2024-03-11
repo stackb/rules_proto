@@ -1,0 +1,31 @@
+# Cut a release whenever a new tag is pushed to the repo.
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+  # Allows owner to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare workspace snippet
+        run: .github/workflows/workspace_snippet.sh ${{ env.GITHUB_REF_NAME }} > release_notes.txt
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: false
+          # Use GH feature to populate the changelog automatically
+          generate_release_notes: true
+          body_path: release_notes.txt

@@ -16,7 +16,12 @@ var ccLibraryKindInfo = rule.KindInfo{
 		"srcs": true,
 		"hdrs": true,
 	},
-	ResolveAttrs: map[string]bool{"deps": true},
+	NonEmptyAttrs: map[string]bool{
+		"srcs": true,
+	},
+	ResolveAttrs: map[string]bool{
+		"deps": true,
+	},
 }
 
 // CcLibrary implements RuleProvider for 'cc_library'-derived rules.
@@ -63,7 +68,10 @@ func (s *CcLibrary) Hdrs() []string {
 
 // Deps computes the deps list for the rule.
 func (s *CcLibrary) Deps() []string {
-	return s.RuleConfig.GetDeps()
+	deps := s.RuleConfig.GetDeps()
+	resolvedDeps := protoc.ResolveLibraryRewrites(s.RuleConfig.GetRewrites(), s.Config.Library)
+	deps = append(deps, resolvedDeps...)
+	return deps
 }
 
 // Visibility provides visibility labels.

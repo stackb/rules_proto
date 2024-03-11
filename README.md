@@ -1,6 +1,6 @@
-# `rules_proto (v2)`
+# `rules_proto (v3)`
 
-[![Build status](https://badge.buildkite.com/5980cc1d55f96e721bd9a7bd5dc1e40a096a7c30bc13117910.svg?branch=master)](https://buildkite.com/bazel/stackb-rules-proto)
+![build-status](https://github.com/stackb/rules_proto/actions/workflows/ci.yaml/badge.svg)
 [![Go Reference](https://pkg.go.dev/badge/github.com/stackb/rules_proto.svg)](https://pkg.go.dev/github.com/stackb/rules_proto)
 
 Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
@@ -30,7 +30,7 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 
 # Table of Contents
 
-- [`rules_proto (v2)`](#rules_proto-v2)
+- [`rules_proto (v3)`](#rules_proto-v3)
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
   - [`WORKSPACE` Boilerplate](#workspace-boilerplate)
@@ -63,16 +63,16 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# Release: v2.0.1
+# Release: v3.1.0
 # TargetCommitish: master
-# Date: 2022-10-20 02:38:27 +0000 UTC
-# URL: https://github.com/stackb/rules_proto/releases/tag/v2.0.1
-# Size: 2071295 (2.1 MB)
+# Date: 2024-02-13 05:53:39 +0000 UTC
+# URL: https://github.com/stackb/rules_proto/releases/tag/v3.1.0
+# Size: 1995581 (2.0 MB)
 http_archive(
     name = "build_stack_rules_proto",
-    sha256 = "ac7e2966a78660e83e1ba84a06db6eda9a7659a841b6a7fd93028cd8757afbfb",
-    strip_prefix = "rules_proto-2.0.1",
-    urls = ["https://github.com/stackb/rules_proto/archive/v2.0.1.tar.gz"],
+    sha256 = "ee7a11d66e7bbc5b0f7a35ca3e960cb9a5f8a314b22252e19912dfbc6e22782d",
+    strip_prefix = "rules_proto-3.1.0",
+    urls = ["https://github.com/stackb/rules_proto/archive/v3.1.0.tar.gz"],
 )
 ```
 
@@ -396,7 +396,7 @@ potential conflicts with other possible gazelle extensions, using the name
 The core of `stackb/rules_proto` contains two build rules:
 
 | Rule            | Description                                             |
-| --------------- | ------------------------------------------------------- |
+|-----------------|---------------------------------------------------------|
 | `proto_compile` | Executes the `protoc` tool.                             |
 | `proto_plugin`  | Provides static `protoc` plugin-specific configuration. |
 
@@ -597,7 +597,7 @@ proto_repository(
     build_file_generation = "clean",
     build_file_proto_mode = "file",
     reresolve_known_proto_imports = True,
-    proto_language_config_file = "//example:config.yaml",
+    proto_language_config_file = "@//:rules_proto_config.yaml",
     strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
     type = "zip",
     urls = ["https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9"],
@@ -768,7 +768,7 @@ The plugin name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/plugin_name convention.
 
 | Plugin                                                                                                                 |
-| ---------------------------------------------------------------------------------------------------------------------- |
+|------------------------------------------------------------------------------------------------------------------------|
 | [builtin:cpp](pkg/plugin/builtin/cpp_plugin.go)                                                                        |
 | [builtin:csharp](pkg/plugin/builtin/csharp_plugin.go)                                                                  |
 | [builtin:java](pkg/plugin/builtin/java_plugin.go)                                                                      |
@@ -804,7 +804,7 @@ The rule name is an opaque string, but by convention they are maven-esqe
 artifact identifiers that follow a GitHub org/repo/rule_name convention.
 
 | Plugin                                                                                            |
-| ------------------------------------------------------------------------------------------------- |
+|---------------------------------------------------------------------------------------------------|
 | [stackb:rules_proto:grpc_cc_library](pkg/rule/rules_cc/grpc_cc_library.go)                        |
 | [stackb:rules_proto:grpc_closure_js_library](pkg/rule/rules_closure/grpc_closure_js_library.go)   |
 | [stackb:rules_proto:grpc_java_library](pkg/rule/rules_java/grpc_java_library.go)                  |

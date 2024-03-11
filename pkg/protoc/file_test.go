@@ -21,6 +21,7 @@ func TestHas(t *testing.T) {
 		hasMessages   bool
 		hasServices   bool
 		hasEnumOption string
+		hasRPCOption  string
 	}{
 		"empty file": {},
 		"has services": {
@@ -32,6 +33,33 @@ service Greeter {
 }
 `,
 			hasServices: true,
+		},
+		"has enum option": {
+			in: `
+syntax = "proto3";
+import "google/api/visibility.proto";
+enum MyEnum {
+    UNKNOWN = 0;
+	PRIVATE = 1 [(google.api.value_visibility).restriction = "HIDDEN"];
+}
+`,
+			hasEnumOption: "(google.api.value_visibility).restriction",
+		},
+		"has rpc option": {
+			in: `
+syntax = "proto3";
+import "google/api/annotations.proto";
+
+service Greeter {
+	rpc Greet(GreetRequest) returns (GreetResponse) {
+		option (google.api.http) = {
+			get: "/greet"
+		};
+	}
+}
+`,
+			hasServices:  true,
+			hasRPCOption: "(google.api.http)",
 		},
 	}
 
@@ -47,6 +75,10 @@ service Greeter {
 			if tc.hasEnumOption != "" && !f.HasEnumOption(tc.hasEnumOption) {
 				t.Errorf("hasEnumOption: expected %s",
 					tc.hasEnumOption)
+			}
+			if tc.hasRPCOption != "" && !f.HasRPCOption(tc.hasRPCOption) {
+				t.Errorf("hasRPCOption: expected %s",
+					tc.hasRPCOption)
 			}
 		})
 	}

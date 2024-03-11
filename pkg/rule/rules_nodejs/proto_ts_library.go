@@ -42,6 +42,9 @@ func (s *protoTsLibrary) KindInfo() rule.KindInfo {
 			"tsconfig": true,
 			"out_dir":  true,
 		},
+		NonEmptyAttrs: map[string]bool{
+			"srcs": true,
+		},
 		ResolveAttrs: map[string]bool{
 			"deps": true,
 		},

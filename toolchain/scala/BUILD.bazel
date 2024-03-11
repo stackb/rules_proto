@@ -1,0 +1,90 @@
+load("@io_bazel_rules_scala//scala:scala_toolchain.bzl", "scala_toolchain")
+
+toolchain(
+    name = "default_toolchain",
+    toolchain = "minimal_direct_source_deps",
+    toolchain_type = "@io_bazel_rules_scala//scala:toolchain_type",
+    visibility = ["//visibility:public"],
+)
+
+scala_toolchain(
+    name = "minimal_direct_source_deps",
+    compiler_deps_mode = "error",
+    dependency_mode = "direct",
+    dependency_tracking_method = "ast-plus",
+    scalac_jvm_flags = [
+        "-Djava.security.manager=allow",
+    ],
+    strict_deps_mode = "error",
+    unused_dependency_checker_mode = "error",
+)
+
+# toolchain(
+#     name = "testing_toolchain",
+#     toolchain = ":testing_toolchain_with_junit_and_scalatest_impl",
+#     toolchain_type = "@io_bazel_rules_scala//testing/toolchain:testing_toolchain_type",
+#     visibility = ["//visibility:public"],
+# )
+
+# scala_testing_toolchain(
+#     name = "testing_toolchain_with_junit_and_scalatest_impl",
+#     dep_providers = [
+#         ":junit_classpath_provider",
+#         ":scalatest_classpath_provider",
+#     ],
+#     visibility = ["//visibility:public"],
+# )
+
+# declare_deps_provider(
+#     name = "junit_classpath_provider",
+#     deps_id = "junit_classpath",
+#     visibility = ["//visibility:public"],
+#     deps = [
+#         "@maven//:junit_junit",
+#         "@maven//:org_hamcrest_hamcrest",
+#         "@maven//:org_hamcrest_hamcrest_core",
+#     ],
+# )
+
+# declare_deps_provider(
+#     name = "scalatest_classpath_provider",
+#     deps_id = "scalatest_classpath",
+#     visibility = ["//visibility:public"],
+#     deps = [
+#         "@maven//:org_scalactic_scalactic_2_12",
+#         "@maven//:org_scalamock_scalamock_2_12",
+#         "@maven//:org_scalatest_scalatest_2_12",
+#     ],
+# )
+
+# filegroup(
+#     name = "jacocorunner",
+#     srcs = ["@bazel_jacocorunner//:jar"],
+#     visibility = ["//visibility:public"],
+# )
+
+# genrule(
+#     name = "jacocorunner_jar",
+#     srcs = [":jacocorunner"],
+#     outs = ["jacocorunner.jar"],
+#     cmd = "cp $< $@",
+# )
+
+# # NOTE: this target is named in a patch file for io_bazel_rules_scala to
+# # synchronize the version of the jacocorunner used by the scala instrumenter
+# # (compile-time) and during the coverage tests (runtime).
+# java_import(
+#     name = "global_jacocorunner",
+#     jars = [":jacocorunner.jar"],
+#     visibility = ["//visibility:public"],
+# )
+
+# create_base_image_with_core_deps(
+#     arch_shortname = "arm64",
+#     base_image = "//bazel_tools:java_arm64",
+# )
+
+# create_base_image_with_core_deps(
+#     arch_shortname = "amd64",
+#     base_image = "//bazel_tools:java",
+# )

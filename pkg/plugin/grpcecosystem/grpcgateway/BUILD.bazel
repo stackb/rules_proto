@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "grpcgateway",
@@ -18,4 +18,11 @@ filegroup(
         "BUILD.bazel",
     ] + glob(["*.go"]),
     visibility = ["//pkg:__pkg__"],
+)
+
+go_test(
+    name = "grpcgateway_test",
+    srcs = ["protoc-gen-grpc-gateway_test.go"],
+    embed = [":grpcgateway"],
+    deps = ["//pkg/plugintest"],
 )

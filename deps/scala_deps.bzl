@@ -30,10 +30,10 @@ def bazel_skylib():
     _maybe(
         http_archive,
         name = "bazel_skylib",
-        sha256 = "ebdf850bfef28d923a2cc67ddca86355a449b5e4f38b0a70e584dc24e5984aa6",
-        strip_prefix = "bazel-skylib-f80bc733d4b9f83d427ce3442be2e07427b2cc8d",
+        sha256 = "118e313990135890ee4cc8504e32929844f9578804a1b2f571d69b1dd080cfb8",
+        strip_prefix = "bazel-skylib-1.5.0",
         urls = [
-            "https://github.com/bazelbuild/bazel-skylib/archive/f80bc733d4b9f83d427ce3442be2e07427b2cc8d.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/archive/1.5.0.tar.gz",
         ],
     )
 
@@ -41,9 +41,9 @@ def io_bazel_rules_scala():
     _maybe(
         http_archive,
         name = "io_bazel_rules_scala",
-        sha256 = "0701ee4e1cfd59702d780acde907ac657752fbb5c7d08a0ec6f58ebea8cd0efb",
-        strip_prefix = "rules_scala-2437e40131072cadc1628726775ff00fa3941a4a",
+        sha256 = "9a23058a36183a556a9ba7229b4f204d3e68c8c6eb7b28260521016b38ef4e00",
+        strip_prefix = "rules_scala-6.4.0",
         urls = [
-            "https://github.com/bazelbuild/rules_scala/archive/2437e40131072cadc1628726775ff00fa3941a4a.tar.gz",
+            "https://github.com/bazelbuild/rules_scala/archive/v6.4.0.tar.gz",
         ],
     )

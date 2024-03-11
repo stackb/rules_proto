@@ -1,0 +1,38 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+# gazelle:proto_strip_import_prefix /module_app
+
+py_binary(
+    name = "app_py",
+    srcs = ["app_py.py"],
+    deps = ["app_py_library"],
+)
+
+proto_library(
+    name = "app_proto",
+    srcs = ["api.proto"],
+    strip_import_prefix = "/module_app",
+    visibility = ["//visibility:public"],
+    deps = ["//module_lib/util:util_proto"],
+)
+
+proto_compile(
+    name = "app_python_compile",
+    output_mappings = ["api_pb2.py=/app/api_pb2.py"],
+    outputs = ["api_pb2.py"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
+    proto = "app_proto",
+)
+
+proto_py_library(
+    name = "app_py_library",
+    srcs = ["api_pb2.py"],
+    imports = [".."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//module_lib/util:util_py_library",
+        "@com_google_protobuf//:protobuf_python",
+    ],
+)

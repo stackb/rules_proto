@@ -1,0 +1,28 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+# gazelle:proto_strip_import_prefix /module_lib
+
+proto_library(
+    name = "util_proto",
+    srcs = ["date.proto"],
+    strip_import_prefix = "/module_lib",
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "util_python_compile",
+    output_mappings = ["date_pb2.py=/util/date_pb2.py"],
+    outputs = ["date_pb2.py"],
+    plugins = ["@build_stack_rules_proto//plugin/builtin:python"],
+    proto = "util_proto",
+)
+
+proto_py_library(
+    name = "util_py_library",
+    srcs = ["date_pb2.py"],
+    imports = [".."],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:protobuf_python"],
+)

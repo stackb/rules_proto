@@ -71,7 +71,7 @@ func parsePythonPluginOptions(kindName string, args []string) *pythonPluginOptio
 	flags := flag.NewFlagSet(kindName, flag.ExitOnError)
 
 	var excludeOutput string
-	flags.StringVar(&excludeOutput, "exclude_output", "", "--exclude_output=pythonPluginOptions suppresses the file 'foo_pb2.py' from the output list")
+	flags.StringVar(&excludeOutput, "exclude_output", "", "--exclude_output=foo_pb2.py suppresses the file 'foo_pb2.py' from the output list")
 
 	if err := flags.Parse(args); err != nil {
 		log.Fatalf("failed to parse flags for %q: %v", kindName, err)

@@ -196,12 +196,13 @@ func (r *resolver) Resolve(lang, impLang, imp string) []resolve.FindResult {
 	}
 	if got, ok := known[imp]; ok {
 		res := make([]resolve.FindResult, len(got))
-		// use last-wins semantics by providing FindResults in reverse to how
-		// they were provided.
-		var index int
-		for i := len(got) - 1; i >= 0; i-- {
-			res[index] = resolve.FindResult{Label: got[i]}
-			index++
+		for i, l := range got {
+			res[i] = resolve.FindResult{Label: l}
+		}
+		// reverse results to preserve last-wins semantics of prior
+		// stackb/rules_proto behavior
+		for i, j := 0, len(res)-1; i < j; i, j = i+1, j-1 {
+			res[i], res[j] = res[j], res[i]
 		}
 		return res
 	}
@@ -267,23 +268,16 @@ func (r *resolver) Imports(lang, impLang string, visitor func(imp string, locati
 }
 
 func (r *resolver) Install(c *config.Config) {
-	// The resolve config has already processed resolve directives, and there's
-	// no public API. Take somewhat extreme measures to augment it's internal
-	// override list via unsafe memory reallocation.
-	overrides := make([]overrideSpec, 0)
+	overrides := make(overrideSpec, 0)
 
 	for key, known := range r.known {
 		lang, impLang := keyLang(key)
 		for imp, lbls := range known {
 			for _, lbl := range lbls {
-				overrides = append(overrides, overrideSpec{
-					imp: resolve.ImportSpec{
-						Lang: impLang,
-						Imp:  imp,
-					},
+				overrides[overrideKey{
+					imp:  resolve.ImportSpec{Lang: impLang, Imp: imp},
 					lang: lang,
-					dep:  lbl,
-				})
+				}] = lbl
 			}
 		}
 	}
@@ -333,31 +327,39 @@ func getResolveConfig(c *config.Config) interface{} {
 
 // rewriteResolveConfigOverrides reads the existing private attribute and
 // appends more overrides.
-func rewriteResolveConfigOverrides(rc interface{}, more []overrideSpec) {
+func rewriteResolveConfigOverrides(rc interface{}, more overrideSpec) {
 	rcv := reflect.ValueOf(rc).Elem()
 	val := reflect.Indirect(rcv)
 	member := val.FieldByName("overrides")
 	ptrToOverrides := unsafe.Pointer(member.UnsafeAddr())
-	overrides := (*[]overrideSpec)(ptrToOverrides)
+	overrides := (*overrideSpec)(ptrToOverrides)
 
 	// create new array: FindRuleWithOverride searches last entries first, so
 	// respect the users own resolve directives by putting them last
-	newOverrides := make([]overrideSpec, 0)
-	newOverrides = append(newOverrides, more...)
-	newOverrides = append(newOverrides, *overrides...)
+	newOverrides := make(overrideSpec, 0)
+	for k, v := range more {
+		newOverrides[k] = v
+	}
+	for k, v := range *overrides {
+		newOverrides[k] = v
+	}
 
 	// reassign memory value
 	*overrides = newOverrides
 }
 
+type overrideKey struct {
+	imp  resolve.ImportSpec
+	lang string
+}
+
 // overrideSpec is a copy of the same private type in resolve/config.go.  It must be
 // kept in sync with the original to avoid discrepancy with the expected memory
 // layout.
-type overrideSpec struct {
-	imp  resolve.ImportSpec
-	lang string
-	dep  label.Label
-}
+//
+// NOTE: in https://github.com/bazelbuild/bazel-gazelle/pull/1687,
+// []overrideSpec was changed to map[overrideKey]label.Label
+type overrideSpec map[overrideKey]label.Label
 
 func langKey(lang, impLang string) string {
 	return lang + " " + impLang

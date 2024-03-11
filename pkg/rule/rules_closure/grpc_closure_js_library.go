@@ -46,6 +46,7 @@ func (s *grpcClosureJsLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *p
 	if len(outputs) == 0 {
 		return nil
 	}
+
 	return &ClosureJsLibrary{
 		KindName:       GrpcClosureJsLibraryRuleName,
 		RuleNameSuffix: GrpcClosureJsLibraryRuleSuffix,

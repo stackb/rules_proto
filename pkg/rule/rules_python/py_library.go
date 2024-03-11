@@ -1,6 +1,7 @@
 package rules_python
 
 import (
+	"path/filepath"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -16,8 +17,14 @@ var pyLibraryKindInfo = rule.KindInfo{
 		"srcs":       true,
 		"deps":       true,
 		"visibility": true,
+		"imports":    true,
 	},
-	ResolveAttrs: map[string]bool{"deps": true},
+	NonEmptyAttrs: map[string]bool{
+		"srcs": true,
+	},
+	ResolveAttrs: map[string]bool{
+		"deps": true,
+	},
 }
 
 // PyLibrary implements RuleProvider for 'py_library'-derived rules.
@@ -61,6 +68,35 @@ func (s *PyLibrary) Visibility() []string {
 	return s.RuleConfig.GetVisibility()
 }
 
+// ImportsAttr provides the py_library.imports attribute values.
+func (s *PyLibrary) ImportsAttr() (imps []string) {
+	// if we have a strip_import_prefix on the proto_library, the python search
+	// path should include the directory N parents above the current package,
+	// where N is the number of segments needed to ascend to the prefix from
+	// the dir for the current rule.
+	if s.Config.Library.StripImportPrefix() == "" {
+		return
+	}
+	prefix := s.Config.Library.StripImportPrefix()
+	if !strings.HasPrefix(prefix, "/") {
+		return // deal with relative-imports at another time
+	}
+
+	prefix = strings.TrimPrefix(prefix, "/")
+	rel, err := filepath.Rel(prefix, s.Config.Rel)
+	if err != nil {
+		return // the prefix doesn't prefix the current path, shouldn't happen
+	}
+
+	parts := strings.Split(rel, "/")
+	for i := 0; i < len(parts); i++ {
+		parts[i] = ".."
+	}
+	imp := strings.Join(parts, "/")
+	imps = append(imps, imp)
+	return
+}
+
 // Rule implements part of the ruleProvider interface.
 func (s *PyLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule := rule.NewRule(s.Kind(), s.Name())
@@ -71,6 +107,12 @@ func (s *PyLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	if len(deps) > 0 {
 		newRule.SetAttr("deps", deps)
 	}
+
+	imports := s.ImportsAttr()
+	if len(imports) > 0 {
+		newRule.SetAttr("imports", imports)
+	}
+
 	visibility := s.Visibility()
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)
@@ -79,10 +121,26 @@ func (s *PyLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	return newRule
 }
 
+func pyFilenameToImport(s string) string {
+	if strings.HasSuffix(s, ".py") {
+		return strings.ReplaceAll(s[:len(s)-3], "/", ".")
+	}
+	return s
+}
+
 // Imports implements part of the RuleProvider interface.
 func (s *PyLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
 	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok {
-		return protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+		specs := protoc.ProtoLibraryImportSpecsForKind(r.Kind(), lib)
+		specs = maybeStripImportPrefix(specs, lib.StripImportPrefix())
+		from := label.New("", file.Pkg, r.Name())
+		for _, o := range s.Outputs {
+			pyImp := pyFilenameToImport(o)
+			protoc.GlobalResolver().Provide("py", "py", pyImp, from)
+			specs = append(specs, resolve.ImportSpec{Lang: "py", Imp: pyImp})
+		}
+
+		return specs
 	}
 	return nil
 }
@@ -90,4 +148,19 @@ func (s *PyLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []r
 // Resolve implements part of the RuleProvider interface.
 func (s *PyLibrary) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 	s.Resolver(c, ix, r, imports, from)
+}
+
+func maybeStripImportPrefix(specs []resolve.ImportSpec, stripImportPrefix string) []resolve.ImportSpec {
+	if stripImportPrefix == "" {
+		return specs
+	}
+
+	prefix := strings.TrimPrefix(stripImportPrefix, "/")
+	for i, spec := range specs {
+		spec.Imp = strings.TrimPrefix(spec.Imp, prefix)
+		spec.Imp = strings.TrimPrefix(spec.Imp, "/") // should never be absolute
+		specs[i] = spec
+	}
+
+	return specs
 }

@@ -11,7 +11,7 @@ def _examplegen_impl(ctx):
         name = ctx.label.name,
         label = str(ctx.label),
         testOut = output_test.path,
-        testHeader = ctx.attr.extra_test_content,
+        testContent = ctx.attr.test_content,
         markdownOut = output_markdown.path,
         workspaceIn = ctx.file.workspace_template.path,
         stripPrefix = ctx.attr.strip_prefix,
@@ -46,8 +46,15 @@ _examplegen = rule(
         "strip_prefix": attr.string(
             doc = "path prefix to remove from test files in the txtar",
         ),
-        "extra_test_content": attr.string(
-            doc = "optional chunk of content that will be written into the _test.go file",
+        "test_content": attr.string(
+            doc = "optional chunk of golang test content.  Default behavior is 'bazel build ...'",
+            default = """
+func TestBuild(t *testing.T) {
+	if err := bazel_testing.RunBazel("build", "..."); err != nil {
+		t.Fatal(err)
+	}
+}
+""",
         ),
         "workspace_template": attr.label(
             doc = "Template for the test WORKSPACE",
@@ -78,22 +85,24 @@ def gazelle_testdata_example(**kwargs):
     """
     name = kwargs.pop("name")
     srcs = kwargs.pop("srcs", [])
+    deps = kwargs.pop("deps", [])
     strip_prefix = kwargs.pop("strip_prefix", "")
 
-    extra_test_content = kwargs.pop("extra_test_content", "")
+    test_content = kwargs.pop("test_content", None)
     rule_files = kwargs.pop("rule_files", ["//:all_files"])
 
     _examplegen(
         name = name,
         srcs = srcs,
         strip_prefix = strip_prefix,
-        extra_test_content = extra_test_content,
+        test_content = test_content,
         workspace_template = kwargs.pop("workspace_template", ""),
     )
 
     go_bazel_test(
         name = name + "_test",
         srcs = [name + "_test.go"],
+        deps = deps + ["@com_github_google_go_cmp//cmp"],
         rule_files = rule_files,
         **kwargs
     )

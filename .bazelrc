@@ -1,13 +1,19 @@
-common --enable_platform_specific_config
 
+common --jvmopt=-Djava.security.manager=allow
+build --java_language_version=17
+build --java_runtime_version=remotejdk_17
+build --tool_java_language_version=17
+build --tool_java_runtime_version=remotejdk_17
+
+common --enable_platform_specific_config
 build:windows --cxxopt='/std:c++14'
 build:windows --host_cxxopt='/std:c++14'
-build:linux   --cxxopt='-std=c++14'
-build:linux   --host_cxxopt='-std=c++14'
-build:macos   --cxxopt='-std=c++14'
-build:macos   --host_cxxopt='-std=c++14'
-build:freebsd   --cxxopt='-std=c++14'
-build:freebsd   --host_cxxopt='-std=c++14'
+build:linux --cxxopt='-std=c++14'
+build:linux --host_cxxopt='-std=c++14'
+build:macos --cxxopt='-std=c++14'
+build:macos --host_cxxopt='-std=c++14'
+build:freebsd --cxxopt='-std=c++14'
+build:freebsd --host_cxxopt='-std=c++14'
 
 build:bazelci --deleted_packages=docs
 
@@ -17,3 +23,7 @@ build --incompatible_java_common_parameters=false
 # HOME appears to be required by //pkg/plugin/grpc/grpc:grpc_test
 # (for github.com/bazelbuild/rules_go/go/tools/bazel_testing)
 test --action_env=HOME
+
+# Don't depend on a JAVA_HOME pointing at a system JDK
+# see https://github.com/bazelbuild/rules_jvm_external/issues/445
+build --repo_env=JAVA_HOME=../bazel_tools/jdk
