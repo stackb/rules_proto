@@ -259,6 +259,22 @@ load("@maven_akka//:defs.bzl", pinned_maven_akka_install = "pinned_maven_install
 
 pinned_maven_akka_install()
 
+# bazel run @maven_zio//:pin, but first comment out the "maven_install_json"
+# (put it back once pinned again)
+maven_install(
+    name = "maven_zio",
+    artifacts = [
+        "com.thesamet.scalapb.zio-grpc:zio-grpc-codegen_2.12:0.6.0",
+    ],
+    fetch_sources = True,
+    maven_install_json = "//:maven_zio_install.json",
+    repositories = ["https://repo1.maven.org/maven2"],
+)
+
+load("@maven_zio//:defs.bzl", pinned_maven_zio_install = "pinned_maven_install")
+
+pinned_maven_zio_install()
+
 # ----------------------------------------------------
 # Closure
 # ----------------------------------------------------

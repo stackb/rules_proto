@@ -1,0 +1,26 @@
+load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+
+proto_plugin(
+    name = "protoc-gen-zio-grpc",
+    out = "{BIN_DIR}/{PACKAGE}/{PROTO_LIBRARY_BASENAME}_zio_grpc.srcjar",
+    options = ["flat_package"],
+    tool = ":zio_grpc_codegen",
+    use_built_in_shell_environment = True,
+    visibility = ["//visibility:public"],
+)
+
+java_binary(
+    name = "zio_grpc_codegen",
+    main_class = "scalapb.zio_grpc.ZioCodeGenerator",
+    visibility = ["//visibility:public"],
+    runtime_deps = [
+        "@maven_zio//:com_thesamet_scalapb_zio_grpc_zio_grpc_codegen_2_12",
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = ["BUILD.bazel"],
+    visibility = ["//plugin:__pkg__"],
+)
