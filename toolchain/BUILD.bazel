@@ -36,6 +36,9 @@ genrule(
         "@bazel_tools//src/conditions:windows": [
             "@prebuilt_protoc_windows//:protoc",
         ],
+        "@bazel_tools//src/conditions:linux_aarch64": [
+            "@prebuilt_protoc_linux_aarch64//:protoc",
+        ],
         "//conditions:default": [
             "@prebuilt_protoc_linux//:protoc",
         ],
