@@ -1,14 +1,14 @@
-load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
-load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
-load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
-load("@//rules:proto_gazelle.bzl", "proto_gazelle")
+load("@gazelle//:def.bzl", "gazelle", "gazelle_binary")
+# load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+# load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
+# load("@//rules:proto_gazelle.bzl", "proto_gazelle")
 
 exports_files(["rules_proto_config.yaml"])
 
 # ----------------------------------------------------
 # Buildifier
 # ----------------------------------------------------
-buildifier(name = "buildifier")
+# buildifier(name = "buildifier")
 
 # ----------------------------------------------------
 # Gazelle
@@ -24,22 +24,22 @@ gazelle_binary(
         # NOTE: order matters here.  Gazelle will respect the ordering of
         # languages which will impact the population of 'OtherGen', so
         # //language/protobuf MUST come after language/proto.
-        "@bazel_gazelle//language/go",
-        "@bazel_gazelle//language/proto",
-        "//language/protobuf",
+        "@gazelle//language/go",
+        "@gazelle//language/proto",
+        # "//language/protobuf",
     ],
     visibility = ["//visibility:public"],
 )
 
-proto_gazelle(
-    name = "gazelle",
-    cfgs = [":rules_proto_config.yaml"],
-    gazelle = ":gazelle-protobuf",
-    imports = [
-        "@googleapis//:imports.csv",
-        "@protoapis//:imports.csv",
-    ],
-)
+# proto_gazelle(
+#     name = "gazelle",
+#     cfgs = [":rules_proto_config.yaml"],
+#     gazelle = ":gazelle-protobuf",
+#     imports = [
+#         "@googleapis//:imports.csv",
+#         "@protoapis//:imports.csv",
+#     ],
+# )
 
 gazelle(
     name = "update_go_deps",
@@ -76,6 +76,6 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-npm_link_all_packages(
-    name = "node_modules",
-)
+# npm_link_all_packages(
+#     name = "node_modules",
+# )

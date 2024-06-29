@@ -1,0 +1,7 @@
+module(
+    name = "build_stack_rules_proto",
+    version = "0.0.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "gazelle", version = "0.35.0", dev_dependency = False)
