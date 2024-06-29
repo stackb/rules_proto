@@ -1,5 +1,5 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
-load("@io_bazel_rules_go//go/tools/bazel_testing:def.bzl", "go_bazel_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go/tools/bazel_testing:def.bzl", "go_bazel_test")
 
 go_library(
     name = "grpc",
@@ -8,7 +8,7 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",
-        "@bazel_gazelle//label:go_default_library",
+        "@gazelle//label:go_default_library",
     ],
 )
 
@@ -22,7 +22,7 @@ go_test(
     deps = [
         ":grpc",
         "//pkg/plugintest",
-        "@io_bazel_rules_go//go/tools/bazel_testing:go_default_library",
+        "@rules_go//go/tools/bazel_testing:go_default_library",
     ],
 )
 

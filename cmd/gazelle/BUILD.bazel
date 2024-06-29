@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
 
 go_library(
     name = "gazelle_lib",
@@ -21,18 +21,18 @@ go_library(
         "//cmd/gazelle/internal/module",
         "//cmd/gazelle/internal/wspace",
         "//language/protobuf",
-        "@bazel_gazelle//config:go_default_library",
-        "@bazel_gazelle//flag:go_default_library",
-        "@bazel_gazelle//label:go_default_library",
-        "@bazel_gazelle//language:go_default_library",
-        "@bazel_gazelle//language/go:go_default_library",
-        "@bazel_gazelle//language/proto:go_default_library",
-        "@bazel_gazelle//merger:go_default_library",
-        "@bazel_gazelle//repo:go_default_library",
-        "@bazel_gazelle//resolve:go_default_library",
-        "@bazel_gazelle//rule:go_default_library",
-        "@bazel_gazelle//walk:go_default_library",
         "@com_github_pmezard_go_difflib//difflib",
+        "@gazelle//config:go_default_library",
+        "@gazelle//flag:go_default_library",
+        "@gazelle//label:go_default_library",
+        "@gazelle//language:go_default_library",
+        "@gazelle//language/go:go_default_library",
+        "@gazelle//language/proto:go_default_library",
+        "@gazelle//merger:go_default_library",
+        "@gazelle//repo:go_default_library",
+        "@gazelle//resolve:go_default_library",
+        "@gazelle//rule:go_default_library",
+        "@gazelle//walk:go_default_library",
     ],
 )
 
@@ -53,9 +53,9 @@ go_test(
     data = ["@go_sdk//:files"],
     embed = [":gazelle_lib"],
     deps = [
-        "@bazel_gazelle//config:go_default_library",
-        "@bazel_gazelle//testtools:go_default_library",
-        "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+        "@gazelle//config:go_default_library",
+        "@gazelle//testtools:go_default_library",
+        "@rules_go//go/tools/bazel:go_default_library",
     ],
 )
 

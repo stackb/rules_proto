@@ -1,14 +1,8 @@
 load("@gazelle//:def.bzl", "gazelle", "gazelle_binary")
-# load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 # load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 # load("@//rules:proto_gazelle.bzl", "proto_gazelle")
 
 exports_files(["rules_proto_config.yaml"])
-
-# ----------------------------------------------------
-# Buildifier
-# ----------------------------------------------------
-# buildifier(name = "buildifier")
 
 # ----------------------------------------------------
 # Gazelle
@@ -26,7 +20,7 @@ gazelle_binary(
         # //language/protobuf MUST come after language/proto.
         "@gazelle//language/go",
         "@gazelle//language/proto",
-        # "//language/protobuf",
+        "//language/protobuf",
     ],
     visibility = ["//visibility:public"],
 )
