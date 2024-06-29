@@ -1,6 +1,7 @@
 load("@gazelle//:def.bzl", "gazelle", "gazelle_binary")
+
 # load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
-# load("@//rules:proto_gazelle.bzl", "proto_gazelle")
+load("@//rules:proto_gazelle.bzl", "proto_gazelle")
 
 exports_files(["rules_proto_config.yaml"])
 
@@ -25,15 +26,15 @@ gazelle_binary(
     visibility = ["//visibility:public"],
 )
 
-# proto_gazelle(
-#     name = "gazelle",
-#     cfgs = [":rules_proto_config.yaml"],
-#     gazelle = ":gazelle-protobuf",
-#     imports = [
-#         "@googleapis//:imports.csv",
-#         "@protoapis//:imports.csv",
-#     ],
-# )
+proto_gazelle(
+    name = "gazelle",
+    cfgs = [":rules_proto_config.yaml"],
+    gazelle = ":gazelle-protobuf",
+    # imports = [
+    #     "@googleapis//:imports.csv",
+    #     "@protoapis//:imports.csv",
+    # ],
+)
 
 gazelle(
     name = "update_go_deps",
