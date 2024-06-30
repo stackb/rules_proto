@@ -74,7 +74,7 @@ def proto_repositories():
             "gazelle:proto_language cpp enable false",
             "gazelle:proto_language descriptor enable true",
         ],
-        imports = ["@protoapis//:imports.csv"],
+        imports = ["@protobufapis//:imports.csv"],
         build_file_expunge = True,
         build_file_proto_mode = "file",
         reresolve_known_proto_imports = True,

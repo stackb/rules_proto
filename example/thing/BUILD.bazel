@@ -13,7 +13,7 @@ proto_library(
     name = "thing_proto",
     srcs = ["thing.proto"],
     visibility = ["//visibility:public"],
-    deps = ["@protoapis//google/protobuf:timestamp_proto"],
+    deps = ["@protobufapis//google/protobuf:timestamp_proto"],
 )
 
 proto_closure_js_library(
@@ -50,7 +50,7 @@ proto_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "@com_google_protobuf//:protobuf",
-        "@protoapis//google/protobuf:timestamp_cc_library",
+        "@protobufapis//google/protobuf:timestamp_cc_library",
     ],
 )
 
@@ -101,11 +101,11 @@ proto_java_library(
     visibility = ["//visibility:public"],
     exports = [
         "@com_google_protobuf//:protobuf_java",
-        "@protoapis//google/protobuf:timestamp_java_library",
+        "@protobufapis//google/protobuf:timestamp_java_library",
     ],
     deps = [
         "@com_google_protobuf//:protobuf_java",
-        "@protoapis//google/protobuf:timestamp_java_library",
+        "@protobufapis//google/protobuf:timestamp_java_library",
     ],
 )
 
@@ -144,7 +144,7 @@ proto_py_library(
     visibility = ["//visibility:public"],
     deps = [
         "@com_google_protobuf//:protobuf_python",
-        "@protoapis//google/protobuf:timestamp_py_library",
+        "@protobufapis//google/protobuf:timestamp_py_library",
     ],
 )
 

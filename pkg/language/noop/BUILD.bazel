@@ -1,4 +1,4 @@
-load("@rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "noop",
@@ -6,11 +6,11 @@ go_library(
     importpath = "github.com/stackb/rules_proto/pkg/language/noop",
     visibility = ["//visibility:public"],
     deps = [
-        "@gazelle//config:go_default_library",
-        "@gazelle//label:go_default_library",
-        "@gazelle//language:go_default_library",
-        "@gazelle//repo:go_default_library",
-        "@gazelle//resolve:go_default_library",
-        "@gazelle//rule:go_default_library",
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//language:go_default_library",
+        "@bazel_gazelle//repo:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
     ],
 )

@@ -21,8 +21,8 @@ load(
 )
 
 DEFAULT_LANGUAGES = [
-    "@gazelle//language/proto:go_default_library",
-    "@gazelle//language/go:go_default_library",
+    "@bazel_gazelle//language/proto:go_default_library",
+    "@bazel_gazelle//language/go:go_default_library",
     "@build_stack_rules_proto//language/protobuf",
 ]
 
@@ -72,7 +72,7 @@ def _gazelle_runner_impl(ctx):
     env = "\n".join(["export %s=%s" % (x, shell.quote(y)) for (x, y) in ctx.attr.env.items()])
 
     out_file = ctx.actions.declare_file(ctx.label.name + ".bash")
-    go_tool = ctx.toolchains["@rules_go//go:toolchain"].sdk.go
+    go_tool = ctx.toolchains["@io_bazel_rules_go//go:toolchain"].sdk.go
     repo_config = ctx.file._repo_config
     substitutions = {
         "@@ARGS@@": shell.array_literal(args),
@@ -141,12 +141,12 @@ _gazelle_runner = rule(
             allow_single_file = True,
         ),
         "_template": attr.label(
-            default = "@gazelle//internal:gazelle.bash.in",
+            default = "@bazel_gazelle//internal:gazelle.bash.in",
             allow_single_file = True,
         ),
     },
     executable = True,
-    toolchains = ["@rules_go//go:toolchain"],
+    toolchains = ["@io_bazel_rules_go//go:toolchain"],
 )
 
 def proto_gazelle(name, **kwargs):

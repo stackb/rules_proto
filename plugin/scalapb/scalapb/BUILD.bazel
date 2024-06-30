@@ -24,7 +24,7 @@ java_binary(
     main_class = "scalapb.ScalaPbCodeGenerator",
     runtime_deps = [
         "@maven_scala//:com_thesamet_scalapb_compilerplugin_2_12",
-        "@maven_scala//:com_thesamet_scalapb_protoc_bridge_2_12",
+        # "@maven_scala//:com_thesamet_scalapb_protoc_bridge_2_12",
     ],
 )
 

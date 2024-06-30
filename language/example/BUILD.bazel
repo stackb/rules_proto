@@ -1,4 +1,4 @@
-load("@rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "example",
@@ -7,6 +7,6 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/language/noop",
-        "@gazelle//language:go_default_library",
+        "@bazel_gazelle//language:go_default_library",
     ],
 )

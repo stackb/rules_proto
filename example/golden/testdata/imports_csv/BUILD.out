@@ -4,5 +4,5 @@ proto_library(
     name = "test_proto",
     srcs = ["example.proto"],
     visibility = ["//visibility:public"],
-    deps = ["@protoapis//google/protobuf:any_proto"],
+    deps = ["@protobufapis//google/protobuf:any_proto"],
 )

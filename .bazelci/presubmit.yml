@@ -7,7 +7,7 @@ tasks:
   default_workspace_ubuntu1804:
     platform: ubuntu1804
     build_targets:
-      - "@protoapis//..."
+      - "@protobufapis//..."
       - "@googleapis//..."
     test_targets:
       - //example/...
@@ -23,7 +23,7 @@ tasks:
   default_workspace_macos:
     platform: macos
     build_targets:
-      - "@protoapis//..."
+      - "@protobufapis//..."
       - "@googleapis//..."
     test_targets:
       - //example/...

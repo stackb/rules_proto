@@ -4,45 +4,316 @@ module(
     compatibility_level = 1,
 )
 
-bazel_dep(name = "gazelle", version = "0.35.0", dev_dependency = True)
-bazel_dep(name = "rules_go", version = "0.45.1", dev_dependency = True)
+register_toolchains("@build_stack_rules_proto//toolchain:standard")
 
-go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
+# core_deps.bzl
+bazel_dep(name = "bazel_features", version = "1.9.1")
+bazel_dep(name = "bazel_skylib", version = "1.5.0")
+bazel_dep(name = "rules_go", version = "0.45.1", repo_name = "io_bazel_rules_go")
+bazel_dep(name = "gazelle", version = "0.35.0", repo_name = "bazel_gazelle")
+bazel_dep(name = "rules_proto", version = "6.0.0")
+bazel_dep(name = "rules_cc", version = "0.0.9")
 
-go_deps.module(
-    # name = "com_github_bmatcuk_doublestar",
-    # build_file_proto_mode = "disable_global",
-    path = "github.com/bmatcuk/doublestar",
-    sum = "h1:gPypJ5xD31uhX6Tf54sDPUOBXTqKH4c9aPY66CyQrS0=",
-    version = "v1.3.4",
-)
-go_deps.module(
-    path = "github.com/emicklei/proto",
-    sum = "h1:YtC/om6EdkJ0me1JPw4h2g10k+ELITjYFb7tpzm8i8k=",
-    version = "v1.13.0",
-)
-go_deps.module(
-    path = "go.starlark.net",
-    sum = "h1:hzy3LFnSN8kuQK8h9tHl4ndF6UruMj47OqwqsS+/Ai4=",
-    version = "v0.0.0-20231121155337-90ade8b19d09",
-)
-go_deps.module(
-    path = "github.com/bazelbuild/buildtools",
-    sum = "h1:2Gc2Q6hVR1SJ8bBI9Ybzoggp8u/ED2WkM4MfvEIn9+c=",
-    version = "v0.0.0-20231115204819-d4c9dccdfbb1",
+non_module_deps = use_extension("@bazel_gazelle//internal/bzlmod:non_module_deps.bzl", "non_module_deps")
+use_repo(
+    non_module_deps,
+    "bazel_gazelle_go_repository_cache",
+    "bazel_gazelle_go_repository_tools",
+    "bazel_gazelle_is_bazel_module",
 )
 
-go_deps.module(
-    path = "gopkg.in/yaml.v3",
-    sum = "h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=",
-    version = "v3.0.1",
+# grpc_java_deps()
+bazel_dep(name = "rules_java", version = "7.6.1")
+bazel_dep(name = "rules_jvm_external", version = "5.3")
+bazel_dep(name = "grpc-java", version = "1.64.0", repo_name = "io_grpc_grpc_java")
+
+# gazelle_protobuf_extension_go_deps()
+
+proto_repository_tools = use_repo_rule("//rules/private:proto_repository_tools.bzl", "proto_repository_tools")
+
+proto_repository_tools(
+    name = "proto_repository_tools",
+    go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
 )
 
+# go_repository(
+#     name = "com_github_emicklei_proto",
+#     build_file_proto_mode = "disable_global",
+#     importpath = "github.com/emicklei/proto",
+#     sum = "h1:YtC/om6EdkJ0me1JPw4h2g10k+ELITjYFb7tpzm8i8k=",
+#     version = "v1.13.0",
+# )
+# go_repository(
+#     name = "in_gopkg_yaml_v3",
+#     build_file_proto_mode = "disable_global",
+#     importpath = "gopkg.in/yaml.v3",
+#     sum = "h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=",
+#     version = "v3.0.1",
+# )
+# go_repository(
+#     name = "in_gopkg_check_v1",
+#     build_file_proto_mode = "disable_global",
+#     importpath = "gopkg.in/check.v1",
+#     sum = "h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=",
+#     version = "v0.0.0-20161208181325-20d25e280405",
+# )
+# go_repository(
+#     name = "com_github_bmatcuk_doublestar",
+#     build_file_proto_mode = "disable_global",
+#     importpath = "github.com/bmatcuk/doublestar",
+#     sum = "h1:gPypJ5xD31uhX6Tf54sDPUOBXTqKH4c9aPY66CyQrS0=",
+#     version = "v1.3.4",
+# )
+
+# protobuf_core_deps()
+
+bazel_dep(name = "rules_pkg", version = "0.7.0")
+bazel_dep(name = "rules_python", version = "0.27.1")
+bazel_dep(name = "zlib", version = "1.2.11")
+bazel_dep(name = "protobuf", version = "27.1", repo_name = "com_google_protobuf")
+bazel_dep(name = "protobuf_javascript", repo_name = "com_google_protobuf_javascript")
+git_override(
+    module_name = "protobuf_javascript",
+    commit = "5d939dbc8fd5245c4316d52c203a1bff24bac5c4",  # https://github.com/protocolbuffers/protobuf-javascript/commit/05560593d93e7207e84829b3ab6a80c08078e389
+    remote = "https://github.com/protocolbuffers/protobuf-javascript",
+)
+
+# grpc_core_deps()
+
+#bazel_dep(name = "rules_pkg", version = "0.7.1")
+#bazel_dep(name = "rules_python", version = "0.27.1")
+#bazel_dep(name = "zlib", version = "1.2.11")
+#bazel_dep(name = "protobuf", version = "21.7", repo_name = "com_google_protobuf")
+bazel_dep(name = "grpc", version = "1.56.3", repo_name = "com_github_grpc_grpc")
+
+# go_core_deps()
+
+go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
+go_deps.from_file(go_mod = "//:go.mod")
 use_repo(
     go_deps,
+    "com_github_bazelbuild_buildtools",
     "com_github_bmatcuk_doublestar",
     "com_github_emicklei_proto",
-    "net_starlark_go",
-    "com_github_bazelbuild_buildtools",
+    "com_github_google_go_cmp",
+    "com_github_pmezard_go_difflib",
+    "com_github_stretchr_testify",
     "in_gopkg_yaml_v3",
+    "net_starlark_go",
+)
+
+# def com_github_golang_protobuf():
+#     _maybe(
+#         go_repository,
+#         name = "com_github_golang_protobuf",
+#         sum = "h1:JjCZWpVbqXDqFVmTfYWEVTMIYrL/NPdPSCHPJ0T/raM=",
+#         version = "v1.4.3",
+#         importpath = "github.com/golang/protobuf",
+#         build_file_proto_mode = "disable_global",
+#     )
+
+# def org_golang_google_grpc():
+#     _maybe(
+#         go_repository,
+#         name = "org_golang_google_grpc",
+#         sum = "h1:TwIQcH3es+MojMVojxxfQ3l3OF2KzlRxML2xZq0kRo8=",
+#         version = "v1.35.0",
+#         importpath = "google.golang.org/grpc",
+#         build_file_proto_mode = "disable",
+#     )
+
+# def org_golang_google_grpc_cmd_protoc_gen_go_grpc():
+#     _maybe(
+#         go_repository,
+#         name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
+#         sum = "h1:M1YKkFIboKNieVO5DLUEVzQfGwJD30Nv2jfUgzb5UcE=",
+#         version = "v1.1.0",
+#         importpath = "google.golang.org/grpc/cmd/protoc-gen-go-grpc",
+#         build_file_proto_mode = "disable_global",
+#     )
+
+# ts_proto_deps()
+bazel_dep(name = "aspect_bazel_lib", version = "1.33.0")
+bazel_dep(name = "aspect_rules_js", version = "1.31.0")
+bazel_dep(name = "aspect_rules_ts", version = "1.4.5")
+
+npm = use_extension(
+    "@aspect_rules_js//npm:extensions.bzl",
+    "npm",
+)
+npm.npm_translate_lock(
+    name = "npm_ts_proto",
+    generate_bzl_library_targets = True,
+    npmrc = "//:.npmrc",
+    pnpm_lock = "//:pnpm-lock.yaml",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "npm_ts_proto")
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "prebuilt_protoc_linux",
+    build_file_content = """
+filegroup(
+    name = "protoc",
+    srcs = ["bin/protoc"],
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "3a0e900f9556fbcac4c3a913a00d07680f0fdf6b990a341462d822247b265562",
+    urls = [
+        "https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-linux-x86_64.zip",
+    ],
+)
+
+http_archive(
+    name = "prebuilt_protoc_osx",
+    build_file_content = """
+filegroup(
+    name = "protoc",
+    srcs = ["bin/protoc"],
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "b4f36b18202d54d343a66eebc9f8ae60809a2a96cc2d1b378137550bbe4cf33c",
+    urls = [
+        "https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-osx-x86_64.zip",
+    ],
+)
+
+http_archive(
+    name = "prebuilt_protoc_windows",
+    build_file_content = """
+filegroup(
+    name = "protoc",
+    srcs = ["bin/protoc.exe"],
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "2291c634777242f3bf4891b082cebc6dd495ae621fbf751b27e800b83369a345",
+    urls = [
+        "https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-win32.zip",
+    ],
+)
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    name = "maven_scala",
+    artifacts = [
+        "com.thesamet.scalapb:compilerplugin_2.12:0.11.17",
+        # "com.thesamet.scalapb:lenses_2.12:0.11.5",
+        # "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
+        # "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
+        # "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
+        # "com.thesamet.scalapb:scalapbc_2.12:0.11.5",
+        # "io.grpc:grpc-api:1.40.1",
+        # "io.grpc:grpc-core:1.40.1",
+        # "io.grpc:grpc-netty:1.40.1",
+        # "io.grpc:grpc-protobuf:1.40.1",
+        # "io.grpc:grpc-stub:1.40.1",
+        # "org.json4s:json4s-core_2.12:4.0.3",
+    ],
+    fetch_sources = True,
+    # lock_file = "//:maven_scala_install.json",
+    repositories = ["https://repo1.maven.org/maven2"],
+)
+maven.install(
+    name = "maven_akka",
+    artifacts = [
+        "com.lightbend.akka.grpc:akka-grpc-codegen_2.12:2.1.3",
+        "com.lightbend.akka.grpc:akka-grpc-runtime_2.12:2.1.3",
+    ],
+    fetch_sources = True,
+    lock_file = "//:maven_akka_install.json",
+    repositories = ["https://repo1.maven.org/maven2"],
+)
+use_repo(maven, "maven_akka", "maven_scala")
+
+proto_repository = use_extension("//extensions:proto_repository.bzl", "proto_repository", dev_dependency = True)
+proto_repository.http_archive(
+    name = "protobufapis",
+    build_directives = [
+        "gazelle:exclude testdata",
+        "gazelle:exclude google/protobuf/compiler/ruby",
+        "gazelle:exclude google/protobuf/util",
+        "gazelle:proto_language go enable false",
+        "gazelle:proto_language cpp enable true",
+        "gazelle:proto_language java enable true",
+        "gazelle:proto_language scala enable true",
+        "gazelle:proto_language go enable true",
+        "gazelle:proto_language python enable true",
+        "gazelle:proto_language descriptor enable true",
+        "gazelle:proto_rule proto_ts_library attr out_dir ts",
+    ],
+    build_file_expunge = True,
+    build_file_proto_mode = "file",
+    cfgs = ["@//:rules_proto_config.yaml"],
+    deleted_files = [
+        "google/protobuf/map_lite_unittest.proto",
+        "google/protobuf/map_proto2_unittest.proto",
+        "google/protobuf/map_proto3_unittest.proto",
+        "google/protobuf/map_unittest.proto",
+        "google/protobuf/test_messages_proto2.proto",
+        "google/protobuf/test_messages_proto3.proto",
+        "google/protobuf/unittest.proto",
+        "google/protobuf/unittest_arena.proto",
+        "google/protobuf/unittest_custom_options.proto",
+        "google/protobuf/unittest_drop_unknown_fields.proto",
+        "google/protobuf/unittest_embed_optimize_for.proto",
+        "google/protobuf/unittest_empty.proto",
+        "google/protobuf/unittest_enormous_descriptor.proto",
+        "google/protobuf/unittest_import_lite.proto",
+        "google/protobuf/unittest_import_public_lite.proto",
+        "google/protobuf/unittest_import_public.proto",
+        "google/protobuf/unittest_import.proto",
+        "google/protobuf/unittest_lazy_dependencies_custom_option.proto",
+        "google/protobuf/unittest_lazy_dependencies_enum.proto",
+        "google/protobuf/unittest_lazy_dependencies.proto",
+        "google/protobuf/unittest_lite_imports_nonlite.proto",
+        "google/protobuf/unittest_lite.proto",
+        "google/protobuf/unittest_mset_wire_format.proto",
+        "google/protobuf/unittest_mset.proto",
+        "google/protobuf/unittest_no_field_presence.proto",
+        "google/protobuf/unittest_no_generic_services.proto",
+        "google/protobuf/unittest_optimize_for.proto",
+        "google/protobuf/unittest_preserve_unknown_enum.proto",
+        "google/protobuf/unittest_preserve_unknown_enum2.proto",
+        "google/protobuf/unittest_proto3_arena_lite.proto",
+        "google/protobuf/unittest_proto3_arena.proto",
+        "google/protobuf/unittest_proto3_lite.proto",
+        "google/protobuf/unittest_proto3_optional.proto",
+        "google/protobuf/unittest_proto3.proto",
+        "google/protobuf/unittest_retention.proto",
+        "google/protobuf/unittest_well_known_types.proto",
+        "google/protobuf/compiler/cpp/test_bad_identifiers.proto",
+    ],
+    reresolve_known_proto_imports = True,
+    sha256 = "087c2ec84a07308318d35e0e39717e2037e05d14e628244602a2c78fbe203fa5",
+    strip_prefix = "protobuf-a74f54b724bdc2fe0bfc271f4dc0ceb159805625/src",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/a74f54b724bdc2fe0bfc271f4dc0ceb159805625.tar.gz"],
+)
+proto_repository.http_archive(
+    name = "googleapis",
+    build_directives = [
+        "gazelle:exclude google/ads/googleads/v12/services",
+        "gazelle:exclude google/ads/googleads/v13/services",
+        "gazelle:exclude google/ads/googleads/v14/services",
+        "gazelle:proto_language go enable false",
+        "gazelle:proto_language cpp enable false",
+        "gazelle:proto_language descriptor enable true",
+    ],
+    build_file_expunge = True,
+    build_file_proto_mode = "file",
+    cfgs = ["@//:rules_proto_config.yaml"],
+    imports = ["@protobufapis//:imports.csv"],
+    reresolve_known_proto_imports = True,
+    sha256 = "e5b59ae2c0c812e3867158eca8e484fddb96dff03b8e2073bf44242b708fa919",
+    strip_prefix = "googleapis-e115ab1839cb6e1bd953e40337b7e84001291766",
+    urls = ["https://github.com/googleapis/googleapis/archive/e115ab1839cb6e1bd953e40337b7e84001291766.tar.gz"],
+)
+use_repo(
+    proto_repository,
+    "googleapis",
+    "protobufapis",
 )

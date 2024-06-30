@@ -34,7 +34,7 @@ func TestOverrideRule(t *testing.T) {
 			},
 			want: []string{
 				"//google/api:http_proto",
-				"@protoapis//google/protobuf:any_proto",
+				"@protobufapis//google/protobuf:any_proto",
 			},
 			imps: []string{
 				"google/protobuf/any.proto",

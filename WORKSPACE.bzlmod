@@ -1,0 +1,71 @@
+workspace(name = "build_stack_rules_proto")
+
+# ----------------------------------------------------
+# Scala
+# ----------------------------------------------------
+
+# rules_scala is not yet in the bzlmod registry.
+load("//deps:scala_deps.bzl", "io_bazel_rules_scala")
+
+io_bazel_rules_scala()
+
+load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
+
+scala_config(
+    enable_compiler_dependency_tracking = True,
+    scala_version = "2.12.18",
+)
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+
+scala_repositories()
+
+register_toolchains(
+    "//toolchain/scala:default_toolchain",
+)
+
+# ----------------------------------------------------
+# Closure
+# ----------------------------------------------------
+
+# rules_closure is not yet in the bzlmod registry.
+load("//deps:closure_deps.bzl", "io_bazel_rules_closure")
+
+io_bazel_rules_closure()
+
+load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
+
+rules_closure_toolchains()
+
+rules_closure_dependencies(
+    omit_com_google_protobuf = True,
+    omit_rules_python = True,
+)
+
+# ----------------------------------------------------
+# Node
+# ----------------------------------------------------
+
+load("//deps:grpc_node_deps.bzl", "com_github_grpc_grpc_node_packages_grpc_tools_src")
+
+com_github_grpc_grpc_node_packages_grpc_tools_src()
+
+load("//deps:nodejs_deps.bzl", "nodejs_deps")
+
+nodejs_deps()
+
+# ----------------------------------------------------
+# Grpc-Web
+# ----------------------------------------------------
+
+load("//deps:grpc_web_deps.bzl", "grpc_web_deps")
+
+grpc_web_deps()
+
+# ----------------------------------------------------
+# Grpc-JS
+# ----------------------------------------------------
+
+load("//deps:grpc_js_deps.bzl", "grpc_js_deps")
+
+grpc_js_deps()
