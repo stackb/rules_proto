@@ -177,19 +177,19 @@ grpc_java_library(
     visibility = ["//visibility:public"],
     exports = [
         ":routeguide_java_library",
-        "@com_google_guava_guava//jar",
-        "@io_grpc_grpc_java//context",
+        "@io_grpc_grpc_java//api",
         "@io_grpc_grpc_java//protobuf",
         "@io_grpc_grpc_java//stub",
         "@io_grpc_grpc_java//stub:javax_annotation",
+        "@maven//:com_google_guava_guava",
     ],
     deps = [
         ":routeguide_java_library",
-        "@com_google_guava_guava//jar",
-        "@io_grpc_grpc_java//context",
+        "@io_grpc_grpc_java//api",
         "@io_grpc_grpc_java//protobuf",
         "@io_grpc_grpc_java//stub",
         "@io_grpc_grpc_java//stub:javax_annotation",
+        "@maven//:com_google_guava_guava",
     ],
 )
 
@@ -305,6 +305,9 @@ grpc_scala_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "@io_grpc_grpc_java//api",
+        "@io_grpc_grpc_java//protobuf",
+        "@io_grpc_grpc_java//stub",
         "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3",
         "@maven_akka//:com_typesafe_akka_akka_actor_2_12",
         "@maven_akka//:com_typesafe_akka_akka_http_core_2_12",
@@ -313,9 +316,6 @@ grpc_scala_library(
         "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12",
-        "@maven_scala//:io_grpc_grpc_api",
-        "@maven_scala//:io_grpc_grpc_protobuf",
-        "@maven_scala//:io_grpc_grpc_stub",
     ],
 )
 

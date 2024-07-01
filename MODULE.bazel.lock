@@ -6382,7 +6382,7 @@
     },
     "@@grpc~//bazel:grpc_extra_deps.bzl%grpc_extra_deps_ext": {
       "general": {
-        "bzlTransitiveDigest": "vVD8a5mg8cdXnJ440BgfrWsO8r4hxiArDnK5+1tIb5w=",
+        "bzlTransitiveDigest": "2wCkYZ4VrKDRnXftQNfo+MV8q7UGd3KZEPJ2PlnH+ZI=",
         "usagesDigest": "eRLYoI4x2BgRx5FrVYi0hNEK6FJAwdTH6FqfwxeDq78=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

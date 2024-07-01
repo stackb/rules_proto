@@ -141,7 +141,7 @@ rules:
       - "@io_grpc_grpc_java//stub:javax_annotation"
       - "@io_grpc_grpc_java//context"
       - "@io_grpc_grpc_java//protobuf"
-      - "@com_google_guava_guava//jar"
+      - "@maven//:com_google_guava_guava"
     visibility:
       - //visibility:public
 
@@ -184,17 +184,17 @@ rules:
     options:
       - --plugins=protoc-gen-scala-grpc,protoc-gen-akka-grpc
     deps:
-      - "@maven_scala//:com_google_protobuf_protobuf_java"
-      - "@maven_scala//:com_thesamet_scalapb_lenses_2_12"
-      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12"
-      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12"
+      - "@io_grpc_grpc_java//api"
+      - "@io_grpc_grpc_java//protobuf"
+      - "@io_grpc_grpc_java//stub"
       - "@maven_akka//:com_lightbend_akka_grpc_akka_grpc_runtime_2_12_2_1_3"
       - "@maven_akka//:com_typesafe_akka_akka_actor_2_12"
       - "@maven_akka//:com_typesafe_akka_akka_http_core_2_12"
       - "@maven_akka//:com_typesafe_akka_akka_stream_2_12"
-      - "@maven_scala//:io_grpc_grpc_api"
-      - "@maven_scala//:io_grpc_grpc_protobuf"
-      - "@maven_scala//:io_grpc_grpc_stub"
+      - "@maven_scala//:com_google_protobuf_protobuf_java"
+      - "@maven_scala//:com_thesamet_scalapb_lenses_2_12"
+      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12"
+      - "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_grpc_2_12"
     visibility:
       - //visibility:public
 

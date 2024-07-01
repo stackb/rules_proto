@@ -46,9 +46,9 @@ rules_closure_dependencies(
 # Node
 # ----------------------------------------------------
 
-load("//deps:grpc_node_deps.bzl", "com_github_grpc_grpc_node_packages_grpc_tools_src")
+# load("//deps:grpc_node_deps.bzl", "com_github_grpc_grpc_node_packages_grpc_tools_src")
 
-com_github_grpc_grpc_node_packages_grpc_tools_src()
+# com_github_grpc_grpc_node_packages_grpc_tools_src()
 
 load("//deps:nodejs_deps.bzl", "nodejs_deps")
 

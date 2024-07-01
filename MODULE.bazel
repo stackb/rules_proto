@@ -110,6 +110,8 @@ use_repo(
     "in_gopkg_yaml_v3",
     "net_starlark_go",
     "org_golang_google_protobuf",
+    "org_golang_google_grpc",
+    "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
     "bazel_gazelle_go_repository_config",  # keep
 )
 
@@ -213,22 +215,44 @@ filegroup(
     ],
 )
 
+http_archive(
+    name = "com_github_grpc_grpc_node_packages_grpc_tools_src",
+    sha256 = "7fbe9d04e45420c3c2e02456c0275fa8716fa894c48525b9a8f7db9ac0b4acb0",
+    strip_prefix = "grpc-node-aeb42733d861883b82323e2dc6d1aba0e3a12aa0/packages/grpc-tools/src",
+    urls = [
+        "https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz",
+    ],
+    build_file_content = """
+cc_library(
+    name = "grpc_plugin_support",
+    srcs = ["node_generator.cc"],
+    hdrs = [
+        "config.h",
+        "config_protobuf.h",
+        "generator_helpers.h",
+        "node_generator.h",
+        "node_generator_helpers.h",
+    ],
+    deps = ["@com_google_protobuf//:protoc_lib"],
+)
+cc_binary(
+    name = "grpc_node_plugin",
+    srcs = ["node_plugin.cc"],
+    visibility = ["//visibility:public"],
+    deps = [":grpc_plugin_support"],
+)
+""",
+)
+
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     name = "maven_scala",
     artifacts = [
         "com.thesamet.scalapb:compilerplugin_2.12:0.11.17",
         "com.thesamet.scalapb:lenses_2.12:0.11.5",
-        # "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
+        "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
         "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
-        # "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
-        # "com.thesamet.scalapb:scalapbc_2.12:0.11.5",
-        # "io.grpc:grpc-api:1.40.1",
-        # "io.grpc:grpc-core:1.40.1",
-        # "io.grpc:grpc-netty:1.40.1",
-        # "io.grpc:grpc-protobuf:1.40.1",
-        # "io.grpc:grpc-stub:1.40.1",
-        # "org.json4s:json4s-core_2.12:4.0.3",
+        "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
     ],
     lock_file = "rules_jvm_external~~maven~maven_scala_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
@@ -247,6 +271,7 @@ use_repo(
     maven,
     "maven_akka",
     "maven_scala",
+    "maven",
     "com_google_protobuf_protobuf_java_3_19_3",
     "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
 )
