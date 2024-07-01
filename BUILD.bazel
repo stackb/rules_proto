@@ -1,7 +1,6 @@
-load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
-
-# load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 load("@//rules:proto_gazelle.bzl", "proto_gazelle")
+load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 
 exports_files(["rules_proto_config.yaml"])
 
@@ -71,6 +70,6 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-# npm_link_all_packages(
-#     name = "node_modules",
-# )
+npm_link_all_packages(
+    name = "node_modules",
+)

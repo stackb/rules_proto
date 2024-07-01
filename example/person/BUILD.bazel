@@ -172,7 +172,9 @@ proto_scala_library(
     visibility = ["//visibility:public"],
     deps = [
         "//example/place:place_proto_scala_library",
-        "@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_deps",
+        "@maven_scala//:com_google_protobuf_protobuf_java",
+        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
     ],
 )
 

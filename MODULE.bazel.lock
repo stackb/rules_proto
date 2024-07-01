@@ -10,15 +10,14 @@
     "https://bcr.bazel.build/modules/abseil-cpp/20230802.0/MODULE.bazel": "d253ae36a8bd9ee3c5955384096ccb6baf16a1b1e93e858370da0a3b94f77c16",
     "https://bcr.bazel.build/modules/apple_support/1.5.0/MODULE.bazel": "50341a62efbc483e8a2a6aec30994a58749bd7b885e18dd96aa8c33031e558ef",
     "https://bcr.bazel.build/modules/apple_support/1.5.0/source.json": "eb98a7627c0bc486b57f598ad8da50f6625d974c8f723e9ea71bd39f709c9862",
-    "https://bcr.bazel.build/modules/aspect_bazel_lib/1.29.2/MODULE.bazel": "3ca4ed580f4d7e7e47c0b4f2e4799e8c895a2e59e7fab922078cdd5fb631095b",
-    "https://bcr.bazel.build/modules/aspect_bazel_lib/1.31.2/MODULE.bazel": "7bee702b4862612f29333590f4b658a5832d433d6f8e4395f090e8f4e85d442f",
     "https://bcr.bazel.build/modules/aspect_bazel_lib/1.33.0/MODULE.bazel": "1b92e36c38ef8df5a4f9d421f6cc70f53c168511557846af7f841393026405df",
-    "https://bcr.bazel.build/modules/aspect_bazel_lib/1.33.0/source.json": "a10710400fbf19b6e4db6b73827c17f68ef830396fda7c06f4e91211ec96f728",
-    "https://bcr.bazel.build/modules/aspect_rules_js/1.29.2/MODULE.bazel": "1b8f06192f8372e33139e1f6aa97e1d56295eb5134b288d70a750d4d13a37736",
-    "https://bcr.bazel.build/modules/aspect_rules_js/1.31.0/MODULE.bazel": "15de32c321263f88c9fcef21c9ad5e9474c40d5bfc1fc6a7be0dd4af42d8eac9",
-    "https://bcr.bazel.build/modules/aspect_rules_js/1.31.0/source.json": "59c2174d269314abb23c6b8d2634ba100122fa4fffb888e4968ebd4ed6f71124",
-    "https://bcr.bazel.build/modules/aspect_rules_ts/1.4.5/MODULE.bazel": "9e6520f1aa823e7f707968124e1bbe87598ec5495df3162d0749fa19a29973bb",
-    "https://bcr.bazel.build/modules/aspect_rules_ts/1.4.5/source.json": "40b03d827dd656b775318fe205a54481219d4729a67bf8293e6706a8a41ab2cd",
+    "https://bcr.bazel.build/modules/aspect_bazel_lib/1.38.1/MODULE.bazel": "17ae5bb970187e51c39a5ac21190279a58d7eeba83bc43e4165547cc0cf8de4a",
+    "https://bcr.bazel.build/modules/aspect_bazel_lib/1.40.2/MODULE.bazel": "94faac347405327a3bb58382da0f8be7e0f266a4ab2ee094aa34aada2720a672",
+    "https://bcr.bazel.build/modules/aspect_bazel_lib/1.40.2/source.json": "a32f31e10d1db0d00ec72c049f08a2dd41f03d40888dfa59f9b5516882cff864",
+    "https://bcr.bazel.build/modules/aspect_rules_js/1.34.0/MODULE.bazel": "cbe059f9c11db239121a858c5586cbfbed56777eb089860553675b25085ab11a",
+    "https://bcr.bazel.build/modules/aspect_rules_js/1.34.0/source.json": "c23bf35f2b198d99edc04d006dfa76133243bfa31d9d9e79c45cf5d112adda67",
+    "https://bcr.bazel.build/modules/aspect_rules_ts/2.4.2/MODULE.bazel": "0ac8af28f091d5213aefb3f8d088991148f375721c29118a50fcbf2eb177f228",
+    "https://bcr.bazel.build/modules/aspect_rules_ts/2.4.2/source.json": "2c9cb1d14b4bb20f76a41f36196aeea537b0e74e9a0cd667c52290329e09172c",
     "https://bcr.bazel.build/modules/bazel_features/0.1.0/MODULE.bazel": "47011d645b0f949f42ee67f2e8775188a9cf4a0a1528aa2fa4952f2fd00906fd",
     "https://bcr.bazel.build/modules/bazel_features/1.1.0/MODULE.bazel": "cfd42ff3b815a5f39554d97182657f8c4b9719568eb7fded2b9135f084bf760b",
     "https://bcr.bazel.build/modules/bazel_features/1.1.1/MODULE.bazel": "27b8c79ef57efe08efccbd9dd6ef70d61b4798320b8d3c134fd571f78963dbcd",
@@ -98,7 +97,6 @@
     "https://bcr.bazel.build/modules/rules_go/0.45.1/MODULE.bazel": "6d7884f0edf890024eba8ab31a621faa98714df0ec9d512389519f0edff0281a",
     "https://bcr.bazel.build/modules/rules_go/0.46.0/MODULE.bazel": "3477df8bdcc49e698b9d25f734c4f3a9f5931ff34ee48a2c662be168f5f2d3fd",
     "https://bcr.bazel.build/modules/rules_go/0.46.0/source.json": "fbf0e50e8ed487272e5c0977c0b67c74cbe97e1880b45bbeff44a3338dc8a08e",
-    "https://bcr.bazel.build/modules/rules_java/4.0.0/MODULE.bazel": "5a78a7ae82cd1a33cef56dc578c7d2a46ed0dca12643ee45edbb8417899e6f74",
     "https://bcr.bazel.build/modules/rules_java/5.1.0/MODULE.bazel": "324b6478b0343a3ce7a9add8586ad75d24076d6d43d2f622990b9c1cfd8a1b15",
     "https://bcr.bazel.build/modules/rules_java/5.3.5/MODULE.bazel": "a4ec4f2db570171e3e5eb753276ee4b389bae16b96207e9d3230895c99644b86",
     "https://bcr.bazel.build/modules/rules_java/6.0.0/MODULE.bazel": "8a43b7df601a7ec1af61d79345c17b31ea1fedc6711fd4abfd013ea612978e39",
@@ -129,7 +127,6 @@
     "https://bcr.bazel.build/modules/rules_python/0.31.0/MODULE.bazel": "93a43dc47ee570e6ec9f5779b2e64c1476a6ce921c48cc9a1678a91dd5f8fd58",
     "https://bcr.bazel.build/modules/rules_python/0.31.0/source.json": "a41c836d4065888eef4377f2f27b6eea0fedb9b5adb1bab1970437373fe90dc7",
     "https://bcr.bazel.build/modules/rules_python/0.4.0/MODULE.bazel": "9208ee05fd48bf09ac60ed269791cf17fb343db56c8226a720fbb1cdf467166c",
-    "https://bcr.bazel.build/modules/stardoc/0.5.0/MODULE.bazel": "f9f1f46ba8d9c3362648eea571c6f9100680efc44913618811b58cc9c02cd678",
     "https://bcr.bazel.build/modules/stardoc/0.5.4/MODULE.bazel": "6569966df04610b8520957cb8e97cf2e9faac2c0309657c537ab51c16c18a2a4",
     "https://bcr.bazel.build/modules/stardoc/0.5.6/MODULE.bazel": "c43dabc564990eeab55e25ed61c07a1aadafe9ece96a4efabb3f8bf9063b71ef",
     "https://bcr.bazel.build/modules/stardoc/0.5.6/source.json": "956954c9c45ef492ea4001ce579dc40431fbd75090151e8f9eadf9ed6377a108",
@@ -171,10 +168,10 @@
         ]
       }
     },
-    "@@aspect_bazel_lib~//lib:extensions.bzl%ext": {
+    "@@aspect_bazel_lib~//lib:extensions.bzl%toolchains": {
       "general": {
-        "bzlTransitiveDigest": "3btyuuS2a+YKBsQrxsmABws/K5NKnrUYIKtbjzT7LOo=",
-        "usagesDigest": "DLw+9suRcOpakuXUPqw8x1ekvI/Z/IE24PQx2H1yuu8=",
+        "bzlTransitiveDigest": "9K7CAdcuUb2trK3TBsnGPQzSLzlzmxnY59Xuw/389i0=",
+        "usagesDigest": "BjJSZOpxeEMvKkc2M5cHywOfiN2U+vartuwM17AWUoo=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -211,6 +208,13 @@
             "ruleClassName": "expand_template_platform_repo",
             "attributes": {
               "platform": "darwin_arm64"
+            }
+          },
+          "copy_to_directory_freebsd_amd64": {
+            "bzlFile": "@@aspect_bazel_lib~//lib/private:copy_to_directory_toolchain.bzl",
+            "ruleClassName": "copy_to_directory_platform_repo",
+            "attributes": {
+              "platform": "freebsd_amd64"
             }
           },
           "expand_template_linux_amd64": {
@@ -300,6 +304,13 @@
             "ruleClassName": "coreutils_toolchains_repo",
             "attributes": {
               "user_repository_name": "coreutils"
+            }
+          },
+          "copy_directory_freebsd_amd64": {
+            "bzlFile": "@@aspect_bazel_lib~//lib/private:copy_directory_toolchain.bzl",
+            "ruleClassName": "copy_directory_platform_repo",
+            "attributes": {
+              "platform": "freebsd_amd64"
             }
           },
           "yq_linux_s390x": {
@@ -397,6 +408,13 @@
               "version": "1.6"
             }
           },
+          "expand_template_freebsd_amd64": {
+            "bzlFile": "@@aspect_bazel_lib~//lib/private:expand_template_toolchain.bzl",
+            "ruleClassName": "expand_template_platform_repo",
+            "attributes": {
+              "platform": "freebsd_amd64"
+            }
+          },
           "yq_linux_ppc64le": {
             "bzlFile": "@@aspect_bazel_lib~//lib/private:yq_toolchain.bzl",
             "ruleClassName": "yq_platform_repo",
@@ -486,7 +504,7 @@
     },
     "@@aspect_rules_js~//npm:extensions.bzl%npm": {
       "general": {
-        "bzlTransitiveDigest": "SJM/YwqJkBU1D1iqtCC3GRuu3y3fFs4HL6VsB5OY0/4=",
+        "bzlTransitiveDigest": "MKzvX1Jj/qTGqETebtw0N0jARYsVdnhgo5DIzIGitIk=",
         "usagesDigest": "wcJl6hf9OxE+jNu52QEns4ThZJ/TbcWACt6NnlzsbqQ=",
         "recordedFileInputs": {
           "@@//pnpm-lock.yaml": "95767e020b80c24dd21943417a1c98316aa7aa3012abcb1f6d5b034aa44e52b6",
@@ -578,6 +596,7 @@
               "patches": {},
               "patch_args": {},
               "custom_postinstalls": {},
+              "package_visibility": {},
               "prod": false,
               "public_hoist_packages": {},
               "dev": false,
@@ -691,7 +710,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__node-fetch__2.6.12__links": {
@@ -724,7 +746,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_bufbuild_protoplugin__1.3.0__links": {
@@ -765,7 +790,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_protobufjs_path__1.1.2": {
@@ -890,7 +918,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__string-width__4.2.3__links": {
@@ -928,7 +959,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__iterare__1.2.1__links": {
@@ -950,7 +984,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__fast-safe-stringify__2.1.1": {
@@ -1000,7 +1037,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__wrap-ansi__7.0.0": {
@@ -1098,7 +1138,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__protobufjs__7.2.4__links": {
@@ -1175,7 +1218,10 @@
                 "no-sandbox"
               ],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__tslib__2.6.1__links": {
@@ -1197,7 +1243,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_types_node__20.4.9__links": {
@@ -1223,7 +1272,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__color-convert__2.0.1": {
@@ -1325,7 +1377,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_nestjs_common__10.1.3__1840228737__links": {
@@ -1375,7 +1430,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__long__5.2.3": {
@@ -1425,7 +1483,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__case-anything__2.1.13__links": {
@@ -1447,7 +1508,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_types_long__4.0.2__links": {
@@ -1469,7 +1533,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__case-anything__2.1.13": {
@@ -1571,7 +1638,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__supports-color__7.2.0__links": {
@@ -1598,7 +1668,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__iterare__1.2.1": {
@@ -1644,7 +1717,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__tr46__0.0.3": {
@@ -1708,7 +1784,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_lukeed_csprng__1.1.0__links": {
@@ -1730,7 +1809,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__require-directory__2.1.1": {
@@ -1877,7 +1959,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__dprint-node__1.0.7": {
@@ -1923,7 +2008,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__chalk__4.1.2": {
@@ -1969,7 +2057,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__debug__4.3.4__links": {
@@ -1996,7 +2087,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__reflect-metadata__0.1.13": {
@@ -2046,7 +2140,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_nestjs_core__10.1.3__836871504__links": {
@@ -2242,7 +2339,10 @@
                 "no-sandbox"
               ],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__string-width__4.2.3": {
@@ -2312,7 +2412,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__escalade__3.1.1": {
@@ -2410,7 +2513,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__typescript__4.5.2__links": {
@@ -2432,7 +2538,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__whatwg-url__5.0.0__links": {
@@ -2463,7 +2572,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_protobufjs_aspromise__1.1.2": {
@@ -2538,7 +2650,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_nestjs_microservices__10.1.3__887215905__links": {
@@ -2729,7 +2844,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__color-name__1.1.4__links": {
@@ -2751,7 +2869,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__consola__2.15.3": {
@@ -2802,7 +2923,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_protobufjs_float__1.0.2": {
@@ -2960,7 +3084,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_grpc_grpc-js__1.9.0": {
@@ -3010,7 +3137,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__long__4.0.0__links": {
@@ -3032,7 +3162,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__debug__4.3.4": {
@@ -3120,7 +3253,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__is-fullwidth-code-point__3.0.0__links": {
@@ -3142,7 +3278,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__yargs__17.7.2": {
@@ -3284,7 +3423,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_bufbuild_protoc-gen-es__1.3.0__at_bufbuild_protobuf_1.3.0": {
@@ -3334,7 +3476,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_bufbuild_protobuf__1.3.0__links": {
@@ -3360,7 +3505,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__path-to-regexp__3.2.0": {
@@ -3459,7 +3607,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_bufbuild_protoc-gen-es__1.3.0__at_bufbuild_protobuf_1.3.0__links": {
@@ -3506,7 +3657,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__get-caller-file__2.0.5": {
@@ -3656,7 +3810,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__protobufjs__7.2.4": {
@@ -3714,7 +3871,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_types_node__20.4.9": {
@@ -3764,7 +3924,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_nestjs_common__10.1.3__1840228737": {
@@ -3962,7 +4125,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__fast-safe-stringify__2.1.1__links": {
@@ -3984,7 +4150,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__rxjs__7.8.1__links": {
@@ -4015,7 +4184,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__ts-poet__6.5.0__links": {
@@ -4045,7 +4217,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__uid__2.0.2__links": {
@@ -4072,7 +4247,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_typescript_vfs__1.5.0": {
@@ -4118,7 +4296,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__yargs-parser__21.1.1__links": {
@@ -4140,7 +4321,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_protobufjs_fetch__1.1.0__links": {
@@ -4171,7 +4355,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__has-flag__4.0.0__links": {
@@ -4193,7 +4380,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_protobufjs_inquire__1.1.0": {
@@ -4239,7 +4429,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__path-to-regexp__3.2.0__links": {
@@ -4261,7 +4454,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_protobufjs_base64__1.1.2__links": {
@@ -4283,7 +4479,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__has-flag__4.0.0": {
@@ -4353,7 +4552,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__ansi-styles__4.3.0__links": {
@@ -4383,7 +4585,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__detect-libc__1.0.3__links": {
@@ -4405,7 +4610,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__dprint-node__1.0.7__links": {
@@ -4432,7 +4640,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__webidl-conversions__3.0.1": {
@@ -4582,7 +4793,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__cliui__8.0.1": {
@@ -4636,7 +4850,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__typescript__4.5.2": {
@@ -4730,7 +4947,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__escalade__3.1.1__links": {
@@ -4752,7 +4972,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__ts-proto__1.156.0__links": {
@@ -4837,7 +5060,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__ms__2.1.2__links": {
@@ -4859,7 +5085,10 @@
               "lifecycle_hooks_env": [],
               "lifecycle_hooks_execution_requirements": [],
               "bins": {},
-              "npm_translate_lock_repo": "npm_ts_proto"
+              "npm_translate_lock_repo": "npm_ts_proto",
+              "package_visibility": [
+                "//visibility:public"
+              ]
             }
           },
           "npm_ts_proto__at_protobufjs_pool__1.1.0": {
@@ -5062,6 +5291,41 @@
           ],
           [
             "bazel_features~",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
+      }
+    },
+    "@@aspect_rules_ts~//ts:extensions.bzl%ext": {
+      "general": {
+        "bzlTransitiveDigest": "1X9STUnwmBLzzWERVX6QAHTZVHXkhVNUNaw1KokzY/Q=",
+        "usagesDigest": "Zutx8H8icdMcmqOrtNh89IUS0iO+63iDOJtpJxAOgss=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "npm_typescript": {
+            "bzlFile": "@@aspect_rules_ts~//ts/private:npm_repositories.bzl",
+            "ruleClassName": "http_archive_version",
+            "attributes": {
+              "bzlmod": true,
+              "version": "5.4.5",
+              "integrity": "",
+              "build_file": "@@aspect_rules_ts~//ts:BUILD.typescript",
+              "build_file_substitutions": {
+                "bazel_worker_version": "5.4.2",
+                "google_protobuf_version": "3.20.1"
+              },
+              "urls": [
+                "https://registry.npmjs.org/typescript/-/typescript-{}.tgz"
+              ]
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "aspect_rules_ts~",
             "bazel_tools",
             "bazel_tools"
           ]
@@ -6931,7 +7195,7 @@
     "@@rules_nodejs~//nodejs:extensions.bzl%node": {
       "general": {
         "bzlTransitiveDigest": "liNCpme8abwnUcdsL6FZlbuEqQRiO4GmDTZyX6QuOH4=",
-        "usagesDigest": "rb3Wpyewk21cRPbuNzJA5nWM6ezQFnOKHZRf97sQWqY=",
+        "usagesDigest": "VsZooNB4cD1O6nui7QCEUoSyXOPZWBrfePwvnLvmSxc=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},

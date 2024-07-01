@@ -143,10 +143,15 @@ use_repo(
 #         build_file_proto_mode = "disable_global",
 #     )
 
-# ts_proto_deps()
 bazel_dep(name = "aspect_bazel_lib", version = "1.33.0")
-bazel_dep(name = "aspect_rules_js", version = "1.31.0")
-bazel_dep(name = "aspect_rules_ts", version = "1.4.5")
+bazel_dep(name = "aspect_rules_js", version = "1.34.0")
+bazel_dep(name = "aspect_rules_ts", version = "2.4.2")
+
+rules_ts_ext = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext", dev_dependency = True)
+
+rules_ts_ext.deps()
+
+use_repo(rules_ts_ext, "npm_typescript")
 
 npm = use_extension(
     "@aspect_rules_js//npm:extensions.bzl",
@@ -225,6 +230,7 @@ maven.install(
         # "io.grpc:grpc-stub:1.40.1",
         # "org.json4s:json4s-core_2.12:4.0.3",
     ],
+    lock_file = "rules_jvm_external~~maven~maven_scala_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
 maven.install(

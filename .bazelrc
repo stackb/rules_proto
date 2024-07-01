@@ -1,4 +1,9 @@
 common --enable_bzlmod
+common --@aspect_rules_ts//ts:skipLibCheck=always
+
+build --@aspect_rules_ts//ts:default_to_tsc_transpiler
+fetch --@aspect_rules_ts//ts:default_to_tsc_transpiler
+query --@aspect_rules_ts//ts:default_to_tsc_transpiler
 
 common --jvmopt=-Djava.security.manager=allow
 build --java_language_version=17
