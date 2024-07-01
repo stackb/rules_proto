@@ -32,7 +32,7 @@ go_library(
         "@bazel_gazelle//resolve:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
         "@bazel_gazelle//walk:go_default_library",
-        "@com_github_pmezard_go_difflib//difflib",
+        "@com_github_pmezard_go_difflib//difflib:go_default_library",
     ],
 )
 

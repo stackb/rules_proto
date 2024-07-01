@@ -13,7 +13,7 @@ proto_library(
     name = "thing_proto",
     srcs = ["thing.proto"],
     visibility = ["//visibility:public"],
-    deps = ["@protobufapis//google/protobuf:timestamp_proto"],
+    deps = ["@_main~proto_repository~protobufapis//google/protobuf:timestamp_proto"],
 )
 
 proto_closure_js_library(
@@ -49,8 +49,8 @@ proto_cc_library(
     hdrs = ["thing.pb.h"],
     visibility = ["//visibility:public"],
     deps = [
+        "@_main~proto_repository~protobufapis//google/protobuf:timestamp_cc_library",
         "@com_google_protobuf//:protobuf",
-        "@protobufapis//google/protobuf:timestamp_cc_library",
     ],
 )
 
@@ -100,12 +100,12 @@ proto_java_library(
     srcs = ["thing.srcjar"],
     visibility = ["//visibility:public"],
     exports = [
+        "@_main~proto_repository~protobufapis//google/protobuf:timestamp_java_library",
         "@com_google_protobuf//:protobuf_java",
-        "@protobufapis//google/protobuf:timestamp_java_library",
     ],
     deps = [
+        "@_main~proto_repository~protobufapis//google/protobuf:timestamp_java_library",
         "@com_google_protobuf//:protobuf_java",
-        "@protobufapis//google/protobuf:timestamp_java_library",
     ],
 )
 
@@ -143,8 +143,8 @@ proto_py_library(
     srcs = ["thing_pb2.py"],
     visibility = ["//visibility:public"],
     deps = [
+        "@_main~proto_repository~protobufapis//google/protobuf:timestamp_py_library",
         "@com_google_protobuf//:protobuf_python",
-        "@protobufapis//google/protobuf:timestamp_py_library",
     ],
 )
 
@@ -167,11 +167,7 @@ proto_scala_library(
     name = "thing_proto_scala_library",
     srcs = ["thing_scala.srcjar"],
     visibility = ["//visibility:public"],
-    deps = [
-        "@maven_scala//:com_google_protobuf_protobuf_java",
-        "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
-    ],
+    deps = ["@build_stack_rules_proto//plugin/scalapb/scalapb:proto_scala_library_deps"],
 )
 
 proto_compile(

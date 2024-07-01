@@ -22,10 +22,7 @@ proto_plugin(
 java_binary(
     name = "protoc-gen-scala_bin",
     main_class = "scalapb.ScalaPbCodeGenerator",
-    runtime_deps = [
-        # ":scalapb_compiler_deps",
-        "@maven_scala//:com_thesamet_scalapb_compilerplugin_2_12",
-    ],
+    runtime_deps = ["@maven_scala//:com_thesamet_scalapb_compilerplugin_2_12"],
 )
 
 java_library(
@@ -34,26 +31,6 @@ java_library(
     deps = [
         "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
-    ],
-)
-
-# scalapb_compiler_deps is a target that replaces
-# @maven_scala//:com_thesamet_scalapb_compilerplugin_2_12.  Due to
-# maven.override semantics explained in
-# https://github.com/bazelbuild/rules_jvm_external/issues/1180#issuecomment-2198769979.
-# Since grpc-java overrides the protobuf-java artifact to
-# @com_google_protobuf//:protobuf_java.
-java_import(
-    name = "scalapb_compiler_deps",
-    jars = [
-        "@com_google_protobuf_protobuf_java_3_19_3//file",
-        "@com_thesamet_scalapb_compilerplugin_2_12_0_11_8//file",
-    ],
-    deps = [
-        "@maven_scala//:com_thesamet_scalapb_protoc_bridge_2_12",
-        "@maven_scala//:com_thesamet_scalapb_protoc_gen_2_12",
-        "@maven_scala//:org_scala_lang_modules_scala_collection_compat_2_12",
-        "@maven_scala//:org_scala_lang_scala_library",
     ],
 )
 
@@ -75,18 +52,6 @@ java_library(
         "@maven_scala//:io_grpc_grpc_stub",
     ],
 )
-
-# java_library(
-#     name = "scalapb_compiler_deps2",
-#     runtime_deps = [
-#         "@https___repo1.maven.org_maven2_com_google_protobuf_protobuf-java_3.19.6_protobuf-java-3.19.6.jar//jar",
-#         "@https___repo1.maven.org_maven2_com_thesamet_scalapb_compilerplugin_2.12_0.11.17_compilerplugin_2.12-0.11.17.jar//jar",
-#         "@https___repo1.maven.org_maven2_com_thesamet_scalapb_protoc-bridge_2.12_0.9.7_protoc-bridge_2.12-0.9.7.jar//jar",
-#         "@https___repo1.maven.org_maven2_com_thesamet_scalapb_protoc-gen_2.12_0.9.7_protoc-gen_2.12-0.9.7.jar//jar",
-#         "@https___repo1.maven.org_maven2_org_scala-lang_modules_scala-collection-compat_2.12_2.12.0_scala-collection-compat_2.12-2.12.0.jar//jar",
-#         "@https___repo1.maven.org_maven2_org_scala-lang_scala-library_2.12.19_scala-library-2.12.19.jar//jar",
-#     ],
-# )
 
 filegroup(
     name = "all_files",
