@@ -52,6 +52,7 @@ go_test(
     args = ["-go_sdk=go_sdk"],
     data = ["@go_sdk//:files"],
     embed = [":gazelle_lib"],
+    tags = ["manual"],  # TODO(pcj): reconcile cmd/gazelle with upstream (see README.md)
     deps = [
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//testtools:go_default_library",

@@ -186,7 +186,7 @@ func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
 
 	for _, pair := range pairs {
 		if !fileExists(pair.Src) {
-			return fmt.Errorf("could not prepare (generated file not found): %q", pair.Src)
+			return fmt.Errorf("could not prepare (generated file not found in pair): %v", pair)
 		}
 	}
 

@@ -95,7 +95,19 @@ git_override(
 #bazel_dep(name = "protobuf", version = "21.7", repo_name = "com_google_protobuf")
 bazel_dep(name = "grpc", version = "1.56.3", repo_name = "com_github_grpc_grpc")
 
-# go_core_deps()
+go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(
+    name = "go_sdk",
+    version = "1.21.8",
+)
+use_repo(
+    go_sdk,
+    "go_sdk",
+    "go_toolchains",
+    # This name is ugly on purpose to avoid a conflict with a user-named SDK.
+    "io_bazel_rules_nogo",
+)
+# register_toolchains("@go_toolchains//:all")
 
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
@@ -111,6 +123,7 @@ use_repo(
     "net_starlark_go",
     "org_golang_google_protobuf",
     "org_golang_google_grpc",
+    "com_github_gogo_protobuf",
     "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
     "bazel_gazelle_go_repository_config",  # keep
 )
