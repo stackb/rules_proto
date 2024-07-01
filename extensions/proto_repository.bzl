@@ -43,24 +43,24 @@ def _proto_repository_impl(module_ctx):
     # named_repos is a dict<K,V> where V is the kwargs for the actual
     # "proto_repository" repo rule and K is the tag.name (the name given by the
     # MODULE.bazel author)
-    named_http_archives = {}
+    named_archives = {}
 
-    # iterate all the module tags and gather a list of named_http_archives.
+    # iterate all the module tags and gather a list of named_archives.
     #
     # TODO(pcj): what is the best practice for version selection here? Do I need
     # to check if module.is_root and handle that differently?
     #
     for module in module_ctx.modules:
-        for tag in module.tags.http_archive:
+        for tag in module.tags.archive:
             kwargs = {
                 attr: getattr(tag, attr)
-                for attr in _proto_repository_http_archive_attrs.keys()
+                for attr in _proto_repository_archive_attrs.keys()
                 if hasattr(tag, attr)
             }
-            named_http_archives[tag.name] = kwargs
+            named_archives[tag.name] = kwargs
 
     # declare a repository rule foreach one
-    for _, kwargs in named_http_archives.items():
+    for _, kwargs in named_archives.items():
         proto_repository_repo_rule(**kwargs)
 
     return _extension_metadata(
@@ -68,7 +68,7 @@ def _proto_repository_impl(module_ctx):
         reproducible = True,
     )
 
-_proto_repository_http_archive_attrs = proto_repository_attrs | {
+_proto_repository_archive_attrs = proto_repository_attrs | {
     "name": attr.string(
         doc = "The repo name.",
         mandatory = True,
@@ -78,9 +78,9 @@ _proto_repository_http_archive_attrs = proto_repository_attrs | {
 proto_repository = module_extension(
     implementation = _proto_repository_impl,
     tag_classes = dict(
-        http_archive = tag_class(
+        archive = tag_class(
             doc = "declare an http_archive repository that is post-processed by a custom version of gazelle that includes the 'protobuf' language",
-            attrs = _proto_repository_http_archive_attrs,
+            attrs = _proto_repository_archive_attrs,
         ),
     ),
 )

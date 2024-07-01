@@ -24,7 +24,12 @@ use_repo(
 
 # grpc_java_deps()
 bazel_dep(name = "rules_java", version = "7.6.1")
-bazel_dep(name = "rules_jvm_external", version = "5.3")
+bazel_dep(name = "rules_jvm_external", version = "6.1")
+local_path_override(
+    module_name = "rules_jvm_external",
+    path = "/Users/pcj/go/src/github.com/bazelbuild/rules_jvm_external",
+)
+
 bazel_dep(name = "grpc-java", version = "1.64.0", repo_name = "io_grpc_grpc_java")
 
 # gazelle_protobuf_extension_go_deps()
@@ -70,7 +75,11 @@ proto_repository_tools(
 bazel_dep(name = "rules_pkg", version = "0.7.0")
 bazel_dep(name = "rules_python", version = "0.27.1")
 bazel_dep(name = "zlib", version = "1.2.11")
-bazel_dep(name = "protobuf", version = "27.1", repo_name = "com_google_protobuf")
+bazel_dep(name = "protobuf", version = "27.2", repo_name = "com_google_protobuf")
+single_version_override(
+    module_name = "protobuf",
+    version = "24.4",
+)
 bazel_dep(name = "protobuf_javascript", repo_name = "com_google_protobuf_javascript")
 git_override(
     module_name = "protobuf_javascript",
@@ -100,6 +109,7 @@ use_repo(
     "com_github_stretchr_testify",
     "in_gopkg_yaml_v3",
     "net_starlark_go",
+    "bazel_gazelle_go_repository_config",  # keep
 )
 
 # def com_github_golang_protobuf():
@@ -197,11 +207,26 @@ filegroup(
     ],
 )
 
+# http_jar = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
+# [http_jar(
+#     name = url.replace("/", "_").replace(":", "_"),
+#     url = url,
+# ) for url in [
+#     "https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.19.6/protobuf-java-3.19.6.jar",
+#     "https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-gen_2.12/0.9.7/protoc-gen_2.12-0.9.7.jar",
+#     "https://repo1.maven.org/maven2/com/thesamet/scalapb/compilerplugin_2.12/0.11.17/compilerplugin_2.12-0.11.17.jar",
+#     "https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.19/scala-library-2.12.19.jar",
+#     "https://repo1.maven.org/maven2/com/thesamet/scalapb/protoc-bridge_2.12/0.9.7/protoc-bridge_2.12-0.9.7.jar",
+#     "https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.12.0/scala-collection-compat_2.12-2.12.0.jar",
+# ]]
+
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
 maven.install(
     name = "maven_scala",
     artifacts = [
         "com.thesamet.scalapb:compilerplugin_2.12:0.11.17",
+        "com.google.protobuf:protobuf-java:3.19.6",
         # "com.thesamet.scalapb:lenses_2.12:0.11.5",
         # "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
         # "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
@@ -214,6 +239,7 @@ maven.install(
         # "io.grpc:grpc-stub:1.40.1",
         # "org.json4s:json4s-core_2.12:4.0.3",
     ],
+    generate_compat_repositories = True,
     fetch_sources = True,
     # lock_file = "//:maven_scala_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
@@ -228,10 +254,16 @@ maven.install(
     lock_file = "//:maven_akka_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
-use_repo(maven, "maven_akka", "maven_scala")
+use_repo(
+    maven,
+    "maven_akka",
+    "maven_scala",
+    "com_google_protobuf_protobuf_java_3_19_3",
+    "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
+)
 
 proto_repository = use_extension("//extensions:proto_repository.bzl", "proto_repository", dev_dependency = True)
-proto_repository.http_archive(
+proto_repository.archive(
     name = "protobufapis",
     build_directives = [
         "gazelle:exclude testdata",
@@ -293,7 +325,7 @@ proto_repository.http_archive(
     strip_prefix = "protobuf-a74f54b724bdc2fe0bfc271f4dc0ceb159805625/src",
     urls = ["https://github.com/protocolbuffers/protobuf/archive/a74f54b724bdc2fe0bfc271f4dc0ceb159805625.tar.gz"],
 )
-proto_repository.http_archive(
+proto_repository.archive(
     name = "googleapis",
     build_directives = [
         "gazelle:exclude google/ads/googleads/v12/services",
