@@ -1,1 +1,1 @@
-proto,proto,google/protobuf/any.proto,@protoapis//google/protobuf:any_proto
+proto,proto,google/protobuf/any.proto,@protobufapis//google/protobuf:any_proto

@@ -1,14 +1,8 @@
-load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
-load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
-load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 load("@//rules:proto_gazelle.bzl", "proto_gazelle")
+load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 
 exports_files(["rules_proto_config.yaml"])
-
-# ----------------------------------------------------
-# Buildifier
-# ----------------------------------------------------
-buildifier(name = "buildifier")
 
 # ----------------------------------------------------
 # Gazelle
@@ -37,8 +31,15 @@ proto_gazelle(
     gazelle = ":gazelle-protobuf",
     imports = [
         "@googleapis//:imports.csv",
-        "@protoapis//:imports.csv",
+        "@protobufapis//:imports.csv",
     ],
+)
+
+genrule(
+    name = "imports_csv",
+    outs = ["imports.csv"],
+    cmd = "cp $(location @protobufapis//:imports.csv) $@",
+    tools = ["@protobufapis//:imports.csv"],
 )
 
 gazelle(

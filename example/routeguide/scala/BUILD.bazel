@@ -7,7 +7,7 @@ scala_library(
     deps = [
         "//example/routeguide:routeguide_grpc_scala_library",
         "@maven_scala//:com_thesamet_scalapb_lenses_2_12",
-        "@maven_scala//:com_thesamet_scalapb_scalapb_json4s_2_12_0_12_0",
+        "@maven_scala//:com_thesamet_scalapb_scalapb_json4s_2_12",
         "@maven_scala//:com_thesamet_scalapb_scalapb_runtime_2_12",
     ],
 )

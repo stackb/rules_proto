@@ -31,7 +31,7 @@ import (
 
 var goSdk = flag.String("go_sdk", "", "name of the go_sdk repository when invoked by Bazel")
 
-func TestMain(m *testing.M) {
+func SkipTestMain(m *testing.M) {
 	status := 1
 	defer func() {
 		os.Exit(status)

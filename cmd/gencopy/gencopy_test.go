@@ -127,7 +127,7 @@ func TestRunPkg(t *testing.T) {
 				t.Fatal(err)
 			}
 			listFiles(t, ".")
-			if err := run(&tc.cfg, t.Logf); err != nil {
+			if err := run(&tc.cfg); err != nil {
 				t.Fatal(err)
 			}
 

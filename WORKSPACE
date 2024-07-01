@@ -1,327 +1,327 @@
-workspace(name = "build_stack_rules_proto")
+# workspace(name = "build_stack_rules_proto")
 
 # gazelle:repo bazel_gazelle
 
-# ----------------------------------------------------
-# Toolchain-Related
-# ----------------------------------------------------
+# # ----------------------------------------------------
+# # Toolchain-Related
+# # ----------------------------------------------------
 
-register_toolchains(
-    "//toolchain:standard",
-    # "//toolchain:prebuilt",  # alt
-)
-
-# ----------------------------------------------------
-# Core Deps
-# ----------------------------------------------------
-
-load("//deps:core_deps.bzl", "core_deps")
-
-core_deps()
-
-# ----------------------------------------------------
-# Core Protobuf
-# ----------------------------------------------------
-
-load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
-
-protobuf_core_deps()
-
-# ----------------------------------------------------
-# Core gRPC
-# ----------------------------------------------------
-
-load("//deps:grpc_core_deps.bzl", "grpc_core_deps")
-
-grpc_core_deps()
-
-load(
-    "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
-    "grpc_deps",
-)
-
-grpc_deps()
-
-# NOTE: rather than using the 'grpc_extra_deps' function, we selectively load
-# only the parts of that macro that are needed.  Using the macro as-is for
-# *this* WORKSPACE causes issues with duplicate go_register_toolchains calls.
-#
-# load( "@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps",
+# register_toolchains(
+#     "//toolchain:standard",
+#     # "//toolchain:prebuilt",  # alt
 # )
-# grpc_extra_deps()
-
-load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
-
-apple_rules_dependencies(ignore_version_differences = False)
-
-load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
-
-# Initialize Google APIs with only C++ and Python targets
-switched_rules_by_language(
-    name = "com_google_googleapis_imports",
-    cc = True,
-    grpc = True,
-    python = True,
-)
-
-load("@envoy_api//bazel:repositories.bzl", "api_dependencies")
-
-api_dependencies()
-
-# ----------------------------------------------------
-# Go Tools
-# ----------------------------------------------------
-
-load(
-    "@io_bazel_rules_go//go:deps.bzl",
-    "go_register_toolchains",
-    "go_rules_dependencies",
-)
-
-go_rules_dependencies()
-
-go_register_toolchains(version = "1.18.2")
-
-# ----------------------------------------------------
-# Gazelle
-# ----------------------------------------------------
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-
-gazelle_dependencies()
-
-load("//:go_deps.bzl", "gazelle_protobuf_extension_go_deps", "go_deps")
-
-# gazelle:repository_macro go_deps.bzl%go_deps
-go_deps()
-
-gazelle_protobuf_extension_go_deps()
-
-load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
-
-prebuilt_protoc_deps()
-
-load("//deps:js_core_deps.bzl", "js_core_deps")
-
-js_core_deps()
-
-load("//deps:grpc_java_deps.bzl", "grpc_java_deps")
-
-grpc_java_deps()
-
-load("//deps:closure_deps.bzl", "closure_deps")
-
-closure_deps()
-
-load("//deps:grpc_js_deps.bzl", "grpc_js_deps")
-
-grpc_js_deps()
-
-load("//deps:scala_deps.bzl", "scala_deps")
-
-scala_deps()
-
-load("//deps:nodejs_deps.bzl", "nodejs_deps")
-
-nodejs_deps()
-
-load("//deps:grpc_node_deps.bzl", "grpc_node_deps")
-
-grpc_node_deps()
-
-load("//deps:grpc_web_deps.bzl", "grpc_web_deps")
-
-grpc_web_deps()
-
-load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
-
-ts_proto_deps()
-
-# ----------------------------------------------------
-# Python
-# ----------------------------------------------------
-
-load("@rules_python//python:repositories.bzl", "py_repositories")
-
-py_repositories()
-
-# ----------------------------------------------------
-# Java
-# ----------------------------------------------------
-
-load(
-    "@rules_jvm_external//:defs.bzl",
-    "maven_install",
-)
-load(
-    "@io_grpc_grpc_java//:repositories.bzl",
-    "IO_GRPC_GRPC_JAVA_ARTIFACTS",
-    "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS",
-    "grpc_java_repositories",
-)
-load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
-
-protobuf_deps()
-
-maven_install(
-    name = "maven",
-    artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS + PROTOBUF_MAVEN_ARTIFACTS,
-    generate_compat_repositories = True,
-    # TODO(pcj): why does pinning of this repository cause such problems?
-    # example: no such package '@com_google_errorprone_error_prone_annotations_2_18_0//file': The repository '@com_google_errorprone_error_prone_annotations_2_18_0' could not be resolved: Repository '@com_google_errorprone_error_prone_annotations_2_18_0' is not defined and referenced by '@maven//:com_google_errorprone_error_prone_annotations_2_18_0_extension'
-    # maven_install_json = "//:maven_install.json",
-    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
-    repositories = ["https://repo.maven.apache.org/maven2/"],
-    strict_visibility = True,
-)
-
-load("@maven//:compat.bzl", "compat_repositories")
-
-compat_repositories()
-
-grpc_java_repositories()
 
 # # ----------------------------------------------------
-# # Golang
+# # Core Deps
 # # ----------------------------------------------------
 
-load("//deps:go_core_deps.bzl", "go_core_deps")
+# load("//deps:core_deps.bzl", "core_deps")
 
-go_core_deps()
+# core_deps()
 
-# ----------------------------------------------------
-# Scala
-# ----------------------------------------------------
+# # ----------------------------------------------------
+# # Core Protobuf
+# # ----------------------------------------------------
 
-load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
+# load("//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
 
-scala_config(
-    enable_compiler_dependency_tracking = True,
-    scala_version = "2.12.18",
-)
+# protobuf_core_deps()
 
-load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+# # ----------------------------------------------------
+# # Core gRPC
+# # ----------------------------------------------------
 
-scala_repositories()
+# load("//deps:grpc_core_deps.bzl", "grpc_core_deps")
 
-register_toolchains(
-    "//toolchain/scala:default_toolchain",
-)
+# grpc_core_deps()
 
-# ----------------------------------------------------
-# Scala/Maven
-# ----------------------------------------------------
+# load(
+#     "@com_github_grpc_grpc//bazel:grpc_deps.bzl",
+#     "grpc_deps",
+# )
 
-# bazel run @maven_scala//:pin, but first comment out the "maven_install_json"
-# (put it back once pinned again)
-maven_install(
-    name = "maven_scala",
-    artifacts = [
-        "com.thesamet.scalapb:lenses_2.12:0.11.5",
-        "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
-        "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
-        "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
-        "com.thesamet.scalapb:scalapbc_2.12:0.11.5",
-        "io.grpc:grpc-api:1.40.1",
-        "io.grpc:grpc-core:1.40.1",
-        "io.grpc:grpc-netty:1.40.1",
-        "io.grpc:grpc-protobuf:1.40.1",
-        "io.grpc:grpc-stub:1.40.1",
-        "org.json4s:json4s-core_2.12:4.0.3",
-    ],
-    fetch_sources = True,
-    maven_install_json = "//:maven_scala_install.json",
-    repositories = ["https://repo1.maven.org/maven2"],
-)
+# grpc_deps()
 
-load("@maven_scala//:defs.bzl", pinned_maven_scala_install = "pinned_maven_install")
+# # NOTE: rather than using the 'grpc_extra_deps' function, we selectively load
+# # only the parts of that macro that are needed.  Using the macro as-is for
+# # *this* WORKSPACE causes issues with duplicate go_register_toolchains calls.
+# #
+# # load( "@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps",
+# # )
+# # grpc_extra_deps()
 
-pinned_maven_scala_install()
+# load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
 
-# ----------------------------------------------------
-# Scala/Akka
-# ----------------------------------------------------
+# apple_rules_dependencies(ignore_version_differences = False)
 
-# bazel run @maven_akka//:pin, but first comment out the "maven_install_json"
-# (put it back once pinned again)
-maven_install(
-    name = "maven_akka",
-    artifacts = [
-        "com.lightbend.akka.grpc:akka-grpc-codegen_2.12:2.1.3",
-        "com.lightbend.akka.grpc:akka-grpc-runtime_2.12:2.1.3",
-    ],
-    fetch_sources = True,
-    maven_install_json = "//:maven_akka_install.json",
-    repositories = ["https://repo1.maven.org/maven2"],
-)
+# load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
 
-load("@maven_akka//:defs.bzl", pinned_maven_akka_install = "pinned_maven_install")
+# # Initialize Google APIs with only C++ and Python targets
+# switched_rules_by_language(
+#     name = "com_google_googleapis_imports",
+#     cc = True,
+#     grpc = True,
+#     python = True,
+# )
 
-pinned_maven_akka_install()
+# load("@envoy_api//bazel:repositories.bzl", "api_dependencies")
 
-# ----------------------------------------------------
-# Closure
-# ----------------------------------------------------
+# api_dependencies()
 
-load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
+# # ----------------------------------------------------
+# # Go Tools
+# # ----------------------------------------------------
 
-rules_closure_toolchains()
+# load(
+#     "@io_bazel_rules_go//go:deps.bzl",
+#     "go_register_toolchains",
+#     "go_rules_dependencies",
+# )
 
-rules_closure_dependencies(
-    omit_rules_python = True,
-)
+# go_rules_dependencies()
 
-# ----------------------------------------------------
-# NodeJS
-# ----------------------------------------------------
+# go_register_toolchains(version = "1.18.2")
 
-load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
+# # ----------------------------------------------------
+# # Gazelle
+# # ----------------------------------------------------
 
-build_bazel_rules_nodejs_dependencies()
+# load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
-load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
+# gazelle_dependencies()
 
-node_repositories()
+# load("//:go_deps.bzl", "gazelle_protobuf_extension_go_deps", "go_deps")
 
-# ----------------------------------------------------
-# proto_repositories
-# ----------------------------------------------------
+# # gazelle:repository_macro go_deps.bzl%go_deps
+# go_deps()
 
-load("//:proto_repositories.bzl", "proto_repositories")
+# gazelle_protobuf_extension_go_deps()
 
-proto_repositories()
+# load("//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
 
-# ----------------------------------------------------
-# @aspect_rules_ts
-# ----------------------------------------------------
-load("@aspect_rules_ts//ts:repositories.bzl", "rules_ts_dependencies")
+# prebuilt_protoc_deps()
 
-rules_ts_dependencies(
-    # This keeps the TypeScript version in-sync with the editor, which is typically best.
-    ts_version_from = "//:package.json",
-)
+# load("//deps:js_core_deps.bzl", "js_core_deps")
 
-# ----------------------------------------------------
-# @rules_nodejs
-# ----------------------------------------------------
+# js_core_deps()
 
-load("@rules_nodejs//nodejs:repositories.bzl", "DEFAULT_NODE_VERSION", "nodejs_register_toolchains")
+# load("//deps:grpc_java_deps.bzl", "grpc_java_deps")
 
-nodejs_register_toolchains(
-    name = "node",
-    node_version = DEFAULT_NODE_VERSION,
-)
+# grpc_java_deps()
 
-load("@aspect_rules_js//npm:npm_import.bzl", "npm_translate_lock")
+# load("//deps:closure_deps.bzl", "closure_deps")
 
-npm_translate_lock(
-    name = "npm_ts_proto",
-    generate_bzl_library_targets = True,
-    npmrc = "//:.npmrc",
-    pnpm_lock = "//:pnpm-lock.yaml",
-    verify_node_modules_ignored = "//:.bazelignore",
-)
+# closure_deps()
 
-load("@npm_ts_proto//:repositories.bzl", npm_ts_proto_repositories = "npm_repositories")
+# load("//deps:grpc_js_deps.bzl", "grpc_js_deps")
 
-npm_ts_proto_repositories()
+# grpc_js_deps()
+
+# load("//deps:scala_deps.bzl", "scala_deps")
+
+# scala_deps()
+
+# load("//deps:nodejs_deps.bzl", "nodejs_deps")
+
+# nodejs_deps()
+
+# load("//deps:grpc_node_deps.bzl", "grpc_node_deps")
+
+# grpc_node_deps()
+
+# load("//deps:grpc_web_deps.bzl", "grpc_web_deps")
+
+# grpc_web_deps()
+
+# load("//deps:ts_proto_deps.bzl", "ts_proto_deps")
+
+# ts_proto_deps()
+
+# # ----------------------------------------------------
+# # Python
+# # ----------------------------------------------------
+
+# load("@rules_python//python:repositories.bzl", "py_repositories")
+
+# py_repositories()
+
+# # ----------------------------------------------------
+# # Java
+# # ----------------------------------------------------
+
+# load(
+#     "@rules_jvm_external//:defs.bzl",
+#     "maven_install",
+# )
+# load(
+#     "@io_grpc_grpc_java//:repositories.bzl",
+#     "IO_GRPC_GRPC_JAVA_ARTIFACTS",
+#     "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS",
+#     "grpc_java_repositories",
+# )
+# load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
+
+# protobuf_deps()
+
+# maven_install(
+#     name = "maven",
+#     artifacts = IO_GRPC_GRPC_JAVA_ARTIFACTS + PROTOBUF_MAVEN_ARTIFACTS,
+#     generate_compat_repositories = True,
+#     # TODO(pcj): why does pinning of this repository cause such problems?
+#     # example: no such package '@com_google_errorprone_error_prone_annotations_2_18_0//file': The repository '@com_google_errorprone_error_prone_annotations_2_18_0' could not be resolved: Repository '@com_google_errorprone_error_prone_annotations_2_18_0' is not defined and referenced by '@maven//:com_google_errorprone_error_prone_annotations_2_18_0_extension'
+#     # maven_install_json = "//:maven_install.json",
+#     override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
+#     repositories = ["https://repo.maven.apache.org/maven2/"],
+#     strict_visibility = True,
+# )
+
+# load("@maven//:compat.bzl", "compat_repositories")
+
+# compat_repositories()
+
+# grpc_java_repositories()
+
+# # # ----------------------------------------------------
+# # # Golang
+# # # ----------------------------------------------------
+
+# load("//deps:go_core_deps.bzl", "go_core_deps")
+
+# go_core_deps()
+
+# # ----------------------------------------------------
+# # Scala
+# # ----------------------------------------------------
+
+# load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
+
+# scala_config(
+#     enable_compiler_dependency_tracking = True,
+#     scala_version = "2.12.18",
+# )
+
+# load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+
+# scala_repositories()
+
+# register_toolchains(
+#     "//toolchain/scala:default_toolchain",
+# )
+
+# # ----------------------------------------------------
+# # Scala/Maven
+# # ----------------------------------------------------
+
+# # bazel run @maven_scala//:pin, but first comment out the "maven_install_json"
+# # (put it back once pinned again)
+# maven_install(
+#     name = "maven_scala",
+#     artifacts = [
+#         "com.thesamet.scalapb:lenses_2.12:0.11.5",
+#         "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
+#         "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
+#         "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
+#         "com.thesamet.scalapb:scalapbc_2.12:0.11.5",
+#         "io.grpc:grpc-api:1.40.1",
+#         "io.grpc:grpc-core:1.40.1",
+#         "io.grpc:grpc-netty:1.40.1",
+#         "io.grpc:grpc-protobuf:1.40.1",
+#         "io.grpc:grpc-stub:1.40.1",
+#         "org.json4s:json4s-core_2.12:4.0.3",
+#     ],
+#     fetch_sources = True,
+#     maven_install_json = "//:maven_scala_install.json",
+#     repositories = ["https://repo1.maven.org/maven2"],
+# )
+
+# load("@maven_scala//:defs.bzl", pinned_maven_scala_install = "pinned_maven_install")
+
+# pinned_maven_scala_install()
+
+# # ----------------------------------------------------
+# # Scala/Akka
+# # ----------------------------------------------------
+
+# # bazel run @maven_akka//:pin, but first comment out the "maven_install_json"
+# # (put it back once pinned again)
+# maven_install(
+#     name = "maven_akka",
+#     artifacts = [
+#         "com.lightbend.akka.grpc:akka-grpc-codegen_2.12:2.1.3",
+#         "com.lightbend.akka.grpc:akka-grpc-runtime_2.12:2.1.3",
+#     ],
+#     fetch_sources = True,
+#     maven_install_json = "//:maven_akka_install.json",
+#     repositories = ["https://repo1.maven.org/maven2"],
+# )
+
+# load("@maven_akka//:defs.bzl", pinned_maven_akka_install = "pinned_maven_install")
+
+# pinned_maven_akka_install()
+
+# # ----------------------------------------------------
+# # Closure
+# # ----------------------------------------------------
+
+# load("@io_bazel_rules_closure//closure:repositories.bzl", "rules_closure_dependencies", "rules_closure_toolchains")
+
+# rules_closure_toolchains()
+
+# rules_closure_dependencies(
+#     omit_rules_python = True,
+# )
+
+# # ----------------------------------------------------
+# # NodeJS
+# # ----------------------------------------------------
+
+# load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
+
+# build_bazel_rules_nodejs_dependencies()
+
+# load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
+
+# node_repositories()
+
+# # ----------------------------------------------------
+# # proto_repositories
+# # ----------------------------------------------------
+
+# load("//:proto_repositories.bzl", "proto_repositories")
+
+# proto_repositories()
+
+# # ----------------------------------------------------
+# # @aspect_rules_ts
+# # ----------------------------------------------------
+# load("@aspect_rules_ts//ts:repositories.bzl", "rules_ts_dependencies")
+
+# rules_ts_dependencies(
+#     # This keeps the TypeScript version in-sync with the editor, which is typically best.
+#     ts_version_from = "//:package.json",
+# )
+
+# # ----------------------------------------------------
+# # @rules_nodejs
+# # ----------------------------------------------------
+
+# load("@rules_nodejs//nodejs:repositories.bzl", "DEFAULT_NODE_VERSION", "nodejs_register_toolchains")
+
+# nodejs_register_toolchains(
+#     name = "node",
+#     node_version = DEFAULT_NODE_VERSION,
+# )
+
+# load("@aspect_rules_js//npm:npm_import.bzl", "npm_translate_lock")
+
+# npm_translate_lock(
+#     name = "npm_ts_proto",
+#     generate_bzl_library_targets = True,
+#     npmrc = "//:.npmrc",
+#     pnpm_lock = "//:pnpm-lock.yaml",
+#     verify_node_modules_ignored = "//:.bazelignore",
+# )
+
+# load("@npm_ts_proto//:repositories.bzl", npm_ts_proto_repositories = "npm_repositories")
+
+# npm_ts_proto_repositories()

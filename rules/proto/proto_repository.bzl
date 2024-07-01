@@ -226,7 +226,7 @@ def _proto_repository_impl(ctx):
             "-repo_config",
             ctx.path(ctx.attr.build_config),
             "-proto_repo_name",
-            ctx.name,
+            ctx.attr.apparent_name,
         ]
         if ctx.attr.version:
             cmd.append("-go_repository_module_mode")
@@ -269,116 +269,127 @@ def _proto_repository_impl(ctx):
             ))
         if result.stderr:
             # buildifier: disable=print
-            print("%s: %s" % (ctx.name, result.stderr))
+            print("[ctx.name=%s]: %s" % (ctx.name, result.stderr))
 
     # Apply patches if necessary.
     patch(ctx)
 
-go_repository = repository_rule(
+proto_repository_attrs = {
+    "apparent_name": attr.string(
+        doc = "the apparent name of the repository (repository_ctx.name provides the canonical one)",
+        mandatory = True,
+    ),
+    # Fundamental attributes of a go repository
+    "importpath": attr.string(mandatory = False),  # True in go_repository
+
+    # Attributes for a repository that should be checked out from VCS
+    "commit": attr.string(),
+    "tag": attr.string(),
+    "vcs": attr.string(
+        default = "",
+        values = [
+            "",
+            "git",
+            "hg",
+            "svn",
+            "bzr",
+        ],
+    ),
+    "remote": attr.string(),
+
+    # Attributes for a repository that should be downloaded via HTTP.
+    "urls": attr.string_list(),
+    "strip_prefix": attr.string(),
+    "type": attr.string(),
+    "sha256": attr.string(),
+
+    # Attributes for a repository that is publically hosted by github
+    "source_host": attr.string(default = "github.com"),
+    "source_owner": attr.string(),
+    "source_repo": attr.string(),
+    "source_prefix": attr.string(),
+    "source_commit": attr.string(),
+
+    # Attributes for a module that should be downloaded with the Go toolchain.
+    "version": attr.string(),
+    "sum": attr.string(),
+    "replace": attr.string(),
+
+    # Attributes for a repository that needs automatic build file generation
+    "build_external": attr.string(
+        values = [
+            "",
+            "external",
+            "vendored",
+        ],
+    ),
+    "build_file_name": attr.string(default = "BUILD.bazel,BUILD"),
+    "build_file_generation": attr.string(
+        default = "on",
+        values = [
+            "auto",
+            "off",
+            "on",
+        ],
+    ),
+    "build_naming_convention": attr.string(
+        values = [
+            "go_default_library",
+            "import",
+            "import_alias",
+        ],
+        default = "import_alias",
+    ),
+    "build_tags": attr.string_list(),
+    "build_file_proto_mode": attr.string(
+        values = [
+            "",
+            "file",
+            "default",
+            "package",
+            "disable",
+            "disable_global",
+            "legacy",
+        ],
+    ),
+    "build_extra_args": attr.string_list(),
+    "build_config": attr.label(default = "@bazel_gazelle_go_repository_config//:WORKSPACE"),
+    "build_directives": attr.string_list(default = []),
+
+    # Patches to apply after running gazelle.
+    "patches": attr.label_list(),
+    "patch_tool": attr.string(default = "patch"),
+    "patch_args": attr.string_list(default = ["-p0"]),
+    "patch_cmds": attr.string_list(default = []),
+
+    # protobuf extension specific configuration
+    "build_file_expunge": attr.bool(
+        default = True,
+    ),
+    "languages": attr.string_list(
+        default = ["proto", "protobuf"],
+    ),
+    "cfgs": attr.label_list(allow_files = True),
+    "imports": attr.label_list(
+        allow_files = True,
+    ),
+    "imports_out": attr.string(default = "imports.csv"),
+    "deleted_files": attr.string_list(),
+    "reresolve_known_proto_imports": attr.bool(),
+}
+
+protobuf_go_repository = repository_rule(
     implementation = _proto_repository_impl,
-    attrs = {
-
-        # Fundamental attributes of a go repository
-        "importpath": attr.string(mandatory = False),  # True in go_repository
-
-        # Attributes for a repository that should be checked out from VCS
-        "commit": attr.string(),
-        "tag": attr.string(),
-        "vcs": attr.string(
-            default = "",
-            values = [
-                "",
-                "git",
-                "hg",
-                "svn",
-                "bzr",
-            ],
-        ),
-        "remote": attr.string(),
-
-        # Attributes for a repository that should be downloaded via HTTP.
-        "urls": attr.string_list(),
-        "strip_prefix": attr.string(),
-        "type": attr.string(),
-        "sha256": attr.string(),
-
-        # Attributes for a repository that is publically hosted by github
-        "source_host": attr.string(default = "github.com"),
-        "source_owner": attr.string(),
-        "source_repo": attr.string(),
-        "source_prefix": attr.string(),
-        "source_commit": attr.string(),
-
-        # Attributes for a module that should be downloaded with the Go toolchain.
-        "version": attr.string(),
-        "sum": attr.string(),
-        "replace": attr.string(),
-
-        # Attributes for a repository that needs automatic build file generation
-        "build_external": attr.string(
-            values = [
-                "",
-                "external",
-                "vendored",
-            ],
-        ),
-        "build_file_name": attr.string(default = "BUILD.bazel,BUILD"),
-        "build_file_generation": attr.string(
-            default = "auto",
-            values = [
-                "auto",
-                "off",
-                "on",
-            ],
-        ),
-        "build_naming_convention": attr.string(
-            values = [
-                "go_default_library",
-                "import",
-                "import_alias",
-            ],
-            default = "import_alias",
-        ),
-        "build_tags": attr.string_list(),
-        "build_file_proto_mode": attr.string(
-            values = [
-                "",
-                "file",
-                "default",
-                "package",
-                "disable",
-                "disable_global",
-                "legacy",
-            ],
-        ),
-        "build_extra_args": attr.string_list(),
-        "build_config": attr.label(default = "@bazel_gazelle_go_repository_config//:WORKSPACE"),
-        "build_directives": attr.string_list(default = []),
-
-        # Patches to apply after running gazelle.
-        "patches": attr.label_list(),
-        "patch_tool": attr.string(default = "patch"),
-        "patch_args": attr.string_list(default = ["-p0"]),
-        "patch_cmds": attr.string_list(default = []),
-
-        # protobuf extension specific configuration
-        "build_file_expunge": attr.bool(),
-        "languages": attr.string_list(),
-        "cfgs": attr.label_list(allow_files = True),
-        "imports": attr.label_list(
-            allow_files = True,
-        ),
-        "imports_out": attr.string(default = "imports.csv"),
-        "deleted_files": attr.string_list(),
-        "reresolve_known_proto_imports": attr.bool(),
-    },
+    attrs = proto_repository_attrs,
 )
 
 def proto_repository(**kwargs):
+    name = kwargs.get("name")
+    kwargs.setdefault("apparent_name", name)
     kwargs.setdefault("languages", ["proto", "protobuf"])
     kwargs.setdefault("build_file_expunge", True)
     kwargs.setdefault("build_file_generation", "on")
-    go_repository(**kwargs)
+    protobuf_go_repository(**kwargs)
 
 # Copied from @bazel_tools//tools/build_defs/repo:utils.bzl
 def patch(ctx):

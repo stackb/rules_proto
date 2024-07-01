@@ -34,14 +34,14 @@ func TestOverrideRule(t *testing.T) {
 			},
 			want: []string{
 				"//google/api:http_proto",
-				"@protoapis//google/protobuf:any_proto",
+				"@protobufapis//google/protobuf:any_proto",
 			},
 			imps: []string{
 				"google/protobuf/any.proto",
 				"google/api/http.proto",
 			},
 			known: map[string]label.Label{
-				"google/protobuf/any.proto": label.New("protoapis", "google/protobuf", "any_proto"),
+				"google/protobuf/any.proto": label.New("protobufapis", "google/protobuf", "any_proto"),
 				"google/api/http.proto":     label.New("", "google/api", "http_proto"),
 			},
 		},
