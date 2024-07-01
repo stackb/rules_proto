@@ -35,6 +35,13 @@ proto_gazelle(
     ],
 )
 
+genrule(
+    name = "imports_csv",
+    outs = ["imports.csv"],
+    cmd = "cp $(location @protobufapis//:imports.csv) $@",
+    tools = ["@protobufapis//:imports.csv"],
+)
+
 gazelle(
     name = "update_go_deps",
     args = [

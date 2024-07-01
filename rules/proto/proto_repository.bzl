@@ -226,7 +226,7 @@ def _proto_repository_impl(ctx):
             "-repo_config",
             ctx.path(ctx.attr.build_config),
             "-proto_repo_name",
-            ctx.name,
+            ctx.attr.apparent_name,
         ]
         if ctx.attr.version:
             cmd.append("-go_repository_module_mode")
@@ -269,12 +269,16 @@ def _proto_repository_impl(ctx):
             ))
         if result.stderr:
             # buildifier: disable=print
-            print("%s: %s" % (ctx.name, result.stderr))
+            print("[ctx.name=%s]: %s" % (ctx.name, result.stderr))
 
     # Apply patches if necessary.
     patch(ctx)
 
 proto_repository_attrs = {
+    "apparent_name": attr.string(
+        doc = "the apparent name of the repository (repository_ctx.name provides the canonical one)",
+        mandatory = True,
+    ),
     # Fundamental attributes of a go repository
     "importpath": attr.string(mandatory = False),  # True in go_repository
 
@@ -374,16 +378,18 @@ proto_repository_attrs = {
     "reresolve_known_proto_imports": attr.bool(),
 }
 
-go_repository = repository_rule(
+protobuf_go_repository = repository_rule(
     implementation = _proto_repository_impl,
     attrs = proto_repository_attrs,
 )
 
 def proto_repository(**kwargs):
+    name = kwargs.get("name")
+    kwargs.setdefault("apparent_name", name)
     kwargs.setdefault("languages", ["proto", "protobuf"])
     kwargs.setdefault("build_file_expunge", True)
     kwargs.setdefault("build_file_generation", "on")
-    go_repository(**kwargs)
+    protobuf_go_repository(**kwargs)
 
 # Copied from @bazel_tools//tools/build_defs/repo:utils.bzl
 def patch(ctx):

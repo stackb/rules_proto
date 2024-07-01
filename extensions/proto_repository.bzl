@@ -60,8 +60,11 @@ def _proto_repository_impl(module_ctx):
             named_archives[tag.name] = kwargs
 
     # declare a repository rule foreach one
-    for _, kwargs in named_archives.items():
-        proto_repository_repo_rule(**kwargs)
+    for apparent_name, kwargs in named_archives.items():
+        proto_repository_repo_rule(
+            apparent_name = apparent_name,
+            **kwargs
+        )
 
     return _extension_metadata(
         module_ctx,
@@ -74,6 +77,7 @@ _proto_repository_archive_attrs = proto_repository_attrs | {
         mandatory = True,
     ),
 }
+_proto_repository_archive_attrs.pop("apparent_name")
 
 proto_repository = module_extension(
     implementation = _proto_repository_impl,

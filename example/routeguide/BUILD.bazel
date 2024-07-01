@@ -177,7 +177,7 @@ grpc_java_library(
     visibility = ["//visibility:public"],
     exports = [
         ":routeguide_java_library",
-        "@io_grpc_grpc_java//api",
+        "@io_grpc_grpc_java//context",
         "@io_grpc_grpc_java//protobuf",
         "@io_grpc_grpc_java//stub",
         "@io_grpc_grpc_java//stub:javax_annotation",
@@ -185,7 +185,7 @@ grpc_java_library(
     ],
     deps = [
         ":routeguide_java_library",
-        "@io_grpc_grpc_java//api",
+        "@io_grpc_grpc_java//context",
         "@io_grpc_grpc_java//protobuf",
         "@io_grpc_grpc_java//stub",
         "@io_grpc_grpc_java//stub:javax_annotation",
