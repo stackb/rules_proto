@@ -64,7 +64,7 @@ proto_py_library(
 						Outputs: []string{"test_pb2.py"},
 					},
 				},
-                Rel: "com/foo/baz/qux/v1",
+				Rel: "com/foo/baz/qux/v1",
 			},
 			want: `
 proto_py_library(
@@ -81,7 +81,7 @@ proto_py_library(
 			var got string
 			if impl != nil {
 				rule := impl.Rule()
-				got = printRules(rule)
+				got = formatRules(rule)
 			}
 			if diff := cmp.Diff(strings.TrimSpace(tc.want), strings.TrimSpace(got)); diff != "" {
 				t.Errorf("(-want +got):\n%s", diff)
@@ -90,7 +90,7 @@ proto_py_library(
 	}
 }
 
-func printRules(rules ...*rule.Rule) string {
+func formatRules(rules ...*rule.Rule) string {
 	file := rule.EmptyFile("", "")
 	for _, r := range rules {
 		r.Insert(file)

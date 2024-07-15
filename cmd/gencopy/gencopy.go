@@ -103,12 +103,12 @@ func copyFile(src, dst string, mode os.FileMode) error {
 func readFileAsString(filename string) (string, error) {
 	bytes, err := os.ReadFile(filename)
 	if err != nil {
-		return "", fmt.Errorf("could not read %s: %v", filename, err)
+		return "", fmt.Errorf("attempted readFileAsString %s: %v", filename, err)
 	}
 	return string(bytes), nil
 }
 
-func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
+func check(_ *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 	for _, pair := range pairs {
 		expected, err := readFileAsString(pair.Src)
 		if err != nil {
@@ -186,7 +186,7 @@ func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
 
 	for _, pair := range pairs {
 		if !fileExists(pair.Src) {
-			return fmt.Errorf("could not prepare (generated file not found in pair): %v", pair)
+			return fmt.Errorf("could not prepare (generated source file %q not found in pair): %+v", pair.Src, pair)
 		}
 	}
 
