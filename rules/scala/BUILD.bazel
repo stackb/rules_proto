@@ -4,6 +4,7 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "grpc_scala_library.bzl",
+        "grpc_zio_scala_library.bzl",
         "proto_scala_library.bzl",
         "scala_proto_library.bzl",
     ],
