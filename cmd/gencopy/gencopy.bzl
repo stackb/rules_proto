@@ -19,6 +19,10 @@ gencopy_attrs = {
         doc = "The label.name used to regenerate targets",
         mandatory = True,
     ),
+    "extension": attr.string(
+        doc = "optional file extension to add to the copied file",
+        mandatory = False,
+    ),
     "_gencopy_script": attr.label(
         doc = "The gencopy script template",
         default = str(Label("//cmd/gencopy:gencopy.bash.in")),
@@ -43,7 +47,7 @@ def gencopy_config(ctx):
     )
 
 def gencopy_action(ctx, config, runfiles):
-    """gencopy_action declared a bazel action that runs the gencopy.bash script.
+    """gencopy_action declares a bazel action that runs the gencopy.bash script.
 
     Args:
         ctx: the context object.

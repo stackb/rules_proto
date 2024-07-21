@@ -32,6 +32,8 @@ def proto_compiled_sources(**kwargs):
         name = name,
         srcs = srcs,
         protoc = protoc,
+        output_file_suffix = ".gen",
+        default_info = False,
         **kwargs
     )
 

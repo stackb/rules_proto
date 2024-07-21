@@ -11,7 +11,12 @@ CONFIG_SHORT_PATH=@@CONFIG_SHORT_PATH@@
 
 # env
 # set -x
+# echo "PWD: $PWD"
 # find .
+# find ..
+
+# Get the directory of the current script (part of the runfiles tree)
+script_dir=$(dirname "$0")
 
 # find_runfile prints the location of a runfile in the source workspace,
 # either by reading the symbolic link or reading the runfiles manifest.
@@ -45,18 +50,18 @@ fi
 # Note that we don't change directories first; if we did, Generator wouldn't be
 # able to find runfiles, and some extensions rely on that. Generator can use
 # BUILD_WORKSPACE_DIRECTORY to interpret relative paths on the command line.
-GENCOPY_short_path=$(find_runfile "$GENCOPY_SHORT_PATH")
-if [ -z "$GENCOPY_short_path" ]; then
+GENCOPY_path=$(find_runfile "$GENCOPY_SHORT_PATH")
+if [ -z "$GENCOPY_path" ]; then
   echo "error: could not locate gencopy binary" >&2
   exit 1
 fi
 
-CONFIG_short_path=$(find_runfile "$CONFIG_SHORT_PATH")
-if [ -z "$CONFIG_short_path" ]; then
+CONFIG_path=$(find_runfile "$CONFIG_SHORT_PATH")
+if [ -z "$CONFIG_path" ]; then
   echo "error: could not locate gencopy configuration file" >&2
   exit 1
 fi
 
-"$GENCOPY_short_path" \
-  -config="$CONFIG_short_path" \
+"$GENCOPY_path" \
+  -config="$CONFIG_path" \
   -workspace_root_directory="${BUILD_WORKSPACE_DIRECTORY:-""}"

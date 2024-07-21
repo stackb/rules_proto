@@ -11,7 +11,6 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -174,7 +173,6 @@ func makePkgSrcDstPairs(cfg *Config, pkg *PackageConfig) []*SrcDst {
 
 func makePkgSrcDstPair(cfg *Config, pkg *PackageConfig, src, dst string) *SrcDst {
 	if pkg.TargetWorkspaceRoot != "" {
-		src = filepath.Join("external", strings.TrimPrefix(src, ".."))
 		dst = filepath.Join(pkg.TargetWorkspaceRoot, dst)
 	}
 	dst = filepath.Join(cfg.WorkspaceRootDirectory, dst)
