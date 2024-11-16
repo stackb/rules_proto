@@ -1,0 +1,16 @@
+# gazelle:proto_language closure_js enable false
+# gazelle:proto_language cpp enable false
+# gazelle:proto_language go enable false
+# gazelle:proto_language java enable false
+# gazelle:proto_language node_js enable false
+# gazelle:proto_language python enable true
+# gazelle:proto_language scala enable false
+# gazelle:proto_language ts_proto enable false
+
+# gazelle:proto_plugin python implementation builtin:python
+# gazelle:proto_rule proto_python_library implementation stackb:rules_proto:proto_py_library
+# gazelle:proto_rule proto_python_stub_library implementation example/starlark_proto/lib/rules.star%proto_python_stubs_library
+# gazelle:proto_rule proto_python_stub_library visibility //visibility:public
+# gazelle:proto_language python plugin python
+# gazelle:proto_language python rule proto_python_library
+# gazelle:proto_language python rule proto_python_stub_library

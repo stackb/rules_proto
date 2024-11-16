@@ -1,0 +1,46 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("//example/starlark_proto/lib:rules.bzl", "mypy_stubs")
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+
+proto_library(
+    name = "proto_proto",
+    srcs = [
+        "a.proto",
+        "b.proto",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_compile(
+    name = "proto_python_compile",
+    outputs = [
+        "a_pb2.py",
+        "a_pb2.pyi",
+        "b_pb2.py",
+        "b_pb2.pyi",
+    ],
+    plugins = [
+        "@build_stack_rules_proto//plugin/builtin:pyi",
+        "@build_stack_rules_proto//plugin/builtin:python",
+    ],
+    proto = "proto_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_py_library(
+    name = "proto_py_library",
+    srcs = [
+        "a_pb2.py",
+        "b_pb2.py",
+    ],
+)
+
+mypy_stubs(
+    name = "proto_pyi_library",
+    srcs = [
+        "a_pb2.pyi",
+        "b_pb2.pyi",
+    ],
+    visibility = ["//visibility:public"],
+)

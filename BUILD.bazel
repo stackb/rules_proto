@@ -35,6 +35,9 @@ proto_gazelle(
     name = "gazelle",
     cfgs = [":rules_proto_config.yaml"],
     gazelle = ":gazelle-protobuf",
+    extra_args = [
+        "-proto_rule=example/starlark_proto/lib/rules.star%proto_python_stubs_library",
+    ],
     imports = [
         "@googleapis//:imports.csv",
         "@protoapis//:imports.csv",
