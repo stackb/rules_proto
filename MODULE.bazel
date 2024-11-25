@@ -280,10 +280,20 @@ maven.install(
     lock_file = "//:maven_akka_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
+maven.install(
+    name = "maven_zio",
+    artifacts = [
+        "com.thesamet.scalapb.zio-grpc:zio-grpc-codegen_2.12:0.6.0",
+    ],
+    fetch_sources = True,
+    lock_file = "//:maven_zio_install.json",
+    repositories = ["https://repo1.maven.org/maven2"],
+)
 use_repo(
     maven,
     "maven_akka",
     "maven_scala",
+    "maven_zio",
     "maven",
     "com_google_protobuf_protobuf_java_3_19_3",
     "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
