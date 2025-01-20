@@ -80,12 +80,12 @@ single_version_override(
     module_name = "protobuf",
     version = "24.4",
 )
-bazel_dep(name = "protobuf_javascript", repo_name = "com_google_protobuf_javascript")
-git_override(
-    module_name = "protobuf_javascript",
-    commit = "5d939dbc8fd5245c4316d52c203a1bff24bac5c4",  # https://github.com/protocolbuffers/protobuf-javascript/commit/05560593d93e7207e84829b3ab6a80c08078e389
-    remote = "https://github.com/protocolbuffers/protobuf-javascript",
-)
+# bazel_dep(name = "protobuf_javascript", version = "0.0.0", repo_name = "com_google_protobuf_javascript")
+# git_override(
+#     module_name = "protobuf_javascript",
+#     commit = "5d939dbc8fd5245c4316d52c203a1bff24bac5c4",  # https://github.com/protocolbuffers/protobuf-javascript/commit/05560593d93e7207e84829b3ab6a80c08078e389
+#     remote = "https://github.com/protocolbuffers/protobuf-javascript",
+# )
 
 # grpc_core_deps()
 
@@ -96,17 +96,15 @@ git_override(
 bazel_dep(name = "grpc", version = "1.56.3", repo_name = "com_github_grpc_grpc")
 
 go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
-go_sdk.download(
-    name = "go_sdk",
-    version = "1.21.8",
-)
-use_repo(
-    go_sdk,
-    "go_sdk",
-    "go_toolchains",
-    # This name is ugly on purpose to avoid a conflict with a user-named SDK.
-    "io_bazel_rules_nogo",
-)
+go_sdk.download(version = "1.21.8")
+
+# use_repo(
+#     go_sdk,
+#     "go_sdk",
+#     "go_toolchains",
+#     # This name is ugly on purpose to avoid a conflict with a user-named SDK.
+#     "io_bazel_rules_nogo",
+# )
 # register_toolchains("@go_toolchains//:all")
 
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")

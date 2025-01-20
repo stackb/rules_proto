@@ -3,9 +3,9 @@ module github.com/stackb/rules_proto
 go 1.18
 
 require (
-	github.com/bazelbuild/bazel-gazelle v0.35.0
-	github.com/bazelbuild/buildtools v0.0.0-20231115204819-d4c9dccdfbb1
-	github.com/bazelbuild/rules_go v0.44.1
+	github.com/bazelbuild/bazel-gazelle v0.41.0
+	github.com/bazelbuild/buildtools v0.0.0-20240918101019-be1c24cc9a44
+	github.com/bazelbuild/rules_go v0.51.0
 	github.com/bmatcuk/doublestar v1.3.4
 	github.com/emicklei/proto v1.13.0
 	github.com/google/go-cmp v0.6.0
