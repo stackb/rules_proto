@@ -27,7 +27,7 @@ var (
 	ErrNoLabel    = errors.New("no label")
 )
 
-const debug = true
+const debug = false
 
 type DepsResolver func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label)
 

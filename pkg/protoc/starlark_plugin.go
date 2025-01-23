@@ -141,6 +141,8 @@ func (p *starlarkPlugin) Configure(ctx *PluginContext) *PluginConfiguration {
 			Out:     out,
 			Options: options,
 		}
+	case starlark.NoneType:
+		return nil
 	default:
 		p.errorReporter("plugin %q configure returned invalid type: %T", p.name, value)
 		return nil
