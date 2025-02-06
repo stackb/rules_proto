@@ -1,6 +1,6 @@
 "example.bzl provides the gazelle_testdata_example rule."
 
-load("@io_bazel_rules_go//go/tools/bazel_testing:def.bzl", "go_bazel_test")
+load("@rules_go//go/tools/bazel_testing:def.bzl", "go_bazel_test")
 
 def _examplegen_impl(ctx):
     config_json = ctx.outputs.json

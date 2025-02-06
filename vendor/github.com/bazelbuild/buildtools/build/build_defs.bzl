@@ -16,7 +16,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 """
 
 load(
-    "@io_bazel_rules_go//go:def.bzl",
+    "@rules_go//go:def.bzl",
     "GoSource",
 )
 

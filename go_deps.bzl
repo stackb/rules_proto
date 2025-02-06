@@ -2,7 +2,7 @@
 """
 
 load("//rules/private:proto_repository_tools.bzl", "proto_repository_tools")
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 def gazelle_protobuf_extension_go_deps():
     """additional go_repository rules beyond gazelle itself needed for the gazelle-protobuf extension.

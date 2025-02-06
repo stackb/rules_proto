@@ -338,7 +338,7 @@ func resolveProto(c *config.Config, ix *resolve.RuleIndex, rc *repo.RemoteCache,
 // wellKnownProtos is the set of proto sets for which we don't need to add
 // an explicit dependency in go_proto_library.
 // TODO(jayconrod): generate from
-// @io_bazel_rules_go//proto/wkt:WELL_KNOWN_TYPE_PACKAGES
+// @rules_go//proto/wkt:WELL_KNOWN_TYPE_PACKAGES
 var wellKnownProtos = map[string]bool{
 	"google/protobuf/any.proto":             true,
 	"google/protobuf/api.proto":             true,

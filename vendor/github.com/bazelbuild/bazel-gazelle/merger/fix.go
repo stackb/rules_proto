@@ -181,7 +181,7 @@ func newLoadIndex(f *rule.File, after []string) int {
 func CheckGazelleLoaded(f *rule.File) error {
 	needGazelle := false
 	for _, l := range f.Loads {
-		if strings.HasPrefix(l.Name(), "@bazel_gazelle//") {
+		if strings.HasPrefix(l.Name(), "@gazelle//") {
 			needGazelle = true
 		}
 	}

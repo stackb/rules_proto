@@ -588,7 +588,7 @@ func (g *generator) maybeGenerateExtraLib(lib *rule.Rule, pkg *goPackage) *rule.
 		r.SetAttr("visibility", []string{"//visibility:public"})
 		r.SetAttr("deps", []string{
 			"//proto:go_default_library",
-			"@io_bazel_rules_go//proto/wkt:descriptor_go_proto",
+			"@rules_go//proto/wkt:descriptor_go_proto",
 			"@org_golang_google_protobuf//reflect/protodesc:go_default_library",
 			"@org_golang_google_protobuf//reflect/protoreflect:go_default_library",
 			"@org_golang_google_protobuf//runtime/protoimpl:go_default_library",
@@ -607,8 +607,8 @@ func (g *generator) maybeGenerateExtraLib(lib *rule.Rule, pkg *goPackage) *rule.
 		r.SetAttr("deps", []string{
 			"//proto:go_default_library",
 			"//protoc-gen-go/generator/internal/remap:go_default_library",
-			"@io_bazel_rules_go//proto/wkt:compiler_plugin_go_proto",
-			"@io_bazel_rules_go//proto/wkt:descriptor_go_proto",
+			"@rules_go//proto/wkt:compiler_plugin_go_proto",
+			"@rules_go//proto/wkt:descriptor_go_proto",
 		})
 
 	case "github.com/golang/protobuf/ptypes":
@@ -618,9 +618,9 @@ func (g *generator) maybeGenerateExtraLib(lib *rule.Rule, pkg *goPackage) *rule.
 		r.SetAttr("visibility", []string{"//visibility:public"})
 		r.SetAttr("deps", []string{
 			"//proto:go_default_library",
-			"@io_bazel_rules_go//proto/wkt:any_go_proto",
-			"@io_bazel_rules_go//proto/wkt:duration_go_proto",
-			"@io_bazel_rules_go//proto/wkt:timestamp_go_proto",
+			"@rules_go//proto/wkt:any_go_proto",
+			"@rules_go//proto/wkt:duration_go_proto",
+			"@rules_go//proto/wkt:timestamp_go_proto",
 			"@org_golang_google_protobuf//reflect/protoreflect:go_default_library",
 			"@org_golang_google_protobuf//reflect/protoregistry:go_default_library",
 		})

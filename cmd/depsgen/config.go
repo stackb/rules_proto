@@ -10,7 +10,7 @@ import (
 // empty string are native and do not need a load statement.
 var knownLoads = map[string]string{
 	"bind":             "",
-	"go_repository":    "@bazel_gazelle//:deps.bzl",
+	"go_repository":    "@gazelle//:deps.bzl",
 	"http_archive":     "@bazel_tools//tools/build_defs/repo:http.bzl",
 	"http_file":        "@bazel_tools//tools/build_defs/repo:http.bzl",
 	"local_repository": "",

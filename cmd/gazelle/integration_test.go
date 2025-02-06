@@ -108,7 +108,7 @@ func TestSelectLabelsSorted(t *testing.T) {
 		{
 			Path: "BUILD",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -173,7 +173,7 @@ package foo
 		{Path: "outer_android_suffix/outer.go", Content: "package outer_android_suffix"},
 		{Path: "outer/inner/inner.go", Content: "package inner"},
 	})
-	want := `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+	want := `load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -221,8 +221,8 @@ func TestFixAndUpdateChanges(t *testing.T) {
 		{Path: "WORKSPACE"},
 		{
 			Path: "BUILD",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_prefix")
-load("@io_bazel_rules_go//go:def.bzl", "cgo_library", "go_test")
+			Content: `load("@rules_go//go:def.bzl", "go_library", "go_prefix")
+load("@rules_go//go:def.bzl", "cgo_library", "go_test")
 
 go_prefix("example.com/foo")
 
@@ -260,7 +260,7 @@ import "C"
 	}{
 		{
 			cmd: "update",
-			want: `load("@io_bazel_rules_go//go:def.bzl", "cgo_library", "go_library", "go_prefix")
+			want: `load("@rules_go//go:def.bzl", "cgo_library", "go_library", "go_prefix")
 
 go_prefix("example.com/foo")
 
@@ -282,7 +282,7 @@ cgo_library(
 `,
 		}, {
 			cmd: "fix",
-			want: `load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_prefix")
+			want: `load("@rules_go//go:def.bzl", "go_library", "go_prefix")
 
 go_prefix("example.com/foo")
 
@@ -322,7 +322,7 @@ func TestFixUnlinkedCgoLibrary(t *testing.T) {
 		{Path: "WORKSPACE"},
 		{
 			Path: "BUILD",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "cgo_library", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "cgo_library", "go_library")
 
 cgo_library(
     name = "cgo_default_library",
@@ -345,7 +345,7 @@ go_library(
 	dir, cleanup := testtools.CreateFiles(t, files)
 	defer cleanup()
 
-	want := `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+	want := `load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -372,7 +372,7 @@ func TestMultipleDirectories(t *testing.T) {
 		{
 			Path: "a/BUILD.bazel",
 			Content: `# This file shouldn't be modified.
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -404,7 +404,7 @@ import _ "example.com/foo/x"
 		files[1], // should not change
 		{
 			Path: "b/BUILD.bazel",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -511,7 +511,7 @@ import _ "golang.org/x/baz"
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{
 		{
 			Path: config.DefaultValidBuildFileNames[0],
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "foo",
@@ -523,7 +523,7 @@ go_library(
 `,
 		}, {
 			Path: "vendor/golang.org/x/bar/" + config.DefaultValidBuildFileNames[0],
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "bar",
@@ -544,7 +544,7 @@ func TestMigrateProtoRules(t *testing.T) {
 		{
 			Path: config.DefaultValidBuildFileNames[0],
 			Content: `
-load("@io_bazel_rules_go//proto:go_proto_library.bzl", "go_proto_library")
+load("@rules_go//proto:go_proto_library.bzl", "go_proto_library")
 
 filegroup(
     name = "go_default_library_protos",
@@ -576,7 +576,7 @@ option go_package = "example.com/repo";
 		{
 			args: []string{"update", "-go_prefix", "example.com/repo"},
 			want: `
-load("@io_bazel_rules_go//proto:go_proto_library.bzl", "go_proto_library")
+load("@rules_go//proto:go_proto_library.bzl", "go_proto_library")
 
 filegroup(
     name = "go_default_library_protos",
@@ -593,8 +593,8 @@ go_proto_library(
 			args: []string{"fix", "-go_prefix", "example.com/repo"},
 			want: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
     name = "repo_proto",
@@ -641,8 +641,8 @@ func TestRemoveProtoDeletesRules(t *testing.T) {
 			Path: config.DefaultValidBuildFileNames[0],
 			Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
 
 filegroup(
     name = "go_default_library_protos",
@@ -687,7 +687,7 @@ go_library(
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{{
 		Path: config.DefaultValidBuildFileNames[0],
 		Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -706,8 +706,8 @@ func TestAddServiceConvertsToGrpc(t *testing.T) {
 			Path: config.DefaultValidBuildFileNames[0],
 			Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
     name = "repo_proto",
@@ -752,8 +752,8 @@ service TestService {}
 		Path: config.DefaultValidBuildFileNames[0],
 		Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
     name = "repo_proto",
@@ -763,7 +763,7 @@ proto_library(
 
 go_proto_library(
     name = "repo_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    compilers = ["@rules_go//proto:go_grpc"],
     importpath = "example.com/repo",
     proto = ":repo_proto",
     visibility = ["//visibility:public"],
@@ -786,8 +786,8 @@ func TestProtoImportPrefix(t *testing.T) {
 			Path: config.DefaultValidBuildFileNames[0],
 			Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
     name = "foo_proto",
@@ -828,8 +828,8 @@ go_library(
 		Path: config.DefaultValidBuildFileNames[0],
 		Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
     name = "foo_proto",
@@ -885,7 +885,7 @@ import (
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{{
 		Path: filepath.Join("bar", config.DefaultValidBuildFileNames[0]),
 		Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "bar",
@@ -913,7 +913,7 @@ import _ "example.com/alt/baz"
 `,
 		}, {
 			Path: "bar/BUILD.bazel",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -940,7 +940,7 @@ go_library(
 		{
 			Path: "foo/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -952,7 +952,7 @@ go_library(
 `,
 		}, {
 			Path: "bar/BUILD.bazel",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -994,7 +994,7 @@ import _ "example.com/foo"
 		{
 			Path: "sub/vendor/example.com/foo/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "foo",
@@ -1007,7 +1007,7 @@ go_library(
 		}, {
 			Path: "sub/bar/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "bar",
@@ -1030,8 +1030,8 @@ func TestDeleteProtoWithDeps(t *testing.T) {
 			Path: "foo/BUILD.bazel",
 			Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -1082,7 +1082,7 @@ message Bar {};
 		{
 			Path: "foo/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -1127,7 +1127,7 @@ import _ "example.com/bar"
 		{
 			Path: "BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "foo",
@@ -1182,7 +1182,7 @@ import _ "example.com/bar"
 		{
 			Path: "ext/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "foo",
@@ -1231,9 +1231,9 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_depe
 
 go_rules_dependencies()
 
-go_register_toolchains(nogo = "@bazel_gazelle//:nogo")
+go_register_toolchains(nogo = "@gazelle//:nogo")
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 `,
@@ -1276,9 +1276,9 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_depe
 
 go_rules_dependencies()
 
-go_register_toolchains(nogo = "@bazel_gazelle//:nogo")
+go_register_toolchains(nogo = "@gazelle//:nogo")
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 go_repository(
     name = "com_github_sirupsen_logrus",
@@ -1307,11 +1307,11 @@ http_archive(
     sha256 = "6228d9618ab9536892aa69082c063207c91e777e51bd3c5544c9c060cafe1bd8",
     url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
 )
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains", "go_repository")
+load("@rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains", "go_repository")
 go_rules_dependencies()
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 gazelle_dependencies()
 
 go_repository(
@@ -1395,13 +1395,13 @@ http_archive(
     url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 go_repository(
     name = "com_github_pkg_errors",
@@ -1450,11 +1450,11 @@ http_archive(
     sha256 = "6228d9618ab9536892aa69082c063207c91e777e51bd3c5544c9c060cafe1bd8",
     url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
 )
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains", "go_repository")
+load("@rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains", "go_repository")
 go_rules_dependencies()
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 gazelle_dependencies()
 
 http_archive(
@@ -1468,7 +1468,7 @@ http_archive(
 		}, {
 			Path: "repositories.bzl",
 			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 def go_repositories():
     go_repository(
@@ -1546,13 +1546,13 @@ http_archive(
     url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 go_repository(
     name = "com_github_pkg_errors",
@@ -1574,7 +1574,7 @@ http_archive(
 		}, {
 			Path: "repositories.bzl",
 			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 def go_repositories():
     go_repository(
@@ -1613,13 +1613,13 @@ http_archive(
     url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
@@ -1635,7 +1635,7 @@ http_archive(
 		}, {
 			Path: "repositories.bzl",
 			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 def go_repositories():
     go_repository(
@@ -1707,13 +1707,13 @@ http_archive(
     url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
@@ -1729,7 +1729,7 @@ http_archive(
 		}, {
 			Path: "repositories.bzl",
 			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 def go_repositories():
     go_repository(
@@ -1774,7 +1774,7 @@ local_repository(
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 
 go_rules_dependencies()
 
@@ -1844,7 +1844,7 @@ local_repository(
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 load("//:repositories.bzl", "go_repositories")
 
 # gazelle:repository_macro repositories.bzl%go_repositories
@@ -1859,7 +1859,7 @@ gazelle_dependencies()
 		}, {
 			Path: "repositories.bzl",
 			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 def go_repositories():
     go_repository(
@@ -1907,13 +1907,13 @@ http_archive(
     url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
@@ -1940,7 +1940,7 @@ go_repository(
 		}, {
 			Path: "repositories.bzl",
 			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 def go_repositories():
     go_repository(
@@ -2026,13 +2026,13 @@ http_archive(
     url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
@@ -2054,7 +2054,7 @@ go_repository(
 		}, {
 			Path: "repositories.bzl",
 			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 def go_repositories():
     go_repository(
@@ -2095,7 +2095,7 @@ func TestDeleteRulesInEmptyDir(t *testing.T) {
 		{
 			Path: "BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_binary")
+load("@rules_go//go:def.bzl", "go_library", "go_binary")
 
 go_library(
     name = "go_default_library",
@@ -2136,7 +2136,7 @@ func TestFixWorkspaceWithoutGazelle(t *testing.T) {
 		{
 			Path: "WORKSPACE",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_repository")
+load("@rules_go//go:def.bzl", "go_repository")
 
 go_repository(
     name = "com_example_repo",
@@ -2165,7 +2165,7 @@ func TestFixGazelle(t *testing.T) {
 		}, {
 			Path: "BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "gazelle", "go_library")
+load("@rules_go//go:def.bzl", "gazelle", "go_library")
 
 gazelle(name = "gazelle")
 
@@ -2184,8 +2184,8 @@ go_library(name = "go_default_library")
 		{
 			Path: "BUILD.bazel",
 			Content: `
-load("@bazel_gazelle//:def.bzl", "gazelle")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@gazelle//:def.bzl", "gazelle")
+load("@rules_go//go:def.bzl", "go_library")
 
 gazelle(name = "gazelle")
 
@@ -2205,7 +2205,7 @@ func TestKeepDeps(t *testing.T) {
 		}, {
 			Path: "BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 # gazelle:prefix example.com/repo
 
@@ -2280,7 +2280,7 @@ import _ "example.com/bar"
 		}, {
 			Path: "third_party/example.com/bar/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "bar",
@@ -2306,7 +2306,7 @@ go_library(
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{{
 		Path: "foo/BUILD.bazel",
 		Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "foo",
@@ -2344,7 +2344,7 @@ import (
 			Content: "package bar",
 		}, {
 			Path: "third_party/baz/BUILD.bazel",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_library")
 
 # this should be ignored because -index=false
 go_library(
@@ -2376,7 +2376,7 @@ go_library(
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{
 		{
 			Path: "foo/BUILD.bazel",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "foo",
@@ -2409,7 +2409,7 @@ import (
 			Content: "package bar",
 		}, {
 			Path: "third_party/baz/BUILD.bazel",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_library")
 
 # this should be ignored because -index=false
 go_library(
@@ -2441,7 +2441,7 @@ go_library(
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{
 		{
 			Path: "foo/BUILD.bazel",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "foo",
@@ -2453,7 +2453,7 @@ go_library(
 `,
 		}, {
 			Path: "foo/bar/BUILD.bazel",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "bar",
@@ -2500,7 +2500,7 @@ import (
 		{
 			Path: "sub/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:prefix example.com/sub
 
@@ -2527,8 +2527,8 @@ func TestGoGrpcProtoFlag(t *testing.T) {
 			Path: "BUILD.bazel",
 			Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_proto_library(
     name = "foo_go_proto",
@@ -2563,12 +2563,12 @@ message Bar {};
 			Path: "service/BUILD.bazel",
 			Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_proto_library(
     name = "service_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    compilers = ["@rules_go//proto:go_grpc"],
     importpath = "example.com/repo/service",
     proto = ":service_proto",
     visibility = ["//visibility:public"],
@@ -2611,8 +2611,8 @@ service TestService {}
 			Path: "BUILD.bazel",
 			Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_proto_library(
     name = "foo_go_proto",
@@ -2640,8 +2640,8 @@ go_library(
 			Path: "service/BUILD.bazel",
 			Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_proto_library(
     name = "service_go_proto",
@@ -2716,7 +2716,7 @@ my_library(
 		}, {
 			Path: "enabled/existing_rules/unmapped/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # An existing rule with an unmapped type is preserved
 go_library(
@@ -2776,7 +2776,7 @@ import (
 		{
 			Path: "BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:prefix example.com/mapkind
 # gazelle:go_naming_convention go_default_library
@@ -2835,7 +2835,7 @@ overridden_library(
 		{
 			Path: "disabled/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -2865,7 +2865,7 @@ my_library(
 		{
 			Path: "enabled/existing_rules/unmapped/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # An existing rule with an unmapped type is preserved
 go_library(
@@ -2914,7 +2914,7 @@ go_binary(
 		{
 			Path: "depend_on_mapped_kind/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -2963,7 +2963,7 @@ func TestMinimalModuleCompatibilityAliases(t *testing.T) {
 		{
 			Path: "BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "foo",
@@ -2976,7 +2976,7 @@ go_library(
 		}, {
 			Path: "bar/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "bar",
@@ -3023,7 +3023,7 @@ go_repository(
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{{
 		Path: "internal/version/BUILD.bazel",
 		Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "version",
@@ -3077,7 +3077,7 @@ func TestGoInternalVisibility_TopLevel(t *testing.T) {
 		{
 			Path: "BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:prefix modernc.org/internal
 
@@ -3095,7 +3095,7 @@ go_library(
 		{
 			Path: "buffer/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "buffer",
@@ -3188,7 +3188,7 @@ github.com/Selvatico/go-mocket v1.0.7/go.mod h1:4gO2v+uQmsL+jzQgLANy3tyEFzaEzHly
 		{
 			Path: "WORKSPACE",
 			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 # gazelle:repo bazel_gazelle
 
@@ -3211,7 +3211,7 @@ func TestUpdateReposWithGlobalBuildTags(t *testing.T) {
 		{
 			Path: "WORKSPACE",
 			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 # gazelle:repo bazel_gazelle
 
@@ -3260,7 +3260,7 @@ github.com/Selvatico/go-mocket v1.0.7/go.mod h1:4gO2v+uQmsL+jzQgLANy3tyEFzaEzHly
 		{
 			Path: "WORKSPACE",
 			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
 # gazelle:repo bazel_gazelle
 
@@ -3314,8 +3314,8 @@ proto_library(
 		{
 			Path: "proto/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 # gazelle:prefix example.com/foo
 
@@ -3365,7 +3365,7 @@ func TestConfigLang(t *testing.T) {
 		// Confirm it does index and resolve a rule in a directory where go is activated.
 		{Path: "invisible1.go", Content: "package invisible1"},
 		{Path: "BUILD.bazel", Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:prefix root
 
@@ -3378,7 +3378,7 @@ go_library(
 `},
 		{Path: "baz/protos/invisible2.go", Content: "package invisible2"},
 		{Path: "baz/protos/BUILD.bazel", Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:lang proto
 # gazelle:prefix github.com/rule_indexing/invisible2
@@ -3392,7 +3392,7 @@ go_library(
 `},
 		{Path: "visible/visible.go", Content: "package visible"},
 		{Path: "visible/BUILD.bazel", Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:lang go,proto
 # gazelle:prefix github.com/rule_indexing/visible
@@ -3440,7 +3440,7 @@ proto_library(
 		{
 			Path: filepath.Join("bar", "BUILD.bazel"),
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:lang
 
@@ -3454,7 +3454,7 @@ go_library(
 		{
 			Path: filepath.Join("baz", "BUILD.bazel"),
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:lang go,proto
 
@@ -3467,7 +3467,7 @@ go_library(
 		},
 
 		{Path: "baz/test_no_index/BUILD.bazel", Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -3532,7 +3532,7 @@ func TestGoGenerateProto(t *testing.T) {
 		{
 			Path: "proto/BUILD.bazel",
 			Content: `load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:go_generate_proto false
 # gazelle:prefix example.com/proto
@@ -3567,7 +3567,7 @@ func TestGoMainLibraryRemoved(t *testing.T) {
 		},
 		{
 			Path: "cmd/foo/BUILD.bazel",
-			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+			Content: `load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
 		name = "foo_lib",
@@ -3631,7 +3631,7 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 `,
@@ -3676,7 +3676,7 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 go_repository(
     name = "org_golang_x_mod",
@@ -3722,7 +3722,7 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 `,
@@ -3767,7 +3767,7 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 load("//:deps.bzl", "deps")
 
 # gazelle:repository_macro deps.bzl%deps
@@ -3805,7 +3805,7 @@ http_archive(
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 
 go_rules_dependencies()
 
@@ -3849,7 +3849,7 @@ http_archive(
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 go_repository(
     name = "org_golang_x_mod",
@@ -3894,7 +3894,7 @@ http_archive(
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 
 go_rules_dependencies()
 
@@ -3938,7 +3938,7 @@ http_archive(
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 load("//:deps.bzl", "deps")
 
 # gazelle:repository_macro deps.bzl%deps
@@ -3975,7 +3975,7 @@ import _ "example.com/foo"
 		{
 			Path: "foo/BUILD.bazel",
 			Content: `# gazelle:prefix example.com/foo
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "foo",
@@ -4004,7 +4004,7 @@ go_test(
 		{
 			Path: "foo/BUILD.bazel",
 			Content: `# gazelle:prefix example.com/foo
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "foo",
@@ -4083,7 +4083,7 @@ func TestPlatformSpecificEmbedsrcs(t *testing.T) {
 		{
 			Path: "BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:prefix example.com/foo
 
@@ -4124,7 +4124,7 @@ var s string
 		{
 			Path: "BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:prefix example.com/foo
 
@@ -4190,7 +4190,7 @@ func TestQuotedEmbedsrcs(t *testing.T) {
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{{
 		Path: "BUILD.bazel",
 		Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 # gazelle:prefix example.com/foo
 

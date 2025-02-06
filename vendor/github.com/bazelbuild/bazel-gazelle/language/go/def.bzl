@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_context")
+load("@rules_go//go:def.bzl", "go_context")
 
 def _std_package_list_impl(ctx):
     go = go_context(ctx)
@@ -23,8 +23,8 @@ std_package_list = rule(
             executable = True,
         ),
         "_go_context_data": attr.label(
-            default = "@io_bazel_rules_go//:go_context_data",
+            default = "@rules_go//:go_context_data",
         ),
     },
-    toolchains = ["@io_bazel_rules_go//go:toolchain"],
+    toolchains = ["@rules_go//go:toolchain"],
 )

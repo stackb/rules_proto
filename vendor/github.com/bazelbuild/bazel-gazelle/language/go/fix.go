@@ -314,7 +314,7 @@ func removeLegacyProto(c *config.Config, f *rule.File) {
 	// Scan for definitions to delete.
 	var protoLoads []*rule.Load
 	for _, l := range f.Loads {
-		if l.Name() == "@io_bazel_rules_go//proto:go_proto_library.bzl" {
+		if l.Name() == "@rules_go//proto:go_proto_library.bzl" {
 			protoLoads = append(protoLoads, l)
 		}
 	}
@@ -351,11 +351,11 @@ func removeLegacyProto(c *config.Config, f *rule.File) {
 }
 
 // removeLegacyGazelle removes loads of the "gazelle" macro from
-// @io_bazel_rules_go//go:def.bzl. The definition has moved to
+// @rules_go//go:def.bzl. The definition has moved to
 // @bazel_gazelle//:def.bzl, and the old one will be deleted soon.
 func removeLegacyGazelle(c *config.Config, f *rule.File) {
 	for _, l := range f.Loads {
-		if l.Name() == "@io_bazel_rules_go//go:def.bzl" && l.Has("gazelle") {
+		if l.Name() == "@rules_go//go:def.bzl" && l.Has("gazelle") {
 			l.Remove("gazelle")
 			if l.IsEmpty() {
 				l.Delete()

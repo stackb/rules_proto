@@ -28,7 +28,7 @@ go_register_toolchains(version = "1.18.2")
 
 # == Gazelle ==
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 

@@ -172,7 +172,7 @@ func TestNoChanges(t *testing.T) {
 	}
 
 	buildFile := filepath.Join(dir, "BUILD")
-	if err = ioutil.WriteFile(buildFile, []byte(`load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+	if err = ioutil.WriteFile(buildFile, []byte(`load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
     name = "go_default_library",
@@ -253,7 +253,7 @@ func main() {}
 				{
 					Path: "src/BUILD.bazel",
 					Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_binary(
     name = "hello",
@@ -286,7 +286,7 @@ go_library(
 				{
 					Path: "out/BUILD",
 					Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
 # src build file
 
@@ -320,7 +320,7 @@ go_binary(
 				{
 					Path: "out/BUILD",
 					Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_binary(
     name = "hello",
@@ -363,7 +363,7 @@ func TestFix_LangFilter(t *testing.T) {
 		{
 			Path: "BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_binary(
     name = "nofix",

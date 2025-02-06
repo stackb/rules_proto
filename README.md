@@ -124,7 +124,7 @@ go_register_toolchains(version = "1.18.2")
 ---
 
 ```python
-load( "@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load( "@gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 ```
@@ -157,13 +157,13 @@ protobuf_core_deps()
 ## Gazelle Setup
 
 ```python
-load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@gazelle//:def.bzl", "gazelle", "gazelle_binary")
 
 gazelle_binary(
     name = "gazelle-protobuf",
     languages = [
-        "@bazel_gazelle//language/go",
-        "@bazel_gazelle//language/proto",
+        "@gazelle//language/go",
+        "@gazelle//language/proto",
         # must be after the proto extension (order matters)
         "@build_stack_rules_proto//language/protobuf",
     ],

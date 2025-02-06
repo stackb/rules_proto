@@ -1,6 +1,6 @@
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
 load(
-    "@io_bazel_rules_go//proto/wkt:well_known_types.bzl",
+    "@rules_go//proto/wkt:well_known_types.bzl",
     "GOGO_WELL_KNOWN_TYPE_REMAPS",
 )
 load(":variants.bzl", "GOGO_VARIANTS")

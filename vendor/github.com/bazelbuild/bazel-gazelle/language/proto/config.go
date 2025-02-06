@@ -262,10 +262,10 @@ func inferProtoMode(c *config.Config, rel string, f *rule.File) {
 outer:
 	for _, l := range f.Loads {
 		name := l.Name()
-		if name == "@io_bazel_rules_go//proto:def.bzl" {
+		if name == "@rules_go//proto:def.bzl" {
 			break
 		}
-		if name == "@io_bazel_rules_go//proto:go_proto_library.bzl" {
+		if name == "@rules_go//proto:go_proto_library.bzl" {
 			mode = LegacyMode
 			break
 		}
