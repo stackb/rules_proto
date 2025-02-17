@@ -21,8 +21,8 @@ load(
 )
 
 DEFAULT_LANGUAGES = [
-    "@bazel_gazelle//language/proto:go_default_library",
-    "@bazel_gazelle//language/go:go_default_library",
+    "@gazelle//language/proto:go_default_library",
+    "@gazelle//language/go:go_default_library",
     "@build_stack_rules_proto//language/protobuf",
 ]
 
@@ -141,7 +141,7 @@ _gazelle_runner = rule(
             allow_single_file = True,
         ),
         "_template": attr.label(
-            default = "@bazel_gazelle//internal:gazelle.bash.in",
+            default = "@gazelle//internal:gazelle.bash.in",
             allow_single_file = True,
         ),
     },

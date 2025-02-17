@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "protobuf",
@@ -28,7 +28,7 @@ go_library(
         "//pkg/rule/rules_nodejs",
         "//pkg/rule/rules_python",
         "//pkg/rule/rules_scala",
-        "@bazel_gazelle//language:go_default_library",
+        "@gazelle//language:go_default_library",
     ],
 )
 

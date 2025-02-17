@@ -452,7 +452,7 @@ func findWorkspaceInsertIndex(f *rule.File, kinds map[string]rule.KindInfo, load
 	}
 
 	// Find the first index after load statements from files that contain
-	// repository rules (for example, "@bazel_gazelle//:deps.bzl") and after
+	// repository rules (for example, "@gazelle//:deps.bzl") and after
 	// repository rules declaring those files (http_archive for bazel_gazelle).
 	// It doesn't matter whether the repository rules are actually loaded.
 	insertAfter := 0

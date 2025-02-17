@@ -105,7 +105,7 @@
 # # Gazelle
 # # ----------------------------------------------------
 
-# load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+# load("@gazelle//:deps.bzl", "gazelle_dependencies")
 
 # gazelle_dependencies()
 

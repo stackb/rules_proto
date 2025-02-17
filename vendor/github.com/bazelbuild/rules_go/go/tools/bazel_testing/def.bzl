@@ -26,7 +26,7 @@ def go_bazel_test(rule_files = None, **kwargs):
     # Add dependency on bazel_testing library.
     kwargs.setdefault("deps", [])
 
-    bazel_testing_library = "@io_bazel_rules_go//go/tools/bazel_testing"
+    bazel_testing_library = "@rules_go//go/tools/bazel_testing"
     if bazel_testing_library not in kwargs["deps"]:
         kwargs["deps"].append(bazel_testing_library)
 

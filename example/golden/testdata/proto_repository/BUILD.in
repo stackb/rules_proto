@@ -1,5 +1,5 @@
 
-load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@build_stack_rules_proto//rules:proto_gazelle.bzl", "DEFAULT_LANGUAGES", "proto_gazelle")
 load("//:proto_repository_info_test.bzl", "proto_repository_info_test")
 load("//:proto_gazelle_data_test.bzl", "proto_gazelle_data_test")

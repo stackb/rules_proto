@@ -14,7 +14,7 @@
 """"""
 
 load("//rules/private:execution.bzl", "env_execute", "executable_extension")
-load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
+load("@gazelle//internal:go_repository_cache.bzl", "read_cache_env")
 load("@build_stack_rules_proto//rules/private:proto_repository_tools_srcs.bzl", "PROTO_REPOSITORY_TOOLS_SRCS")
 
 _PROTO_REPOSITORY_TOOLS_BUILD_FILE = """

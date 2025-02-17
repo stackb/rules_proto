@@ -39,7 +39,7 @@ go_register_toolchains(version = "1.18.2")
 
 # == Gazelle ==
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 
@@ -59,7 +59,7 @@ protobuf_core_deps()
 The simplest configuration would be:
 
 ```python
-load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@gazelle//:def.bzl", "gazelle")
 
 gazelle(
     name = "update_build_files",
@@ -70,15 +70,15 @@ gazelle(
 If you have your own gazelle language implementation(s), use something like the following:
 
 ```python
-load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@gazelle//:def.bzl", "gazelle", "gazelle_binary")
 
 gazelle_binary(
     name = "gazelle",
     languages = [
         # NOTE: order matters here
-        "@bazel_gazelle//language/proto",
+        "@gazelle//language/proto",
         "@build_stack_rules_proto//language/protobuf",
-        "@bazel_gazelle//language/go",
+        "@gazelle//language/go",
         "//gazelle/language/foo",
     ],
 )
