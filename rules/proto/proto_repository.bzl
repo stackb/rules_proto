@@ -28,15 +28,23 @@ def _get_auth(ctx, urls):
     netrcfile = ""
     if "NETRC" in ctx.os.environ:
         netrcfile = ctx.os.environ["NETRC"]
+        print("proto_repository: using netrcfile given by NETRC env var:", netrcfile)
     elif ctx.os.name.startswith("windows"):
         if "USERPROFILE" in ctx.os.environ:
             netrcfile = "%s/_netrc" % (ctx.os.environ["USERPROFILE"])
+        print("proto_repository: using netrcfile given by USERPROFILE env var:", netrcfile)
     elif "HOME" in ctx.os.environ:
         netrcfile = "%s/.netrc" % (ctx.os.environ["HOME"])
+        print("proto_repository: using netrcfile given by HOME env var:", netrcfile)
 
     if netrcfile and ctx.path(netrcfile).exists:
         netrc = read_netrc(ctx, netrcfile)
-        return use_netrc(netrc, urls, {})
+        netrc_data = use_netrc(netrc, urls, {})
+        print("proto_repository: netrc data:", netrc_data)
+
+        return netrc_data
+
+    print("proto_repository: netrc not used (returning empty dict)")
 
     return {}
 
