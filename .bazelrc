@@ -1,3 +1,4 @@
+common --enable_bzlmod=false
 
 common --jvmopt=-Djava.security.manager=allow
 build --java_language_version=17
