@@ -30,10 +30,3 @@ test --action_env=HOME
 # Don't depend on a JAVA_HOME pointing at a system JDK
 # see https://github.com/bazelbuild/rules_jvm_external/issues/445
 build --repo_env=JAVA_HOME=../bazel_tools/jdk
-
-# C compilation flags
-build --copt='-Wno-error=c23-extensions'
-build --host_copt='-Wno-error=c23-extensions'
-# Fix for upb/clang 16+ offsetof extensions error
-build --copt='-Wno-gnu-offsetof-extensions'
-build --host_copt='-Wno-gnu-offsetof-extensions'
