@@ -15,6 +15,7 @@ filegroup(
         "//pkg/plugin/grpc/grpcweb:all_files",
         "//pkg/plugin/grpcecosystem/grpcgateway:all_files",
         "//pkg/plugin/scalapb/scalapb:all_files",
+        "//pkg/plugin/scalapb/zio_grpc:all_files",
         "//pkg/plugin/stackb/grpc_js:all_files",
         "//pkg/plugin/stephenh/ts-proto:all_files",
         "//pkg/plugintest:all_files",

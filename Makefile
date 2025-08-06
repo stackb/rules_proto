@@ -34,8 +34,7 @@ example_test:
 
 .PHONY: test
 test:
-	bazel test --keep_going //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
-		--deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
+	bazel test --keep_going //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/...
 
 .PHONY: get
 get:
