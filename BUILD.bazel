@@ -52,6 +52,36 @@ gazelle(
     command = "update-repos",
 )
 
+genrule(
+    name = "gendeps",
+    srcs = [
+        "//deps:closure_deps.bzl",
+        "//deps:core_deps.bzl",
+        "//deps:go_core_deps.bzl",
+        "//deps:grpc_core_deps.bzl",
+        "//deps:grpc_java_deps.bzl",
+        "//deps:grpc_js_deps.bzl",
+        "//deps:grpc_node_deps.bzl",
+        "//deps:grpc_web_deps.bzl",
+        "//deps:js_core_deps.bzl",
+        "//deps:nodejs_deps.bzl",
+        "//deps:prebuilt_protoc_deps.bzl",
+        "//deps:protobuf_core_deps.bzl",
+        "//deps:scala_deps.bzl",
+        "//deps:ts_proto_deps.bzl",
+    ],
+    outs = ["deps.tar"],
+    cmd = """
+output="$$PWD/$@"
+tar -cf $$output --files-from /dev/null
+for file in $(SRCS); do
+    base=$$(basename $$file)
+    cp $$file ./$$base
+    tar -rf $$output $$base
+done
+""",
+)
+
 # ----------------------------------------------------
 # Test-Related
 # ----------------------------------------------------

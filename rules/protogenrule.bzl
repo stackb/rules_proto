@@ -53,10 +53,12 @@ def protogenrule(
     name_test = name + test_target_suffix
 
     outs = kwargs.pop("outs", [])
+    srcs = kwargs.pop("srcs", [])
     visibility = kwargs.pop("visibility", [])
 
     native.genrule(
         name = name,
+        srcs = srcs,
         outs = outs,
         visibility = visibility,
         **kwargs

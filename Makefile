@@ -14,11 +14,11 @@ gazelle:
 
 .PHONY: deps
 deps:
-	bazel build //deps:*
-	cp -f ./bazel-bin/deps/*.bzl deps/
+	bazel build //:gendeps
+	(cd deps/ && tar -xvf ../bazel-bin/deps.tar)
 	chmod 0644 deps/*.bzl
 	bazel run //:buildifier -- deps/
-		
+
 .PHONY: site
 site:
 	bazel build //example/golden:*
