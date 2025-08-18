@@ -24,6 +24,7 @@ def _proto_compiled_sources_impl(ctx):
     return ProtoCompileInfo(
         label = ctx.attr.dep.label,
         outputs = dep.files.to_list(),
+        output_files_by_rel_path = {},
     )
 
 _proto_compiled_sources = rule(

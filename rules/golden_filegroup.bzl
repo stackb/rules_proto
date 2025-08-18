@@ -22,6 +22,7 @@ def _files_impl(ctx):
     return ProtoCompileInfo(
         label = ctx.attr.dep.label,
         outputs = dep.files.to_list(),
+        output_files_by_rel_path = {},
     )
 
 _files = rule(
