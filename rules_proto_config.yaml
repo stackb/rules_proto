@@ -1,5 +1,4 @@
 plugins:
-
   # CLOSURE
   - name: closure_js
     implementation: builtin:js:closure
@@ -70,10 +69,13 @@ plugins:
       - "esModuleInterop=true"
 
 rules:
-
   # CORE
   - name: proto_compile
     implementation: stackb:rules_proto:proto_compile
+    visibility:
+      - //visibility:public
+  - name: proto_compiled_sources
+    implementation: stackb:rules_proto:proto_compiled_sources
     visibility:
       - //visibility:public
   - name: proto_descriptor_set
@@ -213,7 +215,6 @@ rules:
       - "@//:node_modules/rxjs"
 
 languages:
-
   # CLOSURE
   - name: closure_js
     plugins:

@@ -1,0 +1,74 @@
+load("@build_stack_rules_proto//rules:proto_compile_assets.bzl", "proto_compile_assets")
+load("@build_stack_rules_proto//rules:proto_compiled_sources.bzl", "proto_compiled_sources")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+# gazelle:proto file
+
+# gazelle:proto_language cpp enable false
+# gazelle:proto_language java enable false
+# gazelle:proto_language python enable false
+# gazelle:proto_language scala enable false
+# gazelle:proto_language ts_proto enable false
+
+# gazelle:proto_language go enable true
+# gazelle:proto_language go -rule proto_compile
+# gazelle:proto_language go -rule proto_go_library
+# gazelle:proto_language go +rule proto_compiled_sources
+
+proto_compile_assets(
+    name = "assets",
+    deps = [
+        ":api_go_compiled_sources",
+        ":api_request_go_compiled_sources",
+        ":api_response_go_compiled_sources",
+    ],
+)
+
+proto_library(
+    name = "api_proto",
+    srcs = ["api.proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":api_request_proto",
+        ":api_response_proto",
+    ],
+)
+
+proto_library(
+    name = "api_request_proto",
+    srcs = ["api_request.proto"],
+    visibility = ["//visibility:public"],
+)
+
+proto_library(
+    name = "api_response_proto",
+    srcs = ["api_response.proto"],
+    visibility = ["//visibility:public"],
+)
+
+proto_compiled_sources(
+    name = "api_go_compiled_sources",
+    srcs = ["api.pb.go"],
+    output_mappings = ["api.pb.go=github.com/stackb/rules_proto/example/assets/api.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    proto = "api_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_compiled_sources(
+    name = "api_request_go_compiled_sources",
+    srcs = ["api_request.pb.go"],
+    output_mappings = ["api_request.pb.go=github.com/stackb/rules_proto/example/assets/api_request.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    proto = "api_request_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_compiled_sources(
+    name = "api_response_go_compiled_sources",
+    srcs = ["api_response.pb.go"],
+    output_mappings = ["api_response.pb.go=github.com/stackb/rules_proto/example/assets/api_response.pb.go"],
+    plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
+    proto = "api_response_proto",
+    visibility = ["//visibility:public"],
+)

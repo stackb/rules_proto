@@ -88,25 +88,6 @@ func TestRunPkg(t *testing.T) {
 	}{
 		"degenerate": {},
 		"simple": {
-			// {
-			//     "extension": "",
-			//     "fileMode": "0644",
-			//     "mode": "update",
-			//     "packageConfigs": [
-			//         {
-			//             "generatedFiles": [
-			//                 "api/v1/v1_pb2.py"
-			//             ],
-			//             "sourceFiles": [
-			//                 "api/v1/v1_pb2.py"
-			//             ],
-			//             "targetLabel": "@//api/v1:api_v1_python_compiled_sources",
-			//             "targetPackage": "api/v1",
-			//             "targetWorkspaceRoot": ""
-			//         }
-			//     ],
-			//     "updateTargetLabelName": "api_v1_python_compiled_sources.update"
-			// }
 			cfg: Config{
 				Extension:              "",
 				FileMode:               "0644",
@@ -115,7 +96,7 @@ func TestRunPkg(t *testing.T) {
 				UpdateTargetLabelName:  "api_v1_python_compiled_sources.update",
 				PackageConfigs: []*PackageConfig{
 					{
-						GeneratedFiles:      []string{"../gen/api/v1/v1_pb2.py"},
+						GeneratedFiles:      []string{"external/gen/api/v1/v1_pb2.py"},
 						SourceFiles:         []string{"api/v1/v1_pb2.py"},
 						TargetLabel:         "@//api/v1:api_v1_python_compiled_sources",
 						TargetPackage:       "api/v1",
