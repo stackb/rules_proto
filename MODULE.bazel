@@ -1,3 +1,5 @@
+"""Bazel MODULE file for https://github.com/stackb/rules_proto"""
+
 module(
     name = "build_stack_rules_proto",
     version = "0.0.0",
