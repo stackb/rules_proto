@@ -14,20 +14,11 @@ scala deps, for example.
   The `langs.go` file is added which loads the protobuf language.  This copy of
   gazelle ends up being built by the standard go toolchain for the
   `proto_repository` rule.
-- `//cmd/depsgen`: a helper tool used by the `depsgen` rule (see `//deps:*`)
-  that generates `.bzl` files based on the transitive set of `proto_repository`
-  rules.
 - `//cmd/examplegen`: a helper tool that generates markdown and a `_test.go`
   file used by the `gazelle_testdata_example` rule (see `//example/golden:*`).
 - `//cmd/gencopy`: a helper tool that is used to copy generated files back into
   the source tree.
 - `//example/...`: example gazelle directives and rules.
-- `//deps:*`: contains the `//deps:BUILD.bazel` files where all project
-  dependencies are declared as `proto_repository` rules.  These are linked
-  together via their `deps` attribute.  Each `depsgen(name = "foo")` rule in
-  that file is used to create the corresponding `deps/foo_deps.bzl`, which is
-  generated and then copied back into the source tree.  Use `make deps` target
-  to regenerate these files.
 - `go.mod, go.sum`.  The are the inputs to generate the `go_deps.bzl` file.  Use
   `bazel run //:update_go_deps` to regenerate this file.
 - `//language/protobuf`: contains the `protobuf` language extension.  The label
