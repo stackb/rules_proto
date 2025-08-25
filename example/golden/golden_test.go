@@ -8,6 +8,6 @@ import (
 
 func TestGoldens(t *testing.T) {
 	goldentest.
-		FromDir("example/golden", goldentest.WithOnlyTests("scala")).
+		FromDir("example/golden").
 		Run(t, "gazelle")
 }
