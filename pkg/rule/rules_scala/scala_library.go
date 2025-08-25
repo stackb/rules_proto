@@ -268,7 +268,6 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, rawImports []string, from label.Label) {
 
 	imports := s.options.filterImports(rawImports)
-	log.Printf("scalaLibraryRule.Resolve imports raw=%v, filtered=%v", rawImports, imports)
 
 	// log.Println(formatRules(r))
 
