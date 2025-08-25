@@ -63,12 +63,6 @@ gazelle_testdata_example(
 )
 
 gazelle_testdata_example(
-    name = "closurejs",
-    srcs = glob(["testdata/closurejs/*"]),
-    workspace_template = "prebuilt.WORKSPACE",
-)
-
-gazelle_testdata_example(
     name = "gogo",
     srcs = glob(["testdata/gogo/*"]),
     workspace_template = "prebuilt.WORKSPACE",

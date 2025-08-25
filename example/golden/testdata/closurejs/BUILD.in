@@ -1,9 +1,0 @@
-# "proto_rule" instantiates the proto_compile rule
-# gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
-
-# "proto_plugin" instantiates the builtin closurejs plugin
-# gazelle:proto_plugin closurejs implementation builtin:js:closure
-
-# "proto_language" binds the rule(s) and plugin(s) together
-# gazelle:proto_language closurejs rule proto_compile
-# gazelle:proto_language closurejs plugin closurejs
