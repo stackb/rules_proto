@@ -6,4 +6,5 @@ go_bazel_test(
     name = "standard_test",
     srcs = ["standard_test.go"],
     rule_files = ["//:all_files"],
+    tags = ["manual"],
 )

@@ -121,13 +121,6 @@ gazelle_testdata_example(
     strip_prefix = "example/golden/testdata/starlark_java",
 )
 
-filegroup(
-    name = "all_files",
-    testonly = True,
-    srcs = ["BUILD.bazel"] + glob(["*.go"]),
-    visibility = ["//:__pkg__"],
-)
-
 gazelle_testdata_example(
     name = "strip_import_prefix",
     srcs = glob(["testdata/strip_import_prefix/**/*"]),
@@ -221,4 +214,11 @@ proto_compile_gencopy_test rule //src/idl:svc_python_compiled_sources_test
 	}
 }
 """,
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = ["BUILD.bazel"] + glob(["*.go"]),
+    visibility = ["//:__pkg__"],
 )
