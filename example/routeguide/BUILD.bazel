@@ -117,6 +117,7 @@ proto_go_library(
 grpc_java_library(
     name = "routeguide_grpc_java_library",
     srcs = ["routeguide_grpc.srcjar"],
+    tags = ["manual"],
     visibility = ["//visibility:public"],
     exports = [
         ":routeguide_java_library",
@@ -198,6 +199,7 @@ grpc_scala_library(
         "routeguide_akka_grpc.srcjar",
         "routeguide_scala_grpc.srcjar",
     ],
+    tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
         "@io_grpc_grpc_java//api",
