@@ -221,6 +221,16 @@ use_repo(npm, "npm_ts_proto")
 # -------------------------------------------------------------------
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
+maven.install(
+    name = "maven",
+    known_contributing_modules = [
+        "build_stack_rules_proto",
+        "grpc-java",
+        "protobuf",
+    ],
+)
+
 maven.install(
     name = "maven_scala",
     artifacts = [
@@ -230,7 +240,7 @@ maven.install(
         "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
         "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
     ],
-    # lock_file = "rules_jvm_external~~maven~maven_scala_install.json",
+    lock_file = "rules_jvm_external~~maven~maven_scala_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
 maven.install(
@@ -240,7 +250,7 @@ maven.install(
         "com.lightbend.akka.grpc:akka-grpc-runtime_2.12:2.1.3",
     ],
     fetch_sources = True,
-    # lock_file = "//:maven_akka_install.json",
+    lock_file = "//:maven_akka_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
 maven.install(
