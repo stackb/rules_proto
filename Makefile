@@ -13,9 +13,10 @@ gazelle:
 
 .PHONY: deps
 deps:
-	bazel build //deps:*
-	cp -f ./bazel-bin/deps/*.bzl deps/
+	bazel build //:gendeps
+	(cd deps/ && tar -xvf ../bazel-bin/deps.tar)
 	chmod 0644 deps/*.bzl
+	bazel run //:buildifier -- deps/
 
 .PHONY: site
 site:
@@ -32,8 +33,7 @@ example_test:
 
 .PHONY: test
 test:
-	bazel test --keep_going //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/... \
-		--deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
+	bazel test --keep_going //example/... //pkg/... //plugin/... //language/... //rules/... //toolchain/...
 
 .PHONY: get
 get:

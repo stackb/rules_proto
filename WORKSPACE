@@ -2,9 +2,22 @@
 
 # gazelle:repo bazel_gazelle
 
-# # ----------------------------------------------------
-# # Toolchain-Related
-# # ----------------------------------------------------
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# ----------------------------------------------------
+# Toolchain-Related
+# ----------------------------------------------------
+
+http_archive(
+    name = "bazel_features",
+    sha256 = "a015f3f2ebf4f1ac3f4ca8ea371610acb63e1903514fa8725272d381948d2747",
+    strip_prefix = "bazel_features-1.31.0",
+    url = "https://github.com/bazel-contrib/bazel_features/releases/download/v1.31.0/bazel_features-v1.31.0.tar.gz",
+)
+
+load("@bazel_features//:deps.bzl", "bazel_features_deps")
+
+bazel_features_deps()
 
 # register_toolchains(
 #     "//toolchain:standard",

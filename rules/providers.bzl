@@ -23,8 +23,9 @@ ProtoPluginInfo = provider(
 ProtoCompileInfo = provider(
     "ProtoCompileInfo provides downstream rules with the outputs of proto_compile",
     fields = {
-        "label": "The proto_compile rule label",
-        "outputs": "The output files from the rule",
+        "label": "The proto_compile rule label (type Label)",
+        "outputs": "The output files from the rule (type List[File])",
+        "output_files_by_rel_path": "The output files from the rule (type Dict[String,List[File]]).  The keys are the package-relative paths of the file and values are the file objects.",
     },
 )
 

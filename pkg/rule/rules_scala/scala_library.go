@@ -459,13 +459,26 @@ func provideScalaImports(files []*protoc.File, resolver protoc.ImportResolver, f
 			resolver.Provide(lang, "service", name+"Client", from)
 			resolver.Provide(lang, "service", name+"Handler", from)
 			resolver.Provide(lang, "service", name+"Server", from)
-			// TOOD: if this is configured on the proto_plugin, we won't know
-			// about the plugin option.  Advertise them anyway.
-			// if options["server_power_apis"] {
-			resolver.Provide(lang, "service", name+"PowerApi", from)
-			resolver.Provide(lang, "service", name+"PowerApiHandler", from)
-			resolver.Provide(lang, "service", name+"ClientPowerApi", from)
+
+			if strings.Contains(from.Name, "zio") {
+				zioName := "Zio" + s.Name
+				if pkgName != "" {
+					zioName = pkgName + "." + zioName
+				}
+				// if the scala rule name includes the term 'zio', assume this is a
+				// zio library and advertize the zio symbols as well.
+				resolver.Provide(lang, "service", zioName, from)
+
+			} else {
+				// options["server_power_apis"] may or may not be enabled and
+				// it's difficult to know if the option is present.  Advertize
+				// them optimitically anyway.
+				resolver.Provide(lang, "service", name+"PowerApi", from)
+				resolver.Provide(lang, "service", name+"PowerApiHandler", from)
+				resolver.Provide(lang, "service", name+"ClientPowerApi", from)
+			}
 			// }
+
 		}
 	}
 }

@@ -1,6 +1,8 @@
 load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
 load("@build_stack_rules_proto//rules:depsgen.bzl", "depsgen")
 
+package(default_visibility = ["//:__pkg__"])
+
 depsgen(
     name = "core",
     deps = [
@@ -127,19 +129,28 @@ proto_dependency(
     ],
 )
 
-# Branch: v21.12
-# Commit: f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c
-# Date: 2022-12-13 00:03:12 +0000 UTC
-# URL: https://github.com/protocolbuffers/protobuf/commit/f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c
+# Commit: cb1f518b4e291051d60b5d5c39548dda84a38ffe
+# Date: 2024-09-24 23:54:01 +0000 UTC
+# URL: https://github.com/protocolbuffers/protobuf/commit/cb1f518b4e291051d60b5d5c39548dda84a38ffe
+# PR: https://github.com/protocolbuffers/protobuf/pull/18435
+# protobuf v31.1
 #
-# Updating version.json and repo version numbers to: 21.12
-# Size: 5146983 (5.1 MB)
+# Fix mixing rules from builtins and protobuf
+#
+# The rules in protobuf and built-in Bazel don't mix well. Different aspects may cause actions conflicts. The safest way is to use built-in rules whenever they are still present.
+#
+# proto_library should be safe, because it's not using an aspect. py_proto_library never had a built-in implementation, so it's also safe.
+#
+# This still makes it possible to use the rules on Bazel 7, but only with --incompatible_autoload_externally enabled.
+#
+# PiperOrigin-RevId: 678446311
+# Size: 9367372 (9.4 MB)
 proto_dependency(
     name = "com_google_protobuf",
     repository_rule = "http_archive",
-    sha256 = "d594b561fb41bf243233d8f411c7f2b7d913e5c9c1be4ca439baf7e48384c893",
-    strip_prefix = "protobuf-f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c.tar.gz"],
+    sha256 = "786779e1597893431b9500e22515c78a14a47e3229fc6dc9bb4956208db463dc",
+    strip_prefix = "protobuf-cb1f518b4e291051d60b5d5c39548dda84a38ffe",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/cb1f518b4e291051d60b5d5c39548dda84a38ffe.tar.gz"],
     visibility = ["//visibility:public"],
     deps = [
         ":bazel_skylib",
@@ -153,12 +164,9 @@ proto_dependency(
     name = "zlib",
     build_file = "@build_stack_rules_proto//third_party:zlib.BUILD",
     repository_rule = "http_archive",
-    sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
-    strip_prefix = "zlib-1.2.11",
-    urls = [
-        "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
-        "https://zlib.net/zlib-1.2.11.tar.gz",
-    ],
+    sha256 = "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+    strip_prefix = "zlib-1.3.1",
+    urls = ["https://zlib.net/zlib-1.3.1.tar.gz"],
     visibility = ["//visibility:public"],
 )
 
@@ -258,17 +266,17 @@ proto_dependency(
     visibility = ["//visibility:public"],
 )
 
-# Release: v1.54.3
-# TargetCommitish: v1.54.x
-# Date: 2023-07-25 20:28:39 +0000 UTC
-# URL: https://github.com/grpc/grpc/releases/tag/v1.54.3
-# Size: 8914754 (8.9 MB)
+# Release: v1.74.1
+# TargetCommitish: v1.74.x
+# Date: 2025-08-06 17:44:32 +0000 UTC
+# URL: https://github.com/grpc/grpc/releases/tag/v1.74.1
+# Size: 15014220 (15 MB)
 proto_dependency(
     name = "com_github_grpc_grpc",
     repository_rule = "http_archive",
-    sha256 = "17e4e1b100657b88027721220cbfb694d86c4b807e9257eaf2fb2d273b41b1b1",
-    strip_prefix = "grpc-1.54.3",
-    urls = ["https://github.com/grpc/grpc/archive/v1.54.3.tar.gz"],
+    sha256 = "7bf97c11cf3808d650a3a025bbf9c5f922c844a590826285067765dfd055d228",
+    strip_prefix = "grpc-1.74.1",
+    urls = ["https://github.com/grpc/grpc/archive/v1.74.1.tar.gz"],
     deps = [
         ":com_google_protobuf",
     ],

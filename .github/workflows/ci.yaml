@@ -18,19 +18,19 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: bazelbuild/setup-bazelisk@v2
+      - uses: bazelbuild/setup-bazelisk@v3
 
       - name: Mount bazel action cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         if: always()
         with:
           path: "~/.cache/bazel"
           key: bazel
 
       - name: Mount bazel repo cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         if: always()
         with:
           path: "~/.cache/bazel-repo"
@@ -45,7 +45,6 @@ jobs:
           --bazelrc=.github/workflows/ci.bazelrc
           --bazelrc=.bazelrc
           test
-          --deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
           //example/...
           //pkg/...
           //plugin/...
