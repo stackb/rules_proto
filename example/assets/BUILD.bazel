@@ -4,13 +4,14 @@ load("@rules_proto//proto:defs.bzl", "proto_library")
 
 # gazelle:proto file
 
+# -- disables inherited languages
 # gazelle:proto_language cpp enable false
 # gazelle:proto_language java enable false
 # gazelle:proto_language python enable false
 # gazelle:proto_language scala enable false
 # gazelle:proto_language ts_proto enable false
 
-# gazelle:proto_language go enable true
+# -- modifies the inherited go configuration
 # gazelle:proto_language go -rule proto_compile
 # gazelle:proto_language go -rule proto_go_library
 # gazelle:proto_language go +rule proto_compiled_sources

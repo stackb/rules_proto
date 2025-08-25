@@ -1,5 +1,5 @@
 load("@//rules:proto_gazelle.bzl", "proto_gazelle")
-load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@bazel_gazelle//:def.bzl", "gazelle_binary")
 load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 
 exports_files(["rules_proto_config.yaml"])
@@ -37,20 +37,9 @@ proto_gazelle(
 
 genrule(
     name = "imports_csv",
+    srcs = ["@protobufapis//:imports.csv"],
     outs = ["imports.csv"],
     cmd = "cp $(location @protobufapis//:imports.csv) $@",
-    tools = ["@protobufapis//:imports.csv"],
-)
-
-gazelle(
-    name = "update_go_deps",
-    args = [
-        "-from_file=go.mod",
-        "-to_macro=go_deps.bzl%go_deps",
-        "-build_file_proto_mode=disable_global",
-        "-prune=true",
-    ],
-    command = "update-repos",
 )
 
 # ----------------------------------------------------
@@ -63,7 +52,6 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "MODULE.bazel",
-        "go_deps.bzl",
         "//cmd/gazelle:all_files",
         "//cmd/gencopy:all_files",
         "//language/protobuf:all_files",
