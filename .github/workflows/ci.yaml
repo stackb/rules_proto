@@ -36,6 +36,17 @@ jobs:
           path: "~/.cache/bazel-repo"
           key: bazel-repo
 
+      - name: bazel build
+        env:
+          # Bazelisk will download bazel to here, ensure it is cached between runs.
+          XDG_CACHE_HOME: ~/.cache/bazel-repo
+        run: >-
+          bazel
+          --bazelrc=.github/workflows/ci.bazelrc
+          --bazelrc=.bazelrc
+          build
+          ...
+
       - name: bazel test
         env:
           # Bazelisk will download bazel to here, ensure it is cached between runs.
@@ -47,7 +58,3 @@ jobs:
           test
           //example/...
           //pkg/...
-          //plugin/...
-          //language/...
-          //rules/...
-          //toolchain/...
