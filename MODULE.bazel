@@ -28,6 +28,7 @@ bazel_dep(name = "aspect_bazel_lib", version = "2.21.1")
 bazel_dep(name = "aspect_rules_js", version = "2.5.0")
 bazel_dep(name = "aspect_rules_ts", version = "3.7.0")
 bazel_dep(name = "protobuf_javascript", repo_name = "com_google_protobuf_javascript")
+bazel_dep(name = "rules_scala", version = "7.0.0", repo_name = "io_bazel_rules_scala")
 
 # -------------------------------------------------------------------
 # Overrides
@@ -181,6 +182,27 @@ proto_repository_tools(
     name = "proto_repository_tools",
     go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
 )
+
+# -------------------------------------------------------------------
+# Configuration: Scala
+# -------------------------------------------------------------------
+
+# Selects the Scala version and other configuration parameters.
+#
+# 2.12 is the default version. Use other versions by passing them explicitly, as
+# illustrated below.
+scala_config = use_extension(
+    "@io_bazel_rules_scala//scala/extensions:config.bzl",
+    "scala_config",
+)
+scala_config.settings(scala_version = "2.13.16")
+
+scala_deps = use_extension(
+    "@io_bazel_rules_scala//scala/extensions:deps.bzl",
+    "scala_deps",
+)
+
+scala_deps.scala()
 
 # -------------------------------------------------------------------
 # Configuration: NPM Deps
