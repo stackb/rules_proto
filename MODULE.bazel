@@ -6,182 +6,53 @@ module(
     compatibility_level = 1,
 )
 
-register_toolchains("@build_stack_rules_proto//toolchain:standard")
+# -------------------------------------------------------------------
+# Bazel Dependencies
+# -------------------------------------------------------------------
 
-# core_deps.bzl
 bazel_dep(name = "bazel_features", version = "1.9.1")
 bazel_dep(name = "bazel_skylib", version = "1.5.0")
 bazel_dep(name = "rules_go", version = "0.45.1", repo_name = "io_bazel_rules_go")
-bazel_dep(name = "gazelle", version = "0.35.0", repo_name = "bazel_gazelle")
+bazel_dep(name = "gazelle", version = "0.45.0", repo_name = "bazel_gazelle")
 bazel_dep(name = "rules_proto", version = "6.0.0")
 bazel_dep(name = "rules_cc", version = "0.0.9")
-
-non_module_deps = use_extension("@bazel_gazelle//internal/bzlmod:non_module_deps.bzl", "non_module_deps")
-use_repo(
-    non_module_deps,
-    "bazel_gazelle_go_repository_cache",
-    "bazel_gazelle_go_repository_tools",
-    "bazel_gazelle_is_bazel_module",
-)
-
-# grpc_java_deps()
+bazel_dep(name = "rules_pkg", version = "0.7.0")
+bazel_dep(name = "rules_python", version = "0.27.1")
+bazel_dep(name = "zlib", version = "1.2.11")
+bazel_dep(name = "protobuf", version = "27.2", repo_name = "com_google_protobuf")
 bazel_dep(name = "rules_java", version = "7.6.1")
 bazel_dep(name = "rules_jvm_external", version = "6.1")
+bazel_dep(name = "grpc-java", version = "1.64.0", repo_name = "io_grpc_grpc_java")
+bazel_dep(name = "grpc", version = "1.56.3", repo_name = "com_github_grpc_grpc")
+bazel_dep(name = "aspect_bazel_lib", version = "1.33.0")
+bazel_dep(name = "aspect_rules_js", version = "1.34.0")
+bazel_dep(name = "aspect_rules_ts", version = "2.4.2")
+
+# -------------------------------------------------------------------
+# Overrides
+# -------------------------------------------------------------------
+
 local_path_override(
     module_name = "rules_jvm_external",
     path = "/Users/pcj/go/src/github.com/bazelbuild/rules_jvm_external",
 )
 
-bazel_dep(name = "grpc-java", version = "1.64.0", repo_name = "io_grpc_grpc_java")
-
-# gazelle_protobuf_extension_go_deps()
-
-proto_repository_tools = use_repo_rule("//rules/private:proto_repository_tools.bzl", "proto_repository_tools")
-
-proto_repository_tools(
-    name = "proto_repository_tools",
-    go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
-)
-
-# go_repository(
-#     name = "com_github_emicklei_proto",
-#     build_file_proto_mode = "disable_global",
-#     importpath = "github.com/emicklei/proto",
-#     sum = "h1:YtC/om6EdkJ0me1JPw4h2g10k+ELITjYFb7tpzm8i8k=",
-#     version = "v1.13.0",
-# )
-# go_repository(
-#     name = "in_gopkg_yaml_v3",
-#     build_file_proto_mode = "disable_global",
-#     importpath = "gopkg.in/yaml.v3",
-#     sum = "h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=",
-#     version = "v3.0.1",
-# )
-# go_repository(
-#     name = "in_gopkg_check_v1",
-#     build_file_proto_mode = "disable_global",
-#     importpath = "gopkg.in/check.v1",
-#     sum = "h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=",
-#     version = "v0.0.0-20161208181325-20d25e280405",
-# )
-# go_repository(
-#     name = "com_github_bmatcuk_doublestar",
-#     build_file_proto_mode = "disable_global",
-#     importpath = "github.com/bmatcuk/doublestar",
-#     sum = "h1:gPypJ5xD31uhX6Tf54sDPUOBXTqKH4c9aPY66CyQrS0=",
-#     version = "v1.3.4",
-# )
-
-# protobuf_core_deps()
-
-bazel_dep(name = "rules_pkg", version = "0.7.0")
-bazel_dep(name = "rules_python", version = "0.27.1")
-bazel_dep(name = "zlib", version = "1.2.11")
-bazel_dep(name = "protobuf", version = "27.2", repo_name = "com_google_protobuf")
 single_version_override(
     module_name = "protobuf",
     version = "24.4",
 )
+
 bazel_dep(name = "protobuf_javascript", repo_name = "com_google_protobuf_javascript")
+
 git_override(
     module_name = "protobuf_javascript",
     commit = "5d939dbc8fd5245c4316d52c203a1bff24bac5c4",  # https://github.com/protocolbuffers/protobuf-javascript/commit/05560593d93e7207e84829b3ab6a80c08078e389
     remote = "https://github.com/protocolbuffers/protobuf-javascript",
 )
 
-# grpc_core_deps()
-
-#bazel_dep(name = "rules_pkg", version = "0.7.1")
-#bazel_dep(name = "rules_python", version = "0.27.1")
-#bazel_dep(name = "zlib", version = "1.2.11")
-#bazel_dep(name = "protobuf", version = "21.7", repo_name = "com_google_protobuf")
-bazel_dep(name = "grpc", version = "1.56.3", repo_name = "com_github_grpc_grpc")
-
-go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
-go_sdk.download(
-    name = "go_sdk",
-    version = "1.21.8",
-)
-use_repo(
-    go_sdk,
-    "go_sdk",
-    "go_toolchains",
-    # This name is ugly on purpose to avoid a conflict with a user-named SDK.
-    "io_bazel_rules_nogo",
-)
-# register_toolchains("@go_toolchains//:all")
-
-go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
-go_deps.from_file(go_mod = "//:go.mod")
-use_repo(
-    go_deps,
-    "com_github_bazelbuild_buildtools",
-    "com_github_bmatcuk_doublestar",
-    "com_github_emicklei_proto",
-    "com_github_google_go_cmp",
-    "com_github_pmezard_go_difflib",
-    "com_github_stretchr_testify",
-    "in_gopkg_yaml_v3",
-    "net_starlark_go",
-    "org_golang_google_protobuf",
-    "org_golang_google_grpc",
-    "com_github_gogo_protobuf",
-    "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
-    "bazel_gazelle_go_repository_config",  # keep
-)
-
-# def com_github_golang_protobuf():
-#     _maybe(
-#         go_repository,
-#         name = "com_github_golang_protobuf",
-#         sum = "h1:JjCZWpVbqXDqFVmTfYWEVTMIYrL/NPdPSCHPJ0T/raM=",
-#         version = "v1.4.3",
-#         importpath = "github.com/golang/protobuf",
-#         build_file_proto_mode = "disable_global",
-#     )
-
-# def org_golang_google_grpc():
-#     _maybe(
-#         go_repository,
-#         name = "org_golang_google_grpc",
-#         sum = "h1:TwIQcH3es+MojMVojxxfQ3l3OF2KzlRxML2xZq0kRo8=",
-#         version = "v1.35.0",
-#         importpath = "google.golang.org/grpc",
-#         build_file_proto_mode = "disable",
-#     )
-
-# def org_golang_google_grpc_cmd_protoc_gen_go_grpc():
-#     _maybe(
-#         go_repository,
-#         name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
-#         sum = "h1:M1YKkFIboKNieVO5DLUEVzQfGwJD30Nv2jfUgzb5UcE=",
-#         version = "v1.1.0",
-#         importpath = "google.golang.org/grpc/cmd/protoc-gen-go-grpc",
-#         build_file_proto_mode = "disable_global",
-#     )
-
-bazel_dep(name = "aspect_bazel_lib", version = "1.33.0")
-bazel_dep(name = "aspect_rules_js", version = "1.34.0")
-bazel_dep(name = "aspect_rules_ts", version = "2.4.2")
-
-rules_ts_ext = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext", dev_dependency = True)
-
-rules_ts_ext.deps()
-
-use_repo(rules_ts_ext, "npm_typescript")
-
-npm = use_extension(
-    "@aspect_rules_js//npm:extensions.bzl",
-    "npm",
-)
-npm.npm_translate_lock(
-    name = "npm_ts_proto",
-    generate_bzl_library_targets = True,
-    npmrc = "//:.npmrc",
-    pnpm_lock = "//:pnpm-lock.yaml",
-    verify_node_modules_ignored = "//:.bazelignore",
-)
-use_repo(npm, "npm_ts_proto")
+# -------------------------------------------------------------------
+# Http Archives
+# -------------------------------------------------------------------
 
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -259,7 +130,97 @@ cc_binary(
 """,
 )
 
+# -------------------------------------------------------------------
+# Configuration: Go
+# -------------------------------------------------------------------
+
+go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
+
+go_sdk.download(
+    name = "go_sdk",
+    version = "1.21.8",
+)
+
+use_repo(
+    go_sdk,
+    "go_sdk",
+    "go_toolchains",
+    # This name is ugly on purpose to avoid a conflict with a user-named SDK.
+    "io_bazel_rules_nogo",
+)
+
+go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
+
+go_deps.from_file(go_mod = "//:go.mod")
+
+use_repo(
+    go_deps,
+    "com_github_bazelbuild_buildtools",
+    "com_github_bmatcuk_doublestar",
+    "com_github_emicklei_proto",
+    "com_github_google_go_cmp",
+    "com_github_pmezard_go_difflib",
+    "com_github_stretchr_testify",
+    "in_gopkg_yaml_v3",
+    "net_starlark_go",
+    "org_golang_google_protobuf",
+    "org_golang_google_grpc",
+    "com_github_gogo_protobuf",
+    "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
+    "bazel_gazelle_go_repository_config",  # keep
+)
+
+# -------------------------------------------------------------------
+# Configuration: Gazelle
+# -------------------------------------------------------------------
+
+non_module_deps = use_extension("@bazel_gazelle//internal/bzlmod:non_module_deps.bzl", "non_module_deps")
+
+use_repo(
+    non_module_deps,
+    "bazel_gazelle_go_repository_cache",
+    "bazel_gazelle_go_repository_tools",
+    "bazel_gazelle_is_bazel_module",
+)
+
+proto_repository_tools = use_repo_rule("//rules/private:proto_repository_tools.bzl", "proto_repository_tools")
+
+proto_repository_tools(
+    name = "proto_repository_tools",
+    go_cache = "@bazel_gazelle_go_repository_cache//:go.env",
+)
+
+# -------------------------------------------------------------------
+# Configuration: NPM Deps
+# -------------------------------------------------------------------
+
+rules_ts_ext = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext", dev_dependency = True)
+
+rules_ts_ext.deps()
+
+use_repo(rules_ts_ext, "npm_typescript")
+
+npm = use_extension(
+    "@aspect_rules_js//npm:extensions.bzl",
+    "npm",
+)
+
+npm.npm_translate_lock(
+    name = "npm_ts_proto",
+    generate_bzl_library_targets = True,
+    npmrc = "//:.npmrc",
+    pnpm_lock = "//:pnpm-lock.yaml",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+
+use_repo(npm, "npm_ts_proto")
+
+# -------------------------------------------------------------------
+# Configuration: Maven Deps
+# -------------------------------------------------------------------
+
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
 maven.install(
     name = "maven_scala",
     artifacts = [
@@ -272,6 +233,7 @@ maven.install(
     lock_file = "rules_jvm_external~~maven~maven_scala_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
+
 maven.install(
     name = "maven_akka",
     artifacts = [
@@ -282,6 +244,7 @@ maven.install(
     lock_file = "//:maven_akka_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
+
 maven.install(
     name = "maven_zio",
     artifacts = [
@@ -291,6 +254,7 @@ maven.install(
     lock_file = "//:maven_zio_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
+
 use_repo(
     maven,
     "maven_akka",
@@ -301,7 +265,12 @@ use_repo(
     "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
 )
 
+# -------------------------------------------------------------------
+# Configuration: Protobuf Deps
+# -------------------------------------------------------------------
+
 proto_repository = use_extension("//extensions:proto_repository.bzl", "proto_repository", dev_dependency = True)
+
 proto_repository.archive(
     name = "protobufapis",
     build_directives = [
@@ -364,6 +333,7 @@ proto_repository.archive(
     strip_prefix = "protobuf-a74f54b724bdc2fe0bfc271f4dc0ceb159805625/src",
     urls = ["https://github.com/protocolbuffers/protobuf/archive/a74f54b724bdc2fe0bfc271f4dc0ceb159805625.tar.gz"],
 )
+
 proto_repository.archive(
     name = "googleapis",
     build_directives = [
@@ -383,8 +353,15 @@ proto_repository.archive(
     strip_prefix = "googleapis-e115ab1839cb6e1bd953e40337b7e84001291766",
     urls = ["https://github.com/googleapis/googleapis/archive/e115ab1839cb6e1bd953e40337b7e84001291766.tar.gz"],
 )
+
 use_repo(
     proto_repository,
     "googleapis",
     "protobufapis",
 )
+
+# -------------------------------------------------------------------
+# Toolchains
+# -------------------------------------------------------------------
+
+register_toolchains("@build_stack_rules_proto//toolchain:standard")
