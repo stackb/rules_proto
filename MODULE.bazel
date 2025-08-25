@@ -121,20 +121,32 @@ cc_binary(
     ],
 )
 
+http_archive(
+    name = "com_github_stackb_grpc_js",
+    sha256 = "33042aa893625ec5bf6d59bf38b3954e5558b7e549b1cb2eeee66cd2ccf8ab29",
+    strip_prefix = "grpc.js-c938ee76ee462abf4f83d758f63d52f03fa24c7c",
+    urls = [
+        "https://github.com/stackb/grpc.js/archive/c938ee76ee462abf4f83d758f63d52f03fa24c7c.tar.gz",
+    ],
+)
+
+http_file = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+
+http_file(
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_aarch64",
+    executable = True,
+    sha256 = "a12b759629b943ebac5528f58fac5039d9aa2fb7abb9e9684d1b481b35afbfc6",
+    urls = [
+        "https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-darwin-aarch64",
+    ],
+)
+
 # -------------------------------------------------------------------
 # Configuration: Go
 # -------------------------------------------------------------------
 
 go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
 go_sdk.from_file(go_mod = "//:go.mod")
-
-# use_repo(
-#     go_sdk,
-#     "go_sdk",
-#     "go_toolchains",
-#     # This name is ugly on purpose to avoid a conflict with a user-named SDK.
-#     "io_bazel_rules_nogo",
-# )
 
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
@@ -186,7 +198,10 @@ scala_config = use_extension(
     "@io_bazel_rules_scala//scala/extensions:config.bzl",
     "scala_config",
 )
-scala_config.settings(scala_version = "2.12.20")
+scala_config.settings(
+    scala_version = "2.12.20",
+    enable_compiler_dependency_tracking = True,
+)
 
 scala_deps = use_extension(
     "@io_bazel_rules_scala//scala/extensions:deps.bzl",
