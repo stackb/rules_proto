@@ -1,5 +1,5 @@
-load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
 load("@build_stack_rules_proto//rules:depsgen.bzl", "depsgen")
+load("@build_stack_rules_proto//rules:proto_dependency.bzl", "proto_dependency")
 
 package(default_visibility = ["//:__pkg__"])
 
