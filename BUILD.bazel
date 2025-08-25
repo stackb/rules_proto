@@ -62,7 +62,7 @@ filegroup(
     testonly = True,
     srcs = [
         "BUILD.bazel",
-        "WORKSPACE",
+        "MODULE.bazel",
         "go_deps.bzl",
         "//cmd/gazelle:all_files",
         "//cmd/gencopy:all_files",

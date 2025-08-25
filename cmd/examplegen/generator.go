@@ -32,7 +32,7 @@ func generateMarkdown(c *Config) error {
 			buildIn = src
 		case "BUILD.out":
 			buildOut = src
-		case "WORKSPACE":
+		case "MODULE.bazel":
 			workspace = src
 		}
 	}
@@ -65,7 +65,7 @@ func generateMarkdown(c *Config) error {
 		return err
 	}
 
-	fmt.Fprintf(f, "\n## `WORKSPACE`\n\n")
+	fmt.Fprintf(f, "\n## `MODULE.bazel`\n\n")
 	if err := printFileBlock(filepath.Base(workspace), "python", workspace, f); err != nil {
 		return err
 	}
@@ -91,7 +91,7 @@ func generateTest(c *Config) error {
 
 	fmt.Fprintln(f, "var txtar=`")
 
-	fmt.Fprintf(f, "-- WORKSPACE --\n")
+	fmt.Fprintf(f, "-- MODULE.bazel --\n")
 	data, err := ioutil.ReadFile(c.WorkspaceIn)
 	if err != nil {
 		return fmt.Errorf("read %q: %v", c.WorkspaceIn, err)
@@ -99,10 +99,10 @@ func generateTest(c *Config) error {
 	if _, err := f.Write(data); err != nil {
 		return fmt.Errorf("write %q: %v", c.WorkspaceIn, err)
 	}
-	// seek out the WORKSPACE file and append it now such that the WORKSPACE in
+	// seek out the MODULE.bazel file and append it now such that the MODULE.bazel in
 	// the testdata is concatenated with the config.WorkspaceIn.
 	for _, src := range c.Files {
-		if filepath.Base(src) != "WORKSPACE" {
+		if filepath.Base(src) != "MODULE.bazel" {
 			continue
 		}
 		data, err := ioutil.ReadFile(src)
@@ -149,7 +149,7 @@ func mapFilename(in string) string {
 	base := filepath.Base(in)
 
 	switch base {
-	case "WORKSPACE":
+	case "MODULE.bazel":
 		return ""
 	case "BUILD.in":
 		return ""
@@ -164,7 +164,7 @@ func printFileBlock(name, syntax, filename string, out io.Writer) error {
 	fmt.Fprintf(out, "~~~%s\n", syntax)
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
-		log.Panicf("%s: read %q: %v", name, filename, err)
+		log.Panicf("%s: failed to read filename=%q: %v", name, filename, err)
 	}
 	if _, err := out.Write(data); err != nil {
 		log.Panicf("%s: write %q: %v", name, filename, err)

@@ -353,7 +353,7 @@ proto_repository_attrs = {
         ],
     ),
     "build_extra_args": attr.string_list(),
-    "build_config": attr.label(default = "@bazel_gazelle_go_repository_config//:WORKSPACE"),
+    "build_config": attr.label(default = "@bazel_gazelle_go_repository_config//:MODULE.bazel"),
     "build_directives": attr.string_list(default = []),
 
     # Patches to apply after running gazelle.

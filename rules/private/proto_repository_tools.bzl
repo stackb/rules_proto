@@ -32,7 +32,7 @@ def _proto_repository_tools_impl(ctx):
     extension = executable_extension(ctx)
     go_tool = env["GOROOT"] + "/bin/go" + extension
 
-    rules_proto_path = ctx.path(Label("@build_stack_rules_proto//:WORKSPACE"))
+    rules_proto_path = ctx.path(Label("@build_stack_rules_proto//:MODULE.bazel"))
     ctx.symlink(
         rules_proto_path.dirname,
         "src/github.com/stackb/rules_proto",

@@ -21,7 +21,7 @@ go_test(
 gazelle_testdata_example(
     name = "cpp",
     srcs = glob(["testdata/cpp/*"]),
-    workspace_template = "prebuilt.WORKSPACE",
+    module_template = "default.MODULE.bazel",
 )
 
 gazelle_testdata_example(
@@ -29,67 +29,68 @@ gazelle_testdata_example(
     srcs = glob(["testdata/java/*"]),
     # TODO: investigate java does not PASS with the prebuilt toolchain protoc.
     # Perhaps the version is too old?
-    workspace_template = "builtin.WORKSPACE",
+    module_template = "builtin.MODULE.bazel",
 )
 
 gazelle_testdata_example(
     name = "python",
     srcs = glob(["testdata/python/*"]),
-    workspace_template = "prebuilt.WORKSPACE",
+    module_template = "default.MODULE.bazel",
 )
 
 gazelle_testdata_example(
     name = "ruby",
     srcs = glob(["testdata/ruby/*"]),
-    workspace_template = "prebuilt.WORKSPACE",
+    module_template = "default.MODULE.bazel",
 )
 
 gazelle_testdata_example(
     name = "csharp",
     srcs = glob(["testdata/csharp/*"]),
-    workspace_template = "prebuilt.WORKSPACE",
+    module_template = "default.MODULE.bazel",
 )
 
 gazelle_testdata_example(
     name = "objc",
     srcs = glob(["testdata/objc/*"]),
-    workspace_template = "prebuilt.WORKSPACE",
+    module_template = "default.MODULE.bazel",
 )
 
 gazelle_testdata_example(
     name = "commonjs",
     srcs = glob(["testdata/commonjs/*"]),
-    workspace_template = "prebuilt.WORKSPACE",
+    module_template = "default.MODULE.bazel",
 )
 
 gazelle_testdata_example(
     name = "gogo",
     srcs = glob(["testdata/gogo/*"]),
-    workspace_template = "prebuilt.WORKSPACE",
+    module_template = "default.MODULE.bazel",
 )
 
 gazelle_testdata_example(
     name = "go",
     srcs = glob(["testdata/go/*"]),
-    workspace_template = "prebuilt.WORKSPACE",
+    module_template = "default.MODULE.bazel",
 )
 
 gazelle_testdata_example(
     name = "gomerge",
     srcs = glob(["testdata/gomerge/*"]),
-    workspace_template = "prebuilt.WORKSPACE",
+    module_template = "default.MODULE.bazel",
 )
 
 gazelle_testdata_example(
     name = "goembed",
     srcs = glob(["testdata/goembed/**/*"]),
+    module_template = "builtin.MODULE.bazel",
     strip_prefix = "example/golden/testdata/goembed",
-    workspace_template = "builtin.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "proto_repository",
     srcs = glob(["testdata/proto_repository/**/*"]),
+    module_template = "default.MODULE.bazel",
     strip_prefix = "example/golden/testdata/proto_repository",
     test_content = """
 func TestRunGazelle(t *testing.T) {
@@ -104,21 +105,20 @@ func TestRunGazelle(t *testing.T) {
 	}
 }
 """,
-    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "scala",
     srcs = glob(["testdata/scala/**/*"]),
+    module_template = "default.MODULE.bazel",
     strip_prefix = "example/golden/testdata/scala",
-    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "starlark_java",
     srcs = glob(["testdata/starlark_java/**/*"]),
+    module_template = "default.MODULE.bazel",
     strip_prefix = "example/golden/testdata/starlark_java",
-    workspace_template = "prebuilt.WORKSPACE",
 )
 
 filegroup(
@@ -131,6 +131,7 @@ filegroup(
 gazelle_testdata_example(
     name = "strip_import_prefix",
     srcs = glob(["testdata/strip_import_prefix/**/*"]),
+    module_template = "default.MODULE.bazel",
     strip_prefix = "example/golden/testdata/strip_import_prefix",
     test_content = """
 func TestBuild(t *testing.T) {
@@ -145,12 +146,12 @@ func TestRunPyApp(t *testing.T) {
 	}
 }
 """,
-    workspace_template = "prebuilt.WORKSPACE",
 )
 
 gazelle_testdata_example(
     name = "proto_compiled_sources",
     srcs = glob(["testdata/proto_compiled_sources/**/*"]),
+    module_template = "default.MODULE.bazel",
     strip_prefix = "example/golden/testdata/proto_compiled_sources",
     test_content = """
 
@@ -220,5 +221,4 @@ proto_compile_gencopy_test rule //src/idl:svc_python_compiled_sources_test
 	}
 }
 """,
-    workspace_template = "prebuilt.WORKSPACE",
 )

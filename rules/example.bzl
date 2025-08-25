@@ -13,7 +13,7 @@ def _examplegen_impl(ctx):
         testOut = output_test.path,
         testContent = ctx.attr.test_content,
         markdownOut = output_markdown.path,
-        workspaceIn = ctx.file.workspace_template.path,
+        workspaceIn = ctx.file.module_template.path,
         stripPrefix = ctx.attr.strip_prefix,
         files = [f.path for f in ctx.files.srcs],
     )
@@ -28,7 +28,7 @@ def _examplegen_impl(ctx):
         progress_message = "Generating %s test" % ctx.attr.name,
         executable = ctx.file._examplegen,
         arguments = ["--config_json=%s" % config_json.path],
-        inputs = [config_json, ctx.file.workspace_template] + ctx.files.srcs,
+        inputs = [config_json, ctx.file.module_template] + ctx.files.srcs,
         outputs = [output_test, output_markdown],
     )
 
@@ -56,8 +56,8 @@ func TestBuild(t *testing.T) {
 }
 """,
         ),
-        "workspace_template": attr.label(
-            doc = "Template for the test WORKSPACE",
+        "module_template": attr.label(
+            doc = "Template for the test MODULE.bazel file",
             allow_single_file = True,
             mandatory = True,
         ),
@@ -96,7 +96,7 @@ def gazelle_testdata_example(**kwargs):
         srcs = srcs,
         strip_prefix = strip_prefix,
         test_content = test_content,
-        workspace_template = kwargs.pop("workspace_template", ""),
+        module_template = kwargs.pop("module_template", ""),
     )
 
     go_bazel_test(
@@ -104,5 +104,6 @@ def gazelle_testdata_example(**kwargs):
         srcs = [name + "_test.go"],
         deps = deps + ["@com_github_google_go_cmp//cmp"],
         rule_files = rule_files,
+        tags = ["manual"],
         **kwargs
     )
