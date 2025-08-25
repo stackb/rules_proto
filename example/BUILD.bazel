@@ -1,8 +1,6 @@
-# gazelle:proto_language closure_js enable true
 # gazelle:proto_language cpp enable true
 # gazelle:proto_language go enable true
 # gazelle:proto_language java enable true
-# gazelle:proto_language node_js enable true
 # gazelle:proto_language python enable true
 # gazelle:proto_language scala enable true
 # gazelle:proto_language ts_proto enable true
