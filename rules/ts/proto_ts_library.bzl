@@ -11,8 +11,9 @@ def proto_ts_library(
     """
     ts_project(
         name = name,
-        # validate = False,
+        validate = False,
         declaration = declaration,
+        transpiler = "tsc",
         tsconfig = tsconfig or {
             "compilerOptions": {
                 "declaration": declaration,
