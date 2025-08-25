@@ -30,3 +30,5 @@ test --action_env=HOME
 # Don't depend on a JAVA_HOME pointing at a system JDK
 # see https://github.com/bazelbuild/rules_jvm_external/issues/445
 build --repo_env=JAVA_HOME=../bazel_tools/jdk
+
+common --override_repository=compatibility_proxy=./compatibility_proxy

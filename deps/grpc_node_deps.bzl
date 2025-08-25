@@ -2,6 +2,7 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def _maybe(repo_rule, name, **kwargs):
@@ -18,6 +19,7 @@ def grpc_node_deps():
     com_google_protobuf()  # via com_github_grpc_grpc
     com_github_grpc_grpc()  # via com_github_grpc_grpc_node_packages_grpc_tools_src
     com_github_grpc_grpc_node_packages_grpc_tools_src()  # via <TOP>
+
 
 def bazel_skylib():
     _maybe(
@@ -68,10 +70,10 @@ def com_google_protobuf():
     _maybe(
         http_archive,
         name = "com_google_protobuf",
-        sha256 = "d594b561fb41bf243233d8f411c7f2b7d913e5c9c1be4ca439baf7e48384c893",
-        strip_prefix = "protobuf-f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",
+        sha256 = "786779e1597893431b9500e22515c78a14a47e3229fc6dc9bb4956208db463dc",
+        strip_prefix = "protobuf-cb1f518b4e291051d60b5d5c39548dda84a38ffe",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/cb1f518b4e291051d60b5d5c39548dda84a38ffe.tar.gz",
         ],
     )
 
@@ -79,10 +81,10 @@ def com_github_grpc_grpc():
     _maybe(
         http_archive,
         name = "com_github_grpc_grpc",
-        sha256 = "17e4e1b100657b88027721220cbfb694d86c4b807e9257eaf2fb2d273b41b1b1",
-        strip_prefix = "grpc-1.54.3",
+        sha256 = "7bf97c11cf3808d650a3a025bbf9c5f922c844a590826285067765dfd055d228",
+        strip_prefix = "grpc-1.74.1",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.54.3.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.74.1.tar.gz",
         ],
     )
 

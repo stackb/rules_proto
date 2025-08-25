@@ -2,6 +2,7 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
 def _maybe(repo_rule, name, **kwargs):
@@ -16,6 +17,7 @@ def grpc_web_deps():
     github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_aarch64()  # via <TOP>
     github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_x86_64()  # via <TOP>
     github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_windows_x86_64_exe()  # via <TOP>
+
 
 def github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_aarch64():
     _maybe(

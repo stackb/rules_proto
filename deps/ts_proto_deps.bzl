@@ -2,6 +2,7 @@
 GENERATED FILE - DO NOT EDIT (created via @build_stack_rules_proto//cmd/depsgen)
 """
 
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def _maybe(repo_rule, name, **kwargs):
@@ -15,6 +16,7 @@ def ts_proto_deps():
     aspect_rules_js()  # via aspect_rules_ts
     rules_nodejs()  # via aspect_rules_ts
     aspect_rules_ts()  # via <TOP>
+
 
 def aspect_bazel_lib():
     _maybe(
