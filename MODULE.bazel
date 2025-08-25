@@ -102,11 +102,6 @@ filegroup(
 
 http_archive(
     name = "com_github_grpc_grpc_node_packages_grpc_tools_src",
-    sha256 = "7fbe9d04e45420c3c2e02456c0275fa8716fa894c48525b9a8f7db9ac0b4acb0",
-    strip_prefix = "grpc-node-aeb42733d861883b82323e2dc6d1aba0e3a12aa0/packages/grpc-tools/src",
-    urls = [
-        "https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz",
-    ],
     build_file_content = """
 cc_library(
     name = "grpc_plugin_support",
@@ -127,6 +122,11 @@ cc_binary(
     deps = [":grpc_plugin_support"],
 )
 """,
+    sha256 = "7fbe9d04e45420c3c2e02456c0275fa8716fa894c48525b9a8f7db9ac0b4acb0",
+    strip_prefix = "grpc-node-aeb42733d861883b82323e2dc6d1aba0e3a12aa0/packages/grpc-tools/src",
+    urls = [
+        "https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz",
+    ],
 )
 
 # -------------------------------------------------------------------
@@ -134,7 +134,6 @@ cc_binary(
 # -------------------------------------------------------------------
 
 go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
-
 go_sdk.from_file(go_mod = "//:go.mod")
 
 # use_repo(
@@ -146,9 +145,7 @@ go_sdk.from_file(go_mod = "//:go.mod")
 # )
 
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
-
 go_deps.from_file(go_mod = "//:go.mod")
-
 use_repo(
     go_deps,
     "com_github_bazelbuild_buildtools",
@@ -171,7 +168,6 @@ use_repo(
 # -------------------------------------------------------------------
 
 non_module_deps = use_extension("@bazel_gazelle//internal/bzlmod:non_module_deps.bzl", "non_module_deps")
-
 use_repo(
     non_module_deps,
     "bazel_gazelle_go_repository_cache",
@@ -191,16 +187,13 @@ proto_repository_tools(
 # -------------------------------------------------------------------
 
 rules_ts_ext = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext", dev_dependency = True)
-
 rules_ts_ext.deps()
-
 use_repo(rules_ts_ext, "npm_typescript")
 
 npm = use_extension(
     "@aspect_rules_js//npm:extensions.bzl",
     "npm",
 )
-
 npm.npm_translate_lock(
     name = "npm_ts_proto",
     generate_bzl_library_targets = True,
@@ -208,7 +201,6 @@ npm.npm_translate_lock(
     pnpm_lock = "//:pnpm-lock.yaml",
     verify_node_modules_ignored = "//:.bazelignore",
 )
-
 use_repo(npm, "npm_ts_proto")
 
 # -------------------------------------------------------------------
@@ -216,7 +208,6 @@ use_repo(npm, "npm_ts_proto")
 # -------------------------------------------------------------------
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
-
 maven.install(
     name = "maven_scala",
     artifacts = [
@@ -229,7 +220,6 @@ maven.install(
     lock_file = "rules_jvm_external~~maven~maven_scala_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
-
 maven.install(
     name = "maven_akka",
     artifacts = [
@@ -240,7 +230,6 @@ maven.install(
     lock_file = "//:maven_akka_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
-
 maven.install(
     name = "maven_zio",
     artifacts = [
@@ -250,15 +239,14 @@ maven.install(
     lock_file = "//:maven_zio_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
-
 use_repo(
     maven,
+    "com_google_protobuf_protobuf_java_3_19_3",
+    "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
+    "maven",
     "maven_akka",
     "maven_scala",
     "maven_zio",
-    "maven",
-    "com_google_protobuf_protobuf_java_3_19_3",
-    "com_thesamet_scalapb_compilerplugin_2_12_0_11_8",
 )
 
 # -------------------------------------------------------------------
@@ -266,7 +254,6 @@ use_repo(
 # -------------------------------------------------------------------
 
 proto_repository = use_extension("//extensions:proto_repository.bzl", "proto_repository", dev_dependency = True)
-
 proto_repository.archive(
     name = "protobufapis",
     build_directives = [
@@ -329,7 +316,6 @@ proto_repository.archive(
     strip_prefix = "protobuf-a74f54b724bdc2fe0bfc271f4dc0ceb159805625/src",
     urls = ["https://github.com/protocolbuffers/protobuf/archive/a74f54b724bdc2fe0bfc271f4dc0ceb159805625.tar.gz"],
 )
-
 proto_repository.archive(
     name = "googleapis",
     build_directives = [
@@ -349,7 +335,6 @@ proto_repository.archive(
     strip_prefix = "googleapis-e115ab1839cb6e1bd953e40337b7e84001291766",
     urls = ["https://github.com/googleapis/googleapis/archive/e115ab1839cb6e1bd953e40337b7e84001291766.tar.gz"],
 )
-
 use_repo(
     proto_repository,
     "googleapis",
