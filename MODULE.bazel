@@ -141,6 +141,24 @@ http_file(
     ],
 )
 
+http_file(
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_x86_64",
+    executable = True,
+    sha256 = "1fa3ef92194d06c03448a5cba82759e9773e43d8b188866a1f1d4fc23bb1ecb7",
+    urls = [
+        "https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-darwin-x86_64",
+    ],
+)
+
+http_file(
+    name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_x86_64",
+    executable = True,
+    sha256 = "2e6e074497b221045a14d5a54e9fc910945bfdd1198b12b9fc23686a95671d64",
+    urls = [
+        "https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-linux-x86_64",
+    ],
+)
+
 # -------------------------------------------------------------------
 # Configuration: Go
 # -------------------------------------------------------------------
