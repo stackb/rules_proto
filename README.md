@@ -25,7 +25,7 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 1. Rules for driving the `protoc` tool within a bazel workspace.
 2. A [gazelle](https://github.com/bazelbuild/bazel-gazelle/) extension that
    generates rules based on the content of your `.proto` files.
-3. A repository rule that runs gazelle in an external workspace.
+3. A repository rule / extension that runs gazelle in an external workspace.
 4. Example setups for a variety of languages.
 
 # Table of Contents
