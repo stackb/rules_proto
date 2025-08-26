@@ -51,15 +51,16 @@ go_test(
         "diff_test.go",
         "fix_test.go",
         "integration_test.go",
-        "langs.go",  # keep
+        # "langs.go",  # keep
         "profiler_test.go",
     ],
-    data = [
-        "@go_sdk//:ROOT",
-        "@go_sdk//:files",
-    ],
     embed = [":gazelle_lib"],
-    x_defs = {"goRootFile": "$(rlocationpath @go_sdk//:ROOT)"},
+    # data = [
+    #     "@go_sdk//:ROOT",
+    #     "@go_sdk//:files",
+    # ],
+    tags = ["manual"],  # TODO(pcj): reconcile non-visible @go_sdk
+    # x_defs = {"goRootFile": "$(rlocationpath @go_sdk//:ROOT)"},
     deps = [
         "//cmd/gazelle/internal/wspace",
         "@bazel_gazelle//config:go_default_library",
