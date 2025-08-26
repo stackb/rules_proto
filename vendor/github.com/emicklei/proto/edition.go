@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Ernest Micklei
+// Copyright (c) 2024 Ernest Micklei
 //
 // MIT License
 //
@@ -27,63 +27,39 @@ import (
 	"text/scanner"
 )
 
-// Extensions declare that a range of field numbers in a message are available for third-party extensions.
-// proto2 only
-type Extensions struct {
+type Edition struct {
 	Position      scanner.Position
 	Comment       *Comment
-	Ranges        []Range
+	Value         string
 	InlineComment *Comment
 	Parent        Visitee
-	Options       []*Option
 }
 
-// inlineComment is part of commentInliner.
-func (e *Extensions) inlineComment(c *Comment) {
-	e.InlineComment = c
-}
-
-// Accept dispatches the call to the visitor.
-func (e *Extensions) Accept(v Visitor) {
-	v.VisitExtensions(e)
-}
-
-// parse expects ranges
-func (e *Extensions) parse(p *Parser) error {
-	list, err := parseRanges(p, e)
-	if err != nil {
-		return err
+func (e *Edition) parse(p *Parser) error {
+	if _, tok, lit := p.next(); tok != tEQUALS {
+		return p.unexpected(lit, "edition =", e)
 	}
-	e.Ranges = list
-
-	// see if there are options
-	pos, tok, lit := p.next()
-	if tLEFTSQUARE != tok {
-		p.nextPut(pos, tok, lit)
-		return nil
+	_, _, lit := p.next()
+	if !isString(lit) {
+		return p.unexpected(lit, "edition string constant", e)
 	}
-	// consume options (copied from normal field parsing)
-	for {
-		o := new(Option)
-		o.Position = pos
-		o.IsEmbedded = true
-		o.parent(e)
-		err := o.parse(p)
-		if err != nil {
-			return err
-		}
-		e.Options = append(e.Options, o)
-
-		pos, tok, lit = p.next()
-		if tRIGHTSQUARE == tok {
-			break
-		}
-		if tCOMMA != tok {
-			return p.unexpected(lit, "option ,", o)
-		}
-	}
+	e.Value, _ = unQuote(lit)
 	return nil
 }
 
-// parent is part of elementContainer
-func (e *Extensions) parent(p Visitee) { e.Parent = p }
+// Accept dispatches the call to the visitor.
+func (e *Edition) Accept(v Visitor) {
+	// v.VisitEdition(e) in v2
+}
+
+// Doc is part of Documented
+func (e *Edition) Doc() *Comment {
+	return e.Comment
+}
+
+// inlineComment is part of commentInliner.
+func (e *Edition) inlineComment(c *Comment) {
+	e.InlineComment = c
+}
+
+func (e *Edition) parent(v Visitee) { e.Parent = v }

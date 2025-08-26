@@ -4,15 +4,15 @@ go 1.23.1
 
 require (
 	github.com/bazelbuild/bazel-gazelle v0.45.0
-	github.com/bazelbuild/buildtools v0.0.0-20240918101019-be1c24cc9a44
+	github.com/bazelbuild/buildtools v0.0.0-20250715102656-62b9413b08bb
 	github.com/bazelbuild/rules_go v0.57.0
 	github.com/bmatcuk/doublestar v1.3.4
-	github.com/emicklei/proto v1.13.0
-	github.com/google/go-cmp v0.6.0
+	github.com/emicklei/proto v1.14.2
+	github.com/google/go-cmp v0.7.0
 	github.com/pmezard/go-difflib v1.0.0
-	github.com/stretchr/testify v1.8.4
-	go.starlark.net v0.0.0-20231121155337-90ade8b19d09
-	google.golang.org/protobuf v1.36.3
+	github.com/stretchr/testify v1.11.0
+	go.starlark.net v0.0.0-20250804182900-3c9dc17c5f2e
+	google.golang.org/protobuf v1.36.8
 	gopkg.in/yaml.v3 v3.0.1
 )
 
