@@ -20,39 +20,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: bazelbuild/setup-bazelisk@v3
-
-      - name: Mount bazel action cache
-        uses: actions/cache@v4
-        if: always()
+      - uses: bazel-contrib/setup-bazel@0.15.0
         with:
-          path: "~/.cache/bazel"
-          key: bazel
-
-      - name: Mount bazel repo cache
-        uses: actions/cache@v4
-        if: always()
-        with:
-          path: "~/.cache/bazel-repo"
-          key: bazel-repo
+          # Avoid downloading Bazel every time.
+          bazelisk-cache: true
+          # Store build cache per workflow.
+          disk-cache: ${{ github.workflow }}
+          # Share repository cache between workflows.
+          repository-cache: true
 
       - name: bazel build
-        env:
-          # Bazelisk will download bazel to here, ensure it is cached between runs.
-          XDG_CACHE_HOME: ~/.cache/bazel-repo
         run: >-
-          bazel
+          bazelisk
           --bazelrc=.github/workflows/ci.bazelrc
           --bazelrc=.bazelrc
           build
           ...
 
       - name: bazel test
-        env:
-          # Bazelisk will download bazel to here, ensure it is cached between runs.
-          XDG_CACHE_HOME: ~/.cache/bazel-repo
         run: >-
-          bazel
+          bazelisk
           --bazelrc=.github/workflows/ci.bazelrc
           --bazelrc=.bazelrc
           test
