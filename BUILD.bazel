@@ -34,13 +34,6 @@ proto_gazelle(
     ],
 )
 
-genrule(
-    name = "imports_csv",
-    srcs = ["@protobufapis//:imports.csv"],
-    outs = ["imports.csv"],
-    cmd = "cp $(location @protobufapis//:imports.csv) $@",
-)
-
 # ----------------------------------------------------
 # Test-Related
 # ----------------------------------------------------
@@ -59,7 +52,6 @@ filegroup(
         "//rules:all_files",
         "//third_party:all_files",
         "//toolchain:all_files",
-        "@bazel_gazelle_go_repository_config//:WORKSPACE",
     ] + glob(["vendor/**/*"]),
     visibility = ["//visibility:public"],
 )

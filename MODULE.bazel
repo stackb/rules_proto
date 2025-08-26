@@ -256,11 +256,20 @@ use_repo(npm, "npm_ts_proto")
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     name = "maven",
+    # these artifacts are specified only to disambiguate versions between
+    # multiple contributing modules (bazel mod warnings)
+    artifacts = [
+        "com.google.code.findbugs:jsr305:3.0.2",
+        "com.google.code.gson:gson:2.11.0",
+        "com.google.errorprone:error_prone_annotations:2.30.0",
+        "com.google.guava:guava:32.0.1-jre",
+    ],
     known_contributing_modules = [
         "build_stack_rules_proto",
         "grpc-java",
         "protobuf",
     ],
+    lock_file = "maven_install.json",
 )
 maven.install(
     name = "maven_scala",
