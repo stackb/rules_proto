@@ -16,7 +16,7 @@ go_library(
         "diff.go",
         "fix.go",
         "fix-update.go",
-        "langs.go",  # keep
+        "langs.go",
         "main.go",
         "metaresolver.go",
         "print.go",

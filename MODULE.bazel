@@ -217,15 +217,14 @@ scala_config = use_extension(
     "scala_config",
 )
 scala_config.settings(
-    scala_version = "2.12.20",
     enable_compiler_dependency_tracking = True,
+    scala_version = "2.12.20",
 )
 
 scala_deps = use_extension(
     "@io_bazel_rules_scala//scala/extensions:deps.bzl",
     "scala_deps",
 )
-
 scala_deps.scala()
 
 # -------------------------------------------------------------------
@@ -254,7 +253,6 @@ use_repo(npm, "npm_ts_proto")
 # -------------------------------------------------------------------
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
-
 maven.install(
     name = "maven",
     known_contributing_modules = [
@@ -263,7 +261,6 @@ maven.install(
         "protobuf",
     ],
 )
-
 maven.install(
     name = "maven_scala",
     artifacts = [

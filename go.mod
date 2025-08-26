@@ -12,6 +12,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0
 	github.com/stretchr/testify v1.8.4
 	go.starlark.net v0.0.0-20231121155337-90ade8b19d09
+	google.golang.org/protobuf v1.36.3
 	gopkg.in/yaml.v3 v3.0.1
 )
 
