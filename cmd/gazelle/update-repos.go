@@ -20,6 +20,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"sort"
@@ -31,7 +32,6 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/merger"
 	"github.com/bazelbuild/bazel-gazelle/repo"
 	"github.com/bazelbuild/bazel-gazelle/rule"
-	"github.com/stackb/rules_proto/cmd/gazelle/internal/module"
 	"github.com/stackb/rules_proto/cmd/gazelle/internal/wspace"
 )
 
@@ -43,6 +43,9 @@ type updateReposConfig struct {
 	pruneRules    bool
 	workspace     *rule.File
 	repoFileMap   map[string]*rule.File
+	cpuProfile    string
+	memProfile    string
+	profile       profiler
 }
 
 const updateReposName = "_update-repos"
@@ -50,6 +53,8 @@ const updateReposName = "_update-repos"
 func getUpdateReposConfig(c *config.Config) *updateReposConfig {
 	return c.Exts[updateReposName].(*updateReposConfig)
 }
+
+var _ config.Configurer = (*updateReposConfigurer)(nil)
 
 type updateReposConfigurer struct{}
 
@@ -81,10 +86,19 @@ func (*updateReposConfigurer) RegisterFlags(fs *flag.FlagSet, cmd string, c *con
 	fs.StringVar(&uc.repoFilePath, "from_file", "", "Gazelle will translate repositories listed in this file into repository rules in WORKSPACE or a .bzl macro function. Gopkg.lock and go.mod files are supported")
 	fs.Var(macroFlag{macroFileName: &uc.macroFileName, macroDefName: &uc.macroDefName}, "to_macro", "Tells Gazelle to write repository rules into a .bzl macro function rather than the WORKSPACE file. . The expected format is: macroFile%defName")
 	fs.BoolVar(&uc.pruneRules, "prune", false, "When enabled, Gazelle will remove rules that no longer have equivalent repos in the go.mod file. Can only used with -from_file.")
+
+	fs.StringVar(&uc.cpuProfile, "cpuprofile", "", "write cpu profile to `file`")
+	fs.StringVar(&uc.memProfile, "memprofile", "", "write memory profile to `file`")
 }
 
 func (*updateReposConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 	uc := getUpdateReposConfig(c)
+	p, err := newProfiler(uc.cpuProfile, uc.memProfile)
+	if err != nil {
+		return err
+	}
+	uc.profile = p
+
 	switch {
 	case uc.repoFilePath != "":
 		if len(fs.Args()) != 0 {
@@ -104,11 +118,14 @@ func (*updateReposConfigurer) CheckFlags(fs *flag.FlagSet, c *config.Config) err
 		uc.importPaths = fs.Args()
 	}
 
-	var err error
 	workspacePath := wspace.FindWORKSPACEFile(c.RepoRoot)
 	uc.workspace, err = rule.LoadWorkspaceFile(workspacePath, "")
 	if err != nil {
-		return fmt.Errorf("loading WORKSPACE file: %v", err)
+		if c.Bzlmod {
+			return nil
+		} else {
+			return fmt.Errorf("loading WORKSPACE file: %v", err)
+		}
 	}
 	c.Repos, uc.repoFileMap, err = repo.ListRepositories(uc.workspace)
 	if err != nil {
@@ -136,17 +153,17 @@ func updateRepos(wd string, args []string) (err error) {
 		return err
 	}
 	uc := getUpdateReposConfig(c)
-
-	moduleToApparentName, err := module.ExtractModuleToApparentNameMapping(c.RepoRoot)
-	if err != nil {
-		return err
-	}
+	defer func() {
+		if err := uc.profile.stop(); err != nil {
+			log.Printf("stopping profiler: %v", err)
+		}
+	}()
 
 	kinds := make(map[string]rule.KindInfo)
 	loads := []rule.LoadInfo{}
 	for _, lang := range languages {
 		if moduleAwareLang, ok := lang.(language.ModuleAwareLanguage); ok {
-			loads = append(loads, moduleAwareLang.ApparentLoads(moduleToApparentName)...)
+			loads = append(loads, moduleAwareLang.ApparentLoads(c.ModuleToApparentName)...)
 		} else {
 			loads = append(loads, lang.Loads()...)
 		}
@@ -304,7 +321,10 @@ func updateRepos(wd string, args []string) (err error) {
 
 	updatedFiles := make(map[string]*rule.File)
 	for _, f := range sortedFiles {
-		merger.MergeFile(f, emptyForFiles[f], genForFiles[f], merger.PreResolve, kinds)
+		// We don't need to pass any wrapper macros config into MergeFile because the update repos command does not support
+		// the '# gazelle:alias_kind MACRO KIND' directive.
+		var emptyAliasedKinds map[string]string = nil
+		merger.MergeFile(f, emptyForFiles[f], genForFiles[f], merger.PreResolve, kinds, emptyAliasedKinds)
 		merger.FixLoads(f, loads)
 		if f == uc.workspace && !c.Bzlmod {
 			if err := merger.CheckGazelleLoaded(f); err != nil {
