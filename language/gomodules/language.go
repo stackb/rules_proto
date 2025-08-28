@@ -2,6 +2,8 @@ package gomodules
 
 import (
 	"flag"
+	"log"
+	"os"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -11,6 +13,17 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
+const (
+	targetDirDirective = "gomodules_target_dir"
+	goVersionDirective = "gomodules_go_version"
+)
+
+type Config interface {
+	TargetPkg() string
+	LoadName() string
+	GoVersion() string
+}
+
 func NewLanguage() language.Language {
 	return NewGoModulesLanguage("gomodules")
 }
@@ -18,6 +31,7 @@ func NewLanguage() language.Language {
 // NewGoModulesLanguage create a new GoModulesLanguage Gazelle extension
 // implementation.
 func NewGoModulesLanguage(name string) *GoModulesLanguage {
+	log.Println("NewLanguage!!!!!!!!!", name)
 	return &GoModulesLanguage{
 		name: name,
 	}
@@ -26,11 +40,23 @@ func NewGoModulesLanguage(name string) *GoModulesLanguage {
 // GoModulesLanguage implements language.Language.
 type GoModulesLanguage struct {
 	name      string
-	enabled   bool
 	loadName  string
 	targetPkg string
+	goVersion string
 	goModule  *goModule
 	goModules *goModules
+}
+
+func (l GoModulesLanguage) LoadName() string {
+	return l.loadName
+}
+
+func (l GoModulesLanguage) TargetPkg() string {
+	return l.targetPkg
+}
+
+func (l GoModulesLanguage) GoVersion() string {
+	return l.goVersion
 }
 
 // Name returns the name of the language. This should be a prefix of the kinds
@@ -42,33 +68,44 @@ func (l *GoModulesLanguage) Name() string { return l.name }
 // https://pkg.go.dev/github.com/bazelbuild/bazel-gazelle/resolve?tab=doc#Resolver
 // interface, but are otherwise unused.
 func (l *GoModulesLanguage) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
-	fs.BoolVar(&l.enabled, "gomodules-enabled", false, "Whether the gomodules language is enabled")
+	log.Printf("%s: register flags: args=%v", l.name, os.Args)
+
 	fs.StringVar(&l.loadName, "gomodules-load-name", "@build_stack_rules_proto//rules/go:module.bzl", "Load source for the go_module and go_modules rule symbols")
 	fs.StringVar(&l.targetPkg, "gomodules-target-package", "", "Package name where go_modules aggregate rule should be generated")
 }
 
 func (l *GoModulesLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
-	l.goModule = newGoModule(l.loadName, l.targetPkg)
-	l.goModules = newGoModules(l.loadName, l.targetPkg)
+	l.goModule = newGoModule(l)
+	l.goModules = newGoModules(l)
 	return nil
 }
 
 func (*GoModulesLanguage) KnownDirectives() []string {
-	return nil
+	return []string{targetDirDirective, goVersionDirective}
 }
 
 // Configure implements config.Configurer
 func (l *GoModulesLanguage) Configure(c *config.Config, rel string, f *rule.File) {
+	if f == nil {
+		log.Printf("%s: skipping configure: rel=%s", l.name, rel)
+		return
+	}
+	log.Printf("%s: configure: rel=%s", l.name, rel)
+	for _, d := range f.Directives {
+		if d.Key == targetDirDirective && d.Value != "" {
+			l.targetPkg = d.Value
+		} else if d.Key == goVersionDirective {
+			l.goVersion = d.Value
+		}
+	}
+	log.Printf("%s: targetPkg: %s", l.name, l.targetPkg)
+	log.Printf("%s: goVersion: %s", l.name, l.goVersion)
 }
 
 // Kinds returns a map of maps rule names (kinds) and information on how to
 // match and merge attributes that may be found in rules of those kinds. All
 // kinds of rules generated for this language may be found here.
 func (l *GoModulesLanguage) Kinds() map[string]rule.KindInfo {
-	if !l.enabled {
-		return nil
-	}
-
 	kinds := map[string]rule.KindInfo{
 		l.goModule.kind():  l.goModule.kindInfo(),
 		l.goModules.kind(): l.goModules.kindInfo(),
@@ -81,10 +118,14 @@ func (l *GoModulesLanguage) Kinds() map[string]rule.KindInfo {
 // GenerateRules, now or in the past, should be loadable from one of these
 // files.
 func (l *GoModulesLanguage) Loads() []rule.LoadInfo {
-	if !l.enabled {
-		return nil
+	return []rule.LoadInfo{
+		l.goModule.loadInfo(),
+		l.goModules.loadInfo(),
 	}
+}
 
+// ApparentLoads implements the optional interface language.ModuleAwareLanguage
+func (l *GoModulesLanguage) ApparentLoads(moduleToApparentName func(string) string) []rule.LoadInfo {
 	return []rule.LoadInfo{
 		l.goModule.loadInfo(),
 		l.goModules.loadInfo(),
@@ -142,9 +183,12 @@ func (l *GoModulesLanguage) Resolve(
 // Any non-fatal errors this function encounters should be logged using
 // log.Print.
 func (l *GoModulesLanguage) GenerateRules(args language.GenerateArgs) language.GenerateResult {
-	if !l.enabled {
+	if l.targetPkg == "" {
+		log.Printf("%s: skipping generate: rel=%s", l.name, args.Rel)
 		return language.GenerateResult{}
 	}
+
+	log.Printf("%s: generate: rel=%s", l.name, args.Rel)
 
 	var rules []*rule.Rule
 
@@ -159,6 +203,8 @@ func (l *GoModulesLanguage) GenerateRules(args language.GenerateArgs) language.G
 	for i, r := range rules {
 		imports[i] = r.PrivateAttr(config.GazelleImportsKey)
 	}
+
+	log.Printf("%s: rules: %v", l.name, rules)
 
 	return language.GenerateResult{
 		Gen:     rules,

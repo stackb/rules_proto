@@ -16,7 +16,6 @@ def proto_repositories():
             "gazelle:proto_language descriptor enable true",
             "gazelle:proto_rule proto_ts_library attr out_dir ts",
         ],
-        build_file_expunge = True,
         build_file_proto_mode = "file",
         cfgs = ["@//:rules_proto_config.yaml"],
         deleted_files = [
@@ -75,7 +74,6 @@ def proto_repositories():
             "gazelle:proto_language descriptor enable true",
         ],
         imports = ["@protobufapis//:imports.csv"],
-        build_file_expunge = True,
         build_file_proto_mode = "file",
         reresolve_known_proto_imports = True,
         cfgs = ["@//:rules_proto_config.yaml"],

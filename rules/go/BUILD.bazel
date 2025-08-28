@@ -1,8 +1,14 @@
+exports_files([
+    "go_mod_replacements.sh.tmpl",
+])
+
 filegroup(
     name = "all_files",
     testonly = True,
     srcs = [
         "BUILD.bazel",
+        "go_mod_replacements.sh.tmpl",
+        "module.bzl",
         "proto_go_library.bzl",
     ],
     visibility = ["//rules:__pkg__"],

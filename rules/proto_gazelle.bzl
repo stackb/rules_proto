@@ -24,6 +24,7 @@ DEFAULT_LANGUAGES = [
     "@bazel_gazelle//language/proto:go_default_library",
     "@bazel_gazelle//language/go:go_default_library",
     "@build_stack_rules_proto//language/protobuf",
+    "@build_stack_rules_proto//language/gomodules",
 ]
 
 def _valid_env_variable_name(name):

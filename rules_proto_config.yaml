@@ -112,6 +112,7 @@ rules:
   - name: proto_go_library
     implementation: stackb:rules_proto:proto_go_library
     deps:
+      - "@org_golang_google_protobuf//proto"
       - "@org_golang_google_protobuf//reflect/protoreflect"
       - "@org_golang_google_protobuf//runtime/protoimpl"
     resolves:
@@ -123,9 +124,6 @@ rules:
   # GRPC-WEB
   - name: grpc_web_js_library
     implementation: stackb:rules_proto:grpc_web_js_library
-    deps:
-      - "@org_golang_google_protobuf//reflect/protoreflect"
-      - "@org_golang_google_protobuf//runtime/protoimpl"
     visibility:
       - //visibility:public
 

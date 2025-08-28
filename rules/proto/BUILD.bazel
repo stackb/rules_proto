@@ -1,9 +1,14 @@
+exports_files([
+    "proto_repository_delete_files.sh",
+])
+
 filegroup(
     name = "all_files",
     testonly = True,
     srcs = [
         "BUILD.bazel",
         "proto_repository.bzl",
+        "proto_repository_delete_files.sh",
     ],
     visibility = ["//rules:__pkg__"],
 )

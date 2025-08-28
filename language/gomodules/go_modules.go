@@ -8,14 +8,12 @@ import (
 )
 
 type goModules struct {
-	loadName  string
-	targetPkg string
+	cfg Config
 }
 
-func newGoModules(loadname, targetPkg string) *goModules {
+func newGoModules(cfg Config) *goModules {
 	return &goModules{
-		loadName:  loadname,
-		targetPkg: targetPkg,
+		cfg: cfg,
 	}
 }
 
@@ -25,7 +23,7 @@ func (m *goModules) kind() string {
 
 func (m *goModules) loadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
-		Name:    m.loadName,
+		Name:    m.cfg.LoadName(),
 		Symbols: []string{m.kind()},
 	}
 }
@@ -39,7 +37,7 @@ func (m *goModules) kindInfo() rule.KindInfo {
 }
 
 func (m *goModules) generate(fromPkg string) (*rule.Rule, bool) {
-	if fromPkg != m.targetPkg {
+	if !(fromPkg == m.cfg.TargetPkg() || (fromPkg == "" && m.cfg.TargetPkg() == "ROOT")) {
 		return nil, false
 	}
 	goModules := rule.NewRule(m.kind(), m.kind())

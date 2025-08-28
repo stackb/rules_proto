@@ -9,16 +9,14 @@ import (
 )
 
 type goModule struct {
-	index     map[label.Label]bool
-	loadName  string
-	targetPkg string
+	index map[label.Label]bool
+	cfg   Config
 }
 
-func newGoModule(loadName, targetPkg string) *goModule {
+func newGoModule(cfg Config) *goModule {
 	return &goModule{
-		index:     make(map[label.Label]bool),
-		loadName:  loadName,
-		targetPkg: targetPkg,
+		index: make(map[label.Label]bool),
+		cfg:   cfg,
 	}
 }
 
@@ -28,7 +26,7 @@ func (m *goModule) kind() string {
 
 func (m *goModule) loadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
-		Name:    m.loadName,
+		Name:    m.cfg.LoadName(),
 		Symbols: []string{m.kind()},
 	}
 }
@@ -65,7 +63,10 @@ func (m *goModule) generate(fromPkg string, args language.GenerateArgs) (*rule.R
 
 	goModule := rule.NewRule(m.kind(), "go_module")
 	goModule.SetAttr("importpath", importpath)
-	goModule.SetAttr("visibility", []string{m.targetPkg + ":__pkg__"})
+	if m.cfg.GoVersion() != "" {
+		goModule.SetAttr("go_version", m.cfg.GoVersion())
+	}
+	goModule.SetAttr("visibility", []string{"//visibility:public"})
 	goModule.SetAttr("srcs", srcs)
 
 	m.index[label.New(args.Config.RepoName, fromPkg, goModule.Name())] = true

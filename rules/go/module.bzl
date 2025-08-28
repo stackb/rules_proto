@@ -41,7 +41,7 @@ go_module = rule(
         ),
         "go_version": attr.string(
             doc = "go version",
-            default = GO_VERSION,
+            default = "1.23.0",
         ),
         "srcs": attr.label_list(
             doc = "generated sources included in the module",
@@ -107,7 +107,7 @@ go_modules = rule(
         ),
         "_script_template": attr.label(
             doc = "template for the go.mod replacement script",
-            default = Label("//bazel_tools:go_mod_replacements.sh.tmpl"),
+            default = Label("@build_stack_rules_proto//rules/go:go_mod_replacements.sh.tmpl"),
             allow_single_file = True,
         ),
     },
