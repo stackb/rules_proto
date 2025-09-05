@@ -1,4 +1,4 @@
-set -euox pipefail
+set -euo pipefail
 
 if [ $# -lt 2 ]; then
     echo "Usage: $0 <base-path> <pattern1> [pattern2] [pattern3] ..."

@@ -67,7 +67,7 @@ func (m *goModule) generate(fromPkg string, args language.GenerateArgs) (*rule.R
 		goModule.SetAttr("go_version", m.cfg.GoVersion())
 	}
 	goModule.SetAttr("visibility", []string{"//visibility:public"})
-	goModule.SetAttr("srcs", srcs)
+	// goModule.SetAttr("srcs", srcs)
 
 	m.index[label.New(args.Config.RepoName, fromPkg, goModule.Name())] = true
 

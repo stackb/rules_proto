@@ -9,7 +9,7 @@ def _proto_repository_info_test_impl(ctx):
     must_attr(info, ctx.attr, "source_commit")
     must_attr(info, ctx.attr, "source_prefix")
 
-    ctx.actions.write(ctx.outputs.json, info.to_json())
+    ctx.actions.write(ctx.outputs.json, json.encode(info))
 
     # we're checking attr values in the provider, so the script really does not
     # need to do anything

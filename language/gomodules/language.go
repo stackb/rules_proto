@@ -31,7 +31,7 @@ func NewLanguage() language.Language {
 // NewGoModulesLanguage create a new GoModulesLanguage Gazelle extension
 // implementation.
 func NewGoModulesLanguage(name string) *GoModulesLanguage {
-	log.Println("NewLanguage!!!!!!!!!", name)
+	log.Println("NewLanguage!!!!!!!!!!!", name)
 	return &GoModulesLanguage{
 		name: name,
 	}
@@ -183,19 +183,15 @@ func (l *GoModulesLanguage) Resolve(
 // Any non-fatal errors this function encounters should be logged using
 // log.Print.
 func (l *GoModulesLanguage) GenerateRules(args language.GenerateArgs) language.GenerateResult {
-	if l.targetPkg == "" {
-		log.Printf("%s: skipping generate: rel=%s", l.name, args.Rel)
-		return language.GenerateResult{}
-	}
+	// if l.targetPkg == "" {
+	// 	log.Printf("%s: skipping generate: rel=%s", l.name, args.Rel)
+	// 	return language.GenerateResult{}
+	// }
 
 	log.Printf("%s: generate: rel=%s", l.name, args.Rel)
 
 	var rules []*rule.Rule
-
-	if r, ok := l.goModule.generate(args.Rel, args); ok {
-		rules = append(rules, r)
-	}
-	if r, ok := l.goModules.generate(args.Rel); ok {
+	if r, ok := l.goModules.generateRule(args); ok {
 		rules = append(rules, r)
 	}
 

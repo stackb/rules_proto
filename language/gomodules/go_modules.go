@@ -1,19 +1,23 @@
 package gomodules
 
 import (
+	"log"
 	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/language"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
 type goModules struct {
-	cfg Config
+	cfg  Config
+	deps map[label.Label]bool
 }
 
 func newGoModules(cfg Config) *goModules {
 	return &goModules{
-		cfg: cfg,
+		cfg:  cfg,
+		deps: make(map[label.Label]bool),
 	}
 }
 
@@ -36,10 +40,21 @@ func (m *goModules) kindInfo() rule.KindInfo {
 	}
 }
 
-func (m *goModules) generate(fromPkg string) (*rule.Rule, bool) {
-	if !(fromPkg == m.cfg.TargetPkg() || (fromPkg == "" && m.cfg.TargetPkg() == "ROOT")) {
+func (m *goModules) generateRule(args language.GenerateArgs) (*rule.Rule, bool) {
+	log.Println("generateRule:", args.Rel)
+	for _, r := range args.OtherGen {
+		switch r.Kind() {
+		case "proto_go_library":
+			dep := label.New(args.Config.RepoName, args.Rel, r.Name())
+			m.deps[dep] = true
+			log.Println("indexed dep:", dep)
+		}
+	}
+
+	if !(args.Rel == m.cfg.TargetPkg() || (args.Rel == "" && m.cfg.TargetPkg() == "ROOT")) {
 		return nil, false
 	}
+
 	goModules := rule.NewRule(m.kind(), m.kind())
 	return goModules, true
 }
@@ -49,11 +64,12 @@ func (m *goModules) resolve(_ label.Label, r *rule.Rule, index map[label.Label]b
 		return false
 	}
 
-	deps := make([]string, len(index))
-	i := 0
-	for lbl := range index {
-		deps[i] = lbl.String()
-		i++
+	deps := make([]string, 0)
+	for dep, ok := range m.deps {
+		if !ok {
+			continue
+		}
+		deps = append(deps, dep.String())
 	}
 	sort.Strings(deps)
 

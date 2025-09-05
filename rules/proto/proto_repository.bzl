@@ -402,7 +402,8 @@ def _delete_files(ctx, files_to_delete):
     )
     if result.return_code:
         fail("%s: %s" % (ctx.name, result.stderr))
-    print("result:", result.stdout)
+
+    # print("delete files result:", result.stdout)
 
 def _generate_package_info(*, importpath, version):
     package_name = importpath

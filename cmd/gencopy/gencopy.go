@@ -27,7 +27,7 @@ var (
 
 type (
 
-	// Config can be produced by a starlark struct.to_json() using camelCase
+	// Config can be produced by a starlark json.encode(struct) using camelCase
 	// names.
 	Config struct {
 		// The root of the monorepo.  This comes from the environment variable

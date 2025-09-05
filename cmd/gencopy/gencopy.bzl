@@ -72,7 +72,7 @@ def gencopy_action(ctx, config, runfiles):
 
     ctx.actions.write(
         output = config_json,
-        content = config.to_json(),
+        content = json.encode(config),
     )
 
     ctx.actions.expand_template(
