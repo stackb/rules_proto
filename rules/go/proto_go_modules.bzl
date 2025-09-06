@@ -1,6 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "GoArchive")
 
-LocalGoModulesInfo = provider(
+ProtoGoModulesInfo = provider(
     doc = "info provided from a go_modules rule",
     fields = {
         "direct": "List[GoArchive] deps of this rule",
@@ -14,7 +14,7 @@ def _is_proto_dep(go_archive_data):
             return True
     return False
 
-def _local_go_modules_impl(ctx):
+def _proto_go_modules_impl(ctx):
     # index the GoArchive objects by importpath.
     direct = {}
 
@@ -22,7 +22,7 @@ def _local_go_modules_impl(ctx):
         go_archive = dep[GoArchive]
         direct[go_archive.data.importpath] = go_archive
     for module in ctx.attr.modules:
-        for imp, go_archive in module[LocalGoModulesInfo].direct.items():
+        for imp, go_archive in module[ProtoGoModulesInfo].direct.items():
             if direct.get(imp) == None:
                 direct[imp] = go_archive
 
@@ -102,22 +102,22 @@ def _local_go_modules_impl(ctx):
             files = depset([ctx.outputs.executable]),
             runfiles = ctx.runfiles(files = srcs),
         ),
-        LocalGoModulesInfo(
+        ProtoGoModulesInfo(
             label = ctx.label,
             direct = direct,
         ),
     ]
 
-go_modules = rule(
-    implementation = _local_go_modules_impl,
+proto_go_modules = rule(
+    implementation = _proto_go_modules_impl,
     attrs = {
         "deps": attr.label_list(
             doc = "list of libraries that provide GoArchive (proto_go_library, go_library, ...)",
             providers = [GoArchive],
         ),
         "modules": attr.label_list(
-            doc = "list of labels that provide LocalGoModulesInfo (go_modules)",
-            providers = [LocalGoModulesInfo],
+            doc = "list of labels that provide ProtoGoModulesInfo (go_modules)",
+            providers = [ProtoGoModulesInfo],
         ),
         "imports": attr.string_list(
             doc = "list of go importpaths that represent top-level proto imports that are desired.  The transitive set of proto import dependencies will be computed from this set",
@@ -129,6 +129,6 @@ go_modules = rule(
             default = "local",
         ),
     },
-    provides = [DefaultInfo, LocalGoModulesInfo],
+    provides = [DefaultInfo, ProtoGoModulesInfo],
     executable = True,
 )

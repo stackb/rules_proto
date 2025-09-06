@@ -739,15 +739,27 @@ _protobuf_repository_attrs = {
 
     # protobuf extension specific configuration
     "languages": attr.string_list(
-        default = ["proto", "protobuf", "gomodules"],
+        doc = "the default set of languages to enable",
+        default = ["proto", "protobuf", "proto_go_modules"],
     ),
-    "cfgs": attr.label_list(allow_files = True),
-    "imports": attr.label_list(
+    "cfgs": attr.label_list(
+        doc = "the list of base proto configurations to include",
         allow_files = True,
     ),
-    "imports_out": attr.string(default = "imports.csv"),
-    "deleted_files": attr.string_list(),
-    "reresolve_known_proto_imports": attr.bool(),
+    "imports": attr.label_list(
+        doc = "list of csv files that provide resolve records",
+        allow_files = True,
+    ),
+    "imports_out": attr.string(
+        doc = "name of CSV file that should be produced",
+        default = "imports.csv",
+    ),
+    "deleted_files": attr.string_list(
+        doc = "list of paths that should be deleted after download and extract (and before gazelle generate)",
+    ),
+    "reresolve_known_proto_imports": attr.bool(
+        doc = "this should be set to true for @googleapis repo",
+    ),
 }
 
 proto_repository_attrs = _go_repository_attrs | _protobuf_repository_attrs
@@ -761,7 +773,6 @@ def proto_repository(**kwargs):
     name = kwargs.get("name")
     kwargs.setdefault("apparent_name", name)
 
-    # kwargs.setdefault("languages", ["proto", "protobuf", "gomodules"])
     protobuf_go_repository(**kwargs)
 
 def github_proto_repository(name, owner, repo, commit, prefix = "", host = "github.com", build_file_proto_mode = "file", **kwargs):

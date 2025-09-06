@@ -1,7 +1,6 @@
-package gomodules
+package proto_go_modules
 
 import (
-	"log"
 	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -9,30 +8,30 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
 
-type goModules struct {
+type protoGoModules struct {
 	cfg  Config
 	deps map[label.Label]bool
 }
 
-func newGoModules(cfg Config) *goModules {
-	return &goModules{
+func newProtoGoModules(cfg Config) *protoGoModules {
+	return &protoGoModules{
 		cfg:  cfg,
 		deps: make(map[label.Label]bool),
 	}
 }
 
-func (m *goModules) kind() string {
-	return "go_modules"
+func (m *protoGoModules) kind() string {
+	return "proto_go_modules"
 }
 
-func (m *goModules) loadInfo() rule.LoadInfo {
+func (m *protoGoModules) loadInfo() rule.LoadInfo {
 	return rule.LoadInfo{
 		Name:    m.cfg.LoadName(),
 		Symbols: []string{m.kind()},
 	}
 }
 
-func (m *goModules) kindInfo() rule.KindInfo {
+func (m *protoGoModules) kindInfo() rule.KindInfo {
 	return rule.KindInfo{
 		MatchAny:      true,
 		ResolveAttrs:  map[string]bool{"deps": true},
@@ -40,28 +39,27 @@ func (m *goModules) kindInfo() rule.KindInfo {
 	}
 }
 
-func (m *goModules) generateRule(args language.GenerateArgs) (*rule.Rule, bool) {
-	log.Println("generateRule:", args.Rel)
+func (m *protoGoModules) generateRule(args language.GenerateArgs) (*rule.Rule, bool) {
+	indexKinds := m.cfg.IndexKinds()
+
 	for _, r := range args.OtherGen {
-		switch r.Kind() {
-		case "proto_go_library":
+		if indexKinds[r.Kind()] {
 			dep := label.New(args.Config.RepoName, args.Rel, r.Name())
 			m.deps[dep] = true
-			log.Println("indexed dep:", dep)
 		}
 	}
 
-	if !(args.Rel == m.cfg.TargetPkg() || (args.Rel == "" && m.cfg.TargetPkg() == "ROOT")) {
+	if !(args.Rel == m.cfg.TargetDir() || (args.Rel == "" && m.cfg.TargetDir() == "ROOT")) {
 		return nil, false
 	}
 
-	goModules := rule.NewRule(m.kind(), m.kind())
-	goModules.SetAttr("visibility", []string{"//visibility:public"})
+	newRule := rule.NewRule(m.kind(), m.kind())
+	newRule.SetAttr("visibility", []string{"//visibility:public"})
 
-	return goModules, true
+	return newRule, true
 }
 
-func (m *goModules) resolve(_ label.Label, r *rule.Rule) bool {
+func (m *protoGoModules) resolve(_ label.Label, r *rule.Rule) bool {
 	if r.Kind() != m.kind() {
 		return false
 	}

@@ -1,13 +1,12 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "gomodules",
+    name = "proto_go_modules",
     srcs = [
-        # "go_module.go",
-        "go_modules.go",
         "language.go",
+        "rule.go",
     ],
-    importpath = "github.com/stackb/rules_proto/language/gomodules",
+    importpath = "github.com/stackb/rules_proto/language/proto_go_modules",
     visibility = ["//visibility:public"],
     deps = [
         "@bazel_gazelle//config:go_default_library",

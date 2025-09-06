@@ -61,9 +61,7 @@ filegroup(
 )
 """,
     sha256 = "3a0e900f9556fbcac4c3a913a00d07680f0fdf6b990a341462d822247b265562",
-    urls = [
-        "https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-linux-x86_64.zip",
-    ],
+    urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-linux-x86_64.zip"],
 )
 
 http_archive(
@@ -76,9 +74,7 @@ filegroup(
 )
 """,
     sha256 = "b4f36b18202d54d343a66eebc9f8ae60809a2a96cc2d1b378137550bbe4cf33c",
-    urls = [
-        "https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-osx-x86_64.zip",
-    ],
+    urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-osx-x86_64.zip"],
 )
 
 http_archive(
@@ -91,9 +87,7 @@ filegroup(
 )
 """,
     sha256 = "2291c634777242f3bf4891b082cebc6dd495ae621fbf751b27e800b83369a345",
-    urls = [
-        "https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-win32.zip",
-    ],
+    urls = ["https://github.com/google/protobuf/releases/download/v3.20.1/protoc-3.20.1-win32.zip"],
 )
 
 http_archive(
@@ -120,18 +114,14 @@ cc_binary(
 """,
     sha256 = "7fbe9d04e45420c3c2e02456c0275fa8716fa894c48525b9a8f7db9ac0b4acb0",
     strip_prefix = "grpc-node-aeb42733d861883b82323e2dc6d1aba0e3a12aa0/packages/grpc-tools/src",
-    urls = [
-        "https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz",
-    ],
+    urls = ["https://github.com/grpc/grpc-node/archive/aeb42733d861883b82323e2dc6d1aba0e3a12aa0.tar.gz"],
 )
 
 http_archive(
     name = "com_github_stackb_grpc_js",
     sha256 = "33042aa893625ec5bf6d59bf38b3954e5558b7e549b1cb2eeee66cd2ccf8ab29",
     strip_prefix = "grpc.js-c938ee76ee462abf4f83d758f63d52f03fa24c7c",
-    urls = [
-        "https://github.com/stackb/grpc.js/archive/c938ee76ee462abf4f83d758f63d52f03fa24c7c.tar.gz",
-    ],
+    urls = ["https://github.com/stackb/grpc.js/archive/c938ee76ee462abf4f83d758f63d52f03fa24c7c.tar.gz"],
 )
 
 # -------------------------------------------------------------------
@@ -144,27 +134,21 @@ http_file(
     name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_aarch64",
     executable = True,
     sha256 = "a12b759629b943ebac5528f58fac5039d9aa2fb7abb9e9684d1b481b35afbfc6",
-    urls = [
-        "https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-darwin-aarch64",
-    ],
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-darwin-aarch64"],
 )
 
 http_file(
     name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_darwin_x86_64",
     executable = True,
     sha256 = "1fa3ef92194d06c03448a5cba82759e9773e43d8b188866a1f1d4fc23bb1ecb7",
-    urls = [
-        "https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-darwin-x86_64",
-    ],
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-darwin-x86_64"],
 )
 
 http_file(
     name = "github_com_grpc_grpc_web_releases_download_1_5_0_protoc_gen_grpc_web_1_5_0_linux_x86_64",
     executable = True,
     sha256 = "2e6e074497b221045a14d5a54e9fc910945bfdd1198b12b9fc23686a95671d64",
-    urls = [
-        "https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-linux-x86_64",
-    ],
+    urls = ["https://github.com/grpc/grpc-web/releases/download/1.5.0/protoc-gen-grpc-web-1.5.0-linux-x86_64"],
 )
 
 # -------------------------------------------------------------------
@@ -201,7 +185,6 @@ use_repo(
 non_module_deps = use_extension("@bazel_gazelle//internal/bzlmod:non_module_deps.bzl", "non_module_deps")
 use_repo(
     non_module_deps,
-    # "go_sdk",
     "bazel_gazelle_go_repository_cache",
     "bazel_gazelle_go_repository_tools",
     "bazel_gazelle_is_bazel_module",
@@ -330,7 +313,7 @@ proto_repository = use_extension("@build_stack_rules_proto//extensions:proto_rep
 proto_repository.archive(
     name = "protobufapis",
     build_directives = [
-        "gazelle:gomodules_target_dir ROOT",
+        "gazelle:proto_go_modules_target_dir ROOT",
         "gazelle:exclude testdata",
         "gazelle:exclude google/protobuf/compiler/ruby",
         "gazelle:exclude google/protobuf/util/internal/testdata",
@@ -364,7 +347,7 @@ proto_repository.archive(
     name = "googleapis",
     build_file_generation = "clean",
     build_directives = [
-        "gazelle:gomodules_target_dir ROOT",
+        "gazelle:proto_go_modules_target_dir ROOT",
         "gazelle:exclude google/example",
         "gazelle:exclude google/ads/googleads/v7/services",
         "gazelle:exclude google/ads/googleads/v8/services",
