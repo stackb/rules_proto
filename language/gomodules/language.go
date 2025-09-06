@@ -43,7 +43,6 @@ type GoModulesLanguage struct {
 	loadName  string
 	targetPkg string
 	goVersion string
-	goModule  *goModule
 	goModules *goModules
 }
 
@@ -75,7 +74,6 @@ func (l *GoModulesLanguage) RegisterFlags(fs *flag.FlagSet, cmd string, c *confi
 }
 
 func (l *GoModulesLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
-	l.goModule = newGoModule(l)
 	l.goModules = newGoModules(l)
 	return nil
 }
@@ -107,7 +105,6 @@ func (l *GoModulesLanguage) Configure(c *config.Config, rel string, f *rule.File
 // kinds of rules generated for this language may be found here.
 func (l *GoModulesLanguage) Kinds() map[string]rule.KindInfo {
 	kinds := map[string]rule.KindInfo{
-		l.goModule.kind():  l.goModule.kindInfo(),
 		l.goModules.kind(): l.goModules.kindInfo(),
 	}
 	return kinds
@@ -119,7 +116,6 @@ func (l *GoModulesLanguage) Kinds() map[string]rule.KindInfo {
 // files.
 func (l *GoModulesLanguage) Loads() []rule.LoadInfo {
 	return []rule.LoadInfo{
-		l.goModule.loadInfo(),
 		l.goModules.loadInfo(),
 	}
 }
@@ -127,7 +123,6 @@ func (l *GoModulesLanguage) Loads() []rule.LoadInfo {
 // ApparentLoads implements the optional interface language.ModuleAwareLanguage
 func (l *GoModulesLanguage) ApparentLoads(moduleToApparentName func(string) string) []rule.LoadInfo {
 	return []rule.LoadInfo{
-		l.goModule.loadInfo(),
 		l.goModules.loadInfo(),
 	}
 }
@@ -167,7 +162,7 @@ func (l *GoModulesLanguage) Resolve(
 	importsRaw interface{},
 	from label.Label,
 ) {
-	l.goModules.resolve(from, r, l.goModule.index)
+	l.goModules.resolve(from, r)
 }
 
 // GenerateRules extracts build metadata from source files in a directory.

@@ -56,10 +56,12 @@ func (m *goModules) generateRule(args language.GenerateArgs) (*rule.Rule, bool) 
 	}
 
 	goModules := rule.NewRule(m.kind(), m.kind())
+	goModules.SetAttr("visibility", []string{"//visibility:public"})
+
 	return goModules, true
 }
 
-func (m *goModules) resolve(_ label.Label, r *rule.Rule, index map[label.Label]bool) bool {
+func (m *goModules) resolve(_ label.Label, r *rule.Rule) bool {
 	if r.Kind() != m.kind() {
 		return false
 	}

@@ -14,6 +14,7 @@ GoModulesInfo = provider(
     doc = "info provided from a go_modules rule",
     fields = {
         "deps": "List[GoArchive] deps of this rule",
+        "modules": "List[GoModuleInfo] module deps of this rule",
         "label": "[Label]: the label of this rule",
     },
 )
@@ -66,37 +67,81 @@ go_module = rule(
     ],
 )
 
+def _is_proto_dep(go_archive_data):
+    for src in go_archive_data.srcs:
+        if src.basename.endswith(".pb.go"):
+            return True
+    return False
+
 def _go_modules_impl(ctx):
+    # comprehend a list of GoArchive providers
     deps = [
         dep[GoArchive]
         for dep in ctx.attr.deps
     ]
+    modules = [
+        dep[GoModulesInfo]
+        for dep in ctx.attr.modules
+    ]
+    for module in modules:
+        deps.extend(module.deps)
 
+    # index the GoArchiveData objects by importpath.  Collect the direct and
+    # transitive deps into different containers
+    direct = {}
+    transitive = {}
+    for dep in deps:
+        direct[dep.data.importpath] = dep
+        for d in dep.direct:
+            transitive[d.data.importpath] = d.data
+        for d in dep.transitive.to_list():
+            transitive[d.importpath] = d
+
+    # collect the final list of deps we want to vendor sources for
+    want = []
+    if len(ctx.attr.imports) == 0:
+        want = direct.values()
+    else:
+        for imp in ctx.attr.imports:
+            dep = direct.get(imp)
+            if not dep:
+                fail("no known GoArchive for %s.  Please ensure .deps or .modules provides the corresponding import." % imp)
+            want.append(dep)
+            for d in dep.direct:
+                if _is_proto_dep(d.data):
+                    want.append(d)
+
+    # srcs will be a list of .go files that will be included in runfiles such
+    # that they will be available for copy operations.
     srcs = []
+
+    # lines is a list of shell script commands to be written to the executable
+    # output script.
     lines = [
         "set -euox pipefail",
         """cd $BUILD_WORKING_DIRECTORY""",
     ]
-    replaces = []
 
-    for dep in deps:
+    for dep in want:
         dstdir = "./%s/%s" % (ctx.attr.srcroot, dep.data.importpath)
+
         lines.append("")
         lines.append("# module=" + str(dep.data.importpath))
         lines.append("mkdir -p %s" % dstdir)
         lines.append("echo 'module %s' > %s/go.mod" % (dep.data.importpath, dstdir))
-        lines.append("echo 'go %s' >> %s/go.mod" % (ctx.attr.go_version, dstdir))
+
+        if ctx.attr.go_version == "go.mod":
+            lines.append("""echo "$(grep '^go' < %s)" >> %s/go.mod""" % (ctx.attr.go_version, dstdir))
+        else:
+            lines.append("""echo "go %s" >> %s/go.mod""" % (ctx.attr.go_version, dstdir))
+
         for src in dep.data.srcs:
             srcs.append(src)
             dst = "%s/%s" % (dstdir, src.basename)
             lines.append("cp -f %s %s" % (src.path, dst))
-        lines.append("go mod edit -replace %s=%s" % (dep.data.importpath, dstdir))
-        replaces.append("%s=%s" % (dep.data.importpath, dstdir))
-    lines.append("")
 
-    lines.append("go mod edit\\")
-    for replace in replaces:
-        lines.append(" -replace %s\\" % replace)
+        lines.append("go mod edit -replace %s=%s" % (dep.data.importpath, dstdir))
+
     lines.append("")
     lines.append("")
 
@@ -113,6 +158,7 @@ def _go_modules_impl(ctx):
         ),
         GoModulesInfo(
             deps = deps,
+            modules = modules,
         ),
     ]
 
@@ -120,8 +166,15 @@ go_modules = rule(
     implementation = _go_modules_impl,
     attrs = {
         "deps": attr.label_list(
-            doc = "data dependencies to be built from this one",
+            doc = "list of libraries that provide GoArchive (proto_go_library, go_library, ...)",
             providers = [GoArchive],
+        ),
+        "modules": attr.label_list(
+            doc = "list of labels that provide GoModulesInfo (go_modules)",
+            providers = [GoModulesInfo],
+        ),
+        "imports": attr.string_list(
+            doc = "list of go importpaths that represent top-level proto imports that are desired.  The transitive set of proto import dependencies will be computed from this set",
         ),
         "go_version": attr.string(
             default = "1.23.0",
