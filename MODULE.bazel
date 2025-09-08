@@ -319,68 +319,93 @@ proto_repository = use_extension("@build_stack_rules_proto//extensions:proto_rep
 proto_repository.archive(
     name = "protobufapis",
     build_directives = [
-        "gazelle:proto_go_modules_target_dir ROOT",
         "gazelle:exclude testdata",
         "gazelle:exclude google/protobuf/compiler/ruby",
+        "gazelle:exclude google/protobuf/bridge",
         "gazelle:exclude google/protobuf/util/internal/testdata",
         "gazelle:proto_language cpp enable true",
         "gazelle:proto_language descriptor enable true",
-        "gazelle:proto_language go enable false",
         "gazelle:proto_language go enable true",
         "gazelle:proto_language java enable true",
         "gazelle:proto_language python enable true",
         "gazelle:proto_language scala enable true",
-        "gazelle:proto_rule proto_ts_library attr out_dir ts",
+        "gazelle:proto_go_modules_enabled true",
     ],
-    sha256 = "4514213c25a5b87e1948aeeb4c40effc55d11d60871ca5b903a2779005fc48ce",
     build_file_proto_mode = "file",
     build_file_generation = "clean",
     cfgs = ["@//:rules_proto_config.yaml"],
     deleted_files = [
         "google/protobuf/*test*.proto",
         "google/protobuf/*unittest*.proto",
+        "google/protobuf/late*.proto",
+        "google/protobuf/sample*.proto",
+        "google/protobuf/cpp_features.proto",
+        "google/protobuf/internal_options.proto",
         "google/protobuf/compiler/cpp/*test*.proto",
         "google/protobuf/util/*test*.proto",
         "google/protobuf/util/*unittest*.proto",
         "google/protobuf/util/json_format*.proto",
     ],
-    strip_prefix = "protobuf-9650e9fe8f737efcad485c2a8e6e696186ae3862/src",
-    type = "zip",
-    urls = ["https://codeload.github.com/protocolbuffers/protobuf/zip/9650e9fe8f737efcad485c2a8e6e696186ae3862"],
+    sha256 = "bb1fd58473c47c747a3f00fc45ced1d562bba4bf645db07cc889fe86dee279ca",
+    strip_prefix = "protobuf-4fbd1111a292d04746c732573025e3251de0bb9c/src",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/4fbd1111a292d04746c732573025e3251de0bb9c.tar.gz"],
 )
 
+# Commit: 60e1300d4a0b60b85b3df167ddc4062ac7cc4f44
+# Date: 2025-09-08 18:27:45 +0000 UTC
+# URL: https://github.com/googleapis/googleapis/commit/60e1300d4a0b60b85b3df167ddc4062ac7cc4f44
+#
+# feat: release initial client libraries for Cloud Location Finder (https://cloud.google.com/location-finder)
+#
+# Clients can now use this v1 client library via the following methods: ListCloudLocations, GetCloudLocation, SearchCloudLocations
+#
+# PiperOrigin-RevId: 804516757
+# Size: 11515047 (12 MB)
 proto_repository.archive(
     name = "googleapis",
     build_file_generation = "clean",
     build_directives = [
-        "gazelle:proto_go_modules_target_dir ROOT",
-        "gazelle:exclude google/example",
+        "gazelle:exclude google/ads/googleads/v19/services",
+        "gazelle:exclude google/ads/googleads/v20/services",
+        "gazelle:exclude google/ads/googleads/v21/services",
         "gazelle:exclude google/ads/googleads/v7/services",
         "gazelle:exclude google/ads/googleads/v8/services",
-        "gazelle:proto_language go enabled true",
+        "gazelle:exclude google/cloud/recommendationengine/v1beta1",
+        "gazelle:exclude google/devtools/containeranalysis/v1beta1",
+        "gazelle:exclude google/example",
+        "gazelle:exclude google/maps/weather/v1",
+        "gazelle:proto_go_modules_enabled true",
+        "gazelle:proto_language cpp enable true",
         "gazelle:proto_language descriptor enable true",
+        "gazelle:proto_language go enable true",
+        "gazelle:proto_language java enable true",
+        "gazelle:proto_language python enable true",
+        "gazelle:proto_language scala enable true",
     ],
-    sha256 = "95da12951c7d570980d5152f6cca9e1cb795ddc6b6dd7e9423bdffde28290f7a",
     build_file_proto_mode = "file",
     cfgs = ["//:rules_proto_config.yaml"],
     imports = ["@protobufapis//:imports.csv"],
     reresolve_known_proto_imports = True,
-    strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
-    type = "zip",
-    urls = ["https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9"],
+    sha256 = "b1f729e116312e1bed9a6c0b812e8d6071755dcf93ff4f665c07bbf517dd61a6",
+    strip_prefix = "googleapis-60e1300d4a0b60b85b3df167ddc4062ac7cc4f44",
+    urls = ["https://github.com/googleapis/googleapis/archive/60e1300d4a0b60b85b3df167ddc4062ac7cc4f44.tar.gz"],
 )
+
+# Commit: 3df4b0cc65e3e67ee84c124484be64de63779ae7
+# Date: 2025-08-23 17:33:43 +0000 UTC
+# URL: https://github.com/scalapb/ScalaPB/commit/3df4b0cc65e3e67ee84c124484be64de63779ae7
+#
+# Fix organization name
+# Size: 993390 (993 kB)
 proto_repository.archive(
     name = "scalaapis",
     build_directives = ["gazelle:proto_language scala enabled true"],
     build_file_generation = "clean",
     build_file_proto_mode = "file",
     cfgs = ["//:rules_proto_config.yaml"],
-    sha256 = "1ac039f79b0825fe2e7e5ddf24e330632d63b70a7a42bfd39ded5bb1fb648811",
-    # the typical importpath is 'scalapb/scalapb.proto', so strip the prefix up
-    # to that directory.
-    strip_prefix = "ScalaPB-a4e0e02c0f5b160877d5f97f6902dbec4c633afe/protobuf",
-    type = "zip",
-    urls = ["https://codeload.github.com/scalapb/ScalaPB/zip/a4e0e02c0f5b160877d5f97f6902dbec4c633afe"],
+    strip_prefix = "ScalaPB-3df4b0cc65e3e67ee84c124484be64de63779ae7/protobuf",  # the typical importpath is 'scalapb/scalapb.proto', so strip the prefix up to that dir
+    sha256 = "2f8985d6f55904fa9cc3f73a419818c2ce71ccf98b2d310678da3f7e16bf4d19",
+    urls = ["https://github.com/scalapb/ScalaPB/archive/3df4b0cc65e3e67ee84c124484be64de63779ae7.tar.gz"],
 )
 use_repo(
     proto_repository,

@@ -115,13 +115,30 @@ gazelle_testdata_example(
     extra_module_bazel_content = extra_module_bazel_content + """
 bazel_dep(name = "gazelle", version = "0.45.0", repo_name = "bazel_gazelle")
 
+# -------------------------------------------------------------------
+# Configuration: Go
+# -------------------------------------------------------------------
+
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
-go_deps.from_file(go_mod = "//:go.mod")
+go_deps.module(
+    path = "google.golang.org/protobuf",
+    sum = "h1:OgPcDAFKHnH8X3O4WcO4XUc8GRDeKsKReqbQtiCj7N8=",
+    version = "v1.36.6",
+)
+go_deps.module(
+    path = "google.golang.org/grpc",
+    sum = "h1:OgPcDAFKHnH8X3O4WcO4XUc8GRDeKsKReqbQtiCj7N8=",
+    version = "v1.67.3",
+)
 use_repo(
     go_deps,
-    "org_golang_google_protobuf",
     "org_golang_google_grpc",
+    "org_golang_google_protobuf",
 )
+
+# -------------------------------------------------------------------
+# Configuration: Protobuf
+# -------------------------------------------------------------------
 
 proto_repository = use_extension("@build_stack_rules_proto//extensions:proto_repository.bzl", "proto_repository", dev_dependency = True)
 proto_repository.archive(
@@ -156,6 +173,7 @@ proto_repository.archive(
         "gazelle:exclude google/example",
         "gazelle:exclude google/ads/googleads/v7/services",
         "gazelle:exclude google/ads/googleads/v8/services",
+        "gazelle:exclude google/cloud/recommendationengine/v1beta1",
         "gazelle:proto_language go enabled true",
     ],
     build_file_generation = "clean",
@@ -186,9 +204,10 @@ func TestRunGazelle(t *testing.T) {
 	if err := bazel_testing.RunBazel("build", "..."); err != nil {
 		t.Fatal(err)
 	}
-	if err := bazel_testing.RunBazel("test", "..."); err != nil {
+	if err := bazel_testing.RunBazel("build", "@googleapis//..."); err != nil {
 		t.Fatal(err)
 	}
+
 }
 """,
 )
