@@ -32,9 +32,6 @@ def _proto_go_modules_impl(ctx):
         for go_archive in direct.values()
         if _is_proto_dep(go_archive.data)
     ]
-    # for go_archive in direct.values():
-    #     if _is_proto_dep(go_archive.data):
-    #         available_imports.appgo_archive.data.importpath] = go_archive.data
 
     # collect the final list of deps we want to vendor sources for
     want = {}

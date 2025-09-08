@@ -139,84 +139,79 @@ bazel_dep(name = "build_stack_rules_proto", version = "0.0.0")
 
 proto_repository = use_extension("@build_stack_rules_proto//extensions:proto_repository.bzl", "proto_repository", dev_dependency = True)
 proto_repository.archive(
-    name = "googleapis",
+    name = "protobufapis",
     build_directives = [
-        "gazelle:proto_go_modules_target_dir ROOT",
-        "gazelle:exclude google/example",
+        "gazelle:exclude testdata",
+        "gazelle:exclude google/protobuf/compiler/ruby",
+        "gazelle:exclude google/protobuf/bridge",
+        "gazelle:exclude google/protobuf/util/internal/testdata",
+        "gazelle:proto_language go enable true",
+    ],
+    build_file_proto_mode = "file",
+    build_file_generation = "clean",
+    cfgs = ["@//:rules_proto_config.yaml"],
+    deleted_files = [
+        "google/protobuf/*test*.proto",
+        "google/protobuf/*unittest*.proto",
+        "google/protobuf/late*.proto",
+        "google/protobuf/sample*.proto",
+        "google/protobuf/cpp_features.proto",
+        "google/protobuf/internal_options.proto",
+        "google/protobuf/compiler/cpp/*test*.proto",
+        "google/protobuf/util/*test*.proto",
+        "google/protobuf/util/*unittest*.proto",
+        "google/protobuf/util/json_format*.proto",
+    ],
+    sha256 = "bb1fd58473c47c747a3f00fc45ced1d562bba4bf645db07cc889fe86dee279ca",
+    strip_prefix = "protobuf-4fbd1111a292d04746c732573025e3251de0bb9c/src",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/4fbd1111a292d04746c732573025e3251de0bb9c.tar.gz"],
+)
+proto_repository.archive(
+    name = "googleapis",
+    build_file_generation = "clean",
+    build_directives = [
+        "gazelle:exclude google/ads/googleads/v19/services",
+        "gazelle:exclude google/ads/googleads/v20/services",
+        "gazelle:exclude google/ads/googleads/v21/services",
         "gazelle:exclude google/ads/googleads/v7/services",
         "gazelle:exclude google/ads/googleads/v8/services",
-        "gazelle:proto_language go enabled true",
+        "gazelle:exclude google/cloud/recommendationengine/v1beta1",
+        "gazelle:exclude google/devtools/containeranalysis/v1beta1",
+        "gazelle:exclude google/example",
+        "gazelle:exclude google/maps/weather/v1",
+        "gazelle:proto_go_modules_enabled true",
+        "gazelle:proto_language go enable true",
     ],
-    build_file_generation = "clean",
     build_file_proto_mode = "file",
     cfgs = ["//:rules_proto_config.yaml"],
-    imports = ["@protoapis//:imports.csv"],
+    imports = ["@protobufapis//:imports.csv"],
     reresolve_known_proto_imports = True,
-    sha256 = "95da12951c7d570980d5152f6cca9e1cb795ddc6b6dd7e9423bdffde28290f7a",
-    strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
-    type = "zip",
-    urls = [
-        "https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9",
-    ],
+    sha256 = "b1f729e116312e1bed9a6c0b812e8d6071755dcf93ff4f665c07bbf517dd61a6",
+    strip_prefix = "googleapis-60e1300d4a0b60b85b3df167ddc4062ac7cc4f44",
+    urls = ["https://github.com/googleapis/googleapis/archive/60e1300d4a0b60b85b3df167ddc4062ac7cc4f44.tar.gz"],
 )
 proto_repository.archive(
     name = "remoteapis",
     build_directives = [
-        "gazelle:proto_go_modules_target_dir ROOT",
         "gazelle:exclude third_party",
-        "gazelle:exclude build/bazel/remote/asset/v1",
-        "gazelle:exclude build/bazel/remote/logstream/v1",
+        "gazelle:proto_go_modules_enabled true",
         "gazelle:proto_language go enable true",
-        "gazelle:proto_plugin protoc-gen-go option Mbuild/bazel/remote/execution/v2/remote_execution.proto=github.com/bazelbuild/remote-apis/build/bazel/remote/execution/v2",
-        "gazelle:proto_plugin protoc-gen-go option Mbuild/bazel/semver/semver.proto=github.com/bazelbuild/remote-apis/build/bazel/semver",
-        "gazelle:proto_plugin protoc-gen-go-grpc option Mbuild/bazel/remote/execution/v2/remote_execution.proto=github.com/bazelbuild/remote-apis/build/bazel/remote/execution/v2",
-        "gazelle:proto_plugin protoc-gen-go-grpc option Mbuild/bazel/semver/semver.proto=github.com/bazelbuild/remote-apis/build/bazel/semver",
     ],
     build_file_generation = "clean",
     build_file_proto_mode = "file",
     cfgs = ["//:rules_proto_config.yaml"],
     imports = [
         "@googleapis//:imports.csv",
-        "@protoapis//:imports.csv",
+        "@protobufapis//:imports.csv",
     ],
-    sha256 = "743d2d5b5504029f3f825beb869ce0ec2330b647b3ee465a4f39ca82df83f8bf",
-    strip_prefix = "remote-apis-636121a32fa7b9114311374e4786597d8e7a69f3",
-    type = "zip",
-    urls = [
-        "https://codeload.github.com/bazelbuild/remote-apis/zip/636121a32fa7b9114311374e4786597d8e7a69f3",
-    ],
-)
-proto_repository.archive(
-    name = "protoapis",
-    build_directives = [
-        "gazelle:proto_go_modules_target_dir ROOT",
-        "gazelle:exclude testdata",
-        "gazelle:exclude google/protobuf/compiler/ruby",
-        "gazelle:exclude google/protobuf/util/internal/testdata",
-        "gazelle:proto_language go enable true",
-    ],
-    build_file_generation = "clean",
-    build_file_proto_mode = "file",
-    cfgs = ["//:rules_proto_config.yaml"],
-    deleted_files = [
-        "google/protobuf/*test*.proto",
-        "google/protobuf/*unittest*.proto",
-        "google/protobuf/compiler/cpp/*test*.proto",
-        "google/protobuf/util/*test*.proto",
-        "google/protobuf/util/*unittest*.proto",
-        "google/protobuf/util/json_format*.proto",
-    ],
-    sha256 = "4514213c25a5b87e1948aeeb4c40effc55d11d60871ca5b903a2779005fc48ce",
-    strip_prefix = "protobuf-9650e9fe8f737efcad485c2a8e6e696186ae3862/src",
-    type = "zip",
-    urls = [
-        "https://codeload.github.com/protocolbuffers/protobuf/zip/9650e9fe8f737efcad485c2a8e6e696186ae3862",
-    ],
+    sha256 = "7b6847779f18fe0a586c8629b9347cf5e54edb0c9fb7cd7b56c489c0209409c2",
+    strip_prefix = "remote-apis-6777112ef7defa6705b1ebd2831d6c7efeb12ba2",
+    urls = ["https://github.com/bazelbuild/remote-apis/archive/6777112ef7defa6705b1ebd2831d6c7efeb12ba2.tar.gz"],
 )
 use_repo(
     proto_repository,
     "googleapis",
-    "protoapis",
+    "protobufapis",
     "remoteapis",
 )
 ```
@@ -227,10 +222,9 @@ few extra gazelle directives that are injected into the generated root
 
 1. turns on go protobuf rule generation for `go` (`gazelle:proto_language go
    enable true`)
-2. turns on the gazelle lang `proto_go_modules` by setting the target package to
-   the special token `ROOT` (`gazelle:proto_go_modules_target_dir ROOT`).
+2. turns on the gazelle lang `proto_go_modules` (`gazelle:proto_go_modules_enabled true`).
 
-When the requested (e.g. `bazel query @protoapis//...`), bazel will:
+When the requested (e.g. `bazel query @protobufapis//...`), bazel will:
 
 1. download and extract the zip file
 2. remove all existing `BUILD.bazel` files in the workspace
@@ -247,7 +241,7 @@ rule include all the generated `proto_go_library` rules in the repo (`GoArchive`
 providers):
 
 ```sh
-bazel query @protoapis//:proto_go_modules --output build
+bazel query @protobufapis//:proto_go_modules --output build
 ```
 
 ```py
@@ -255,18 +249,18 @@ proto_go_modules(
     name = "proto_go_modules",
     visibility = ["//visibility:public"],
     deps = [
-        "@protoapis//google/protobuf:any_go_proto",
-        "@protoapis//google/protobuf:api_go_proto",
-        "@protoapis//google/protobuf:descriptor_go_proto",
-        "@protoapis//google/protobuf:duration_go_proto",
-        "@protoapis//google/protobuf:empty_go_proto",
-        "@protoapis//google/protobuf:field_mask_go_proto",
-        "@protoapis//google/protobuf:source_context_go_proto",
-        "@protoapis//google/protobuf:struct_go_proto",
-        "@protoapis//google/protobuf:timestamp_go_proto",
-        "@protoapis//google/protobuf:type_go_proto",
-        "@protoapis//google/protobuf:wrappers_go_proto",
-        "@protoapis//google/protobuf/compiler:plugin_go_proto",
+        "@protobufapis//google/protobuf:any_go_proto",
+        "@protobufapis//google/protobuf:api_go_proto",
+        "@protobufapis//google/protobuf:descriptor_go_proto",
+        "@protobufapis//google/protobuf:duration_go_proto",
+        "@protobufapis//google/protobuf:empty_go_proto",
+        "@protobufapis//google/protobuf:field_mask_go_proto",
+        "@protobufapis//google/protobuf:source_context_go_proto",
+        "@protobufapis//google/protobuf:struct_go_proto",
+        "@protobufapis//google/protobuf:timestamp_go_proto",
+        "@protobufapis//google/protobuf:type_go_proto",
+        "@protobufapis//google/protobuf:wrappers_go_proto",
+        "@protobufapis//google/protobuf/compiler:plugin_go_proto",
     ],
 )
 ```
@@ -284,7 +278,7 @@ proto_go_modules(
     ],
     modules = [
         "@googleapis//:proto_go_modules",
-        "@protoapis//:proto_go_modules",
+        "@protobufapis//:proto_go_modules",
         "@remoteapis//:proto_go_modules",
     ],
 )
