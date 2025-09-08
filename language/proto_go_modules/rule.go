@@ -49,7 +49,7 @@ func (m *protoGoModules) generateRule(args language.GenerateArgs) (*rule.Rule, b
 		}
 	}
 
-	if !(args.Rel == m.cfg.TargetDir() || (args.Rel == "" && m.cfg.TargetDir() == "ROOT")) {
+	if args.Rel != "" {
 		return nil, false
 	}
 

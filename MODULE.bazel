@@ -158,6 +158,12 @@ http_file(
 go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
 go_sdk.from_file(go_mod = "//:go.mod")
 
+# Known to exist since it is instantiated by rules_go itself.
+use_repo(
+    go_sdk,
+    go_sdk = "go_default_sdk",
+)
+
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
 use_repo(

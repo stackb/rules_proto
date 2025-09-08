@@ -2,6 +2,8 @@ package proto_go_modules
 
 import (
 	"flag"
+	"log"
+	"strconv"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -14,11 +16,10 @@ import (
 
 const (
 	protoGoModulesLanguageName = "proto_go_modules"
-	targetDirDirective         = "proto_go_modules_target_dir"
+	enabledDirective           = "proto_go_modules_enabled"
 )
 
 type Config interface {
-	TargetDir() string
 	LoadName() string
 	IndexKinds() map[string]bool
 }
@@ -30,18 +31,14 @@ func NewLanguage() language.Language {
 
 // ProtoGoModulesLanguage implements language.Language.
 type ProtoGoModulesLanguage struct {
+	enabled    bool
 	loadName   string
-	targetDir  string
 	indexKinds string
 	modules    *protoGoModules
 }
 
 func (l ProtoGoModulesLanguage) LoadName() string {
 	return l.loadName
-}
-
-func (l ProtoGoModulesLanguage) TargetDir() string {
-	return l.targetDir
 }
 
 func (l ProtoGoModulesLanguage) IndexKinds() map[string]bool {
@@ -62,7 +59,6 @@ func (l *ProtoGoModulesLanguage) Name() string { return protoGoModulesLanguageNa
 // interface, but are otherwise unused.
 func (l *ProtoGoModulesLanguage) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
 	fs.StringVar(&l.loadName, "proto_go_modules_load_name", "@build_stack_rules_proto//rules/go:proto_go_modules.bzl", "Load source for the go_module and go_modules rule symbols")
-	fs.StringVar(&l.targetDir, "proto_go_modules_target_dir", "ROOT", "Package name where go_modules aggregate rule should be generated")
 	fs.StringVar(&l.indexKinds, "proto_go_modules_index_kinds", "proto_go_library", "Rule kinds to index as proto_go_modules deps")
 }
 
@@ -72,7 +68,7 @@ func (l *ProtoGoModulesLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) 
 }
 
 func (*ProtoGoModulesLanguage) KnownDirectives() []string {
-	return []string{targetDirDirective}
+	return []string{enabledDirective}
 }
 
 // Configure implements config.Configurer
@@ -81,8 +77,12 @@ func (l *ProtoGoModulesLanguage) Configure(c *config.Config, rel string, f *rule
 		return
 	}
 	for _, d := range f.Directives {
-		if d.Key == targetDirDirective && d.Value != "" {
-			l.targetDir = d.Value
+		if d.Key == enabledDirective {
+			want, err := strconv.ParseBool(d.Value)
+			if err != nil {
+				log.Panicln("malformed directive:", d, err)
+			}
+			l.enabled = want
 		}
 	}
 }
@@ -164,6 +164,10 @@ func (l *ProtoGoModulesLanguage) Resolve(
 // Any non-fatal errors this function encounters should be logged using
 // log.Print.
 func (l *ProtoGoModulesLanguage) GenerateRules(args language.GenerateArgs) language.GenerateResult {
+	if !l.enabled {
+		return language.GenerateResult{}
+	}
+
 	var rules []*rule.Rule
 	if r, ok := l.modules.generateRule(args); ok {
 		rules = append(rules, r)
