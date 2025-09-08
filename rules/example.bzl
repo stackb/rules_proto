@@ -102,6 +102,5 @@ def gazelle_testdata_example(**kwargs):
         srcs = [name + "_test.go"],
         deps = deps + ["@com_github_google_go_cmp//cmp"],
         rule_files = rule_files,
-        tags = ["manual"],
         **kwargs
     )

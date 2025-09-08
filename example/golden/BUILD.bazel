@@ -18,6 +18,17 @@ go_test(
     deps = ["//pkg/goldentest"],
 )
 
+# the "extra_module_bazel_content" block is fed to the ModuleFileSuffix field of
+# the bazel_testing.Args struct and ultimately appended to a MODULE.bazel file
+# by the bazel_testing library.  For reference, that content looks like:
+
+# MODULE.bazel (/private/var/tmp/_bazel_pcj/092d6dadaf86f07590903c45033f576e/bazel_testing/bazel_go_test/main/MODULE.bazel)
+# bazel_dep(name = "build_stack_rules_proto", repo_name = "build_stack_rules_proto")
+# local_path_override(
+#     module_name = "build_stack_rules_proto",
+#     path = "/private/var/tmp/_bazel_pcj/092d6dadaf86f07590903c45033f576e/bazel_testing/bazel_go_test/tested_repo",
+# )
+#
 extra_module_bazel_content = """
 bazel_dep(name = "rules_go", version = "0.57.0", repo_name = "io_bazel_rules_go")
 
@@ -158,6 +169,7 @@ use_repo(
 )
 """,
     strip_prefix = "example/golden/testdata/proto_repository",
+    tags = ["manual"],  # FIXME(pcj)
     test_content = """
 func TestRunGazelle(t *testing.T) {
 	if err := bazel_testing.RunBazel("run", "//:gazelle"); err != nil {
@@ -183,14 +195,18 @@ gazelle_testdata_example(
 gazelle_testdata_example(
     name = "starlark_java",
     srcs = glob(["testdata/starlark_java/**/*"]),
-    extra_module_bazel_content = "default.MODULE.bazel",
+    extra_module_bazel_content = extra_module_bazel_content + """
+bazel_dep(name = "protobuf", version = "32.0", repo_name = "com_google_protobuf")
+""",
     strip_prefix = "example/golden/testdata/starlark_java",
 )
 
 gazelle_testdata_example(
     name = "strip_import_prefix",
     srcs = glob(["testdata/strip_import_prefix/**/*"]),
-    extra_module_bazel_content = "default.MODULE.bazel",
+    extra_module_bazel_content = extra_module_bazel_content + """
+bazel_dep(name = "protobuf", version = "32.0", repo_name = "com_google_protobuf")
+""",
     strip_prefix = "example/golden/testdata/strip_import_prefix",
     test_content = """
 func TestBuild(t *testing.T) {
@@ -210,7 +226,9 @@ func TestRunPyApp(t *testing.T) {
 gazelle_testdata_example(
     name = "proto_compiled_sources",
     srcs = glob(["testdata/proto_compiled_sources/**/*"]),
-    extra_module_bazel_content = "default.MODULE.bazel",
+    extra_module_bazel_content = extra_module_bazel_content + """
+bazel_dep(name = "protobuf", version = "32.0", repo_name = "com_google_protobuf")
+""",
     strip_prefix = "example/golden/testdata/proto_compiled_sources",
     test_content = """
 
