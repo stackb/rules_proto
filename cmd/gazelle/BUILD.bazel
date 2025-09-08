@@ -24,7 +24,6 @@ go_library(
         "update-repos.go",
     ],
     importpath = "github.com/stackb/rules_proto/cmd/gazelle",
-    tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
         "//cmd/gazelle/internal/wspace",
