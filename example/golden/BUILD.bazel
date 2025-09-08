@@ -298,6 +298,7 @@ use_repo(
 )
 """,
     strip_prefix = "example/golden/testdata/scala",
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(

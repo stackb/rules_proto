@@ -34,7 +34,6 @@ jobs:
           bazelisk
           --bazelrc=.github/workflows/ci.bazelrc
           --bazelrc=.bazelrc
-          --deleted_packages=vendor
           build
           ...
 
