@@ -67,7 +67,10 @@ def _proto_repository_tools_impl(ctx):
                 "run",
                 ctx.path(ctx.attr._list_repository_tools_srcs),
                 "-dir=src/github.com/stackb/rules_proto",
+                # Run it under 'check' to assert file is up-to-date
                 # "-check=rules/private/proto_repository_tools_srcs.bzl",
+                # Run it under 'skip' to not check (only for internal testing)
+                # "-skip=rules/private/proto_repository_tools_srcs.bzl",
                 # Run it under 'generate' to recreate the list
                 "-generate=rules/private/proto_repository_tools_srcs.bzl",
             ],
