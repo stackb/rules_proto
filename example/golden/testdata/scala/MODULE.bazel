@@ -3,29 +3,26 @@
 # ----------------------------------------------------
 
 load("@build_stack_rules_proto//deps:scala_deps.bzl", "scala_deps")
+load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+load(
+    "@rules_jvm_external//:defs.bzl",
+    "maven_install",
+)
+load("@build_stack_rules_proto//rules/proto:proto_repository.bzl", "proto_repository")
 
 scala_deps()
 
-load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
-
 scala_config(scala_version = "2.12.18")
 
-load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
-
 scala_repositories()
-
-load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
 
 scala_register_toolchains()
 
 # ----------------------------------------------------
 # maven
 # ----------------------------------------------------
-
-load(
-    "@rules_jvm_external//:defs.bzl",
-    "maven_install",
-)
 
 maven_install(
     name = "maven_scala",
@@ -58,8 +55,6 @@ maven_install(
 # ----------------------------------------------------
 # proto_repository
 # ----------------------------------------------------
-
-load("@build_stack_rules_proto//rules/proto:proto_repository.bzl", "proto_repository")
 
 proto_repository(
     name = "scalaapis",
