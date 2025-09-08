@@ -25,9 +25,11 @@ jobs:
           # Avoid downloading Bazel every time.
           bazelisk-cache: true
           # Store build cache per workflow.
-          disk-cache: ${{ github.workflow }}
+          disk-cache: true
           # Share repository cache between workflows.
           repository-cache: true
+          # Share external cache between workflows.
+          external-cache: true
 
       - name: bazel build
         run: >-

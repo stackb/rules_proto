@@ -10,9 +10,9 @@ ProtoGoModulesInfo = provider(
 
 def _is_proto_dep(go_archive_data):
     for src in go_archive_data.srcs:
-        if src.basename.endswith(".pb.go"):
-            return True
-    return False
+        if not src.basename.endswith(".pb.go"):
+            return False
+    return True
 
 def _proto_go_modules_impl(ctx):
     # index the GoArchive objects by importpath.
@@ -26,13 +26,15 @@ def _proto_go_modules_impl(ctx):
             if direct.get(imp) == None:
                 direct[imp] = go_archive
 
-    # collect transitive info for debug purposes
-    transitive = {}
-    for go_archive in direct.values():
-        transitive[go_archive.data.importpath] = go_archive.data
-        for go_archive_data in go_archive.transitive.to_list():
-            if transitive.get(go_archive_data.importpath) == None:
-                transitive[go_archive.data.importpath] = go_archive_data
+    # collect proto_modules info for debug purposes
+    available_imports = [
+        go_archive.data
+        for go_archive in direct.values()
+        if _is_proto_dep(go_archive.data)
+    ]
+    # for go_archive in direct.values():
+    #     if _is_proto_dep(go_archive.data):
+    #         available_imports.appgo_archive.data.importpath] = go_archive.data
 
     # collect the final list of deps we want to vendor sources for
     want = {}
@@ -88,8 +90,10 @@ def _proto_go_modules_impl(ctx):
     lines.append("")
     lines.append("")
 
-    for importpath, d in transitive.items():
-        lines.append("# %s provided by %s" % (importpath, d.label))
+    lines.extend(sorted([
+        "# %s provided by %s" % (d.importpath, d.label)
+        for d in available_imports
+    ]))
 
     ctx.actions.write(
         output = ctx.outputs.executable,
