@@ -6,5 +6,4 @@ go_bazel_test(
     name = "prebuilt_test",
     srcs = ["prebuilt_test.go"],
     rule_files = ["//:all_files"],
-    tags = ["manual"],
 )
