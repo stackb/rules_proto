@@ -89,31 +89,30 @@ func TestRunPkg(t *testing.T) {
 		"degenerate": {},
 		"simple": {
 			cfg: Config{
-				Extension:              "",
-				FileMode:               "0644",
-				Mode:                   "update",
-				WorkspaceRootDirectory: "workspace",
-				UpdateTargetLabelName:  "api_v1_python_compiled_sources.update",
+				Extension:             "",
+				FileMode:              "0644",
+				Mode:                  "update",
+				UpdateTargetLabelName: "api_v1_python_compiled_sources.update",
 				PackageConfigs: []*PackageConfig{
 					{
-						GeneratedFiles:      []string{"external/gen/api/v1/v1_pb2.py"},
-						SourceFiles:         []string{"api/v1/v1_pb2.py"},
-						TargetLabel:         "@//api/v1:api_v1_python_compiled_sources",
-						TargetPackage:       "api/v1",
-						TargetWorkspaceRoot: "external/gen",
+						GeneratedFiles:      []string{"example/assets/api.pb.go.gen"},
+						SourceFiles:         []string{"example/assets/api.pb.go"},
+						TargetLabel:         "@@//example/assets:api_go_compiled_sources",
+						TargetPackage:       "example/assets",
+						TargetWorkspaceRoot: "",
 					},
 				},
 			},
 			files: []testtools.FileSpec{
 				{
-					Path:    "external/gen/api/v1/v1_pb2.py",
-					Content: "# generated file api/v1/v1_pb2.py",
+					Path:    "example/assets/api.pb.go.gen",
+					Content: "# generated file",
 				},
 			},
 			want: []testtools.FileSpec{
 				{
-					Path:    "api/v1/v1_pb2.py",
-					Content: "# generated file api/v1/v1_pb2.py",
+					Path:    "example/assets/api.pb.go",
+					Content: "# generated file",
 				},
 			},
 		},
@@ -125,9 +124,19 @@ func TestRunPkg(t *testing.T) {
 			if err := os.Chdir(dir); err != nil {
 				t.Fatal(err)
 			}
-			listFiles(t, ".")
+
+			t.Logf("BEFORE:")
+			if err := listFiles(t, "."); err != nil {
+				t.Logf("listfiles error: %v", err)
+			}
+
 			if err := run(&tc.cfg); err != nil {
 				t.Fatal(err)
+			}
+
+			t.Logf("AFTER:")
+			if err := listFiles(t, "."); err != nil {
+				t.Logf("listfiles error: %v", err)
 			}
 
 			testtools.CheckFiles(t, dir, tc.want)
