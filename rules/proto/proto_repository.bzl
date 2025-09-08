@@ -454,25 +454,7 @@ package_info(
 
 def _generate_proto_repository_info(ctx):
     return """
-load("@build_stack_rules_proto//rules:proto_repository_info.bzl", "proto_repository_info")
-
 exports_files(["{imports_out}"])
-
-proto_repository_info(
-    name = "proto_repository",
-    commit = "{commit}",
-    tag = "{tag}",
-    vcs = "{vcs}",
-    urls = {urls},
-    sha256 = "{sha256}",
-    strip_prefix = "{strip_prefix}",
-    source_host = "{source_host}",
-    source_owner = "{source_owner}",
-    source_repo = "{source_repo}",
-    source_prefix = "{source_prefix}",
-    source_commit = "{source_commit}",
-    visibility = ["//visibility:public"],
-)
 """.format(
         imports_out = ctx.attr.imports_out,
         commit = ctx.attr.commit,
@@ -481,11 +463,6 @@ proto_repository_info(
         urls = ctx.attr.urls,
         sha256 = ctx.attr.sha256,
         strip_prefix = ctx.attr.strip_prefix,
-        source_host = ctx.attr.source_host,
-        source_owner = ctx.attr.source_owner,
-        source_repo = ctx.attr.source_repo,
-        source_prefix = ctx.attr.source_prefix,
-        source_commit = ctx.attr.source_commit,
     )
 
 _go_repository_attrs = {
@@ -730,13 +707,6 @@ _protobuf_repository_attrs = {
         mandatory = True,
     ),
 
-    # Attributes for a repository that is publically hosted by github
-    "source_host": attr.string(default = "github.com"),
-    "source_owner": attr.string(),
-    "source_repo": attr.string(),
-    "source_prefix": attr.string(),
-    "source_commit": attr.string(),
-
     # protobuf extension specific configuration
     "languages": attr.string_list(
         doc = "the default set of languages to enable",
@@ -774,34 +744,3 @@ def proto_repository(**kwargs):
     kwargs.setdefault("apparent_name", name)
 
     protobuf_go_repository(**kwargs)
-
-def github_proto_repository(name, owner, repo, commit, prefix = "", host = "github.com", build_file_proto_mode = "file", **kwargs):
-    """github_proto_repository is a macro for a proto_repository hosted at github.com
-
-    Args:
-        name: the name of the rule
-        owner: the github owner (e.g. 'protocolbuffers')
-        repo: the github repo name (e.g. 'protobuf')
-        prefix: the strip_prefix value for the repo (e.g. 'src')
-        host: the source host (default 'github.com')
-        commit: the git commit (required for this macro)
-        build_file_proto_mode: defaults to 'file' for this macro.
-        **kwargs: the kwargs accumulator
-
-    """
-    strip_prefix = "%s-%s" % (repo, commit)
-    if prefix:
-        strip_prefix += "/" + prefix
-
-    proto_repository(
-        name = name,
-        source_host = host,
-        source_owner = owner,
-        source_repo = repo,
-        source_commit = commit,
-        source_prefix = prefix,
-        strip_prefix = strip_prefix,
-        build_file_proto_mode = build_file_proto_mode,
-        urls = ["https://%s/%s/%s/archive/%s.tar.gz" % (host, owner, repo, commit)],
-        **kwargs
-    )

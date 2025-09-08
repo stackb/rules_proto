@@ -104,10 +104,6 @@ func main() {
 			log.Fatal(err)
 		}
 
-		if err := os.WriteFile(*check+".want", buf.Bytes(), 0666); err != nil {
-			log.Fatal(err)
-		}
-
 		if !bytes.Equal(got, buf.Bytes()) {
 			log.Fatalf("generated file %s is not up to date", *check)
 		}
