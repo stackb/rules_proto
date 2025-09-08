@@ -18,11 +18,12 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io/fs"
 	"os"
 	"path"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -363,7 +364,7 @@ func initRunfiles() {
 		// Windows doesn't support symbolic links by default. Instead, runfile
 		// locations are written to a manifest file.
 		runfiles.index = newIndex()
-		data, err := ioutil.ReadFile(manifest)
+		data, err := os.ReadFile(manifest)
 		if err != nil {
 			runfiles.err = err
 			return
@@ -453,7 +454,21 @@ func initRunfiles() {
 	}
 
 	if runfiles.dir != "" {
-		fis, err := ioutil.ReadDir(runfiles.dir)
+		fis, err := func() ([]fs.FileInfo, error) {
+			f, err := os.Open(runfiles.dir)
+			if err != nil {
+				return nil, err
+			}
+			list, err := f.Readdir(-1)
+			f.Close()
+			if err != nil {
+				return nil, err
+			}
+			slices.SortFunc(list, func(a, b os.FileInfo) int {
+				return strings.Compare(a.Name(), b.Name())
+			})
+			return list, nil
+		}()
 		if err != nil {
 			runfiles.err = fmt.Errorf("could not open runfiles directory: %v", err)
 			return

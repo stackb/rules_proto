@@ -38,17 +38,17 @@ bazel_dep(name = "abseil-cpp", version = "20250814.0")
 
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# Commit: 5d939dbc8fd5245c4316d52c203a1bff24bac5c4
-# Date: 2024-06-17 21:08:52 +0000 UTC
-# URL: https://github.com/protocolbuffers/protobuf-javascript/commit/5d939dbc8fd5245c4316d52c203a1bff24bac5c4
+# Commit: 861c8020a5c0cba9b7cdf915dffde96a4421a1f4
+# Date: 2025-08-15 21:09:45 +0000 UTC
+# URL: https://github.com/protocolbuffers/protobuf-javascript/commit/861c8020a5c0cba9b7cdf915dffde96a4421a1f4
 #
-# Bump version to 3.21.3
-# Size: 373788 (374 kB)
+# Bump module versions for 4.0.0 release
+# Size: 401540 (402 kB)
 http_archive(
     name = "com_google_protobuf_javascript",
-    sha256 = "b04b1dd5e7cbcbcc94d539432e9491dcfc483851ef8ac5b23080fa2532be5f2a",
-    strip_prefix = "protobuf-javascript-5d939dbc8fd5245c4316d52c203a1bff24bac5c4",
-    urls = ["https://github.com/protocolbuffers/protobuf-javascript/archive/5d939dbc8fd5245c4316d52c203a1bff24bac5c4.tar.gz"],
+    sha256 = "6c009ad82a356c58c75fc3548c8d8f1f7eb56409a46d0d4cce4f779703f89ce2",
+    strip_prefix = "protobuf-javascript-861c8020a5c0cba9b7cdf915dffde96a4421a1f4",
+    urls = ["https://github.com/protocolbuffers/protobuf-javascript/archive/861c8020a5c0cba9b7cdf915dffde96a4421a1f4.tar.gz"],
 )
 
 http_archive(

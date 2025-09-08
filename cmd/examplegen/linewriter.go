@@ -3,8 +3,8 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 	"text/template"
 )
@@ -39,7 +39,7 @@ func (w *LineWriter) ln() {
 }
 
 func (w *LineWriter) MustWrite(filepath string) {
-	err := ioutil.WriteFile(filepath, []byte(strings.Join(w.lines, "\n")), 0666)
+	err := os.WriteFile(filepath, []byte(strings.Join(w.lines, "\n")), 0666)
 	if err != nil {
 		log.Fatalf("FAIL %s: %v", filepath, err)
 	}
@@ -47,7 +47,7 @@ func (w *LineWriter) MustWrite(filepath string) {
 }
 
 func (w *LineWriter) Write(filepath string) error {
-	if err := ioutil.WriteFile(filepath, []byte(strings.Join(w.lines, "\n")), 0666); err != nil {
+	if err := os.WriteFile(filepath, []byte(strings.Join(w.lines, "\n")), 0666); err != nil {
 		return fmt.Errorf("could not write %s: %w", filepath, err)
 	}
 	log.Printf("Wrote %s", filepath)

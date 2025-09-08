@@ -26,7 +26,6 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -91,11 +90,11 @@ func main() {
 	fmt.Fprintln(buf, "]")
 
 	if *generate != "" {
-		if err := ioutil.WriteFile(*generate, buf.Bytes(), 0666); err != nil {
+		if err := os.WriteFile(*generate, buf.Bytes(), 0666); err != nil {
 			log.Fatal(err)
 		}
 	} else {
-		got, err := ioutil.ReadFile(*check)
+		got, err := os.ReadFile(*check)
 		if err != nil {
 			log.Fatal(err)
 		}

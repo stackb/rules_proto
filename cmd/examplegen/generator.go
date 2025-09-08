@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -89,32 +88,13 @@ func generateTest(c *Config) error {
 	fmt.Fprintln(f, testHeader)
 	fmt.Fprintln(f, c.TestContent)
 
-	fmt.Fprintln(f, "var txtar=`")
+	fmt.Fprintln(f, "var moduleFileSuffix=`")
+	if _, err := f.WriteString(c.WorkspaceIn); err != nil {
+		return err
+	}
+	fmt.Fprintln(f, "`")
 
-	fmt.Fprintf(f, "-- MODULE.bazel --\n")
-	data, err := ioutil.ReadFile(c.WorkspaceIn)
-	if err != nil {
-		return fmt.Errorf("read %q: %v", c.WorkspaceIn, err)
-	}
-	if _, err := f.Write(data); err != nil {
-		return fmt.Errorf("write %q: %v", c.WorkspaceIn, err)
-	}
-	// seek out the MODULE.bazel file and append it now such that the MODULE.bazel in
-	// the testdata is concatenated with the config.WorkspaceIn.
-	for _, src := range c.Files {
-		if filepath.Base(src) != "MODULE.bazel" {
-			continue
-		}
-		data, err := ioutil.ReadFile(src)
-		if err != nil {
-			return fmt.Errorf("read %q: %v", src, err)
-		}
-		f.WriteString("\n")
-		if _, err := f.Write(data); err != nil {
-			return fmt.Errorf("write: %v", err)
-		}
-		break
-	}
+	fmt.Fprintln(f, "var txtar=`")
 
 	for _, src := range c.Files {
 		dst := mapFilename(src)
@@ -129,7 +109,7 @@ func generateTest(c *Config) error {
 
 		fmt.Fprintf(f, "-- %s --\n", dstFilename)
 
-		data, err := ioutil.ReadFile(src)
+		data, err := os.ReadFile(src)
 		if err != nil {
 			return fmt.Errorf("read %q: %v", src, err)
 		}
@@ -162,7 +142,7 @@ func mapFilename(in string) string {
 
 func printFileBlock(name, syntax, filename string, out io.Writer) error {
 	fmt.Fprintf(out, "~~~%s\n", syntax)
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		log.Panicf("%s: failed to read filename=%q: %v", name, filename, err)
 	}

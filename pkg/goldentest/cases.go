@@ -19,7 +19,6 @@ import (
 	"bufio"
 	"bytes"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -148,9 +147,9 @@ func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []b
 				continue
 			}
 
-			content, err := ioutil.ReadFile(path)
+			content, err := os.ReadFile(path)
 			if err != nil {
-				t.Errorf("ioutil.ReadFile(%q) error: %v", path, err)
+				t.Errorf("ReadFile(%q) error: %v", path, err)
 			}
 
 			if shortPath == ".gazelle.args" {

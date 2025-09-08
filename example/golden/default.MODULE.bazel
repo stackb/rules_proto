@@ -1,6 +1,0 @@
-bazel_dep(name = "build_stack_rules_proto", version = "ignored")
-
-local_path_override(
-    module_name = "build_stack_rules_proto",
-    path = "../build_stack_rules_proto",
-)

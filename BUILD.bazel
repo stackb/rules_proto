@@ -44,8 +44,12 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "MODULE.bazel",
+        "go.mod",
+        "go.sum",
         "//cmd/gazelle:all_files",
         "//cmd/gencopy:all_files",
+        "//extensions:all_files",
+        "//language/proto_go_modules:all_files",
         "//language/protobuf:all_files",
         "//pkg:all_files",
         "//plugin:all_files",

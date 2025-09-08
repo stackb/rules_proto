@@ -3,7 +3,6 @@ package protoc
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -101,7 +100,7 @@ func resolveStarlarkFilename(workDir, filename string) (string, error) {
 		if _, err := os.Stat(sourceRootFile); errors.Is(err, os.ErrNotExist) {
 			dirname = filepath.Dir(dirname)
 		} else {
-			data, err := ioutil.ReadFile(sourceRootFile)
+			data, err := os.ReadFile(sourceRootFile)
 			if err != nil {
 				return "", fmt.Errorf("failed to read DO_NOT_BUILD_HERE file: %w", err)
 			}
