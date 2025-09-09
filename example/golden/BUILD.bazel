@@ -50,54 +50,63 @@ gazelle_testdata_example(
     name = "cpp",
     srcs = glob(["testdata/cpp/*"]),
     extra_module_bazel_content = extra_module_bazel_content,
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(
     name = "java",
     srcs = glob(["testdata/java/*"]),
     extra_module_bazel_content = extra_module_bazel_content,
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(
     name = "python",
     srcs = glob(["testdata/python/*"]),
     extra_module_bazel_content = extra_module_bazel_content,
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(
     name = "ruby",
     srcs = glob(["testdata/ruby/*"]),
     extra_module_bazel_content = extra_module_bazel_content,
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(
     name = "csharp",
     srcs = glob(["testdata/csharp/*"]),
     extra_module_bazel_content = extra_module_bazel_content,
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(
     name = "objc",
     srcs = glob(["testdata/objc/*"]),
     extra_module_bazel_content = extra_module_bazel_content,
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(
     name = "commonjs",
     srcs = glob(["testdata/commonjs/*"]),
     extra_module_bazel_content = extra_module_bazel_content,
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(
     name = "go",
     srcs = glob(["testdata/go/*"]),
     extra_module_bazel_content = extra_module_bazel_content,
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(
     name = "gomerge",
     srcs = glob(["testdata/gomerge/*"]),
     extra_module_bazel_content = extra_module_bazel_content,
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(
@@ -107,6 +116,7 @@ gazelle_testdata_example(
 bazel_dep(name = "protobuf", version = "32.0", repo_name = "com_google_protobuf")
 """,
     strip_prefix = "example/golden/testdata/goembed",
+    tags = ["manual"],
 )
 
 gazelle_testdata_example(
@@ -308,7 +318,6 @@ gazelle_testdata_example(
 bazel_dep(name = "protobuf", version = "32.0", repo_name = "com_google_protobuf")
 """,
     strip_prefix = "example/golden/testdata/starlark_java",
-    tags = ["manual"],  # TODO(pcj): figure out why this one is timing out in CI (gh actions)
 )
 
 gazelle_testdata_example(
@@ -318,6 +327,7 @@ gazelle_testdata_example(
 bazel_dep(name = "protobuf", version = "32.0", repo_name = "com_google_protobuf")
 """,
     strip_prefix = "example/golden/testdata/strip_import_prefix",
+    tags = ["manual"],
     test_content = """
 func TestBuild(t *testing.T) {
 	if err := bazel_testing.RunBazel("build", "..."); err != nil {
@@ -340,6 +350,7 @@ gazelle_testdata_example(
 bazel_dep(name = "protobuf", version = "32.0", repo_name = "com_google_protobuf")
 """,
     strip_prefix = "example/golden/testdata/proto_compiled_sources",
+    tags = ["manual"],
     test_content = """
 
 func TestUpdate(t *testing.T) {

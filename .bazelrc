@@ -1,3 +1,27 @@
-# Updated to C++17 for protobuf compatibility
+# =========================================================================
+# STARTUP
+# =========================================================================
+
+# Use blake3 as digest function instead of the much slower default sha256.
+startup --digest_function=blake3
+
+# =========================================================================
+# COMMON
+# =========================================================================
+
+# Use '+' instead of the legacy '~' when resolving repo names.
+common --incompatible_use_plus_in_repo_names
+
+# =========================================================================
+# BUILD
+# =========================================================================
+
+# Don't leak PATH and LD_LIBRARY_PATH into the build.
+# build --incompatible_strict_action_env
+
+# Don't use legacy repository rules.
+build --incompatible_disable_native_repo_rules
+
+# C++17 for protobuf compatibility
 build --host_cxxopt=-std=c++17
 build --cxxopt=-std=c++17

@@ -51,3 +51,28 @@ jobs:
           --bazelrc=.bazelrc
           test
           ...
+
+      # run this block of manual tests.  For some reason when run sequentially
+      # in the same bazel invocation, one or more will hang / TIMEOUT (300s).
+      - name: bazel test //example/golden:commonjs_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:commonjs_test
+      - name: bazel test //example/golden:cpp_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:cpp_test
+      - name: bazel test //example/golden:csharp_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:csharp_test
+      - name: bazel test //example/golden:go_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:go_test
+      - name: bazel test //example/golden:goembed_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:goembed_test
+      - name: bazel test //example/golden:java_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:java_test
+      - name: bazel test //example/golden:objc_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:objc_test
+      - name: bazel test //example/golden:proto_compiled_sources_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:proto_compiled_sources_test
+      - name: bazel test //example/golden:python_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:python_test
+      - name: bazel test //example/golden:ruby_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:ruby_test
+      - name: bazel test //example/golden:strip_import_prefix_test
+        run: bazelisk --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //example/golden:strip_import_prefix_test
