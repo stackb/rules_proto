@@ -238,7 +238,7 @@ type visitRecord struct {
 	rules []*rule.Rule
 
 	// imports contains opaque import information for each rule in rules.
-	imports []interface{}
+	imports []any
 
 	// empty is a list of empty rules that may be deleted.
 	empty []*rule.Rule
@@ -278,7 +278,7 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 	mrslv := newMetaResolver()
 	kinds := make(map[string]rule.KindInfo)
 	loads := genericLoads
-	exts := make([]interface{}, 0, len(languages))
+	exts := make([]any, 0, len(languages))
 	for _, lang := range languages {
 		for kind, info := range lang.Kinds() {
 			mrslv.AddBuiltin(kind, lang)
@@ -348,7 +348,7 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 
 		// Generate rules.
 		var empty, gen []*rule.Rule
-		var imports []interface{}
+		var imports []any
 		var relsToVisit []string
 		for _, l := range filterLanguages(c, languages) {
 			res := l.GenerateRules(language.GenerateArgs{
@@ -362,6 +362,10 @@ func runFixUpdate(wd string, cmd command, args []string) (err error) {
 				OtherEmpty:   empty,
 				OtherGen:     gen,
 			})
+			if l.Name() == "protobuf" {
+				log.Println("protobuf lang gen:", rel, res)
+			}
+
 			if len(res.Gen) != len(res.Imports) {
 				log.Panicf("%s: language %s generated %d rules but returned %d imports", rel, l.Name(), len(res.Gen), len(res.Imports))
 			}

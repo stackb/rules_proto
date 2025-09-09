@@ -97,7 +97,7 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		rules = append(rules, makeProtoOverrideRule(protoLibraries))
 	}
 
-	imports := make([]interface{}, len(rules))
+	imports := make([]any, len(rules))
 	for i, r := range rules {
 		imports[i] = r.PrivateAttr(config.GazelleImportsKey)
 		internalLabel := label.New("", args.Rel, r.Name())

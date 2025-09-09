@@ -13,11 +13,11 @@ type LineWriter struct {
 	lines []string
 }
 
-func (w *LineWriter) w(s string, args ...interface{}) {
+func (w *LineWriter) w(s string, args ...any) {
 	w.lines = append(w.lines, fmt.Sprintf(s, args...))
 }
 
-func (w *LineWriter) t(t *template.Template, data interface{}) {
+func (w *LineWriter) t(t *template.Template, data any) {
 	var buf bytes.Buffer
 	err := t.Execute(&buf, data)
 	if err != nil {
@@ -26,7 +26,7 @@ func (w *LineWriter) t(t *template.Template, data interface{}) {
 	w.lines = append(w.lines, buf.String())
 }
 
-func (w *LineWriter) tpl(filename string, data interface{}) {
+func (w *LineWriter) tpl(filename string, data any) {
 	tpl, err := template.ParseFiles(filename)
 	if err != nil {
 		log.Fatalf("Failed to parse %s: %v", filename, err)

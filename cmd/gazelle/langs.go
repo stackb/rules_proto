@@ -19,7 +19,6 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/language"
 	golang "github.com/bazelbuild/bazel-gazelle/language/go"
 	"github.com/bazelbuild/bazel-gazelle/language/proto"
-	"github.com/stackb/rules_proto/language/proto_go_modules"
 	"github.com/stackb/rules_proto/language/protobuf"
 )
 
@@ -27,5 +26,4 @@ var languages = []language.Language{
 	proto.NewLanguage(),
 	protobuf.NewLanguage(),
 	golang.NewLanguage(),
-	proto_go_modules.NewLanguage(),
 }

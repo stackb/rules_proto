@@ -52,7 +52,7 @@ func (pl *protobufLang) Resolve(
 	ix *resolve.RuleIndex,
 	rc *repo.RemoteCache,
 	r *rule.Rule,
-	importsRaw interface{},
+	importsRaw any,
 	from label.Label,
 ) {
 	if r.Kind() == overrideKindName {

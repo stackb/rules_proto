@@ -129,7 +129,7 @@ func (imkr inverseMapKindResolver) Embeds(r *rule.Rule, from label.Label) []labe
 	return imkr.delegate.Embeds(r, from)
 }
 
-func (imkr inverseMapKindResolver) Resolve(c *config.Config, ix *resolve.RuleIndex, rc *repo.RemoteCache, r *rule.Rule, imports interface{}, from label.Label) {
+func (imkr inverseMapKindResolver) Resolve(c *config.Config, ix *resolve.RuleIndex, rc *repo.RemoteCache, r *rule.Rule, imports any, from label.Label) {
 	r = imkr.inverseMapKind(r)
 	imkr.delegate.Resolve(c, ix, rc, r, imports, from)
 }

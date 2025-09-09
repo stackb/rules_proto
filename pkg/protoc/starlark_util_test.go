@@ -88,7 +88,7 @@ func TestStructAttrMapStringBool(t *testing.T) {
 	} {
 		t.Run(name, func(t *testing.T) {
 			var gotErr string
-			got := structAttrMapStringBool(&tc.in, tc.name, func(format string, args ...interface{}) error {
+			got := structAttrMapStringBool(&tc.in, tc.name, func(format string, args ...any) error {
 				gotErr += fmt.Sprintf(format, args...)
 				return nil
 			})
