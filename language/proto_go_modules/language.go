@@ -16,7 +16,7 @@ import (
 
 const (
 	protoGoModulesLanguageName = "proto_go_modules"
-	enabledDirective           = "proto_go_modules_enabled"
+	enableDirective            = "proto_go_modules_enable"
 )
 
 type Config interface {
@@ -68,7 +68,7 @@ func (l *ProtoGoModulesLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) 
 }
 
 func (*ProtoGoModulesLanguage) KnownDirectives() []string {
-	return []string{enabledDirective}
+	return []string{enableDirective}
 }
 
 // Configure implements config.Configurer
@@ -77,7 +77,7 @@ func (l *ProtoGoModulesLanguage) Configure(c *config.Config, rel string, f *rule
 		return
 	}
 	for _, d := range f.Directives {
-		if d.Key == enabledDirective {
+		if d.Key == enableDirective {
 			want, err := strconv.ParseBool(d.Value)
 			if err != nil {
 				log.Panicln("malformed directive:", d, err)

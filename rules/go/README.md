@@ -179,7 +179,7 @@ proto_repository.archive(
         "gazelle:exclude google/devtools/containeranalysis/v1beta1",
         "gazelle:exclude google/example",
         "gazelle:exclude google/maps/weather/v1",
-        "gazelle:proto_go_modules_enabled true",
+        "gazelle:proto_go_modules_enable true",
         "gazelle:proto_language go enable true",
     ],
     build_file_proto_mode = "file",
@@ -194,7 +194,7 @@ proto_repository.archive(
     name = "remoteapis",
     build_directives = [
         "gazelle:exclude third_party",
-        "gazelle:proto_go_modules_enabled true",
+        "gazelle:proto_go_modules_enable true",
         "gazelle:proto_language go enable true",
     ],
     build_file_generation = "clean",
@@ -222,7 +222,7 @@ few extra gazelle directives that are injected into the generated root
 
 1. turns on go protobuf rule generation for `go` (`gazelle:proto_language go
    enable true`)
-2. turns on the gazelle lang `proto_go_modules` (`gazelle:proto_go_modules_enabled true`).
+2. turns on the gazelle lang `proto_go_modules` (`gazelle:proto_go_modules_enable true`).
 
 When the requested (e.g. `bazel query @protobufapis//...`), bazel will:
 
