@@ -26,7 +26,6 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -35,10 +34,11 @@ import (
 
 func main() {
 	dir := flag.String("dir", "", "directory to run in")
+	skip := flag.String("skip", "", ".bzl file to not check (relative to rules_proto root)")
 	check := flag.String("check", "", ".bzl file to check (relative to rules_proto root)")
 	generate := flag.String("generate", "", ".bzl file to generate (relative to rules_proto root)")
 	flag.Parse()
-	if *check == "" && *generate == "" {
+	if *skip == "" && (*check == "" && *generate == "") {
 		log.Fatal("neither -check nor -generate were set")
 	}
 	if *check != "" && *generate != "" {
@@ -48,6 +48,10 @@ func main() {
 		if err := os.Chdir(filepath.FromSlash(*dir)); err != nil {
 			log.Fatal(err)
 		}
+	}
+
+	if *skip != "" {
+		return
 	}
 	if *check != "" {
 		*check = filepath.FromSlash(*check)
@@ -91,14 +95,15 @@ func main() {
 	fmt.Fprintln(buf, "]")
 
 	if *generate != "" {
-		if err := ioutil.WriteFile(*generate, buf.Bytes(), 0666); err != nil {
+		if err := os.WriteFile(*generate, buf.Bytes(), 0666); err != nil {
 			log.Fatal(err)
 		}
 	} else {
-		got, err := ioutil.ReadFile(*check)
+		got, err := os.ReadFile(*check)
 		if err != nil {
 			log.Fatal(err)
 		}
+
 		if !bytes.Equal(got, buf.Bytes()) {
 			log.Fatalf("generated file %s is not up to date", *check)
 		}

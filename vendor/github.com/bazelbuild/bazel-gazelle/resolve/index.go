@@ -73,40 +73,61 @@ type CrossResolver interface {
 // RuleIndex is a table of rules in a workspace, indexed by label and by
 // import path. Used by Resolver to map import paths to labels.
 type RuleIndex struct {
-	rules          []*ruleRecord
-	labelMap       map[label.Label]*ruleRecord
-	importMap      map[ImportSpec][]*ruleRecord
 	mrslv          func(r *rule.Rule, pkgRel string) Resolver
 	crossResolvers []CrossResolver
+
+	// The underlying state of rules. All indexing should be reproducible from this.
+	rules []*ruleRecord
+
+	// If indexing of rules has occurred already
+	indexed bool
+
+	// Rules indexed by label.
+	// Computed from `rules` when indexing.
+	labelMap map[label.Label]*ruleRecord
+
+	// Imports specs mapping to records producing those.
+	// Computed from `rules` when indexing.
+	importMap map[ImportSpec][]*ruleRecord
+
+	// Whether another rule of the same language embeds this rule.
+	// Embedded rules should not be indexed.
+	// Computed from `rules` when indexing.
+	embedded map[label.Label]struct{}
+
+	// The transitive closure of labels embedded within rules (as determined by the Embeds method).
+	// This only includes rules in the same language (i.e., it includes a go_library embedding
+	// a go_proto_library, but not a go_proto_library embedding a proto_library).
+	// Computed from `rules` when indexing.
+	embeds map[label.Label][]label.Label
+
+	// The transitive closure of all imports produced by each label.
+	// This includes transitive imports from embedded labels (as determined by
+	// the Embeds method). This may include imports of other languages.
+	// Computed from `rules` when indexing.
+	imports map[label.Label][]ImportSpec
 }
 
 // ruleRecord contains information about a rule relevant to import indexing.
 type ruleRecord struct {
 	rule  *rule.Rule
-	label label.Label
-	file  *rule.File
 
-	// importedAs is a list of ImportSpecs by which this rule may be imported.
-	// Used to build a map from ImportSpecs to ruleRecords.
-	importedAs []ImportSpec
+	Kind  string      `json:"kind"`
+	Label label.Label `json:"label"`
 
-	// embeds is the transitive closure of labels for rules that this rule embeds
-	// (as determined by the Embeds method). This only includes rules in the same
-	// language (i.e., it includes a go_library embedding a go_proto_library, but
-	// not a go_proto_library embedding a proto_library).
-	embeds []label.Label
+	Pkg string `json:"pkg"`
 
-	// embedded indicates whether another rule of the same language embeds this
-	// rule. Embedded rules should not be indexed.
-	embedded bool
+	// A list of ImportSpecs by which this rule may be imported.
+	ImportedAs []ImportSpec `json:"importedAs"`
 
-	didCollectEmbeds bool
+	// The set of labels (of any language) that this rule directly embeds.
+	Embeds []label.Label `json:"embeds"`
 
-	// lang records the language that this import is relevant for.
+	// The language that this rule is relevant for.
 	// Due to the presence of mapped kinds, it's otherwise
 	// impossible to know the underlying builtin rule type for an
 	// arbitrary import.
-	lang string
+	Lang string `json:"lang"`
 }
 
 // NewRuleIndex creates a new index.
@@ -121,7 +142,6 @@ func NewRuleIndex(mrslv func(r *rule.Rule, pkgRel string) Resolver, exts ...inte
 		}
 	}
 	return &RuleIndex{
-		labelMap:       make(map[label.Label]*ruleRecord),
 		mrslv:          mrslv,
 		crossResolvers: crossResolvers,
 	}
@@ -133,12 +153,24 @@ func NewRuleIndex(mrslv func(r *rule.Rule, pkgRel string) Resolver, exts ...inte
 //
 // AddRule may only be called before Finish.
 func (ix *RuleIndex) AddRule(c *config.Config, r *rule.Rule, f *rule.File) {
+	if ix.indexed {
+		log.Fatal("AddRule called after Finish")
+	}
+
 	var lang string
 	var imps []ImportSpec
+	var embeds []label.Label
+
+	l := label.New(c.RepoName, f.Pkg, r.Name())
+
 	if rslv := ix.mrslv(r, f.Pkg); rslv != nil {
 		lang = rslv.Name()
 		if passesLanguageFilter(c.Langs, lang) {
 			imps = rslv.Imports(c, r, f)
+
+			for _, e := range rslv.Embeds(r, l) {
+				embeds = append(embeds, e.Abs(l.Repo, l.Pkg))
+			}
 		}
 	}
 	// If imps == nil, the rule is not importable. If imps is the empty slice,
@@ -149,17 +181,14 @@ func (ix *RuleIndex) AddRule(c *config.Config, r *rule.Rule, f *rule.File) {
 
 	record := &ruleRecord{
 		rule:       r,
-		label:      label.New(c.RepoName, f.Pkg, r.Name()),
-		file:       f,
-		importedAs: imps,
-		lang:       lang,
-	}
-	if _, ok := ix.labelMap[record.label]; ok {
-		log.Printf("multiple rules found with label %s", record.label)
-		return
+		Kind:       r.Kind(),
+		Pkg:        f.Pkg,
+		Label:      l,
+		ImportedAs: imps,
+		Embeds:     embeds,
+		Lang:       lang,
 	}
 	ix.rules = append(ix.rules, record)
-	ix.labelMap[record.label] = record
 }
 
 // Finish constructs the import index and performs any other necessary indexing
@@ -169,32 +198,54 @@ func (ix *RuleIndex) AddRule(c *config.Config, r *rule.Rule, f *rule.File) {
 // Finish must be called after all AddRule calls and before any
 // FindRulesByImport calls.
 func (ix *RuleIndex) Finish() {
+	ix.labelMap = make(map[label.Label]*ruleRecord)
+	ix.imports = make(map[label.Label][]ImportSpec)
+
 	for _, r := range ix.rules {
-		ix.collectEmbeds(r)
+		if _, ok := ix.labelMap[r.Label]; ok {
+			log.Printf("multiple rules found with label %s", r.Label)
+			continue
+		}
+
+		ix.labelMap[r.Label] = r
+		ix.imports[r.Label] = r.ImportedAs
 	}
+
+	ix.collectEmbeds()
 	ix.buildImportIndex()
+
+	ix.indexed = true
 }
 
-func (ix *RuleIndex) collectEmbeds(r *ruleRecord) {
-	if r.didCollectEmbeds {
+func (ix *RuleIndex) collectEmbeds() {
+	ix.embeds = make(map[label.Label][]label.Label)
+	ix.embedded = make(map[label.Label]struct{})
+
+	didCollectEmbeds := make(map[label.Label]bool)
+
+	for _, r := range ix.rules {
+		ix.collectRecordEmbeds(r, didCollectEmbeds)
+	}
+}
+func (ix *RuleIndex) collectRecordEmbeds(r *ruleRecord, didCollectEmbeds map[label.Label]bool) {
+	if _, ok := didCollectEmbeds[r.Label]; ok {
 		return
 	}
-	resolver := ix.mrslv(r.rule, r.file.Pkg)
-	r.didCollectEmbeds = true
-	embedLabels := resolver.Embeds(r.rule, r.label)
-	r.embeds = embedLabels
-	for _, e := range embedLabels {
-		er, ok := ix.findRuleByLabel(e, r.label)
+	resolver := ix.mrslv(r.rule, r.Pkg)
+	didCollectEmbeds[r.Label] = true
+	ix.embeds[r.Label] = r.Embeds
+	for _, e := range r.Embeds {
+		er, ok := ix.labelMap[e]
 		if !ok {
 			continue
 		}
-		ix.collectEmbeds(er)
-		erResolver := ix.mrslv(er.rule, er.file.Pkg)
+		ix.collectRecordEmbeds(er, didCollectEmbeds)
+		erResolver := ix.mrslv(er.rule, er.Pkg)
 		if resolver.Name() == erResolver.Name() {
-			er.embedded = true
-			r.embeds = append(r.embeds, er.embeds...)
+			ix.embedded[er.Label] = struct{}{}
+			ix.embeds[r.Label] = append(ix.embeds[r.Label], ix.embeds[er.Label]...)
 		}
-		r.importedAs = append(r.importedAs, er.importedAs...)
+		ix.imports[r.Label] = append(ix.imports[r.Label], ix.imports[er.Label]...)
 	}
 }
 
@@ -202,11 +253,11 @@ func (ix *RuleIndex) collectEmbeds(r *ruleRecord) {
 func (ix *RuleIndex) buildImportIndex() {
 	ix.importMap = make(map[ImportSpec][]*ruleRecord)
 	for _, r := range ix.rules {
-		if r.embedded {
+		if _, embedded := ix.embedded[r.Label]; embedded {
 			continue
 		}
 		indexed := make(map[ImportSpec]bool)
-		for _, imp := range r.importedAs {
+		for _, imp := range ix.imports[r.Label] {
 			if indexed[imp] {
 				continue
 			}
@@ -214,12 +265,6 @@ func (ix *RuleIndex) buildImportIndex() {
 			ix.importMap[imp] = append(ix.importMap[imp], r)
 		}
 	}
-}
-
-func (ix *RuleIndex) findRuleByLabel(label label.Label, from label.Label) (*ruleRecord, bool) {
-	label = label.Abs(from.Repo, from.Pkg)
-	r, ok := ix.labelMap[label]
-	return r, ok
 }
 
 type FindResult struct {
@@ -249,12 +294,12 @@ func (ix *RuleIndex) FindRulesByImport(imp ImportSpec, lang string) []FindResult
 	matches := ix.importMap[imp]
 	results := make([]FindResult, 0, len(matches))
 	for _, m := range matches {
-		if m.lang != lang {
+		if m.Lang != lang {
 			continue
 		}
 		results = append(results, FindResult{
-			Label:  m.label,
-			Embeds: m.embeds,
+			Label:  m.Label,
+			Embeds: ix.embeds[m.Label],
 		})
 	}
 	return results

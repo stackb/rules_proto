@@ -3,7 +3,6 @@ package protoc
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -12,7 +11,7 @@ import (
 	"go.starlark.net/starlarkstruct"
 )
 
-type errorReporter func(format string, args ...interface{}) error
+type errorReporter func(format string, args ...any) error
 
 type goStarlarkFunction func(thread *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, kwargs []starlark.Tuple) (starlark.Value, error)
 
@@ -101,7 +100,7 @@ func resolveStarlarkFilename(workDir, filename string) (string, error) {
 		if _, err := os.Stat(sourceRootFile); errors.Is(err, os.ErrNotExist) {
 			dirname = filepath.Dir(dirname)
 		} else {
-			data, err := ioutil.ReadFile(sourceRootFile)
+			data, err := os.ReadFile(sourceRootFile)
 			if err != nil {
 				return "", fmt.Errorf("failed to read DO_NOT_BUILD_HERE file: %w", err)
 			}
@@ -115,8 +114,8 @@ func resolveStarlarkFilename(workDir, filename string) (string, error) {
 	return filepath.Join(sourceRoot, filename), nil
 }
 
-func loadStarlarkProgram(filename string, src interface{}, predeclared starlark.StringDict, reporter func(msg string), errorReporter func(err error)) (*starlark.StringDict, *starlark.Thread, error) {
-	newErrorf := func(msg string, args ...interface{}) error {
+func loadStarlarkProgram(filename string, src any, predeclared starlark.StringDict, reporter func(msg string), errorReporter func(err error)) (*starlark.StringDict, *starlark.Thread, error) {
+	newErrorf := func(msg string, args ...any) error {
 		err := fmt.Errorf(filename+": "+msg, args...)
 		errorReporter(err)
 		return err

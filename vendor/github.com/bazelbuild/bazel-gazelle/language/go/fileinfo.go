@@ -137,44 +137,59 @@ const (
 // a file. It does not read data from the file.
 func fileNameInfo(path_ string) fileInfo {
 	name := filepath.Base(path_)
-	var ext ext
-	switch path.Ext(name) {
-	case ".go":
-		ext = goExt
-	case ".c", ".cc", ".cpp", ".cxx", ".m", ".mm":
-		ext = cExt
-	case ".h", ".hh", ".hpp", ".hxx":
-		ext = hExt
-	case ".s":
-		ext = sExt
-	case ".S":
-		ext = csExt
-	case ".proto":
-		ext = protoExt
+	nameExt := path.Ext(name)
+
+	ext := unknownExt
+	switch name[0] {
+	case '.', '_':
 	default:
-		ext = unknownExt
-	}
-	if strings.HasPrefix(name, ".") || strings.HasPrefix(name, "_") {
-		ext = unknownExt
+		switch nameExt {
+		case ".go":
+			ext = goExt
+		case ".c", ".cc", ".cpp", ".cxx", ".m", ".mm":
+			ext = cExt
+		case ".h", ".hh", ".hpp", ".hxx":
+			ext = hExt
+		case ".s":
+			ext = sExt
+		case ".S":
+			ext = csExt
+		case ".proto":
+			ext = protoExt
+		}
 	}
 
 	// Determine test, goos, and goarch. This is intended to match the logic
 	// in goodOSArchFile in go/build.
 	var isTest bool
 	var goos, goarch string
-	l := strings.Split(name[:len(name)-len(path.Ext(name))], "_")
-	if len(l) >= 2 && l[len(l)-1] == "test" {
+
+	toParse := name[:len(name)-len(nameExt)]
+	if strings.HasSuffix(toParse, "_test") {
 		isTest = ext == goExt
-		l = l[:len(l)-1]
+		toParse = toParse[:len(toParse)-len("_test")]
 	}
+
+	var segments [2]string
+	n := 0
+	for n < 2 {
+		i := strings.LastIndex(toParse, "_")
+		if i < 0 {
+			break
+		}
+		segments[n] = toParse[i+1:]
+		toParse = toParse[:i]
+		n++
+	}
+
 	switch {
-	case len(l) >= 3 && rule.KnownOSSet[l[len(l)-2]] && rule.KnownArchSet[l[len(l)-1]]:
-		goos = l[len(l)-2]
-		goarch = l[len(l)-1]
-	case len(l) >= 2 && rule.KnownOSSet[l[len(l)-1]]:
-		goos = l[len(l)-1]
-	case len(l) >= 2 && rule.KnownArchSet[l[len(l)-1]]:
-		goarch = l[len(l)-1]
+	case n == 2 && IsKnownOS(segments[1]) && IsKnownArch(segments[0]):
+		goos = segments[1]
+		goarch = segments[0]
+	case n >= 1 && IsKnownOS(segments[0]):
+		goos = segments[0]
+	case n >= 1 && IsKnownArch(segments[0]):
+		goarch = segments[0]
 	}
 
 	return fileInfo{
@@ -211,7 +226,7 @@ func otherFileInfo(path string) fileInfo {
 // will be returned.
 // This function is intended to match go/build.Context.Import.
 // TODD(#53): extract canonical import path
-func goFileInfo(path, rel string) fileInfo {
+func goFileInfo(path, srcdir string) fileInfo {
 	info := fileNameInfo(path)
 	fset := token.NewFileSet()
 	pf, err := parser.ParseFile(fset, info.path, nil, parser.ImportsOnly|parser.ParseComments)
@@ -254,7 +269,7 @@ func goFileInfo(path, rel string) fileInfo {
 					cg = d.Doc
 				}
 				if cg != nil {
-					if err := saveCgo(&info, rel, cg); err != nil {
+					if err := saveCgo(&info, srcdir, cg); err != nil {
 						log.Printf("%s: error reading go file: %v", info.path, err)
 					}
 				}
@@ -317,7 +332,7 @@ func goFileInfo(path, rel string) fileInfo {
 // saveCgo extracts CFLAGS, CPPFLAGS, CXXFLAGS, and LDFLAGS directives
 // from a comment above a "C" import. This is intended to match logic in
 // go/build.Context.saveCgo.
-func saveCgo(info *fileInfo, rel string, cg *ast.CommentGroup) error {
+func saveCgo(info *fileInfo, srcdir string, cg *ast.CommentGroup) error {
 	text := cg.Text()
 	for _, line := range strings.Split(text, "\n") {
 		orig := line
@@ -355,7 +370,7 @@ func saveCgo(info *fileInfo, rel string, cg *ast.CommentGroup) error {
 		}
 
 		for i, opt := range opts {
-			if opt, ok = expandSrcDir(opt, rel); !ok {
+			if opt, ok = expandSrcDir(opt, srcdir); !ok {
 				return fmt.Errorf("%s: malformed #cgo argument: %s", info.path, orig)
 			}
 			opts[i] = opt
@@ -478,8 +493,10 @@ func expandSrcDir(str string, srcdir string) (string, bool) {
 // See golang.org/issue/6038.
 // The @ is for OS X. See golang.org/issue/13720.
 // The % is for Jenkins. See golang.org/issue/16959.
+// The ~ is for Bzlmod as it is used as a separator in repository names. It is special in shells (which we don't pass
+// it to) and on Windows (where it can still be part of legitimate short paths).
 const (
-	safeString = "+-.,/0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz:$@%"
+	safeString = "+-.,/0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz:$@%~"
 	safeSpaces = " "
 )
 
@@ -512,12 +529,9 @@ func isOSArchSpecific(info fileInfo, cgoTags *cgoTagsAndOpts) (osSpecific, archS
 
 	checkTags := func(tags []string) {
 		for _, tag := range tags {
-			_, osOk := rule.KnownOSSet[tag]
-			if osOk || tag == "unix" {
+			if IsKnownOS(tag) || tag == "unix" {
 				osSpecific = true
-			}
-			_, archOk := rule.KnownArchSet[tag]
-			if archOk {
+			} else if IsKnownArch(tag) {
 				archSpecific = true
 			}
 		}
@@ -567,18 +581,29 @@ func checkConstraints(c *config.Config, os, arch, osSuffix, archSuffix string, t
 	}
 
 	goConf := getGoConfig(c)
+
+	if tags != nil {
+		// Treat provided generic tags as "ignored tags", meaning that both
+		// `tag` and `!tag` are considered true when evaluating build constraints
+		isIgnoredTag := func(tag string) bool {
+			return goConf.genericTags[tag]
+		}
+
+		tags = newBuildTags(dropNegationForIgnoredTags(tags.expr, isIgnoredTag))
+	}
+
 	checker := func(tag string) bool {
-		if isIgnoredTag(tag) {
+		if isDefaultIgnoredTag(tag) {
 			return true
 		}
-		if _, ok := rule.KnownOSSet[tag]; ok || tag == "unix" {
+		if IsKnownOS(tag) || tag == "unix" {
 			if os == "" {
 				return false
 			}
 			return matchesOS(os, tag)
 		}
 
-		if _, ok := rule.KnownArchSet[tag]; ok {
+		if IsKnownArch(tag) {
 			if arch == "" {
 				return false
 			}

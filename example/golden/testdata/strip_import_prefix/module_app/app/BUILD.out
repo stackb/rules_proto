@@ -1,6 +1,6 @@
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 # gazelle:proto_strip_import_prefix /module_app
 

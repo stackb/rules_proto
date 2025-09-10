@@ -1,31 +1,30 @@
-# Cut a release whenever a new tag is pushed to the repo.
+# Based on https://github.com/bazel-contrib/rules-template/blob/main/.github/workflows/release.yaml.
 name: Release
-
 on:
   push:
     tags:
-      - "v*.*.*"
-
-  # Allows owner to run this workflow manually from the Actions tab
+      - "*.*.*"
   workflow_dispatch:
-
+    inputs:
+      tag_name:
+        description: git tag to release. The tag must exist.
+        required: true
+        type: string
 jobs:
-  test:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Prepare workspace snippet
-        run: .github/workflows/workspace_snippet.sh ${{ env.GITHUB_REF_NAME }} > release_notes.txt
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          prerelease: false
-          # Use GH feature to populate the changelog automatically
-          generate_release_notes: true
-          body_path: release_notes.txt
+  release:
+    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@v7.2.2
+    with:
+      release_files: rules_proto-*.tar.gz
+      prerelease: true
+      tag_name: ${{ inputs.tag_name || github.ref_name }}
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+  publish:
+    needs: release
+    uses: ./.github/workflows/publish-to-bcr.yaml
+    with:
+      tag_name: ${{ inputs.tag_name || github.ref_name }}
+    secrets:
+      publish_token: ${{ secrets.publish_token || secrets.BCR_PUBLISH_TOKEN }}

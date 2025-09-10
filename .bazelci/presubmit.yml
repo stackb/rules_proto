@@ -7,7 +7,7 @@ tasks:
   default_workspace_ubuntu1804:
     platform: ubuntu1804
     build_targets:
-      - "@protoapis//..."
+      - "@protobufapis//..."
       - "@googleapis//..."
     test_targets:
       - //example/...
@@ -19,11 +19,10 @@ tasks:
       - -//pkg/plugin/grpc/grpc:grpc_test # TODO(pcj): error "bazel_testing: read-only filesystem"
     test_flags:
       - --config=bazelci
-      - --deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
   default_workspace_macos:
     platform: macos
     build_targets:
-      - "@protoapis//..."
+      - "@protobufapis//..."
       - "@googleapis//..."
     test_targets:
       - //example/...
@@ -32,5 +31,3 @@ tasks:
       - //plugin/...
       - //rules/...
       - //toolchain/...
-    test_flags:
-      - --deleted_packages=//plugin/grpc-ecosystem/grpc-gateway

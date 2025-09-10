@@ -19,7 +19,6 @@ import (
 	"bufio"
 	"bytes"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -148,9 +147,9 @@ func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []b
 				continue
 			}
 
-			content, err := ioutil.ReadFile(path)
+			content, err := os.ReadFile(path)
 			if err != nil {
-				t.Errorf("ioutil.ReadFile(%q) error: %v", path, err)
+				t.Errorf("ReadFile(%q) error: %v", path, err)
 			}
 
 			if shortPath == ".gazelle.args" {
@@ -197,7 +196,6 @@ func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []b
 			}
 		}
 
-		t.Log("running test dir:", dir)
 		args := append([]string{"-build_file_name=BUILD"}, extraArgs...)
 		cmd := exec.Command(gazellePath, args...)
 		cmd.Stdout = os.Stdout
@@ -206,8 +204,6 @@ func (g *GoldenTests) testPath(t *testing.T, gazellePath, name string, files []b
 		if err := cmd.Run(); err != nil {
 			t.Fatal("gazelle command failed!", err)
 		}
-
-		t.Log("checking files:", dir)
 
 		testtools.CheckFiles(t, dir, goldens)
 

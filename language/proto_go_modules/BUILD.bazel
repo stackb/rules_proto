@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "proto_go_modules",
+    srcs = [
+        "language.go",
+        "rule.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/language/proto_go_modules",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bazel_gazelle//config:go_default_library",
+        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//language:go_default_library",
+        "@bazel_gazelle//repo:go_default_library",
+        "@bazel_gazelle//resolve:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = ["BUILD.bazel"] + glob(["*.go"]),
+    visibility = ["//:__pkg__"],
+)

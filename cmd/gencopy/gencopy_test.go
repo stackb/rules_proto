@@ -68,7 +68,7 @@ func TestMakePkgSrcDstPair(t *testing.T) {
 			pkg:  PackageConfig{TargetWorkspaceRoot: "external/foo"},
 			src:  "../foo/file.txt",
 			dst:  "file.txt",
-			want: SrcDst{Src: "external/foo/file.txt", Dst: "/home/external/foo/file.txt"},
+			want: SrcDst{Src: "../foo/file.txt", Dst: "/home/external/foo/file.txt"},
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
@@ -88,33 +88,31 @@ func TestRunPkg(t *testing.T) {
 	}{
 		"degenerate": {},
 		"simple": {
-			// {"extension":"","fileMode":"0644","mode":"update","packageConfigs":[{"generatedFiles":["api/v1/v1_pb2.py"],"sourceFiles":["api/v1/v1_pb2.py"],"targetLabel":"@//api/v1:api_v1_python_compiled_sources","targetPackage":"api/v1","targetWorkspaceRoot":""}],"updateTargetLabelName":"api_v1_python_compiled_sources.update"}
 			cfg: Config{
-				Extension:              "",
-				FileMode:               "0644",
-				Mode:                   "update",
-				WorkspaceRootDirectory: "workspace",
-				UpdateTargetLabelName:  "api_v1_python_compiled_sources.update",
+				Extension:             "",
+				FileMode:              "0644",
+				Mode:                  "update",
+				UpdateTargetLabelName: "api_v1_python_compiled_sources.update",
 				PackageConfigs: []*PackageConfig{
 					{
-						GeneratedFiles:      []string{"api/v1/v1_pb2.py"},
-						SourceFiles:         []string{"api/v1/v1_pb2.py"},
-						TargetLabel:         "@//api/v1:api_v1_python_compiled_sources",
-						TargetPackage:       "api/v1",
-						TargetWorkspaceRoot: "gen",
+						GeneratedFiles:      []string{"example/assets/api.pb.go.gen"},
+						SourceFiles:         []string{"example/assets/api.pb.go"},
+						TargetLabel:         "@@//example/assets:api_go_compiled_sources",
+						TargetPackage:       "example/assets",
+						TargetWorkspaceRoot: "",
 					},
 				},
 			},
 			files: []testtools.FileSpec{
 				{
-					Path:    "workspace/api/v1/v1_pb2.py",
-					Content: "# generated file api/v1/v1_pb2.py",
+					Path:    "example/assets/api.pb.go.gen",
+					Content: "# generated file",
 				},
 			},
 			want: []testtools.FileSpec{
 				{
-					Path:    "api/v1/v1_pb2.py",
-					Content: "# generated file api/v1/v1_pb2.py",
+					Path:    "example/assets/api.pb.go",
+					Content: "# generated file",
 				},
 			},
 		},
@@ -126,9 +124,19 @@ func TestRunPkg(t *testing.T) {
 			if err := os.Chdir(dir); err != nil {
 				t.Fatal(err)
 			}
-			listFiles(t, ".")
-			if err := run(&tc.cfg, t.Logf); err != nil {
+
+			t.Logf("BEFORE:")
+			if err := listFiles(t, "."); err != nil {
+				t.Logf("listfiles error: %v", err)
+			}
+
+			if err := run(&tc.cfg); err != nil {
 				t.Fatal(err)
+			}
+
+			t.Logf("AFTER:")
+			if err := listFiles(t, "."); err != nil {
+				t.Logf("listfiles error: %v", err)
 			}
 
 			testtools.CheckFiles(t, dir, tc.want)

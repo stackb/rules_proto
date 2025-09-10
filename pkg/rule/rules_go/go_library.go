@@ -237,14 +237,6 @@ func (s *goLibraryRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	return newRule
 }
 
-func printProtoLibraryNames(libs []protoc.ProtoLibrary) string {
-	names := make([]string, len(libs))
-	for i, lib := range libs {
-		names[i] = lib.BaseName()
-	}
-	return strings.Join(names, ",")
-}
-
 // Imports implements part of the RuleProvider interface.
 func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
 	// for the cross-resolver such that go can cross-resolve this library
@@ -263,7 +255,7 @@ func (s *goLibraryRule) Imports(c *config.Config, r *rule.Rule, f *rule.File) []
 
 // Resolve implements part of the RuleProvider interface.
 func (s *goLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-	protoc.ResolveDepsAttr("deps", true)(c, ix, r, imports, from)
+	protoc.ResolveDepsAttr("deps", false)(c, ix, r, imports, from)
 
 	// need to make one more pass to possibly move deps into embeds.  There may
 	// be dependencies *IN OTHER PACKAGES* that have the same importpath; in

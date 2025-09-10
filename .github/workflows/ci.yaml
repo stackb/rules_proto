@@ -11,6 +11,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+concurrency:
+  # Cancel previous actions from the same PR: https://stackoverflow.com/a/72408109
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     # The type of runner that the job will run on
@@ -18,37 +23,31 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: bazelbuild/setup-bazelisk@v2
-
-      - name: Mount bazel action cache
-        uses: actions/cache@v3
-        if: always()
+      - uses: bazel-contrib/setup-bazel@0.15.0
         with:
-          path: "~/.cache/bazel"
-          key: bazel
+          # Avoid downloading Bazel every time.
+          bazelisk-cache: true
+          # Store build cache per workflow.
+          disk-cache: true
+          # Share repository cache between workflows.
+          repository-cache: true
+          # Share external cache between workflows.
+          external-cache: true
 
-      - name: Mount bazel repo cache
-        uses: actions/cache@v3
-        if: always()
-        with:
-          path: "~/.cache/bazel-repo"
-          key: bazel-repo
+      - name: bazel build
+        run: >-
+          bazelisk
+          --bazelrc=.github/workflows/ci.bazelrc
+          --bazelrc=.bazelrc
+          build
+          ...
 
       - name: bazel test
-        env:
-          # Bazelisk will download bazel to here, ensure it is cached between runs.
-          XDG_CACHE_HOME: ~/.cache/bazel-repo
         run: >-
-          bazel
+          bazelisk
           --bazelrc=.github/workflows/ci.bazelrc
           --bazelrc=.bazelrc
           test
-          --deleted_packages=//plugin/grpc-ecosystem/grpc-gateway
-          //example/...
-          //pkg/...
-          //plugin/...
-          //language/...
-          //rules/...
-          //toolchain/...
+          ...

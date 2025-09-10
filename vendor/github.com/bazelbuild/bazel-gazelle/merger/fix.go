@@ -46,6 +46,7 @@ func FixLoads(f *rule.File, knownLoads []rule.LoadInfo) {
 	// since these may be changed. Keep track of symbols loaded from unknown
 	// files; we will not add loads for these.
 	var loads []*rule.Load
+	assignedSymbols := make(map[string]bool)
 	otherLoadedKinds := make(map[string]bool)
 	for _, l := range f.Loads {
 		if knownFiles[l.Name()] {
@@ -60,30 +61,50 @@ func FixLoads(f *rule.File, knownLoads []rule.LoadInfo) {
 	// Make a map of all the symbols from known files used in this file.
 	usedSymbols := make(map[string]map[string]bool)
 	bzl.Walk(f.File, func(x bzl.Expr, stk []bzl.Expr) {
-		ce, ok := x.(*bzl.CallExpr)
-		if !ok {
-			return
-		}
+		var idents []*bzl.Ident
 
-		var functionIdent *bzl.Ident
-
-		d, ok := ce.X.(*bzl.DotExpr)
-		if ok {
-			functionIdent, ok = d.X.(*bzl.Ident)
-		} else {
-			functionIdent, ok = ce.X.(*bzl.Ident)
-		}
-
-		if !ok {
-			return
-		}
-
-		idents := []*bzl.Ident{functionIdent}
-
-		for _, arg := range ce.List {
-			if argIdent, ok := arg.(*bzl.Ident); ok {
-				idents = append(idents, argIdent)
+		if ce, ok := x.(*bzl.CallExpr); ok {
+			if d, ok := ce.X.(*bzl.DotExpr); ok {
+				if functionIdent, ok := d.X.(*bzl.Ident); ok {
+					idents = append(idents, functionIdent)
+				} else {
+					return
+				}
+			} else {
+				if functionIdent, ok := ce.X.(*bzl.Ident); ok {
+					idents = append(idents, functionIdent)
+				} else {
+					return
+				}
 			}
+
+			for _, arg := range ce.List {
+				if argIdent, ok := arg.(*bzl.Ident); ok {
+					idents = append(idents, argIdent)
+				}
+			}
+		} else if d, ok := x.(*bzl.DotExpr); ok {
+			if id, ok := d.X.(*bzl.Ident); ok {
+				idents = append(idents, id)
+			} else {
+				return
+			}
+		} else if ae, ok := x.(*bzl.AssignExpr); ok {
+			if id, ok := ae.LHS.(*bzl.Ident); ok && len(stk) == 1 {
+				assignedSymbols[id.Name] = true
+			} else if id, ok := ae.RHS.(*bzl.Ident); ok && !assignedSymbols[id.Name] {
+				idents = append(idents, id)
+			} else if l, ok := ae.RHS.(*bzl.ListExpr); ok {
+				for _, e := range l.List {
+					if id, ok := e.(*bzl.Ident); ok && !assignedSymbols[id.Name] {
+						idents = append(idents, id)
+					}
+				}
+			} else {
+				return
+			}
+		} else {
+			return
 		}
 
 		for _, id := range idents {
@@ -123,6 +144,7 @@ func FixLoads(f *rule.File, knownLoads []rule.LoadInfo) {
 			if load != nil {
 				index := newLoadIndex(f, known.After)
 				load.Insert(f, index)
+				loads = append(loads, load)
 			}
 		}
 	}

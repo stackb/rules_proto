@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 )
 
 type Config struct {
@@ -20,7 +20,7 @@ type Config struct {
 // fromJSON constructs a Config struct from the given filename that contains a
 // JSON.
 func fromJSON(filename string) (*Config, error) {
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("read: %w", err)
 	}

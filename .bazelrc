@@ -1,29 +1,27 @@
+# =========================================================================
+# STARTUP
+# =========================================================================
 
-common --jvmopt=-Djava.security.manager=allow
-build --java_language_version=17
-build --java_runtime_version=remotejdk_17
-build --tool_java_language_version=17
-build --tool_java_runtime_version=remotejdk_17
+# Use blake3 as digest function instead of the much slower default sha256.
+startup --digest_function=blake3
 
-common --enable_platform_specific_config
-build:windows --cxxopt='/std:c++14'
-build:windows --host_cxxopt='/std:c++14'
-build:linux --cxxopt='-std=c++14'
-build:linux --host_cxxopt='-std=c++14'
-build:macos --cxxopt='-std=c++14'
-build:macos --host_cxxopt='-std=c++14'
-build:freebsd --cxxopt='-std=c++14'
-build:freebsd --host_cxxopt='-std=c++14'
+# =========================================================================
+# COMMON
+# =========================================================================
 
-build:bazelci --deleted_packages=docs
+# Use '+' instead of the legacy '~' when resolving repo names.
+common --incompatible_use_plus_in_repo_names
 
-# workaround for scala
-build --incompatible_java_common_parameters=false
+# =========================================================================
+# BUILD
+# =========================================================================
 
-# HOME appears to be required by //pkg/plugin/grpc/grpc:grpc_test
-# (for github.com/bazelbuild/rules_go/go/tools/bazel_testing)
-test --action_env=HOME
+# Don't leak PATH and LD_LIBRARY_PATH into the build.
+# build --incompatible_strict_action_env
 
-# Don't depend on a JAVA_HOME pointing at a system JDK
-# see https://github.com/bazelbuild/rules_jvm_external/issues/445
-build --repo_env=JAVA_HOME=../bazel_tools/jdk
+# Don't use legacy repository rules.
+build --incompatible_disable_native_repo_rules
+
+# C++17 for protobuf compatibility
+build --host_cxxopt=-std=c++17
+build --cxxopt=-std=c++17

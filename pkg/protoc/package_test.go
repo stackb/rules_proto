@@ -3,8 +3,8 @@ package protoc
 import (
 	"fmt"
 
-	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/bazelbuild/bazel-gazelle/config"
+	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/emicklei/proto"
 )
 
@@ -60,7 +60,7 @@ func examplePackage() *Package {
 }
 
 func ExamplePackage() {
-	printRules(examplePackage().Rules())
+	formaatRules(examplePackage().Rules()...)
 	// Output:
 	// proto_compile(
 	//     name = "test_fake_compile",
@@ -70,7 +70,7 @@ func ExamplePackage() {
 	// )
 }
 
-func printRules(rules []*rule.Rule) {
+func formaatRules(rules ...*rule.Rule) {
 	file := rule.EmptyFile(exampleDir, "")
 	for _, r := range rules {
 		r.Insert(file)

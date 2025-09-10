@@ -27,9 +27,9 @@ func LoadStarlarkPluginFromFile(workDir, filename, name string, reporter func(ms
 	return loadStarlarkPlugin(name, filename, f, reporter, errorReporter)
 }
 
-func loadStarlarkPlugin(name, filename string, src interface{}, reporter func(msg string), errorReporter func(err error)) (Plugin, error) {
+func loadStarlarkPlugin(name, filename string, src any, reporter func(msg string), errorReporter func(err error)) (Plugin, error) {
 
-	newErrorf := func(msg string, args ...interface{}) error {
+	newErrorf := func(msg string, args ...any) error {
 		err := fmt.Errorf(filename+": "+msg, args...)
 		errorReporter(err)
 		return err
@@ -61,7 +61,7 @@ func loadStarlarkPlugin(name, filename string, src interface{}, reporter func(ms
 type starlarkPlugin struct {
 	name          string
 	reporter      func(thread *starlark.Thread, msg string)
-	errorReporter func(msg string, args ...interface{}) error
+	errorReporter func(msg string, args ...any) error
 	plugin        *starlarkstruct.Struct
 }
 

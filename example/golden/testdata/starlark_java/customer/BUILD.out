@@ -1,7 +1,7 @@
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("//:defs.bzl", "java_wrapper")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 load("@rules_java//java:defs.bzl", "java_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("//:defs.bzl", "java_wrapper")
 
 proto_library(
     name = "customer_proto",

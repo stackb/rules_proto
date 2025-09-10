@@ -25,7 +25,7 @@ Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.
 1. Rules for driving the `protoc` tool within a bazel workspace.
 2. A [gazelle](https://github.com/bazelbuild/bazel-gazelle/) extension that
    generates rules based on the content of your `.proto` files.
-3. A repository rule that runs gazelle in an external workspace.
+3. A repository rule / extension that runs gazelle in an external workspace.
 4. Example setups for a variety of languages.
 
 # Table of Contents
@@ -653,7 +653,7 @@ proto_repository(
     cfgs = ["//proto:config.yaml"],
     imports = [
         "@googleapis//:imports.csv",
-        "@protoapis//:imports.csv",
+        "@protobufapis//:imports.csv",
         "@remoteapis//:imports.csv",
     ],
     strip_prefix = "bazel-02ad3e3bc6970db11fe80f966da5707a6c389fdd",
@@ -715,7 +715,7 @@ proto_gazelle(
     imports = [
         "@bazelapis//:imports.csv",
         "@googleapis//:imports.csv",
-        "@protoapis//:imports.csv",
+        "@protobufapis//:imports.csv",
         "@remoteapis//:imports.csv",
     ],
 )
@@ -729,7 +729,7 @@ With this setup, we can simply place an import statement like
 `import "src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto";`
 in a `foo.proto` file in the default workspace, and gazelle will automagically
 figure out the import dependency tree spanning `@bazelapis`, `@remoteapis`,
-`@googleapis`, and the well-known types from `@protoapis`.
+`@googleapis`, and the well-known types from `@protobufapis`.
 
 This works for any `proto_language`, with any set of custom protoc plugins.
 

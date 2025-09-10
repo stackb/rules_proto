@@ -1,6 +1,6 @@
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "app_proto",

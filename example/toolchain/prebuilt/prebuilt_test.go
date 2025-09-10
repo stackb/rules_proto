@@ -9,20 +9,14 @@ import (
 func TestMain(m *testing.M) {
 	bazel_testing.TestMain(m, bazel_testing.Args{
 		Main: `
--- WORKSPACE --
-local_repository(
-	name = "build_stack_rules_proto",
-	path = "../build_stack_rules_proto",
-)
-
-register_toolchains("@build_stack_rules_proto//toolchain:prebuilt")
-
-load("@build_stack_rules_proto//deps:prebuilt_protoc_deps.bzl", "prebuilt_protoc_deps")
-
-prebuilt_protoc_deps()
-
 -- BUILD.bazel --
 # empty file
+`,
+		ModuleFileSuffix: `
+# TODO(pcj): why do we need a bazel_dep for rules_go?  It would seem to be setup by go_bazel_test already
+bazel_dep(name = "rules_go", version = "0.57.0", repo_name = "io_bazel_rules_go")
+go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(version = "1.23.1")
 `,
 	})
 }

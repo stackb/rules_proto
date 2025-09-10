@@ -22,7 +22,6 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path"
@@ -63,7 +62,7 @@ type FileSpec struct {
 // after the test.
 func CreateFiles(t *testing.T, files []FileSpec) (dir string, cleanup func()) {
 	t.Helper()
-	dir, err := ioutil.TempDir(os.Getenv("TEST_TEMPDIR"), "gazelle_test")
+	dir, err := os.MkdirTemp(os.Getenv("TEST_TEMPDIR"), "gazelle_test")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -94,7 +93,7 @@ func CreateFiles(t *testing.T, files []FileSpec) (dir string, cleanup func()) {
 			}
 			continue
 		}
-		if err := ioutil.WriteFile(path, []byte(f.Content), 0o600); err != nil {
+		if err := os.WriteFile(path, []byte(f.Content), 0o600); err != nil {
 			os.RemoveAll(dir)
 			t.Fatal(err)
 		}
@@ -128,13 +127,13 @@ func CheckFiles(t *testing.T, dir string, files []FileSpec) {
 				t.Errorf("not a directory: %s", f.Path)
 			}
 		} else {
-			want := strings.TrimSpace(f.Content)
-			gotBytes, err := ioutil.ReadFile(filepath.Join(dir, f.Path))
+			want := normalizeSpace(f.Content)
+			gotBytes, err := os.ReadFile(filepath.Join(dir, f.Path))
 			if err != nil {
 				t.Errorf("could not read %s: %v", f.Path, err)
 				continue
 			}
-			got := strings.TrimSpace(string(gotBytes))
+			got := normalizeSpace(string(gotBytes))
 			if diff := cmp.Diff(want, got); diff != "" {
 				t.Errorf("%s diff (-want,+got):\n%s", f.Path, diff)
 			}
@@ -176,18 +175,19 @@ var (
 
 // TestGazelleGenerationOnPath runs a full gazelle binary on a testdata directory.
 // With a test data directory of the form:
-//└── <testDataPath>
-//    └── some_test
-//        ├── WORKSPACE
-//        ├── README.md --> README describing what the test does.
-//        ├── arguments.txt --> newline delimited list of arguments to pass in (ignored if empty).
-//        ├── expectedStdout.txt --> Expected stdout for this test.
-//        ├── expectedStderr.txt --> Expected stderr for this test.
-//        ├── expectedExitCode.txt --> Expected exit code for this test.
-//        └── app
-//            └── sourceFile.foo
-//            └── BUILD.in --> BUILD file prior to running gazelle.
-//            └── BUILD.out --> BUILD file expected after running gazelle.
+// └── <testDataPath>
+//
+//	└── some_test
+//	    ├── WORKSPACE
+//	    ├── README.md --> README describing what the test does.
+//	    ├── arguments.txt --> newline delimited list of arguments to pass in (ignored if empty).
+//	    ├── expectedStdout.txt --> Expected stdout for this test.
+//	    ├── expectedStderr.txt --> Expected stderr for this test.
+//	    ├── expectedExitCode.txt --> Expected exit code for this test.
+//	    └── app
+//	        └── sourceFile.foo
+//	        └── BUILD.in --> BUILD file prior to running gazelle.
+//	        └── BUILD.out --> BUILD file expected after running gazelle.
 func TestGazelleGenerationOnPath(t *testing.T, args *TestGazelleGenerationArgs) {
 	t.Run(args.Name, func(t *testing.T) {
 		t.Helper() // Make the stack trace a little bit more clear.
@@ -217,14 +217,14 @@ func TestGazelleGenerationOnPath(t *testing.T, args *TestGazelleGenerationArgs) 
 				return nil
 			}
 
-			content, err := ioutil.ReadFile(path)
+			content, err := os.ReadFile(path)
 			if err != nil {
-				t.Errorf("ioutil.ReadFile(%q) error: %v", path, err)
+				t.Errorf("os.ReadFile(%q) error: %v", path, err)
 			}
 
 			// Read in expected stdout, stderr, and exit code files.
 			if d.Name() == argumentsFilename {
-				config.Args = strings.Split(string(content), "\n")
+				config.Args = strings.Split(normalizeSpace(string(content)), "\n")
 				return nil
 			}
 			if d.Name() == expectedStdoutFilename {
@@ -236,7 +236,7 @@ func TestGazelleGenerationOnPath(t *testing.T, args *TestGazelleGenerationArgs) 
 				return nil
 			}
 			if d.Name() == expectedExitCodeFilename {
-				config.ExitCode, err = strconv.Atoi(string(content))
+				config.ExitCode, err = strconv.Atoi(strings.TrimSpace(string(content)))
 				if err != nil {
 					// Set the ExitCode to a sentinel value (-1) to ensure that if the caller is updating the files on disk the value is updated.
 					config.ExitCode = -1
@@ -353,13 +353,13 @@ Run %s to update BUILD.out and expected{Stdout,Stderr,ExitCode}.txt files.
 			}
 		}
 		actualStdout := redactWorkspacePath(stdout.String(), workspaceRoot)
-		if strings.TrimSpace(config.Stdout) != strings.TrimSpace(actualStdout) {
+		if normalizeSpace(config.Stdout) != normalizeSpace(actualStdout) {
 			errs = append(errs, fmt.Errorf("expected gazelle stdout: %s\ngot: %s",
 				config.Stdout, actualStdout,
 			))
 		}
 		actualStderr := redactWorkspacePath(stderr.String(), workspaceRoot)
-		if strings.TrimSpace(config.Stderr) != strings.TrimSpace(actualStderr) {
+		if normalizeSpace(config.Stderr) != normalizeSpace(actualStderr) {
 			errs = append(errs, fmt.Errorf("expected gazelle stderr: %s\ngot: %s",
 				config.Stderr, actualStderr,
 			))
@@ -368,7 +368,7 @@ Run %s to update BUILD.out and expected{Stdout,Stderr,ExitCode}.txt files.
 			for _, err := range errs {
 				t.Log(err)
 			}
-			t.FailNow()
+			t.Fail()
 		}
 
 		CheckFiles(t, testdataDir, goldens)
@@ -423,4 +423,8 @@ func updateExpectedConfig(t *testing.T, expected string, actual string, srcTestD
 // output reproducible.
 func redactWorkspacePath(s, wsPath string) string {
 	return strings.ReplaceAll(s, wsPath, "%WORKSPACEPATH%")
+}
+
+func normalizeSpace(s string) string {
+	return strings.TrimSpace(strings.ReplaceAll(s, "\r\n", "\n"))
 }

@@ -22,8 +22,6 @@ package main
 import (
 	"bytes"
 	"flag"
-	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -32,6 +30,8 @@ import (
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/testtools"
+	"github.com/google/go-cmp/cmp"
+	"github.com/stackb/rules_proto/cmd/gazelle/internal/wspace"
 )
 
 // skipIfWorkspaceVisible skips the test if the WORKSPACE file for the
@@ -39,7 +39,7 @@ import (
 // are run without sandboxing, since temp directories may be inside the
 // exec root.
 func skipIfWorkspaceVisible(t *testing.T, dir string) {
-	if parent, err := FindRepoRoot(dir); err == nil {
+	if parent, err := wspace.FindRepoRoot(dir); err == nil {
 		t.Skipf("WORKSPACE visible in parent %q of tmp %q", parent, dir)
 	}
 }
@@ -209,7 +209,7 @@ go_library(
 	if err := runGazelle(dir, []string{"-go_prefix", "example.com/foo"}); err != nil {
 		t.Fatal(err)
 	}
-	if got, err := ioutil.ReadFile(filepath.Join(dir, "BUILD")); err != nil {
+	if got, err := os.ReadFile(filepath.Join(dir, "BUILD")); err != nil {
 		t.Fatal(err)
 	} else if string(got) != want {
 		t.Fatalf("got %s ; want %s", string(got), want)
@@ -308,7 +308,7 @@ go_library(
 			if err := runGazelle(dir, []string{c.cmd}); err != nil {
 				t.Fatal(err)
 			}
-			if got, err := ioutil.ReadFile(filepath.Join(dir, "BUILD")); err != nil {
+			if got, err := os.ReadFile(filepath.Join(dir, "BUILD")); err != nil {
 				t.Fatal(err)
 			} else if string(got) != c.want {
 				t.Fatalf("got %s ; want %s", string(got), c.want)
@@ -336,7 +336,8 @@ go_library(
     visibility = ["//visibility:public"],
 )
 `,
-		}, {
+		},
+		{
 			Path:    "pure.go",
 			Content: "package foo",
 		},
@@ -357,7 +358,7 @@ go_library(
 	if err := runGazelle(dir, []string{"fix", "-go_prefix", "example.com/foo"}); err != nil {
 		t.Fatal(err)
 	}
-	if got, err := ioutil.ReadFile(filepath.Join(dir, "BUILD")); err != nil {
+	if got, err := os.ReadFile(filepath.Join(dir, "BUILD")); err != nil {
 		t.Fatal(err)
 	} else if string(got) != want {
 		t.Fatalf("got %s ; want %s", string(got), want)
@@ -380,10 +381,12 @@ go_library(
     importpath = "example.com/foo/x",
 )
 `,
-		}, {
+		},
+		{
 			Path:    "a/a.go",
 			Content: "package a",
-		}, {
+		},
+		{
 			Path: "b/b.go",
 			Content: `
 package b
@@ -461,7 +464,8 @@ func TestBuildFileNameIgnoresBuild(t *testing.T) {
 		{
 			Path:    "a/BUILD",
 			Content: "!!! parse error",
-		}, {
+		},
+		{
 			Path:    "a.go",
 			Content: "package a",
 		},
@@ -557,13 +561,15 @@ go_proto_library(
     srcs = [":go_default_library_protos"],
 )
 `,
-		}, {
+		},
+		{
 			Path: "foo.proto",
 			Content: `syntax = "proto3";
 
 option go_package = "example.com/repo";
 `,
-		}, {
+		},
+		{
 			Path:    "foo.pb.go",
 			Content: `package repo`,
 		},
@@ -592,9 +598,9 @@ go_proto_library(
 		}, {
 			args: []string{"fix", "-go_prefix", "example.com/repo"},
 			want: `
-load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "repo_proto",
@@ -671,7 +677,8 @@ go_library(
     visibility = ["//visibility:public"],
 )
 `,
-		}, {
+		},
+		{
 			Path:    "extra.go",
 			Content: `package repo`,
 		},
@@ -705,9 +712,9 @@ func TestAddServiceConvertsToGrpc(t *testing.T) {
 		{
 			Path: config.DefaultValidBuildFileNames[0],
 			Content: `
-load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "repo_proto",
@@ -729,7 +736,8 @@ go_library(
     visibility = ["//visibility:public"],
 )
 `,
-		}, {
+		},
+		{
 			Path: "foo.proto",
 			Content: `syntax = "proto3";
 
@@ -751,9 +759,9 @@ service TestService {}
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{{
 		Path: config.DefaultValidBuildFileNames[0],
 		Content: `
-load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "repo_proto",
@@ -763,7 +771,7 @@ proto_library(
 
 go_proto_library(
     name = "repo_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    compilers = ["@io_bazel_rules_go//proto:go_grpc_v2"],
     importpath = "example.com/repo",
     proto = ":repo_proto",
     visibility = ["//visibility:public"],
@@ -785,9 +793,9 @@ func TestProtoImportPrefix(t *testing.T) {
 		{
 			Path: config.DefaultValidBuildFileNames[0],
 			Content: `
-load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "foo_proto",
@@ -809,7 +817,8 @@ go_library(
     visibility = ["//visibility:public"],
 )
 `,
-		}, {
+		},
+		{
 			Path:    "foo.proto",
 			Content: `syntax = "proto3";`,
 		},
@@ -818,8 +827,10 @@ go_library(
 	dir, cleanup := testtools.CreateFiles(t, files)
 	defer cleanup()
 
-	args := []string{"update", "-go_prefix", "example.com/repo",
-		"-proto_import_prefix", "/bar"}
+	args := []string{
+		"update", "-go_prefix", "example.com/repo",
+		"-proto_import_prefix", "/bar",
+	}
 	if err := runGazelle(dir, args); err != nil {
 		t.Fatal(err)
 	}
@@ -827,9 +838,9 @@ go_library(
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{{
 		Path: config.DefaultValidBuildFileNames[0],
 		Content: `
-load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "foo_proto",
@@ -855,13 +866,252 @@ go_library(
 	}})
 }
 
+func TestProtoFileMode(t *testing.T) {
+	files := []testtools.FileSpec{
+		{Path: "WORKSPACE"},
+		{
+			Path: config.DefaultValidBuildFileNames[0],
+			Content: `
+# gazelle:proto file
+
+proto_library(
+    name = "bar_proto",
+    srcs = ["bar.proto"],
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "repo_go_proto",
+    importpath = "example.com/repo",
+    proto = ":bar_proto",
+    visibility = ["//visibility:public"],
+)
+
+`,
+		},
+		{
+			Path: "foo.proto",
+			Content: `syntax = "proto3";
+import "bar.proto";`,
+		},
+		{
+			Path:    "bar.proto",
+			Content: `syntax = "proto3";`,
+		},
+		{
+			Path:    "baz.proto",
+			Content: `syntax = "proto3";`,
+		},
+	}
+
+	dir, cleanup := testtools.CreateFiles(t, files)
+	defer cleanup()
+
+	args := []string{
+		"update", "-go_prefix", "example.com/repo",
+	}
+	if err := runGazelle(dir, args); err != nil {
+		t.Fatal(err)
+	}
+
+	testtools.CheckFiles(t, dir, []testtools.FileSpec{{
+		Path: config.DefaultValidBuildFileNames[0],
+		Content: `
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+# gazelle:proto file
+
+proto_library(
+    name = "bar_proto",
+    srcs = ["bar.proto"],
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "repo_go_proto",
+    importpath = "example.com/repo",
+    protos = [
+        ":bar_proto",
+        ":baz_proto",
+        ":foo_proto",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_library(
+    name = "baz_proto",
+    srcs = ["baz.proto"],
+    visibility = ["//visibility:public"],
+)
+
+proto_library(
+    name = "foo_proto",
+    srcs = ["foo.proto"],
+    visibility = ["//visibility:public"],
+    deps = [":bar_proto"],
+)
+`,
+	}})
+}
+
+func TestProtoFileModeRemoveGoDefaultLibrary(t *testing.T) {
+	files := []testtools.FileSpec{
+		{Path: "WORKSPACE"},
+		{
+			Path: config.DefaultValidBuildFileNames[0],
+			Content: `
+# gazelle:proto file
+
+proto_library(
+    name = "bar_proto",
+    srcs = ["bar.proto"],
+	deps = ["//somedir:foo_proto"],
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "bar_go_proto",
+    importpath = "example.com/repo",
+    proto = ":bar_proto",
+	deps = ["//somedir:go_default_library"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+	name = "go_default_library",
+	embed = [":bar_go_proto"],
+	srcs = ["bar.go"],
+	importpath = "example.com/repo",
+	deps = ["//somedir:go_default_library"],
+	visibility = ["//visibility:public"],
+)
+
+`,
+		},
+		{
+			Path: "bar.proto",
+			Content: `syntax = "proto3";
+import "somedir/foo.proto";
+`,
+		},
+		{
+			Path: "bar.go",
+			Content: `package repo
+import _ "example.com/repo/somedir/foo"`,
+		},
+		{
+			Path: "somedir/" + config.DefaultValidBuildFileNames[0],
+			Content: `
+# gazelle:proto file
+
+proto_library(
+    name = "foo_proto",
+    srcs = ["foo.proto"],
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "foo_go_proto",
+    importpath = "example.com/repo/somedir/foo",
+    proto = ":foo_proto",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "go_default_library",
+    embed = [":foo_go_proto"],
+    importpath = "example.com/repo/somedir/foo",
+    visibility = ["//visibility:public"],
+)
+
+`,
+		},
+		{
+			Path: "somedir/foo.proto",
+			Content: `syntax = "proto3";
+option go_package = "example.com/repo/somedir/foo";
+`,
+		},
+	}
+
+	dir, cleanup := testtools.CreateFiles(t, files)
+	defer cleanup()
+
+	args := []string{
+		"update", "-go_prefix", "example.com/repo",
+	}
+	if err := runGazelle(dir, args); err != nil {
+		t.Fatal(err)
+	}
+
+	testtools.CheckFiles(t, dir, []testtools.FileSpec{{
+		Path: config.DefaultValidBuildFileNames[0],
+		Content: `
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+# gazelle:proto file
+
+proto_library(
+    name = "bar_proto",
+    srcs = ["bar.proto"],
+    visibility = ["//visibility:public"],
+    deps = ["//somedir:foo_proto"],
+)
+
+go_proto_library(
+    name = "bar_go_proto",
+    importpath = "example.com/repo",
+    proto = ":bar_proto",
+    visibility = ["//visibility:public"],
+    deps = ["//somedir:foo_go_proto"],
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = ["bar.go"],
+    embed = [":bar_go_proto"],
+    importpath = "example.com/repo",
+    visibility = ["//visibility:public"],
+    deps = ["//somedir:foo_go_proto"],
+)
+
+`,
+	},
+		{
+			Path: "somedir/" + config.DefaultValidBuildFileNames[0],
+			Content: `
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+# gazelle:proto file
+
+proto_library(
+    name = "foo_proto",
+    srcs = ["foo.proto"],
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "foo_go_proto",
+    importpath = "example.com/repo/somedir/foo",
+    proto = ":foo_proto",
+    visibility = ["//visibility:public"],
+)
+`,
+		}})
+}
+
 func TestEmptyGoPrefix(t *testing.T) {
 	files := []testtools.FileSpec{
 		{Path: "WORKSPACE"},
 		{
 			Path:    "foo/foo.go",
 			Content: "package foo",
-		}, {
+		},
+		{
 			Path: "bar/bar.go",
 			Content: `
 package bar
@@ -911,7 +1161,8 @@ package foo
 
 import _ "example.com/alt/baz"
 `,
-		}, {
+		},
+		{
 			Path: "bar/BUILD.bazel",
 			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
@@ -922,7 +1173,8 @@ go_library(
     visibility = ["//visibility:public"],
 )
 `,
-		}, {
+		},
+		{
 			Path:    "bar/bar.go",
 			Content: "package bar",
 		},
@@ -973,7 +1225,8 @@ func TestResolveVendorSubdirectory(t *testing.T) {
 		{
 			Path:    "sub/vendor/example.com/foo/foo.go",
 			Content: "package foo",
-		}, {
+		},
+		{
 			Path: "sub/bar/bar.go",
 			Content: `
 package bar
@@ -1056,10 +1309,12 @@ go_proto_library(
     deps = ["//foo/bar:go_default_library"],
 )
 `,
-		}, {
+		},
+		{
 			Path:    "foo/extra.go",
 			Content: "package foo",
-		}, {
+		},
+		{
 			Path: "foo/bar/bar.proto",
 			Content: `
 syntax = "proto3";
@@ -1289,802 +1544,6 @@ go_repository(
 
 gazelle_dependencies()
 `,
-		}})
-}
-
-func TestImportReposFromDepToWorkspace(t *testing.T) {
-	files := []testtools.FileSpec{
-		{
-			Path: "WORKSPACE",
-			Content: `
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "4b14d8dd31c6dbaf3ff871adcd03f28c3274e42abc855cb8fb4d01233c0154dc",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/0.10.1/rules_go-0.10.1.tar.gz",
-)
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "6228d9618ab9536892aa69082c063207c91e777e51bd3c5544c9c060cafe1bd8",
-    url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
-)
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains", "go_repository")
-go_rules_dependencies()
-go_register_toolchains()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-gazelle_dependencies()
-
-go_repository(
-    name = "org_golang_x_net",
-    importpath = "golang.org/x/net",
-    tag = "1.2",
-)
-
-# keep
-go_repository(
-    name = "org_golang_x_sys",
-    importpath = "golang.org/x/sys",
-    remote = "https://github.com/golang/sys",
-)
-
-http_archive(
-    name = "com_github_go_yaml_yaml",
-    sha256 = "1234",
-    urls = ["https://example.com/yaml.tar.gz"],
-)
-`,
-		}, {
-			Path: "Gopkg.lock",
-			Content: `# This file is autogenerated, do not edit; changes may be undone by the next 'dep ensure'.
-
-
-[[projects]]
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
-  version = "v0.8.0"
-
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/net"
-  packages = ["context"]
-  revision = "66aacef3dd8a676686c7ae3716979581e8b03c47"
-
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/sys"
-  packages = ["unix"]
-  revision = "bb24a47a89eac6c1227fbcb2ae37a8b9ed323366"
-
-[[projects]]
-  branch = "v2"
-  name = "github.com/go-yaml/yaml"
-  packages = ["."]
-  revision = "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b"
-
-[solve-meta]
-  analyzer-name = "dep"
-  analyzer-version = 1
-  inputs-digest = "05c1cd69be2c917c0cc4b32942830c2acfa044d8200fdc94716aae48a8083702"
-  solver-name = "gps-cdcl"
-  solver-version = 1
-`,
-		},
-	}
-	dir, cleanup := testtools.CreateFiles(t, files)
-	defer cleanup()
-
-	args := []string{"update-repos", "-build_file_generation", "off", "-from_file", "Gopkg.lock"}
-	if err := runGazelle(dir, args); err != nil {
-		t.Fatal(err)
-	}
-
-	testtools.CheckFiles(t, dir, []testtools.FileSpec{
-		{
-			Path: "WORKSPACE",
-			Content: `
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "4b14d8dd31c6dbaf3ff871adcd03f28c3274e42abc855cb8fb4d01233c0154dc",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/0.10.1/rules_go-0.10.1.tar.gz",
-)
-
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "6228d9618ab9536892aa69082c063207c91e777e51bd3c5544c9c060cafe1bd8",
-    url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
-)
-
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
-
-go_repository(
-    name = "com_github_pkg_errors",
-    build_file_generation = "off",
-    commit = "645ef00459ed84a119197bfb8d8205042c6df63d",
-    importpath = "github.com/pkg/errors",
-)
-
-gazelle_dependencies()
-
-go_repository(
-    name = "org_golang_x_net",
-    build_file_generation = "off",
-    commit = "66aacef3dd8a676686c7ae3716979581e8b03c47",
-    importpath = "golang.org/x/net",
-)
-
-# keep
-go_repository(
-    name = "org_golang_x_sys",
-    importpath = "golang.org/x/sys",
-    remote = "https://github.com/golang/sys",
-)
-
-http_archive(
-    name = "com_github_go_yaml_yaml",
-    sha256 = "1234",
-    urls = ["https://example.com/yaml.tar.gz"],
-)
-`,
-		}})
-}
-
-func TestImportReposFromDepToWorkspaceWithMacro(t *testing.T) {
-	files := []testtools.FileSpec{
-		{
-			Path: "WORKSPACE",
-			Content: `
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "4b14d8dd31c6dbaf3ff871adcd03f28c3274e42abc855cb8fb4d01233c0154dc",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/0.10.1/rules_go-0.10.1.tar.gz",
-)
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "6228d9618ab9536892aa69082c063207c91e777e51bd3c5544c9c060cafe1bd8",
-    url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
-)
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains", "go_repository")
-go_rules_dependencies()
-go_register_toolchains()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-gazelle_dependencies()
-
-http_archive(
-	name = "com_github_go_yaml_yaml",
-	sha256 = "1234",
-	urls = ["https://example.com/yaml.tar.gz"],
-)
-
-# gazelle:repository_macro repositories.bzl%go_repositories
-`,
-		}, {
-			Path: "repositories.bzl",
-			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
-
-def go_repositories():
-    go_repository(
-        name = "org_golang_x_net",
-        importpath = "golang.org/x/net",
-        tag = "1.2",
-    )
-
-    # keep
-    go_repository(
-        name = "org_golang_x_sys",
-        importpath = "golang.org/x/sys",
-        remote = "https://github.com/golang/sys",
-    )
-`,
-		}, {
-			Path: "Gopkg.lock",
-			Content: `# This file is autogenerated, do not edit; changes may be undone by the next 'dep ensure'.
-
-
-[[projects]]
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
-  version = "v0.8.0"
-
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/net"
-  packages = ["context"]
-  revision = "66aacef3dd8a676686c7ae3716979581e8b03c47"
-
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/sys"
-  packages = ["unix"]
-  revision = "bb24a47a89eac6c1227fbcb2ae37a8b9ed323366"
-
-[[projects]]
-  branch = "v2"
-  name = "github.com/go-yaml/yaml"
-  packages = ["."]
-  revision = "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b"
-
-[solve-meta]
-  analyzer-name = "dep"
-  analyzer-version = 1
-  inputs-digest = "05c1cd69be2c917c0cc4b32942830c2acfa044d8200fdc94716aae48a8083702"
-  solver-name = "gps-cdcl"
-  solver-version = 1
-`,
-		},
-	}
-	dir, cleanup := testtools.CreateFiles(t, files)
-	defer cleanup()
-
-	args := []string{"update-repos", "-build_file_generation", "off", "-from_file", "Gopkg.lock"}
-	if err := runGazelle(dir, args); err != nil {
-		t.Fatal(err)
-	}
-
-	testtools.CheckFiles(t, dir, []testtools.FileSpec{
-		{
-			Path: "WORKSPACE",
-			Content: `
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "4b14d8dd31c6dbaf3ff871adcd03f28c3274e42abc855cb8fb4d01233c0154dc",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/0.10.1/rules_go-0.10.1.tar.gz",
-)
-
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "6228d9618ab9536892aa69082c063207c91e777e51bd3c5544c9c060cafe1bd8",
-    url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
-)
-
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
-
-go_repository(
-    name = "com_github_pkg_errors",
-    build_file_generation = "off",
-    commit = "645ef00459ed84a119197bfb8d8205042c6df63d",
-    importpath = "github.com/pkg/errors",
-)
-
-gazelle_dependencies()
-
-http_archive(
-    name = "com_github_go_yaml_yaml",
-    sha256 = "1234",
-    urls = ["https://example.com/yaml.tar.gz"],
-)
-
-# gazelle:repository_macro repositories.bzl%go_repositories
-`,
-		}, {
-			Path: "repositories.bzl",
-			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
-
-def go_repositories():
-    go_repository(
-        name = "org_golang_x_net",
-        build_file_generation = "off",
-        commit = "66aacef3dd8a676686c7ae3716979581e8b03c47",
-        importpath = "golang.org/x/net",
-    )
-
-    # keep
-    go_repository(
-        name = "org_golang_x_sys",
-        importpath = "golang.org/x/sys",
-        remote = "https://github.com/golang/sys",
-    )
-
-`,
-		},
-	})
-}
-
-func TestImportReposFromDepToMacroWithWorkspace(t *testing.T) {
-	files := []testtools.FileSpec{
-		{
-			Path: "WORKSPACE",
-			Content: `
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "4b14d8dd31c6dbaf3ff871adcd03f28c3274e42abc855cb8fb4d01233c0154dc",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/0.10.1/rules_go-0.10.1.tar.gz",
-)
-
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "6228d9618ab9536892aa69082c063207c91e777e51bd3c5544c9c060cafe1bd8",
-    url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
-)
-
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
-
-gazelle_dependencies()
-
-http_archive(
-    name = "com_github_go_yaml_yaml",
-    sha256 = "1234",
-    urls = ["https://example.com/yaml.tar.gz"],
-)
-
-# gazelle:repository_macro repositories.bzl%go_repositories
-# gazelle:repository_macro repositories.bzl%foo_repositories
-`,
-		}, {
-			Path: "repositories.bzl",
-			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
-
-def go_repositories():
-    go_repository(
-        name = "org_golang_x_sys",
-        importpath = "golang.org/x/sys",
-        remote = "https://github.com/golang/sys",
-    )
-
-def foo_repositories():
-    go_repository(
-        name = "org_golang_x_net",
-        importpath = "golang.org/x/net",
-        tag = "1.2",
-    )
-`,
-		}, {
-			Path: "Gopkg.lock",
-			Content: `# This file is autogenerated, do not edit; changes may be undone by the next 'dep ensure'.
-
-
-[[projects]]
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
-  version = "v0.8.0"
-
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/net"
-  packages = ["context"]
-  revision = "66aacef3dd8a676686c7ae3716979581e8b03c47"
-
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/sys"
-  packages = ["unix"]
-  revision = "bb24a47a89eac6c1227fbcb2ae37a8b9ed323366"
-
-[solve-meta]
-  analyzer-name = "dep"
-  analyzer-version = 1
-  inputs-digest = "05c1cd69be2c917c0cc4b32942830c2acfa044d8200fdc94716aae48a8083702"
-  solver-name = "gps-cdcl"
-  solver-version = 1
-`,
-		},
-	}
-	dir, cleanup := testtools.CreateFiles(t, files)
-	defer cleanup()
-
-	args := []string{"update-repos", "-build_file_generation", "off", "-from_file", "Gopkg.lock", "-to_macro", "repositories.bzl%foo_repositories"}
-	if err := runGazelle(dir, args); err != nil {
-		t.Fatal(err)
-	}
-
-	testtools.CheckFiles(t, dir, []testtools.FileSpec{
-		{
-			Path: "WORKSPACE",
-			Content: `
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "4b14d8dd31c6dbaf3ff871adcd03f28c3274e42abc855cb8fb4d01233c0154dc",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/0.10.1/rules_go-0.10.1.tar.gz",
-)
-
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "6228d9618ab9536892aa69082c063207c91e777e51bd3c5544c9c060cafe1bd8",
-    url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
-)
-
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
-
-gazelle_dependencies()
-
-http_archive(
-    name = "com_github_go_yaml_yaml",
-    sha256 = "1234",
-    urls = ["https://example.com/yaml.tar.gz"],
-)
-
-# gazelle:repository_macro repositories.bzl%go_repositories
-# gazelle:repository_macro repositories.bzl%foo_repositories
-`,
-		}, {
-			Path: "repositories.bzl",
-			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
-
-def go_repositories():
-    go_repository(
-        name = "org_golang_x_sys",
-        build_file_generation = "off",
-        commit = "bb24a47a89eac6c1227fbcb2ae37a8b9ed323366",
-        importpath = "golang.org/x/sys",
-    )
-
-def foo_repositories():
-    go_repository(
-        name = "com_github_pkg_errors",
-        build_file_generation = "off",
-        commit = "645ef00459ed84a119197bfb8d8205042c6df63d",
-        importpath = "github.com/pkg/errors",
-    )
-
-    go_repository(
-        name = "org_golang_x_net",
-        build_file_generation = "off",
-        commit = "66aacef3dd8a676686c7ae3716979581e8b03c47",
-        importpath = "golang.org/x/net",
-    )
-`,
-		},
-	})
-}
-
-func TestImportReposFromDepToEmptyMacro(t *testing.T) {
-	files := []testtools.FileSpec{
-		{
-			Path: "WORKSPACE",
-			Content: `
-local_repository(
-    name = "io_bazel_rules_go",
-    path = "???",
-)
-
-local_repository(
-    name = "bazel_gazelle",
-    path = "???",
-)
-
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-gazelle_dependencies()
-`,
-		},
-		{
-			Path: "Gopkg.lock",
-			Content: `# This file is autogenerated, do not edit; changes may be undone by the next 'dep ensure'.
-
-
-[[projects]]
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
-  version = "v0.8.0"
-
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/net"
-  packages = ["context"]
-  revision = "66aacef3dd8a676686c7ae3716979581e8b03c47"
-
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/sys"
-  packages = ["unix"]
-  revision = "bb24a47a89eac6c1227fbcb2ae37a8b9ed323366"
-
-[[projects]]
-  branch = "v2"
-  name = "github.com/go-yaml/yaml"
-  packages = ["."]
-  revision = "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b"
-
-[solve-meta]
-  analyzer-name = "dep"
-  analyzer-version = 1
-  inputs-digest = "05c1cd69be2c917c0cc4b32942830c2acfa044d8200fdc94716aae48a8083702"
-  solver-name = "gps-cdcl"
-  solver-version = 1
-`,
-		},
-	}
-	dir, cleanup := testtools.CreateFiles(t, files)
-	defer cleanup()
-
-	args := []string{"update-repos", "-build_file_generation", "off", "-from_file", "Gopkg.lock", "-to_macro", "repositories.bzl%go_repositories"}
-	if err := runGazelle(dir, args); err != nil {
-		t.Fatal(err)
-	}
-
-	testtools.CheckFiles(t, dir, []testtools.FileSpec{
-		{
-			Path: "WORKSPACE",
-			Content: `
-local_repository(
-    name = "io_bazel_rules_go",
-    path = "???",
-)
-
-local_repository(
-    name = "bazel_gazelle",
-    path = "???",
-)
-
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-load("//:repositories.bzl", "go_repositories")
-
-# gazelle:repository_macro repositories.bzl%go_repositories
-go_repositories()
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-gazelle_dependencies()
-`,
-		}, {
-			Path: "repositories.bzl",
-			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
-
-def go_repositories():
-    go_repository(
-        name = "com_github_go_yaml_yaml",
-        build_file_generation = "off",
-        commit = "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b",
-        importpath = "github.com/go-yaml/yaml",
-    )
-    go_repository(
-        name = "com_github_pkg_errors",
-        build_file_generation = "off",
-        commit = "645ef00459ed84a119197bfb8d8205042c6df63d",
-        importpath = "github.com/pkg/errors",
-    )
-    go_repository(
-        name = "org_golang_x_net",
-        build_file_generation = "off",
-        commit = "66aacef3dd8a676686c7ae3716979581e8b03c47",
-        importpath = "golang.org/x/net",
-    )
-    go_repository(
-        name = "org_golang_x_sys",
-        build_file_generation = "off",
-        commit = "bb24a47a89eac6c1227fbcb2ae37a8b9ed323366",
-        importpath = "golang.org/x/sys",
-    )
-`,
-		}})
-}
-
-func TestPruneRepoRules(t *testing.T) {
-	files := []testtools.FileSpec{
-		{
-			Path: "WORKSPACE",
-			Content: `
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "4b14d8dd31c6dbaf3ff871adcd03f28c3274e42abc855cb8fb4d01233c0154dc",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/0.10.1/rules_go-0.10.1.tar.gz",
-)
-
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "6228d9618ab9536892aa69082c063207c91e777e51bd3c5544c9c060cafe1bd8",
-    url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
-)
-
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
-
-gazelle_dependencies()
-
-http_archive(
-    name = "com_github_go_yaml_yaml",
-    sha256 = "1234",
-    urls = ["https://example.com/yaml.tar.gz"],
-)
-
-go_repository(
-    name = "pruneMe",
-    importpath = "pruneMe",
-)
-
-# keep
-go_repository(
-    name = "keepMe",
-    importpath = "keepMe",
-)
-
-# gazelle:repository_macro repositories.bzl%go_repositories
-# gazelle:repository_macro repositories.bzl%foo_repositories
-`,
-		}, {
-			Path: "repositories.bzl",
-			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
-
-def go_repositories():
-    go_repository(
-        name = "org_golang_x_sys",
-        importpath = "golang.org/x/sys",
-        remote = "https://github.com/golang/sys",
-    )
-    go_repository(
-        name = "foo",
-        importpath = "foo",
-    )
-
-def foo_repositories():
-    go_repository(
-        name = "org_golang_x_net",
-        importpath = "golang.org/x/net",
-        tag = "1.2",
-    )
-    go_repository(
-        name = "bar",
-        importpath = "bar",
-    )
-
-    # keep
-    go_repository(
-        name = "stay",
-        importpath = "stay",
-    )
-`,
-		}, {
-			Path: "Gopkg.lock",
-			Content: `# This file is autogenerated, do not edit; changes may be undone by the next 'dep ensure'.
-
-
-[[projects]]
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
-  version = "v0.8.0"
-
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/net"
-  packages = ["context"]
-  revision = "66aacef3dd8a676686c7ae3716979581e8b03c47"
-
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/sys"
-  packages = ["unix"]
-  revision = "bb24a47a89eac6c1227fbcb2ae37a8b9ed323366"
-
-[solve-meta]
-  analyzer-name = "dep"
-  analyzer-version = 1
-  inputs-digest = "05c1cd69be2c917c0cc4b32942830c2acfa044d8200fdc94716aae48a8083702"
-  solver-name = "gps-cdcl"
-  solver-version = 1
-`,
-		},
-	}
-	dir, cleanup := testtools.CreateFiles(t, files)
-	defer cleanup()
-
-	args := []string{"update-repos", "-build_file_generation", "off", "-from_file", "Gopkg.lock", "-to_macro", "repositories.bzl%foo_repositories", "-prune"}
-	if err := runGazelle(dir, args); err != nil {
-		t.Fatal(err)
-	}
-
-	testtools.CheckFiles(t, dir, []testtools.FileSpec{
-		{
-			Path: "WORKSPACE",
-			Content: `
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "4b14d8dd31c6dbaf3ff871adcd03f28c3274e42abc855cb8fb4d01233c0154dc",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/0.10.1/rules_go-0.10.1.tar.gz",
-)
-
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "6228d9618ab9536892aa69082c063207c91e777e51bd3c5544c9c060cafe1bd8",
-    url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/0.10.0/bazel-gazelle-0.10.0.tar.gz",
-)
-
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
-
-gazelle_dependencies()
-
-http_archive(
-    name = "com_github_go_yaml_yaml",
-    sha256 = "1234",
-    urls = ["https://example.com/yaml.tar.gz"],
-)
-
-# keep
-go_repository(
-    name = "keepMe",
-    importpath = "keepMe",
-)
-
-# gazelle:repository_macro repositories.bzl%go_repositories
-# gazelle:repository_macro repositories.bzl%foo_repositories
-`,
-		}, {
-			Path: "repositories.bzl",
-			Content: `
-load("@bazel_gazelle//:deps.bzl", "go_repository")
-
-def go_repositories():
-    go_repository(
-        name = "org_golang_x_sys",
-        build_file_generation = "off",
-        commit = "bb24a47a89eac6c1227fbcb2ae37a8b9ed323366",
-        importpath = "golang.org/x/sys",
-    )
-
-def foo_repositories():
-    go_repository(
-        name = "com_github_pkg_errors",
-        build_file_generation = "off",
-        commit = "645ef00459ed84a119197bfb8d8205042c6df63d",
-        importpath = "github.com/pkg/errors",
-    )
-
-    go_repository(
-        name = "org_golang_x_net",
-        build_file_generation = "off",
-        commit = "66aacef3dd8a676686c7ae3716979581e8b03c47",
-        importpath = "golang.org/x/net",
-    )
-
-    # keep
-    go_repository(
-        name = "stay",
-        importpath = "stay",
-    )
-`,
 		},
 	})
 }
@@ -2271,13 +1730,16 @@ package foo
 
 import _ "example.com/bar"
 `,
-		}, {
+		},
+		{
 			Path:    "third_party/example.com/bar/bar.go",
 			Content: "package bar",
-		}, {
+		},
+		{
 			Path:    "third_party/BUILD.bazel",
 			Content: "# gazelle:prefix",
-		}, {
+		},
+		{
 			Path: "third_party/example.com/bar/BUILD.bazel",
 			Content: `
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
@@ -2342,7 +1804,8 @@ import (
 		{
 			Path:    "foo/bar/bar.go",
 			Content: "package bar",
-		}, {
+		},
+		{
 			Path: "third_party/baz/BUILD.bazel",
 			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
@@ -2354,7 +1817,8 @@ go_library(
     visibility = ["//visibility:public"],
 )
 `,
-		}, {
+		},
+		{
 			Path:    "third_party/baz/baz.go",
 			Content: "package baz",
 		},
@@ -2462,7 +1926,8 @@ go_library(
     visibility = ["//visibility:public"],
 )
 `,
-		}})
+		},
+	})
 }
 
 // TestSubdirectoryPrefixExternal checks that directives set in subdirectories
@@ -2526,9 +1991,9 @@ func TestGoGrpcProtoFlag(t *testing.T) {
 		}, {
 			Path: "BUILD.bazel",
 			Content: `
-load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 go_proto_library(
     name = "foo_go_proto",
@@ -2568,7 +2033,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_proto_library(
     name = "service_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    compilers = ["@io_bazel_rules_go//proto:go_grpc_v2"],
     importpath = "example.com/repo/service",
     proto = ":service_proto",
     visibility = ["//visibility:public"],
@@ -2610,9 +2075,9 @@ service TestService {}
 		{
 			Path: "BUILD.bazel",
 			Content: `
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 go_proto_library(
     name = "foo_go_proto",
@@ -2639,9 +2104,9 @@ go_library(
 		{
 			Path: "service/BUILD.bazel",
 			Content: `
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 go_proto_library(
     name = "service_go_proto",
@@ -2674,27 +2139,34 @@ func TestMapKind(t *testing.T) {
 	files := []testtools.FileSpec{
 		{
 			Path: "WORKSPACE",
-		}, {
+		},
+		{
 			Path: "BUILD.bazel",
 			Content: `
 # gazelle:prefix example.com/mapkind
 # gazelle:go_naming_convention go_default_library
 `,
-		}, {
+		},
+		{
 			Path:    "root_lib.go",
 			Content: `package mapkind`,
-		}, {
+		},
+		{
 			Path:    "enabled/BUILD.bazel",
 			Content: "# gazelle:map_kind go_library my_library //tools/go:def.bzl",
-		}, {
+		},
+		{
 			Path:    "enabled/enabled_lib.go",
 			Content: `package enabled`,
-		}, {
+		},
+		{
 			Path: "enabled/inherited/BUILD.bazel",
-		}, {
+		},
+		{
 			Path:    "enabled/inherited/inherited_lib.go",
 			Content: `package inherited`,
-		}, {
+		},
+		{
 			Path: "enabled/existing_rules/mapped/BUILD.bazel",
 			Content: `
 load("//tools/go:def.bzl", "my_library")
@@ -2707,18 +2179,21 @@ my_library(
     visibility = ["//visibility:public"],
 )
 `,
-		}, {
+		},
+		{
 			Path:    "enabled/existing_rules/mapped/mapped_lib.go",
 			Content: `package mapped`,
-		}, {
+		},
+		{
 			Path:    "enabled/existing_rules/mapped/mapped_lib2.go",
 			Content: `package mapped`,
-		}, {
+		},
+		{
 			Path: "enabled/existing_rules/unmapped/BUILD.bazel",
 			Content: `
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
-# An existing rule with an unmapped type is preserved
+# An existing rule with an unmapped type is updated
 go_library(
     name = "go_default_library",
     srcs = ["unmapped_lib.go"],
@@ -2726,32 +2201,84 @@ go_library(
     visibility = ["//visibility:public"],
 )
 `,
-		}, {
+		},
+		{
 			Path:    "enabled/existing_rules/unmapped/unmapped_lib.go",
 			Content: `package unmapped`,
-		}, {
+		},
+		{
+			Path: "enabled/existing_rules/clean/BUILD.bazel",
+			Content: `load("//tools/go:def.bzl", "my_go_library")
+
+# gazelle:go_naming_convention import
+# gazelle:map_kind go_library my_go_library //tools/go:def.bzl
+
+my_go_library(
+    name = "clean",
+    srcs = [
+        "foo.go",
+        "bar.go",
+        "buz.go",
+    ],
+    importpath = "example.com/mapkind/enabled/existing_rules/clean",
+    visibility = ["//visibility:private"],
+)
+`,
+		},
+		{
+			Path: "enabled/existing_rules/clean_binary/BUILD.bazel",
+			Content: `load("//tools/go:def.bzl", "my_go_binary", "my_go_library")
+
+# gazelle:go_naming_convention import
+# gazelle:map_kind go_binary my_go_binary //tools/go:def.bzl
+# gazelle:map_kind go_library my_go_library //tools/go:def.bzl
+
+my_go_library(
+    name = "clean_binary_lib",
+    srcs = ["main.go"],
+    importpath = "example.com/mapkind/enabled/existing_rules/clean_binary",
+    visibility = ["//visibility:private"],
+)
+
+my_go_binary(
+    name = "clean_binary",
+    embed = [":clean_binary_lib"],
+    visibility = ["//visibility:public"],
+)
+`,
+		},
+		{
 			Path:    "enabled/existing_rules/nobuild/nobuild_lib.go",
 			Content: `package nobuild`,
-		}, {
+		},
+		{
 			Path:    "enabled/overridden/BUILD.bazel",
 			Content: "# gazelle:map_kind go_library overridden_library //tools/overridden:def.bzl",
-		}, {
+		},
+		{
 			Path:    "enabled/overridden/overridden_lib.go",
 			Content: `package overridden`,
-		}, {
+		},
+		{
 			Path: "disabled/BUILD.bazel",
-		}, {
+		},
+		{
 			Path:    "disabled/disabled_lib.go",
 			Content: `package disabled`,
-		}, {
+		},
+		{
 			Path: "enabled/multiple_mappings/BUILD.bazel",
 			Content: `
 # gazelle:map_kind go_binary go_binary //tools/go:def.bzl
 # gazelle:map_kind go_library go_library //tools/go:def.bzl
 `,
-		}, {
-			Path:    "enabled/multiple_mappings/multiple_mappings.go",
-			Content: `package main`,
+		},
+		{
+			Path: "enabled/multiple_mappings/multiple_mappings.go",
+			Content: `
+package main
+
+func main() {}`,
 		},
 		{
 			Path: "depend_on_mapped_kind/lib.go",
@@ -2865,15 +2392,30 @@ my_library(
 		{
 			Path: "enabled/existing_rules/unmapped/BUILD.bazel",
 			Content: `
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//tools/go:def.bzl", "my_library")
 
-# An existing rule with an unmapped type is preserved
-go_library(
+# An existing rule with an unmapped type is updated
+my_library(
     name = "go_default_library",
     srcs = ["unmapped_lib.go"],
     importpath = "example.com/mapkind/enabled/existing_rules/unmapped",
     visibility = ["//visibility:public"],
 )
+`,
+		},
+		{
+			Path: "enabled/existing_rules/clean/BUILD.bazel",
+			Content: `
+# gazelle:go_naming_convention import
+# gazelle:map_kind go_library my_go_library //tools/go:def.bzl
+`,
+		},
+		{
+			Path: "enabled/existing_rules/clean_binary/BUILD.bazel",
+			Content: `
+# gazelle:go_naming_convention import
+# gazelle:map_kind go_binary my_go_binary //tools/go:def.bzl
+# gazelle:map_kind go_library my_go_library //tools/go:def.bzl
 `,
 		},
 		{
@@ -2928,6 +2470,870 @@ go_library(
         "//enabled/existing_rules/unmapped:go_default_library",
         "//enabled/overridden:go_default_library",
     ],
+)
+`,
+		},
+	})
+}
+
+func TestAliasKind(t *testing.T) {
+	for name, tc := range map[string]struct {
+		before []testtools.FileSpec
+		after  []testtools.FileSpec
+		index  bool
+	}{
+		"existing aliased kind with matching name has deps updated": {
+			index: false,
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `
+# gazelle:prefix example.com/aliaskind
+# gazelle:go_naming_convention go_default_library
+# gazelle:alias_kind my_custom_macro go_library
+load("//custom:def.bzl", "my_custom_macro")
+
+my_custom_macro(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/aliaskind",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+				{
+					Path: "file.go",
+					Content: `
+package aliaskind
+
+import (
+	_ "example.com/aliaskind/foo"
+	_ "github.com/external"
+)
+`,
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "BUILD.bazel",
+					Content: `
+# gazelle:prefix example.com/aliaskind
+# gazelle:go_naming_convention go_default_library
+# gazelle:alias_kind my_custom_macro go_library
+load("//custom:def.bzl", "my_custom_macro")
+
+my_custom_macro(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/aliaskind",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//foo:go_default_library",
+        "//vendor/github.com/external:go_default_library",
+    ],
+)
+`,
+				},
+			},
+		},
+		"existing aliased kind with different name has deps updated": {
+			index: false,
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `
+# gazelle:prefix example.com/aliaskind
+# gazelle:go_naming_convention go_default_library
+# gazelle:alias_kind my_custom_macro go_library
+load("//custom:def.bzl", "my_custom_macro")
+
+my_custom_macro(
+    name = "custom_lib",
+    srcs = ["file.go"],
+    importpath = "example.com/aliaskind",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+				{
+					Path: "file.go",
+					Content: `
+package aliaskind
+
+import (
+	_ "example.com/aliaskind/foo"
+	_ "github.com/external"
+)
+`,
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "BUILD.bazel",
+					Content: `
+# gazelle:prefix example.com/aliaskind
+# gazelle:go_naming_convention go_default_library
+# gazelle:alias_kind my_custom_macro go_library
+load("//custom:def.bzl", "my_custom_macro")
+
+my_custom_macro(
+    name = "custom_lib",
+    srcs = ["file.go"],
+    importpath = "example.com/aliaskind",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//foo:go_default_library",
+        "//vendor/github.com/external:go_default_library",
+    ],
+)
+`,
+				},
+			},
+		},
+		"existing aliased kind is indexed for deps": {
+			index: true,
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+# gazelle:prefix example.com/aliaskind
+# gazelle:go_naming_convention go_default_library
+# gazelle:alias_kind my_custom_macro go_library
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/aliaskind",
+    visibility = ["//visibility:public"],
+)
+			`,
+				},
+				{
+					Path: "file.go",
+					Content: `
+package aliaskind
+
+import (
+	_ "example.com/aliaskind/foo"
+	_ "github.com/external"
+)
+			`,
+				},
+				{
+					Path: "foo/BUILD.bazel",
+					Content: `
+load("//custom:def.bzl", "my_custom_macro")
+
+my_custom_macro(
+    name = "go_default_library",
+    srcs = ["foo.go"],
+    importpath = "example.com/aliaskind/foo",
+    visibility = ["//visibility:public"],
+)
+			`,
+				},
+				{
+					Path:    "foo/foo.go",
+					Content: "package foo",
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "BUILD.bazel",
+					Content: `
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+# gazelle:prefix example.com/aliaskind
+# gazelle:go_naming_convention go_default_library
+# gazelle:alias_kind my_custom_macro go_library
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/aliaskind",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//foo:go_default_library",
+        "//vendor/github.com/external:go_default_library",
+    ],
+)
+			`,
+				},
+			},
+		},
+		"alias_kind around a mapped_kind": {
+			index: false,
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `
+# gazelle:prefix example.com/aliaskind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library my_library //tools:go:def.bzl
+# gazelle:alias_kind my_custom_macro my_library
+load("//custom:def.bzl", "my_custom_macro")
+
+my_custom_macro(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/aliaskind",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+				{
+					Path: "file.go",
+					Content: `
+package aliaskind
+
+import (
+	_ "example.com/aliaskind/foo"
+	_ "github.com/external"
+)
+`,
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "BUILD.bazel",
+					Content: `
+# gazelle:prefix example.com/aliaskind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library my_library //tools:go:def.bzl
+# gazelle:alias_kind my_custom_macro my_library
+load("//custom:def.bzl", "my_custom_macro")
+
+my_custom_macro(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/aliaskind",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//foo:go_default_library",
+        "//vendor/github.com/external:go_default_library",
+    ],
+)
+`,
+				},
+			},
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			dir, cleanup := testtools.CreateFiles(t, tc.before)
+			t.Cleanup(cleanup)
+			args := []string{"-external=vendored"}
+			if !tc.index {
+				args = append(args, "-index=false")
+			}
+			if err := runGazelle(dir, args); err != nil {
+				t.Fatal(err)
+			}
+			testtools.CheckFiles(t, dir, tc.after)
+		})
+	}
+}
+
+func TestMapKindEdgeCases(t *testing.T) {
+	for name, tc := range map[string]struct {
+		before []testtools.FileSpec
+		after  []testtools.FileSpec
+	}{
+		"new generated rule applies map_kind": {
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library go_library //custom:def.bzl
+`,
+				},
+				{
+					Path:    "dir/file.go",
+					Content: "package dir",
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+		},
+		"existing generated rule with non-renaming mapping applied applies map_kind": {
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library go_library //custom:def.bzl
+`,
+				},
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+				{
+					Path:    "dir/file.go",
+					Content: "package dir",
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+		},
+		"existing generated rule without non-renaming mapping applied applies map_kind": {
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library go_library //custom:def.bzl
+`,
+				},
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+				{
+					Path:    "dir/file.go",
+					Content: "package dir",
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+		},
+		"existing generated rule without renaming mapping applied applies map_kind": {
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library custom_go_library //custom:def.bzl
+`,
+				},
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+				{
+					Path:    "dir/file.go",
+					Content: "package dir",
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "custom_go_library")
+
+custom_go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+		},
+		"existing generated rule with renaming mapping applied preserves map_kind": {
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library custom_go_library //custom:def.bzl
+`,
+				},
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "custom_go_library")
+
+custom_go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+				{
+					Path:    "dir/file.go",
+					Content: "package dir",
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "custom_go_library")
+
+custom_go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+		},
+		"unrelated non-generated non-map_kind'd rule of same kind applies map_kind if other rule is generated": {
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library go_library //custom:def.bzl
+		`,
+				},
+				{
+					Path:    "dir/file.go",
+					Content: "package dir",
+				},
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "custom_lib",
+    srcs = ["custom_lib.go"],
+)
+`,
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_library")
+
+go_library(
+    name = "custom_lib",
+    srcs = ["custom_lib.go"],
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+		},
+		"unrelated non-generated non-renaming map_kind'd rule of same kind keeps map_kind if other rule is generated": {
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library go_library //custom:def.bzl
+		`,
+				},
+				{
+					Path:    "dir/file.go",
+					Content: "package dir",
+				},
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_library")
+
+go_library(
+    name = "custom_lib",
+    srcs = ["custom_lib.go"],
+)
+`,
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_library")
+
+go_library(
+    name = "custom_lib",
+    srcs = ["custom_lib.go"],
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+		},
+		"unrelated non-generated non-renaming map_kind'd rule keeps map_kind if other generated rule is newly generated": {
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library go_library //custom:def.bzl
+# gazelle:map_kind go_test go_test //custom:def.bzl
+		`,
+				},
+				{
+					Path:    "dir/file.go",
+					Content: "package dir",
+				},
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_test")
+
+go_test(
+    name = "custom_test",
+    srcs = ["custom_test.java"],
+)
+`,
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_library", "go_test")
+
+go_test(
+    name = "custom_test",
+    srcs = ["custom_test.java"],
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+		},
+		"unrelated non-generated non-renaming map_kind'd rule keeps map_kind if other generated rule already existed": {
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library go_library //custom:def.bzl
+# gazelle:map_kind go_test go_test //custom:def.bzl
+`,
+				},
+				{
+					Path:    "dir/file.go",
+					Content: "package dir",
+				},
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_library", "go_test")
+
+go_test(
+    name = "custom_test",
+    srcs = ["custom_test.java"],
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//custom:def.bzl", "go_library", "go_test")
+
+go_test(
+    name = "custom_test",
+    srcs = ["custom_test.java"],
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+		},
+		"transitive remappings are applied": {
+			before: []testtools.FileSpec{
+				{
+					Path: "WORKSPACE",
+				},
+				{
+					Path: "BUILD.bazel",
+					Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library custom_go_library //custom:def.bzl
+		`,
+				},
+				{
+					Path:    "dir/file.go",
+					Content: "package dir",
+				},
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `# gazelle:map_kind custom_go_library other_custom_go_library //another/custom:def.bzl
+`,
+				},
+			},
+			after: []testtools.FileSpec{
+				{
+					Path: "dir/BUILD.bazel",
+					Content: `load("//another/custom:def.bzl", "other_custom_go_library")
+
+# gazelle:map_kind custom_go_library other_custom_go_library //another/custom:def.bzl
+
+other_custom_go_library(
+    name = "go_default_library",
+    srcs = ["file.go"],
+    importpath = "example.com/mapkind/dir",
+    visibility = ["//visibility:public"],
+)
+`,
+				},
+			},
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			dir, cleanup := testtools.CreateFiles(t, tc.before)
+			t.Cleanup(cleanup)
+			if err := runGazelle(dir, []string{"-external=vendored"}); err != nil {
+				t.Fatal(err)
+			}
+			testtools.CheckFiles(t, dir, tc.after)
+		})
+	}
+}
+
+func TestMapKindLoop(t *testing.T) {
+	dir, cleanup := testtools.CreateFiles(t, []testtools.FileSpec{
+		{
+			Path: "WORKSPACE",
+		},
+		{
+			Path: "BUILD.bazel",
+			Content: `# gazelle:prefix example.com/mapkind
+# gazelle:go_naming_convention go_default_library
+# gazelle:map_kind go_library custom_go_library //custom:def.bzl
+		`,
+		},
+		{
+			Path:    "dir/file.go",
+			Content: "package dir",
+		},
+		{
+			Path: "dir/BUILD.bazel",
+			Content: `# gazelle:map_kind custom_go_library go_library @io_bazel_rules_go//go:def.bzl
+`,
+		},
+	})
+	t.Cleanup(cleanup)
+	err := runGazelle(dir, []string{"-external=vendored"})
+	if err == nil {
+		t.Fatal("Expected error running gazelle with map_kind loop")
+	}
+	msg := err.Error()
+	if !strings.Contains(msg, "looking up mapped kind: found loop of map_kind replacements: go_library -> custom_go_library -> go_library") {
+		t.Fatalf("Expected error to contain useful descriptors but was %q", msg)
+	}
+}
+
+// TestMapKindEmbeddedResolve tests the gazelle:map_kind properly resolves
+// dependencies for embedded rules (see #1162).
+func TestMapKindEmbeddedResolve(t *testing.T) {
+	files := []testtools.FileSpec{
+		{
+			Path: "WORKSPACE",
+		}, {
+			Path: "BUILD.bazel",
+			Content: `
+# gazelle:prefix example.com/mapkind
+# gazelle:map_kind go_library my_go_library //:my.bzl
+`,
+		}, {
+			Path: "a/a.proto",
+			Content: `
+syntax = "proto3";
+
+package test;
+option go_package = "example.com/mapkind/a";
+`,
+		}, {
+			Path: "b/b.proto",
+			Content: `
+syntax = "proto3";
+
+package test;
+option go_package = "example.com/mapkind/b";
+
+import "a/a.proto";
+`,
+		},
+	}
+	dir, cleanup := testtools.CreateFiles(t, files)
+	defer cleanup()
+
+	if err := runGazelle(dir, []string{"-external=vendored"}); err != nil {
+		t.Fatal(err)
+	}
+
+	testtools.CheckFiles(t, dir, []testtools.FileSpec{
+		{
+			Path: "a/BUILD.bazel",
+			Content: `
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("//:my.bzl", "my_go_library")
+
+proto_library(
+    name = "a_proto",
+    srcs = ["a.proto"],
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "a_go_proto",
+    importpath = "example.com/mapkind/a",
+    proto = ":a_proto",
+    visibility = ["//visibility:public"],
+)
+
+my_go_library(
+    name = "a",
+    embed = [":a_go_proto"],
+    importpath = "example.com/mapkind/a",
+    visibility = ["//visibility:public"],
+)
+`,
+		},
+		{
+			Path: "b/BUILD.bazel",
+			Content: `
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("//:my.bzl", "my_go_library")
+
+proto_library(
+    name = "b_proto",
+    srcs = ["b.proto"],
+    visibility = ["//visibility:public"],
+    deps = ["//a:a_proto"],
+)
+
+go_proto_library(
+    name = "b_go_proto",
+    importpath = "example.com/mapkind/b",
+    proto = ":b_proto",
+    visibility = ["//visibility:public"],
+    deps = ["//a"],
+)
+
+my_go_library(
+    name = "b",
+    embed = [":b_go_proto"],
+    importpath = "example.com/mapkind/b",
+    visibility = ["//visibility:public"],
 )
 `,
 		},
@@ -3145,7 +3551,7 @@ github.com/selvatico/go-mocket v1.0.7/go.mod h1:7bSWzuNieCdUlanCVu3w0ppS0LvDtPAZ
 	if err := runGazelle(dir, args); err == nil {
 		t.Fatal("expected error, got nil")
 	} else if err.Error() != errMsg {
-		t.Error(fmt.Sprintf("want %s, got %s", errMsg, err.Error()))
+		t.Errorf("want %s, got %s", errMsg, err.Error())
 	}
 }
 
@@ -3326,7 +3732,7 @@ proto_library(
 )
 
 go_proto_library(
-    name = "foo_go_proto",
+    name = "existing_go_proto",
     importpath = "example.com/foo",
     proto = ":existing_proto",
     visibility = ["//visibility:public"],
@@ -3334,7 +3740,7 @@ go_proto_library(
 
 go_library(
     name = "foo",
-    embed = [":foo_go_proto"],
+    embed = [":existing_go_proto"],
     importpath = "example.com/foo",
     visibility = ["//visibility:public"],
 )`,
@@ -3423,12 +3829,14 @@ import (
 		t.Fatal(err)
 	}
 
-	testtools.CheckFiles(t, dir, []testtools.FileSpec{{
-		Path:     filepath.Join("foo", "BUILD.bazel"),
-		NotExist: true,
-	}, {
-		Path: filepath.Join("pb", "BUILD.bazel"),
-		Content: `
+	testtools.CheckFiles(t, dir, []testtools.FileSpec{
+		{
+			Path:     filepath.Join("foo", "BUILD.bazel"),
+			NotExist: true,
+		},
+		{
+			Path: filepath.Join("pb", "BUILD.bazel"),
+			Content: `
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
@@ -3436,7 +3844,7 @@ proto_library(
     srcs = ["pb.proto"],
     visibility = ["//visibility:public"],
 )`,
-	},
+		},
 		{
 			Path: filepath.Join("bar", "BUILD.bazel"),
 			Content: `
@@ -3531,8 +3939,8 @@ func TestGoGenerateProto(t *testing.T) {
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{
 		{
 			Path: "proto/BUILD.bazel",
-			Content: `load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 # gazelle:go_generate_proto false
 # gazelle:prefix example.com/proto
@@ -3691,6 +4099,94 @@ gazelle_dependencies()
 	})
 }
 
+func TestUpdateReposSkipsDirectiveRepo(t *testing.T) {
+	files := []testtools.FileSpec{
+		{
+			Path: "WORKSPACE",
+			Content: `
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "io_bazel_rules_go",
+    sha256 = "2697f6bc7c529ee5e6a2d9799870b9ec9eaeb3ee7d70ed50b87a2c2c97e13d9e",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.23.8/rules_go-v0.23.8.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.23.8/rules_go-v0.23.8.tar.gz",
+    ],
+)
+
+http_archive(
+    name = "bazel_gazelle",
+    sha256 = "cdb02a887a7187ea4d5a27452311a75ed8637379a1287d8eeb952138ea485f7d",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.21.1/bazel-gazelle-v0.21.1.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.21.1/bazel-gazelle-v0.21.1.tar.gz",
+    ],
+)
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_toolchains")
+
+go_rules_dependencies()
+
+go_register_toolchains()
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
+gazelle_dependencies()
+
+# gazelle:repository go_repository name=org_golang_x_mod importpath=golang.org/x/mod
+`,
+		},
+	}
+
+	dir, cleanup := testtools.CreateFiles(t, files)
+	defer cleanup()
+
+	args := []string{"update-repos", "golang.org/x/mod@v0.3.0"}
+	if err := runGazelle(dir, args); err != nil {
+		t.Fatal(err)
+	}
+
+	testtools.CheckFiles(t, dir, []testtools.FileSpec{
+		{
+			Path: "WORKSPACE",
+			Content: `
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "io_bazel_rules_go",
+    sha256 = "2697f6bc7c529ee5e6a2d9799870b9ec9eaeb3ee7d70ed50b87a2c2c97e13d9e",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.23.8/rules_go-v0.23.8.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.23.8/rules_go-v0.23.8.tar.gz",
+    ],
+)
+
+http_archive(
+    name = "bazel_gazelle",
+    sha256 = "cdb02a887a7187ea4d5a27452311a75ed8637379a1287d8eeb952138ea485f7d",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.21.1/bazel-gazelle-v0.21.1.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.21.1/bazel-gazelle-v0.21.1.tar.gz",
+    ],
+)
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains()
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
+gazelle_dependencies()
+
+# gazelle:repository go_repository name=org_golang_x_mod importpath=golang.org/x/mod
+`,
+		},
+	})
+}
+
 func TestUpdateReposOldBoilerplateNewMacro(t *testing.T) {
 	files := []testtools.FileSpec{
 		{
@@ -3804,8 +4300,8 @@ http_archive(
     ],
 )
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -3848,8 +4344,8 @@ http_archive(
     ],
 )
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_repository(
     name = "org_golang_x_mod",
@@ -3893,8 +4389,8 @@ http_archive(
     ],
 )
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -3937,8 +4433,8 @@ http_archive(
     ],
 )
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("//:deps.bzl", "deps")
 
 # gazelle:repository_macro deps.bzl%deps
@@ -4252,4 +4748,369 @@ require golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
 		t.Fatal(err)
 	}
 	testtools.CheckFiles(t, dir, []testtools.FileSpec{goSumFile})
+}
+
+func TestResolveGoStaticFromGoMod(t *testing.T) {
+	dir, cleanup := testtools.CreateFiles(t, []testtools.FileSpec{
+		{Path: "WORKSPACE"},
+		{
+			Path: "go.mod",
+			Content: `
+module example.com/use
+
+go 1.19
+
+require example.com/dep v1.0.0
+`,
+		},
+		{
+			Path: "use.go",
+			Content: `
+package use
+
+import _ "example.com/dep/pkg"
+`,
+		},
+	})
+	defer cleanup()
+
+	args := []string{
+		"-go_prefix=example.com/use",
+		"-external=static",
+		"-go_naming_convention_external=import",
+	}
+	if err := runGazelle(dir, args); err != nil {
+		t.Fatal(err)
+	}
+
+	testtools.CheckFiles(t, dir, []testtools.FileSpec{
+		{
+			Path: "BUILD.bazel",
+			Content: `
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "use",
+    srcs = ["use.go"],
+    importpath = "example.com/use",
+    visibility = ["//visibility:public"],
+    deps = ["@com_example_dep//pkg"],
+)
+`,
+		},
+	})
+}
+
+func TestMigrateSelectFromWorkspaceToBzlmod(t *testing.T) {
+	dir, cleanup := testtools.CreateFiles(t, []testtools.FileSpec{
+		{Path: "WORKSPACE"},
+		{
+			Path:    "MODULE.bazel",
+			Content: `bazel_dep(name = "rules_go", version = "0.39.1", repo_name = "my_rules_go")`,
+		},
+		{
+			Path: "BUILD",
+			Content: `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "foo",
+    srcs = [
+        "bar.go",
+        "foo.go",
+        "foo_android.go",
+        "foo_android_build_tag.go",
+    ],
+    importpath = "example.com/foo",
+    visibility = ["//visibility:public"],
+    deps = select({
+        "@io_bazel_rules_go//go/platform:android": [
+            "//outer",
+            "//outer/inner",
+            "//outer_android_build_tag",
+            "//outer_android_suffix",
+            "@com_github_jr_hacker_tools//:go_default_library",
+        ],
+        "@io_bazel_rules_go//go/platform:linux": [
+            "//outer",
+            "//outer/inner",
+            "@com_github_jr_hacker_tools//:go_default_library",
+        ],
+        "//conditions:default": [],
+    }),
+)
+`,
+		},
+		{
+			Path: "foo.go",
+			Content: `
+// +build linux
+
+package foo
+
+import (
+    _ "example.com/foo/outer"
+    _ "example.com/foo/outer/inner"
+    _ "github.com/jr_hacker/tools"
+)
+`,
+		},
+		{
+			Path: "foo_android_build_tag.go",
+			Content: `
+// +build android
+
+package foo
+
+import (
+    _ "example.com/foo/outer_android_build_tag"
+)
+`,
+		},
+		{
+			Path: "foo_android.go",
+			Content: `
+package foo
+
+import (
+    _ "example.com/foo/outer_android_suffix"
+)
+`,
+		},
+		{
+			Path: "bar.go",
+			Content: `// +build linux
+
+package foo
+`,
+		},
+		{Path: "outer/outer.go", Content: "package outer"},
+		{Path: "outer_android_build_tag/outer.go", Content: "package outer_android_build_tag"},
+		{Path: "outer_android_suffix/outer.go", Content: "package outer_android_suffix"},
+		{Path: "outer/inner/inner.go", Content: "package inner"},
+	})
+	want := `load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "foo",
+    srcs = [
+        "bar.go",
+        "foo.go",
+        "foo_android.go",
+        "foo_android_build_tag.go",
+    ],
+    importpath = "example.com/foo",
+    visibility = ["//visibility:public"],
+    deps = select({
+        "@my_rules_go//go/platform:android": [
+            "//outer",
+            "//outer/inner",
+            "//outer_android_build_tag",
+            "//outer_android_suffix",
+            "@com_github_jr_hacker_tools//:go_default_library",
+        ],
+        "@my_rules_go//go/platform:linux": [
+            "//outer",
+            "//outer/inner",
+            "@com_github_jr_hacker_tools//:go_default_library",
+        ],
+        "//conditions:default": [],
+    }),
+)
+`
+	defer cleanup()
+
+	if err := runGazelle(dir, []string{"-go_prefix", "example.com/foo"}); err != nil {
+		t.Fatal(err)
+	}
+	if got, err := os.ReadFile(filepath.Join(dir, "BUILD")); err != nil {
+		t.Fatal(err)
+	} else if string(got) != want {
+		t.Fatalf("got %s ; want %s; diff %s", string(got), want, cmp.Diff(string(got), want))
+	}
+}
+
+func TestUpdateReposWithBzlmodWithToMacro(t *testing.T) {
+	dir, cleanup := testtools.CreateFiles(t, []testtools.FileSpec{
+		{Path: "WORKSPACE"},
+		{
+			Path: "go.mod",
+			Content: `
+module example.com/foo/v2
+
+go 1.19
+
+require (
+	github.com/stretchr/testify v1.8.4
+)
+`,
+		},
+	})
+
+	t.Cleanup(cleanup)
+
+	args := []string{
+		"update-repos",
+		"-from_file=go.mod",
+		"-to_macro=go_deps.bzl%my_go_deps",
+		"-bzlmod",
+	}
+	if err := runGazelle(dir, args); err != nil {
+		t.Fatal(err)
+	}
+
+	// Confirm that the WORKSPACE is still empty
+	want := ""
+	if got, err := os.ReadFile(filepath.Join(dir, "WORKSPACE")); err != nil {
+		t.Fatal(err)
+	} else if string(got) != want {
+		t.Fatalf("got %s ; want %s; diff %s", string(got), want, cmp.Diff(string(got), want))
+	}
+
+	// Confirm that the macro file was written
+	want = `load("@bazel_gazelle//:deps.bzl", "go_repository")
+
+def my_go_deps():
+    go_repository(
+        name = "com_github_stretchr_testify",
+        importpath = "github.com/stretchr/testify",
+        sum = "h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=",
+        version = "v1.8.4",
+    )
+`
+	if got, err := os.ReadFile(filepath.Join(dir, "go_deps.bzl")); err != nil {
+		t.Fatal(err)
+	} else if string(got) != want {
+		t.Fatalf("got %s ; want %s; diff %s", string(got), want, cmp.Diff(string(got), want))
+	}
+}
+
+func TestUpdateReposWithBzlmodWithoutToMacro(t *testing.T) {
+	dir, cleanup := testtools.CreateFiles(t, []testtools.FileSpec{
+		{Path: "WORKSPACE"},
+		{
+			Path: "go.mod",
+			Content: `
+module example.com/foo/v2
+
+go 1.19
+
+require (
+	github.com/stretchr/testify v1.8.4
+)
+`,
+		},
+	})
+
+	t.Cleanup(cleanup)
+
+	args := []string{
+		"update-repos",
+		"-from_file=go.mod",
+		"-bzlmod",
+	}
+	if err := runGazelle(dir, args); err != nil {
+		t.Fatal(err)
+	}
+
+	// Confirm that the WORKSPACE is still empty
+	want := ""
+	if got, err := os.ReadFile(filepath.Join(dir, "WORKSPACE")); err != nil {
+		t.Fatal(err)
+	} else if string(got) != want {
+		t.Fatalf("got %s ; want %s; diff %s", string(got), want, cmp.Diff(string(got), want))
+	}
+}
+
+func TestCgoFlagsHaveExternalPrefix(t *testing.T) {
+	files := []testtools.FileSpec{
+		{
+			Path:    "external/com_example_foo_v2/go.mod",
+			Content: "module example.com/foo/v2",
+		}, {
+			Path: "external/com_example_foo_v2/cgo_static.go",
+			Content: `
+package duckdb
+
+/*
+#cgo LDFLAGS: -lstdc++ -lm -ldl -L${SRCDIR}/deps
+*/
+import "C"
+`,
+		},
+	}
+	dir, cleanup := testtools.CreateFiles(t, files)
+	defer cleanup()
+
+	repoRoot := filepath.Join(dir, "external", "com_example_foo_v2")
+
+	args := []string{"update", "-repo_root", repoRoot, "-go_prefix", "example.com/foo/v2", "-go_repository_mode", "-go_repository_module_mode"}
+	if err := runGazelle(repoRoot, args); err != nil {
+		t.Fatal(err)
+	}
+
+	testtools.CheckFiles(t, repoRoot, []testtools.FileSpec{
+		{
+			Path: "BUILD.bazel",
+			Content: `
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "foo",
+    srcs = ["cgo_static.go"],
+    cgo = True,
+    clinkopts = ["-lstdc++ -lm -ldl -Lexternal/com_example_foo_v2/deps"],
+    importpath = "example.com/foo/v2",
+    importpath_aliases = ["example.com/foo"],
+    visibility = ["//visibility:public"],
+)
+`,
+		},
+	})
+}
+
+func TestCgoFlagsHaveDotDotPrefixWithSiblingRepositoryLayout(t *testing.T) {
+	files := []testtools.FileSpec{
+		{
+			Path:    "execroot/com_example_foo_v2/go.mod",
+			Content: "module example.com/foo/v2",
+		}, {
+			Path: "execroot/com_example_foo_v2/cgo_static.go",
+			Content: `
+package duckdb
+
+/*
+#cgo LDFLAGS: -lstdc++ -lm -ldl -L${SRCDIR}/deps
+*/
+import "C"
+`,
+		},
+	}
+	dir, cleanup := testtools.CreateFiles(t, files)
+	defer cleanup()
+
+	repoRoot := filepath.Join(dir, "execroot", "com_example_foo_v2")
+
+	args := []string{"update", "-repo_root", repoRoot, "-go_prefix", "example.com/foo/v2", "-go_repository_mode", "-go_repository_module_mode"}
+	if err := runGazelle(repoRoot, args); err != nil {
+		t.Fatal(err)
+	}
+
+	testtools.CheckFiles(t, repoRoot, []testtools.FileSpec{
+		{
+			Path: "BUILD.bazel",
+			Content: `
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "foo",
+    srcs = ["cgo_static.go"],
+    cgo = True,
+    clinkopts = ["-lstdc++ -lm -ldl -L../com_example_foo_v2/deps"],
+    importpath = "example.com/foo/v2",
+    importpath_aliases = ["example.com/foo"],
+    visibility = ["//visibility:public"],
+)
+`,
+		},
+	})
 }

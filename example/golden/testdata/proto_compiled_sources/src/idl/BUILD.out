@@ -1,5 +1,5 @@
-load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@build_stack_rules_proto//rules:proto_compiled_sources.bzl", "proto_compiled_sources")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 # gazelle:proto_strip_import_prefix /src
 
