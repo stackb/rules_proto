@@ -3,7 +3,6 @@ package proto_go_modules
 import (
 	"flag"
 	"log"
-	"strconv"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -16,7 +15,7 @@ import (
 
 const (
 	protoGoModulesLanguageName = "proto_go_modules"
-	enableDirective            = "proto_go_modules_enable"
+	indexKindDirective         = "proto_go_modules_index_kind"
 )
 
 type Config interface {
@@ -25,15 +24,16 @@ type Config interface {
 }
 
 func NewLanguage() language.Language {
-	l := &ProtoGoModulesLanguage{}
+	l := &ProtoGoModulesLanguage{
+		indexKinds: make(map[string]bool),
+	}
 	return l
 }
 
 // ProtoGoModulesLanguage implements language.Language.
 type ProtoGoModulesLanguage struct {
-	enabled    bool
 	loadName   string
-	indexKinds string
+	indexKinds map[string]bool
 	modules    *protoGoModules
 }
 
@@ -42,11 +42,7 @@ func (l ProtoGoModulesLanguage) LoadName() string {
 }
 
 func (l ProtoGoModulesLanguage) IndexKinds() map[string]bool {
-	kinds := make(map[string]bool)
-	for _, kind := range strings.Split(l.indexKinds, ",") {
-		kinds[kind] = true
-	}
-	return kinds
+	return l.indexKinds
 }
 
 // Name returns the name of the language. This should be a prefix of the kinds
@@ -59,7 +55,6 @@ func (l *ProtoGoModulesLanguage) Name() string { return protoGoModulesLanguageNa
 // interface, but are otherwise unused.
 func (l *ProtoGoModulesLanguage) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
 	fs.StringVar(&l.loadName, "proto_go_modules_load_name", "@build_stack_rules_proto//rules/go:proto_go_modules.bzl", "Load source for the go_module and go_modules rule symbols")
-	fs.StringVar(&l.indexKinds, "proto_go_modules_index_kinds", "proto_go_library", "Rule kinds to index as proto_go_modules deps")
 }
 
 func (l *ProtoGoModulesLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
@@ -68,7 +63,7 @@ func (l *ProtoGoModulesLanguage) CheckFlags(fs *flag.FlagSet, c *config.Config) 
 }
 
 func (*ProtoGoModulesLanguage) KnownDirectives() []string {
-	return []string{enableDirective}
+	return []string{indexKindDirective}
 }
 
 // Configure implements config.Configurer
@@ -77,12 +72,13 @@ func (l *ProtoGoModulesLanguage) Configure(c *config.Config, rel string, f *rule
 		return
 	}
 	for _, d := range f.Directives {
-		if d.Key == enableDirective {
-			want, err := strconv.ParseBool(d.Value)
-			if err != nil {
-				log.Panicln("malformed directive:", d, err)
+		if d.Key == indexKindDirective {
+			if d.Value == "" {
+				log.Fatalf("error: gazelle:%s must have a non-empty list of rule kinds to index", indexKindDirective)
 			}
-			l.enabled = want
+			for _, kind := range strings.Fields(d.Value) {
+				l.indexKinds[kind] = true
+			}
 		}
 	}
 }
@@ -164,7 +160,7 @@ func (l *ProtoGoModulesLanguage) Resolve(
 // Any non-fatal errors this function encounters should be logged using
 // log.Print.
 func (l *ProtoGoModulesLanguage) GenerateRules(args language.GenerateArgs) language.GenerateResult {
-	if !l.enabled {
+	if len(l.indexKinds) == 0 {
 		return language.GenerateResult{}
 	}
 

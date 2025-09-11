@@ -1,4 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "GoArchive")
+load("@io_bazel_rules_go//go/private:common.bzl", "GO_TOOLCHAIN")
 
 ProtoGoModulesInfo = provider(
     doc = "info provided from a go_modules rule",
@@ -55,17 +56,18 @@ def _proto_go_modules_impl(ctx):
     # that they will be available for copy operations.
     srcs = []
 
+    # get the go toolchain for (1) the go tool and (2) the version that we stamp
+    # into generated go.mod files
+    toolchain = ctx.toolchains[GO_TOOLCHAIN]
+
     # lines is a list of shell script commands to be written to the executable
     # output script.
     lines = [
         "set -euox pipefail",
         "cwd=$PWD",
-        """cd $BUILD_WORKING_DIRECTORY""",
+        """gobin="$PWD/%s" """ % toolchain.sdk.go.short_path,
+        """cd $BUILD_WORKING_DIRECTORY """,
     ]
-    if ctx.attr.go_version == "go.mod":
-        lines.append("""go_version=$(grep '^go' < %s)""" % ctx.attr.go_version)
-    else:
-        lines.append("""go_version='go %s'""" % ctx.attr.go_version)
 
     for go_archive_data in want.values():
         dstdir = "./%s/%s" % (ctx.attr.srcroot, go_archive_data.importpath)
@@ -74,7 +76,7 @@ def _proto_go_modules_impl(ctx):
         lines.append("# module=" + str(go_archive_data.importpath))
         lines.append("mkdir -p %s" % dstdir)
         lines.append("echo 'module %s' > %s/go.mod" % (go_archive_data.importpath, dstdir))
-        lines.append("""echo "${go_version}" >> %s/go.mod""" % dstdir)
+        lines.append("""echo "go %s" >> %s/go.mod""" % (toolchain.sdk.version, dstdir))
 
         for src in go_archive_data.srcs:
             srcs.append(src)
@@ -82,7 +84,7 @@ def _proto_go_modules_impl(ctx):
             lines.append("""cp -f "${cwd}/%s" %s""" % (src.short_path, dst))
             lines.append("""echo '# %s' >> %s/go.mod""" % (src.short_path, dstdir))  # to record where the src was copied from
 
-        lines.append("go mod edit -replace %s=%s" % (go_archive_data.importpath, dstdir))
+        lines.append(""""${gobin}" mod edit -replace %s=%s""" % (go_archive_data.importpath, dstdir))
 
     lines.append("")
     lines.append("")
@@ -101,7 +103,7 @@ def _proto_go_modules_impl(ctx):
         DefaultInfo(
             executable = ctx.outputs.executable,
             files = depset([ctx.outputs.executable]),
-            runfiles = ctx.runfiles(files = srcs),
+            runfiles = ctx.runfiles(files = srcs + [toolchain.sdk.go]),
         ),
         ProtoGoModulesInfo(
             label = ctx.label,
@@ -123,13 +125,11 @@ proto_go_modules = rule(
         "imports": attr.string_list(
             doc = "list of go importpaths that represent top-level proto imports that are desired.  The transitive set of proto import dependencies will be computed from this set",
         ),
-        "go_version": attr.string(
-            default = "1.23.0",
-        ),
         "srcroot": attr.string(
             default = "local",
         ),
     },
     provides = [DefaultInfo, ProtoGoModulesInfo],
+    toolchains = [GO_TOOLCHAIN],
     executable = True,
 )
