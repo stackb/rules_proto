@@ -26,6 +26,6 @@ import (
 var languages = []language.Language{
 	proto.NewLanguage(),
 	protobuf.NewLanguage(),
-	proto_go_modules.NewLanguage(),
 	golang.NewLanguage(),
+	proto_go_modules.NewLanguage(),
 }
