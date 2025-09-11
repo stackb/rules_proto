@@ -3,7 +3,7 @@
 This package registers two rules:
 
 | Name                  | Implementation                           |
-| --------------------- | ---------------------------------------- |
+|-----------------------|------------------------------------------|
 | `proto_scala_library` | `stackb:rules_proto:proto_scala_library` |
 | `grpc_scala_library`  | `stackb:rules_proto:grpc_scala_library`  |
 

@@ -2,10 +2,9 @@
 
 The tests in this package are used to:
 
-1. that gazelle runs properly (generates correct output from BUILD.in to
+1. check that gazelle runs properly (generates correct output from BUILD.in to
    BUILD.out)
-2. that the build artifacts can actually be built (bazel build //...).
-3. Generate documentation.
+2. assert that the build artifacts can actually be built (bazel build //...).
 
 `//example/golden:golden_test` runs the gazelle tests.  Each subdirectory of
 `testdata/*` represents a separate test.  The `BUILD.in` file is used as the
@@ -16,6 +15,8 @@ The individual `gazelle_testdata_example` tests package up specific examples and
 generate a `go_bazel_test` for the example.  So for `//example/golden:java`, a
 `//example/golden:java_test` will run a test that actually tries to build
 everything within the workspace based on the contents of `BUILD.out`.
+
+> these are currently tagged `manual` due to timeouts in CI.
 
 # debugging golden example tests
 
