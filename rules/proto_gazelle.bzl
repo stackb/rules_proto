@@ -19,6 +19,7 @@ load(
     "@bazel_skylib//lib:shell.bzl",
     "shell",
 )
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 
 DEFAULT_LANGUAGES = [
     "@bazel_gazelle//language/proto:go_default_library",
@@ -176,7 +177,7 @@ def proto_gazelle(name, **kwargs):
         tags = tags,
         **kwargs
     )
-    native.sh_binary(
+    sh_binary(
         name = name,
         srcs = [runner_name],
         tags = tags,

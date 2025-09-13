@@ -1,6 +1,8 @@
 "proto_go_modules.bzl provides the 'proto_go_modules' rule"
 
 load("@io_bazel_rules_go//go:def.bzl", "GoArchive")
+
+# buildifier: disable=bzl-visibility
 load("@io_bazel_rules_go//go/private:common.bzl", "GO_TOOLCHAIN")
 
 ProtoGoModulesInfo = provider(

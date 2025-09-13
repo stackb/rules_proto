@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@bazel_tools//tools/build_defs/repo:utils.bzl", "patch", "read_user_netrc", "use_netrc")
-load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
 load("@bazel_gazelle//internal:common.bzl", "env_execute", "executable_extension", "watch")
+load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
+load("@bazel_tools//tools/build_defs/repo:utils.bzl", "patch", "read_user_netrc", "use_netrc")
 
 # copied from
 # https://github.com/bazelbuild/bazel/blob/d273cb62f43ef8169415cf60fc96e503ea2ad823/tools/build_defs/repo/http.bzl#L76
@@ -52,6 +52,9 @@ The final HTTP request would have the following header:
 Authorization: Bearer RANDOM-TOKEN
 </pre>
 """
+
+# developer debugging setting
+DEBUG = False
 
 # We can't disable timeouts on Bazel, but we can set them to large values.
 _GO_REPOSITORY_TIMEOUT = 86400
@@ -242,11 +245,14 @@ def _proto_repository_impl(ctx):
         fail("%s: %s" % (ctx.name, result.stderr))
 
     _delete_files(ctx, ctx.attr.deleted_files)
-    # _find(ctx)
+    if DEBUG:
+        _find(ctx)
 
     # Repositories are fetched. Determine if build file generation is needed.
     build_file_names = ctx.attr.build_file_name.split(",")
     existing_build_file = ""
+    build_file_name = build_file_names[0]
+
     for name in build_file_names:
         path = ctx.path(name)
         if path.exists and not env_execute(ctx, ["test", "-f", path]).return_code:
@@ -389,6 +395,8 @@ def _find(ctx):
     )
     if result.return_code:
         fail("%s: %s" % (ctx.name, result.stderr))
+
+    # buildifier: disable=print
     print("result:", result.stdout)
 
 def _delete_files(ctx, files_to_delete):
