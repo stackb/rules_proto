@@ -1,5 +1,0 @@
-# Using scala_deps here because it provides rules_jvm_external, there is nothing
-# scala-specific about this example.
-load("@build_stack_rules_proto//deps:scala_deps.bzl", "scala_deps")
-
-scala_deps()

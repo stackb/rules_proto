@@ -24,8 +24,8 @@ Have any `BUILD.bazel` files crept into the `vendor/` tree?  These are globbed
 in `//:all_files` and the presence of one will elide files in that package from
 the glob.  You might not see them because they are .gitignored.
 
-```
-bazel query //:all_files --output build > all_files.BUILD
+```sh
+$ bazel query //:all_files --output build > all_files.BUILD
 ```
 
 Try and build from the main test workspace.  To do that, open up rules_go in the

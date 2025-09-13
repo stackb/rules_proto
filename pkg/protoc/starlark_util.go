@@ -52,7 +52,7 @@ func newStringList(in []string) *starlark.List {
 	return starlark.NewList(values)
 }
 
-func newStringListDict(in map[string]map[string]bool) *starlark.Dict {
+func newStringListDict(_ map[string]map[string]bool) *starlark.Dict {
 	out := &starlark.Dict{}
 	return out
 }

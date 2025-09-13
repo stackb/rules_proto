@@ -1,3 +1,5 @@
+"proto_go_modules.bzl provides the 'proto_go_modules' rule"
+
 load("@io_bazel_rules_go//go:def.bzl", "GoArchive")
 load("@io_bazel_rules_go//go/private:common.bzl", "GO_TOOLCHAIN")
 

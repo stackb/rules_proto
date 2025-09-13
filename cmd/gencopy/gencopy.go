@@ -18,6 +18,7 @@ import (
 const (
 	ModeUpdate = "update"
 	ModeCheck  = "check"
+	debug      = false
 )
 
 var (
@@ -82,9 +83,6 @@ func copyFile(src, dst string, mode os.FileMode) error {
 	if _, err := os.Stat(src); os.IsNotExist(err) {
 		return fmt.Errorf("copyFile: src not found: %s", src)
 	}
-
-	// NOTE: for some reason the io.Copy approach was writing an empty file...
-	// for now OK to copy in-memory
 
 	data, err := os.ReadFile(src)
 	if err != nil {
@@ -231,7 +229,9 @@ func readConfig(workspaceRootDirectory string) (*Config, error) {
 		cfg.FileMode = "0644"
 	}
 
-	// log.Printf("%+v", cfg)
+	if debug {
+		log.Printf("%+v", cfg)
+	}
 
 	return cfg, nil
 }

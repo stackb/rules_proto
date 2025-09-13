@@ -13,7 +13,6 @@ CONFIG_SHORT_PATH=@@CONFIG_SHORT_PATH@@
 # set -x
 # echo "PWD: $PWD"
 # find .
-# find ..
 
 # Get the directory of the current script (part of the runfiles tree)
 script_dir=$(dirname "$0")
