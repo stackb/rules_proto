@@ -1,7 +1,5 @@
 load("@buildifier_prebuilt//:rules.bzl", "buildifier", "buildifier_test")
 
-# gazelle:exclude_from_release
-
 buildifier(
     name = "buildifier.fix",
     diff_command = "diff",

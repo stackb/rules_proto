@@ -30,6 +30,7 @@ gazelle_binary(
 proto_gazelle(
     name = "gazelle",
     cfgs = [":rules_proto_config.yaml"],
+    external = "static",
     gazelle = ":gazelle-protobuf",
     imports = [
         "@googleapis//:imports.csv",
