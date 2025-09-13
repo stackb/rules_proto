@@ -10,8 +10,6 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//cmd/gazelle:diff.go",
     "@build_stack_rules_proto//cmd/gazelle:fix-update.go",
     "@build_stack_rules_proto//cmd/gazelle:fix.go",
-    "@build_stack_rules_proto//cmd/gazelle/internal/module:BUILD.bazel",
-    "@build_stack_rules_proto//cmd/gazelle/internal/module:module.go",
     "@build_stack_rules_proto//cmd/gazelle/internal/wspace:BUILD.bazel",
     "@build_stack_rules_proto//cmd/gazelle/internal/wspace:finder.go",
     "@build_stack_rules_proto//cmd/gazelle:langs.go",

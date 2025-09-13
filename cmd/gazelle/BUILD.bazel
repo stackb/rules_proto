@@ -86,7 +86,6 @@ filegroup(
         "profiler.go",
         "profiler_test.go",
         "update-repos.go",
-        "//cmd/gazelle/internal/module:all_files",
         "//cmd/gazelle/internal/wspace:all_files",
     ],
     visibility = ["//visibility:public"],
