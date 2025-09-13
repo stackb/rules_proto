@@ -2,7 +2,10 @@ load("@//rules:proto_gazelle.bzl", "proto_gazelle")
 load("@bazel_gazelle//:def.bzl", "gazelle_binary")
 load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 
-exports_files(["rules_proto_config.yaml"])
+exports_files([
+    "rules_proto_config.yaml",
+    "MODULE.bazel",
+])
 
 # ----------------------------------------------------
 # Gazelle

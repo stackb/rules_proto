@@ -190,6 +190,7 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//rules/ts:BUILD.bazel",
     "@build_stack_rules_proto//toolchain:BUILD.bazel",
     "@build_stack_rules_proto//toolchain/scala:BUILD.bazel",
+    "@build_stack_rules_proto//tools:BUILD.bazel",
     "@build_stack_rules_proto//vendor/github.com/bazelbuild/bazel-gazelle/config:config.go",
     "@build_stack_rules_proto//vendor/github.com/bazelbuild/bazel-gazelle/config:constants.go",
     "@build_stack_rules_proto//vendor/github.com/bazelbuild/bazel-gazelle/flag:flag.go",
