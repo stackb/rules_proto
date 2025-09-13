@@ -1,29 +1,36 @@
-# Based on https://github.com/bazel-contrib/rules-template/blob/main/.github/workflows/release.yaml.
+# Cut a release whenever a new tag is pushed to the repo.
 name: Release
 on:
-  push:
-    tags:
-      - "*.*.*"
-  workflow_dispatch:
+  # Can be triggered from the tag.yaml workflow
+  workflow_call:
     inputs:
       tag_name:
-        description: git tag to release. The tag must exist.
         required: true
         type: string
+    secrets:
+      publish_token:
+        required: true
+  # Or, developers can manually push a tag from their clone
+  push:
+    tags:
+      - "v*.*.*"
+permissions:
+  id-token: write
+  attestations: write
+  contents: write
 jobs:
   release:
-    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@v7.2.2
+    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@v7.2.3
     with:
-      release_files: rules_proto-*.tar.gz
-      prerelease: true
+      release_files: |
+        rules_proto-*.tar.gz
+      prerelease: false
       tag_name: ${{ inputs.tag_name || github.ref_name }}
-    permissions:
-      attestations: write
-      contents: write
-      id-token: write
+    secrets:
+        inherit
   publish:
     needs: release
-    uses: ./.github/workflows/publish-to-bcr.yaml
+    uses: ./.github/workflows/publish.yaml
     with:
       tag_name: ${{ inputs.tag_name || github.ref_name }}
     secrets:

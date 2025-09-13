@@ -2,13 +2,9 @@ name: CI
 
 # Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [master]
   pull_request:
-    branches: [master]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 concurrency:
@@ -18,13 +14,9 @@ concurrency:
 
 jobs:
   test:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v4
-
       - uses: bazel-contrib/setup-bazel@0.15.0
         with:
           # Avoid downloading Bazel every time.
@@ -33,9 +25,6 @@ jobs:
           disk-cache: true
           # Share repository cache between workflows.
           repository-cache: true
-          # Share external cache between workflows.
-          external-cache: true
-
       - name: bazel build
         run: >-
           bazelisk
