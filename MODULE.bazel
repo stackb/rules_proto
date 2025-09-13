@@ -314,6 +314,11 @@ use_repo(
 # Configuration: Protobuf Deps
 # -------------------------------------------------------------------
 
+proto_language_directives = [
+    "gazelle:proto_language %s enable true" % name
+    for name in ["cpp", "descriptor", "go", "java", "python", "scala"]
+]
+
 proto_repository = use_extension("@build_stack_rules_proto//extensions:proto_repository.bzl", "proto_repository", dev_dependency = True)
 
 proto_repository.archive(
@@ -324,13 +329,7 @@ proto_repository.archive(
         "gazelle:exclude google/protobuf/util/internal/testdata",
         "gazelle:exclude testdata",
         "gazelle:proto_go_modules_index_kind proto_go_library",
-        "gazelle:proto_language cpp enable true",
-        "gazelle:proto_language descriptor enable true",
-        "gazelle:proto_language go enable true",
-        "gazelle:proto_language java enable true",
-        "gazelle:proto_language python enable true",
-        "gazelle:proto_language scala enable true",
-    ],
+    ] + proto_language_directives,
     build_file_proto_mode = "file",
     build_file_generation = "clean",
     cfgs = ["@//:rules_proto_config.yaml"],
@@ -375,13 +374,7 @@ proto_repository.archive(
         "gazelle:exclude google/example",
         "gazelle:exclude google/maps/weather/v1",
         "gazelle:proto_go_modules_index_kind proto_go_library",
-        "gazelle:proto_language cpp enable true",
-        "gazelle:proto_language descriptor enable true",
-        "gazelle:proto_language go enable true",
-        "gazelle:proto_language java enable true",
-        "gazelle:proto_language python enable true",
-        "gazelle:proto_language scala enable true",
-    ],
+    ] + proto_language_directives,
     build_file_proto_mode = "file",
     cfgs = ["//:rules_proto_config.yaml"],
     imports = ["@protobufapis//:imports.csv"],

@@ -16,15 +16,9 @@ func generateMarkdown(c *Config) error {
 	}
 	defer f.Close()
 
-	var workspace, buildIn, buildOut, protoFile string
+	var workspace, buildIn, buildOut string
 	for _, src := range c.Files {
 		base := filepath.Base(src)
-		ext := filepath.Ext(base)
-
-		if ext == ".proto" {
-			protoFile = src
-			continue
-		}
 
 		switch base {
 		case "BUILD.in":
@@ -52,27 +46,24 @@ func generateMarkdown(c *Config) error {
 
 	fmt.Fprintf(f, "# %s example\n\n", c.Name)
 
-	fmt.Fprintf(f, "`bazel test %s_test`\n\n", c.Label)
+	fmt.Fprintf(f, "[`testdata files`](/example/golden/testdata/%s)\n\n", c.Name)
 
-	fmt.Fprintf(f, "\n## `BUILD.bazel` (after gazelle)\n\n")
-	if err := printFileBlock("BUILD.bazel", "python", buildOut, f); err != nil {
-		return err
-	}
+	fmt.Fprintf(f, "\n## `Integration Test`\n\n")
+	fmt.Fprintf(f, "`bazel test %s_test`)\n\n", c.Label)
 
 	fmt.Fprintf(f, "\n## `BUILD.bazel` (before gazelle)\n\n")
-	if err := printFileBlock("BUILD.bazel", "python", buildIn, f); err != nil {
+	if err := printFileBlock("BUILD.bazel", "python", buildIn, "", f); err != nil {
 		return err
 	}
 
-	fmt.Fprintf(f, "\n## `MODULE.bazel`\n\n")
-	if err := printFileBlock(filepath.Base(workspace), "python", workspace, f); err != nil {
+	fmt.Fprintf(f, "\n## `BUILD.bazel` (after gazelle)\n\n")
+	if err := printFileBlock("BUILD.bazel", "python", buildOut, "", f); err != nil {
 		return err
 	}
 
-	if false {
-		if err := printFileBlock(filepath.Base(protoFile), "proto", protoFile, f); err != nil {
-			return err
-		}
+	fmt.Fprintf(f, "\n## `MODULE.bazel (snippet)`\n\n")
+	if err := printFileBlock(filepath.Base(workspace), "python", workspace, c.WorkspaceIn, f); err != nil {
+		return err
 	}
 
 	return nil
@@ -140,14 +131,19 @@ func mapFilename(in string) string {
 	return in
 }
 
-func printFileBlock(name, syntax, filename string, out io.Writer) error {
+func printFileBlock(name, syntax, filename string, extraContent string, out io.Writer) error {
 	fmt.Fprintf(out, "~~~%s\n", syntax)
 	data, err := os.ReadFile(filename)
 	if err != nil {
-		log.Panicf("%s: failed to read filename=%q: %v", name, filename, err)
+		return fmt.Errorf("%s: failed to read filename=%q: %v", name, filename, err)
 	}
 	if _, err := out.Write(data); err != nil {
-		log.Panicf("%s: write %q: %v", name, filename, err)
+		return fmt.Errorf("%s: write %q: %v", name, filename, err)
+	}
+	if extraContent != "" {
+		if _, err := out.Write([]byte(extraContent + "\n")); err != nil {
+			return fmt.Errorf("%s: write %q: %v", name, filename, err)
+		}
 	}
 	fmt.Fprintf(out, "~~~\n\n")
 

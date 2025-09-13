@@ -14,6 +14,11 @@ golden_test:
 test:
 	bazel test ...
 
+.PHONY: site
+site:
+	bazel build '//example/golden:*'
+	cp -f ./bazel-bin/example/golden/*.md docs/
+
 update_pnpm_lock:
 	# nvm use 18
 	pnpm install --lockfile-only

@@ -478,6 +478,11 @@ proto_repository.archive(
         "gazelle:proto_plugin protoc-gen-go option Msrc/main/protobuf/crash_debugging.proto=github.com/bazelbuild/bazel/src/main/protobuf/crash_debugging",
         "gazelle:proto_plugin protoc-gen-go option Msrc/main/protobuf/file_invalidation_data.proto=github.com/bazelbuild/bazel/src/main/protobuf/file_invalidation_data",
         "gazelle:proto_plugin protoc-gen-go option Msrc/main/protobuf/bazel_output_service_rev2.proto=github.com/bazelbuild/bazel/src/main/protobuf/bazel_output_service_rev2",
+    ] + [
+      "gazelle:proto_plugin protoc-gen-go option Msrc/main/protobuf/{0}.proto=github.com/bazelbuild/bazel/src/main/protobuf/{0}" % name 
+      for name in [
+        "stardoc_output", "strategy_policy", "execution_graph", "remote_scrubbing", "memory_pressure", "cache_salt", "crash_debugging", "file_invalidation_data", "bazel_output_service_rev2",
+      ],
     ],
     deleted_files = [
         "src/main/protobuf/bazel_output_service.proto",
