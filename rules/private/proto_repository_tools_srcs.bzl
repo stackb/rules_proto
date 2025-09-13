@@ -5,7 +5,6 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//cmd/examplegen:config.go",
     "@build_stack_rules_proto//cmd/examplegen:examplegen.go",
     "@build_stack_rules_proto//cmd/examplegen:generator.go",
-    "@build_stack_rules_proto//cmd/examplegen:linewriter.go",
     "@build_stack_rules_proto//cmd/examplegen:template.go",
     "@build_stack_rules_proto//cmd/gazelle:BUILD.bazel",
     "@build_stack_rules_proto//cmd/gazelle:diff.go",
