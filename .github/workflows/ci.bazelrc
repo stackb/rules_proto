@@ -11,3 +11,7 @@ build --repository_cache=$HOME/.cache/bazel-repo
 
 # Allows tests to run bazelisk-in-bazel, since this is the cache folder used
 test --test_env=XDG_CACHE_HOME
+
+# Use remote cache instance
+build:cas --remote_instance_name=main
+build:cas --remote_cache=grpc://cas.stack.build:50051
