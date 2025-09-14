@@ -21,9 +21,9 @@ on:
         type: string
 jobs:
   publish:
-    uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v0.2.2
+    uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v0.2.3
     with:
-      open_pull_request: false
+      draft: false
       tag_name: ${{ inputs.tag_name }}
       # GitHub repository which is a fork of the upstream where the Pull Request will be opened.
       registry_fork: stackb/bazel-central-registry
