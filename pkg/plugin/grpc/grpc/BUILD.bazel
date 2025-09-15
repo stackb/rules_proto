@@ -1,5 +1,4 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
-load("@io_bazel_rules_go//go/tools/bazel_testing:def.bzl", "go_bazel_test")
 
 go_library(
     name = "grpc",
@@ -15,7 +14,6 @@ go_library(
 go_test(
     name = "grpc_test",
     srcs = [
-        "grpc_test.go",
         "protoc-gen-grpc-python_test.go",
     ],
     data = [
@@ -25,7 +23,6 @@ go_test(
     deps = [
         ":grpc",
         "//pkg/plugintest",
-        "@io_bazel_rules_go//go/tools/bazel_testing:go_default_library",
     ],
 )
 
@@ -43,12 +40,6 @@ genrule(
     cmd = "cp $(location @com_github_grpc_grpc//src/compiler:grpc_python_plugin) $@",
     executable = True,
     tools = ["@com_github_grpc_grpc//src/compiler:grpc_python_plugin"],
-)
-
-go_bazel_test(
-    name = "bazel_test",
-    srcs = ["grpc_test.go"],
-    rule_files = [],
 )
 
 filegroup(
