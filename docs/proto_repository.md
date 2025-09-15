@@ -8,15 +8,26 @@ parent: Examples
 
 # proto_repository example
 
-`bazel test //example/golden:proto_repository_test`
+[`testdata files`](/example/golden/testdata/proto_repository)
+
+
+## `Integration Test`
+
+`bazel test @@//example/golden:proto_repository_test`)
+
+
+## `BUILD.bazel` (before gazelle)
+
+~~~python
+~~~
 
 
 ## `BUILD.bazel` (after gazelle)
 
 ~~~python
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "app_proto",
@@ -66,34 +77,105 @@ proto_go_library(
 ~~~
 
 
-## `BUILD.bazel` (before gazelle)
+## `MODULE.bazel (snippet)`
 
 ~~~python
-~~~
 
+bazel_dep(name = "rules_go", version = "0.57.0", repo_name = "io_bazel_rules_go")
 
-## `WORKSPACE`
+# -------------------------------------------------------------------
+# Configuration: Go
+# -------------------------------------------------------------------
 
-~~~python
-# ----------------------------------------------------
-# proto_repository
-# ----------------------------------------------------
+go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(version = "1.23.1")
 
-load("@build_stack_rules_proto//rules/proto:proto_repository.bzl", "proto_repository")
+# -------------------------------------------------------------------
+# Configuration: protobuf
+# -------------------------------------------------------------------
 
-proto_repository(
-    name = "googleapis",
+register_toolchains("@build_stack_rules_proto//toolchain:prebuilt")
+
+bazel_dep(name = "gazelle", version = "0.45.0", repo_name = "bazel_gazelle")
+
+# -------------------------------------------------------------------
+# Configuration: Go
+# -------------------------------------------------------------------
+
+go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
+go_deps.module(
+    path = "google.golang.org/protobuf",
+    sum = "h1:OgPcDAFKHnH8X3O4WcO4XUc8GRDeKsKReqbQtiCj7N8=",
+    version = "v1.36.6",
+)
+go_deps.module(
+    path = "google.golang.org/grpc",
+    sum = "h1:OgPcDAFKHnH8X3O4WcO4XUc8GRDeKsKReqbQtiCj7N8=",
+    version = "v1.67.3",
+)
+use_repo(
+    go_deps,
+    "org_golang_google_grpc",
+    "org_golang_google_protobuf",
+)
+
+# -------------------------------------------------------------------
+# Configuration: Protobuf
+# -------------------------------------------------------------------
+
+proto_repository = use_extension("@build_stack_rules_proto//extensions:proto_repository.bzl", "proto_repository", dev_dependency = True)
+proto_repository.archive(
+    name = "protoapis",
     build_directives = [
-        "gazelle:proto_language go enabled true",
+        "gazelle:exclude testdata",
+        "gazelle:exclude google/protobuf/compiler/ruby",
+        "gazelle:exclude google/protobuf/util/internal/testdata",
+        "gazelle:proto_language go enable true",
     ],
-    build_file_generation = "on",
+    build_file_generation = "clean",
     build_file_proto_mode = "file",
     cfgs = ["//:config.yaml"],
-    reresolve_known_proto_imports = True,
-    sha256 = "b9dbc65ebc738a486265ef7b708e9449bf361541890091983e946557ee0a4bfc",
-    strip_prefix = "googleapis-66759bdf6a5ebb898c2a51c8649aefd1ee0b7ffe",
+    deleted_files = [
+        "google/protobuf/*test*.proto",
+        "google/protobuf/*unittest*.proto",
+        "google/protobuf/compiler/cpp/*test*.proto",
+        "google/protobuf/util/*test*.proto",
+        "google/protobuf/util/*unittest*.proto",
+        "google/protobuf/util/json_format*.proto",
+    ],
+    sha256 = "4514213c25a5b87e1948aeeb4c40effc55d11d60871ca5b903a2779005fc48ce",
+    strip_prefix = "protobuf-9650e9fe8f737efcad485c2a8e6e696186ae3862/src",
     type = "zip",
-    urls = ["https://codeload.github.com/googleapis/googleapis/zip/66759bdf6a5ebb898c2a51c8649aefd1ee0b7ffe"],
+    urls = [
+        "https://codeload.github.com/protocolbuffers/protobuf/zip/9650e9fe8f737efcad485c2a8e6e696186ae3862",
+    ],
 )
+proto_repository.archive(
+    name = "googleapis",
+    build_directives = [
+        "gazelle:exclude google/example",
+        "gazelle:exclude google/ads/googleads/v7/services",
+        "gazelle:exclude google/ads/googleads/v8/services",
+        "gazelle:exclude google/cloud/recommendationengine/v1beta1",
+        "gazelle:proto_language go enabled true",
+    ],
+    build_file_generation = "clean",
+    build_file_proto_mode = "file",
+    cfgs = ["//:config.yaml"],
+    imports = ["@protoapis//:imports.csv"],
+    reresolve_known_proto_imports = True,
+    sha256 = "95da12951c7d570980d5152f6cca9e1cb795ddc6b6dd7e9423bdffde28290f7a",
+    strip_prefix = "googleapis-02710fa0ea5312d79d7fb986c9c9823fb41049a9",
+    type = "zip",
+    urls = [
+        "https://codeload.github.com/googleapis/googleapis/zip/02710fa0ea5312d79d7fb986c9c9823fb41049a9",
+    ],
+)
+use_repo(
+    proto_repository,
+    "googleapis",
+    "protoapis",
+)
+
 ~~~
 

@@ -8,15 +8,36 @@ parent: Examples
 
 # go example
 
-`bazel test //example/golden:go_test`
+[`testdata files`](/example/golden/testdata/go)
+
+
+## `Integration Test`
+
+`bazel test @@//example/golden:go_test`)
+
+
+## `BUILD.bazel` (before gazelle)
+
+~~~python
+# gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go
+# gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
+# gazelle:proto_rule proto_go_library implementation stackb:rules_proto:proto_go_library
+# gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//reflect/protoreflect
+# gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//runtime/protoimpl
+# gazelle:proto_rule proto_go_library resolve google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/${1}pb
+# gazelle:proto_rule proto_go_library visibility //visibility:public
+# gazelle:proto_language go plugin protoc-gen-go
+# gazelle:proto_language go rule proto_compile
+# gazelle:proto_language go rule proto_go_library
+~~~
 
 
 ## `BUILD.bazel` (after gazelle)
 
 ~~~python
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 # gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go
 # gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
@@ -55,24 +76,24 @@ proto_go_library(
 ~~~
 
 
-## `BUILD.bazel` (before gazelle)
+## `MODULE.bazel (snippet)`
 
 ~~~python
-# gazelle:proto_plugin protoc-gen-go implementation golang:protobuf:protoc-gen-go
-# gazelle:proto_rule proto_compile implementation stackb:rules_proto:proto_compile
-# gazelle:proto_rule proto_go_library implementation stackb:rules_proto:proto_go_library
-# gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//reflect/protoreflect
-# gazelle:proto_rule proto_go_library deps @org_golang_google_protobuf//runtime/protoimpl
-# gazelle:proto_rule proto_go_library resolve google/protobuf/([a-z]+).proto @org_golang_google_protobuf//types/known/${1}pb
-# gazelle:proto_rule proto_go_library visibility //visibility:public
-# gazelle:proto_language go plugin protoc-gen-go
-# gazelle:proto_language go rule proto_compile
-# gazelle:proto_language go rule proto_go_library
-~~~
 
+bazel_dep(name = "rules_go", version = "0.57.0", repo_name = "io_bazel_rules_go")
 
-## `WORKSPACE`
+# -------------------------------------------------------------------
+# Configuration: Go
+# -------------------------------------------------------------------
 
-~~~python
+go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(version = "1.23.1")
+
+# -------------------------------------------------------------------
+# Configuration: protobuf
+# -------------------------------------------------------------------
+
+register_toolchains("@build_stack_rules_proto//toolchain:prebuilt")
+
 ~~~
 

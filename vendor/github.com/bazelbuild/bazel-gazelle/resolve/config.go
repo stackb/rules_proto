@@ -38,7 +38,8 @@ func FindRuleWithOverride(c *config.Config, imp ImportSpec, lang string) (label.
 	for i := len(rc.regexpOverrides) - 1; i >= 0; i-- {
 		o := rc.regexpOverrides[i]
 		if o.matches(imp, lang) {
-			return o.dep, true
+			dep := o.resolveRegexpDep(imp)
+			return dep, true
 		}
 	}
 	return label.NoLabel, false
@@ -60,6 +61,22 @@ func (o regexpOverrideSpec) matches(imp ImportSpec, lang string) bool {
 	return imp.Lang == o.ImpLang &&
 		o.ImpRegex.MatchString(imp.Imp) &&
 		(o.lang == "" || o.lang == lang)
+}
+
+func (o regexpOverrideSpec) resolveRegexpDep(imp ImportSpec) label.Label {
+	// If "$" is found in the dependency string, then backreferences exist and
+	// ReplaceAllString() should be run on the string to substitute in the
+	// correct replacement strings to build the label.
+	if !strings.Contains(o.dep.String(), "$") {
+	    return o.dep
+	}
+	resolvedDepWithRegex := o.ImpRegex.ReplaceAllString(imp.Imp, o.dep.String())
+	resolvedLabel, err := label.Parse(resolvedDepWithRegex)
+	if err != nil {
+		return o.dep
+	}
+
+	return resolvedLabel
 }
 
 type resolveConfig struct {
@@ -101,6 +118,8 @@ const resolveName = "_resolve"
 func getResolveConfig(c *config.Config) *resolveConfig {
 	return c.Exts[resolveName].(*resolveConfig)
 }
+
+var _ config.Configurer = (*Configurer)(nil)
 
 type Configurer struct{}
 

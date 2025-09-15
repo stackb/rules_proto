@@ -27,7 +27,7 @@ package rule
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"sort"
@@ -95,7 +95,7 @@ func EmptyFile(path, pkg string) *File {
 // This function returns I/O and parse errors without modification. It's safe
 // to use os.IsNotExist and similar predicates.
 func LoadFile(path, pkg string) (*File, error) {
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func LoadFile(path, pkg string) (*File, error) {
 // LoadWorkspaceFile is similar to LoadFile but parses the file as a WORKSPACE
 // file.
 func LoadWorkspaceFile(path, pkg string) (*File, error) {
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func LoadWorkspaceFile(path, pkg string) (*File, error) {
 // The function's syntax tree will be returned within File and can be modified by
 // Sync and Save calls.
 func LoadMacroFile(path, pkg, defName string) (*File, error) {
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
@@ -253,10 +253,22 @@ func scanExprs(defName string, stmt []bzl.Expr) (rules []*Rule, loads []*Load, f
 	return rules, loads, fn
 }
 
-// MatchBuildFileName looks for a file in files that has a name from names.
+// MatchBuildFile looks for a file in files that has a name from names.
 // If there is at least one matching file, a path will be returned by joining
 // dir and the first matching name. If there are no matching files, the
 // empty string is returned.
+func MatchBuildFile(dir string, names []string, ents []fs.DirEntry) string {
+	for _, name := range names {
+		for _, ent := range ents {
+			if ent.Name() == name && !ent.IsDir() {
+				return filepath.Join(dir, name)
+			}
+		}
+	}
+	return ""
+}
+
+// Deprecated: Prefer MatchBuildFile, it's more efficient to fetch a []fs.DirEntry
 func MatchBuildFileName(dir string, names []string, files []os.FileInfo) string {
 	for _, name := range names {
 		for _, fi := range files {
@@ -412,7 +424,7 @@ func (f *File) SortMacro() {
 func (f *File) Save(path string) error {
 	f.Sync()
 	f.Content = bzl.Format(f.File)
-	return ioutil.WriteFile(path, f.Content, 0o666)
+	return os.WriteFile(path, f.Content, 0o666)
 }
 
 // HasDefaultVisibility returns whether the File contains a "package" rule with
@@ -502,7 +514,7 @@ type rulesByKindAndName struct {
 }
 
 // type checking
-var _ sort.Interface = rulesByKindAndName{}
+var _ sort.Interface = (*rulesByKindAndName)(nil)
 
 func (s rulesByKindAndName) Len() int {
 	return len(s.rules)
@@ -527,7 +539,7 @@ type loadsByName struct {
 }
 
 // type checking
-var _ sort.Interface = loadsByName{}
+var _ sort.Interface = (*loadsByName)(nil)
 
 func (s loadsByName) Len() int {
 	return len(s.loads)
@@ -713,10 +725,11 @@ func (l *Load) sync() {
 // Rule represents a rule statement within a build file.
 type Rule struct {
 	stmt
-	kind    bzl.Expr
-	args    []bzl.Expr
-	attrs   map[string]attrValue
-	private map[string]interface{}
+	kind        string
+	args        []bzl.Expr
+	attrs       map[string]attrValue
+	private     map[string]interface{}
+	sortedAttrs []string
 }
 
 type attrValue struct {
@@ -734,10 +747,11 @@ func NewRule(kind, name string) *Rule {
 	call := &bzl.CallExpr{X: kindIdent}
 
 	r := &Rule{
-		stmt:    stmt{expr: call},
-		kind:    kindIdent,
-		attrs:   map[string]attrValue{},
-		private: map[string]interface{}{},
+		stmt:        stmt{expr: call},
+		kind:        kind,
+		attrs:       map[string]attrValue{},
+		private:     map[string]interface{}{},
+		sortedAttrs: []string{"deps", "srcs"},
 	}
 	if name != "" {
 		nameAttr := attrValue{
@@ -757,17 +771,19 @@ func NewRule(kind, name string) *Rule {
 // is either `*bzl.DotExpr` or `*bzl.Ident`.
 //
 // For `myKind` kind it returns:
-//  &bzl.Ident{
-//      Name: "myKind"
-//  }
+//
+//	&bzl.Ident{
+//	    Name: "myKind"
+//	}
 //
 // For `myKind.inner` kind it returns:
-//  &bzl.DotExpr{
-//      Name: "inner",
-//      X: &bzl.Ident {
-//          Name: "myKind"
-//      }
-//  }
+//
+//	&bzl.DotExpr{
+//	    Name: "inner",
+//	    X: &bzl.Ident {
+//	        Name: "myKind"
+//	    }
+//	}
 func createDotExpr(kind string) bzl.Expr {
 	var expr bzl.Expr
 	parts := strings.Split(kind, ".")
@@ -834,7 +850,7 @@ func ruleFromExpr(index int, expr bzl.Expr) *Rule {
 			expr:     call,
 			comments: commentsFromExpr(expr),
 		},
-		kind:    kind,
+		kind:    bzl.FormatString(kind),
 		args:    args,
 		attrs:   attrs,
 		private: map[string]interface{}{},
@@ -850,12 +866,12 @@ func (r *Rule) ShouldKeep() bool {
 
 // Kind returns the kind of rule this is (for example, "go_library").
 func (r *Rule) Kind() string {
-	return bzl.FormatString(r.kind)
+	return r.kind
 }
 
 // SetKind changes the kind of rule this is.
 func (r *Rule) SetKind(kind string) {
-	r.kind = &bzl.Ident{Name: kind}
+	r.kind = kind
 	r.updated = true
 }
 
@@ -944,6 +960,7 @@ func (r *Rule) SetAttr(key string, value interface{}) {
 	if attr, ok := r.attrs[key]; ok {
 		attr.expr.RHS = rhs
 		attr.val = value
+		r.attrs[key] = attr
 	} else {
 		r.attrs[key] = attrValue{
 			expr: &bzl.AssignExpr{
@@ -955,6 +972,16 @@ func (r *Rule) SetAttr(key string, value interface{}) {
 		}
 	}
 	r.updated = true
+}
+
+// AttrComments returns the comments for an attribute.
+// It can be used to attach comments like "do not sort".
+func (r *Rule) AttrComments(key string) *bzl.Comments {
+	attr, ok := r.attrs[key]
+	if !ok {
+		return nil
+	}
+	return attr.expr.Comment()
 }
 
 // PrivateAttrKeys returns a sorted list of private attribute names.
@@ -987,6 +1014,28 @@ func (r *Rule) Args() []bzl.Expr {
 // AddArg adds a positional argument to the rule.
 func (r *Rule) AddArg(value bzl.Expr) {
 	r.args = append(r.args, value)
+	r.updated = true
+}
+
+// UpdateArg replaces an existing arg with a new value.
+func (r *Rule) UpdateArg(index int, value bzl.Expr) error {
+	if len(r.args) < index {
+		return fmt.Errorf("can't update argument at index %d, only have %d args", index, len(r.args))
+	}
+	r.args[index] = value
+	r.updated = true
+	return nil
+}
+
+// SortedAttrs returns the keys of attributes whose values will be sorted
+func (r *Rule) SortedAttrs() []string {
+	return r.sortedAttrs
+}
+
+// SetSortedAttrs sets the keys of attributes whose values will be sorted
+func (r *Rule) SetSortedAttrs(keys []string) {
+	r.sortedAttrs = keys
+	r.updated = true
 }
 
 // Insert marks this statement for insertion at the end of the file. Multiple
@@ -1032,7 +1081,7 @@ func (r *Rule) sync() {
 	}
 	r.updated = false
 
-	for _, k := range []string{"srcs", "deps"} {
+	for _, k := range r.sortedAttrs {
 		attr, ok := r.attrs[k]
 		_, isUnsorted := attr.val.(UnsortedStrings)
 		if ok && !isUnsorted {
@@ -1096,7 +1145,7 @@ func CheckInternalVisibility(rel, visibility string) string {
 
 type byAttrName []KeyValue
 
-var _ sort.Interface = byAttrName{}
+var _ sort.Interface = (*byAttrName)(nil)
 
 func (s byAttrName) Len() int {
 	return len(s)

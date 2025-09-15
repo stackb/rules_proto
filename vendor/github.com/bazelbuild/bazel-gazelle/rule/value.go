@@ -37,6 +37,86 @@ type GlobValue struct {
 	Excludes []string
 }
 
+var _ BzlExprValue = (*GlobValue)(nil)
+
+func (g GlobValue) BzlExpr() bzl.Expr {
+	patternsValue := ExprFromValue(g.Patterns)
+	globArgs := []bzl.Expr{patternsValue}
+	if len(g.Excludes) > 0 {
+		excludesValue := ExprFromValue(g.Excludes)
+		globArgs = append(globArgs, &bzl.AssignExpr{
+			LHS: &bzl.Ident{Name: "exclude"},
+			Op:  "=",
+			RHS: excludesValue,
+		})
+	}
+	return &bzl.CallExpr{
+		X:    &bzl.Ident{Name: "glob"},
+		List: globArgs,
+	}
+}
+
+// ParseGlobExpr detects whether the given expression is a call to the glob
+// function. If it is, ParseGlobExpr returns the glob's patterns and excludes
+// (if they are literal strings) and true. If not, ParseGlobExpr returns false.
+func ParseGlobExpr(e bzl.Expr) (GlobValue, bool) {
+	call, ok := e.(*bzl.CallExpr)
+	if !ok {
+		return GlobValue{}, false
+	}
+	callee, ok := call.X.(*bzl.Ident)
+	if !ok || callee.Name != "glob" {
+		return GlobValue{}, false
+	}
+	var glob GlobValue
+	parseStringsList := func(list *bzl.ListExpr) []string {
+		parsed := make([]string, 0, len(list.List))
+		for _, e := range list.List {
+			if str, ok := e.(*bzl.StringExpr); ok {
+				parsed = append(parsed, str.Value)
+			}
+		}
+		return parsed
+	}
+
+	// Positional arguments needs to be placed before named arguments, otherwise these are ambigious
+	allowPositionalArgs := true
+	for i, arg := range call.List {
+		if list, ok := arg.(*bzl.ListExpr); ok && allowPositionalArgs {
+			switch i {
+			case 0:
+				glob.Patterns = parseStringsList(list)
+			case 1:
+				glob.Excludes = parseStringsList(list)
+				// Last handled positional argument, no need to visit more
+				return glob, true
+			}
+			continue
+		}
+
+		kv, ok := arg.(*bzl.AssignExpr)
+		if !ok {
+			continue
+		}
+		allowPositionalArgs = false
+		key, ok := kv.LHS.(*bzl.Ident)
+		if !ok {
+			continue
+		}
+		list, ok := kv.RHS.(*bzl.ListExpr)
+		if !ok {
+			continue
+		}
+		switch key.Name {
+		case "exclude":
+			glob.Excludes = parseStringsList(list)
+		case "include":
+			glob.Patterns = parseStringsList(list)
+		}
+	}
+	return glob, true
+}
+
 // BzlExprValue is implemented by types that have custom translations
 // to Starlark values.
 type BzlExprValue interface {
@@ -54,6 +134,9 @@ type Merger interface {
 }
 
 type SortedStrings []string
+
+var _ BzlExprValue = SortedStrings(nil)
+var _ Merger = SortedStrings(nil)
 
 func (s SortedStrings) BzlExpr() bzl.Expr {
 	list := make([]bzl.Expr, len(s))
@@ -76,6 +159,8 @@ func (s SortedStrings) Merge(other bzl.Expr) bzl.Expr {
 
 type UnsortedStrings []string
 
+var _ Merger = UnsortedStrings(nil)
+
 func (s UnsortedStrings) Merge(other bzl.Expr) bzl.Expr {
 	if other == nil {
 		return ExprFromValue(s)
@@ -86,6 +171,8 @@ func (s UnsortedStrings) Merge(other bzl.Expr) bzl.Expr {
 // SelectStringListValue is a value that can be translated to a Bazel
 // select expression that picks a string list based on a string condition.
 type SelectStringListValue map[string][]string
+
+var _ BzlExprValue = SelectStringListValue(nil)
 
 func (s SelectStringListValue) BzlExpr() bzl.Expr {
 	defaultKey := "//conditions:default"
@@ -124,12 +211,13 @@ func (s SelectStringListValue) BzlExpr() bzl.Expr {
 // ExprFromValue converts a value into an expression that can be written into
 // a Bazel build file. The following types of values can be converted:
 //
-//   * bools, integers, floats, strings.
-//   * slices, arrays (converted to lists).
-//   * maps (converted to select expressions; keys must be rules in
+//   - bools, integers, floats, strings.
+//   - labels (converted to strings).
+//   - slices, arrays (converted to lists).
+//   - maps (converted to select expressions; keys must be rules in
 //     @io_bazel_rules_go//go/platform).
-//   * GlobValue (converted to glob expressions).
-//   * PlatformStrings (converted to a concatenation of a list and selects).
+//   - GlobValue (converted to glob expressions).
+//   - PlatformStrings (converted to a concatenation of a list and selects).
 //
 // Converting unsupported types will cause a panic.
 func ExprFromValue(val interface{}) bzl.Expr {
@@ -180,25 +268,6 @@ func ExprFromValue(val interface{}) bzl.Expr {
 			args[i] = &bzl.KeyValueExpr{Key: k, Value: v}
 		}
 		return &bzl.DictExpr{List: args, ForceMultiLine: true}
-
-	case reflect.Struct:
-		switch val := val.(type) {
-		case GlobValue:
-			patternsValue := ExprFromValue(val.Patterns)
-			globArgs := []bzl.Expr{patternsValue}
-			if len(val.Excludes) > 0 {
-				excludesValue := ExprFromValue(val.Excludes)
-				globArgs = append(globArgs, &bzl.AssignExpr{
-					LHS: &bzl.LiteralExpr{Token: "exclude"},
-					Op:  "=",
-					RHS: excludesValue,
-				})
-			}
-			return &bzl.CallExpr{
-				X:    &bzl.LiteralExpr{Token: "glob"},
-				List: globArgs,
-			}
-		}
 	}
 
 	log.Panicf("type not supported: %T", val)
@@ -217,7 +286,7 @@ func mapKeyString(k reflect.Value) string {
 
 type byString []reflect.Value
 
-var _ sort.Interface = byString{}
+var _ sort.Interface = (*byString)(nil)
 
 func (s byString) Len() int {
 	return len(s)

@@ -164,7 +164,8 @@ func (s *scalaLibraryRule) Srcs() []string {
 	return srcs
 }
 
-// Deps computes the deps list for the rule.
+// Deps computes the static deps list for the rule (configured deps, independent
+// of import resolution).
 func (s *scalaLibraryRule) Deps() []string {
 	deps := s.ruleConfig.GetDeps()
 
@@ -264,8 +265,11 @@ func (s *scalaLibraryRule) Imports(c *config.Config, r *rule.Rule, file *rule.Fi
 }
 
 // Resolve implements part of the RuleProvider interface.
-func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
-	imports = s.options.filterImports(imports)
+func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, rawImports []string, from label.Label) {
+
+	imports := s.options.filterImports(rawImports)
+
+	// log.Println(formatRules(r))
 
 	resolveFn := protoc.ResolveDepsAttr("deps", !s.options.resolveWKTs)
 	resolveFn(c, ix, r, imports, from)
@@ -283,6 +287,8 @@ func (s *scalaLibraryRule) Resolve(c *config.Config, ix *resolve.RuleIndex, r *r
 			log.Printf("%[1]v (%[2]s): warning: failed to resolve %[3]q: %v", from, r.Kind(), imp, err)
 		}
 	}
+
+	// log.Println(formatRules(r))
 }
 
 // findRuleWithOverride is the same shape of resolve.FindRuleWithOverride.
@@ -531,7 +537,6 @@ func (o *scalaLibraryOptions) filterOutputs(in []string) (out []string) {
 	if len(o.include) > 0 {
 		log.Printf("filtering includes %v %d %q", o.include, len(o.include), o.include[0])
 		files := make([]string, 0)
-
 		for _, value := range in {
 			var shouldInclude bool
 			for _, pattern := range o.include {
@@ -608,4 +613,12 @@ func getPluginConfiguration(plugins []*protoc.PluginConfiguration, name string) 
 		}
 	}
 	return nil
+}
+
+func formatRules(rules ...*rule.Rule) string {
+	file := rule.EmptyFile("", "")
+	for _, r := range rules {
+		r.Insert(file)
+	}
+	return string(file.Format())
 }

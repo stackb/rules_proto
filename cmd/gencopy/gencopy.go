@@ -11,7 +11,6 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -19,6 +18,7 @@ import (
 const (
 	ModeUpdate = "update"
 	ModeCheck  = "check"
+	debug      = false
 )
 
 var (
@@ -28,7 +28,7 @@ var (
 
 type (
 
-	// Config can be produced by a starlark struct.to_json() using camelCase
+	// Config can be produced by a starlark json.encode(struct) using camelCase
 	// names.
 	Config struct {
 		// The root of the monorepo.  This comes from the environment variable
@@ -84,9 +84,6 @@ func copyFile(src, dst string, mode os.FileMode) error {
 		return fmt.Errorf("copyFile: src not found: %s", src)
 	}
 
-	// NOTE: for some reason the io.Copy approach was writing an empty file...
-	// for now OK to copy in-memory
-
 	data, err := os.ReadFile(src)
 	if err != nil {
 		return err
@@ -103,12 +100,12 @@ func copyFile(src, dst string, mode os.FileMode) error {
 func readFileAsString(filename string) (string, error) {
 	bytes, err := os.ReadFile(filename)
 	if err != nil {
-		return "", fmt.Errorf("could not read %s: %v", filename, err)
+		return "", fmt.Errorf("attempted readFileAsString %s: %v", filename, err)
 	}
 	return string(bytes), nil
 }
 
-func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
+func check(_ *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 	for _, pair := range pairs {
 		expected, err := readFileAsString(pair.Src)
 		if err != nil {
@@ -174,7 +171,6 @@ func makePkgSrcDstPairs(cfg *Config, pkg *PackageConfig) []*SrcDst {
 
 func makePkgSrcDstPair(cfg *Config, pkg *PackageConfig, src, dst string) *SrcDst {
 	if pkg.TargetWorkspaceRoot != "" {
-		src = filepath.Join("external", strings.TrimPrefix(src, ".."))
 		dst = filepath.Join(pkg.TargetWorkspaceRoot, dst)
 	}
 	dst = filepath.Join(cfg.WorkspaceRootDirectory, dst)
@@ -186,7 +182,7 @@ func runPkg(cfg *Config, pkg *PackageConfig) (err error) {
 
 	for _, pair := range pairs {
 		if !fileExists(pair.Src) {
-			return fmt.Errorf("could not prepare (generated file not found): %q", pair.Src)
+			return fmt.Errorf("could not prepare (generated source file %q not found in pair): %+v", pair.Src, pair)
 		}
 	}
 
@@ -233,7 +229,9 @@ func readConfig(workspaceRootDirectory string) (*Config, error) {
 		cfg.FileMode = "0644"
 	}
 
-	// log.Printf("%+v", cfg)
+	if debug {
+		log.Printf("%+v", cfg)
+	}
 
 	return cfg, nil
 }

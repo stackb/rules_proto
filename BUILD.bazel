@@ -1,20 +1,16 @@
-load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
-load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
-load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 load("@//rules:proto_gazelle.bzl", "proto_gazelle")
+load("@bazel_gazelle//:def.bzl", "gazelle_binary")
+load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 
-exports_files(["rules_proto_config.yaml"])
-
-# ----------------------------------------------------
-# Buildifier
-# ----------------------------------------------------
-buildifier(name = "buildifier")
+exports_files([
+    "rules_proto_config.yaml",
+    "MODULE.bazel",
+])
 
 # ----------------------------------------------------
 # Gazelle
 # ----------------------------------------------------
 # gazelle:prefix github.com/stackb/rules_proto
-# gazelle:resolve go github.com/bazelbuild/buildtools/build @com_github_bazelbuild_buildtools//build:go_default_library
 # gazelle:exclude vendor
 # gazelle:exclude node_modules
 
@@ -34,22 +30,12 @@ gazelle_binary(
 proto_gazelle(
     name = "gazelle",
     cfgs = [":rules_proto_config.yaml"],
+    external = "static",
     gazelle = ":gazelle-protobuf",
     imports = [
         "@googleapis//:imports.csv",
-        "@protoapis//:imports.csv",
+        "@protobufapis//:imports.csv",
     ],
-)
-
-gazelle(
-    name = "update_go_deps",
-    args = [
-        "-from_file=go.mod",
-        "-to_macro=go_deps.bzl%go_deps",
-        "-build_file_proto_mode=disable_global",
-        "-prune=true",
-    ],
-    command = "update-repos",
 )
 
 # ----------------------------------------------------
@@ -61,11 +47,18 @@ filegroup(
     testonly = True,
     srcs = [
         "BUILD.bazel",
-        "WORKSPACE",
-        "go_deps.bzl",
+        "MODULE.bazel",
+        "go.mod",
+        "go.sum",
+        "maven_akka_install.json",
+        "maven_install.json",
+        "maven_zio_install.json",
+        "package.json",
+        "rules_jvm_external~~maven~maven_scala_install.json",
         "//cmd/gazelle:all_files",
         "//cmd/gencopy:all_files",
-        "//deps:all_files",
+        "//extensions:all_files",
+        "//language/proto_go_modules:all_files",
         "//language/protobuf:all_files",
         "//pkg:all_files",
         "//plugin:all_files",

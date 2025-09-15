@@ -1,4 +1,2 @@
-#build --bes_backend=grpc://127.0.0.1:1080
-#build --bes_results_url=http://127.0.0.1:8080/pipeline
-#build --bes_timeout=5s
-#build --build_event_publish_all_actions
+build --proto_compiler=@build_stack_rules_proto//toolchain:protoc.exe
+build --host_cxxopt=-std=c++17 --cxxopt=-std=c++17

@@ -62,7 +62,7 @@ func TestFind(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				if err := ioutil.WriteFile(tc.file, nil, 0o755); err != nil {
+				if err := os.WriteFile(tc.file, nil, 0o755); err != nil {
 					t.Fatal(err)
 				}
 			}

@@ -28,7 +28,7 @@ func TestGenerateRules(t *testing.T) {
 			want: language.GenerateResult{
 				Gen:     []*rule.Rule{},
 				Empty:   []*rule.Rule{},
-				Imports: []interface{}{},
+				Imports: []any{},
 			},
 		},
 		"does not register labels qualified with the config.RepoName": {
@@ -48,7 +48,7 @@ import "google/protobuf/any.proto";
 			want: language.GenerateResult{
 				Gen:     []*rule.Rule{},
 				Empty:   []*rule.Rule{},
-				Imports: []interface{}{},
+				Imports: []any{},
 			},
 			post: func(state *testGenerateRulesState) {
 				wantProvided := []importResolverProvide{
@@ -89,7 +89,7 @@ import "google/protobuf/any.proto";
 			want: language.GenerateResult{
 				Gen:     []*rule.Rule{},
 				Empty:   []*rule.Rule{},
-				Imports: []interface{}{},
+				Imports: []any{},
 			},
 			pre: func(state *testGenerateRulesState) {
 				state.ext.repoName = "override"
@@ -167,7 +167,7 @@ func makeTestProtoLibraryRule() *rule.Rule {
 func makeTestConfig(repoName string) *config.Config {
 	return &config.Config{
 		RepoName: repoName,
-		Exts:     make(map[string]interface{}),
+		Exts:     make(map[string]any),
 	}
 }
 

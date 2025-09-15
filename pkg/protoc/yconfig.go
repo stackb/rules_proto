@@ -2,10 +2,11 @@ package protoc
 
 import (
 	"fmt"
-	"io/ioutil"
 	"path/filepath"
 
 	yaml "gopkg.in/yaml.v3"
+
+	"os"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 )
@@ -54,7 +55,7 @@ type YLanguage struct {
 // ParseYConfigFile parses the given filename and returns a YConfig pointer or
 // error if a file read or parse error occurs.
 func ParseYConfigFile(filename string) (*YConfig, error) {
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("yaml read error %s: %w", filename, err)
 	}

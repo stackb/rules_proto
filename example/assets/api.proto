@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package example.assets;
+
+import "example/assets/api_request.proto";
+import "example/assets/api_response.proto";
+
+option go_package = "github.com/stackb/rules_proto/example/assets;assets";
+
+message ApiExchange {
+  ApiRequest request = 1;
+  ApiResponse response = 2;
+}

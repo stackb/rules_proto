@@ -1,0 +1,15 @@
+{
+    "homepage": "https://github.com/stackb/rules_proto",
+    "maintainers": [
+        {
+            "name": "Paul Cody",
+            "email": "pcj@stack.build",
+            "github": "pcj"
+        }
+    ],
+    "repository": [
+        "github:stackb/rules_proto"
+    ],
+    "versions": [],
+    "yanked_versions": {}
+}

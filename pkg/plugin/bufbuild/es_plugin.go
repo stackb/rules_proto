@@ -26,12 +26,7 @@ func (p *EsProto) Name() string {
 // Configure implements part of the Plugin interface.
 func (p *EsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfiguration {
 	flags := parseEsProtoOptions(p.Name(), ctx.PluginConfig.GetFlags())
-	imports := make(map[string]bool)
-	for _, file := range ctx.ProtoLibrary.Files() {
-		for _, imp := range file.Imports() {
-			imports[imp.Filename] = true
-		}
-	}
+
 	// TODO: get target option from directive
 	var options = []string{"keep_empty_files=true", "target=ts"}
 	tsFiles := make([]string, 0)
@@ -58,13 +53,13 @@ func (p *EsProto) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigurati
 	return pc
 }
 
-// EsProtoOptions represents the parsed flag configuration for the
+// esProtoOptions represents the parsed flag configuration for the
 // EsProto implementation.
-type EsProtoOptions struct {
+type esProtoOptions struct {
 	excludeOutput map[string]bool
 }
 
-func parseEsProtoOptions(kindName string, args []string) *EsProtoOptions {
+func parseEsProtoOptions(kindName string, args []string) *esProtoOptions {
 	flags := flag.NewFlagSet(kindName, flag.ExitOnError)
 
 	var excludeOutput string
@@ -73,7 +68,7 @@ func parseEsProtoOptions(kindName string, args []string) *EsProtoOptions {
 	if err := flags.Parse(args); err != nil {
 		log.Fatalf("failed to parse flags for %q: %v", kindName, err)
 	}
-	config := &EsProtoOptions{
+	config := &esProtoOptions{
 		excludeOutput: make(map[string]bool),
 	}
 	for _, value := range strings.Split(excludeOutput, ",") {

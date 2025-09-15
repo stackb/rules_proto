@@ -1,4 +1,5 @@
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
+load("@rules_java//java:java_binary.bzl", "java_binary")
 
 proto_plugin(
     name = "protoc-gen-akka-grpc",

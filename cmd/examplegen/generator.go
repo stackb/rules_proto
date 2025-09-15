@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -17,22 +16,16 @@ func generateMarkdown(c *Config) error {
 	}
 	defer f.Close()
 
-	var workspace, buildIn, buildOut, protoFile string
+	var workspace, buildIn, buildOut string
 	for _, src := range c.Files {
 		base := filepath.Base(src)
-		ext := filepath.Ext(base)
-
-		if ext == ".proto" {
-			protoFile = src
-			continue
-		}
 
 		switch base {
 		case "BUILD.in":
 			buildIn = src
 		case "BUILD.out":
 			buildOut = src
-		case "WORKSPACE":
+		case "MODULE.bazel":
 			workspace = src
 		}
 	}
@@ -53,27 +46,24 @@ func generateMarkdown(c *Config) error {
 
 	fmt.Fprintf(f, "# %s example\n\n", c.Name)
 
-	fmt.Fprintf(f, "`bazel test %s_test`\n\n", c.Label)
+	fmt.Fprintf(f, "[`testdata files`](/example/golden/testdata/%s)\n\n", c.Name)
 
-	fmt.Fprintf(f, "\n## `BUILD.bazel` (after gazelle)\n\n")
-	if err := printFileBlock("BUILD.bazel", "python", buildOut, f); err != nil {
-		return err
-	}
+	fmt.Fprintf(f, "\n## `Integration Test`\n\n")
+	fmt.Fprintf(f, "`bazel test %s_test`)\n\n", c.Label)
 
 	fmt.Fprintf(f, "\n## `BUILD.bazel` (before gazelle)\n\n")
-	if err := printFileBlock("BUILD.bazel", "python", buildIn, f); err != nil {
+	if err := printFileBlock("BUILD.bazel", "python", buildIn, "", f); err != nil {
 		return err
 	}
 
-	fmt.Fprintf(f, "\n## `WORKSPACE`\n\n")
-	if err := printFileBlock(filepath.Base(workspace), "python", workspace, f); err != nil {
+	fmt.Fprintf(f, "\n## `BUILD.bazel` (after gazelle)\n\n")
+	if err := printFileBlock("BUILD.bazel", "python", buildOut, "", f); err != nil {
 		return err
 	}
 
-	if false {
-		if err := printFileBlock(filepath.Base(protoFile), "proto", protoFile, f); err != nil {
-			return err
-		}
+	fmt.Fprintf(f, "\n## `MODULE.bazel (snippet)`\n\n")
+	if err := printFileBlock(filepath.Base(workspace), "python", workspace, c.WorkspaceIn, f); err != nil {
+		return err
 	}
 
 	return nil
@@ -89,32 +79,13 @@ func generateTest(c *Config) error {
 	fmt.Fprintln(f, testHeader)
 	fmt.Fprintln(f, c.TestContent)
 
-	fmt.Fprintln(f, "var txtar=`")
+	fmt.Fprintln(f, "var moduleFileSuffix=`")
+	if _, err := f.WriteString(c.WorkspaceIn); err != nil {
+		return err
+	}
+	fmt.Fprintln(f, "`")
 
-	fmt.Fprintf(f, "-- WORKSPACE --\n")
-	data, err := ioutil.ReadFile(c.WorkspaceIn)
-	if err != nil {
-		return fmt.Errorf("read %q: %v", c.WorkspaceIn, err)
-	}
-	if _, err := f.Write(data); err != nil {
-		return fmt.Errorf("write %q: %v", c.WorkspaceIn, err)
-	}
-	// seek out the WORKSPACE file and append it now such that the WORKSPACE in
-	// the testdata is concatenated with the config.WorkspaceIn.
-	for _, src := range c.Files {
-		if filepath.Base(src) != "WORKSPACE" {
-			continue
-		}
-		data, err := ioutil.ReadFile(src)
-		if err != nil {
-			return fmt.Errorf("read %q: %v", src, err)
-		}
-		f.WriteString("\n")
-		if _, err := f.Write(data); err != nil {
-			return fmt.Errorf("write: %v", err)
-		}
-		break
-	}
+	fmt.Fprintln(f, "var txtar=`")
 
 	for _, src := range c.Files {
 		dst := mapFilename(src)
@@ -129,7 +100,7 @@ func generateTest(c *Config) error {
 
 		fmt.Fprintf(f, "-- %s --\n", dstFilename)
 
-		data, err := ioutil.ReadFile(src)
+		data, err := os.ReadFile(src)
 		if err != nil {
 			return fmt.Errorf("read %q: %v", src, err)
 		}
@@ -149,7 +120,7 @@ func mapFilename(in string) string {
 	base := filepath.Base(in)
 
 	switch base {
-	case "WORKSPACE":
+	case "MODULE.bazel":
 		return ""
 	case "BUILD.in":
 		return ""
@@ -160,14 +131,19 @@ func mapFilename(in string) string {
 	return in
 }
 
-func printFileBlock(name, syntax, filename string, out io.Writer) error {
+func printFileBlock(name, syntax, filename string, extraContent string, out io.Writer) error {
 	fmt.Fprintf(out, "~~~%s\n", syntax)
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
-		log.Panicf("%s: read %q: %v", name, filename, err)
+		return fmt.Errorf("%s: failed to read filename=%q: %v", name, filename, err)
 	}
 	if _, err := out.Write(data); err != nil {
-		log.Panicf("%s: write %q: %v", name, filename, err)
+		return fmt.Errorf("%s: write %q: %v", name, filename, err)
+	}
+	if extraContent != "" {
+		if _, err := out.Write([]byte(extraContent + "\n")); err != nil {
+			return fmt.Errorf("%s: write %q: %v", name, filename, err)
+		}
 	}
 	fmt.Fprintf(out, "~~~\n\n")
 

@@ -2,7 +2,6 @@ package plugintest
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -107,7 +106,7 @@ func (tc *Case) RunIntegration(t *testing.T, subject protoc.Plugin, got *protoc.
 	if err := os.MkdirAll(filepath.Join(execrootDir, relDir), os.ModePerm); err != nil {
 		t.Fatalf("relDir: %v", err)
 	}
-	if err := ioutil.WriteFile(filepath.Join(execrootDir, relDir, filename), []byte(in), os.ModePerm); err != nil {
+	if err := os.WriteFile(filepath.Join(execrootDir, relDir, filename), []byte(in), os.ModePerm); err != nil {
 		t.Fatal(err)
 	}
 

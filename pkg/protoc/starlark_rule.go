@@ -28,8 +28,8 @@ func LoadStarlarkLanguageRuleFromFile(workDir, filename, name string, reporter f
 	return loadStarlarkLanguageRule(name, filename, f, reporter, errorReporter)
 }
 
-func loadStarlarkLanguageRule(name, filename string, src interface{}, reporter func(msg string), errorReporter func(err error)) (LanguageRule, error) {
-	newErrorf := func(msg string, args ...interface{}) error {
+func loadStarlarkLanguageRule(name, filename string, src any, reporter func(msg string), errorReporter func(err error)) (LanguageRule, error) {
+	newErrorf := func(msg string, args ...any) error {
 		err := fmt.Errorf(filename+": "+msg, args...)
 		errorReporter(err)
 		return err
@@ -91,7 +91,7 @@ func newStarlarkLanguageRuleFunction(rules map[string]*starlarkstruct.Struct) go
 type starlarkLanguageRule struct {
 	name          string
 	reporter      func(thread *starlark.Thread, msg string)
-	errorReporter func(msg string, args ...interface{}) error
+	errorReporter func(msg string, args ...any) error
 	rule          *starlarkstruct.Struct
 }
 
@@ -208,7 +208,7 @@ type starlarkRuleProvider struct {
 	name                        string
 	provider                    *starlarkstruct.Struct
 	reporter                    func(thread *starlark.Thread, msg string)
-	errorReporter               func(msg string, args ...interface{}) error
+	errorReporter               func(msg string, args ...any) error
 	experimentalResolveDepsAttr string
 }
 

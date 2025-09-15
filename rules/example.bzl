@@ -13,14 +13,14 @@ def _examplegen_impl(ctx):
         testOut = output_test.path,
         testContent = ctx.attr.test_content,
         markdownOut = output_markdown.path,
-        workspaceIn = ctx.file.workspace_template.path,
+        workspaceIn = ctx.attr.extra_module_bazel_content,
         stripPrefix = ctx.attr.strip_prefix,
         files = [f.path for f in ctx.files.srcs],
     )
 
     ctx.actions.write(
         output = config_json,
-        content = config.to_json(),
+        content = json.encode(config),
     )
 
     ctx.actions.run(
@@ -28,7 +28,7 @@ def _examplegen_impl(ctx):
         progress_message = "Generating %s test" % ctx.attr.name,
         executable = ctx.file._examplegen,
         arguments = ["--config_json=%s" % config_json.path],
-        inputs = [config_json, ctx.file.workspace_template] + ctx.files.srcs,
+        inputs = [config_json] + ctx.files.srcs,
         outputs = [output_test, output_markdown],
     )
 
@@ -56,10 +56,8 @@ func TestBuild(t *testing.T) {
 }
 """,
         ),
-        "workspace_template": attr.label(
-            doc = "Template for the test WORKSPACE",
-            allow_single_file = True,
-            mandatory = True,
+        "extra_module_bazel_content": attr.string(
+            doc = "Content to be appended to the go_bazel_test MODULE.bazel file",
         ),
         "_examplegen": attr.label(
             doc = "The examplegen generator tool",
@@ -96,7 +94,7 @@ def gazelle_testdata_example(**kwargs):
         srcs = srcs,
         strip_prefix = strip_prefix,
         test_content = test_content,
-        workspace_template = kwargs.pop("workspace_template", ""),
+        extra_module_bazel_content = kwargs.pop("extra_module_bazel_content", ""),
     )
 
     go_bazel_test(

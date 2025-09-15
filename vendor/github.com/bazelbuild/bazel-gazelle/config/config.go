@@ -34,6 +34,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/bazelbuild/bazel-gazelle/internal/module"
 	"github.com/bazelbuild/bazel-gazelle/internal/wspace"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
@@ -85,10 +86,21 @@ type Config struct {
 	// libraries in the workspace for dependency resolution
 	IndexLibraries bool
 
+	// When IndexLazy is true, Gazelle builds its index lazily, only reading
+	// specific directories indicated by the user or by extensions.
+	// When false, Gazelle indexes all directories.
+	IndexLazy bool
+
 	// KindMap maps from a kind name to its replacement. It provides a way for
 	// users to customize the kind of rules created by Gazelle, via
 	// # gazelle:map_kind.
 	KindMap map[string]MappedKind
+
+	// AliasMap maps a wrapper macro name to the kind of rule that it wraps.
+	// It provides a way for users to define custom macros that generate rules
+	// that are understood by gazelle, while still allowing gazelle to update
+	// the attrs for the macro calls. Configured via # gazelle:macro.
+	AliasMap map[string]string
 
 	// Repos is a list of repository rules declared in the main WORKSPACE file
 	// or in macros called by the main WORKSPACE file. This may affect rule
@@ -107,6 +119,11 @@ type Config struct {
 
 	// Whether Gazelle is loaded as a Bzlmod 'bazel_dep'.
 	Bzlmod bool
+
+	// ModuleToApparentName is a function that maps the name of a Bazel module
+	// to the apparent name (repo_name) specified in the MODULE.bazel file. It
+	// returns the empty string if the module is not found.
+	ModuleToApparentName func(string) string
 }
 
 // MappedKind describes a replacement to use for a built-in kind.
@@ -189,22 +206,23 @@ type Configurer interface {
 	Configure(c *Config, rel string, f *rule.File)
 }
 
+var _ Configurer = (*CommonConfigurer)(nil)
+
 // CommonConfigurer handles language-agnostic command-line flags and directives,
 // i.e., those that apply to Config itself and not to Config.Exts.
 type CommonConfigurer struct {
-	repoRoot, buildFileNames, readBuildFilesDir, writeBuildFilesDir string
-	indexLibraries, strict                                          bool
-	langCsv                                                         string
-	bzlmod                                                          bool
+	repoRoot                          string
+	indexLibraries, indexLazy, strict bool
+	langCsv                           string
+	bzlmod                            bool
 }
 
 func (cc *CommonConfigurer) RegisterFlags(fs *flag.FlagSet, cmd string, c *Config) {
+	cc.indexLibraries = true
+	cc.indexLazy = false
 	fs.StringVar(&cc.repoRoot, "repo_root", "", "path to a directory which corresponds to go_prefix, otherwise gazelle searches for it.")
-	fs.StringVar(&cc.buildFileNames, "build_file_name", strings.Join(DefaultValidBuildFileNames, ","), "comma-separated list of valid build file names.\nThe first element of the list is the name of output build files to generate.")
-	fs.BoolVar(&cc.indexLibraries, "index", true, "when true, gazelle will build an index of libraries in the workspace for dependency resolution")
+	fs.Var(indexFlag{indexLibraries: &cc.indexLibraries, indexLazy: &cc.indexLazy}, "index", "determines how Gazelle indexes library rules. 'all' means index all libraries in all repo directories. 'lazy' means specific directories, determined by extensions. 'none' means indexing is disabled.")
 	fs.BoolVar(&cc.strict, "strict", false, "when true, gazelle will exit with none-zero value for build file syntax errors or unknown directives")
-	fs.StringVar(&cc.readBuildFilesDir, "experimental_read_build_files_dir", "", "path to a directory where build files should be read from (instead of -repo_root)")
-	fs.StringVar(&cc.writeBuildFilesDir, "experimental_write_build_files_dir", "", "path to a directory where build files should be written to (instead of -repo_root)")
 	fs.StringVar(&cc.langCsv, "lang", "", "if non-empty, process only these languages (e.g. \"go,proto\")")
 	fs.BoolVar(&cc.bzlmod, "bzlmod", false, "for internal usage only")
 }
@@ -229,32 +247,26 @@ func (cc *CommonConfigurer) CheckFlags(fs *flag.FlagSet, c *Config) error {
 	if err != nil {
 		return fmt.Errorf("%s: failed to resolve symlinks: %v", cc.repoRoot, err)
 	}
-	c.ValidBuildFileNames = strings.Split(cc.buildFileNames, ",")
-	if cc.readBuildFilesDir != "" {
-		if filepath.IsAbs(cc.readBuildFilesDir) {
-			c.ReadBuildFilesDir = cc.readBuildFilesDir
-		} else {
-			c.ReadBuildFilesDir = filepath.Join(c.WorkDir, cc.readBuildFilesDir)
-		}
-	}
-	if cc.writeBuildFilesDir != "" {
-		if filepath.IsAbs(cc.writeBuildFilesDir) {
-			c.WriteBuildFilesDir = cc.writeBuildFilesDir
-		} else {
-			c.WriteBuildFilesDir = filepath.Join(c.WorkDir, cc.writeBuildFilesDir)
-		}
+	c.RepoName, err = extractRepositoryName(c.RepoRoot)
+	if err != nil {
+		return fmt.Errorf("failed to extract repository name: %v", err)
 	}
 	c.IndexLibraries = cc.indexLibraries
+	c.IndexLazy = cc.indexLazy
 	c.Strict = cc.strict
 	if len(cc.langCsv) > 0 {
 		c.Langs = strings.Split(cc.langCsv, ",")
 	}
 	c.Bzlmod = cc.bzlmod
+	c.ModuleToApparentName, err = module.ExtractModuleToApparentNameMapping(c.RepoRoot)
+	if err != nil {
+		return fmt.Errorf("failed to parse MODULE.bazel: %v", err)
+	}
 	return nil
 }
 
 func (cc *CommonConfigurer) KnownDirectives() []string {
-	return []string{"build_file_name", "map_kind", "lang"}
+	return []string{"map_kind", "alias_kind", "lang"}
 }
 
 func (cc *CommonConfigurer) Configure(c *Config, rel string, f *rule.File) {
@@ -263,9 +275,6 @@ func (cc *CommonConfigurer) Configure(c *Config, rel string, f *rule.File) {
 	}
 	for _, d := range f.Directives {
 		switch d.Key {
-		case "build_file_name":
-			c.ValidBuildFileNames = strings.Split(d.Value, ",")
-
 		case "map_kind":
 			vals := strings.Fields(d.Value)
 			if len(vals) != 3 {
@@ -281,6 +290,25 @@ func (cc *CommonConfigurer) Configure(c *Config, rel string, f *rule.File) {
 				KindLoad: vals[2],
 			}
 
+		case "alias_kind":
+			vals := strings.Fields(d.Value)
+			if len(vals) != 2 {
+				log.Printf("expected two arguments (gazelle:alias_kind alias_kind underlying_kind), got %v", vals)
+				continue
+			}
+
+			aliasName := vals[0]
+			underlyingKind := vals[1]
+			if aliasName == underlyingKind {
+				log.Printf("alias_kind: alias kind %q is the same as the underlying kind %q", aliasName, underlyingKind)
+				continue
+			}
+
+			if c.AliasMap == nil {
+				c.AliasMap = make(map[string]string)
+			}
+			c.AliasMap[aliasName] = underlyingKind
+
 		case "lang":
 			if len(d.Value) > 0 {
 				c.Langs = strings.Split(d.Value, ",")
@@ -289,4 +317,71 @@ func (cc *CommonConfigurer) Configure(c *Config, rel string, f *rule.File) {
 			}
 		}
 	}
+}
+
+type indexFlag struct {
+	indexLibraries, indexLazy *bool
+}
+
+func (f indexFlag) String() string {
+	switch {
+	case *f.indexLibraries && !*f.indexLazy:
+		return "all"
+	case *f.indexLibraries && *f.indexLazy:
+		return "lazy"
+	default:
+		return "none"
+	}
+}
+
+func (f indexFlag) Set(s string) error {
+	switch s {
+	case "false", "none":
+		*f.indexLibraries = false
+		*f.indexLazy = false
+	case "lazy":
+		*f.indexLibraries = true
+		*f.indexLazy = true
+	case "true", "all":
+		*f.indexLibraries = true
+		*f.indexLazy = false
+	default:
+		return fmt.Errorf("invalid value for -index=%s; valid values are 'none', 'all', 'lazy'", s)
+	}
+	return nil
+}
+
+func (f indexFlag) IsBoolFlag() bool {
+	return true
+}
+
+func extractRepositoryName(repoRoot string) (string, error) {
+	name, err := module.ExtractModuleName(repoRoot)
+	if name != "" || err != nil {
+		return name, err
+	}
+
+	workspacePath := wspace.FindWORKSPACEFile(repoRoot)
+	workspace, _ := rule.LoadWorkspaceFile(workspacePath, "")
+	if workspace != nil {
+		return findWorkspaceName(workspace), nil
+	}
+	return "", nil
+}
+
+func findWorkspaceName(f *rule.File) string {
+	var name string
+	for _, r := range f.Rules {
+		if r.Kind() == "workspace" {
+			name = r.Name()
+			break
+		}
+	}
+	// HACK(bazelbuild/rules_go#2355, bazelbuild/rules_go#2387):
+	// We can't patch the WORKSPACE file with the correct name because Bazel
+	// writes it first; our patches won't apply.
+	if name == "com_google_googleapis" {
+		return "go_googleapis"
+	}
+	return name
 }

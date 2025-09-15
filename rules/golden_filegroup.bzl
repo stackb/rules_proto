@@ -10,18 +10,19 @@ For any golden_filegroup target `//:a` that srcs `a.txt`, `//:a.update` copies
 `a.txt` and `a.txt.golden'` are identical.
 """
 
-load("@build_stack_rules_proto//rules:providers.bzl", "ProtoCompileInfo")
 load(
     "@build_stack_rules_proto//rules:proto_compile_gencopy.bzl",
     "proto_compile_gencopy_run",
     "proto_compile_gencopy_test",
 )
+load("@build_stack_rules_proto//rules:providers.bzl", "ProtoCompileInfo")
 
 def _files_impl(ctx):
     dep = ctx.attr.dep[DefaultInfo]
     return ProtoCompileInfo(
         label = ctx.attr.dep.label,
         outputs = dep.files.to_list(),
+        output_files_by_rel_path = {},
     )
 
 _files = rule(

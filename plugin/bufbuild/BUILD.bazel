@@ -1,6 +1,6 @@
 load("@build_stack_rules_proto//rules:proto_plugin.bzl", "proto_plugin")
-load("@npm_ts_proto//plugin/bufbuild:@bufbuild/protoc-gen-es/package_json.bzl", gen_bin = "bin")
 load("@npm_ts_proto//plugin/bufbuild:@bufbuild/protoc-gen-connect-es/package_json.bzl", connect_bin = "bin")
+load("@npm_ts_proto//plugin/bufbuild:@bufbuild/protoc-gen-es/package_json.bzl", gen_bin = "bin")
 
 gen_bin.protoc_gen_es_binary(
     name = "protoc-gen-es",
