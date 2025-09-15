@@ -212,12 +212,6 @@ def _proto_compile_impl(ctx):
         if plugin_tool:
             tools.append(plugin_tool)
 
-            # const <depset<File>, <list<opaque>>
-            plugin_runfiles, plugin_input_manifests = ctx.resolve_tools(tools = [plugin.tool_target])
-            if plugin_input_manifests:
-                input_manifests.extend(plugin_input_manifests)
-            tools += plugin_runfiles.to_list()
-
             # If Windows, mangle the path.
             plugin_tool_path = plugin_tool.path
             if is_windows(ctx):
