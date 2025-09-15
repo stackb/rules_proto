@@ -1,49 +1,17 @@
-load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
 load("@build_stack_rules_proto//rules/cc:proto_cc_library.bzl", "proto_cc_library")
-load("@build_stack_rules_proto//rules/closure:proto_closure_js_library.bzl", "proto_closure_js_library")
 load("@build_stack_rules_proto//rules/go:proto_go_library.bzl", "proto_go_library")
 load("@build_stack_rules_proto//rules/java:proto_java_library.bzl", "proto_java_library")
-load("@build_stack_rules_proto//rules/nodejs:proto_nodejs_library.bzl", "proto_nodejs_library")
 load("@build_stack_rules_proto//rules/py:proto_py_library.bzl", "proto_py_library")
 load("@build_stack_rules_proto//rules/scala:proto_scala_library.bzl", "proto_scala_library")
 load("@build_stack_rules_proto//rules/ts:proto_ts_library.bzl", "proto_ts_library")
-load("@build_stack_rules_proto//rules:proto_compile.bzl", "proto_compile")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "person_proto",
     srcs = ["person.proto"],
     visibility = ["//visibility:public"],
     deps = ["//example/place:place_proto"],
-)
-
-proto_closure_js_library(
-    name = "person_closure_js_library",
-    srcs = ["person_closure.js"],
-    internal_descriptors = [
-        "//example/person:person_proto",
-        "//example/place:place_proto",
-        "//example/thing:thing_proto",
-        "//google/protobuf:timestamppb_proto",
-    ],
-    suppress = [
-        "JSC_IMPLICITLY_NONNULL_JSDOC",
-        "JSC_UNUSED_LOCAL_ASSIGNMENT",
-    ],
-    visibility = ["//visibility:public"],
-    exports = ["//example/place:place_closure_js_library"],
-    deps = ["//example/place:place_closure_js_library"],
-)
-
-proto_compile(
-    name = "person_closure_js_compile",
-    options = {"@build_stack_rules_proto//plugin/builtin:closurejs": [
-        "import_style=closure",
-        "library=example/person/person_closure",
-    ]},
-    outputs = ["person_closure.js"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:closurejs"],
-    proto = "person_proto",
-    visibility = ["//visibility:public"],
 )
 
 proto_cc_library(
@@ -84,7 +52,10 @@ proto_go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//example/place:place_go_proto",
+        "@org_golang_google_protobuf//encoding/protojson",
+        "@org_golang_google_protobuf//proto",
         "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//reflect/protoregistry",
         "@org_golang_google_protobuf//runtime/protoimpl",
     ],
 )
@@ -110,21 +81,6 @@ proto_java_library(
         "//example/place:place_java_library",
         "@com_google_protobuf//:protobuf_java",
     ],
-)
-
-proto_compile(
-    name = "person_node_js_compile",
-    options = {"@build_stack_rules_proto//plugin/builtin:commonjs": ["import_style=commonjs"]},
-    outputs = ["person_pb.js"],
-    plugins = ["@build_stack_rules_proto//plugin/builtin:commonjs"],
-    proto = "person_proto",
-    visibility = ["//visibility:public"],
-)
-
-proto_nodejs_library(
-    name = "person_nodejs_library",
-    srcs = ["person_pb.js"],
-    visibility = ["//visibility:public"],
 )
 
 proto_compile(

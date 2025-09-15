@@ -33,7 +33,7 @@ func makeProtoOverrideRule(libs []protoc.ProtoLibrary) *rule.Rule {
 	return overrideRule
 }
 
-func resolveOverrideRule(c *config.Config, rel string, overrideRule *rule.Rule, resolver protoc.ImportResolver) {
+func resolveOverrideRule(_ *config.Config, rel string, overrideRule *rule.Rule, resolver protoc.ImportResolver) {
 
 	libs := overrideRule.PrivateAttr(protoLibrariesRuleKey).([]protoc.ProtoLibrary)
 	if len(libs) == 0 {

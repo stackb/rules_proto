@@ -21,6 +21,7 @@ var (
 func TestMain(m *testing.M) {
 	bazel_testing.TestMain(m, bazel_testing.Args{
 		Main: txtar,
+		ModuleFileSuffix: moduleFileSuffix,
 	})
 }
 `

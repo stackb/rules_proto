@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package example.assets;
+
+option go_package = "github.com/stackb/rules_proto/example/assets;assets";
+
+message ApiRequest { repeated string header = 1; }

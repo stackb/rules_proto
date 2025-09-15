@@ -3,8 +3,8 @@
 A "proto_plugin" rule wraps metadata about a proto compiler plugin.
 """
 
+load("@build_stack_rules_proto//rules:providers.bzl", "ProtoPluginInfo")
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
-load("@build_stack_rules_proto//rules:providers.bzl", "ProtoDependencyInfo", "ProtoPluginInfo")
 
 def _proto_plugin_impl(ctx):
     return [
@@ -21,7 +21,6 @@ def _proto_plugin_impl(ctx):
             mods = ctx.attr.mods,
             data = ctx.files.data,
             supplementary_proto_deps = [dep[ProtoInfo] for dep in ctx.attr.supplementary_proto_deps],
-            deps = [dep[ProtoDependencyInfo] for dep in ctx.attr.deps],
         ),
     ]
 
@@ -59,10 +58,6 @@ proto_plugin = rule(
             doc = "Additional proto files/descriptors to be placed on the argument list",
             allow_files = True,
             providers = [ProtoInfo],
-        ),
-        "deps": attr.label_list(
-            doc = "Workspace dependencies the plugin tool requires",
-            providers = [ProtoDependencyInfo],
         ),
         "mods": attr.string_dict(
             doc = "content modifications to apply to the output files",

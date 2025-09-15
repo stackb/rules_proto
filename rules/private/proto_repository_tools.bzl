@@ -13,7 +13,7 @@
 # limitations under the License.
 """"""
 
-load("//rules/private:execution.bzl", "env_execute", "executable_extension")
+load("@bazel_gazelle//internal:common.bzl", "env_execute", "executable_extension")
 load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
 load("@build_stack_rules_proto//rules/private:proto_repository_tools_srcs.bzl", "PROTO_REPOSITORY_TOOLS_SRCS")
 
@@ -32,7 +32,7 @@ def _proto_repository_tools_impl(ctx):
     extension = executable_extension(ctx)
     go_tool = env["GOROOT"] + "/bin/go" + extension
 
-    rules_proto_path = ctx.path(Label("@build_stack_rules_proto//:WORKSPACE"))
+    rules_proto_path = ctx.path(Label("@build_stack_rules_proto//:MODULE.bazel"))
     ctx.symlink(
         rules_proto_path.dirname,
         "src/github.com/stackb/rules_proto",
@@ -67,8 +67,11 @@ def _proto_repository_tools_impl(ctx):
                 "run",
                 ctx.path(ctx.attr._list_repository_tools_srcs),
                 "-dir=src/github.com/stackb/rules_proto",
+                # Run it under 'check' to assert file is up-to-date
                 # "-check=rules/private/proto_repository_tools_srcs.bzl",
-                # Run it under 'generate' to recreate the list'
+                # Run it under 'skip' to not check (only for internal testing)
+                # "-skip=rules/private/proto_repository_tools_srcs.bzl",
+                # Run it under 'generate' to recreate the list
                 "-generate=rules/private/proto_repository_tools_srcs.bzl",
             ],
             environment = env,

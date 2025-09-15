@@ -14,22 +14,11 @@ scala deps, for example.
   The `langs.go` file is added which loads the protobuf language.  This copy of
   gazelle ends up being built by the standard go toolchain for the
   `proto_repository` rule.
-- `//cmd/depsgen`: a helper tool used by the `depsgen` rule (see `//deps:*`)
-  that generates `.bzl` files based on the transitive set of `proto_repository`
-  rules.
 - `//cmd/examplegen`: a helper tool that generates markdown and a `_test.go`
   file used by the `gazelle_testdata_example` rule (see `//example/golden:*`).
 - `//cmd/gencopy`: a helper tool that is used to copy generated files back into
   the source tree.
 - `//example/...`: example gazelle directives and rules.
-- `//deps:*`: contains the `//deps:BUILD.bazel` files where all project
-  dependencies are declared as `proto_repository` rules.  These are linked
-  together via their `deps` attribute.  Each `depsgen(name = "foo")` rule in
-  that file is used to create the corresponding `deps/foo_deps.bzl`, which is
-  generated and then copied back into the source tree.  Use `make deps` target
-  to regenerate these files.
-- `go.mod, go.sum`.  The are the inputs to generate the `go_deps.bzl` file.  Use
-  `bazel run //:update_go_deps` to regenerate this file.
 - `//language/protobuf`: contains the `protobuf` language extension.  The label
   `@build_stack_rules_proto//language/protobuf` should be referenced in the
   `gazelle_binary` rule.
@@ -40,8 +29,7 @@ scala deps, for example.
   implementation.
 - `//pkg/language/noop`: contains an empty extension that can be used as a starting template.
 - `//pkg/protoc`: a core package that defines the registry, language, rule
-  interfaces, and much of the implementation.  I'm not sure why I named it
-  `protoc`.
+  interfaces, and much of the implementation.
 - `//pkg/rule/...`: rule implementations.
 - `//plugin/...`: directories here contain `proto_plugin` rules.  In some cases,
   the plugin tool is built here, possibly depending on language-specific deps.
@@ -80,8 +68,8 @@ actually run `bazel build ...` on it.  So, the `:golden_test` target is used to
 assert that the correct gazelle output is generated, while `:scala_test` is used
 to assert that the outbut actually builds.
 
-The effective `WORKSPACE` file is a concatenation of the `workspace_template`
-(e.g. `prebuilt.WORKSPACE`) and the one in the testdata example dir.
+The effective `MODULE.bazel` file is a concatenation of the `workspace_template`
+(e.g. `default.MODULE.bazel`) and the one in the testdata example dir.
 
 One way to debug these kinds of tests is to open an editor in the effective
 directory where the test is constructed (this will be printed out if it fails).

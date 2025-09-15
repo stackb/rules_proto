@@ -27,6 +27,7 @@ import (
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/pathtools"
+	bzl "github.com/bazelbuild/buildtools/build"
 )
 
 // A Label represents a label of a build target in Bazel. Labels have three
@@ -50,6 +51,12 @@ type Label struct {
 	// Relative indicates whether the label refers to a target in the current
 	// package. Relative is true if and only if Repo and Pkg are both omitted.
 	Relative bool
+
+	// Canonical indicates whether the repository name is canonical. If true,
+	// then the label will be stringified with an extra "@" prefix if it is
+	// absolute.
+	// Note: Label does not apply any kind of repo mapping.
+	Canonical bool
 }
 
 // New constructs a new label from components.
@@ -63,7 +70,8 @@ var NoLabel = Label{}
 
 var (
 	// This was taken from https://github.com/bazelbuild/bazel/blob/71fb1e4188b01e582a308cfe4bcbf1c730eded1b/src/main/java/com/google/devtools/build/lib/cmdline/RepositoryName.java#L159C1-L164
-	labelRepoRegexp = regexp.MustCompile(`^@$|^[A-Za-z0-9_.-][A-Za-z0-9_.~-]*$`)
+	// ~ and + are both allowed as the former is used in canonical repo names by Bazel 7 and earlier and the latter in Bazel 8.
+	labelRepoRegexp = regexp.MustCompile(`^@$|^[A-Za-z0-9_.~+-]*$`)
 	// This was taken from https://github.com/bazelbuild/bazel/blob/master/src/main/java/com/google/devtools/build/lib/cmdline/LabelValidator.java
 	// Package names may contain all 7-bit ASCII characters except:
 	// 0-31 (control characters)
@@ -81,10 +89,11 @@ func Parse(s string) (Label, error) {
 	origStr := s
 
 	relative := true
+	canonical := false
 	var repo string
-	// if target name begins @@ drop the first @
 	if strings.HasPrefix(s, "@@") {
 		s = s[len("@"):]
+		canonical = true
 	}
 	if strings.HasPrefix(s, "@") {
 		relative = false
@@ -138,10 +147,11 @@ func Parse(s string) (Label, error) {
 	}
 
 	return Label{
-		Repo:     repo,
-		Pkg:      pkg,
-		Name:     name,
-		Relative: relative,
+		Repo:      repo,
+		Pkg:       pkg,
+		Name:      name,
+		Relative:  relative,
+		Canonical: canonical,
 	}, nil
 }
 
@@ -157,6 +167,9 @@ func (l Label) String() string {
 		// if l.Repo == "", the label string will begin with "//"
 		// if l.Repo == "@", the label string will begin with "@//"
 		repo = l.Repo
+	}
+	if l.Canonical && strings.HasPrefix(repo, "@") {
+		repo = "@" + repo
 	}
 
 	if path.Base(l.Pkg) == l.Name {
@@ -208,6 +221,12 @@ func (l Label) Contains(other Label) bool {
 	}
 	result := l.Repo == other.Repo && pathtools.HasPrefix(other.Pkg, l.Pkg)
 	return result
+}
+
+func (l Label) BzlExpr() bzl.Expr {
+	return &bzl.StringExpr{
+		Value: l.String(),
+	}
 }
 
 var nonWordRe = regexp.MustCompile(`\W+`)

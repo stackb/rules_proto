@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package example.assets;
+
+option go_package = "github.com/stackb/rules_proto/example/assets;assets";
+
+message ApiResponse {
+  int32 code = 1;
+  string status = 2;
+}

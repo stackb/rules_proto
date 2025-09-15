@@ -7,7 +7,8 @@ import (
 	"github.com/stackb/rules_proto/pkg/plugintest"
 )
 
-func TestJsCommonPlugin(t *testing.T) {
+// TODO(pcj): migrate this test to use the standalone protoc-gen-js plugin.
+func SkipTestJsCommonPlugin(t *testing.T) {
 	plugintest.Cases(t, &builtin.JsCommonPlugin{}, map[string]plugintest.Case{
 		"empty file": {
 			Input: "",

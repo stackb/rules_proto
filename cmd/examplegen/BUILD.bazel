@@ -6,7 +6,6 @@ go_library(
         "config.go",
         "examplegen.go",
         "generator.go",
-        "linewriter.go",
         "template.go",
     ],
     importpath = "github.com/stackb/rules_proto/cmd/examplegen",

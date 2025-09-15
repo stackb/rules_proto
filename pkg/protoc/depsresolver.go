@@ -118,6 +118,9 @@ func ResolveDepsAttr(attrName string, excludeWkt bool) DepsResolver {
 		}
 
 		if len(unresolvedDeps) > 0 {
+			if debug {
+				log.Println(from, "❗ unresolved deps:", unresolvedDeps)
+			}
 			r.SetPrivateAttr(UnresolvedDepsPrivateKey, unresolvedDeps)
 		}
 	}

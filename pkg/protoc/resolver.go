@@ -67,7 +67,7 @@ func GlobalResolver() ImportCrossResolver {
 }
 
 type ImportResolverOptions struct {
-	Printf func(format string, args ...interface{})
+	Printf func(format string, args ...any)
 	Debug  bool
 }
 
@@ -321,13 +321,13 @@ func ResolveImportsString(resolver ImportResolver, rel, kind, impLang string, im
 }
 
 // getResolveConfig returns the resolve.resolveConfig
-func getResolveConfig(c *config.Config) interface{} {
+func getResolveConfig(c *config.Config) any {
 	return c.Exts["_resolve"]
 }
 
 // rewriteResolveConfigOverrides reads the existing private attribute and
 // appends more overrides.
-func rewriteResolveConfigOverrides(rc interface{}, more overrideSpec) {
+func rewriteResolveConfigOverrides(rc any, more overrideSpec) {
 	rcv := reflect.ValueOf(rc).Elem()
 	val := reflect.Indirect(rcv)
 	member := val.FieldByName("overrides")

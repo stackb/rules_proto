@@ -24,6 +24,7 @@ def _proto_compiled_sources_impl(ctx):
     return ProtoCompileInfo(
         label = ctx.attr.dep.label,
         outputs = dep.files.to_list(),
+        output_files_by_rel_path = {},
     )
 
 _proto_compiled_sources = rule(
@@ -53,10 +54,12 @@ def protogenrule(
     name_test = name + test_target_suffix
 
     outs = kwargs.pop("outs", [])
+    srcs = kwargs.pop("srcs", [])
     visibility = kwargs.pop("visibility", [])
 
     native.genrule(
         name = name,
+        srcs = srcs,
         outs = outs,
         visibility = visibility,
         **kwargs

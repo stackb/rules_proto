@@ -24,6 +24,7 @@ import (
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/language"
+	"github.com/bazelbuild/bazel-gazelle/merger"
 	"github.com/bazelbuild/bazel-gazelle/pathtools"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 )
@@ -73,6 +74,15 @@ func (*protoLang) GenerateRules(args language.GenerateArgs) language.GenerateRes
 	var res language.GenerateResult
 	for _, pkg := range pkgs {
 		r := generateProto(pc, args.Rel, pkg, shouldSetVisibility)
+		if args.File != nil {
+			// If matching rule already exists, use its name for generated rule, otherwise other languages may not be able to resolve proto_library rule.
+			// This way we can propagate the name that would actually written to the BUILD file.
+			// Most of downstream extensions would refer to this name directly when generating `<lang>_proto_library`.
+			previous, err := merger.Match(args.File.Rules, r, protoKinds["proto_library"], c.AliasMap)
+			if err == nil && previous != nil {
+				r.SetName(previous.Name())
+			}
+		}
 		if r.IsEmpty(protoKinds[r.Kind()]) {
 			res.Empty = append(res.Empty, r)
 		} else {
@@ -93,8 +103,8 @@ func (*protoLang) GenerateRules(args language.GenerateArgs) language.GenerateRes
 // RuleName returns a name for a proto_library derived from the given strings.
 // For each string, RuleName will look for a non-empty suffix of identifier
 // characters and then append "_proto" to that.
+// It replaces non-identifier characters with underscores.
 func RuleName(names ...string) string {
-	base := "root"
 	for _, name := range names {
 		notIdent := func(c rune) bool {
 			return !('A' <= c && c <= 'Z' ||
@@ -102,15 +112,31 @@ func RuleName(names ...string) string {
 				'0' <= c && c <= '9' ||
 				c == '_')
 		}
-		if i := strings.LastIndexFunc(name, notIdent); i >= 0 {
+		// If name is explicit package name, e.g. `example.com/protos/foo;package_name` use package name instead of import path
+		if i := strings.LastIndexAny(name, `;`); i != -1 {
 			name = name[i+1:]
 		}
-		if name != "" {
-			base = name
-			break
+		// If name is a path, take only the last segment
+		if i := strings.LastIndexAny(name, `/\\.`); i != -1 {
+			name = name[i+1:]
+		}
+		// Replace illegal characters with underscores
+		var b strings.Builder
+		for _, r := range name {
+			if notIdent(r) {
+				b.WriteRune('_')
+			} else {
+				b.WriteRune(r)
+			}
+		}
+		base := strings.Trim(b.String(), "_")
+		// Skip if empty or only underscores
+		if base != "" {
+			return base + "_proto"
 		}
 	}
-	return base + "_proto"
+	// Default name if no valid identifier was found
+	return "root_proto"
 }
 
 // buildPackage extracts metadata from the .proto files in a directory and
@@ -119,7 +145,7 @@ func RuleName(names ...string) string {
 func buildPackages(pc *ProtoConfig, dir, rel string, protoFiles, genFiles []string) []*Package {
 	packageMap := make(map[string]*Package)
 	for _, name := range protoFiles {
-		info := protoFileInfo(dir, name)
+		info := ProtoFileInfo(dir, name)
 		key := info.PackageName
 
 		if pc.Mode == FileMode {

@@ -1,6 +1,5 @@
 /bazel-*
 /.vscode
 __pycache__
-docs/vendor
 node_modules
-vendor/**/BUILD.bazel
+/MODULE.bazel.lock

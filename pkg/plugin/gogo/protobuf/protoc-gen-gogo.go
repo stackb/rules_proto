@@ -40,7 +40,7 @@ func (p *GogoPlugin) Configure(ctx *protoc.PluginContext) *protoc.PluginConfigur
 		return nil
 	}
 
-	grpcOptions := p.grpcOptions(ctx.Rel, ctx.PluginConfig, ctx.ProtoLibrary)
+	grpcOptions := p.grpcOptions(ctx.PluginConfig, ctx.ProtoLibrary)
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/gogo/protobuf", "protoc-gen-"+p.variant),
 		Outputs: p.outputs(ctx.ProtoLibrary),
@@ -73,7 +73,7 @@ func (p *GogoPlugin) outputs(lib protoc.ProtoLibrary) []string {
 	return srcs
 }
 
-func (p *GogoPlugin) grpcOptions(rel string, cfg protoc.LanguagePluginConfig, lib protoc.ProtoLibrary) []string {
+func (p *GogoPlugin) grpcOptions(cfg protoc.LanguagePluginConfig, lib protoc.ProtoLibrary) []string {
 	// if the configuration specifically states that we don't want grpc, return
 	// early
 	if want, ok := cfg.Options[gogoGrpcPluginOption]; ok && !want {

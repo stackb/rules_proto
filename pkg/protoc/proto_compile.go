@@ -140,11 +140,12 @@ func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		switch name {
 		case "verbose":
 			val := vals[0]
-			if val == "True" || val == "true" {
+			switch val {
+			case "True", "true":
 				newRule.SetAttr("verbose", true)
-			} else if val == "False" || val == "false" {
+			case "False", "false":
 				newRule.SetAttr("verbose", false)
-			} else {
+			default:
 				log.Printf("bad attr 'verbose' value: %q", val)
 			}
 		default:

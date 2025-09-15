@@ -4,6 +4,7 @@ filegroup(
     srcs = [
         "BUILD.bazel",
         "proto_go_library.bzl",
+        "proto_go_modules.bzl",
     ],
     visibility = ["//rules:__pkg__"],
 )

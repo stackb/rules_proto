@@ -20,7 +20,6 @@ import (
 	"flag"
 	"fmt"
 	"go/build"
-	"io/ioutil"
 	"log"
 	"os"
 	"path"
@@ -134,6 +133,14 @@ type goConfig struct {
 	// buildTagsAttr are attributes for go_repository rules, set on the command
 	// line.
 	buildDirectivesAttr, buildExternalAttr, buildExtraArgsAttr, buildFileGenerationAttr, buildFileNamesAttr, buildFileProtoModeAttr, buildTagsAttr string
+
+	// goSearch is a list of additional directories that may contain Go libraries.
+	// Subdirectories within these roots may be indexed when lazy indexing
+	// is enabled. Each directory has an associated prefix, specified as part
+	// of the go_search directive. For example, if there's a directive
+	// '# gazelle:go_search replace/b example.com/b', and Gazelle sees an
+	// import of 'example.com/b/p', Gazelle indexes 'replace/b/p'.
+	goSearch []goSearch
 }
 
 // testMode determines how go_test rules are generated.
@@ -149,7 +156,7 @@ const (
 
 var (
 	defaultGoProtoCompilers = []string{"@io_bazel_rules_go//proto:go_proto"}
-	defaultGoGrpcCompilers  = []string{"@io_bazel_rules_go//proto:go_grpc"}
+	defaultGoGrpcCompilers  = []string{"@io_bazel_rules_go//proto:go_grpc_v2"}
 )
 
 func (m testMode) String() string {
@@ -180,7 +187,11 @@ func newGoConfig() *goConfig {
 		goGrpcCompilers:  defaultGoGrpcCompilers,
 		goGenerateProto:  true,
 	}
-	gc.preprocessTags()
+	if gc.genericTags == nil {
+		gc.genericTags = make(map[string]bool)
+	}
+	// Add default tags
+	gc.genericTags["gc"] = true
 	return gc
 }
 
@@ -197,21 +208,12 @@ func (gc *goConfig) clone() *goConfig {
 	gcCopy.goProtoCompilers = gc.goProtoCompilers[:len(gc.goProtoCompilers):len(gc.goProtoCompilers)]
 	gcCopy.goGrpcCompilers = gc.goGrpcCompilers[:len(gc.goGrpcCompilers):len(gc.goGrpcCompilers)]
 	gcCopy.submodules = gc.submodules[:len(gc.submodules):len(gc.submodules)]
+	gcCopy.goSearch = gc.goSearch[:len(gc.goSearch):len(gc.goSearch)]
 	return &gcCopy
-}
-
-// preprocessTags adds some tags which are on by default before they are
-// used to match files.
-func (gc *goConfig) preprocessTags() {
-	if gc.genericTags == nil {
-		gc.genericTags = make(map[string]bool)
-	}
-	gc.genericTags["gc"] = true
 }
 
 // setBuildTags sets genericTags by parsing as a comma separated list. An
 // error will be returned for tags that wouldn't be recognized by "go build".
-// preprocessTags should be called before this.
 func (gc *goConfig) setBuildTags(tags string) error {
 	if tags == "" {
 		return nil
@@ -373,9 +375,13 @@ type moduleRepo struct {
 	repoName, modulePath string
 }
 
+type goSearch struct {
+	rel, prefix string
+}
+
 var (
 	validBuildExternalAttr       = []string{"external", "vendored"}
-	validBuildFileGenerationAttr = []string{"auto", "on", "off"}
+	validBuildFileGenerationAttr = []string{"auto", "on", "off", "clean"}
 	validBuildFileProtoModeAttr  = []string{"default", "legacy", "disable", "disable_global", "package"}
 )
 
@@ -387,6 +393,7 @@ func (*goLang) KnownDirectives() []string {
 		"go_naming_convention",
 		"go_naming_convention_external",
 		"go_proto_compilers",
+		"go_search",
 		"go_test",
 		"go_visibility",
 		"importmap_prefix",
@@ -535,17 +542,23 @@ Update io_bazel_rules_go to a newer version in your WORKSPACE file.`
 		repoNamingConvention := map[string]namingConvention{}
 		for _, repo := range c.Repos {
 			if repo.Kind() == "go_repository" {
+				var name string
+				if apparentName := c.ModuleToApparentName(repo.AttrString("module_name")); apparentName != "" {
+					name = apparentName
+				} else {
+					name = repo.Name()
+				}
 				if attr := repo.AttrString("build_naming_convention"); attr == "" {
 					// No naming convention specified.
 					// go_repsitory uses importAliasNamingConvention by default, so we
 					// could use whichever name.
 					// resolveExternal should take that as a signal to follow the current
 					// naming convention to avoid churn.
-					repoNamingConvention[repo.Name()] = importAliasNamingConvention
+					repoNamingConvention[name] = importAliasNamingConvention
 				} else if nc, err := namingConventionFromString(attr); err != nil {
-					log.Printf("in go_repository named %q: %v", repo.Name(), err)
+					log.Printf("in go_repository named %q: %v", name, err)
 				} else {
-					repoNamingConvention[repo.Name()] = nc
+					repoNamingConvention[name] = nc
 				}
 			}
 		}
@@ -575,6 +588,7 @@ Update io_bazel_rules_go to a newer version in your WORKSPACE file.`
 			gc.prefix = prefix
 			gc.prefixSet = true
 			gc.prefixRel = rel
+			gc.goSearch = append(gc.goSearch, goSearch{rel: rel, prefix: prefix})
 		}
 		for _, d := range f.Directives {
 			switch d.Key {
@@ -582,10 +596,6 @@ Update io_bazel_rules_go to a newer version in your WORKSPACE file.`
 				if err := gc.setBuildTags(d.Value); err != nil {
 					log.Print(err)
 					continue
-				}
-				gc.preprocessTags()
-				if err := gc.setBuildTags(d.Value); err != nil {
-					log.Print(err)
 				}
 
 			case "go_generate_proto":
@@ -627,6 +637,32 @@ Update io_bazel_rules_go to a newer version in your WORKSPACE file.`
 				} else {
 					gc.goProtoCompilersSet = true
 					gc.goProtoCompilers = splitValue(d.Value)
+				}
+
+			case "go_search":
+				// Special syntax (empty value) to reset directive.
+				if d.Value == "" {
+					gc.goSearch = nil
+				} else {
+					args, err := splitQuoted(d.Value)
+					if err != nil {
+						log.Print(err)
+						continue
+					}
+					if len(args) == 0 || len(args) > 2 {
+						log.Printf("# gazelle:go_search: got %d arguments, expected 1 or 2, a relative directory path and a go prefix", len(args))
+						continue
+					}
+					searchDir := args[0]
+					prefix := ""
+					if len(args) > 1 {
+						prefix = args[1]
+					}
+					searchRel := path.Join(rel, searchDir)
+					if searchRel == "." {
+						searchRel = ""
+					}
+					gc.goSearch = append(gc.goSearch, goSearch{rel: searchRel, prefix: prefix})
 				}
 
 			case "go_test":
@@ -726,7 +762,7 @@ Update io_bazel_rules_go to a newer version in your WORKSPACE file.`
 		// Bazel has already fetched io_bazel_rules_go. We can read its version
 		// from //go:def.bzl.
 		defBzlPath := filepath.Join(rulesGoPath, "go", "def.bzl")
-		defBzlContent, err := ioutil.ReadFile(defBzlPath)
+		defBzlContent, err := os.ReadFile(defBzlPath)
 		if err != nil {
 			return nil, err
 		}
@@ -799,7 +835,7 @@ func detectNamingConvention(c *config.Config, rootFile *rule.File) namingConvent
 		var f *rule.File
 		for _, name := range c.ValidBuildFileNames {
 			fpath := filepath.Join(dir, name)
-			data, err := ioutil.ReadFile(fpath)
+			data, err := os.ReadFile(fpath)
 			if err != nil {
 				continue
 			}
@@ -821,15 +857,15 @@ func detectNamingConvention(c *config.Config, rootFile *rule.File) namingConvent
 		}
 	}
 
-	infos, err := ioutil.ReadDir(c.RepoRoot)
+	ents, err := os.ReadDir(c.RepoRoot)
 	if err != nil {
 		return importNamingConvention
 	}
-	for _, info := range infos {
-		if !info.IsDir() {
+	for _, ent := range ents {
+		if !ent.IsDir() {
 			continue
 		}
-		dirName := info.Name()
+		dirName := ent.Name()
 		dirNC := detectInDir(filepath.Join(c.RepoRoot, dirName), dirName)
 		if dirNC == unknownNamingConvention {
 			continue

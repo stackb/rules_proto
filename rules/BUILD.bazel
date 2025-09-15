@@ -4,10 +4,8 @@ filegroup(
     srcs = glob(["*.bzl"]) + [
         "BUILD.bazel",
         "//rules/cc:all_files",
-        "//rules/closure:all_files",
         "//rules/go:all_files",
         "//rules/java:all_files",
-        "//rules/nodejs:all_files",
         "//rules/private:all_files",
         "//rules/proto:all_files",
         "//rules/py:all_files",

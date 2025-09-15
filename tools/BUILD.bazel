@@ -1,0 +1,22 @@
+load("@buildifier_prebuilt//:rules.bzl", "buildifier", "buildifier_test")
+
+buildifier(
+    name = "buildifier.fix",
+    diff_command = "diff",
+    lint_mode = "fix",
+    mode = "fix",
+)
+
+buildifier_test(
+    name = "buildifier.check",
+    size = "small",
+    diff_command = "diff",
+    exclude_patterns = [
+        "./vendor/*",
+    ],
+    lint_mode = "warn",
+    mode = "diff",
+    no_sandbox = True,
+    tags = ["no-remote-exec"],
+    workspace = "//:MODULE.bazel",
+)

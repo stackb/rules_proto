@@ -8,6 +8,7 @@ go_library(
         "generate.go",
         "kinds.go",
         "lang.go",
+        "lifecycle.go",
         "override.go",
         "resolve.go",
     ],
@@ -39,7 +40,7 @@ go_test(
         "@bazel_gazelle//resolve:go_default_library",
         "@bazel_gazelle//rule:go_default_library",
         "@bazel_gazelle//testtools:go_default_library",
-        "@com_github_google_go_cmp//cmp",
+        "@com_github_google_go_cmp//cmp:go_default_library",
     ],
 )
 

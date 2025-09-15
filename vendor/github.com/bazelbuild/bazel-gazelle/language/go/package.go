@@ -106,9 +106,6 @@ func (pkg *goPackage) addFile(c *config.Config, er *embedResolver, info fileInfo
 			pkg.proto.addFile(info)
 		}
 	case info.isTest:
-		if info.isCgo {
-			return fmt.Errorf("%s: use of cgo in test not supported", info.path)
-		}
 		if getGoConfig(c).testMode == fileTestMode || len(pkg.tests) == 0 {
 			pkg.tests = append(pkg.tests, goTarget{})
 		}
@@ -344,8 +341,8 @@ func (t *goTarget) addFile(c *config.Config, er *embedResolver, info fileInfo) {
 
 func protoTargetFromProtoPackage(name string, pkg proto.Package) protoTarget {
 	target := protoTarget{name: name}
-	for f := range pkg.Files {
-		target.sources.addGenericString(f)
+	for _, fInfo := range pkg.Files {
+		target.sources.addGenericString(fInfo.Path)
 	}
 	for i := range pkg.Imports {
 		target.imports.addGenericString(i)

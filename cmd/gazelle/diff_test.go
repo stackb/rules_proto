@@ -31,7 +31,8 @@ func TestDiffExisting(t *testing.T) {
 			Content: `
 # gazelle:prefix example.com/hello
 `,
-		}, {
+		},
+		{
 			Path:    "hello.go",
 			Content: `package hello`,
 		},
@@ -47,20 +48,19 @@ func TestDiffExisting(t *testing.T) {
 	want := append(files, testtools.FileSpec{
 		Path: "p",
 		Content: `
---- BUILD.bazel	1970-01-01 00:00:00.000000000 +0000
-+++ BUILD.bazel	1970-01-01 00:00:00.000000000 +0000
-@@ -1,3 +1,11 @@
+--- BUILD.bazel	1970-01-01 00:00:00.000000001 +0000
++++ BUILD.bazel	1970-01-01 00:00:00.000000001 +0000
+@@ -1,2 +1,10 @@
 +load("@io_bazel_rules_go//go:def.bzl", "go_library")
  
  # gazelle:prefix example.com/hello
- 
++
 +go_library(
 +    name = "hello",
 +    srcs = ["hello.go"],
 +    importpath = "example.com/hello",
 +    visibility = ["//visibility:public"],
 +)
-+
 `,
 	})
 	testtools.CheckFiles(t, dir, want)
@@ -85,9 +85,9 @@ func TestDiffNew(t *testing.T) {
 	want := append(files, testtools.FileSpec{
 		Path: "p",
 		Content: `
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ BUILD.bazel	1970-01-01 00:00:00.000000000 +0000
-@@ -0,0 +1,9 @@
+--- /dev/null	1970-01-01 00:00:00.000000001 +0000
++++ BUILD.bazel	1970-01-01 00:00:00.000000001 +0000
+@@ -0,0 +1,8 @@
 +load("@io_bazel_rules_go//go:def.bzl", "go_library")
 +
 +go_library(
@@ -96,7 +96,6 @@ func TestDiffNew(t *testing.T) {
 +    importpath = "example.com/hello",
 +    visibility = ["//visibility:public"],
 +)
-+
 `,
 	})
 	testtools.CheckFiles(t, dir, want)
@@ -157,9 +156,9 @@ func TestDiffReadWriteDir(t *testing.T) {
 	}
 
 	wantPatch := fmt.Sprintf(`
---- %s	1970-01-01 00:00:00.000000000 +0000
-+++ %s	1970-01-01 00:00:00.000000000 +0000
-@@ -1 +1,11 @@
+--- %s	1970-01-01 00:00:00.000000001 +0000
++++ %s	1970-01-01 00:00:00.000000001 +0000
+@@ -1 +1,10 @@
 +load("@io_bazel_rules_go//go:def.bzl", "go_library")
 +
  # gazelle:prefix example.com/hello
@@ -170,7 +169,6 @@ func TestDiffReadWriteDir(t *testing.T) {
 +    importpath = "example.com/hello",
 +    visibility = ["//visibility:public"],
 +)
-+
 `,
 		filepath.Join(dir, "read", "BUILD.bazel"),
 		filepath.Join(dir, "write", "BUILD.bazel"))
