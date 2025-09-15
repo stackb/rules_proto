@@ -9,11 +9,13 @@ redesigned around the `proto_library` rule and moved to
 
 ## v1
 
-These were pretty good, but open source maintainance was an issue trying to keep up with the matrix of (language * dependencies).
+These were pretty good, but open source maintainance was an issue trying to keep
+up with the matrix of (language * dependencies).
 
 Partially as a result of that, this ruleset was forked to
 <https://github.com/rules-proto-grpc/rules_proto_grpc>. Aspect-based compilation
-was featured for quite a while there but later removed.  Adam does a great job maintaining that repo.  If you're not using gazelle, check it out!
+was featured for quite a while there but later removed.  Adam does a great job
+maintaining that repo.  If you're not using gazelle, check it out!
 
 ## v2
 
@@ -45,4 +47,9 @@ plugins that do things like:
 
 ## v3
 
-With v3, WORKSPACE support was dropped in favor of `bzlmod`.
+The way gazelle stored resolve data in memory changed in 0.35.  Uprading to this
+in https://github.com/stackb/rules_proto/pull/357 was a breaking change.
+
+## v4
+
+With v4, `WORKSPACE` support was dropped in favor of `bzlmod`.
