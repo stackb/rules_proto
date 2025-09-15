@@ -85,7 +85,6 @@ jobs:
       - uses: bazel-contrib/setup-bazel@0.14.0
         with:
           disk-cache: ${{ inputs.mount_bazel_caches }}
-          external-cache: ${{ inputs.mount_bazel_caches }}
           repository-cache: ${{ inputs.mount_bazel_caches }}
 
       - name: Test
@@ -122,7 +121,7 @@ jobs:
     permissions:
       id-token: write
       attestations: write
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       # actions/download-artifact@v4 does not yet support downloading via the immutable artifact-id,
       # but the Javascript library does. See: https://github.com/actions/download-artifact/issues/349
@@ -173,7 +172,7 @@ jobs:
     needs: [build, attest]
     permissions:
       contents: write
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       # actions/download-artifact@v4 does not yet support downloading via the immutable artifact-id,
       # but the Javascript library does. See: https://github.com/actions/download-artifact/issues/349
