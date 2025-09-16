@@ -30,8 +30,8 @@ importers:
         specifier: 5.2.3
         version: 5.2.3
       protobufjs:
-        specifier: 7.2.4
-        version: 7.2.4
+        specifier: 7.2.5
+        version: 7.2.5
       reflect-metadata:
         specifier: 0.2.2
         version: 0.2.2
@@ -341,6 +341,10 @@ packages:
     resolution: {integrity: sha512-AT+RJgD2sH8phPmCf7OUZR8xGdcJRga4+1cOaXJ64hvcSkVhNcRHOwIxUatPH15+nj59WAGTDv3LSGZPEQbJaQ==}
     engines: {node: '>=12.0.0'}
 
+  protobufjs@7.2.5:
+    resolution: {integrity: sha512-gGXRSXvxQ7UiPgfw8gevrfRWcTlSbOFg+p/N+JVJEK5VhueL2miT6qTymqAmjr1Q5WbOCyJbyrk6JfWKwlFn6A==}
+    engines: {node: '>=12.0.0'}
+
   reflect-metadata@0.2.2:
     resolution: {integrity: sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==}
 
@@ -461,7 +465,7 @@ snapshots:
       '@types/long': 4.0.2
       lodash.camelcase: 4.3.0
       long: 4.0.0
-      protobufjs: 7.2.4
+      protobufjs: 7.2.5
       yargs: 17.7.2
 
   '@lukeed/csprng@1.1.0': {}
@@ -644,6 +648,21 @@ snapshots:
       '@types/node': 24.3.0
       long: 5.2.3
 
+  protobufjs@7.2.5:
+    dependencies:
+      '@protobufjs/aspromise': 1.1.2
+      '@protobufjs/base64': 1.1.2
+      '@protobufjs/codegen': 2.0.4
+      '@protobufjs/eventemitter': 1.1.0
+      '@protobufjs/fetch': 1.1.0
+      '@protobufjs/float': 1.0.2
+      '@protobufjs/inquire': 1.1.0
+      '@protobufjs/path': 1.1.2
+      '@protobufjs/pool': 1.1.0
+      '@protobufjs/utf8': 1.1.0
+      '@types/node': 24.3.0
+      long: 5.2.3
+
   reflect-metadata@0.2.2: {}
 
   require-directory@2.1.1: {}
@@ -679,7 +698,7 @@ snapshots:
   ts-proto-descriptors@1.14.0:
     dependencies:
       long: 5.2.3
-      protobufjs: 7.2.4
+      protobufjs: 7.2.5
 
   ts-proto@1.156.0:
     dependencies:
