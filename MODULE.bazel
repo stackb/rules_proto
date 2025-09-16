@@ -22,6 +22,7 @@ bazel_dep(name = "rules_license", version = "1.0.0")
 bazel_dep(name = "rules_jvm_external", version = "6.8")
 bazel_dep(name = "rules_java", version = "8.15.1")
 bazel_dep(name = "rules_go", version = "0.57.0", repo_name = "io_bazel_rules_go")
+bazel_dep(name = "rules_foreign_cc", version = "0.15.0")  # specified to ensure more recent version than @grpc/@opencensus-cpp/@google_benchmark
 bazel_dep(name = "rules_cc", version = "0.2.0")
 bazel_dep(name = "protobuf", version = PROTOBUF_VERSION, repo_name = "com_google_protobuf")
 bazel_dep(name = "package_metadata", version = "0.0.5")
@@ -59,50 +60,6 @@ http_archive(
     strip_prefix = "protobuf-javascript-861c8020a5c0cba9b7cdf915dffde96a4421a1f4",
     urls = ["https://github.com/protocolbuffers/protobuf-javascript/archive/861c8020a5c0cba9b7cdf915dffde96a4421a1f4.tar.gz"],
 )
-
-[
-    http_archive(
-        name = "prebuilt_protoc-" + asset["arch"],
-        build_file_content = """
-filegroup(
-    name = "protoc",
-    srcs = ["bin/protoc%s"],
-    visibility = ["//visibility:public"],
-)
-    """ % asset["extension"],
-        sha256 = asset["sha256"],
-        urls = ["https://github.com/google/protobuf/releases/download/v{version}/protoc-{version}-{arch}.zip".format(
-            arch = asset["arch"],
-            version = asset["version"],
-        )],
-    )
-    for asset in [
-        {
-            "arch": "linux-x86_64",
-            "sha256": "7ca037bfe5e5cabd4255ccd21dd265f79eb82d3c010117994f5dc81d2140ee88",
-            "version": PROTOBUF_VERSION,
-            "extension": "",
-        },
-        {
-            "arch": "osx-x86_64",
-            "sha256": "b4f36b18202d54d343a66eebc9f8ae60809a2a96cc2d1b378137550bbe4cf33c",
-            "version": PROTOBUF_VERSION,
-            "extension": "",
-        },
-        {
-            "arch": "osx-aarch_64",
-            "sha256": "09a2c729cc821215cc0d4c564b761760961fe338c52f24b302fd7e18e7b675d1",
-            "version": PROTOBUF_VERSION,
-            "extension": "",
-        },
-        {
-            "arch": "win64",
-            "sha256": "89c178e9f878cb6dd561f677688e1eb2e757cb9ac84ae30b64436bac19646996",
-            "version": PROTOBUF_VERSION,
-            "extension": ".exe",
-        },
-    ]
-]
 
 http_archive(
     name = "com_github_grpc_grpc_node_packages_grpc_tools_src",

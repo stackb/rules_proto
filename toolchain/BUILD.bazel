@@ -11,39 +11,9 @@ toolchain(
     toolchain_type = "//toolchain:protoc",
 )
 
-toolchain(
-    name = "prebuilt",
-    toolchain = ":precompiled",
-    toolchain_type = "//toolchain:protoc",
-)
-
 protoc(
     name = "compiled",
     tool = "@com_google_protobuf//:protoc",
-)
-
-protoc(
-    name = "precompiled",
-    tool = ":protoc.exe",
-)
-
-genrule(
-    name = "protoc_exe",
-    srcs = select({
-        "@bazel_tools//src/conditions:darwin": [
-            "@prebuilt_protoc-osx-aarch_64//:protoc",
-        ],
-        "@bazel_tools//src/conditions:windows": [
-            "@prebuilt_protoc-win64//:protoc",
-        ],
-        "//conditions:default": [
-            "@prebuilt_protoc-linux-x86_64//:protoc",
-        ],
-    }),
-    outs = ["protoc.exe"],
-    cmd = "cp $< $@",
-    executable = True,
-    visibility = ["//visibility:public"],
 )
 
 filegroup(

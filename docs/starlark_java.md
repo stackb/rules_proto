@@ -67,11 +67,6 @@ proto_compile(
 ## `MODULE.bazel (snippet)`
 
 ~~~python
-# Using scala_deps here because it provides rules_jvm_external, there is nothing
-# scala-specific about this example.
-load("@build_stack_rules_proto//deps:scala_deps.bzl", "scala_deps")
-
-scala_deps()
 
 bazel_dep(name = "rules_go", version = "0.57.0", repo_name = "io_bazel_rules_go")
 
@@ -86,7 +81,7 @@ go_sdk.download(version = "1.23.1")
 # Configuration: protobuf
 # -------------------------------------------------------------------
 
-register_toolchains("@build_stack_rules_proto//toolchain:prebuilt")
+register_toolchains("@build_stack_rules_proto//toolchain:standard")
 
 bazel_dep(name = "protobuf", version = "32.0", repo_name = "com_google_protobuf")
 

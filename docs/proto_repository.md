@@ -94,7 +94,7 @@ go_sdk.download(version = "1.23.1")
 # Configuration: protobuf
 # -------------------------------------------------------------------
 
-register_toolchains("@build_stack_rules_proto//toolchain:prebuilt")
+register_toolchains("@build_stack_rules_proto//toolchain:standard")
 
 bazel_dep(name = "gazelle", version = "0.45.0", repo_name = "bazel_gazelle")
 

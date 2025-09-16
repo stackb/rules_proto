@@ -211,6 +211,7 @@ def _proto_compile_impl(ctx):
         # Add plugin runfiles if plugin has a tool
         if plugin_tool:
             tools.append(plugin_tool)
+            tools.append(plugin.tool_target[DefaultInfo].files_to_run)
 
             # If Windows, mangle the path.
             plugin_tool_path = plugin_tool.path
