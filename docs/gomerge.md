@@ -69,7 +69,7 @@ go_sdk.download(version = "1.23.1")
 # Configuration: protobuf
 # -------------------------------------------------------------------
 
-register_toolchains("@build_stack_rules_proto//toolchain:prebuilt")
+register_toolchains("@build_stack_rules_proto//toolchain:standard")
 
 ~~~
 

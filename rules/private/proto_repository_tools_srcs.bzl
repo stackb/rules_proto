@@ -34,7 +34,6 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//example/routeguide/java:BUILD.bazel",
     "@build_stack_rules_proto//example/routeguide/scala:BUILD.bazel",
     "@build_stack_rules_proto//example/thing:BUILD.bazel",
-    "@build_stack_rules_proto//example/toolchain/prebuilt:BUILD.bazel",
     "@build_stack_rules_proto//extensions:BUILD.bazel",
     "@build_stack_rules_proto//google/protobuf:BUILD.bazel",
     "@build_stack_rules_proto//language/example:BUILD.bazel",

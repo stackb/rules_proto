@@ -48,9 +48,9 @@ go_test(
 genrule(
     name = "protoc_tool",
     outs = ["protoc"],
-    cmd = "cp $(location //toolchain:protoc_exe) $@",
+    cmd = "cp $(location @com_google_protobuf//:protoc) $@",
     executable = True,
-    tools = ["//toolchain:protoc_exe"],
+    tools = ["@com_google_protobuf//:protoc"],
 )
 
 filegroup(

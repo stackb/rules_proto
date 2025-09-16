@@ -103,77 +103,6 @@ proto_scala_library(
 ## `MODULE.bazel (snippet)`
 
 ~~~python
-# ----------------------------------------------------
-# scala
-# ----------------------------------------------------
-
-load("@build_stack_rules_proto//deps:scala_deps.bzl", "scala_deps")
-load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
-load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
-load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
-load(
-    "@rules_jvm_external//:defs.bzl",
-    "maven_install",
-)
-load("@build_stack_rules_proto//rules/proto:proto_repository.bzl", "proto_repository")
-
-scala_deps()
-
-scala_config(scala_version = "2.12.18")
-
-scala_repositories()
-
-scala_register_toolchains()
-
-# ----------------------------------------------------
-# maven
-# ----------------------------------------------------
-
-maven_install(
-    name = "maven_scala",
-    artifacts = [
-        "com.thesamet.scalapb:lenses_2.12:0.11.10",
-        "com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0",
-        "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.10",
-        "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.10",
-        "com.thesamet.scalapb:scalapbc_2.12:0.11.10",
-        "org.json4s:json4s-core_2.12:4.0.3",
-    ],
-    fetch_sources = True,
-    repositories = ["https://repo1.maven.org/maven2"],
-)
-
-# ----------------------------------------------------
-# akka
-# ----------------------------------------------------
-
-maven_install(
-    name = "maven_akka",
-    artifacts = [
-        "com.lightbend.akka.grpc:akka-grpc-codegen_2.12:2.1.3",
-        "com.lightbend.akka.grpc:akka-grpc-runtime_2.12:2.1.3",
-    ],
-    fetch_sources = True,
-    repositories = ["https://repo1.maven.org/maven2"],
-)
-
-# ----------------------------------------------------
-# proto_repository
-# ----------------------------------------------------
-
-proto_repository(
-    name = "scalaapis",
-    build_directives = ["gazelle:proto_language scala enabled true"],
-    build_file_generation = "on",
-    build_file_proto_mode = "file",
-    cfgs = ["//:config.yaml"],
-    sha256 = "1ac039f79b0825fe2e7e5ddf24e330632d63b70a7a42bfd39ded5bb1fb648811",
-    # the typical importpath is 'scalapb/scalapb.proto', so strip the prefix up
-    # to that directory.
-    strip_prefix = "ScalaPB-a4e0e02c0f5b160877d5f97f6902dbec4c633afe/protobuf",
-    type = "zip",
-    urls = ["https://codeload.github.com/scalapb/ScalaPB/zip/a4e0e02c0f5b160877d5f97f6902dbec4c633afe"],
-)
 
 bazel_dep(name = "rules_go", version = "0.57.0", repo_name = "io_bazel_rules_go")
 
@@ -188,7 +117,7 @@ go_sdk.download(version = "1.23.1")
 # Configuration: protobuf
 # -------------------------------------------------------------------
 
-register_toolchains("@build_stack_rules_proto//toolchain:prebuilt")
+register_toolchains("@build_stack_rules_proto//toolchain:standard")
 
 bazel_dep(name = "gazelle", version = "0.45.0", repo_name = "bazel_gazelle")
 bazel_dep(name = "protobuf", version = "32.0", repo_name = "com_google_protobuf")
