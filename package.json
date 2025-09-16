@@ -1,16 +1,16 @@
 {
   "devDependencies": {
+    "@grpc/grpc-js": "1.13.4",
     "@nestjs/common": "11.1.6",
     "@nestjs/core": "11.1.6",
     "@nestjs/microservices": "11.1.6",
-    "@types/node": "^24.3.0",
-    "long": "5.2.3",
-    "protobufjs": "7.2.4",
+    "@types/node": "^24.5.0",
+    "google-protobuf": "4.0.0",
+    "long": "5.3.2",
+    "protobufjs": "7.5.4",
     "reflect-metadata": "0.2.2",
-    "rxjs": "7.8.1",
-    "typescript": "5.1.6",
-    "@grpc/grpc-js": "1.9.0",
-    "google-protobuf": "4.0.0"
+    "rxjs": "7.8.2",
+    "typescript": "5.9.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": []
