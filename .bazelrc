@@ -18,3 +18,9 @@ build --incompatible_disable_native_repo_rules
 # C++17 for protobuf compatibility
 build --host_cxxopt=-std=c++17
 build --cxxopt=-std=c++17
+
+# To facilitate testing in bazelci incompatible flags
+# @see https://github.com/bazelbuild/bazel/pull/26906#issue-3386957462
+# build --incompatible_autoload_externally=@rules_python,+java_common,+JavaInfo,+JavaPluginInfo,+ProguardSpecProvider,+java_binary,+java_import,+java_library,+java_plugin,+java_test,+java_runtime,+java_toolchain,+java_package_configuration,@com_google_protobuf,@rules_shell,+@rules_android,+@rules_cc
+# build --incompatible_autoload_externally=@rules_shell
+build --incompatible_autoload_externally=
