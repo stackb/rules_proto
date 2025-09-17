@@ -90,6 +90,7 @@ proto_compiled_sources(
     options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
         "emitImportedFiles=false",
         "esModuleInterop=true",
+        "comments=true",
     ]},
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "api_proto",
@@ -99,9 +100,11 @@ proto_compiled_sources(
 proto_compiled_sources(
     name = "api_request_ts_proto_compiled_sources",
     srcs = ["api_request.ts"],
+    args = ["--include_source_info"],
     options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
         "emitImportedFiles=false",
         "esModuleInterop=true",
+        "comments=true",
     ]},
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "api_request_proto",
@@ -111,9 +114,11 @@ proto_compiled_sources(
 proto_compiled_sources(
     name = "api_response_ts_proto_compiled_sources",
     srcs = ["api_response.ts"],
+    args = ["--include_source_info"],
     options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
         "emitImportedFiles=false",
         "esModuleInterop=true",
+        "comments=true",
     ]},
     plugins = ["@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto"],
     proto = "api_response_proto",

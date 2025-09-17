@@ -1,3 +1,5 @@
+// ts-proto: Adding a comment to the syntax will become the first
+// comment in the output source file.
 syntax = "proto3";
 
 package example.assets;
@@ -10,6 +12,8 @@ option go_package = "github.com/stackb/rules_proto/example/assets;assets";
 // ApiExchange is a demonstrative example of an API call that has a request and
 // a response.
 message ApiExchange {
+  // request is the API request
   ApiRequest request = 1;
+  // response is the API response
   ApiResponse response = 2;
 }

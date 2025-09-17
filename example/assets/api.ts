@@ -5,8 +5,21 @@ import { ApiResponse } from "./api_response";
 
 export const protobufPackage = "example.assets";
 
+/**
+ * ts-proto: Adding a comment to the syntax will become the first
+ * comment in the output source file.
+ */
+
+/**
+ * ApiExchange is a demonstrative example of an API call that has a request and
+ * a response.
+ */
 export interface ApiExchange {
-  request: ApiRequest | undefined;
+  /** request is the API request */
+  request:
+    | ApiRequest
+    | undefined;
+  /** response is the API response */
   response: ApiResponse | undefined;
 }
 
