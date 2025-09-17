@@ -30,6 +30,7 @@ proto_compile_assets(
         ":api_request_ts_proto_compiled_sources",
         ":api_response_go_compiled_sources",
         ":api_response_ts_proto_compiled_sources",
+        ":api_ts_proto_compiled_sources",
     ],
 )
 
@@ -85,6 +86,7 @@ proto_compiled_sources(
 proto_compiled_sources(
     name = "api_ts_proto_compiled_sources",
     srcs = ["api.ts"],
+    args = ["--include_source_info"],
     options = {"@build_stack_rules_proto//plugin/stephenh/ts-proto:protoc-gen-ts-proto": [
         "emitImportedFiles=false",
         "esModuleInterop=true",
