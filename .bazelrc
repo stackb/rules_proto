@@ -10,17 +10,21 @@ common --incompatible_use_plus_in_repo_names
 # =========================================================================
 
 # Don't leak PATH and LD_LIBRARY_PATH into the build.
-# build --incompatible_strict_action_env
+build --incompatible_strict_action_env
 
 # Don't use legacy repository rules.
 build --incompatible_disable_native_repo_rules
 
 # C++17 for protobuf compatibility
-build --host_cxxopt=-std=c++17
-build --cxxopt=-std=c++17
+build --host_cxxopt=-std=c++17 --cxxopt=-std=c++17
 
 # To facilitate testing in bazelci incompatible flags
 # @see https://github.com/bazelbuild/bazel/pull/26906#issue-3386957462
 # build --incompatible_autoload_externally=@rules_python,+java_common,+JavaInfo,+JavaPluginInfo,+ProguardSpecProvider,+java_binary,+java_import,+java_library,+java_plugin,+java_test,+java_runtime,+java_toolchain,+java_package_configuration,@com_google_protobuf,@rules_shell,+@rules_android,+@rules_cc
 # build --incompatible_autoload_externally=@rules_shell
 build --incompatible_autoload_externally=
+
+# This flag is present only to demonstrate the effect on generated ts-proto
+# assets (see example/assets/*.ts). Without this, the generated descriptor sets
+# from the proto_library rule will be devoid of source info.
+build --experimental_proto_descriptor_sets_include_source_info
