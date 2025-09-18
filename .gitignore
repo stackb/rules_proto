@@ -3,3 +3,4 @@
 __pycache__
 node_modules
 /MODULE.bazel.lock
+!/vendor/**/BUILD*

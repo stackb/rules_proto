@@ -54,3 +54,4 @@ See <https://registry.bazel.build/modules/build_stack_rules_proto> for latest ve
 | Preconfigured plugins                     | [PLUGINS.md](/docs/PLUGINS.md)          |
 | Preconfigured rules                       | [RULES.md](/docs/RULES.md)              |
 | A history of this repository              | [HISTORY.md](/docs/HISTORY.md)          |
+| Developer Guide                           | [DEVELOPMENT.md](/docs/DEVELOPMENT.md)  |
