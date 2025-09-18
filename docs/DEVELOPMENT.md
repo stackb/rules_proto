@@ -27,7 +27,8 @@ scala deps, for example.
 - `//pkg/...`: contains all go packages for tools.
 - `//pkg/language/protobuf`: contains the actual protobuf gazelle extension
   implementation.
-- `//pkg/language/noop`: contains an empty extension that can be used as a starting template.
+- `//pkg/language/noop`: contains an empty extension that can be used as a
+  starting template.
 - `//pkg/protoc`: a core package that defines the registry, language, rule
   interfaces, and much of the implementation.
 - `//pkg/rule/...`: rule implementations.
@@ -56,7 +57,8 @@ optionally using a `.gazelle.args` file to run gazelle.  It then compares the
 actual BUILD files produced to the `BUILD.out` files.  These are generally
 straightforward to debug as a diff is printed out if the test fails.
 
-Use `bazel query //example/golden:all` to see all the actual tests in this package.
+Use `bazel query //example/golden:all` to see all the actual tests in this
+package.
 
 The tests defined by `gazelle_testdata_example` glob up one of the
 `testdata/scala/` directories and generates a `_test.go` file.  Use `bazel build
