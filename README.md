@@ -37,7 +37,7 @@ bazel_dep(name = "build_stack_rules_proto", version = "4.x.x")
 > Until merged, a git_override or other override is needed to consume this
 > repository.
 
-See <https://registry.bazel.build/search?q=build_stack_rules_proto> for latest version.
+See <https://registry.bazel.build/modules/build_stack_rules_proto> for latest version.
 
 > NOTE: Version 4.x.x no longer supports `WORKSPACE`, please use the latest
 > 3.x.x release for workspace compatibility.
