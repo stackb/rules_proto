@@ -111,7 +111,7 @@ _gazelle_runner = rule(
     implementation = _gazelle_runner_impl,
     attrs = {
         "gazelle": attr.label(
-            default = "@build_stack_rules_proto//cmd/gazelle",
+            default = str(Label("@build_stack_rules_proto//cmd/gazelle")),
             executable = True,
             cfg = "exec",
         ),

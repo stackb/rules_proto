@@ -369,9 +369,6 @@ def _proto_compile_impl(ctx):
         for c in commands:
             # buildifier: disable=print
             print("COMMAND:", c)
-        for f in tools:
-            # buildifier: disable=print
-            print("TOOL:", f.path)
         for a in replaced_args:
             # buildifier: disable=print
             print("ARG:", a)

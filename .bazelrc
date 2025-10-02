@@ -15,6 +15,9 @@ build --incompatible_strict_action_env
 # Don't use legacy repository rules.
 build --incompatible_disable_native_repo_rules
 
+# Use a download java runtime
+build --java_runtime_version=remotejdk_21
+
 # C++17 for protobuf compatibility
 build --host_cxxopt=-std=c++17 --cxxopt=-std=c++17
 

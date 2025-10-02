@@ -1,5 +1,5 @@
-load("@//rules:proto_gazelle.bzl", "proto_gazelle")
 load("@bazel_gazelle//:def.bzl", "gazelle_binary")
+load("@build_stack_rules_proto//rules:proto_gazelle.bzl", "proto_gazelle")
 load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 
 exports_files([
@@ -29,9 +29,9 @@ gazelle_binary(
 
 proto_gazelle(
     name = "gazelle",
-    cfgs = [":rules_proto_config.yaml"],
+    cfgs = ["//:rules_proto_config.yaml"],
     external = "static",
-    gazelle = ":gazelle-protobuf",
+    gazelle = "//:gazelle-protobuf",
     imports = [
         "@googleapis//:imports.csv",
         "@protobufapis//:imports.csv",
