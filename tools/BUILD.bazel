@@ -11,9 +11,7 @@ buildifier_test(
     name = "buildifier.check",
     size = "small",
     diff_command = "diff",
-    exclude_patterns = [
-        "./vendor/*",
-    ],
+    exclude_patterns = ["./vendor/*"],
     lint_mode = "warn",
     mode = "diff",
     no_sandbox = True,
