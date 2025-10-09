@@ -245,7 +245,6 @@ maven.install(
         "grpc-java",
         "protobuf",
     ],
-    lock_file = "//:maven_install.json",
 )
 maven.install(
     name = "maven_scala",
