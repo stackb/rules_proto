@@ -151,11 +151,11 @@ proto_ts_library(
     srcs = ["thing.ts"],
     visibility = ["//visibility:public"],
     deps = [
+        "//:node_modules/@nestjs/microservices",
+        "//:node_modules/@types/node",
+        "//:node_modules/long",
+        "//:node_modules/protobufjs",
+        "//:node_modules/rxjs",
         "//google/protobuf:timestamppb_ts_proto",
-        "@//:node_modules/@nestjs/microservices",
-        "@//:node_modules/@types/node",
-        "@//:node_modules/long",
-        "@//:node_modules/protobufjs",
-        "@//:node_modules/rxjs",
     ],
 )

@@ -22,6 +22,8 @@ def _proto_compile_gencopy_run_impl(ctx):
             source_files.append(rel)
             generated_files.append(generated_file.short_path)
 
+        if len(source_files) == 0:
+            fail("source files cannot be empty")
         config.packageConfigs.append(
             struct(
                 targetLabel = str(info.label),

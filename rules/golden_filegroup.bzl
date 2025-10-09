@@ -19,16 +19,21 @@ load("@build_stack_rules_proto//rules:providers.bzl", "ProtoCompileInfo")
 
 def _files_impl(ctx):
     dep = ctx.attr.dep[DefaultInfo]
+    outputs = dep.files.to_list()
+    output_files_by_rel_path = {"/".join([ctx.label.package, f.basename]): f for f in outputs}
+
     return ProtoCompileInfo(
         label = ctx.attr.dep.label,
-        outputs = dep.files.to_list(),
-        output_files_by_rel_path = {},
+        outputs = outputs,
+        output_files_by_rel_path = output_files_by_rel_path,
     )
 
 _files = rule(
     doc = """Provider Adapter from DefaultInfo to ProtoCompileInfo.""",
     implementation = _files_impl,
-    attrs = {"dep": attr.label(providers = [DefaultInfo])},
+    attrs = {
+        "dep": attr.label(providers = [DefaultInfo]),
+    },
 )
 
 def golden_filegroup(
@@ -55,9 +60,19 @@ def golden_filegroup(
     tags = kwargs.pop("tags", [])
     srcs = kwargs.pop("srcs", [])
     goldens = [src + extension for src in srcs]
-    native.filegroup(name = name, srcs = srcs, tags = tags, **kwargs)
 
-    _files(name = name_sources, dep = name, tags = tags)
+    native.filegroup(
+        name = name,
+        srcs = srcs,
+        tags = tags,
+        **kwargs
+    )
+
+    _files(
+        name = name_sources,
+        dep = name,
+        tags = tags,
+    )
 
     proto_compile_gencopy_test(
         name = name_test,

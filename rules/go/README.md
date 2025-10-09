@@ -15,7 +15,7 @@ One solution is to manually copy all the needed `.proto` files from the
 different repos into the default workspace and generate protos from there.  This
 is a common solution but can be troublesome to maintain.
 
-The solution described here (`bazel run @//:proto_go_modules`) has the following
+The solution described here (`bazel run //:proto_go_modules`) has the following
 two side effects: 
 
 1. creates a "vendored" file tree in `./local`
@@ -149,7 +149,7 @@ proto_repository.archive(
     ],
     build_file_proto_mode = "file",
     build_file_generation = "clean",
-    cfgs = ["@//:rules_proto_config.yaml"],
+    cfgs = ["//:rules_proto_config.yaml"],
     deleted_files = [
         "google/protobuf/*test*.proto",
         "google/protobuf/*unittest*.proto",
