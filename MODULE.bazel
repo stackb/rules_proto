@@ -245,7 +245,7 @@ maven.install(
         "grpc-java",
         "protobuf",
     ],
-    lock_file = "maven_install.json",
+    lock_file = "//:maven_install.json",
 )
 maven.install(
     name = "maven_scala",
@@ -256,7 +256,7 @@ maven.install(
         "com.thesamet.scalapb:scalapb-runtime_2.12:0.11.5",
         "com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.11.5",
     ],
-    lock_file = "rules_jvm_external~~maven~maven_scala_install.json",
+    lock_file = "//:maven_scala_install.json",
     repositories = ["https://repo1.maven.org/maven2"],
 )
 maven.install(
