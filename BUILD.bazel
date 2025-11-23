@@ -51,7 +51,6 @@ filegroup(
         "go.mod",
         "go.sum",
         "maven_akka_install.json",
-        "maven_install.json",
         "maven_scala_install.json",
         "maven_zio_install.json",
         "package.json",
