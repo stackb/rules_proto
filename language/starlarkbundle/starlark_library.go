@@ -33,7 +33,6 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/language"
 	"github.com/bazelbuild/bazel-gazelle/pathtools"
-	"github.com/bazelbuild/bazel-gazelle/repo"
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/bazelbuild/buildtools/build"
@@ -42,6 +41,7 @@ import (
 const (
 	starlarkLibraryKind = "starlark_library"
 	fileType            = ".bzl"
+	visibilityPublic    = "//visibility:public"
 )
 
 var ignoreSuffix = suffixes{
@@ -73,14 +73,16 @@ func (s suffixes) Matches(test string) bool {
 }
 
 func starlarkLibraryRule(args language.GenerateArgs, f string) (*rule.Rule, []string) {
-	name := strings.TrimSuffix(f, fileType)
+	// prefix with 'lib' in case someone is also using bzl_library gazelle
+	// extension
+	name := "lib" + strings.TrimSuffix(f, fileType)
 	r := rule.NewRule(starlarkLibraryKind, name)
 
 	r.SetAttr("srcs", []string{f})
 
 	shouldSetVisibility := args.File == nil || !args.File.HasDefaultVisibility()
 	if shouldSetVisibility {
-		vis := checkInternalVisibility(args.Rel, "//visibility:public")
+		vis := checkInternalVisibility(args.Rel, visibilityPublic)
 		r.SetAttr("visibility", []string{vis})
 	}
 
@@ -96,7 +98,7 @@ func starlarkLibraryRule(args language.GenerateArgs, f string) (*rule.Rule, []st
 	return r, loads
 }
 
-func starlarkLibraryImports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
+func starlarkLibraryImports(_ *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
 	srcs := r.AttrStrings("srcs")
 	imports := make([]resolve.ImportSpec, 0, len(srcs))
 
@@ -115,7 +117,7 @@ func starlarkLibraryImports(c *config.Config, r *rule.Rule, f *rule.File) []reso
 	return imports
 }
 
-func starlarkLibraryResolve(c *config.Config, ix *resolve.RuleIndex, rc *repo.RemoteCache, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func starlarkLibraryResolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, importsRaw interface{}, from label.Label) {
 	imports := importsRaw.([]string)
 
 	r.DelAttr("deps")
@@ -175,7 +177,7 @@ func starlarkLibraryResolve(c *config.Config, ix *resolve.RuleIndex, rc *repo.Re
 	}
 }
 
-func starlarkLibararyGenerate(args language.GenerateArgs) language.GenerateResult {
+func starlarkLibraryGenerate(args language.GenerateArgs, starlarkLibraries map[label.Label]*rule.Rule) language.GenerateResult {
 	var rules []*rule.Rule
 	var imports []any
 
@@ -186,12 +188,18 @@ func starlarkLibararyGenerate(args language.GenerateArgs) language.GenerateResul
 		r, loads := starlarkLibraryRule(args, f)
 		rules = append(rules, r)
 		imports = append(imports, loads)
+
+		// populate the map so the bundle rule can use them later.
+		if isVisibilityPublic(r.AttrStrings("visibility")) {
+			from := label.New(args.Config.RepoName, args.Rel, r.Name())
+			starlarkLibraries[from] = r
+		}
 	}
 
 	return language.GenerateResult{
 		Gen:     rules,
 		Imports: imports,
-		Empty:   generateEmpty(args),
+		Empty:   starlarkLibraryEmptyRules(args),
 	}
 }
 
@@ -221,12 +229,16 @@ func isBzlSourceFile(f string) bool {
 	return strings.HasSuffix(f, fileType) && !ignoreSuffix.Matches(f)
 }
 
-// generateEmpty generates the list of rules that don't need to exist in the
-// BUILD file any more. For each symbol_library rule in args.File that only has
-// srcs that aren't in args.RegularFiles or args.GenFiles, add a symbol_library
-// with no srcs or deps. That will let Gazelle delete symbol_library rules after
-// the corresponding .bzl files are deleted.
-func generateEmpty(args language.GenerateArgs) []*rule.Rule {
+func isVisibilityPublic(vis []string) bool {
+	return len(vis) == 1 && vis[0] == visibilityPublic
+}
+
+// starlarkLibraryEmptyRules generates the list of rules that don't need to
+// exist in the BUILD file any more. For each symbol_library rule in args.File
+// that only has srcs that aren't in args.RegularFiles or args.GenFiles, add a
+// symbol_library with no srcs or deps. That will let Gazelle delete
+// symbol_library rules after the corresponding .bzl files are deleted.
+func starlarkLibraryEmptyRules(args language.GenerateArgs) []*rule.Rule {
 	var ret []*rule.Rule
 	if args.File == nil {
 		return ret

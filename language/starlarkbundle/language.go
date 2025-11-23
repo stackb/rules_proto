@@ -25,6 +25,7 @@ import (
 	"flag"
 	"log"
 	"maps"
+	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -35,13 +36,15 @@ import (
 )
 
 const (
-	languageName                    = "starlark_bundle"
-	starlarkBundleRootDirectiveName = "starlark_bundle_root"
+	languageName                       = "starlark_bundle"
+	starlarkBundleRootDirectiveName    = "starlark_bundle_root"
+	starlarkBundleExcludeDirectiveName = "starlark_bundle_exclude"
 )
 
 type starlarkBundleLang struct {
-	starlarkBundleRoot *string
-	starlarkLibraries  map[label.Label]*rule.Rule
+	starlarkBundleRoot        *string
+	starlarkBundleExcludeDirs []string
+	starlarkLibraries         map[label.Label]*rule.Rule
 }
 
 // NewLanguage is called by Gazelle to install this language extension in a
@@ -62,7 +65,7 @@ func (*starlarkBundleLang) Name() string {
 // The following methods are implemented to satisfy the
 // https://pkg.go.dev/github.com/bazelbuild/bazel-gazelle/resolve?tab=doc#Resolver
 // interface, but are otherwise unused.
-func (l *starlarkBundleLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
+func (ext *starlarkBundleLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
 }
 
 func (*starlarkBundleLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
@@ -70,17 +73,23 @@ func (*starlarkBundleLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error 
 }
 
 func (*starlarkBundleLang) KnownDirectives() []string {
-	return []string{starlarkBundleRootDirectiveName}
+	return []string{
+		starlarkBundleRootDirectiveName,
+		starlarkBundleExcludeDirectiveName,
+	}
 }
 
-func (l *starlarkBundleLang) Configure(c *config.Config, rel string, f *rule.File) {
+func (ext *starlarkBundleLang) Configure(c *config.Config, rel string, f *rule.File) {
 	if f != nil {
 		for _, d := range f.Directives {
-			if d.Key == starlarkBundleRootDirectiveName {
-				if l.starlarkBundleRoot != nil {
-					log.Fatalf("gazelle:%s should only be set once (refusing to override %q with %q)", starlarkBundleRootDirectiveName, *l.starlarkBundleRoot, d.Value)
+			switch d.Key {
+			case starlarkBundleRootDirectiveName:
+				if ext.starlarkBundleRoot != nil {
+					log.Fatalf("gazelle:%s should only be set once (refusing to override %q with %q)", starlarkBundleRootDirectiveName, *ext.starlarkBundleRoot, d.Value)
 				}
-				l.starlarkBundleRoot = &rel
+				ext.starlarkBundleRoot = &rel
+			case starlarkBundleExcludeDirectiveName:
+				ext.starlarkBundleExcludeDirs = append(ext.starlarkBundleExcludeDirs, d.Value)
 			}
 		}
 	}
@@ -92,6 +101,7 @@ func (l *starlarkBundleLang) Configure(c *config.Config, rel string, f *rule.Fil
 func (*starlarkBundleLang) Kinds() map[string]rule.KindInfo {
 	kinds := map[string]rule.KindInfo{}
 	maps.Copy(kinds, starlarkLibraryKindInfo)
+	maps.Copy(kinds, starlarkBundleKindInfo)
 	return kinds
 }
 
@@ -101,6 +111,7 @@ func (*starlarkBundleLang) Kinds() map[string]rule.KindInfo {
 func (*starlarkBundleLang) Loads() []rule.LoadInfo {
 	return []rule.LoadInfo{
 		starlarkLibraryLoadInfo,
+		starlarkBundleLoadInfo,
 	}
 }
 
@@ -115,10 +126,12 @@ func (*starlarkBundleLang) Fix(c *config.Config, f *rule.File) {
 //
 // If nil is returned, the rule will not be indexed. If any non-nil slice is
 // returned, including an empty slice, the rule will be indexed.
-func (b *starlarkBundleLang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
+func (ext *starlarkBundleLang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
 	switch r.Kind() {
 	case starlarkLibraryKind:
 		return starlarkLibraryImports(c, r, f)
+	case starlarkBundleKind:
+		return starlarkBundleImports(c, r, f)
 	}
 	return nil
 }
@@ -138,10 +151,12 @@ func (*starlarkBundleLang) Embeds(r *rule.Rule, from label.Label) []label.Label 
 // Resolve generates a "deps" attribute (or the appropriate language-specific
 // equivalent) for each import according to language-specific rules and
 // heuristics.
-func (*starlarkBundleLang) Resolve(c *config.Config, ix *resolve.RuleIndex, rc *repo.RemoteCache, r *rule.Rule, importsRaw interface{}, from label.Label) {
+func (ext *starlarkBundleLang) Resolve(c *config.Config, ix *resolve.RuleIndex, rc *repo.RemoteCache, r *rule.Rule, importsRaw interface{}, from label.Label) {
 	switch r.Kind() {
 	case starlarkLibraryKind:
-		starlarkLibraryResolve(c, ix, rc, r, importsRaw, from)
+		starlarkLibraryResolve(c, ix, r, importsRaw, from)
+	case starlarkBundleKind:
+		starlarkBundleResolve(r, ext.starlarkLibraries)
 	}
 }
 
@@ -157,13 +172,19 @@ func (*starlarkBundleLang) Resolve(c *config.Config, ix *resolve.RuleIndex, rc *
 //
 // Any non-fatal errors this function encounters should be logged using
 // log.Print.
-func (l *starlarkBundleLang) GenerateRules(args language.GenerateArgs) (result language.GenerateResult) {
-	if l.starlarkBundleRoot == nil {
+func (ext *starlarkBundleLang) GenerateRules(args language.GenerateArgs) (result language.GenerateResult) {
+	if ext.starlarkBundleRoot == nil {
 		return
+	}
+	for _, root := range ext.starlarkBundleExcludeDirs {
+		if strings.HasPrefix(args.Rel, root) {
+			return
+		}
 	}
 
 	for _, r := range []language.GenerateResult{
-		starlarkLibararyGenerate(args),
+		starlarkLibraryGenerate(args, ext.starlarkLibraries),
+		starlarkBundleGenerate(args, ext.starlarkBundleRoot),
 	} {
 		result.Gen = append(result.Gen, r.Gen...)
 		result.Imports = append(result.Imports, r.Imports...)

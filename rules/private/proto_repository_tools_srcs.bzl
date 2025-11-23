@@ -45,6 +45,7 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//language/protobuf:protobuf.go",
     "@build_stack_rules_proto//language/starlarkbundle:BUILD.bazel",
     "@build_stack_rules_proto//language/starlarkbundle:language.go",
+    "@build_stack_rules_proto//language/starlarkbundle:starlark_bundle.go",
     "@build_stack_rules_proto//language/starlarkbundle:starlark_library.go",
     "@build_stack_rules_proto//pkg:BUILD.bazel",
     "@build_stack_rules_proto//pkg/goldentest:BUILD.bazel",
