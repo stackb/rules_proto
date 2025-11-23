@@ -151,11 +151,11 @@ proto_ts_library(
     srcs = ["person.ts"],
     visibility = ["//visibility:public"],
     deps = [
+        "//:node_modules/@nestjs/microservices",
+        "//:node_modules/@types/node",
+        "//:node_modules/long",
+        "//:node_modules/protobufjs",
+        "//:node_modules/rxjs",
         "//example/place:place_ts_proto",
-        "@//:node_modules/@nestjs/microservices",
-        "@//:node_modules/@types/node",
-        "@//:node_modules/long",
-        "@//:node_modules/protobufjs",
-        "@//:node_modules/rxjs",
     ],
 )

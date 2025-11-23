@@ -27,10 +27,10 @@ proto_ts_library(
     srcs = ["timestamp.ts"],
     visibility = ["//visibility:public"],
     deps = [
-        "@//:node_modules/@nestjs/microservices",
-        "@//:node_modules/@types/node",
-        "@//:node_modules/long",
-        "@//:node_modules/protobufjs",
-        "@//:node_modules/rxjs",
+        "//:node_modules/@nestjs/microservices",
+        "//:node_modules/@types/node",
+        "//:node_modules/long",
+        "//:node_modules/protobufjs",
+        "//:node_modules/rxjs",
     ],
 )
