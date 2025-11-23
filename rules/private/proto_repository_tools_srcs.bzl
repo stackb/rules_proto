@@ -43,6 +43,8 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//language/proto_go_modules:rule.go",
     "@build_stack_rules_proto//language/protobuf:BUILD.bazel",
     "@build_stack_rules_proto//language/protobuf:protobuf.go",
+    "@build_stack_rules_proto//language/symbol:BUILD.bazel",
+    "@build_stack_rules_proto//language/symbol:symbol.go",
     "@build_stack_rules_proto//pkg:BUILD.bazel",
     "@build_stack_rules_proto//pkg/goldentest:BUILD.bazel",
     "@build_stack_rules_proto//pkg/goldentest:cases.go",

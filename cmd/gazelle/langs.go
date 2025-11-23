@@ -21,6 +21,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/language/proto"
 	"github.com/stackb/rules_proto/language/proto_go_modules"
 	"github.com/stackb/rules_proto/language/protobuf"
+	"github.com/stackb/rules_proto/language/symbol"
 )
 
 var languages = []language.Language{
@@ -28,4 +29,5 @@ var languages = []language.Language{
 	protobuf.NewLanguage(),
 	golang.NewLanguage(),
 	proto_go_modules.NewLanguage(),
+	symbol.NewLanguage(),
 }
