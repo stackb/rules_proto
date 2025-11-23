@@ -1,9 +1,12 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "symbol",
-    srcs = ["symbol.go"],
-    importpath = "github.com/stackb/rules_proto/language/symbol",
+    name = "starlarkbundle",
+    srcs = [
+        "language.go",
+        "starlark_library.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/language/starlarkbundle",
     visibility = ["//visibility:public"],
     deps = [
         "@bazel_gazelle//config:go_default_library",
