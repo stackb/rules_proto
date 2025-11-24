@@ -23,8 +23,10 @@ package starlarkbundle
 
 import (
 	"flag"
+	"io"
 	"log"
 	"maps"
+	"os"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -36,22 +38,29 @@ import (
 )
 
 const (
-	languageName                       = "starlark_bundle"
-	starlarkBundleRootDirectiveName    = "starlark_bundle_root"
-	starlarkBundleExcludeDirectiveName = "starlark_bundle_exclude"
+	languageName                          = "starlark_bundle"
+	starlarkBundleRootDirectiveName       = "starlark_bundle_root"
+	starlarkBundleExcludeDirectiveName    = "starlark_bundle_exclude"
+	starlarkBundleLogFileDirectiveName    = "starlark_bundle_log_file"
+	starlarkModuleDependencyDirectiveName = "module_dependency"
 )
 
 type starlarkBundleLang struct {
 	starlarkBundleRoot        *string
 	starlarkBundleExcludeDirs []string
+	moduleDeps                map[string]string
 	starlarkLibraries         map[label.Label]*rule.Rule
+	logFile                   string
+	logWriter                 *os.File
+	logger                    *log.Logger
 }
 
 // NewLanguage is called by Gazelle to install this language extension in a
 // binary.
 func NewLanguage() language.Language {
 	return &starlarkBundleLang{
-		starlarkLibraries: make(map[label.Label]*rule.Rule),
+		starlarkLibraries: map[label.Label]*rule.Rule{},
+		moduleDeps:        map[string]string{},
 	}
 }
 
@@ -66,9 +75,17 @@ func (*starlarkBundleLang) Name() string {
 // https://pkg.go.dev/github.com/bazelbuild/bazel-gazelle/resolve?tab=doc#Resolver
 // interface, but are otherwise unused.
 func (ext *starlarkBundleLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
+	fs.StringVar(&ext.logFile, "starlark_bundle_log", "", "path to log file for starlark_bundle extension")
 }
 
-func (*starlarkBundleLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
+func (ext *starlarkBundleLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
+	if ext.logFile != "" {
+		ext.createLogger(c, ext.logFile)
+		ext.logf("CheckFlags: log file initialized from flag: %s", ext.logFile)
+	}
+	if ext.logger == nil {
+		ext.logger = log.New(io.Discard, "", 0)
+	}
 	return nil
 }
 
@@ -76,11 +93,14 @@ func (*starlarkBundleLang) KnownDirectives() []string {
 	return []string{
 		starlarkBundleRootDirectiveName,
 		starlarkBundleExcludeDirectiveName,
+		starlarkBundleLogFileDirectiveName,
+		starlarkModuleDependencyDirectiveName,
 	}
 }
 
 func (ext *starlarkBundleLang) Configure(c *config.Config, rel string, f *rule.File) {
 	if f != nil {
+		ext.logf("Configure: processing %d directives in %s", len(f.Directives), rel)
 		for _, d := range f.Directives {
 			switch d.Key {
 			case starlarkBundleRootDirectiveName:
@@ -90,9 +110,35 @@ func (ext *starlarkBundleLang) Configure(c *config.Config, rel string, f *rule.F
 				ext.starlarkBundleRoot = &rel
 			case starlarkBundleExcludeDirectiveName:
 				ext.starlarkBundleExcludeDirs = append(ext.starlarkBundleExcludeDirs, d.Value)
+			case starlarkModuleDependencyDirectiveName:
+				nameVersion := strings.Fields(d.Value)
+				if len(nameVersion) != 2 {
+					log.Fatalf("malformed directive %s, should be NAME VERSION: %s", starlarkModuleDependencyDirectiveName, d.Value)
+				}
+				ext.moduleDeps[nameVersion[0]] = nameVersion[1]
+				ext.logf("Added module dependency: %q -> %q", nameVersion[0], nameVersion[1])
+			case starlarkBundleLogFileDirectiveName:
+				ext.createLogger(c, d.Value)
 			}
 		}
 	}
+}
+
+func (ext *starlarkBundleLang) createLogger(c *config.Config, logFile string) {
+	if logFile != "" {
+		f, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+		if err == nil {
+			ext.logWriter = f
+			ext.logger = log.New(f, "", log.LstdFlags)
+		} else {
+			log.Fatalf("attempting to open log file: %v", err)
+		}
+	}
+	if false && ext.logger == nil {
+		ext.logger = log.New(io.Discard, "", 0)
+	}
+
+	ext.logf("Log initialized")
 }
 
 // Kinds returns a map of maps rule names (kinds) and information on how to
@@ -154,7 +200,7 @@ func (*starlarkBundleLang) Embeds(r *rule.Rule, from label.Label) []label.Label 
 func (ext *starlarkBundleLang) Resolve(c *config.Config, ix *resolve.RuleIndex, rc *repo.RemoteCache, r *rule.Rule, importsRaw interface{}, from label.Label) {
 	switch r.Kind() {
 	case starlarkLibraryKind:
-		starlarkLibraryResolve(c, ix, r, importsRaw, from)
+		starlarkLibraryResolve(c, ix, r, importsRaw, from, ext)
 	case starlarkBundleKind:
 		starlarkBundleResolve(r, ext.starlarkLibraries)
 	}
@@ -182,8 +228,10 @@ func (ext *starlarkBundleLang) GenerateRules(args language.GenerateArgs) (result
 		}
 	}
 
+	ext.logf("GenerateRules: visiting %s", args.Rel)
+
 	for _, r := range []language.GenerateResult{
-		starlarkLibraryGenerate(args, ext.starlarkLibraries),
+		starlarkLibraryGenerate(args, ext.starlarkLibraries, ext),
 		starlarkBundleGenerate(args, ext.starlarkBundleRoot),
 	} {
 		result.Gen = append(result.Gen, r.Gen...)
@@ -192,4 +240,27 @@ func (ext *starlarkBundleLang) GenerateRules(args language.GenerateArgs) (result
 	}
 
 	return
+}
+
+func (ext *starlarkBundleLang) getModuleDependencyRepoName(repo string) (string, bool) {
+	ext.logf("getModuleDependencyRepoName called with repo=%q", repo)
+	if repo == "" {
+		ext.logf("  returning early for empty repo: @")
+		return "@", true
+	}
+	if mappedRepo, ok := ext.moduleDeps[repo]; ok {
+		ext.logf("  found mapping: %q -> %q", repo, mappedRepo)
+		return mappedRepo, true
+	} else {
+		ext.logf("  unknown module dependency: %q (known deps: %v)", repo, ext.moduleDeps)
+		log.Fatalf("unknown module dependency: %q", repo)
+		return repo, false
+	}
+}
+
+// logf logs a message using the extension's logger if configured
+func (ext *starlarkBundleLang) logf(format string, args ...any) {
+	if ext.logger != nil {
+		ext.logger.Printf(format, args...)
+	}
 }

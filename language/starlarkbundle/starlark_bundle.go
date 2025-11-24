@@ -65,8 +65,8 @@ func starlarkBundleResolve(r *rule.Rule, starlarkLibraries map[label.Label]*rule
 		deps = append(deps, dep.String())
 	}
 
-	sort.Strings(deps)
 	if len(deps) > 0 {
+		sort.Strings(deps)
 		r.SetAttr("deps", deps)
 	}
 }
