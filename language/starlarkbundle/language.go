@@ -253,7 +253,7 @@ func (ext *starlarkBundleLang) getModuleDependencyRepoName(repo string) (string,
 		return mappedRepo, true
 	} else {
 		ext.logf("  unknown module dependency: %q (known deps: %v)", repo, ext.moduleDeps)
-		log.Fatalf("unknown module dependency: %q", repo)
+		// log.Fatalf("unknown module dependency: %q", repo)
 		return repo, false
 	}
 }

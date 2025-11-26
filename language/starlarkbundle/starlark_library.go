@@ -367,12 +367,6 @@ func checkInternalVisibility(rel, visibility string) string {
 	return visibility
 }
 
-func sanitizeName(name string) string {
-	name = strings.ReplaceAll(name, "/", "_")
-	name = strings.ReplaceAll(name, "+", "_")
-	return name
-}
-
 // deduplicateAndSort removes duplicate entries and sorts the list
 func deduplicateAndSort(in []string) (out []string) {
 	if len(in) == 0 {

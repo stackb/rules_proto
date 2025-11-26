@@ -33,6 +33,7 @@ import (
 
 const (
 	starlarkBundleKind = "starlark_bundle"
+	starlarkBundleName = "docs"
 )
 
 var starlarkBundleKindInfo = map[string]rule.KindInfo{
@@ -48,7 +49,7 @@ var starlarkBundleLoadInfo = rule.LoadInfo{
 }
 
 func starlarkBundleRule() (*rule.Rule, []string) {
-	r := rule.NewRule(starlarkBundleKind, starlarkBundleKind)
+	r := rule.NewRule(starlarkBundleKind, starlarkBundleName)
 
 	r.SetAttr("visibility", []string{"//visibility:public"})
 
