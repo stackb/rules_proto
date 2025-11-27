@@ -121,7 +121,12 @@ func (s *PyLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	return newRule
 }
 
-func pyFilenameToImport(s string) string {
+func pyFilenameToImport(s , stripImportPrefix string) string {
+	if stripImportPrefix != "" {
+		prefix := strings.TrimPrefix(stripImportPrefix, "/")
+		s = strings.TrimPrefix(s, prefix)
+		s = strings.TrimPrefix(s, "/") // should never be absolute
+	}
 	if strings.HasSuffix(s, ".py") {
 		return strings.ReplaceAll(s[:len(s)-3], "/", ".")
 	}
@@ -135,7 +140,7 @@ func (s *PyLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []r
 		specs = maybeStripImportPrefix(specs, lib.StripImportPrefix())
 		from := label.New("", file.Pkg, r.Name())
 		for _, o := range s.Outputs {
-			pyImp := pyFilenameToImport(o)
+			pyImp := pyFilenameToImport(o, lib.StripImportPrefix())
 			protoc.GlobalResolver().Provide("py", "py", pyImp, from)
 			specs = append(specs, resolve.ImportSpec{Lang: "py", Imp: pyImp})
 		}
