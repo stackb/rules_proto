@@ -23,10 +23,12 @@ package starlarkbundle
 
 import (
 	"flag"
+	"fmt"
 	"io"
 	"log"
 	"maps"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -39,17 +41,21 @@ import (
 
 const (
 	languageName                          = "starlark_bundle"
+	starlarkBundleRepoNameDirectiveName   = "starlark_bundle_repo_name"
 	starlarkBundleRootDirectiveName       = "starlark_bundle_root"
 	starlarkBundleExcludeDirectiveName    = "starlark_bundle_exclude"
 	starlarkBundleLogFileDirectiveName    = "starlark_bundle_log_file"
 	starlarkModuleDependencyDirectiveName = "module_dependency"
+	coarseDependencies                    = true
 )
 
 type starlarkBundleLang struct {
 	starlarkBundleRoot        *string
+	starlarkBundleRepoName    string
 	starlarkBundleExcludeDirs []string
 	moduleDeps                map[string]string
 	starlarkLibraries         map[label.Label]*rule.Rule
+	bzlFiles                  map[string]bool
 	logFile                   string
 	logWriter                 *os.File
 	logger                    *log.Logger
@@ -60,6 +66,7 @@ type starlarkBundleLang struct {
 func NewLanguage() language.Language {
 	return &starlarkBundleLang{
 		starlarkLibraries: map[label.Label]*rule.Rule{},
+		bzlFiles:          map[string]bool{},
 		moduleDeps:        map[string]string{},
 	}
 }
@@ -80,7 +87,7 @@ func (ext *starlarkBundleLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *co
 
 func (ext *starlarkBundleLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 	if ext.logFile != "" {
-		ext.createLogger(c, ext.logFile)
+		ext.createLogger(ext.logFile)
 		ext.logf("CheckFlags: log file initialized from flag: %s", ext.logFile)
 	}
 	if ext.logger == nil {
@@ -108,6 +115,8 @@ func (ext *starlarkBundleLang) Configure(c *config.Config, rel string, f *rule.F
 					log.Fatalf("gazelle:%s should only be set once (refusing to override %q with %q)", starlarkBundleRootDirectiveName, *ext.starlarkBundleRoot, d.Value)
 				}
 				ext.starlarkBundleRoot = &rel
+			case starlarkBundleRepoNameDirectiveName:
+				ext.starlarkBundleRepoName = d.Value
 			case starlarkBundleExcludeDirectiveName:
 				ext.starlarkBundleExcludeDirs = append(ext.starlarkBundleExcludeDirs, d.Value)
 			case starlarkModuleDependencyDirectiveName:
@@ -118,13 +127,13 @@ func (ext *starlarkBundleLang) Configure(c *config.Config, rel string, f *rule.F
 				ext.moduleDeps[nameVersion[0]] = nameVersion[1]
 				ext.logf("Added module dependency: %q -> %q", nameVersion[0], nameVersion[1])
 			case starlarkBundleLogFileDirectiveName:
-				ext.createLogger(c, d.Value)
+				ext.createLogger(d.Value)
 			}
 		}
 	}
 }
 
-func (ext *starlarkBundleLang) createLogger(c *config.Config, logFile string) {
+func (ext *starlarkBundleLang) createLogger(logFile string) {
 	if logFile != "" {
 		f, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
 		if err == nil {
@@ -202,7 +211,12 @@ func (ext *starlarkBundleLang) Resolve(c *config.Config, ix *resolve.RuleIndex, 
 	case starlarkLibraryKind:
 		starlarkLibraryResolve(c, ix, r, importsRaw, from, ext)
 	case starlarkBundleKind:
-		starlarkBundleResolve(r, ext.starlarkLibraries)
+		if coarseDependencies {
+			starlarkBundleResolveCoarse(r, ext.starlarkLibraries, ext.moduleDeps)
+		} else {
+			starlarkBundleResolve(r, ext.starlarkLibraries)
+
+		}
 	}
 }
 
@@ -229,6 +243,26 @@ func (ext *starlarkBundleLang) GenerateRules(args language.GenerateArgs) (result
 	}
 
 	ext.logf("GenerateRules: visiting %s", args.Rel)
+
+	if args.Rel == "" {
+		// REPO.bazel causes visibility issues if the root BUILD file has been
+		// deleted but still referencing non-existent rules.  This should be
+		// moved to the part where gazelle cleans up build files.
+		repoFile := filepath.Join(args.Config.RepoRoot, "REPO.bazel")
+		if _, err := os.Stat(repoFile); err == nil {
+			ext.logf("Removing REPO.bazel from root package")
+			if err := os.Remove(repoFile); err != nil {
+				ext.logf("ERROR: failed to remove REPO.bazel: %v", err)
+			}
+		}
+
+		bazelIgnore := filepath.Join(args.Config.RepoRoot, "REPO.bazel")
+		if _, err := os.Stat(bazelIgnore); err == nil {
+			if err := ext.removeAbsolutePathsFromBazelignore(bazelIgnore); err != nil {
+				ext.logf("ERROR: failed to cleanup .bazelignore file: %v", err)
+			}
+		}
+	}
 
 	for _, r := range []language.GenerateResult{
 		starlarkLibraryGenerate(args, ext.starlarkLibraries, ext),
@@ -263,4 +297,50 @@ func (ext *starlarkBundleLang) logf(format string, args ...any) {
 	if ext.logger != nil {
 		ext.logger.Printf(format, args...)
 	}
+}
+
+// removeAbsolutePathsFromBazelignore reads a .bazelignore file and removes
+// any lines that are absolute paths (starting with /).
+func (ext *starlarkBundleLang) removeAbsolutePathsFromBazelignore(bazelignorePath string) error {
+	ext.logf("Checking .bazelignore file: %s", bazelignorePath)
+
+	// Read the file
+	content, err := os.ReadFile(bazelignorePath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil // File doesn't exist, nothing to do
+		}
+		return fmt.Errorf("failed to read .bazelignore: %w", err)
+	}
+
+	// Split into lines
+	lines := strings.Split(string(content), "\n")
+	var filteredLines []string
+	removedCount := 0
+
+	for _, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		// Keep the line if it's not an absolute path
+		if trimmed == "" || !strings.HasPrefix(trimmed, "/") {
+			filteredLines = append(filteredLines, line)
+		} else {
+			ext.logf("  Removing absolute path from .bazelignore: %q", trimmed)
+			removedCount++
+		}
+	}
+
+	// If nothing changed, don't rewrite the file
+	if removedCount == 0 {
+		ext.logf("  No absolute paths found in .bazelignore")
+		return nil
+	}
+
+	// Write back the filtered content
+	newContent := strings.Join(filteredLines, "\n")
+	if err := os.WriteFile(bazelignorePath, []byte(newContent), 0644); err != nil {
+		return fmt.Errorf("failed to write .bazelignore: %w", err)
+	}
+
+	ext.logf("  Removed %d absolute path(s) from .bazelignore", removedCount)
+	return nil
 }

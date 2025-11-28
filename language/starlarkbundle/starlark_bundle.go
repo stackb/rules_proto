@@ -22,6 +22,7 @@ limitations under the License.
 package starlarkbundle
 
 import (
+	"log"
 	"sort"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -33,7 +34,7 @@ import (
 
 const (
 	starlarkBundleKind = "starlark_bundle"
-	starlarkBundleName = "docs"
+	starlarkBundleName = "bundle"
 )
 
 var starlarkBundleKindInfo = map[string]rule.KindInfo{
@@ -60,6 +61,8 @@ func starlarkBundleImports(_ *config.Config, _ *rule.Rule, _ *rule.File) []resol
 	return nil
 }
 
+// starlarkBundleResolveResolve iterates the set of stalark_library rules and
+// adds them to it's deps list.
 func starlarkBundleResolve(r *rule.Rule, starlarkLibraries map[label.Label]*rule.Rule) {
 	deps := make([]string, 0, len(starlarkLibraries))
 	for dep := range starlarkLibraries {
@@ -70,6 +73,54 @@ func starlarkBundleResolve(r *rule.Rule, starlarkLibraries map[label.Label]*rule
 		sort.Strings(deps)
 		r.SetAttr("deps", deps)
 	}
+}
+
+// starlarkBundleResolveCoarse iterates the set of stalark_library rules and
+// adds them to it's deps list.  It also takes out all external dependencies
+// from the library rules and collects them into itself, but only as the :bundle
+// target.  This is because we cannot ensure that the fine-grained dependency
+// structure is correct. However, we can (hopefully) ensure that the
+// coarse-grained dependency graph of bundles is correct.
+func starlarkBundleResolveCoarse(r *rule.Rule, starlarkLibraries map[label.Label]*rule.Rule, moduleDeps map[string]string) {
+	deps := make([]string, 0, len(starlarkLibraries))
+	for dep, r := range starlarkLibraries {
+		deps = append(deps, dep.String())
+
+		ruleDeps := r.AttrStrings("deps")
+		p1, _ := partitionExternalDeps(ruleDeps)
+		r.SetAttr("deps", p1)
+	}
+
+	if false {
+		for _, module := range moduleDeps {
+			dep := label.New(module, "", "bundle")
+			deps = append(deps, dep.String())
+		}
+	}
+
+	if len(deps) > 0 {
+		sort.Strings(deps)
+		r.SetAttr("deps", deps)
+	}
+}
+
+func partitionExternalDeps(deps []string) ([]string, []label.Label) {
+	var p1 []string      // first and third-party deps
+	var p3 []label.Label // first and third-party deps
+
+	for _, dep := range deps {
+		from, err := label.Parse(dep)
+		if err != nil {
+			log.Panicf("invalid dep label: %v", dep)
+		}
+		if from.Repo != "" {
+			p3 = append(p3, from)
+		} else {
+			p1 = append(p1, dep)
+		}
+	}
+
+	return p1, p3
 }
 
 func starlarkBundleGenerate(args language.GenerateArgs, root *string) (result language.GenerateResult) {

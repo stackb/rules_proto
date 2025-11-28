@@ -72,9 +72,17 @@ func (s suffixes) Matches(test string) bool {
 	return false
 }
 
+func makeStarlarkLibraryRuleName(f string) string {
+	name := starlarkLibraryNamePrefix + strings.TrimSuffix(f, fileType)
+	if strings.HasSuffix(name, "_test") {
+		name += "rule"
+	}
+	return name
+}
+
 func starlarkLibraryRule(args language.GenerateArgs, f string, ext *starlarkBundleLang) (*rule.Rule, []*build.LoadStmt) {
 	fullPath := filepath.Join(args.Dir, f)
-	name := starlarkLibraryNamePrefix + strings.TrimSuffix(f, fileType)
+	name := makeStarlarkLibraryRuleName(f)
 
 	ast, loads, err := getBzlFileLoadsStmts(fullPath)
 	if err != nil {
@@ -83,14 +91,17 @@ func starlarkLibraryRule(args language.GenerateArgs, f string, ext *starlarkBund
 		// without deps.
 	}
 
-	// always castrate fail() exprs
-	if renameFailToPrint(ast) {
-		ext.emitBzlFile(fullPath, ast)
-	}
+	// // always castrate fail() exprs
+	// if renameFailToPrint(ast) {
+	// 	ext.emitBzlFile(fullPath, ast)
+	// }
 
 	r := rule.NewRule(starlarkLibraryKind, name)
 
 	r.SetAttr("src", f)
+	if ext.starlarkBundleRepoName != "" {
+		r.SetAttr("repo_name", ext.starlarkBundleRepoName)
+	}
 
 	shouldSetVisibility := args.File == nil || !args.File.HasDefaultVisibility()
 	if shouldSetVisibility {
@@ -147,6 +158,10 @@ func starlarkLibraryResolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rul
 		// the index only contains absolute labels, not relative
 		impLabel = impLabel.Abs(from.Repo, from.Pkg)
 		ext.logf("    absolute label: %s (repo=%q, pkg=%q, name=%q)", impLabel.String(), impLabel.Repo, impLabel.Pkg, impLabel.Name)
+
+		if coarseDependencies && impLabel.Repo != "" {
+			continue
+		}
 
 		if impLabel.Repo == "bazel_tools" {
 			// The @bazel_tools repo is tricky because it is a part of the
@@ -213,6 +228,17 @@ func starlarkLibraryResolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rul
 			ext.logf("    adding match to deps: %s", depLabel.String())
 			// depLabel = depLabel.Rel(from.Repo, from.Pkg)
 			deps = append(deps, depLabel.String())
+		}
+
+		// in the source file, never use unqualified
+		if ext.starlarkBundleRepoName != "" {
+			// absLabel := impLabel.Abs(ext.starlarkBundleRepoName, from.Pkg)
+			absLabel := label.New(ext.starlarkBundleRepoName, impLabel.Pkg, impLabel.Name)
+			load.Module.Value = absLabel.String()
+			rewriteBzlSourceFile = true
+			ext.logf("   rewrote %v => %v", impLabel, absLabel)
+		} else {
+			ext.logf("    not abs'ing label (nostarlarkBundleRepoName)")
 		}
 	}
 

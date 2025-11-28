@@ -13,14 +13,16 @@ def _starlark_bundle_impl(ctx):
 
     return [
         DefaultInfo(
-            files = transitive_docs,
+            files = transitive_srcs,
         ),
         StarlarkLibraryInfo(
             srcs = [],
             transitive_srcs = transitive_srcs,
         ),
         StarlarkLibraryFileInfo(
+            label = ctx.label,
             src = None,
+            deps = depset(deps),
             transitive_srcs = transitive_srcs,
             transitive_docs = transitive_docs,
             broken = False,
@@ -35,11 +37,12 @@ _starlark_bundle = rule(
             providers = [StarlarkLibraryFileInfo],
         ),
     },
-    doc = "",
     provides = [DefaultInfo, StarlarkLibraryFileInfo, StarlarkLibraryInfo],
 )
 
-def starlark_bundle(name, deps, **kwargs):
+def starlark_bundle(name, **kwargs):
+    deps = kwargs.pop("deps", [])
+
     _starlark_bundle(
         name = name,
         deps = deps,
