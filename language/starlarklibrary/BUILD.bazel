@@ -1,14 +1,9 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "starlarkbundle",
-    srcs = [
-        "language.go",
-        "lifecycle.go",
-        "starlark_bundle.go",
-        "starlark_library.go",
-    ],
-    importpath = "github.com/stackb/rules_proto/language/starlarkbundle",
+    name = "starlarklibrary",
+    srcs = ["language.go"],
+    importpath = "github.com/stackb/rules_proto/language/starlarklibrary",
     visibility = ["//visibility:public"],
     deps = [
         "@bazel_gazelle//config:go_default_library",
@@ -23,12 +18,14 @@ go_library(
 )
 
 go_test(
-    name = "starlarkbundle_test",
+    name = "starlarklibrary_test",
     srcs = [
+        "bazelignore_test.go",
+        "dict_test.go",
         "lifecycle_test.go",
         "starlark_library_test.go",
     ],
-    embed = [":starlarkbundle"],
+    embed = [":starlarklibrary"],
     deps = [
         "@bazel_gazelle//config:go_default_library",
         "@com_github_bazelbuild_buildtools//build:go_default_library",

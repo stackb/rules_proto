@@ -7,94 +7,67 @@ StarlarkLibraryFileInfo = provider(
     fields = {
         "label": "The label of the target rule",
         "repo_name": "The original (non-canonical) repo (workspace!) name",
-        "src": "The top-level src file",
-        "doc": "The starlark_extract_doc output file",
+        "srcs": "List of .bzl files",
+        "loads": "load statements per .bzl file",
         "deps": "DepSet[StarlarkLibraryFileInfo]: deps of this file",
-        # "transitive_deps": "List[DepSet[StarlarkLibraryFileInfo]]: transitive deps of this file",
-        "transitive_srcs": "Transitive closure of rules files required for " +
-                           "interpretation of the src",
-        "transitive_docs": "Transitive closure of docs that have viable dependencies",
-        "broken": "If at last one of the transitive srcs has an unknown dependency.",
+        "transitive_deps": "DepSet[StarlarkLibraryFileInfo]: transitive deps of this file",
+        "bazelignore": "List[str] value of ctx.attr.bazelignore",
+        "bazelversion": "str: the value of ctx.attr.bazelversion",
     },
 )
 
 def _starlark_library_impl(ctx):
-    src = ctx.file.src
-    doc = ctx.file.doc
-    broken = len(ctx.attr.unknown_deps) > 0
-
     deps = [d[StarlarkLibraryFileInfo] for d in ctx.attr.deps]
-    transitive_deps = [d.deps for d in deps]
+    srcs = ctx.files.srcs
+    transitive_srcs = depset(srcs, order = "postorder", transitive = [d.transitive_srcs for d in deps])
 
-    transitive_srcs = depset([src], order = "postorder", transitive = [d.transitive_srcs for d in deps])
-    transitive_docs = depset([doc] if not broken else [], order = "postorder", transitive = [d.transitive_docs for d in deps])
+    # loads = {}
+    # for k, v in ctx.attr.loads.items():
+    #     loads[Label(k)] = v
 
     return [
         DefaultInfo(
             files = transitive_srcs,
         ),
-        OutputGroupInfo(
-            doc = [doc],
-        ),
         StarlarkLibraryInfo(
-            srcs = [src],
+            srcs = srcs,
             transitive_srcs = transitive_srcs,
         ),
         StarlarkLibraryFileInfo(
             label = ctx.label,
             repo_name = ctx.attr.repo_name,
-            src = src,
-            deps = depset(deps, transitive = transitive_deps),
-            transitive_srcs = transitive_srcs,
-            transitive_docs = transitive_docs,
-            broken = broken,
+            srcs = srcs,
+            loads = ctx.attr.loads,
+            bazelignore = ctx.attr.bazelignore,
+            bazelversion = ctx.attr.bazelversion,
+            transitive_deps = depset(deps, transitive = [d.transitive_deps for d in deps]),
         ),
     ]
 
-_starlark_library = rule(
+starlark_library = rule(
     implementation = _starlark_library_impl,
     attrs = {
         "repo_name": attr.string(
             mandatory = True,
         ),
-        "src": attr.label(
+        "srcs": attr.label_list(
             doc = "label for the .bzl file",
-            allow_single_file = True,
+            allow_files = True,
         ),
-        "doc": attr.label(
-            doc = "the output of the starlar_doc_extract rule",
-            allow_single_file = True,
-        ),
-        "unknown_deps": attr.string_list(
-            doc = "list of starlark_library rule dependencies that will not be able to resolve",
+        "loads": attr.string_list_dict(
+            doc = "load per file",
         ),
         "deps": attr.label_list(
             doc = "list of starlark_library rule dependencies.  These can be ",
             providers = [StarlarkLibraryFileInfo],
         ),
+        "bazelignore": attr.string_list(
+            doc = "contents of the .bazelignore file, if present",
+        ),
+        "bazelversion": attr.string(
+            doc = "contents of the .bazelversion file, if present",
+        ),
     },
     doc = "",
     provides = [DefaultInfo, StarlarkLibraryInfo, StarlarkLibraryFileInfo],
 )
-
-def starlark_library(name, src, deps = [], **kwargs):
-    visibility = kwargs.pop("visibility", [])
-    bazel_tools_deps = kwargs.pop("bazel_tools_deps", [])
-
-    # doc_name = name + "_doc"
-    # native.starlark_doc_extract(
-    #     name = doc_name,
-    #     src = src,
-    #     deps = deps + bazel_tools_deps,
-    #     visibility = ["//visibility:public"],
-    # )
-
-    _starlark_library(
-        name = name,
-        src = src,
-        # doc = doc_name,
-        doc = src,
-        deps = deps,
-        visibility = ["//visibility:public"],
-        **kwargs
-    )

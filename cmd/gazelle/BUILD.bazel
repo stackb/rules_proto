@@ -29,7 +29,7 @@ go_library(
         "//cmd/gazelle/internal/wspace",
         "//language/proto_go_modules",
         "//language/protobuf",
-        "//language/starlarkbundle",
+        "//language/starlarklibrary",
         "@bazel_gazelle//config:go_default_library",
         "@bazel_gazelle//flag:go_default_library",
         "@bazel_gazelle//label:go_default_library",
