@@ -30,9 +30,9 @@ import (
 	"log"
 	"maps"
 	"os"
-	"path"
 	"path/filepath"
 	"slices"
+	"sort"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -63,7 +63,8 @@ var (
 	}
 	starlarkLibraryKindInfo = map[string]rule.KindInfo{
 		starlarkLibraryKind: {
-			NonEmptyAttrs: map[string]bool{"src": true},
+			NonEmptyAttrs: map[string]bool{"srcs": true},
+			ResolveAttrs:  map[string]bool{"deps": true},
 		},
 	}
 	starlarkLibraryLoadInfo = rule.LoadInfo{
@@ -76,7 +77,6 @@ type starlarkLibraryLang struct {
 	roots        []string
 	repoName     string
 	excludeDirs  []string
-	bzlFiles     map[string]bool
 	bazelVersion string
 	bazelIgnore  []string
 	logFile      string
@@ -87,9 +87,7 @@ type starlarkLibraryLang struct {
 // NewLanguage is called by Gazelle to install this language extension in a
 // binary.
 func NewLanguage() language.Language {
-	return &starlarkLibraryLang{
-		bzlFiles: map[string]bool{},
-	}
+	return &starlarkLibraryLang{}
 }
 
 // Name returns the name of the language. This should be a prefix of the kinds
@@ -209,7 +207,25 @@ func (*starlarkLibraryLang) Fix(c *config.Config, f *rule.File) {
 // If nil is returned, the rule will not be indexed. If any non-nil slice is
 // returned, including an empty slice, the rule will be indexed.
 func (ext *starlarkLibraryLang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
-	return nil
+	srcs := r.AttrStrings("srcs")
+	imports := make([]resolve.ImportSpec, 0, len(srcs)+1)
+
+	for _, src := range srcs {
+		spec := resolve.ImportSpec{
+			Lang: languageName,
+			Imp:  fmt.Sprintf("//%s:%s", f.Pkg, src),
+		}
+
+		imports = append(imports, spec)
+	}
+
+	// add an import such the one can find *all* the stark_library rules.
+	imports = append(imports, resolve.ImportSpec{
+		Lang: languageName,
+		Imp:  starlarkLibraryKind,
+	})
+
+	return imports
 }
 
 // Embeds returns a list of labels of rules that the given rule embeds. If a
@@ -228,6 +244,10 @@ func (*starlarkLibraryLang) Embeds(r *rule.Rule, from label.Label) []label.Label
 // equivalent) for each import according to language-specific rules and
 // heuristics.
 func (ext *starlarkLibraryLang) Resolve(c *config.Config, ix *resolve.RuleIndex, rc *repo.RemoteCache, r *rule.Rule, importsRaw interface{}, from label.Label) {
+	switch r.Kind() {
+	case starlarkLibraryKind:
+		ext.starlarkLibraryResolve(c, ix, rc, r, importsRaw, from)
+	}
 }
 
 // GenerateRules extracts build metadata from source files in a directory.
@@ -256,33 +276,37 @@ func (ext *starlarkLibraryLang) GenerateRules(args language.GenerateArgs) (resul
 
 	ext.logf("GenerateRules %v: visiting %s", ext.roots, args.Rel)
 
-	// collect all .bzl files
+	// collect all .bzl srcs
+	var srcs []string
 	for _, f := range append(args.RegularFiles, args.GenFiles...) {
-		if !isBzlSourceFile(f) {
-			continue
+		if isBzlSourceFile(f) {
+			srcs = append(srcs, f)
 		}
-		ext.bzlFiles[path.Join(args.Rel, f)] = true
 	}
 
-	if slices.Contains(ext.roots, args.Rel) {
-		r, imports := ext.starlarkLibraryRule(args)
-		result.Gen = append(result.Gen, r)
-		result.Imports = append(result.Imports, imports)
+	if len(srcs) == 0 {
+		return
 	}
+
+	r, imports := ext.starlarkLibraryRule(args, srcs)
+	result.Gen = append(result.Gen, r)
+	result.Imports = append(result.Imports, imports)
+
+	// if slices.Contains(ext.roots, args.Rel) {
+	// 	r, imports := ext.starlarkLibraryRule(args, srcs)
+	// 	result.Gen = append(result.Gen, r)
+	// 	result.Imports = append(result.Imports, imports)
+	// }
 
 	return
 }
 
-func (ext *starlarkLibraryLang) starlarkLibraryRule(args language.GenerateArgs) (*rule.Rule, []any) {
-
+func (ext *starlarkLibraryLang) starlarkLibraryRule(args language.GenerateArgs, srcs []string) (*rule.Rule, []any) {
 	loadsByRelPath := make(map[string][]string)
-	for workspaceRelPath := range ext.bzlFiles {
-		if !strings.HasPrefix(workspaceRelPath, args.Rel) {
-			continue
-		}
-		fullPath := filepath.Join(args.Config.RepoRoot, workspaceRelPath)
-		relPath := strings.TrimPrefix(strings.TrimPrefix(workspaceRelPath, args.Rel), "/")
-		_, stmts, err := getBzlFileLoadsStmts(fullPath)
+	for _, src := range srcs {
+		relPath := filepath.Join(args.Rel, src)
+		fullPath := filepath.Join(args.Config.RepoRoot, relPath)
+		_, stmts, err := getBzlFileLoadsStmts(fullPath, args.Rel, ext.logf)
 
 		if err != nil {
 			ext.logf("%s: contains syntax errors: %v", fullPath, err)
@@ -310,16 +334,47 @@ func (ext *starlarkLibraryLang) starlarkLibraryRule(args language.GenerateArgs) 
 	}
 	r.SetAttr("visibility", []string{visibilityPublic})
 
-	return r, []any{}
+	return r, []any{loadsByRelPath}
+}
+
+func (ext *starlarkLibraryLang) starlarkLibraryResolve(c *config.Config, ix *resolve.RuleIndex, _ *repo.RemoteCache, r *rule.Rule, _ interface{}, from label.Label) {
+	// only perform resolve if this is one of the roots
+	var root *string
+	for _, dir := range ext.roots {
+		if dir == from.Pkg {
+			root = &dir
+			break
+		}
+	}
+	if root == nil {
+		ext.logf("skipping deps resolution for %v (not a root: %v)", from, ext.roots)
+		return
+	}
+
+	var deps []string
+
+	// fetch all rules, then filter by the ones below our root
+	matches := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{
+		Lang: languageName,
+		Imp:  starlarkLibraryKind,
+	}, languageName)
+	for _, m := range matches {
+		depLabel := m.Label.Rel(from.Repo, from.Pkg)
+		if strings.HasPrefix(depLabel.Pkg, *root) {
+			deps = append(deps, depLabel.String())
+		}
+	}
+
+	if len(deps) > 0 {
+		sort.Strings(deps)
+		r.SetAttr("deps", deps)
+	}
 }
 
 // Before implements part of the language.LifecycleManager interface.
 func (ext *starlarkLibraryLang) Before(context.Context) {
 	ext.logf("Lifecycle: Before() called")
 	ext.logf("roots: %v", ext.roots)
-	// if len(ext.roots) == 0 {
-	// 	log.Fatalf("at least one root must be specified")
-	// }
 }
 
 // DoneGeneratingRules implements part of the language.FinishableLanguage interface.
@@ -417,7 +472,7 @@ func isBzlSourceFile(f string) bool {
 	return strings.HasSuffix(f, fileType) && !ignoreSuffix.Matches(f)
 }
 
-func getBzlFileLoadsStmts(path string) (*build.File, []*build.LoadStmt, error) {
+func getBzlFileLoadsStmts(path, rel string, logf LogFunc) (*build.File, []*build.LoadStmt, error) {
 	f, err := os.ReadFile(path)
 	if err != nil {
 		return nil, nil, fmt.Errorf("os.ReadFile(%q) error: %v", path, err)
@@ -431,6 +486,11 @@ func getBzlFileLoadsStmts(path string) (*build.File, []*build.LoadStmt, error) {
 	build.WalkOnce(ast, func(expr *build.Expr) {
 		n := *expr
 		if l, ok := n.(*build.LoadStmt); ok {
+			if lbl, err := label.Parse(l.Module.Value); err == nil {
+				l.Module.Value = lbl.Abs("", rel).String()
+			} else {
+				logf("rel=%q: load parse error: %s %v", rel, l.Module.Value, err)
+			}
 			loads = append(loads, l)
 		}
 	})
