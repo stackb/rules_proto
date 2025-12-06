@@ -21,7 +21,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/language/proto"
 	"github.com/stackb/rules_proto/language/proto_go_modules"
 	"github.com/stackb/rules_proto/language/protobuf"
-	"github.com/stackb/rules_proto/language/starlarklibrary"
+	"github.com/stackb/rules_proto/language/starlarkrepository"
 )
 
 var languages = []language.Language{
@@ -29,5 +29,5 @@ var languages = []language.Language{
 	protobuf.NewLanguage(),
 	golang.NewLanguage(),
 	proto_go_modules.NewLanguage(),
-	starlarklibrary.NewLanguage(),
+	starlarkrepository.NewLanguage(),
 }
