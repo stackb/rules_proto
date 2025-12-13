@@ -98,7 +98,12 @@ type starlarkRepositoryLang struct {
 // binary.
 func NewLanguage() language.Language {
 	return &starlarkRepositoryLang{
-		excludeDirs: []string{"javatests", "testdata"},
+		excludeDirs: []string{
+			"docs",
+			"javatests",
+			"testdata",
+			"tests",
+		},
 	}
 }
 
