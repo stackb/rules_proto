@@ -3,7 +3,7 @@ tidy:
 	bazel run @go_sdk//:bin/go -- mod tidy
 	bazel run @go_sdk//:bin/go -- mod vendor
 	find vendor -name 'BUILD.bazel' | xargs rm
-	bazel run //:gazelle
+	bazel run //:proto_gazelle
 	bazel mod tidy
 
 .PHONY: build
