@@ -9,7 +9,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
-	"github.com/stackb/rules_proto/pkg/protoc"
+	"github.com/stackb/rules_proto/v4/pkg/protoc"
 )
 
 // Imports returns a list of ImportSpecs that can be used to import the rule r.

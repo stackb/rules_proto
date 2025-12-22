@@ -3,8 +3,8 @@ package protobuf_test
 import (
 	"testing"
 
-	"github.com/stackb/rules_proto/pkg/plugin/golang/protobuf"
-	"github.com/stackb/rules_proto/pkg/plugintest"
+	"github.com/stackb/rules_proto/v4/pkg/plugin/golang/protobuf"
+	"github.com/stackb/rules_proto/v4/pkg/plugintest"
 )
 
 func TestProtocGenGoPlugin(t *testing.T) {

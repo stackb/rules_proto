@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
-	"github.com/stackb/rules_proto/pkg/protoc"
+	"github.com/stackb/rules_proto/v4/pkg/protoc"
 )
 
 func init() {

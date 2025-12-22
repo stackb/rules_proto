@@ -7,7 +7,7 @@ go_library(
         "java_library.go",
         "proto_java_library.go",
     ],
-    importpath = "github.com/stackb/rules_proto/pkg/rule/rules_java",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/rule/rules_java",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",

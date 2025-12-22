@@ -10,7 +10,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
-	"github.com/stackb/rules_proto/pkg/protoc"
+	"github.com/stackb/rules_proto/v4/pkg/protoc"
 )
 
 const (

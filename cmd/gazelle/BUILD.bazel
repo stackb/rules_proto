@@ -23,7 +23,7 @@ go_library(
         "profiler.go",
         "update-repos.go",
     ],
-    importpath = "github.com/stackb/rules_proto/cmd/gazelle",
+    importpath = "github.com/stackb/rules_proto/v4/cmd/gazelle",
     visibility = ["//visibility:public"],
     deps = [
         "//cmd/gazelle/internal/wspace",

@@ -10,7 +10,7 @@ exports_files([
 # ----------------------------------------------------
 # Gazelle
 # ----------------------------------------------------
-# gazelle:prefix github.com/stackb/rules_proto
+# gazelle:prefix github.com/stackb/rules_proto/v4
 # gazelle:exclude vendor
 # gazelle:exclude node_modules
 # gazelle:go_generate_proto false

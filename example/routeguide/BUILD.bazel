@@ -82,8 +82,8 @@ proto_compile(
 proto_compile(
     name = "routeguide_go_compile",
     output_mappings = [
-        "routeguide.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide.pb.go",
-        "routeguide_grpc.pb.go=github.com/stackb/rules_proto/example/routeguide/routeguide_grpc.pb.go",
+        "routeguide.pb.go=github.com/stackb/rules_proto/v4/example/routeguide/routeguide.pb.go",
+        "routeguide_grpc.pb.go=github.com/stackb/rules_proto/v4/example/routeguide/routeguide_grpc.pb.go",
     ],
     outputs = [
         "routeguide.pb.go",
@@ -103,7 +103,7 @@ proto_go_library(
         "routeguide.pb.go",
         "routeguide_grpc.pb.go",
     ],
-    importpath = "github.com/stackb/rules_proto/example/routeguide",
+    importpath = "github.com/stackb/rules_proto/v4/example/routeguide",
     visibility = ["//visibility:public"],
     deps = [
         "@org_golang_google_grpc//:go_default_library",

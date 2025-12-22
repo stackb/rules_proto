@@ -48,7 +48,7 @@ plugins that do things like:
 ## v3
 
 The way gazelle stored resolve data in memory changed in 0.35.  Uprading to this
-in https://github.com/stackb/rules_proto/pull/357 was a breaking change.
+in https://github.com/stackb/rules_proto/v4/pull/357 was a breaking change.
 
 ## v4
 

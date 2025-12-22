@@ -1,6 +1,6 @@
 # `rules_proto (v4)`
 
-![build-status](https://github.com/stackb/rules_proto/actions/workflows/ci.yaml/badge.svg)
+![build-status](https://github.com/stackb/rules_proto/v4/actions/workflows/ci.yaml/badge.svg)
 [![Go Reference](https://pkg.go.dev/badge/github.com/stackb/rules_proto.svg)](https://pkg.go.dev/github.com/stackb/rules_proto)
 
 Bazel starlark rules for building protocol buffers +/- gRPC :sparkles:.

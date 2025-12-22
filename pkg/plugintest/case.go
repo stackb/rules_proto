@@ -11,7 +11,7 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 
 	"github.com/bazelbuild/bazel-gazelle/rule"
-	"github.com/stackb/rules_proto/pkg/protoc"
+	"github.com/stackb/rules_proto/v4/pkg/protoc"
 )
 
 // Cases is a utility function that runs a mapping of test cases.

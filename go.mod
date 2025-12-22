@@ -1,4 +1,4 @@
-module github.com/stackb/rules_proto
+module github.com/stackb/rules_proto/v4
 
 go 1.23.1
 

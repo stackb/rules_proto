@@ -234,7 +234,7 @@ proto_library(
 
 proto_compile(
     name = "person_go_compile",
-    output_mappings = ["person.pb.go=github.com/stackb/rules_proto/example/person/person.pb.go"],
+    output_mappings = ["person.pb.go=github.com/stackb/rules_proto/v4/example/person/person.pb.go"],
     outputs = ["person.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "person_proto",
@@ -244,7 +244,7 @@ proto_compile(
 proto_go_library(
     name = "person_go_proto",
     srcs = ["person.pb.go"],
-    importpath = "github.com/stackb/rules_proto/example/person",
+    importpath = "github.com/stackb/rules_proto/v4/example/person",
     visibility = ["//visibility:public"],
     deps = [
         "//example/place:place_go_proto",
@@ -280,7 +280,7 @@ With this change, we get:
 proto_compiled_sources(
     name = "person_go_compiled_sources",
     srcs = ["person.pb.go"],
-    output_mappings = ["person.pb.go=github.com/stackb/rules_proto/example/person/person.pb.go"],
+    output_mappings = ["person.pb.go=github.com/stackb/rules_proto/v4/example/person/person.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "person_proto",
     visibility = ["//visibility:public"],
@@ -305,7 +305,7 @@ gazelle extension:
 go_library(
     name = "person",
     srcs = ["person.pb.go"],
-    importpath = "github.com/stackb/rules_proto/example/person",
+    importpath = "github.com/stackb/rules_proto/v4/example/person",
     visibility = ["//visibility:public"],
     deps = [
         "//example/place:place_go_proto",

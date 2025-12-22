@@ -87,7 +87,7 @@ const file_example_assets_api_proto_rawDesc = "" +
 	"\x18example/assets/api.proto\x12\x0eexample.assets\x1a example/assets/api_request.proto\x1a!example/assets/api_response.proto\"|\n" +
 	"\vApiExchange\x124\n" +
 	"\arequest\x18\x01 \x01(\v2\x1a.example.assets.ApiRequestR\arequest\x127\n" +
-	"\bresponse\x18\x02 \x01(\v2\x1b.example.assets.ApiResponseR\bresponseB5Z3github.com/stackb/rules_proto/example/assets;assetsb\x06proto3"
+	"\bresponse\x18\x02 \x01(\v2\x1b.example.assets.ApiResponseR\bresponseB8Z6github.com/stackb/rules_proto/v4/example/assets;assetsb\x06proto3"
 
 var (
 	file_example_assets_api_proto_rawDescOnce sync.Once

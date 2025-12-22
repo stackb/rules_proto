@@ -4,7 +4,7 @@ go_library(
     name = "goldentest",
     testonly = True,
     srcs = ["cases.go"],
-    importpath = "github.com/stackb/rules_proto/pkg/goldentest",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/goldentest",
     visibility = ["//visibility:public"],
     deps = [
         "@bazel_gazelle//testtools",

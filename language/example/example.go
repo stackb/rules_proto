@@ -3,7 +3,7 @@ package example
 import (
 	"github.com/bazelbuild/bazel-gazelle/language"
 
-	"github.com/stackb/rules_proto/pkg/language/noop"
+	"github.com/stackb/rules_proto/v4/pkg/language/noop"
 	// Put your own imports here!
 	// _ "github.com/org/repo/pkg/plugin/foo"
 )

@@ -6,7 +6,7 @@ go_library(
         "connect_es_plugin.go",
         "es_plugin.go",
     ],
-    importpath = "github.com/stackb/rules_proto/pkg/plugin/bufbuild",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/plugin/bufbuild",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",

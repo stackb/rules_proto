@@ -6,7 +6,7 @@ go_library(
         "language.go",
         "rule.go",
     ],
-    importpath = "github.com/stackb/rules_proto/language/proto_go_modules",
+    importpath = "github.com/stackb/rules_proto/v4/language/proto_go_modules",
     visibility = ["//visibility:public"],
     deps = [
         "@bazel_gazelle//config",

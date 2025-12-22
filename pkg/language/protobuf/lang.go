@@ -1,7 +1,7 @@
 package protobuf
 
 import (
-	"github.com/stackb/rules_proto/pkg/protoc"
+	"github.com/stackb/rules_proto/v4/pkg/protoc"
 )
 
 // NewProtobufLang create a new protobufLang Gazelle extension implementation.

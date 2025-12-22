@@ -3,8 +3,8 @@ package akka_grpc_test
 import (
 	"testing"
 
-	"github.com/stackb/rules_proto/pkg/plugin/akka/akka_grpc"
-	"github.com/stackb/rules_proto/pkg/plugintest"
+	"github.com/stackb/rules_proto/v4/pkg/plugin/akka/akka_grpc"
+	"github.com/stackb/rules_proto/v4/pkg/plugintest"
 )
 
 func TestProtoGenAkkaGrpcPlugin(t *testing.T) {

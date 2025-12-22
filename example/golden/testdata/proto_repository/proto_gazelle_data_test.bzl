@@ -1,6 +1,6 @@
 """proto_gazelle_data_test is a regression test.
 
-See https://github.com/stackb/rules_proto/issues/342.
+See https://github.com/stackb/rules_proto/v4/issues/342.
 
 """
 
