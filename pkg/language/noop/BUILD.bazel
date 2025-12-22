@@ -6,11 +6,11 @@ go_library(
     importpath = "github.com/stackb/rules_proto/pkg/language/noop",
     visibility = ["//visibility:public"],
     deps = [
-        "@bazel_gazelle//config:go_default_library",
-        "@bazel_gazelle//label:go_default_library",
-        "@bazel_gazelle//language:go_default_library",
-        "@bazel_gazelle//repo:go_default_library",
-        "@bazel_gazelle//resolve:go_default_library",
-        "@bazel_gazelle//rule:go_default_library",
+        "@bazel_gazelle//config",
+        "@bazel_gazelle//label",
+        "@bazel_gazelle//language",
+        "@bazel_gazelle//repo",
+        "@bazel_gazelle//resolve",
+        "@bazel_gazelle//rule",
     ],
 )

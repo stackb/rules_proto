@@ -1,4 +1,4 @@
-load("@bazel_gazelle//:def.bzl", "gazelle_binary")
+load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@build_stack_rules_proto//rules:proto_gazelle.bzl", "proto_gazelle")
 load("@npm_ts_proto//:defs.bzl", "npm_link_all_packages")
 
@@ -13,6 +13,13 @@ exports_files([
 # gazelle:prefix github.com/stackb/rules_proto
 # gazelle:exclude vendor
 # gazelle:exclude node_modules
+# gazelle:go_generate_proto false
+
+# ProTip: `bazel run //:gazelle` for go-only deps
+gazelle(
+    name = "gazelle",
+    external = "static",
+)
 
 gazelle_binary(
     name = "gazelle-protobuf",
@@ -27,8 +34,9 @@ gazelle_binary(
     visibility = ["//visibility:public"],
 )
 
+# ProTip: `bazel run //:proto_gazelle` for this extension
 proto_gazelle(
-    name = "gazelle",
+    name = "proto_gazelle",
     cfgs = ["//:rules_proto_config.yaml"],
     external = "static",
     gazelle = "//:gazelle-protobuf",

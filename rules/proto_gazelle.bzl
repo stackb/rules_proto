@@ -16,6 +16,14 @@
 """
 
 load(
+    "@bazel_gazelle_go_repository_config//:go_env.bzl",
+    "GO_ENV",
+)
+load(
+    "@bazel_gazelle_is_bazel_module//:defs.bzl",
+    "GAZELLE_IS_BAZEL_MODULE",
+)
+load(
     "@bazel_skylib//lib:shell.bzl",
     "shell",
 )
@@ -67,7 +75,10 @@ def _gazelle_runner_impl(ctx):
 
     args.extend([ctx.expand_location(arg, ctx.attr.data) for arg in ctx.attr.extra_args])
 
-    for key in ctx.attr.env:
+    combined_env = {}
+    combined_env.update(GO_ENV)
+    combined_env.update(ctx.attr.env)
+    for key in combined_env:
         if not _valid_env_variable_name(key):
             fail("Invalid environmental variable name: '%s'" % key)
 
@@ -139,7 +150,7 @@ _gazelle_runner = rule(
         "cfgs": attr.label_list(allow_files = True),
         "env": attr.string_dict(),
         "_repo_config": attr.label(
-            default = None,
+            default = "@bazel_gazelle_go_repository_config//:WORKSPACE" if GAZELLE_IS_BAZEL_MODULE else None,
             allow_single_file = True,
         ),
         "_template": attr.label(
