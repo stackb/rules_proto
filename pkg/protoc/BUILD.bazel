@@ -34,7 +34,7 @@ go_library(
         "syntaxutil.go",
         "yconfig.go",
     ],
-    importpath = "github.com/stackb/rules_proto/pkg/protoc",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/protoc",
     visibility = ["//visibility:public"],
     deps = [
         "@bazel_gazelle//config",

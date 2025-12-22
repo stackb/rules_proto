@@ -117,7 +117,7 @@ Consider the following rule within the package `example/thing`:
 ```python
 proto_compile(
     name = "thing_go_compile",
-    output_mappings = ["thing.pb.go=github.com/stackb/rules_proto/example/thing/thing.pb.go"],
+    output_mappings = ["thing.pb.go=github.com/stackb/rules_proto/v4/example/thing/thing.pb.go"],
     outputs = ["thing.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
@@ -133,7 +133,7 @@ Let's temporarily comment out the `output_mappings` attribute and rebuild:
 ```python
 proto_compile(
     name = "thing_go_compile",
-    # output_mappings = ["thing.pb.go=github.com/stackb/rules_proto/example/thing/thing.pb.go"],
+    # output_mappings = ["thing.pb.go=github.com/stackb/rules_proto/v4/example/thing/thing.pb.go"],
     outputs = ["thing.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
@@ -142,7 +142,7 @@ proto_compile(
 
 ```sh
 $ bazel build //example/thing:thing_go_compile
-ERROR: /github.com/stackb/rules_proto/example/thing/BUILD.bazel:54:14: output 'example/thing/thing.pb.go' was not created
+ERROR: /github.com/stackb/rules_proto/v4/example/thing/BUILD.bazel:54:14: output 'example/thing/thing.pb.go' was not created
 ```
 
 What happened? Let's add a debugging attribute `verbose = True` on the rule:
@@ -152,7 +152,7 @@ after the `protoc` tool is invoked:
 ```python
 proto_compile(
     name = "thing_go_compile",
-    # output_mappings = ["thing.pb.go=github.com/stackb/rules_proto/example/thing/thing.pb.go"],
+    # output_mappings = ["thing.pb.go=github.com/stackb/rules_proto/v4/example/thing/thing.pb.go"],
     outputs = ["thing.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "thing_proto",
@@ -169,17 +169,17 @@ $ bazel build //example/thing:thing_go_compile
 ./bazel-out/darwin-fastbuild/bin/external/com_google_protobuf/timestamp_proto-descriptor-set.proto.bin
 
 ##### SANDBOX AFTER RUNNING PROTOC
-./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/example/thing/thing.pb.go
+./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/v4/example/thing/thing.pb.go
 ```
 
 So, the file was created, but not in the location we wanted. In this case the
 `protoc-gen-go` plugin is not "playing nice" with Bazel. Because this
 `thing.proto` has
-`option go_package = "github.com/stackb/rules_proto/example/thing;thing";`, the
+`option go_package = "github.com/stackb/rules_proto/v4/example/thing;thing";`, the
 output location is no longer based on the `package`. This is a problem, because
 Bazel semantics disallow declaring a File outside its package boundary. As a
 result, we need to do a
-`mv ./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/example/thing/thing.pb.go ./bazel-out/darwin-fastbuild/bin/example/thing/thing.pb.go`
+`mv ./bazel-out/darwin-fastbuild/bin/github.com/stackb/rules_proto/v4/example/thing/thing.pb.go ./bazel-out/darwin-fastbuild/bin/example/thing/thing.pb.go`
 to relocate the file into its expected location before the action terminates.
 
 Therefore, the `output_mappings` attribute is a list of entries that map file

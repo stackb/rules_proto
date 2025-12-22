@@ -72,7 +72,7 @@ const file_example_assets_api_request_proto_rawDesc = "" +
 	" example/assets/api_request.proto\x12\x0eexample.assets\"$\n" +
 	"\n" +
 	"ApiRequest\x12\x16\n" +
-	"\x06header\x18\x01 \x03(\tR\x06headerB5Z3github.com/stackb/rules_proto/example/assets;assetsb\x06proto3"
+	"\x06header\x18\x01 \x03(\tR\x06headerB8Z6github.com/stackb/rules_proto/v4/example/assets;assetsb\x06proto3"
 
 var (
 	file_example_assets_api_request_proto_rawDescOnce sync.Once

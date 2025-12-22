@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "protobuf",
     srcs = ["protoc-gen-go.go"],
-    importpath = "github.com/stackb/rules_proto/pkg/plugin/golang/protobuf",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/plugin/golang/protobuf",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",

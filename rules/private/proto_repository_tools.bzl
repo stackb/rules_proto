@@ -35,7 +35,7 @@ def _proto_repository_tools_impl(ctx):
     rules_proto_path = ctx.path(Label("@build_stack_rules_proto//:MODULE.bazel"))
     ctx.symlink(
         rules_proto_path.dirname,
-        "src/github.com/stackb/rules_proto",
+        "src/github.com/stackb/rules_proto/v4",
     )
 
     env.update({
@@ -66,7 +66,7 @@ def _proto_repository_tools_impl(ctx):
                 go_tool,
                 "run",
                 ctx.path(ctx.attr._list_repository_tools_srcs),
-                "-dir=src/github.com/stackb/rules_proto",
+                "-dir=src/github.com/stackb/rules_proto/v4",
                 # Run it under 'check' to assert file is up-to-date
                 "-check=rules/private/proto_repository_tools_srcs.bzl",
                 # Run it under 'skip' to not check (only for internal testing)
@@ -89,7 +89,7 @@ def _proto_repository_tools_impl(ctx):
         "all=-trimpath=" + env["GOPATH"],
         "-asmflags",
         "all=-trimpath=" + env["GOPATH"],
-        "github.com/stackb/rules_proto/cmd/gazelle",
+        "github.com/stackb/rules_proto/v4/cmd/gazelle",
     ]
     result = env_execute(ctx, args, environment = env)
     if result.return_code:

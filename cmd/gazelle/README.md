@@ -6,7 +6,7 @@ To upgrade gazelle, one must:
 
 - Compare changes in the source repo@version to the files here.  It's easiest to
   just copy over each file and see where the diffs are.  Make sure `langs.go`
-  includes `github.com/stackb/rules_proto/language/protobuf`.
+  includes `github.com/stackb/rules_proto/v4/language/protobuf`.
 - Since the `proto_gazelle.bzl` rule uses
   `@bazel_gazelle//internal:gazelle.bash.in`, changes there must remain
   compatible with proto_gazelle.  Look at the diff there and make sure the

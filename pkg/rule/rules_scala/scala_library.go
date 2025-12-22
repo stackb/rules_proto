@@ -13,9 +13,9 @@ import (
 	"github.com/bmatcuk/doublestar"
 	"github.com/emicklei/proto"
 
-	"github.com/stackb/rules_proto/pkg/plugin/akka/akka_grpc"
-	"github.com/stackb/rules_proto/pkg/plugin/scalapb/scalapb"
-	"github.com/stackb/rules_proto/pkg/protoc"
+	"github.com/stackb/rules_proto/v4/pkg/plugin/akka/akka_grpc"
+	"github.com/stackb/rules_proto/v4/pkg/plugin/scalapb/scalapb"
+	"github.com/stackb/rules_proto/v4/pkg/protoc"
 )
 
 const (

@@ -7,7 +7,7 @@ go_library(
         "grpc_cc_library.go",
         "proto_cc_library.go",
     ],
-    importpath = "github.com/stackb/rules_proto/pkg/rule/rules_cc",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/rule/rules_cc",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",

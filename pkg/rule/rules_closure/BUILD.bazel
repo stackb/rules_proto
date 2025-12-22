@@ -7,7 +7,7 @@ go_library(
         "grpc_closure_js_library.go",
         "proto_closure_js_library.go",
     ],
-    importpath = "github.com/stackb/rules_proto/pkg/rule/rules_closure",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/rule/rules_closure",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",

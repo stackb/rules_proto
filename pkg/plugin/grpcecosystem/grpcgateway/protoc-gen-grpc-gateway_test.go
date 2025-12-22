@@ -3,7 +3,7 @@ package grpcgateway
 import (
 	"testing"
 
-	"github.com/stackb/rules_proto/pkg/plugintest"
+	"github.com/stackb/rules_proto/v4/pkg/plugintest"
 )
 
 const serviceEmpty = `

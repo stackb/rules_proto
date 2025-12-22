@@ -39,7 +39,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/bazelbuild/bazel-gazelle/walk"
-	"github.com/stackb/rules_proto/cmd/gazelle/internal/wspace"
+	"github.com/stackb/rules_proto/v4/cmd/gazelle/internal/wspace"
 )
 
 // updateConfig holds configuration information needed to run the fix and

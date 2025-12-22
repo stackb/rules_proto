@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "noop",
     srcs = ["noop.go"],
-    importpath = "github.com/stackb/rules_proto/pkg/language/noop",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/language/noop",
     visibility = ["//visibility:public"],
     deps = [
         "@bazel_gazelle//config",

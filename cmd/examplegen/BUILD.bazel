@@ -8,7 +8,7 @@ go_library(
         "generator.go",
         "template.go",
     ],
-    importpath = "github.com/stackb/rules_proto/cmd/examplegen",
+    importpath = "github.com/stackb/rules_proto/v4/cmd/examplegen",
     visibility = ["//visibility:private"],
 )
 
