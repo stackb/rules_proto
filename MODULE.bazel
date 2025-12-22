@@ -145,10 +145,6 @@ use_repo(
 
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
-go_deps.gazelle_default_attributes(
-    directives = ["gazelle:go_naming_convention import_alias"],
-)
-
 use_repo(
     go_deps,
     "bazel_gazelle_go_repository_config",  # keep
