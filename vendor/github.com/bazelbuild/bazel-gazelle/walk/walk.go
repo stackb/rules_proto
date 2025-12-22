@@ -231,30 +231,24 @@ func Walk2(c *config.Config, cexts []config.Configurer, dirs []string, mode Mode
 		// Make sure to visit prefixes of relToVisit as well so we apply
 		// configuration directives.
 		pathtools.Prefixes(relToVisit)(func(rel string) bool {
-			if v, ok := w.visits[rel]; !ok {
-				var c *config.Config
-				if ok {
-					// Already configured this directory but did not call the callback.
-					c = v.c
-				} else {
-					// Never visited this directory.
-					parentRel := path.Dir(rel)
-					if parentRel == "." {
-						parentRel = ""
-					}
-					parentCfg := w.visits[parentRel].c
-					if getWalkConfig(parentCfg).isExcludedDir(rel) {
-						return false
-					}
-					if _, err := w.cache.get(rel, w.loadDirInfo); err != nil {
-						// Error loading directory. Most commonly, this is because the
-						// directory doesn't exist, but it could actually be a file
-						// or we don't have permission, or some other I/O error.
-						// Skip it.
-						return false
-					}
-					c = parentCfg.Clone()
+			if _, ok := w.visits[rel]; !ok {
+				// Never visited this directory.
+				parentRel := path.Dir(rel)
+				if parentRel == "." {
+					parentRel = ""
 				}
+				parentCfg := w.visits[parentRel].c
+				if getWalkConfig(parentCfg).isExcludedDir(rel) {
+					return false
+				}
+				if _, err := w.cache.get(rel, w.loadDirInfo); err != nil {
+					// Error loading directory. Most commonly, this is because the
+					// directory doesn't exist, but it could actually be a file
+					// or we don't have permission, or some other I/O error.
+					// Skip it.
+					return false
+				}
+				c := parentCfg.Clone()
 				w.visit(c, rel, false)
 				if c.Strict && len(w.errs) > 0 {
 					return false
@@ -378,9 +372,9 @@ func newWalker(c *config.Config, cexts []config.Configurer, dirs []string, mode 
 		visits:          make(map[string]visitInfo),
 		relsToVisitSeen: make(map[string]struct{}),
 	}
-	if mode == VisitAllUpdateSubdirsMode || mode == UpdateSubdirsMode {
-		w.populateCache(rels)
-	}
+
+	// Asynchronously populate the walker cache in the background.
+	go w.populateCache()
 
 	return w, nil
 }
@@ -388,7 +382,7 @@ func newWalker(c *config.Config, cexts []config.Configurer, dirs []string, mode 
 // shouldVisit returns whether the visit method should be called on rel.
 // We always need to visit directories requested by the caller and their
 // parents. We may also need to visit subdirectories.
-func (w *walker) shouldVisit(rel string, parentConfig *walkConfig, updateParent bool) bool {
+func (w *walker) shouldVisit(rel string, updateParent bool) bool {
 	switch w.mode {
 	case VisitAllUpdateSubdirsMode, VisitAllUpdateDirsMode:
 		return true
@@ -455,7 +449,7 @@ func (w *walker) visit(c *config.Config, rel string, updateParent bool) {
 	// Visit subdirectories, as needed.
 	for _, subdir := range subdirs {
 		subdirRel := path.Join(rel, subdir)
-		if w.shouldVisit(subdirRel, info.config, shouldUpdate) {
+		if w.shouldVisit(subdirRel, shouldUpdate) {
 			w.visit(c.Clone(), subdirRel, shouldUpdate)
 			if c.Strict && len(w.errs) > 0 {
 				return
