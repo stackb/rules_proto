@@ -54,9 +54,9 @@ def configure(ctx):
 		label = "//%s:python_plugin" % ctx.rel,
 		outputs = ["foo.py", "bar.py"],
 	)
-    
+
 protoc.Plugin(
-	name = "test", 
+	name = "test",
 	configure = configure,
 )
 `,
@@ -69,6 +69,33 @@ protoc.Plugin(
 				Options: []string{},
 			},
 			wantPrinted: `PluginContext(package_config = PackageConfig(config = Config(repo_name = "", repo_root = "", work_dir = "")), plugin_config = LanguagePluginConfig(deps = [], enabled = False, implementation = "", label = "", name = "", options = []), proto_library = ProtoLibrary(base_name = "", deps = [], files = [], imports = [], name = "", srcs = [], strip_import_prefix = ""), rel = "mypkg")` + "\n",
+		},
+		"with mappings": {
+			code: `
+def configure(ctx):
+	return protoc.PluginConfiguration(
+		label = "//%s:python_plugin" % ctx.rel,
+		outputs = ["foo.py", "bar.py"],
+		mappings = {"foo.py": "com/example/foo.py", "bar.py": "com/example/bar.py"},
+	)
+
+protoc.Plugin(
+	name = "test",
+	configure = configure,
+)
+`,
+			ctx: &PluginContext{
+				Rel: "mypkg",
+			},
+			want: &PluginConfiguration{
+				Label:   label.New("", "mypkg", "python_plugin"),
+				Outputs: []string{"foo.py", "bar.py"},
+				Options: []string{},
+				Mappings: map[string]string{
+					"foo.py": "com/example/foo.py",
+					"bar.py": "com/example/bar.py",
+				},
+			},
 		},
 	} {
 		t.Run(name, func(t *testing.T) {

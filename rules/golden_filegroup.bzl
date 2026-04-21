@@ -21,6 +21,7 @@ def _files_impl(ctx):
     dep = ctx.attr.dep[DefaultInfo]
     outputs = dep.files.to_list()
     output_files_by_rel_path = {"/".join([ctx.label.package, f.basename]): f for f in outputs}
+    print("output_files_by_rel_path:", output_files_by_rel_path)
 
     return ProtoCompileInfo(
         label = ctx.attr.dep.label,
@@ -60,6 +61,9 @@ def golden_filegroup(
     tags = kwargs.pop("tags", [])
     srcs = kwargs.pop("srcs", [])
     goldens = [src + extension for src in srcs]
+
+    print("srcs:", srcs)
+    print("goldens:", goldens)
 
     native.filegroup(
         name = name,
