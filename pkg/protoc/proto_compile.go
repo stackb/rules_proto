@@ -34,6 +34,7 @@ func (s *protoCompile) KindInfo() rule.KindInfo {
 			"plugins":         true,
 			"output_mappings": true,
 			"options":         true,
+			"protos":          true,
 		},
 		SubstituteAttrs: map[string]bool{
 			"out": true,
@@ -100,8 +101,54 @@ func (s *protoCompileRule) Outputs() []string {
 
 // Rule implements part of the ruleProvider interface.
 func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
-	newRule := rule.NewRule(s.Kind(), s.Name())
 	outputs := s.Outputs()
+
+	// Check for output overlap with existing proto_compile rules of the same
+	// kind. When a package-level plugin (e.g. protoc-gen-prost) produces the
+	// same output file from multiple proto_library rules, merge them into a
+	// single proto_compile rule using the "protos" attribute.
+	for _, other := range otherGen {
+		if other.Kind() != s.Kind() {
+			continue
+		}
+		otherOutputs := other.AttrStrings(s.outputsAttrName)
+		if !hasOverlap(outputs, otherOutputs) {
+			continue
+		}
+
+		// Merge outputs
+		other.SetAttr(s.outputsAttrName, DeduplicateAndSort(append(otherOutputs, outputs...)))
+
+		// Convert singular "proto" to list "protos" if needed, then append
+		existingProtos := other.AttrStrings("protos")
+		if len(existingProtos) == 0 {
+			if p := other.AttrString("proto"); p != "" {
+				existingProtos = []string{p}
+				other.DelAttr("proto")
+			}
+		}
+		existingProtos = append(existingProtos, s.config.Library.Name())
+		other.SetAttr("protos", DeduplicateAndSort(existingProtos))
+
+		// Merge plugins
+		otherPlugins := other.AttrStrings("plugins")
+		otherPlugins = append(otherPlugins, GetPluginLabels(s.config.Plugins)...)
+		other.SetAttr("plugins", DeduplicateAndSort(otherPlugins))
+
+		// Merge output_mappings
+		if len(s.config.Mappings) > 0 {
+			existing := other.AttrStrings("output_mappings")
+			for k, v := range s.config.Mappings {
+				existing = append(existing, k+"="+v)
+			}
+			other.SetAttr("output_mappings", DeduplicateAndSort(existing))
+		}
+
+		return other
+	}
+
+	// No overlap found — create new rule
+	newRule := rule.NewRule(s.Kind(), s.Name())
 
 	newRule.SetAttr(s.outputsAttrName, outputs)
 	newRule.SetAttr("plugins", GetPluginLabels(s.config.Plugins))
@@ -154,6 +201,20 @@ func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	}
 
 	return newRule
+}
+
+// hasOverlap returns true if two string slices share any common element.
+func hasOverlap(a, b []string) bool {
+	set := make(map[string]bool, len(a))
+	for _, s := range a {
+		set[s] = true
+	}
+	for _, s := range b {
+		if set[s] {
+			return true
+		}
+	}
+	return false
 }
 
 // Imports implements part of the RuleProvider interface.

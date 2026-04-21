@@ -28,7 +28,12 @@ def _ctx_replace_arg(ctx, arg):
     arg = arg.replace("{NAME}", ctx.label.name)
 
     if arg.find("{PROTO_LIBRARY_BASENAME}") != -1:
-        basename = ctx.attr.proto.label.name
+        if ctx.attr.proto:
+            basename = ctx.attr.proto.label.name
+        elif ctx.attr.protos:
+            basename = ctx.attr.protos[0].label.name
+        else:
+            basename = ctx.label.name
         if basename.endswith("_proto"):
             basename = basename[:len(basename) - len("_proto")]
         arg = arg.replace("{PROTO_LIBRARY_BASENAME}", basename)
@@ -142,8 +147,17 @@ def _proto_compile_impl(ctx):
     # const <File> the protoc file from the toolchain
     protoc = get_protoc_executable(ctx)
 
-    # const <ProtoInfo> proto provider
-    proto_info = ctx.attr.proto[ProtoInfo]
+    # const <list<ProtoInfo>> proto providers (from proto or protos attr)
+    proto_infos = []
+    if ctx.attr.proto:
+        proto_infos.append(ctx.attr.proto[ProtoInfo])
+    for p in ctx.attr.protos:
+        proto_infos.append(p[ProtoInfo])
+    if len(proto_infos) == 0:
+        fail("proto_compile requires either 'proto' or 'protos' attribute")
+
+    # const <ProtoInfo> primary proto provider (for descriptor path resolution)
+    primary_proto_info = proto_infos[0]
 
     # const <list<ProtoPluginInfo>> plugins to be applied
     plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
@@ -152,7 +166,9 @@ def _proto_compile_impl(ctx):
     outs = {_plugin_label_key(Label(k)): v for k, v in ctx.attr.outs.items()}
 
     # mut <list<File>> set of descriptors for the compile action
-    descriptors = proto_info.transitive_descriptor_sets.to_list()
+    descriptors = []
+    for pi in proto_infos:
+        descriptors += pi.transitive_descriptor_sets.to_list()
 
     # mut <list<File>> tools for the compile action
     tools = [protoc]
@@ -180,15 +196,16 @@ def _proto_compile_impl(ctx):
         ### Part 2.1: build protos list
 
         # add all protos unless excluded
-        for proto in proto_info.direct_sources:
-            if any([
-                proto.dirname.endswith(exclusion) or proto.path.endswith(exclusion)
-                for exclusion in plugin.exclusions
-            ]) or proto in protos:  # TODO: When using import_prefix, the ProtoInfo.direct_sources list appears to contain duplicate records, this line removes these. https://github.com/bazelbuild/bazel/issues/9127
-                continue
+        for pi in proto_infos:
+            for proto in pi.direct_sources:
+                if any([
+                    proto.dirname.endswith(exclusion) or proto.path.endswith(exclusion)
+                    for exclusion in plugin.exclusions
+                ]) or proto in protos:  # TODO: When using import_prefix, the ProtoInfo.direct_sources list appears to contain duplicate records, this line removes these. https://github.com/bazelbuild/bazel/issues/9127
+                    continue
 
-            # Proto not excluded
-            protos.append(proto)
+                # Proto not excluded
+                protos.append(proto)
 
         # augment proto list with those attached to plugin
         for info in plugin.supplementary_proto_deps:
@@ -275,7 +292,7 @@ def _proto_compile_impl(ctx):
 
     protos = _uniq(protos)
     for proto in protos:
-        args.append(_descriptor_proto_path(proto, proto_info))
+        args.append(_descriptor_proto_path(proto, primary_proto_info))
 
     ### Step 3.3: build args object
 
@@ -436,7 +453,10 @@ proto_compile = rule(
         ),
         "proto": attr.label(
             doc = "The single ProtoInfo provider",
-            mandatory = True,
+            providers = [ProtoInfo],
+        ),
+        "protos": attr.label_list(
+            doc = "List of ProtoInfo providers (use instead of proto for aggregated compilation)",
             providers = [ProtoInfo],
         ),
         "protoc": attr.label(
