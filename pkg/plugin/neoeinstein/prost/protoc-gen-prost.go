@@ -46,7 +46,7 @@ func (p *ProtocGenProstPlugin) Configure(ctx *protoc.PluginContext) *protoc.Plug
 	p.registerExternPaths(ctx.ProtoLibrary)
 
 	return &protoc.PluginConfiguration{
-		Label:   label.New("build_stack_rules_proto", "plugin/prost/prost", "protoc-gen-prost"),
+		Label:   label.New("build_stack_rules_proto", "plugin/neoeinstein/prost", "protoc-gen-prost"),
 		Outputs: outputs,
 		Options: ctx.PluginConfig.GetOptions(),
 	}

@@ -25,7 +25,7 @@ func TestProtocGenProstPlugin(t *testing.T) {
 			),
 			PluginName: "protoc-gen-prost",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/prost/prost:protoc-gen-prost"),
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/neoeinstein/prost:protoc-gen-prost"),
 				plugintest.WithOutputs("example.v1.rs"),
 			),
 			SkipIntegration: true,
@@ -37,7 +37,7 @@ func TestProtocGenProstPlugin(t *testing.T) {
 			),
 			PluginName: "protoc-gen-prost",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/prost/prost:protoc-gen-prost"),
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/neoeinstein/prost:protoc-gen-prost"),
 				plugintest.WithOutputs("example.v1.rs"),
 			),
 			SkipIntegration: true,
@@ -59,7 +59,7 @@ func TestProtocGenProstPlugin(t *testing.T) {
 			),
 			PluginName: "protoc-gen-prost",
 			Configuration: plugintest.WithConfiguration(
-				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/prost/prost:protoc-gen-prost"),
+				plugintest.WithLabel(t, "@build_stack_rules_proto//plugin/neoeinstein/prost:protoc-gen-prost"),
 				plugintest.WithOutputs("example.v1.rs"),
 				plugintest.WithOptions("type_attribute=.example.v1.Foo=#[derive(Eq)]"),
 			),
