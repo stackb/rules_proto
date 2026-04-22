@@ -62,8 +62,8 @@ def _proto_compile_gencopy_test_impl(ctx):
 
     source_file_map = {f.short_path: f for f in ctx.files.srcs}
 
-    for k, v in source_file_map.items():
-        print("source file map:", k, v)
+    # for k, v in source_file_map.items():
+    #     print("source file map:", k, v)
 
     for info in [dep[ProtoCompileInfo] for dep in ctx.attr.deps]:
         # List[String]: names of files that represent the source files.  In a
@@ -75,7 +75,6 @@ def _proto_compile_gencopy_test_impl(ctx):
         # test, these are the outputs files from the proto_compile rule.
         generated_files = []
         for rel, generated_file in info.output_files_by_rel_path.items():
-            print("want rel:", rel)
             source_file = source_file_map.get(rel)
             if not source_file:
                 fail("could not find matching source file for generated file %s in %r" % (rel, source_file_map.keys()))

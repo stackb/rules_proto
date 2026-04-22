@@ -5,6 +5,7 @@ import (
 
 	"github.com/stackb/rules_proto/v4/pkg/language/protobuf"
 
+	_ "github.com/stackb/rules_proto/v4/pkg/plugin/bufbuild"
 	_ "github.com/stackb/rules_proto/v4/pkg/plugin/builtin"
 	_ "github.com/stackb/rules_proto/v4/pkg/plugin/gogo/protobuf"
 	_ "github.com/stackb/rules_proto/v4/pkg/plugin/golang/protobuf"
@@ -14,10 +15,10 @@ import (
 	_ "github.com/stackb/rules_proto/v4/pkg/plugin/grpc/grpcnode"
 	_ "github.com/stackb/rules_proto/v4/pkg/plugin/grpc/grpcweb"
 	_ "github.com/stackb/rules_proto/v4/pkg/plugin/grpcecosystem/grpcgateway"
+	_ "github.com/stackb/rules_proto/v4/pkg/plugin/neoeinstein/prost"
 	_ "github.com/stackb/rules_proto/v4/pkg/plugin/scalapb/scalapb"
 	_ "github.com/stackb/rules_proto/v4/pkg/plugin/scalapb/zio_grpc"
 	_ "github.com/stackb/rules_proto/v4/pkg/plugin/stackb/grpc_js"
-	_ "github.com/stackb/rules_proto/v4/pkg/plugin/bufbuild"
 	_ "github.com/stackb/rules_proto/v4/pkg/plugin/stephenh/ts-proto"
 	_ "github.com/stackb/rules_proto/v4/pkg/rule/rules_cc"
 	_ "github.com/stackb/rules_proto/v4/pkg/rule/rules_closure"
