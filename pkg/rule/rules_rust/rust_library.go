@@ -45,7 +45,7 @@ func (s *RustLibrary) Kind() string {
 // Name implements part of the RuleProvider interface.
 func (s *RustLibrary) Name() string {
 	if pkg := s.Pkg(); pkg != "" {
-		return strings.ReplaceAll(pkg, ".", "_")
+		return protoc.RustCrateName(pkg)
 	}
 	return s.Config.Library.BaseName() + s.RuleNameSuffix
 }

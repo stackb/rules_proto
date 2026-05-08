@@ -107,3 +107,16 @@ func RustKeywordEscapeMappings(pkg string, outputs []string) map[string]string {
 	}
 	return mappings
 }
+
+// RustCrateName returns the canonical Rust crate name for a proto package.
+// The proto package's dots are replaced with underscores and an "_rs" suffix
+// is appended so the resulting identifier is unambiguously a Rust target,
+// not a proto_library (e.g. "trumid.common.utils.state.snapshot.proto" →
+// "trumid_common_utils_state_snapshot_proto_rs"). Returns the empty string
+// for an empty input.
+func RustCrateName(protoPackage string) string {
+	if protoPackage == "" {
+		return ""
+	}
+	return strings.ReplaceAll(protoPackage, ".", "_") + "_rs"
+}

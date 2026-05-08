@@ -88,6 +88,78 @@ func TestResolveTransitiveExternPaths_OwnFilesSkipped(t *testing.T) {
 	}
 }
 
+// TestResolveTransitiveExternPaths_SubpackageOfImportSkipped is a regression
+// test for the case where the current library's proto package is a
+// sub-package of an imported library's proto package. Because prost's
+// extern_path matches by package prefix, emitting an extern_path for the
+// parent package would cause prost to rewrite the current library's own type
+// references into the imported crate. The function must filter such entries
+// out.
+func TestResolveTransitiveExternPaths_SubpackageOfImportSkipped(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	// Imported library: parent proto package "subpkg.parent".
+	resolver.Provide("proto", "prost_extern",
+		"subpkg/parent/p.proto",
+		label.New("", "subpkg.parent", "parent_rs"))
+
+	// Current library: own proto package "subpkg.parent.child" (a sub-package
+	// of the imported one) registered against its own file.
+	resolver.Provide("proto", "prost_extern",
+		"subpkg/parent/child/c.proto",
+		label.New("", "subpkg.parent.child", "child_rs"))
+
+	// Dependency edge: child.proto -> parent.proto.
+	resolver.Provide("proto", "depends",
+		"subpkg/parent/child/c.proto",
+		label.New("", "subpkg/parent", "p.proto"))
+
+	r := makeLibraryRule("child_proto", "subpkg/parent/child", []string{"c.proto"})
+	from := label.New("", "subpkg/parent/child", "child_proto")
+
+	got := prost.ResolveTransitiveExternPaths(r, from)
+	for _, opt := range got {
+		if opt == "extern_path=.subpkg.parent=::parent_rs::subpkg::parent" {
+			t.Errorf("extern_path for parent of own package was not filtered: %v", got)
+		}
+	}
+	if len(got) != 0 {
+		t.Errorf("expected no extern_paths (only entry would shadow own package), got %v", got)
+	}
+}
+
+// TestResolveTransitiveExternPaths_SiblingNotFiltered ensures the filter is
+// not over-aggressive: a sibling package (one that shares a common prefix but
+// is neither equal to nor an ancestor of the current package) must still
+// produce an extern_path entry.
+func TestResolveTransitiveExternPaths_SiblingNotFiltered(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	// Sibling package "sibling.a.x" — shares prefix "sibling.a" with our own
+	// "sibling.a.y" but neither is a parent of the other.
+	resolver.Provide("proto", "prost_extern",
+		"sibling/a/x/x.proto",
+		label.New("", "sibling.a.x", "x_rs"))
+
+	// Own package "sibling.a.y".
+	resolver.Provide("proto", "prost_extern",
+		"sibling/a/y/y.proto",
+		label.New("", "sibling.a.y", "y_rs"))
+
+	resolver.Provide("proto", "depends",
+		"sibling/a/y/y.proto",
+		label.New("", "sibling/a/x", "x.proto"))
+
+	r := makeLibraryRule("y_proto", "sibling/a/y", []string{"y.proto"})
+	from := label.New("", "sibling/a/y", "y_proto")
+
+	got := prost.ResolveTransitiveExternPaths(r, from)
+	want := []string{"extern_path=.sibling.a.x=::x_rs::sibling::a::x"}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("ResolveTransitiveExternPaths:\n got: %v\nwant: %v", got, want)
+	}
+}
+
 func TestResolveExternPathOptions_FiltersExisting(t *testing.T) {
 	// Library with no transitive deps — extern paths come only from cfg.Options
 	// after filtering out any pre-existing extern_path= entries.

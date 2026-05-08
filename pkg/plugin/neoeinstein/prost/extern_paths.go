@@ -59,6 +59,20 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 		ownFiles[path.Join(from.Pkg, src)] = true
 	}
 
+	// Build set of own proto packages. prost's extern_path matches by package
+	// prefix, so any imported package that equals or is a parent of one of our
+	// own packages would cause prost to rewrite our own types as references
+	// into the imported crate. Collect own packages here and use them below
+	// to filter such entries out.
+	ownPackages := make(map[string]bool)
+	for ownFile := range ownFiles {
+		for _, ext := range resolver.Resolve("proto", "prost_extern", ownFile) {
+			if ext.Label.Pkg != "" {
+				ownPackages[ext.Label.Pkg] = true
+			}
+		}
+	}
+
 	// BFS over transitive proto file dependencies
 	seen := make(map[string]bool)
 	stack := list.New()
@@ -109,6 +123,14 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 			continue
 		}
 
+		// Skip extern_path entries that would shadow our own packages. prost's
+		// extern_path matches by package prefix, so emitting one for a package
+		// that equals or is a parent of one of our own packages would cause
+		// prost to rewrite our own type references into the imported crate.
+		if isOwnOrParentOfOwn(protoPackage, ownPackages) {
+			continue
+		}
+
 		// Deduplicate by proto package
 		if _, exists := externPathsByPackage[protoPackage]; exists {
 			continue
@@ -130,4 +152,18 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 	libRule.SetPrivateAttr(TransitiveExternPathsKey, result)
 
 	return result
+}
+
+// isOwnOrParentOfOwn reports whether protoPackage equals one of ownPackages
+// or is a proto-package-prefix parent of one (e.g. "a.b" is a parent of
+// "a.b.c"). Used to filter dependency extern_path entries that would
+// otherwise shadow the current library's own type references through prost's
+// prefix-matching extern_path semantics.
+func isOwnOrParentOfOwn(protoPackage string, ownPackages map[string]bool) bool {
+	for own := range ownPackages {
+		if own == protoPackage || strings.HasPrefix(own, protoPackage+".") {
+			return true
+		}
+	}
+	return false
 }

@@ -51,7 +51,7 @@ func TestProtoRustLibraryRule(t *testing.T) {
 			},
 			want: `
 proto_rust_library(
-    name = "google_api",
+    name = "google_api_rs",
     srcs = ["google.api.rs"],
     pkg = "google.api",
     deps = [
@@ -77,7 +77,7 @@ proto_rust_library(
 			},
 			want: `
 proto_rust_library(
-    name = "trumid_common_proto",
+    name = "trumid_common_proto_rs",
     srcs = [
         "trumid.common.proto.rs",
         "trumid.common.proto.serde.rs",
@@ -107,7 +107,7 @@ proto_rust_library(
 			},
 			want: `
 proto_rust_library(
-    name = "example_wkt",
+    name = "example_wkt_rs",
     srcs = ["example.wkt.rs"],
     pkg = "example.wkt",
     deps = [
@@ -134,7 +134,7 @@ proto_rust_library(
 			},
 			want: `
 proto_rust_library(
-    name = "example_grpc",
+    name = "example_grpc_rs",
     srcs = [
         "example.grpc.rs",
         "example.grpc.tonic.rs",

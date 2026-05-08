@@ -98,10 +98,12 @@ func (p *ProtocGenProstPlugin) outputs(lib protoc.ProtoLibrary) []string {
 // ResolveTransitiveExternPaths when computing extern_path options for dependent
 // packages.
 //
-// The label encodes: Pkg = proto package name, Name = crate name.
+// The label encodes: Pkg = proto package name, Name = crate name. The crate
+// name comes from protoc.RustCrateName so it matches the rust_library target
+// name produced by RustLibrary.Name() — without this alignment, downstream
+// extern_path entries would point at a non-existent crate and rustc would
+// fail to resolve types.
 func (p *ProtocGenProstPlugin) registerExternPaths(lib protoc.ProtoLibrary) {
-	crateName := lib.BaseName() + "_rs"
-
 	for _, f := range lib.Files() {
 		pkg := f.Package()
 		if pkg.Name == "" {
@@ -113,7 +115,7 @@ func (p *ProtocGenProstPlugin) registerExternPaths(lib protoc.ProtoLibrary) {
 			"proto",
 			"prost_extern",
 			protoFile,
-			label.New("", pkg.Name, crateName),
+			label.New("", pkg.Name, protoc.RustCrateName(pkg.Name)),
 		)
 	}
 }
