@@ -3,7 +3,9 @@ package protoc
 import (
 	"fmt"
 	"log"
+	"path"
 	"sort"
+	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -144,6 +146,13 @@ func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 			other.SetAttr("output_mappings", DeduplicateAndSort(existing))
 		}
 
+		// Rename merged rule based on output content (proto package) rather
+		// than the first library's arbitrary name.
+		mergedOutputs := DeduplicateAndSort(append(otherOutputs, outputs...))
+		if name := mergedRuleName(mergedOutputs, s.config.Prefix, s.nameSuffix); name != "" {
+			other.SetName(name)
+		}
+
 		return other
 	}
 
@@ -201,6 +210,23 @@ func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	}
 
 	return newRule
+}
+
+// mergedRuleName derives a rule name from the output filenames for a merged
+// proto_compile rule. It takes the first output (sorted), strips the file
+// extension, replaces dots with underscores, and formats as
+// {sanitized}_{prefix}_{suffix}.
+func mergedRuleName(outputs []string, prefix, suffix string) string {
+	if len(outputs) == 0 {
+		return ""
+	}
+	base := outputs[0]
+	ext := path.Ext(base)
+	if ext != "" {
+		base = base[:len(base)-len(ext)]
+	}
+	sanitized := strings.ReplaceAll(base, ".", "_")
+	return fmt.Sprintf("%s_%s_%s", sanitized, prefix, suffix)
 }
 
 // hasOverlap returns true if two string slices share any common element.

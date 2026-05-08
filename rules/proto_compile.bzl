@@ -195,8 +195,17 @@ def _proto_compile_impl(ctx):
     for plugin in plugins:
         ### Part 2.1: build protos list
 
+        # When using protos (plural), all ProtoInfo providers share the
+        # same package (that's why their outputs overlap). Only pass files
+        # from the first provider to protoc as file_to_generate — the
+        # descriptor sets from ALL providers are already included, giving
+        # the plugin full type information to generate the complete
+        # package output. This avoids duplicate CodeGeneratorResponse.File
+        # entries from package-level plugins like protoc-gen-prost.
+        gen_infos = [proto_infos[0]] if len(proto_infos) > 1 else proto_infos
+
         # add all protos unless excluded
-        for pi in proto_infos:
+        for pi in gen_infos:
             for proto in pi.direct_sources:
                 if any([
                     proto.dirname.endswith(exclusion) or proto.path.endswith(exclusion)

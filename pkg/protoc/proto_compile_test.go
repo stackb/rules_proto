@@ -8,6 +8,41 @@ import (
 	"github.com/emicklei/proto"
 )
 
+func TestMergedRuleName(t *testing.T) {
+	for name, tc := range map[string]struct {
+		outputs        []string
+		prefix, suffix string
+		want           string
+	}{
+		"empty outputs": {
+			outputs: nil, prefix: "rust", suffix: "compile", want: "",
+		},
+		"single dotted name": {
+			outputs: []string{"my.package.rs"}, prefix: "rust", suffix: "compile",
+			want: "my_package_rust_compile",
+		},
+		"no extension": {
+			outputs: []string{"my_package"}, prefix: "rust", suffix: "compile",
+			want: "my_package_rust_compile",
+		},
+		"sorted outputs picks first": {
+			outputs: []string{"a.b.rs", "z.y.rs"}, prefix: "rust", suffix: "compile",
+			want: "a_b_rust_compile",
+		},
+		"package with multiple dots": {
+			outputs: []string{"google.protobuf.compiler.rs"}, prefix: "rust", suffix: "compile",
+			want: "google_protobuf_compiler_rust_compile",
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			if got := mergedRuleName(tc.outputs, tc.prefix, tc.suffix); got != tc.want {
+				t.Errorf("mergedRuleName(%v, %q, %q) = %q, want %q",
+					tc.outputs, tc.prefix, tc.suffix, got, tc.want)
+			}
+		})
+	}
+}
+
 func TestHasOverlap(t *testing.T) {
 	for name, tc := range map[string]struct {
 		a, b []string
@@ -90,7 +125,7 @@ func ExamplePackage_aggregation() {
 	formaatRules(pkg.Rules()...)
 	// Output:
 	// proto_compile(
-	//     name = "a_rust_compile",
+	//     name = "my_package_rust_compile",
 	//     output_mappings = ["my_package.rs=my_package.rs"],
 	//     outputs = ["my_package.rs"],
 	//     plugins = ["//:"],

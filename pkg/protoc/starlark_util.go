@@ -61,9 +61,10 @@ func newPredeclared(plugins, rules map[string]*starlarkstruct.Struct) starlark.S
 	protoc := &starlarkstruct.Module{
 		Name: "protoc",
 		Members: starlark.StringDict{
-			"Plugin":              starlark.NewBuiltin("Plugin", newStarlarkPluginFunction(plugins)),
-			"Rule":                starlark.NewBuiltin("Rule", newStarlarkLanguageRuleFunction(rules)),
-			"PluginConfiguration": starlark.NewBuiltin("PluginConfiguration", newStarlarkPluginConfiguration()),
+			"Plugin":                starlark.NewBuiltin("Plugin", newStarlarkPluginFunction(plugins)),
+			"Rule":                  starlark.NewBuiltin("Rule", newStarlarkLanguageRuleFunction(rules)),
+			"PluginConfiguration":   starlark.NewBuiltin("PluginConfiguration", newStarlarkPluginConfiguration()),
+			"rust_keyword_mappings": starlark.NewBuiltin("rust_keyword_mappings", newRustKeywordMappingsFunction()),
 		},
 	}
 
@@ -284,6 +285,38 @@ func structAttrString(in *starlarkstruct.Struct, name string, errorReporter erro
 	default:
 		errorReporter("%s is not a string (%T)", name, value)
 		return ""
+	}
+}
+
+func newRustKeywordMappingsFunction() goStarlarkFunction {
+	return func(thread *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, kwargs []starlark.Tuple) (starlark.Value, error) {
+		var pkg string
+		outputsList := &starlark.List{}
+
+		if err := starlark.UnpackArgs("rust_keyword_mappings", args, kwargs,
+			"pkg", &pkg,
+			"outputs", &outputsList,
+		); err != nil {
+			return nil, err
+		}
+
+		outputs := make([]string, outputsList.Len())
+		for i := 0; i < outputsList.Len(); i++ {
+			s, ok := outputsList.Index(i).(starlark.String)
+			if !ok {
+				return nil, fmt.Errorf("rust_keyword_mappings: outputs[%d] is not a string", i)
+			}
+			outputs[i] = s.GoString()
+		}
+
+		mappings := RustKeywordEscapeMappings(pkg, outputs)
+		dict := &starlark.Dict{}
+		for k, v := range mappings {
+			if err := dict.SetKey(starlark.String(k), starlark.String(v)); err != nil {
+				return nil, err
+			}
+		}
+		return dict, nil
 	}
 }
 
