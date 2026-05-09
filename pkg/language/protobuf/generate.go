@@ -102,6 +102,23 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		imports[i] = r.PrivateAttr(config.GazelleImportsKey)
 		internalLabel := label.New("", args.Rel, r.Name())
 		protoc.GlobalRuleIndex().Put(internalLabel, r)
+		switch r.Kind() {
+		case "proto_rust_library":
+			pl.protoRustLibraryPackages = append(pl.protoRustLibraryPackages, args.Rel)
+			// The proto_rust_library macro's underlying _proto_rust_lib rule
+			// (named "<name>_lib") is what provides ProtoCompileInfo for the
+			// wrapper lib.rs + Cargo.toml; that's the label that belongs in
+			// the root proto_compile_assets aggregator.
+			pl.vendorAssetLabels = append(pl.vendorAssetLabels, "//"+args.Rel+":"+r.Name()+"_lib")
+		case "proto_compiled_sources":
+			pl.vendorAssetLabels = append(pl.vendorAssetLabels, "//"+args.Rel+":"+r.Name())
+		}
+	}
+
+	// Capture the repo root on the first call so DoneGeneratingRules can
+	// locate the root Cargo.toml without access to *config.Config.
+	if pl.repoRoot == "" {
+		pl.repoRoot = args.Config.RepoRoot
 	}
 
 	// special case if this is the root BUILD file and the user requested to
