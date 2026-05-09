@@ -40,12 +40,13 @@ def _extension_metadata(
     )
 
 def _starlark_repository_impl(module_ctx):
-    # named_repos is a dict<K,V> where V is the kwargs for the actual
-    # "starlark_repository" repo rule and K is the tag.name (the name given by the
-    # MODULE.bazel author)
+    # named_archives / named_locals are dicts<K,V> where V is the kwargs for
+    # the underlying "starlark_repository" repo rule and K is the tag.name
+    # (the name given by the MODULE.bazel author).
     named_archives = {}
+    named_locals = {}
 
-    # iterate all the module tags and gather a list of named_archives.
+    # iterate all the module tags and gather a list of named repos.
     #
     # TODO(pcj): what is the best practice for version selection here? Do I need
     # to check if module.is_root and handle that differently?
@@ -58,9 +59,24 @@ def _starlark_repository_impl(module_ctx):
                 if hasattr(tag, attr)
             }
             named_archives[tag.name] = kwargs
+        for tag in module.tags.local:
+            kwargs = {
+                attr: getattr(tag, attr)
+                for attr in _starlark_repository_local_attrs.keys()
+                if hasattr(tag, attr)
+            }
+            # The user-facing attr is "path"; the underlying repo rule expects
+            # "local_path" (a sibling of "urls" / "commit" / "version").
+            kwargs["local_path"] = kwargs.pop("path")
+            named_locals[tag.name] = kwargs
 
     # declare a repository rule foreach one
     for apparent_name, kwargs in named_archives.items():
+        starlark_repository_repo_rule(
+            apparent_name = apparent_name,
+            **kwargs
+        )
+    for apparent_name, kwargs in named_locals.items():
         starlark_repository_repo_rule(
             apparent_name = apparent_name,
             **kwargs
@@ -79,12 +95,40 @@ _starlark_repository_archive_attrs = starlark_repository_attrs | {
 }
 _starlark_repository_archive_attrs.pop("apparent_name")
 
+# Attrs for the .local() tag class. Excludes archive-only attrs (urls, sha256,
+# strip_prefix, type, integrity, canonical_id, auth_patterns, commit, tag,
+# vcs, remote, version, sum, replace) and instead takes a single `path`
+# (mapped to the underlying rule's `local_path`).
+_starlark_repository_local_attrs = {
+    "name": attr.string(
+        doc = "The repo name.",
+        mandatory = True,
+    ),
+    "path": attr.string(
+        doc = "Filesystem path (workspace-relative or absolute) to the repository contents.",
+        mandatory = True,
+    ),
+    "build_directives": attr.string_list(),
+    "build_file_generation": attr.string(),
+    "languages": attr.string_list(),
+    "cfgs": attr.label_list(allow_files = True),
+    "imports": attr.label_list(allow_files = True),
+    "imports_out": attr.string(default = "imports.csv"),
+    "deleted_files": attr.string_list(),
+    "reresolve_known_proto_imports": attr.bool(),
+    "importpath": attr.string(),
+}
+
 starlark_repository = module_extension(
     implementation = _starlark_repository_impl,
     tag_classes = dict(
         archive = tag_class(
             doc = "declare an http_archive repository that is post-processed by a custom version of gazelle that includes the 'protobuf' language",
             attrs = _starlark_repository_archive_attrs,
+        ),
+        local = tag_class(
+            doc = "declare a local-path repository that is post-processed by gazelle's starlarkrepository language. Useful when the source already lives on disk (e.g. a git submodule) and we want to avoid network fetches.",
+            attrs = _starlark_repository_local_attrs,
         ),
     ),
 )

@@ -84,16 +84,25 @@ def _proto_repository_impl(ctx):
 
     reproducible = False
     if ctx.attr.local_path:
+        # Resolve relative paths against the main workspace root. Bare strings
+        # passed to watch_tree() and the --path arg of fetch_repo are otherwise
+        # interpreted relative to the external repo's own directory, which is
+        # never what the caller wants.
+        local_path = ctx.attr.local_path
+        if not local_path.startswith("/"):
+            workspace_root = str(ctx.path(Label("@@//:MODULE.bazel")).dirname)
+            local_path = workspace_root + "/" + local_path
+
         if hasattr(ctx, "watch_tree"):
             # https://github.com/bazelbuild/bazel/commit/fffa0affebbacf1961a97ef7cd248be64487d480
-            ctx.watch_tree(ctx.attr.local_path)
+            ctx.watch_tree(local_path)
         else:
             # buildifier: disable=print
             print("""
   WARNING: go.mod replace directives to module paths is only supported in bazel 7.1.0-rc1 or later,
-          Because of this changes to %s will not be detected by your version of Bazel.""" % ctx.attr.local_path)
+          Because of this changes to %s will not be detected by your version of Bazel.""" % local_path)
 
-        fetch_repo_args = ["--path", ctx.attr.local_path, "--dest", ctx.path("")]
+        fetch_repo_args = ["--path", local_path, "--dest", ctx.path("")]
     elif ctx.attr.urls:
         # HTTP mode
         for key in ("commit", "tag", "vcs", "remote", "version", "sum", "replace"):
@@ -461,6 +470,8 @@ package_info(
     )
 
 def _generate_proto_repository_info(ctx):
+    if not ctx.attr.imports_out:
+        return ""
     return """
 exports_files(["{imports_out}"])
 """.format(
