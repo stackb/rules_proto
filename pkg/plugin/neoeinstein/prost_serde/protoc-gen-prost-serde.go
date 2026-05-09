@@ -44,9 +44,13 @@ func (p *ProtocGenProstSerdePlugin) Configure(ctx *protoc.PluginContext) *protoc
 }
 
 // ResolvePluginOptions implements the PluginOptionsResolver interface.
-// It computes extern_path options based on transitive proto file dependencies.
+// It computes extern_path options based on transitive proto file dependencies
+// AND emits self-extern overrides for the library's own packages — needed
+// because prost-serde generates impl blocks at crate-root using absolute
+// crate-qualified paths and would otherwise be shadowed by parent extern
+// crate references through prost's longest-prefix matching.
 func (p *ProtocGenProstSerdePlugin) ResolvePluginOptions(cfg *protoc.PluginConfiguration, r *rule.Rule, from label.Label) []string {
-	return prost.ResolveExternPathOptions(cfg, r, from)
+	return prost.ResolveExternPathOptionsForReferences(cfg, r, from)
 }
 
 // shouldApply returns true if the library has files with messages or enums.

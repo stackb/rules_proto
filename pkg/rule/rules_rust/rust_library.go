@@ -14,8 +14,9 @@ import (
 
 var rustLibraryKindInfo = rule.KindInfo{
 	MergeableAttrs: map[string]bool{
-		"srcs": true,
-		"deps": true,
+		"srcs":      true,
+		"deps":      true,
+		"reexports": true,
 	},
 	NonEmptyAttrs: map[string]bool{
 		"srcs": true,
@@ -168,6 +169,55 @@ func (s *RustLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	return newRule
 }
 
+// Reexports returns "crate_name=proto.package" entries identifying every
+// imported package whose proto path is a strict prefix-parent of any of our
+// own proto packages. The proto_rust_library Starlark macro uses these to
+// generate "pub use ::crate_name::path::*;" re-exports inside the local
+// lib.rs at the parent module, which lets prost's relative super::... paths
+// for cross-crate references resolve. See the matching prost-side filter in
+// extern_paths.ResolveExternPathOptions for context: that filter drops the
+// dependency's extern_path entry (which would otherwise make prost skip
+// generating the local sub-package), and these re-exports replace what the
+// extern_path would have provided for cross-crate type resolution.
+func (s *RustLibrary) Reexports() []string {
+	ownPkg := s.Pkg()
+	if ownPkg == "" {
+		return nil
+	}
+
+	resolver := protoc.GlobalResolver()
+	out := make([]string, 0)
+	seen := make(map[string]bool)
+
+	for _, f := range s.Config.Library.Files() {
+		for _, imp := range f.Imports() {
+			results := resolver.Resolve("proto", "prost_extern", imp.Filename)
+			if len(results) == 0 {
+				continue
+			}
+			impPkg := results[0].Label.Pkg
+			impCrate := results[0].Label.Name
+			if impPkg == "" || impCrate == "" {
+				continue
+			}
+			if !strings.HasPrefix(ownPkg, impPkg+".") {
+				// Not a strict prefix-parent of our own package — handled
+				// via the regular extern_path mechanism.
+				continue
+			}
+			entry := impCrate + "=" + impPkg
+			if seen[entry] {
+				continue
+			}
+			seen[entry] = true
+			out = append(out, entry)
+		}
+	}
+
+	sort.Strings(out)
+	return out
+}
+
 // Imports implements part of the RuleProvider interface.
 func (s *RustLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) []resolve.ImportSpec {
 	libs, ok := s.protoLibrariesByRule[s.id]
@@ -180,4 +230,7 @@ func (s *RustLibrary) Imports(c *config.Config, r *rule.Rule, file *rule.File) [
 // Resolve implements part of the RuleProvider interface.
 func (s *RustLibrary) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 	s.Resolver(c, ix, r, imports, from)
+	if reexports := s.Reexports(); len(reexports) > 0 {
+		r.SetAttr("reexports", reexports)
+	}
 }

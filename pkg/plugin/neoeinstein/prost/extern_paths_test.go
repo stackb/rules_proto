@@ -88,28 +88,22 @@ func TestResolveTransitiveExternPaths_OwnFilesSkipped(t *testing.T) {
 	}
 }
 
-// TestResolveTransitiveExternPaths_SubpackageOfImportSkipped is a regression
-// test for the case where the current library's proto package is a
-// sub-package of an imported library's proto package. Because prost's
-// extern_path matches by package prefix, emitting an extern_path for the
-// parent package would cause prost to rewrite the current library's own type
-// references into the imported crate. The function must filter such entries
-// out.
-func TestResolveTransitiveExternPaths_SubpackageOfImportSkipped(t *testing.T) {
+// TestResolveTransitiveExternPaths_SubpackageOfImport verifies that when the
+// current library's proto package is a sub-package of an imported library's
+// proto package, ResolveTransitiveExternPaths emits the imported package's
+// extern_path entry (this is the prost variant — no self-extern override is
+// added; that's the job of ResolveExternPathOptionsForReferences).
+func TestResolveTransitiveExternPaths_SubpackageOfImport(t *testing.T) {
 	resolver := protoc.GlobalResolver()
 
-	// Imported library: parent proto package "subpkg.parent".
 	resolver.Provide("proto", "prost_extern",
 		"subpkg/parent/p.proto",
 		label.New("", "subpkg.parent", "parent_rs"))
 
-	// Current library: own proto package "subpkg.parent.child" (a sub-package
-	// of the imported one) registered against its own file.
 	resolver.Provide("proto", "prost_extern",
 		"subpkg/parent/child/c.proto",
 		label.New("", "subpkg.parent.child", "child_rs"))
 
-	// Dependency edge: child.proto -> parent.proto.
 	resolver.Provide("proto", "depends",
 		"subpkg/parent/child/c.proto",
 		label.New("", "subpkg/parent", "p.proto"))
@@ -118,13 +112,47 @@ func TestResolveTransitiveExternPaths_SubpackageOfImportSkipped(t *testing.T) {
 	from := label.New("", "subpkg/parent/child", "child_proto")
 
 	got := prost.ResolveTransitiveExternPaths(r, from)
-	for _, opt := range got {
-		if opt == "extern_path=.subpkg.parent=::parent_rs::subpkg::parent" {
-			t.Errorf("extern_path for parent of own package was not filtered: %v", got)
-		}
+	want := []string{
+		"extern_path=.subpkg.parent=::parent_rs::subpkg::parent",
 	}
-	if len(got) != 0 {
-		t.Errorf("expected no extern_paths (only entry would shadow own package), got %v", got)
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("ResolveTransitiveExternPaths:\n got: %v\nwant: %v", got, want)
+	}
+}
+
+// TestResolveExternPathOptionsForReferences_SubpackageOfImport verifies the
+// reference-emitting variant (used by prost-serde and tonic) DOES add a self
+// extern_path override for the current sub-package, so prost's longest-
+// prefix-wins matching routes own-package references to crate::... rather
+// than the parent extern crate.
+func TestResolveExternPathOptionsForReferences_SubpackageOfImport(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	resolver.Provide("proto", "prost_extern",
+		"refs/parent/p.proto",
+		label.New("", "refs.parent", "parent_rs"))
+
+	resolver.Provide("proto", "prost_extern",
+		"refs/parent/child/c.proto",
+		label.New("", "refs.parent.child", "child_rs"))
+
+	resolver.Provide("proto", "depends",
+		"refs/parent/child/c.proto",
+		label.New("", "refs/parent", "p.proto"))
+
+	r := makeLibraryRule("child_proto", "refs/parent/child", []string{"c.proto"})
+	from := label.New("", "refs/parent/child", "child_proto")
+
+	cfg := &protoc.PluginConfiguration{Options: nil}
+	got := prost.ResolveExternPathOptionsForReferences(cfg, r, from)
+	want := []string{
+		"extern_path=.refs.parent.child=crate::refs::parent::child",
+		"extern_path=.refs.parent=::parent_rs::refs::parent",
+	}
+	sort.Strings(want)
+	sort.Strings(got)
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("ResolveExternPathOptionsForReferences:\n got: %v\nwant: %v", got, want)
 	}
 }
 
