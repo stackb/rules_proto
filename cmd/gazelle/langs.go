@@ -19,9 +19,9 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/language"
 	golang "github.com/bazelbuild/bazel-gazelle/language/go"
 	"github.com/bazelbuild/bazel-gazelle/language/proto"
-	"github.com/stackb/rules_proto/language/starlarkrepository"
 	"github.com/stackb/rules_proto/v4/language/proto_go_modules"
 	"github.com/stackb/rules_proto/v4/language/protobuf"
+	"github.com/stackb/rules_proto/v4/language/starlarkrepository"
 )
 
 var languages = []language.Language{
