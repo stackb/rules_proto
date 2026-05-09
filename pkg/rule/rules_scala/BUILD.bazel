@@ -6,18 +6,18 @@ go_library(
         "scala_library.go",
         "scala_proto_library.go",
     ],
-    importpath = "github.com/stackb/rules_proto/pkg/rule/rules_scala",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/rule/rules_scala",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/plugin/akka/akka_grpc",
         "//pkg/plugin/scalapb/scalapb",
         "//pkg/protoc",
-        "@bazel_gazelle//config:go_default_library",
-        "@bazel_gazelle//label:go_default_library",
-        "@bazel_gazelle//resolve:go_default_library",
-        "@bazel_gazelle//rule:go_default_library",
-        "@com_github_bmatcuk_doublestar//:go_default_library",
-        "@com_github_emicklei_proto//:go_default_library",
+        "@bazel_gazelle//config",
+        "@bazel_gazelle//label",
+        "@bazel_gazelle//resolve",
+        "@bazel_gazelle//rule",
+        "@com_github_bmatcuk_doublestar//:doublestar",
+        "@com_github_emicklei_proto//:proto",
     ],
 )
 
@@ -27,11 +27,11 @@ go_test(
     embed = [":rules_scala"],
     deps = [
         "//pkg/protoc",
-        "@bazel_gazelle//config:go_default_library",
-        "@bazel_gazelle//label:go_default_library",
-        "@bazel_gazelle//resolve:go_default_library",
-        "@bazel_gazelle//rule:go_default_library",
-        "@com_github_google_go_cmp//cmp:go_default_library",
+        "@bazel_gazelle//config",
+        "@bazel_gazelle//label",
+        "@bazel_gazelle//resolve",
+        "@bazel_gazelle//rule",
+        "@com_github_google_go_cmp//cmp",
     ],
 )
 

@@ -6,7 +6,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
-	"github.com/stackb/rules_proto/pkg/protoc"
+	"github.com/stackb/rules_proto/v4/pkg/protoc"
 )
 
 const (
@@ -54,7 +54,12 @@ func (s *protoJavaLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *proto
 		Config:         pc,
 		Resolver: func(c *config.Config, ix *resolve.RuleIndex, r *rule.Rule, imports []string, from label.Label) {
 			protoc.ResolveDepsAttr("deps", false)(c, ix, r, imports, from)
-			r.SetAttr("exports", r.Attr("deps"))
+			deps := r.Attr("deps")
+			if deps == nil {
+				r.DelAttr("exports")
+			} else {
+				r.SetAttr("exports", deps)
+			}
 		},
 	}
 }

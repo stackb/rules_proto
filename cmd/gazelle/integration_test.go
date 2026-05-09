@@ -31,7 +31,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/testtools"
 	"github.com/google/go-cmp/cmp"
-	"github.com/stackb/rules_proto/cmd/gazelle/internal/wspace"
+	"github.com/stackb/rules_proto/v4/cmd/gazelle/internal/wspace"
 )
 
 // skipIfWorkspaceVisible skips the test if the WORKSPACE file for the

@@ -8,14 +8,14 @@ go_library(
         "doc.go",
         "utils.go",
     ],
-    importpath = "github.com/stackb/rules_proto/pkg/plugintest",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/plugintest",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",
-        "@bazel_gazelle//label:go_default_library",
-        "@bazel_gazelle//rule:go_default_library",
-        "@com_github_google_go_cmp//cmp:go_default_library",
-        "@com_github_google_go_cmp//cmp/cmpopts:go_default_library",
+        "@bazel_gazelle//label",
+        "@bazel_gazelle//rule",
+        "@com_github_google_go_cmp//cmp",
+        "@com_github_google_go_cmp//cmp/cmpopts",
     ],
 )
 

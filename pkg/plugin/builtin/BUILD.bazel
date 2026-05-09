@@ -16,11 +16,11 @@ go_library(
         "python_plugin.go",
         "ruby_plugin.go",
     ],
-    importpath = "github.com/stackb/rules_proto/pkg/plugin/builtin",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/plugin/builtin",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",
-        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//label",
     ],
 )
 

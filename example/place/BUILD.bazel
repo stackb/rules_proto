@@ -38,7 +38,7 @@ proto_compile(
 
 proto_compile(
     name = "place_go_compile",
-    output_mappings = ["place.pb.go=github.com/stackb/rules_proto/example/place/place.pb.go"],
+    output_mappings = ["place.pb.go=github.com/stackb/rules_proto/v4/example/place/place.pb.go"],
     outputs = ["place.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "place_proto",
@@ -48,7 +48,7 @@ proto_compile(
 proto_go_library(
     name = "place_go_proto",
     srcs = ["place.pb.go"],
-    importpath = "github.com/stackb/rules_proto/example/place",
+    importpath = "github.com/stackb/rules_proto/v4/example/place",
     visibility = ["//visibility:public"],
     deps = [
         "//example/thing:thing_go_proto",

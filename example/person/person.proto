@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package example.person;
 
-option go_package = "github.com/stackb/rules_proto/example/person;person";
+option go_package = "github.com/stackb/rules_proto/v4/example/person;person";
 
 import "example/place/place.proto";
 

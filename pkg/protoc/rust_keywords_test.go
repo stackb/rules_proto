@@ -1,0 +1,100 @@
+package protoc
+
+import (
+	"testing"
+
+	"github.com/google/go-cmp/cmp"
+)
+
+func TestRustKeywordEscapeMappings(t *testing.T) {
+	for name, tc := range map[string]struct {
+		pkg     string
+		outputs []string
+		want    map[string]string
+	}{
+		"empty package": {
+			pkg:     "",
+			outputs: []string{"foo.rs"},
+			want:    nil,
+		},
+		"empty outputs": {
+			pkg:     "google.type",
+			outputs: nil,
+			want:    nil,
+		},
+		"no keywords": {
+			pkg:     "google.api",
+			outputs: []string{"google.api.rs", "google.api.serde.rs"},
+			want:    nil,
+		},
+		"type keyword": {
+			pkg:     "google.type",
+			outputs: []string{"google.type.rs", "google.type.serde.rs"},
+			want: map[string]string{
+				"google.type.rs":       "google/r#type/google.type.rs",
+				"google.type.serde.rs": "google/r#type/google.type.serde.rs",
+			},
+		},
+		"keyword at start": {
+			pkg:     "type.example",
+			outputs: []string{"type.example.rs"},
+			want: map[string]string{
+				"type.example.rs": "r#type/example/type.example.rs",
+			},
+		},
+		"multiple keywords": {
+			pkg:     "self.type",
+			outputs: []string{"self.type.rs"},
+			want: map[string]string{
+				"self.type.rs": "r#self/r#type/self.type.rs",
+			},
+		},
+		"single segment keyword": {
+			pkg:     "type",
+			outputs: []string{"type.rs"},
+			want: map[string]string{
+				"type.rs": "r#type/type.rs",
+			},
+		},
+		"single segment no keyword": {
+			pkg:     "example",
+			outputs: []string{"example.rs"},
+			want:    nil,
+		},
+		"full path outputs": {
+			pkg:     "google.type",
+			outputs: []string{"google/type/google.type.rs", "google/type/google.type.serde.rs"},
+			want: map[string]string{
+				"google.type.rs":       "google/r#type/google.type.rs",
+				"google.type.serde.rs": "google/r#type/google.type.serde.rs",
+			},
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			got := RustKeywordEscapeMappings(tc.pkg, tc.outputs)
+			if diff := cmp.Diff(tc.want, got); diff != "" {
+				t.Errorf("(-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+func TestRustCrateName(t *testing.T) {
+	for name, tc := range map[string]struct {
+		pkg  string
+		want string
+	}{
+		"empty":             {pkg: "", want: ""},
+		"single segment":    {pkg: "foo", want: "foo_rs"},
+		"trailing proto":    {pkg: "trumid.common.utils.state.snapshot.proto", want: "trumid_common_utils_state_snapshot_proto_rs"},
+		"sub-package": {pkg: "trumid.common.utils.state.snapshot.proto.example",
+			want: "trumid_common_utils_state_snapshot_proto_example_rs"},
+		"keywords are not escaped here": {pkg: "google.type", want: "google_type_rs"},
+	} {
+		t.Run(name, func(t *testing.T) {
+			if got := RustCrateName(tc.pkg); got != tc.want {
+				t.Errorf("RustCrateName(%q) = %q, want %q", tc.pkg, got, tc.want)
+			}
+		})
+	}
+}

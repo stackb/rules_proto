@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "protobuf",
     srcs = ["protobuf.go"],
-    importpath = "github.com/stackb/rules_proto/language/protobuf",
+    importpath = "github.com/stackb/rules_proto/v4/language/protobuf",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/language/protobuf",
@@ -17,6 +17,9 @@ go_library(
         "//pkg/plugin/grpc/grpcnode",
         "//pkg/plugin/grpc/grpcweb",
         "//pkg/plugin/grpcecosystem/grpcgateway",
+        "//pkg/plugin/neoeinstein/prost",
+        "//pkg/plugin/neoeinstein/prost_serde",
+        "//pkg/plugin/neoeinstein/tonic",
         "//pkg/plugin/scalapb/scalapb",
         "//pkg/plugin/scalapb/zio_grpc",
         "//pkg/plugin/stackb/grpc_js",
@@ -27,8 +30,9 @@ go_library(
         "//pkg/rule/rules_java",
         "//pkg/rule/rules_nodejs",
         "//pkg/rule/rules_python",
+        "//pkg/rule/rules_rust",
         "//pkg/rule/rules_scala",
-        "@bazel_gazelle//language:go_default_library",
+        "@bazel_gazelle//language",
     ],
 )
 

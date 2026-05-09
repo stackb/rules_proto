@@ -9,14 +9,14 @@ go_library(
         "proto_nodejs_library.go",
         "proto_ts_library.go",
     ],
-    importpath = "github.com/stackb/rules_proto/pkg/rule/rules_nodejs",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/rule/rules_nodejs",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",
-        "@bazel_gazelle//config:go_default_library",
-        "@bazel_gazelle//label:go_default_library",
-        "@bazel_gazelle//resolve:go_default_library",
-        "@bazel_gazelle//rule:go_default_library",
+        "@bazel_gazelle//config",
+        "@bazel_gazelle//label",
+        "@bazel_gazelle//resolve",
+        "@bazel_gazelle//rule",
     ],
 )
 

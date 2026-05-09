@@ -3,8 +3,8 @@ package ts_proto_test
 import (
 	"testing"
 
-	ts_proto "github.com/stackb/rules_proto/pkg/plugin/stephenh/ts-proto"
-	"github.com/stackb/rules_proto/pkg/plugintest"
+	ts_proto "github.com/stackb/rules_proto/v4/pkg/plugin/stephenh/ts-proto"
+	"github.com/stackb/rules_proto/v4/pkg/plugintest"
 )
 
 func TestProtocGenTsProtoPlugin(t *testing.T) {

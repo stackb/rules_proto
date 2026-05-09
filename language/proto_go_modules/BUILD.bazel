@@ -6,15 +6,15 @@ go_library(
         "language.go",
         "rule.go",
     ],
-    importpath = "github.com/stackb/rules_proto/language/proto_go_modules",
+    importpath = "github.com/stackb/rules_proto/v4/language/proto_go_modules",
     visibility = ["//visibility:public"],
     deps = [
-        "@bazel_gazelle//config:go_default_library",
-        "@bazel_gazelle//label:go_default_library",
-        "@bazel_gazelle//language:go_default_library",
-        "@bazel_gazelle//repo:go_default_library",
-        "@bazel_gazelle//resolve:go_default_library",
-        "@bazel_gazelle//rule:go_default_library",
+        "@bazel_gazelle//config",
+        "@bazel_gazelle//label",
+        "@bazel_gazelle//language",
+        "@bazel_gazelle//repo",
+        "@bazel_gazelle//resolve",
+        "@bazel_gazelle//rule",
     ],
 )
 

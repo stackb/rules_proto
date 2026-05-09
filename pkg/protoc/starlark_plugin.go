@@ -135,11 +135,34 @@ func (p *starlarkPlugin) Configure(ctx *PluginContext) *PluginConfiguration {
 			out = outString.GoString()
 		}
 
+		var mappings map[string]string
+		mappingsValue, err := value.Attr("mappings")
+		if err == nil {
+			if dict, ok := mappingsValue.(*starlark.Dict); ok && dict.Len() > 0 {
+				mappings = make(map[string]string, dict.Len())
+				for _, key := range dict.Keys() {
+					k, ok := key.(starlark.String)
+					if !ok {
+						p.errorReporter("PluginConfiguration.mappings: key is not a string (%T)", key)
+						continue
+					}
+					if v, found, err := dict.Get(key); found && err == nil {
+						if s, ok := v.(starlark.String); ok {
+							mappings[k.GoString()] = s.GoString()
+						} else {
+							p.errorReporter("PluginConfiguration.mappings: value for %q is not a string (%T)", k.GoString(), v)
+						}
+					}
+				}
+			}
+		}
+
 		result = &PluginConfiguration{
-			Label:   lbl,
-			Outputs: outputs,
-			Out:     out,
-			Options: options,
+			Label:    lbl,
+			Outputs:  outputs,
+			Out:      out,
+			Options:  options,
+			Mappings: mappings,
 		}
 	default:
 		p.errorReporter("plugin %q configure returned invalid type: %T", p.name, value)
@@ -155,12 +178,14 @@ func newStarlarkPluginConfiguration() goStarlarkFunction {
 		var out string
 		outputs := &starlark.List{}
 		options := &starlark.List{}
+		mappings := &starlark.Dict{}
 
 		if err := starlark.UnpackArgs("PluginConfiguration", args, kwargs,
 			"label", &labelStr,
 			"outputs", &outputs,
 			"out?", &out,
 			"options?", &options,
+			"mappings?", &mappings,
 		); err != nil {
 			return nil, err
 		}
@@ -168,10 +193,11 @@ func newStarlarkPluginConfiguration() goStarlarkFunction {
 		return starlarkstruct.FromStringDict(
 			Symbol("PluginConfiguration"),
 			starlark.StringDict{
-				"label":   starlark.String(labelStr),
-				"outputs": outputs,
-				"out":     starlark.String(out),
-				"options": options,
+				"label":    starlark.String(labelStr),
+				"outputs":  outputs,
+				"out":      starlark.String(out),
+				"options":  options,
+				"mappings": mappings,
 			},
 		), nil
 	}

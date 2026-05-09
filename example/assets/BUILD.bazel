@@ -59,7 +59,7 @@ proto_library(
 proto_compiled_sources(
     name = "api_go_compiled_sources",
     srcs = ["api.pb.go"],
-    output_mappings = ["api.pb.go=github.com/stackb/rules_proto/example/assets/api.pb.go"],
+    output_mappings = ["api.pb.go=github.com/stackb/rules_proto/v4/example/assets/api.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "api_proto",
     visibility = ["//visibility:public"],
@@ -68,7 +68,7 @@ proto_compiled_sources(
 proto_compiled_sources(
     name = "api_request_go_compiled_sources",
     srcs = ["api_request.pb.go"],
-    output_mappings = ["api_request.pb.go=github.com/stackb/rules_proto/example/assets/api_request.pb.go"],
+    output_mappings = ["api_request.pb.go=github.com/stackb/rules_proto/v4/example/assets/api_request.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "api_request_proto",
     visibility = ["//visibility:public"],
@@ -77,7 +77,7 @@ proto_compiled_sources(
 proto_compiled_sources(
     name = "api_response_go_compiled_sources",
     srcs = ["api_response.pb.go"],
-    output_mappings = ["api_response.pb.go=github.com/stackb/rules_proto/example/assets/api_response.pb.go"],
+    output_mappings = ["api_response.pb.go=github.com/stackb/rules_proto/v4/example/assets/api_response.pb.go"],
     plugins = ["@build_stack_rules_proto//plugin/golang/protobuf:protoc-gen-go"],
     proto = "api_response_proto",
     visibility = ["//visibility:public"],

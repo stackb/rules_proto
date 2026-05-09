@@ -3,8 +3,8 @@ package zio_grpc_test
 import (
 	"testing"
 
-	"github.com/stackb/rules_proto/pkg/plugin/scalapb/zio_grpc"
-	"github.com/stackb/rules_proto/pkg/plugintest"
+	"github.com/stackb/rules_proto/v4/pkg/plugin/scalapb/zio_grpc"
+	"github.com/stackb/rules_proto/v4/pkg/plugintest"
 )
 
 func TestProtoGenZioGrpcPlugin(t *testing.T) {

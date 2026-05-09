@@ -4,7 +4,7 @@ import (
 	"path"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
-	"github.com/stackb/rules_proto/pkg/protoc"
+	"github.com/stackb/rules_proto/v4/pkg/protoc"
 )
 
 const ZioGrpcPluginName = "scalapb:zio-grpc:protoc-gen-zio-grpc"

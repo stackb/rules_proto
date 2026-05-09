@@ -1,11 +1,11 @@
-module github.com/stackb/rules_proto
+module github.com/stackb/rules_proto/v4
 
 go 1.23.1
 
 require (
-	github.com/bazelbuild/bazel-gazelle v0.45.0
-	github.com/bazelbuild/buildtools v0.0.0-20250826111327-4006b543a694
-	github.com/bazelbuild/rules_go v0.57.0
+	github.com/bazelbuild/bazel-gazelle v0.47.0
+	github.com/bazelbuild/buildtools v0.0.0-20250930140053-2eb4fccefb52
+	github.com/bazelbuild/rules_go v0.59.0
 	github.com/bmatcuk/doublestar v1.3.4
 	github.com/emicklei/proto v1.14.2
 	github.com/gogo/protobuf v1.3.2
@@ -20,13 +20,17 @@ require (
 )
 
 require (
-	github.com/bmatcuk/doublestar/v4 v4.7.1 // indirect
+	github.com/bmatcuk/doublestar/v4 v4.9.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/golang/mock v1.7.0-rc.1 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
 	golang.org/x/mod v0.27.0 // indirect
-	golang.org/x/net v0.41.0 // indirect
-	golang.org/x/sync v0.15.0 // indirect
-	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/text v0.26.0 // indirect
+	golang.org/x/net v0.42.0 // indirect
+	golang.org/x/sync v0.16.0 // indirect
+	golang.org/x/sys v0.34.0 // indirect
+	golang.org/x/text v0.27.0 // indirect
+	golang.org/x/tools v0.35.0 // indirect
 	golang.org/x/tools/go/vcs v0.1.0-deprecated // indirect
+	google.golang.org/genproto v0.0.0-20250115164207-1a7da9e5054f // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
 )

@@ -1,7 +1,7 @@
 package protobuf
 
 import (
-	"github.com/stackb/rules_proto/pkg/protoc"
+	"github.com/stackb/rules_proto/v4/pkg/protoc"
 )
 
 // NewProtobufLang create a new protobufLang Gazelle extension implementation.
@@ -40,6 +40,21 @@ type protobufLang struct {
 	starlarkRules arrayFlags
 	// starlarkPlugins stores custom starlark proto plugin names in the form filename%pluginname
 	starlarkPlugins arrayFlags
+	// protoRustLibraryPackages collects the workspace-relative path of every
+	// package that emits a proto_rust_library rule. Populated in
+	// GenerateRules and consumed in DoneGeneratingRules to update the root
+	// Cargo.toml [workspace] members list.
+	protoRustLibraryPackages []string
+	// vendorAssetLabels collects bazel labels of every generated rule that
+	// provides ProtoCompileInfo and should appear in the root
+	// `proto_compile_assets` aggregator. Populated in GenerateRules and
+	// consumed in DoneGeneratingRules to update the deps list of the
+	// vendoring target between the vendor_proto_sources_deps markers.
+	vendorAssetLabels []string
+	// repoRoot is captured from the first GenerateRules call so
+	// DoneGeneratingRules (which receives no config) can locate the root
+	// Cargo.toml and BUILD.bazel.
+	repoRoot string
 }
 
 // Name implements part of the language.Language interface.

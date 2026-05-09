@@ -3,11 +3,11 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "zio_grpc",
     srcs = ["protoc_gen_zio_grpc.go"],
-    importpath = "github.com/stackb/rules_proto/pkg/plugin/scalapb/zio_grpc",
+    importpath = "github.com/stackb/rules_proto/v4/pkg/plugin/scalapb/zio_grpc",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/protoc",
-        "@bazel_gazelle//label:go_default_library",
+        "@bazel_gazelle//label",
     ],
 )
 

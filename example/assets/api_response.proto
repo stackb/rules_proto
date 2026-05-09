@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package example.assets;
 
-option go_package = "github.com/stackb/rules_proto/example/assets;assets";
+option go_package = "github.com/stackb/rules_proto/v4/example/assets;assets";
 
 message ApiResponse {
   int32 code = 1;

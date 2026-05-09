@@ -25,8 +25,8 @@ proto_library(
 proto_compile(
     name = "mappingsmerge_go_compile",
     output_mappings = [
-        "example.pb.go=github.com/stackb/rules_proto/example/golden/mappingsmerge/example.pb.go",
-        "support.pb.go=github.com/stackb/rules_proto/example/golden/mappingsmerge/support.pb.go",
+        "example.pb.go=github.com/stackb/rules_proto/v4/example/golden/mappingsmerge/example.pb.go",
+        "support.pb.go=github.com/stackb/rules_proto/v4/example/golden/mappingsmerge/support.pb.go",
     ],
     outputs = [
         "example.pb.go",
@@ -42,7 +42,7 @@ proto_go_library(
         "example.pb.go",
         "support.pb.go",
     ],
-    importpath = "github.com/stackb/rules_proto/example/golden/mappingsmerge",
+    importpath = "github.com/stackb/rules_proto/v4/example/golden/mappingsmerge",
     visibility = ["//visibility:public"],
     deps = [
         "@org_golang_google_protobuf//reflect/protoreflect",
