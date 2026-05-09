@@ -65,6 +65,7 @@ def _starlark_repository_impl(module_ctx):
                 for attr in _starlark_repository_local_attrs.keys()
                 if hasattr(tag, attr)
             }
+
             # The user-facing attr is "path"; the underlying repo rule expects
             # "local_path" (a sibling of "urls" / "commit" / "version").
             kwargs["local_path"] = kwargs.pop("path")
