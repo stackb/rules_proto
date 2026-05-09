@@ -200,6 +200,47 @@ func (s *Package) getProvidedRules(providers []RuleProvider, shouldResolve bool)
 			continue
 		}
 
+		// Detect merge: if r is already in the rules slice (same pointer),
+		// the rule was merged (and possibly renamed). Update bookkeeping
+		// and accumulate imports, but don't add a duplicate entry.
+		merged := false
+		for i, existing := range rules {
+			if existing != r {
+				continue
+			}
+			merged = true
+
+			// Update ruleIndexes and providers if the rule was renamed
+			newFrom := label.New("", s.rel, r.Name())
+			if _, ok := ruleIndexes[newFrom]; !ok {
+				for oldFrom, idx := range ruleIndexes {
+					if idx == i {
+						delete(ruleIndexes, oldFrom)
+						ruleIndexes[newFrom] = idx
+						if prov, ok := s.providers[oldFrom.Name]; ok {
+							delete(s.providers, oldFrom.Name)
+							s.providers[r.Name()] = prov
+						}
+						break
+					}
+				}
+			}
+
+			// Accumulate imports from the merged library
+			if shouldResolve {
+				lib := s.ruleLibs[p]
+				imports := lib.Imports()
+				if existingImports, ok := r.PrivateAttr(config.GazelleImportsKey).([]string); ok {
+					imports = append(imports, existingImports...)
+				}
+				r.SetPrivateAttr(config.GazelleImportsKey, imports)
+			}
+			break
+		}
+		if merged {
+			continue
+		}
+
 		if shouldResolve {
 			lib := s.ruleLibs[p]
 			r.SetPrivateAttr(ProtoLibraryKey, lib)

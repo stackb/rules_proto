@@ -1,0 +1,40 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "prost",
+    srcs = [
+        "extern_paths.go",
+        "protoc-gen-prost.go",
+    ],
+    importpath = "github.com/stackb/rules_proto/v4/pkg/plugin/neoeinstein/prost",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protoc",
+        "@bazel_gazelle//label",
+        "@bazel_gazelle//rule",
+    ],
+)
+
+go_test(
+    name = "prost_test",
+    srcs = [
+        "extern_paths_test.go",
+        "protoc-gen-prost_test.go",
+    ],
+    deps = [
+        ":prost",
+        "//pkg/plugintest",
+        "//pkg/protoc",
+        "@bazel_gazelle//label",
+        "@bazel_gazelle//rule",
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = [
+        "BUILD.bazel",
+    ] + glob(["*.go"]),
+    visibility = ["//pkg:__pkg__"],
+)

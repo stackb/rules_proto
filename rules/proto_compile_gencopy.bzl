@@ -62,6 +62,9 @@ def _proto_compile_gencopy_test_impl(ctx):
 
     source_file_map = {f.short_path: f for f in ctx.files.srcs}
 
+    # for k, v in source_file_map.items():
+    #     print("source file map:", k, v)
+
     for info in [dep[ProtoCompileInfo] for dep in ctx.attr.deps]:
         # List[String]: names of files that represent the source files.  In a
         # test, these are the file paths of actual source files that are in the
