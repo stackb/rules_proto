@@ -45,16 +45,20 @@ import (
 )
 
 const (
-	languageName              = "starlarkrepository"
-	repoNameDirectiveName     = languageName + "_repo_name"
-	rootDirectiveName         = languageName + "_root"
-	excludeDirectiveName      = languageName + "_exclude"
-	logFileDirectiveName      = languageName + "_log_file"
-	starlarkModuleKind        = "starlark_module"
-	starlarkModuleLibraryKind = "starlark_module_library"
-	starlarkModuleLibraryName = "modules"
-	fileType                  = ".bzl"
-	visibilityPublic          = "//visibility:public"
+	languageName               = "starlarkrepository"
+	repoNameDirectiveName      = languageName + "_repo_name"
+	rootDirectiveName          = languageName + "_root"
+	excludeDirectiveName       = languageName + "_exclude"
+	logFileDirectiveName       = languageName + "_log_file"
+	starlarkModuleKind         = "starlark_module"
+	starlarkModuleLibraryKind  = "starlark_module_library"
+	starlarkModuleLibraryName  = "modules"
+	starlarkPackageKind        = "starlark_package"
+	starlarkPackageLibraryKind = "starlark_package_library"
+	starlarkPackageLibraryName = "starlark_packages"
+	bzlFileType                = ".bzl"
+	packageFileType            = ".package"
+	visibilityPublic           = "//visibility:public"
 )
 
 var (
@@ -73,6 +77,17 @@ var (
 			NonEmptyAttrs: map[string]bool{"src": true},
 		},
 	}
+	starlarkPackageLibraryKindInfo = map[string]rule.KindInfo{
+		starlarkPackageLibraryKind: {
+			NonEmptyAttrs: map[string]bool{"packages": true},
+			ResolveAttrs:  map[string]bool{"packages": true},
+		},
+	}
+	starlarkPackageKindInfo = map[string]rule.KindInfo{
+		starlarkPackageKind: {
+			NonEmptyAttrs: map[string]bool{"src": true},
+		},
+	}
 	starlarkModuleLibraryLoadInfo = rule.LoadInfo{
 		Name:    "@build_stack_rules_proto//rules:starlark_module_library.bzl",
 		Symbols: []string{starlarkModuleLibraryKind},
@@ -80,6 +95,14 @@ var (
 	starlarkModuleLoadInfo = rule.LoadInfo{
 		Name:    "@build_stack_rules_proto//rules:starlark_module.bzl",
 		Symbols: []string{starlarkModuleKind},
+	}
+	starlarkPackageLibraryLoadInfo = rule.LoadInfo{
+		Name:    "@build_stack_rules_proto//rules:starlark_package_library.bzl",
+		Symbols: []string{starlarkPackageLibraryKind},
+	}
+	starlarkPackageLoadInfo = rule.LoadInfo{
+		Name:    "@build_stack_rules_proto//rules:starlark_package.bzl",
+		Symbols: []string{starlarkPackageKind},
 	}
 )
 
@@ -201,6 +224,8 @@ func (*starlarkRepositoryLang) Kinds() map[string]rule.KindInfo {
 	kinds := map[string]rule.KindInfo{}
 	maps.Copy(kinds, starlarkModuleLibraryKindInfo)
 	maps.Copy(kinds, starlarkModuleKindInfo)
+	maps.Copy(kinds, starlarkPackageLibraryKindInfo)
+	maps.Copy(kinds, starlarkPackageKindInfo)
 	return kinds
 }
 
@@ -211,6 +236,8 @@ func (*starlarkRepositoryLang) Loads() []rule.LoadInfo {
 	return []rule.LoadInfo{
 		starlarkModuleLibraryLoadInfo,
 		starlarkModuleLoadInfo,
+		starlarkPackageLibraryLoadInfo,
+		starlarkPackageLoadInfo,
 	}
 }
 
@@ -229,6 +256,8 @@ func (ext *starlarkRepositoryLang) Imports(c *config.Config, r *rule.Rule, f *ru
 	switch r.Kind() {
 	case starlarkModuleKind:
 		return ext.starlarkModuleImports(c, r, f)
+	case starlarkPackageKind:
+		return ext.starlarkPackageImports(c, r, f)
 	default:
 		return nil
 	}
@@ -239,6 +268,13 @@ func (ext *starlarkRepositoryLang) starlarkModuleImports(_ *config.Config, r *ru
 	return []resolve.ImportSpec{
 		{Lang: languageName, Imp: fmt.Sprintf("//%s:%s", f.Pkg, r.AttrString("src"))},
 		{Lang: languageName, Imp: starlarkModuleKind},
+	}
+}
+
+func (ext *starlarkRepositoryLang) starlarkPackageImports(_ *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
+	return []resolve.ImportSpec{
+		{Lang: languageName, Imp: fmt.Sprintf("//%s:%s", f.Pkg, r.AttrString("src"))},
+		{Lang: languageName, Imp: starlarkPackageKind},
 	}
 }
 
@@ -261,6 +297,8 @@ func (ext *starlarkRepositoryLang) Resolve(c *config.Config, ix *resolve.RuleInd
 	switch r.Kind() {
 	case starlarkModuleLibraryKind:
 		ext.starlarkModuleLibraryResolve(c, ix, rc, r, importsRaw, from)
+	case starlarkPackageLibraryKind:
+		ext.starlarkPackageLibraryResolve(c, ix, rc, r, importsRaw, from)
 	}
 }
 
@@ -309,8 +347,22 @@ func (ext *starlarkRepositoryLang) GenerateRules(args language.GenerateArgs) (re
 		log.Printf("generated %s %s/%s", r.Kind(), args.Rel, r.Name())
 	}
 
+	for _, f := range args.RegularFiles {
+		if !isBuildPackageFile(f) {
+			continue
+		}
+		r, imports := ext.starlarkPackageRule(args, f)
+		result.Gen = append(result.Gen, r)
+		result.Imports = append(result.Imports, imports)
+		log.Printf("generated %s %s/%s", r.Kind(), args.Rel, r.Name())
+	}
+
 	if _, ok := getMatchingRoot(args.Rel, ext.roots); ok {
 		r, imports := ext.starlarkModuleLibraryRule(args)
+		result.Gen = append(result.Gen, r)
+		result.Imports = append(result.Imports, imports)
+
+		r, imports = ext.starlarkPackageLibraryRule(args)
 		result.Gen = append(result.Gen, r)
 		result.Imports = append(result.Imports, imports)
 	}
@@ -344,7 +396,7 @@ func mustListFiles(logf LogFunc, dir string) []string {
 }
 func (ext *starlarkRepositoryLang) starlarkModuleRule(args language.GenerateArgs, src string, loadStmts []*build.LoadStmt) (*rule.Rule, []any) {
 
-	name := strings.TrimSuffix(src, fileType)
+	name := strings.TrimSuffix(src, bzlFileType)
 	ext.logf("generating %s rule for %s //%s:%s", starlarkModuleKind, src, args.Rel, name)
 
 	loads := make([]string, 0, len(loadStmts))
@@ -374,6 +426,59 @@ func (ext *starlarkRepositoryLang) starlarkModuleLibraryRule(_ language.Generate
 	}
 	r.SetAttr("visibility", []string{visibilityPublic})
 	return r, []any{}
+}
+
+func (ext *starlarkRepositoryLang) starlarkPackageRule(args language.GenerateArgs, src string) (*rule.Rule, []any) {
+	// Sanitize the filename into a target name: "BUILD.package" -> "BUILD_package",
+	// "BUILD.bazel.package" -> "BUILD_bazel_package". This avoids clashing with
+	// `pkg.bzl`-derived `starlark_module(name = "pkg")` targets that exist in many
+	// Starlark codebases.
+	name := strings.ReplaceAll(src, ".", "_")
+	ext.logf("generating %s rule for %s //%s:%s", starlarkPackageKind, src, args.Rel, name)
+
+	r := rule.NewRule(starlarkPackageKind, name)
+	r.SetAttr("src", src)
+	r.SetAttr("visibility", []string{visibilityPublic})
+
+	return r, []any{}
+}
+
+func (ext *starlarkRepositoryLang) starlarkPackageLibraryRule(_ language.GenerateArgs) (*rule.Rule, []any) {
+	r := rule.NewRule(starlarkPackageLibraryKind, starlarkPackageLibraryName)
+	if ext.bazelVersion != "" {
+		r.SetAttr("bazelversion", ext.bazelVersion)
+	}
+	if len(ext.bazelIgnore) > 0 {
+		r.SetAttr("bazelignore", ext.bazelIgnore)
+	}
+	r.SetAttr("visibility", []string{visibilityPublic})
+	return r, []any{}
+}
+
+func (ext *starlarkRepositoryLang) starlarkPackageLibraryResolve(c *config.Config, ix *resolve.RuleIndex, _ *repo.RemoteCache, r *rule.Rule, _ interface{}, from label.Label) {
+	root, isRoot := getMatchingRoot(from.Pkg, ext.roots)
+	if !isRoot {
+		ext.logf("skipping packages resolution for %v (not a root: %v)", from, ext.roots)
+		return
+	}
+
+	var packages []string
+
+	matches := ix.FindRulesByImportWithConfig(c, resolve.ImportSpec{
+		Lang: languageName,
+		Imp:  starlarkPackageKind,
+	}, languageName)
+	for _, m := range matches {
+		depLabel := m.Label.Rel(from.Repo, from.Pkg)
+		if strings.HasPrefix(depLabel.Pkg, root) {
+			packages = append(packages, depLabel.String())
+		}
+	}
+
+	if len(packages) > 0 {
+		sort.Strings(packages)
+		r.SetAttr("packages", packages)
+	}
 }
 
 func (ext *starlarkRepositoryLang) starlarkModuleLibraryResolve(c *config.Config, ix *resolve.RuleIndex, _ *repo.RemoteCache, r *rule.Rule, _ interface{}, from label.Label) {
@@ -511,7 +616,11 @@ func readFileLines(filePath string, logf LogFunc) ([]string, error) {
 }
 
 func isBzlSourceFile(f string) bool {
-	return strings.HasSuffix(f, fileType) && !ignoreSuffix.Matches(f)
+	return strings.HasSuffix(f, bzlFileType) && !ignoreSuffix.Matches(f)
+}
+
+func isBuildPackageFile(f string) bool {
+	return f == "BUILD.package" || f == "BUILD.bazel.package"
 }
 
 func getBzlFileLoadsStmts(path, rel string, logf LogFunc) (*build.File, []*build.LoadStmt, error) {

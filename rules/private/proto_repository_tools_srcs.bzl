@@ -21,6 +21,8 @@ PROTO_REPOSITORY_TOOLS_SRCS = [
     "@build_stack_rules_proto//cmd/gazelle:wspace.go",
     "@build_stack_rules_proto//cmd/gencopy:BUILD.bazel",
     "@build_stack_rules_proto//cmd/gencopy:gencopy.go",
+    "@build_stack_rules_proto//cmd/preserve_packages:BUILD.bazel",
+    "@build_stack_rules_proto//cmd/preserve_packages:main.go",
     "@build_stack_rules_proto//example:BUILD.bazel",
     "@build_stack_rules_proto//example/assets:BUILD.bazel",
     "@build_stack_rules_proto//example/assets:api.pb.go",
