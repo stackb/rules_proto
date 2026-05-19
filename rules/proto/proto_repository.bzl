@@ -74,7 +74,7 @@ def _proto_repository_impl(ctx):
     watch(ctx, go_env_cache)
     fetch_repo = str(ctx.path(Label("@bazel_gazelle_go_repository_tools//:bin/fetch_repo{}".format(executable_extension(ctx)))))
     watch(ctx, fetch_repo)
-    generate = ctx.attr.build_file_generation in ["on", "clean"]
+    generate = ctx.attr.build_file_generation in ["on", "clean", "preserve"]
 
     _gazelle = "@proto_repository_tools//:bin/gazelle{}".format(executable_extension(ctx))
 
@@ -254,6 +254,7 @@ def _proto_repository_impl(ctx):
         fail("%s: %s" % (ctx.name, result.stderr))
 
     _delete_files(ctx, ctx.attr.deleted_files)
+    _preserve_packages(ctx)
     if DEBUG:
         _find(ctx)
 
@@ -421,6 +422,25 @@ def _delete_files(ctx, files_to_delete):
         fail("%s: %s" % (ctx.name, result.stderr))
 
     # print("delete files result:", result.stdout)
+
+def _preserve_packages(ctx):
+    """Renames BUILD files to .package suffix for build_file_generation = "preserve".
+
+    Mirrors fetch_repo -clean semantics (deletes MODULE.bazel / WORKSPACE /
+    etc.) but renames BUILD / BUILD.bazel to BUILD.package / BUILD.bazel.package
+    so the starlarkrepository gazelle extension can capture them as
+    starlark_package rules.
+    """
+    if ctx.attr.build_file_generation != "preserve":
+        return
+
+    preserve_packages = str(ctx.path(Label("@proto_repository_tools//:bin/preserve_packages{}".format(executable_extension(ctx)))))
+    result = env_execute(
+        ctx,
+        [preserve_packages, "-root", ctx.path("")],
+    )
+    if result.return_code:
+        fail("preserve_packages failed for %s: %s" % (ctx.name, result.stderr))
 
 def _generate_package_info(*, importpath, version):
     package_name = importpath
@@ -620,17 +640,22 @@ _go_repository_attrs = {
     ),
     "build_file_generation": attr.string(
         default = "auto",
-        doc = """One of `"auto"`, `"on"`, `"off"`, `"clean"`.
+        doc = """One of `"auto"`, `"on"`, `"off"`, `"clean"`, `"preserve"`.
 
             Whether Gazelle should generate build files in the repository. In `"auto"`
             mode, Gazelle will run if there is no build file in the repository root
             directory. In `"clean"` mode, Gazelle will first remove any existing build
-            files.""",
+            files. In `"preserve"` mode (used by `starlark_repository`), the upstream
+            `BUILD` / `BUILD.bazel` files are renamed to `BUILD.package` /
+            `BUILD.bazel.package` (and `MODULE.bazel` / `WORKSPACE*` files are deleted)
+            so the starlarkrepository gazelle extension can emit `starlark_package`
+            rules referencing the preserved files.""",
         values = [
             "on",
             "auto",
             "off",
             "clean",
+            "preserve",
         ],
     ),
     "build_naming_convention": attr.string(

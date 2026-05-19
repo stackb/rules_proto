@@ -39,6 +39,18 @@ def _extension_metadata(
         **metadata_kwargs
     )
 
+def _default_preserve(kwargs):
+    """Sets build_file_generation = "preserve" by default.
+
+    starlark_repository exists specifically to capture upstream module
+    contents for introspection. The "preserve" mode is the only mode that
+    produces the starlark_package_library aggregator, so it's the desired
+    default. Users can still override (e.g. to "on" or "clean") by passing
+    build_file_generation explicitly on the tag.
+    """
+    if not kwargs.get("build_file_generation"):
+        kwargs["build_file_generation"] = "preserve"
+
 def _starlark_repository_impl(module_ctx):
     # named_archives / named_locals are dicts<K,V> where V is the kwargs for
     # the underlying "starlark_repository" repo rule and K is the tag.name
@@ -58,6 +70,7 @@ def _starlark_repository_impl(module_ctx):
                 for attr in _starlark_repository_archive_attrs.keys()
                 if hasattr(tag, attr)
             }
+            _default_preserve(kwargs)
             named_archives[tag.name] = kwargs
         for tag in module.tags.local:
             kwargs = {
@@ -69,6 +82,7 @@ def _starlark_repository_impl(module_ctx):
             # The user-facing attr is "path"; the underlying repo rule expects
             # "local_path" (a sibling of "urls" / "commit" / "version").
             kwargs["local_path"] = kwargs.pop("path")
+            _default_preserve(kwargs)
             named_locals[tag.name] = kwargs
 
     # declare a repository rule foreach one
