@@ -174,9 +174,11 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 			continue
 		}
 
-		// extern_path=.{proto_package}=::{crate_name}::{rust_module_path}
-		rustModulePath := strings.ReplaceAll(protoPackage, ".", "::")
-		externPathsByPackage[protoPackage] = "extern_path=." + protoPackage + "=::" + crateName + "::" + rustModulePath
+		// extern_path=.{proto_package}=::{crate_name}
+		// The crate exposes all generated types at its root (see the
+		// proto_rust_library Starlark macro), so no nested module path is
+		// appended after the crate name.
+		externPathsByPackage[protoPackage] = "extern_path=." + protoPackage + "=::" + crateName
 	}
 
 	result := make([]string, 0, len(externPathsByPackage))
@@ -247,8 +249,9 @@ func selfExternPathsForOverride(ownPackages map[string]bool, parents []string) [
 		if !hasParentInImports(ownPkg, parentPkgs) {
 			continue
 		}
-		rustModulePath := strings.ReplaceAll(ownPkg, ".", "::")
-		out = append(out, "extern_path=."+ownPkg+"=crate::"+rustModulePath)
+		// All own types live at the crate root (flat convention), so the
+		// self-extern override maps the proto sub-package to bare `crate`.
+		out = append(out, "extern_path=."+ownPkg+"=crate")
 	}
 	return out
 }

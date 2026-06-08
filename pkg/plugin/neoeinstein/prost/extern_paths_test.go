@@ -56,8 +56,8 @@ func TestResolveTransitiveExternPaths(t *testing.T) {
 	sort.Strings(got)
 
 	want := []string{
-		"extern_path=.extern.dep_a=::depA_rs::extern::dep_a",
-		"extern_path=.extern.dep_b=::depB_rs::extern::dep_b",
+		"extern_path=.extern.dep_a=::depA_rs",
+		"extern_path=.extern.dep_b=::depB_rs",
 	}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("ResolveTransitiveExternPaths:\n got: %v\nwant: %v", got, want)
@@ -113,7 +113,7 @@ func TestResolveTransitiveExternPaths_SubpackageOfImport(t *testing.T) {
 
 	got := prost.ResolveTransitiveExternPaths(r, from)
 	want := []string{
-		"extern_path=.subpkg.parent=::parent_rs::subpkg::parent",
+		"extern_path=.subpkg.parent=::parent_rs",
 	}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("ResolveTransitiveExternPaths:\n got: %v\nwant: %v", got, want)
@@ -146,8 +146,8 @@ func TestResolveExternPathOptionsForReferences_SubpackageOfImport(t *testing.T) 
 	cfg := &protoc.PluginConfiguration{Options: nil}
 	got := prost.ResolveExternPathOptionsForReferences(cfg, r, from)
 	want := []string{
-		"extern_path=.refs.parent.child=crate::refs::parent::child",
-		"extern_path=.refs.parent=::parent_rs::refs::parent",
+		"extern_path=.refs.parent.child=crate",
+		"extern_path=.refs.parent=::parent_rs",
 	}
 	sort.Strings(want)
 	sort.Strings(got)
@@ -182,7 +182,7 @@ func TestResolveTransitiveExternPaths_SiblingNotFiltered(t *testing.T) {
 	from := label.New("", "sibling/a/y", "y_proto")
 
 	got := prost.ResolveTransitiveExternPaths(r, from)
-	want := []string{"extern_path=.sibling.a.x=::x_rs::sibling::a::x"}
+	want := []string{"extern_path=.sibling.a.x=::x_rs"}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("ResolveTransitiveExternPaths:\n got: %v\nwant: %v", got, want)
 	}
@@ -197,13 +197,13 @@ func TestResolveExternPathOptions_FiltersExisting(t *testing.T) {
 	cfg := &protoc.PluginConfiguration{
 		Options: []string{
 			"compile_well_known_types=true",
-			"extern_path=.stale.pkg=::stale_rs::stale::pkg",
+			"extern_path=.stale.pkg=::stale_rs",
 		},
 	}
 
 	got := prost.ResolveExternPathOptions(cfg, r, from)
 	for _, opt := range got {
-		if opt == "extern_path=.stale.pkg=::stale_rs::stale::pkg" {
+		if opt == "extern_path=.stale.pkg=::stale_rs" {
 			t.Errorf("stale extern_path option was not filtered: %v", got)
 		}
 	}

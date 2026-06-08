@@ -51,7 +51,10 @@ func (s *RustLibrary) Name() string {
 	return s.Config.Library.BaseName() + s.RuleNameSuffix
 }
 
-// Pkg returns the proto package name from the first file in the library.
+// Pkg returns the proto package name of the first file in the library, or "".
+// Internal helper: drives the rule's crate name (via RustCrateName) and the
+// reexport computation. Not propagated to the generated rule as an attribute —
+// the consuming Starlark rule no longer accepts a `pkg` attr.
 func (s *RustLibrary) Pkg() string {
 	files := s.Config.Library.Files()
 	if len(files) == 0 {
@@ -156,9 +159,6 @@ func (s *RustLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule.SetPrivateAttr(config.GazelleImportsKey, imports)
 	s.protoLibrariesByRule[s.id] = []protoc.ProtoLibrary{s.Config.Library}
 
-	if pkg := s.Pkg(); pkg != "" {
-		newRule.SetAttr("pkg", pkg)
-	}
 	if len(deps) > 0 {
 		newRule.SetAttr("deps", deps)
 	}
