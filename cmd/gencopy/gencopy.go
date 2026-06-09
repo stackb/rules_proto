@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -105,7 +106,7 @@ func readFileAsString(filename string) (string, error) {
 	return string(bytes), nil
 }
 
-func check(_ *Config, pkg *PackageConfig, pairs []*SrcDst) error {
+func check(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 	for _, pair := range pairs {
 		expected, err := readFileAsString(pair.Src)
 		if err != nil {
@@ -117,7 +118,10 @@ func check(_ *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 		}
 
 		if diff := cmp.Diff(expected, actual); diff != "" {
-			return fmt.Errorf("gencopy mismatch %q vs. %q (-want +got):\n%s", pair.Src, pair.Dst, diff)
+			return fmt.Errorf(
+				"gencopy mismatch %q vs. %q (-want +got):\n%s\n%s",
+				pair.Src, pair.Dst, diff, regenerateProTip(pkg.TargetLabel, cfg.UpdateTargetLabelName),
+			)
 		}
 	}
 
@@ -127,6 +131,22 @@ func check(_ *Config, pkg *PackageConfig, pairs []*SrcDst) error {
 	}
 
 	return nil
+}
+
+// regenerateProTip returns a friendly hint pointing the developer at the
+// `.update` target that regenerates the checked-in copies. targetLabel is the
+// proto_compile rule's label (e.g. "//proto:foo_proto_compile" or
+// "@@repo//proto:foo_proto_compile"); updateName is the .update target's
+// rule name (e.g. "foo_proto_compile.update").
+func regenerateProTip(targetLabel, updateName string) string {
+	if updateName == "" {
+		return ""
+	}
+	updateLabel := updateName
+	if idx := strings.LastIndex(targetLabel, ":"); idx >= 0 {
+		updateLabel = targetLabel[:idx+1] + updateName
+	}
+	return fmt.Sprintf("\nProTip: to regenerate, run:\n    bazel run %s\n", updateLabel)
 }
 
 func update(cfg *Config, pkg *PackageConfig, pairs []*SrcDst) error {
