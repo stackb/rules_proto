@@ -213,3 +213,171 @@ func TestResolveExternPathOptions_FiltersExisting(t *testing.T) {
 		t.Errorf("ResolveExternPathOptions:\n got: %v\nwant: %v", got, want)
 	}
 }
+
+// TestResolveTransitiveExternPaths_GoogleProtobufNotSkipped guards against the
+// historical hard-coded skip of google/protobuf/* in the dep walk. When a
+// downstream repo registers a rust target for google.protobuf (via
+// proto_language rust enable true on that package), the extern_path entry
+// must flow through so consumers reference ::google_protobuf instead of the
+// prost-build default ::prost_types — which carries no serde impls.
+func TestResolveTransitiveExternPaths_GoogleProtobufNotSkipped(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	resolver.Provide("proto", "prost_extern",
+		"google/protobuf/duration.proto",
+		label.New("", "google.protobuf", "google_protobuf"))
+	resolver.Provide("proto", "prost_extern",
+		"wkttest/consumer/c.proto",
+		label.New("", "wkttest.consumer", "wkttest_consumer"))
+
+	resolver.Provide("proto", "depends",
+		"wkttest/consumer/c.proto",
+		label.New("", "google/protobuf", "duration.proto"))
+
+	r := makeLibraryRule("c_proto", "wkttest/consumer", []string{"c.proto"})
+	from := label.New("", "wkttest/consumer", "c_proto")
+
+	got := prost.ResolveTransitiveExternPaths(r, from)
+	want := []string{"extern_path=.google.protobuf=::google_protobuf"}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("ResolveTransitiveExternPaths:\n got: %v\nwant: %v", got, want)
+	}
+}
+
+// TestResolveProstOptions_AddsCompileWellKnownTypes_OwnPackage verifies that
+// when the library compiles google.protobuf protos itself, the prost plugin
+// prepends compile_well_known_types=true so prost-build emits well-known
+// type definitions locally (default behaviour is to skip them, which leaves
+// the matching prost-serde impls referencing undefined structs).
+func TestResolveProstOptions_AddsCompileWellKnownTypes_OwnPackage(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	resolver.Provide("proto", "prost_extern",
+		"wktown/google/protobuf/any.proto",
+		label.New("", "google.protobuf", "google_protobuf"))
+
+	r := makeLibraryRule("google_protobuf_proto", "wktown/google/protobuf", []string{"any.proto"})
+	from := label.New("", "wktown/google/protobuf", "google_protobuf_proto")
+
+	plugin := &prost.ProtocGenProstPlugin{}
+	got := plugin.ResolvePluginOptions(&protoc.PluginConfiguration{}, r, from)
+
+	if len(got) == 0 || got[0] != "compile_well_known_types=true" {
+		t.Errorf("expected compile_well_known_types=true at head of options for own-google.protobuf library, got: %v", got)
+	}
+}
+
+// TestResolveProstOptions_AddsCompileWellKnownTypes_ExternPath verifies that
+// when a library *consumes* google.protobuf via a foreign crate, the prost
+// plugin emits compile_well_known_types=true alongside the extern_path.
+// Without the flag, prost-build registers its default
+// .google.protobuf=::prost_types extern path and ExternPaths::insert errors
+// out with "duplicate extern Protobuf path: .google.protobuf".
+func TestResolveProstOptions_AddsCompileWellKnownTypes_ExternPath(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	resolver.Provide("proto", "prost_extern",
+		"wktdep/google/protobuf/duration.proto",
+		label.New("", "google.protobuf", "google_protobuf"))
+	resolver.Provide("proto", "prost_extern",
+		"wktdep/consumer/c.proto",
+		label.New("", "wktdep.consumer", "wktdep_consumer"))
+	resolver.Provide("proto", "depends",
+		"wktdep/consumer/c.proto",
+		label.New("", "wktdep/google/protobuf", "duration.proto"))
+
+	r := makeLibraryRule("c_proto", "wktdep/consumer", []string{"c.proto"})
+	from := label.New("", "wktdep/consumer", "c_proto")
+
+	plugin := &prost.ProtocGenProstPlugin{}
+	got := plugin.ResolvePluginOptions(&protoc.PluginConfiguration{}, r, from)
+
+	wantHead := "compile_well_known_types=true"
+	wantExtern := "extern_path=.google.protobuf=::google_protobuf"
+	if len(got) == 0 || got[0] != wantHead {
+		t.Errorf("expected %q as first option, got: %v", wantHead, got)
+	}
+	found := false
+	for _, opt := range got {
+		if opt == wantExtern {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("expected %q in options, got: %v", wantExtern, got)
+	}
+}
+
+// TestResolveProstOptions_NoCompileWellKnownTypes_WhenIrrelevant verifies
+// that the flag is NOT emitted when the library neither compiles nor
+// consumes google.protobuf. Guards against accidental over-emission.
+func TestResolveProstOptions_NoCompileWellKnownTypes_WhenIrrelevant(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	resolver.Provide("proto", "prost_extern",
+		"wktneg/leaf/l.proto",
+		label.New("", "wktneg.leaf", "wktneg_leaf"))
+
+	r := makeLibraryRule("l_proto", "wktneg/leaf", []string{"l.proto"})
+	from := label.New("", "wktneg/leaf", "l_proto")
+
+	plugin := &prost.ProtocGenProstPlugin{}
+	got := plugin.ResolvePluginOptions(&protoc.PluginConfiguration{}, r, from)
+
+	for _, opt := range got {
+		if opt == "compile_well_known_types=true" {
+			t.Errorf("did not expect compile_well_known_types=true for irrelevant library, got: %v", got)
+		}
+	}
+}
+
+// TestResolveTransitiveExternPaths_MergedLibrariesOwn covers the merged-library
+// case: proto_compile/proto_compiled_sources collapses two proto_libraries into
+// one rule via the protos= attribute. Before the fix, only the first library's
+// srcs went into ownFiles, so files from the second library were treated as
+// external in the dep walk and produced a self-referential extern_path entry
+// like .google.api=::google_api. The fix is for the rule to carry the full
+// []ProtoLibrary set under MergedProtoLibrariesKey, and ResolveTransitive-
+// ExternPaths to iterate all of them.
+func TestResolveTransitiveExternPaths_MergedLibrariesOwn(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	// Two libraries sharing one proto package (mergetest.merged) — emulates
+	// e.g. google/api's annotations_proto + http_proto pair, both declaring
+	// `package google.api;`.
+	resolver.Provide("proto", "prost_extern",
+		"mergetest/merged/a.proto",
+		label.New("", "mergetest.merged", "mergetest_merged"))
+	resolver.Provide("proto", "prost_extern",
+		"mergetest/merged/b.proto",
+		label.New("", "mergetest.merged", "mergetest_merged"))
+
+	// a.proto imports b.proto — the dep walk would reach b.proto from a.proto.
+	resolver.Provide("proto", "depends",
+		"mergetest/merged/a.proto",
+		label.New("", "mergetest/merged", "b.proto"))
+
+	// Build a single merged rule directly: instead of ProtoLibraryKey only,
+	// set MergedProtoLibrariesKey with both backing libraries.
+	r := rule.NewRule("proto_library", "merged_proto")
+	libA := protoc.NewOtherProtoLibrary(nil,
+		makeLibraryRule("a_proto", "mergetest/merged", []string{"a.proto"}),
+		protoc.NewFile("mergetest/merged", "a.proto"))
+	libB := protoc.NewOtherProtoLibrary(nil,
+		makeLibraryRule("b_proto", "mergetest/merged", []string{"b.proto"}),
+		protoc.NewFile("mergetest/merged", "b.proto"))
+	r.SetPrivateAttr(protoc.MergedProtoLibrariesKey, []protoc.ProtoLibrary{libA, libB})
+
+	from := label.New("", "mergetest/merged", "merged_proto")
+
+	got := prost.ResolveTransitiveExternPaths(r, from)
+	for _, opt := range got {
+		if opt == "extern_path=.mergetest.merged=::mergetest_merged" {
+			t.Errorf("got self-referential extern_path for merged-in own library, all options: %v", got)
+		}
+	}
+	if len(got) != 0 {
+		t.Errorf("expected no extern_path entries (all files are own), got: %v", got)
+	}
+}

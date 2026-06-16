@@ -108,28 +108,39 @@ func ResolveExternPathOptionsForReferences(cfg *protoc.PluginConfiguration, r *r
 // package. Self-extern overrides are NOT included — see
 // ResolveExternPathOptionsForReferences for the variant that adds them.
 func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
-	lib := r.PrivateAttr(protoc.ProtoLibraryKey)
-	if lib == nil {
+	libraries := mergedLibraries(r)
+	if len(libraries) == 0 {
 		return nil
 	}
-	library := lib.(protoc.ProtoLibrary)
-	libRule := library.Rule()
-
-	if cached, ok := libRule.PrivateAttr(TransitiveExternPathsKey).([]string); ok {
+	// Cache off the first library's underlying rule — merge can occur but the
+	// post-merge PrivateAttrs travel with the first library's rule for back-
+	// compat with the existing cache placement.
+	cacheRule := libraries[0].Rule()
+	if cached, ok := cacheRule.PrivateAttr(TransitiveExternPathsKey).([]string); ok {
 		return cached
 	}
 
 	resolver := protoc.GlobalResolver()
 
 	ownFiles := make(map[string]bool)
-	for _, src := range library.Srcs() {
-		ownFiles[path.Join(from.Pkg, src)] = true
+	for _, library := range libraries {
+		for _, src := range library.Srcs() {
+			ownFiles[path.Join(from.Pkg, src)] = true
+		}
 	}
+	// Also treat any proto file whose registered prost_extern crate matches
+	// one of our own as own. This is a belt-and-suspenders guard for cases
+	// where ownFiles can't identify a merged-in file by path alone (the
+	// caller's `from.Pkg` is the rule's bazel package, but a merged proto_-
+	// library may sit in a different bazel package).
+	ownCrates := ownCrateNames(libraries, resolver, from)
 
 	seen := make(map[string]bool)
 	stack := list.New()
-	for _, src := range library.Srcs() {
-		stack.PushBack(path.Join(from.Pkg, src))
+	for _, library := range libraries {
+		for _, src := range library.Srcs() {
+			stack.PushBack(path.Join(from.Pkg, src))
+		}
 	}
 
 	externPathsByPackage := make(map[string]string)
@@ -154,11 +165,6 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 			continue
 		}
 
-		// Skip well-known types — prost ships these built-in.
-		if strings.HasPrefix(protofile, "google/protobuf/") {
-			continue
-		}
-
 		results := resolver.Resolve("proto", "prost_extern", protofile)
 		if len(results) == 0 {
 			continue
@@ -168,6 +174,11 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 		protoPackage := first.Label.Pkg
 		crateName := first.Label.Name
 		if protoPackage == "" {
+			continue
+		}
+		// Skip files whose crate is one of ours — they're part of the
+		// merged library set, just couldn't be matched by file path.
+		if ownCrates[crateName] {
 			continue
 		}
 		if _, exists := externPathsByPackage[protoPackage]; exists {
@@ -187,7 +198,7 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 	}
 	sort.Strings(result)
 
-	libRule.SetPrivateAttr(TransitiveExternPathsKey, result)
+	cacheRule.SetPrivateAttr(TransitiveExternPathsKey, result)
 	return result
 }
 
@@ -207,31 +218,68 @@ func mergeExternPathOptions(cfg *protoc.PluginConfiguration, externPaths []strin
 
 // ownProtoPackages returns the set of proto packages the library itself
 // contributes, computed from prost_extern resolver entries for each own
-// proto file. Cached on the library rule.
+// proto file across all merged proto_libraries. Cached on the rule.
 func ownProtoPackages(r *rule.Rule, from label.Label) map[string]bool {
-	lib := r.PrivateAttr(protoc.ProtoLibraryKey)
-	if lib == nil {
+	libraries := mergedLibraries(r)
+	if len(libraries) == 0 {
 		return nil
 	}
-	library := lib.(protoc.ProtoLibrary)
-	libRule := library.Rule()
-
-	if cached, ok := libRule.PrivateAttr(OwnProtoPackagesKey).(map[string]bool); ok {
+	cacheRule := libraries[0].Rule()
+	if cached, ok := cacheRule.PrivateAttr(OwnProtoPackagesKey).(map[string]bool); ok {
 		return cached
 	}
 
 	resolver := protoc.GlobalResolver()
 	out := make(map[string]bool)
-	for _, src := range library.Srcs() {
-		ownFile := path.Join(from.Pkg, src)
-		for _, ext := range resolver.Resolve("proto", "prost_extern", ownFile) {
-			if ext.Label.Pkg != "" {
-				out[ext.Label.Pkg] = true
+	for _, library := range libraries {
+		for _, src := range library.Srcs() {
+			ownFile := path.Join(from.Pkg, src)
+			for _, ext := range resolver.Resolve("proto", "prost_extern", ownFile) {
+				if ext.Label.Pkg != "" {
+					out[ext.Label.Pkg] = true
+				}
 			}
 		}
 	}
 
-	libRule.SetPrivateAttr(OwnProtoPackagesKey, out)
+	cacheRule.SetPrivateAttr(OwnProtoPackagesKey, out)
+	return out
+}
+
+// mergedLibraries returns the full set of proto_libraries backing a proto_-
+// compile / proto_compiled_sources rule. Prefers MergedProtoLibrariesKey
+// (set by proto_compile.Rule for every merge — see protoc.MergedProtoLibrariesKey)
+// and falls back to wrapping the single ProtoLibraryKey for callers that
+// haven't migrated (e.g. proto_rust_library, hand-constructed test rules).
+// Returns nil when the rule carries neither.
+func mergedLibraries(r *rule.Rule) []protoc.ProtoLibrary {
+	if libs, ok := r.PrivateAttr(protoc.MergedProtoLibrariesKey).([]protoc.ProtoLibrary); ok && len(libs) > 0 {
+		return libs
+	}
+	if lib, ok := r.PrivateAttr(protoc.ProtoLibraryKey).(protoc.ProtoLibrary); ok && lib != nil {
+		return []protoc.ProtoLibrary{lib}
+	}
+	return nil
+}
+
+// ownCrateNames returns the set of rust crate names registered (via
+// prost_extern) for files belonging to any of the library's merged proto_-
+// libraries. Used to recognise own-merged files in the dep walk even when
+// their on-disk path doesn't share a prefix with from.Pkg (e.g. a
+// proto_compiled_sources at //a:foo that merges in //b:bar_proto would
+// otherwise see b/bar.proto as external).
+func ownCrateNames(libraries []protoc.ProtoLibrary, resolver protoc.ImportResolver, from label.Label) map[string]bool {
+	out := make(map[string]bool)
+	for _, library := range libraries {
+		for _, src := range library.Srcs() {
+			ownFile := path.Join(from.Pkg, src)
+			for _, ext := range resolver.Resolve("proto", "prost_extern", ownFile) {
+				if ext.Label.Name != "" {
+					out[ext.Label.Name] = true
+				}
+			}
+		}
+	}
 	return out
 }
 

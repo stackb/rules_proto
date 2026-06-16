@@ -46,10 +46,50 @@ func (p *ProtocGenProstPlugin) Configure(ctx *protoc.PluginContext) *protoc.Plug
 	}
 }
 
-// ResolvePluginOptions implements the PluginOptionsResolver interface.
-// It computes extern_path options based on transitive proto file dependencies.
+// ResolvePluginOptions implements the PluginOptionsResolver interface. It
+// computes extern_path options based on transitive proto file dependencies,
+// and prepends compile_well_known_types=true whenever:
+//
+//   - one of the library's own proto packages is google.protobuf (the library
+//     is itself compiling the well-known types — without this flag prost
+//     skips them and emits a stub), or
+//   - the resolved extern_path set references .google.protobuf (the library
+//     consumes well-known types via a foreign crate; prost-build registers a
+//     default extern path to ::prost_types unless this flag clears it, which
+//     would collide with our extern_path entry and error out as "duplicate
+//     extern Protobuf path").
+//
+// Only the prost plugin needs this — protoc-gen-prost-serde (pbjson-build)
+// doesn't consult the flag and its codegen doesn't hit the collision path.
 func (p *ProtocGenProstPlugin) ResolvePluginOptions(cfg *protoc.PluginConfiguration, r *rule.Rule, from label.Label) []string {
-	return ResolveExternPathOptions(cfg, r, from)
+	opts := ResolveExternPathOptions(cfg, r, from)
+	if needsCompileWellKnownTypes(opts, ownProtoPackages(r, from)) {
+		opts = append([]string{"compile_well_known_types=true"}, opts...)
+	}
+	return opts
+}
+
+const wellKnownTypesProtoPackage = "google.protobuf"
+
+// needsCompileWellKnownTypes reports whether the prost plugin should emit
+// compile_well_known_types=true for a library based on its computed options
+// and own-package set. See ResolvePluginOptions for the rationale.
+func needsCompileWellKnownTypes(opts []string, ownPackages map[string]bool) bool {
+	if ownPackages[wellKnownTypesProtoPackage] {
+		return true
+	}
+	for _, opt := range opts {
+		if opt == "extern_path=."+wellKnownTypesProtoPackage+"=::"+protoc.RustCrateName(wellKnownTypesProtoPackage) {
+			return true
+		}
+		// More general guard: any extern_path mapping for .google.protobuf
+		// suppresses prost-build's default registration to avoid collision.
+		const prefix = "extern_path=." + wellKnownTypesProtoPackage + "="
+		if len(opt) > len(prefix) && opt[:len(prefix)] == prefix {
+			return true
+		}
+	}
+	return false
 }
 
 // shouldApply returns true if the library has files with messages or enums.
