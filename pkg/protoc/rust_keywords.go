@@ -62,6 +62,32 @@ var rustKeywords = map[string]bool{
 	"yield":    true,
 }
 
+// RustProtocOutputDir returns the directory that protoc-gen-prost (and its
+// siblings) will write outputs into for a given proto package, with Rust
+// keyword segments escaped via the r# prefix.
+//
+// Examples:
+//   - "google.type"                    → "google/r#type"
+//   - "trumid.common.auth"             → "trumid/common/auth"
+//   - ""                                → ""
+//
+// Note this is independent of the bazel package location — protoc-gen-prost
+// always derives the output path from the proto package name unless given
+// flat_output_dir=true. Use the result to compare against pc.Rel and decide
+// whether output_mappings are needed.
+func RustProtocOutputDir(pkg string) string {
+	if pkg == "" {
+		return ""
+	}
+	segments := strings.Split(pkg, ".")
+	for i, seg := range segments {
+		if rustKeywords[seg] {
+			segments[i] = "r#" + seg
+		}
+	}
+	return strings.Join(segments, "/")
+}
+
 // RustKeywordEscapeMappings computes output mappings needed when
 // protoc-gen-prost escapes Rust keywords with the r# prefix in directory paths.
 //
@@ -69,17 +95,17 @@ var rustKeywords = map[string]bool{
 // "google/r#type/" instead of "google/type/". This function returns a mapping
 // from each declared output filename to the actual prost output path.
 //
-// Returns an empty map if no package segments are Rust keywords.
+// Returns an empty map if no package segments are Rust keywords. Callers who
+// also need to handle the more general case of proto-package path differing
+// from the bazel package path should use RustProtocOutputDir directly.
 func RustKeywordEscapeMappings(pkg string, outputs []string) map[string]string {
 	if pkg == "" || len(outputs) == 0 {
 		return nil
 	}
 
-	segments := strings.Split(pkg, ".")
-
 	// Check if any segment is a Rust keyword.
 	needsEscape := false
-	for _, seg := range segments {
+	for _, seg := range strings.Split(pkg, ".") {
 		if rustKeywords[seg] {
 			needsEscape = true
 			break
@@ -89,17 +115,7 @@ func RustKeywordEscapeMappings(pkg string, outputs []string) map[string]string {
 		return nil
 	}
 
-	// Build the escaped directory path.
-	escaped := make([]string, len(segments))
-	for i, seg := range segments {
-		if rustKeywords[seg] {
-			escaped[i] = "r#" + seg
-		} else {
-			escaped[i] = seg
-		}
-	}
-	escapedDir := strings.Join(escaped, "/")
-
+	escapedDir := RustProtocOutputDir(pkg)
 	mappings := make(map[string]string, len(outputs))
 	for _, output := range outputs {
 		base := path.Base(output)

@@ -92,10 +92,15 @@ func needsCompileWellKnownTypes(opts []string, ownPackages map[string]bool) bool
 	return false
 }
 
-// shouldApply returns true if the library has files with messages or enums.
+// shouldApply returns true if the library has any file with messages, enums,
+// or services. Services are included because protoc-gen-tonic's generated
+// code is inserted into prost's {package}.rs at the @@protoc_insertion_point
+// marker (see protoc-gen-prost's append_to_file mechanism). If prost isn't
+// invoked, the file doesn't exist and tonic's insert fails with
+// "Tried to insert into file that doesn't exist".
 func (p *ProtocGenProstPlugin) shouldApply(lib protoc.ProtoLibrary) bool {
 	for _, f := range lib.Files() {
-		if f.HasMessages() || f.HasEnums() {
+		if f.HasMessages() || f.HasEnums() || f.HasServices() {
 			return true
 		}
 	}
@@ -105,12 +110,17 @@ func (p *ProtocGenProstPlugin) shouldApply(lib protoc.ProtoLibrary) bool {
 // outputs computes the output files for the plugin. Prost generates one .rs
 // file per proto package, named {proto_package}.rs. The path includes the
 // file's directory so that mergeSources can handle the rel stripping.
+//
+// Packages contributed by service-only files (no messages/enums) are
+// included — prost still emits a stub .rs containing the
+// @@protoc_insertion_point(module) marker, which tonic relies on to inject
+// its client/server code via append_to_file.
 func (p *ProtocGenProstPlugin) outputs(lib protoc.ProtoLibrary) []string {
 	seen := make(map[string]bool)
 	outputs := make([]string, 0)
 
 	for _, f := range lib.Files() {
-		if !(f.HasMessages() || f.HasEnums()) {
+		if !(f.HasMessages() || f.HasEnums() || f.HasServices()) {
 			continue
 		}
 		pkg := f.Package()

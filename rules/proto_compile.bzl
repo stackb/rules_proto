@@ -159,8 +159,21 @@ def _proto_compile_impl(ctx):
     # const <ProtoInfo> primary proto provider (for descriptor path resolution)
     primary_proto_info = proto_infos[0]
 
-    # const <list<ProtoPluginInfo>> plugins to be applied
-    plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
+    # const <list<ProtoPluginInfo>> plugins to be applied. Sort by plugin name
+    # so protoc invocation order is deterministic and independent of attr
+    # ordering. This matters when plugins use protoc's @@protoc_insertion_point
+    # mechanism — e.g. protoc-gen-tonic inserts client/server code at the
+    # `module` insertion point of protoc-gen-prost's {package}.rs output. If
+    # tonic runs before prost, the insertion target doesn't exist yet and
+    # protoc fails with "Tried to insert into file that doesn't exist" (and
+    # then "Tried to write the same file twice" when prost's subsequent
+    # create collides with the failed-insertion entry). Alphabetical sort
+    # puts protoc-gen-prost before protoc-gen-tonic, satisfying the
+    # producer-before-consumer ordering this protocol requires.
+    plugins = sorted(
+        [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins],
+        key = lambda p: p.name,
+    )
 
     # const <dict<string,string>>
     outs = {_plugin_label_key(Label(k)): v for k, v in ctx.attr.outs.items()}
