@@ -332,6 +332,197 @@ func TestResolveProstOptions_NoCompileWellKnownTypes_WhenIrrelevant(t *testing.T
 	}
 }
 
+// TestResolveTransitiveExternPaths_PerFileSiblingTypes covers the headline
+// per-file behaviour: when our per-file proto_library imports another file
+// in the *same* proto package (a sibling per-file crate), ResolveTransitive-
+// ExternPaths emits per-type extern_path entries routing each sibling type
+// through its own per-file crate, AND suppresses the per-package extern_path
+// that would otherwise hijack our own crate's references via prost's
+// longest-prefix matching.
+func TestResolveTransitiveExternPaths_PerFileSiblingTypes(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	// Two per-file crates in the same proto package. The per-file crate
+	// naming convention is `<pkg>__<file_stem>` — see protoc-gen-prost's
+	// registerExternPaths().
+	const pkg = "perfiletest.pkg"
+	const ourCrate = "perfiletest_pkg__order"
+	const siblingCrate = "perfiletest_pkg__trade"
+
+	resolver.Provide("proto", "prost_extern",
+		"perfiletest/pkg/order.proto",
+		label.New("", pkg, ourCrate))
+	resolver.Provide("proto", "prost_extern",
+		"perfiletest/pkg/trade.proto",
+		label.New("", pkg, siblingCrate))
+
+	// Per-type registry, keyed by proto package: each entry is
+	// (typeName, crateName).
+	resolver.Provide("proto", prost.PerFileTypeProvideKind, pkg,
+		label.New("", "Order", ourCrate))
+	resolver.Provide("proto", prost.PerFileTypeProvideKind, pkg,
+		label.New("", "Trade", siblingCrate))
+
+	// order.proto imports trade.proto.
+	resolver.Provide("proto", "depends",
+		"perfiletest/pkg/order.proto",
+		label.New("", "perfiletest/pkg", "trade.proto"))
+
+	r := makeLibraryRule("order_proto", "perfiletest/pkg", []string{"order.proto"})
+	from := label.New("", "perfiletest/pkg", "order_proto")
+
+	got := prost.ResolveTransitiveExternPaths(r, from)
+	sort.Strings(got)
+
+	want := []string{
+		// Per-type entry for the sibling's type — routes references in our
+		// crate to the sibling's per-file crate. The trailing `::Trade`
+		// is needed so prost lands on the type (not the crate itself) when
+		// substituting references.
+		"extern_path=.perfiletest.pkg.Trade=::perfiletest_pkg__trade::Trade",
+	}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("ResolveTransitiveExternPaths:\n got: %v\nwant: %v", got, want)
+	}
+
+	// Must NOT contain a per-package extern_path for our own package —
+	// that would hijack every type reference in our crate.
+	for _, opt := range got {
+		if opt == "extern_path=.perfiletest.pkg=::perfiletest_pkg__trade" {
+			t.Errorf("per-package extern_path for own proto package leaked: %v", got)
+		}
+	}
+
+	// Must NOT contain a per-type entry for our own type (would prevent
+	// prost from generating its definition locally).
+	for _, opt := range got {
+		if opt == "extern_path=.perfiletest.pkg.Order=::perfiletest_pkg__order" {
+			t.Errorf("per-type extern_path for own type leaked: %v", got)
+		}
+	}
+}
+
+// TestResolveTransitiveExternPaths_PerFileCrossPackageStillEmitsPerPackage
+// ensures the per-file machinery is additive: cross-*package* references
+// still get a per-package extern_path (because the dep isn't in our proto
+// package), even when we're a per-file crate ourselves.
+func TestResolveTransitiveExternPaths_PerFileCrossPackageStillEmitsPerPackage(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	// Our per-file crate.
+	resolver.Provide("proto", "prost_extern",
+		"perfilecross/own/o.proto",
+		label.New("", "perfilecross.own", "perfilecross_own__o"))
+
+	// A dep in a *different* proto package — its crate is the conventional
+	// per-package (façade) name.
+	resolver.Provide("proto", "prost_extern",
+		"perfilecross/dep/d.proto",
+		label.New("", "perfilecross.dep", "perfilecross_dep"))
+
+	// o.proto imports d.proto (cross-package).
+	resolver.Provide("proto", "depends",
+		"perfilecross/own/o.proto",
+		label.New("", "perfilecross/dep", "d.proto"))
+
+	r := makeLibraryRule("o_proto", "perfilecross/own", []string{"o.proto"})
+	from := label.New("", "perfilecross/own", "o_proto")
+
+	got := prost.ResolveTransitiveExternPaths(r, from)
+	want := []string{"extern_path=.perfilecross.dep=::perfilecross_dep"}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("ResolveTransitiveExternPaths:\n got: %v\nwant: %v", got, want)
+	}
+}
+
+// TestResolveTransitiveExternPaths_PerFileNoSiblingsRegistered verifies that
+// when no PerFileTypeProvideKind entries are registered for our proto
+// packages (i.e. the per-file plugin path wasn't taken — e.g. package-mode
+// surroundings), ResolveTransitiveExternPaths emits zero per-type entries.
+// Guards against regression for the default per-package convention.
+func TestResolveTransitiveExternPaths_PerFileNoSiblingsRegistered(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	resolver.Provide("proto", "prost_extern",
+		"perfilenone/own/own.proto",
+		label.New("", "perfilenone.own", "perfilenone_own"))
+
+	r := makeLibraryRule("own_proto", "perfilenone/own", []string{"own.proto"})
+	from := label.New("", "perfilenone/own", "own_proto")
+
+	got := prost.ResolveTransitiveExternPaths(r, from)
+	if len(got) != 0 {
+		t.Errorf("expected no extern paths, got %v", got)
+	}
+}
+
+// TestResolveTransitiveExternPaths_PerFileMultiFileOwn covers the merged
+// per-file case: our gazelle rule actually owns *multiple* per-file
+// libraries (each in its own proto_library) merged into a single
+// proto_rust_library via MergedProtoLibrariesKey. Per-type entries for
+// every type any of our own files defines must be skipped — only sibling
+// types from siblings that aren't part of our merge set should emerge.
+func TestResolveTransitiveExternPaths_PerFileMultiFileOwn(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+
+	const pkg = "perfilemulti.pkg"
+	const aCrate = "perfilemulti_pkg__a"
+	const bCrate = "perfilemulti_pkg__b"
+	const cCrate = "perfilemulti_pkg__c"
+
+	// Three sibling per-file crates in the same proto package — we own
+	// `a` and `b`, `c` is an external sibling we'd reference via its own
+	// crate. (Contrived, but it covers the multi-own / single-sibling
+	// composition.)
+	resolver.Provide("proto", "prost_extern",
+		"perfilemulti/pkg/a.proto", label.New("", pkg, aCrate))
+	resolver.Provide("proto", "prost_extern",
+		"perfilemulti/pkg/b.proto", label.New("", pkg, bCrate))
+	resolver.Provide("proto", "prost_extern",
+		"perfilemulti/pkg/c.proto", label.New("", pkg, cCrate))
+
+	resolver.Provide("proto", prost.PerFileTypeProvideKind, pkg,
+		label.New("", "A", aCrate))
+	resolver.Provide("proto", prost.PerFileTypeProvideKind, pkg,
+		label.New("", "B", bCrate))
+	resolver.Provide("proto", prost.PerFileTypeProvideKind, pkg,
+		label.New("", "C", cCrate))
+
+	// a.proto imports c.proto so c is on the dep stack; b.proto imports
+	// a.proto so the merge graph touches every file.
+	resolver.Provide("proto", "depends",
+		"perfilemulti/pkg/a.proto",
+		label.New("", "perfilemulti/pkg", "c.proto"))
+	resolver.Provide("proto", "depends",
+		"perfilemulti/pkg/b.proto",
+		label.New("", "perfilemulti/pkg", "a.proto"))
+
+	// Build a merged rule owning a.proto + b.proto. c.proto is not ours.
+	r := rule.NewRule("proto_library", "ab_merged")
+	libA := protoc.NewOtherProtoLibrary(nil,
+		makeLibraryRule("a_proto", "perfilemulti/pkg", []string{"a.proto"}),
+		protoc.NewFile("perfilemulti/pkg", "a.proto"))
+	libB := protoc.NewOtherProtoLibrary(nil,
+		makeLibraryRule("b_proto", "perfilemulti/pkg", []string{"b.proto"}),
+		protoc.NewFile("perfilemulti/pkg", "b.proto"))
+	r.SetPrivateAttr(protoc.MergedProtoLibrariesKey, []protoc.ProtoLibrary{libA, libB})
+
+	from := label.New("", "perfilemulti/pkg", "ab_merged")
+
+	got := prost.ResolveTransitiveExternPaths(r, from)
+	sort.Strings(got)
+
+	// Only C should appear (A and B are ours). The rust_path includes the
+	// trailing `::C` so prost emits `::<crate>::C` rather than `::<crate>`
+	// when substituting type references.
+	want := []string{
+		"extern_path=.perfilemulti.pkg.C=::perfilemulti_pkg__c::C",
+	}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("ResolveTransitiveExternPaths:\n got: %v\nwant: %v", got, want)
+	}
+}
+
 // TestResolveTransitiveExternPaths_MergedLibrariesOwn covers the merged-library
 // case: proto_compile/proto_compiled_sources collapses two proto_libraries into
 // one rule via the protos= attribute. Before the fix, only the first library's

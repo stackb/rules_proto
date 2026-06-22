@@ -17,6 +17,7 @@ var rustLibraryKindInfo = rule.KindInfo{
 		"srcs":      true,
 		"deps":      true,
 		"reexports": true,
+		"per_file":  true,
 	},
 	NonEmptyAttrs: map[string]bool{
 		"srcs": true,
@@ -28,12 +29,17 @@ var rustLibraryKindInfo = rule.KindInfo{
 
 // RustLibrary implements RuleProvider for 'proto_rust_library'-derived rules.
 type RustLibrary struct {
-	KindName             string
-	RuleNameSuffix       string
-	Outputs              []string
-	Config               *protoc.ProtocConfiguration
-	RuleConfig           *protoc.LanguageRuleConfig
-	Resolver             protoc.DepsResolver
+	KindName       string
+	RuleNameSuffix string
+	Outputs        []string
+	Config         *protoc.ProtocConfiguration
+	RuleConfig     *protoc.LanguageRuleConfig
+	Resolver       protoc.DepsResolver
+	// PerFile, when true, tells the proto_rust_library macro to expand
+	// `srcs` into one rust_library per .proto file plus a per-package
+	// façade. Set from the surrounding gazelle:proto file mode — see
+	// ProtocConfiguration.IsProtoFileMode.
+	PerFile              bool
 	id                   label.Label
 	protoLibrariesByRule map[label.Label][]protoc.ProtoLibrary
 }
@@ -164,6 +170,12 @@ func (s *RustLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	}
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)
+	}
+	if s.PerFile {
+		// Tell the proto_rust_library macro to expand srcs into per-file
+		// crates + a per-package façade. See macro docstring in
+		// bazel_tools/rust/proto_rust_library.bzl.
+		newRule.SetAttr("per_file", true)
 	}
 
 	return newRule

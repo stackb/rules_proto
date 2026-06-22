@@ -318,6 +318,14 @@ def _proto_compile_impl(ctx):
 
     replaced_args = _ctx_replace_args(ctx, _uniq(args))
     final_args = ctx.actions.args()
+    # protoc reads `@paramfile` with one arg per line and NO shell quoting.
+    # Bazel's default "shell" format wraps each arg in single quotes, which
+    # protoc treats as input filenames (the leading `'` defeats the `--flag`
+    # prefix match) and the action fails with "Missing output directives".
+    # The bug stays latent until the args list overflows the command line and
+    # bazel actually materializes the param file — typically only triggered
+    # once a rule accumulates many --xxx_opt= entries.
+    final_args.set_param_file_format("multiline")
     final_args.use_param_file("@%s", use_always = False)
     final_args.add_all(replaced_args)
 

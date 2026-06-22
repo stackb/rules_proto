@@ -134,6 +134,14 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 	// caller's `from.Pkg` is the rule's bazel package, but a merged proto_-
 	// library may sit in a different bazel package).
 	ownCrates := ownCrateNames(libraries, resolver, from)
+	// Per-file mode: sibling .proto files within the same proto package
+	// resolve to *different* per-file crates, so the ownCrates check above
+	// doesn't catch them. Tracking our own proto packages lets us suppress
+	// the per-package extern_path emission for siblings — they're routed
+	// per-type by perFileSiblingTypeExternPaths below. Without this, a
+	// `.<our_pkg>=::<sibling_crate>` entry would (via prost's longest-
+	// prefix matching) hijack every type reference in our own crate.
+	ownPackages := ownProtoPackages(r, from)
 
 	seen := make(map[string]bool)
 	stack := list.New()
@@ -181,6 +189,13 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 		if ownCrates[crateName] {
 			continue
 		}
+		// Skip same-proto-package siblings in per-file mode. Per-type
+		// extern_paths handle them downstream; a per-package entry here
+		// would hijack our own crate's references via prost's longest-
+		// prefix matching.
+		if ownPackages[protoPackage] {
+			continue
+		}
 		if _, exists := externPathsByPackage[protoPackage]; exists {
 			continue
 		}
@@ -196,10 +211,66 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 	for _, ep := range externPathsByPackage {
 		result = append(result, ep)
 	}
+
+	// In per-file mode, also emit per-type extern_path entries for sibling
+	// per-file crates in the same proto package — without these, prost
+	// emits a relative path for cross-file same-package references that
+	// won't resolve once each file lives in its own crate. The siblings'
+	// types were registered against PerFileTypeProvideKind keyed by proto
+	// package; we look them up by our own packages and skip entries
+	// whose crate is one of ours.
+	result = append(result, perFileSiblingTypeExternPaths(resolver, ownPackages, ownCrates)...)
+
 	sort.Strings(result)
 
 	cacheRule.SetPrivateAttr(TransitiveExternPathsKey, result)
 	return result
+}
+
+// perFileSiblingTypeExternPaths emits extern_path entries that route same-
+// package cross-file type references through the correct sibling per-file
+// crate. Returns nil if no per-file type entries are registered (the
+// common case — only per-file-mode libraries register them).
+//
+// `ownPackages` is the set of proto packages we contribute (derived via
+// `ownProtoPackages` from the resolver, not from File.Package() — the
+// parsed proto-package field isn't reliably populated outside the real
+// gazelle Generate pass, e.g. in unit tests).
+func perFileSiblingTypeExternPaths(
+	resolver protoc.ImportResolver,
+	ownPackages map[string]bool,
+	ownCrates map[string]bool,
+) []string {
+	var out []string
+	seen := make(map[string]bool)
+	for pkg := range ownPackages {
+		for _, ent := range resolver.Resolve("proto", PerFileTypeProvideKind, pkg) {
+			typeName := ent.Label.Pkg
+			crateName := ent.Label.Name
+			if typeName == "" || crateName == "" {
+				continue
+			}
+			// Skip types declared in our own crate(s) — prost emits them
+			// locally; an extern_path here would tell prost to skip
+			// generating the definition entirely.
+			if ownCrates[crateName] {
+				continue
+			}
+			// Per-type extern_path keys are EXACT-matched by prost-build, which
+			// returns the rust_path verbatim — without appending the trailing
+			// type segment. Spelling the type name into the rust_path so the
+			// generated code lands on `::<crate>::<TypeName>` rather than
+			// `::<crate>` (the latter would refer to the crate itself, not
+			// the type, and fails compilation as E0425/E0433).
+			entry := "extern_path=." + pkg + "." + typeName + "=::" + crateName + "::" + typeName
+			if seen[entry] {
+				continue
+			}
+			seen[entry] = true
+			out = append(out, entry)
+		}
+	}
+	return out
 }
 
 // mergeExternPathOptions strips any pre-existing extern_path= entries from
