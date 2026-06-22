@@ -5,6 +5,8 @@ import (
 	"sort"
 	"strings"
 
+	eproto "github.com/emicklei/proto"
+
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 
@@ -90,14 +92,20 @@ func needsCompileWellKnownTypes(opts []string, ownPackages map[string]bool) bool
 	if ownPackages[wellKnownTypesProtoPackage] {
 		return true
 	}
+	// Match any extern_path entry targeting `.google.protobuf` or any
+	// `.google.protobuf.<Type>` — both forms would collide with the
+	// defaults prost-build registers when prost_types is on, so
+	// `compile_well_known_types=true` must be set to suppress them.
+	pkgPrefix := "extern_path=." + wellKnownTypesProtoPackage
 	for _, opt := range opts {
-		if opt == "extern_path=."+wellKnownTypesProtoPackage+"=::"+protoc.RustCrateName(wellKnownTypesProtoPackage) {
-			return true
+		if !strings.HasPrefix(opt, pkgPrefix) {
+			continue
 		}
-		// More general guard: any extern_path mapping for .google.protobuf
-		// suppresses prost-build's default registration to avoid collision.
-		const prefix = "extern_path=." + wellKnownTypesProtoPackage + "="
-		if len(opt) > len(prefix) && opt[:len(prefix)] == prefix {
+		// Next char after the prefix must be either `=` (per-package
+		// `extern_path=.google.protobuf=...`) or `.` (per-type
+		// `extern_path=.google.protobuf.Foo=...`).
+		next := opt[len(pkgPrefix):]
+		if strings.HasPrefix(next, "=") || strings.HasPrefix(next, ".") {
 			return true
 		}
 	}
@@ -269,13 +277,18 @@ func (p *ProtocGenProstPlugin) registerExternPaths(lib protoc.ProtoLibrary, perF
 		}
 		stem := strings.TrimSuffix(f.Basename, ".proto")
 		perFileCrate := facadeCrate + "__" + stem
+
+		// Register top-level AND nested messages/enums. Why nested:
+		// prost-build's `resolve_ident` tries an exact match first and
+		// falls back to prefix matching only when no exact key exists.
+		// Prefix-match re-applies `to_snake_case` to every rust_path
+		// segment, which collapses our per-file crate's `__<stem>` to
+		// `_<stem>` and produces a non-existent crate reference. By
+		// registering the nested type with an exact key, the
+		// exact-match branch fires and the rust_path is returned
+		// verbatim — `__` survives.
 		for _, msg := range f.Messages() {
-			resolver.Provide(
-				"proto",
-				PerFileTypeProvideKind,
-				pkg.Name,
-				label.New("", msg.Name, perFileCrate),
-			)
+			registerNestedTypes(resolver, pkg.Name, msg, msg.Name, perFileCrate)
 		}
 		for _, enum := range f.Enums() {
 			resolver.Provide(
@@ -283,6 +296,42 @@ func (p *ProtocGenProstPlugin) registerExternPaths(lib protoc.ProtoLibrary, perF
 				PerFileTypeProvideKind,
 				pkg.Name,
 				label.New("", enum.Name, perFileCrate),
+			)
+		}
+	}
+}
+
+// registerNestedTypes walks a message's nested messages and enums (recursively)
+// and registers each under PerFileTypeProvideKind with a dotted type-path key
+// rooted at the supplied `prefix` (the message's own name on first call).
+//
+// Each registration's Label.Pkg holds the full dotted type path
+// (e.g. `Outer.Inner` or `Outer.Inner.MoreNested`); perFileSiblingTypeExternPaths
+// later converts the dots to `::` and upper-camels each segment when emitting
+// the extern_path rust_path.
+func registerNestedTypes(
+	resolver protoc.ImportResolver,
+	protoPackage string,
+	msg eproto.Message,
+	prefix string,
+	perFileCrate string,
+) {
+	resolver.Provide(
+		"proto",
+		PerFileTypeProvideKind,
+		protoPackage,
+		label.New("", prefix, perFileCrate),
+	)
+	for _, el := range msg.Elements {
+		switch e := el.(type) {
+		case *eproto.Message:
+			registerNestedTypes(resolver, protoPackage, *e, prefix+"."+e.Name, perFileCrate)
+		case *eproto.Enum:
+			resolver.Provide(
+				"proto",
+				PerFileTypeProvideKind,
+				protoPackage,
+				label.New("", prefix+"."+e.Name, perFileCrate),
 			)
 		}
 	}

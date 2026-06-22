@@ -12,6 +12,7 @@ import (
 	"github.com/stackb/rules_proto/v4/pkg/protoc"
 )
 
+
 const (
 	// TransitiveExternPathsKey caches the dependency-only extern_path option
 	// strings on the library rule's private attrs.
@@ -107,6 +108,12 @@ func ResolveExternPathOptionsForReferences(cfg *protoc.PluginConfiguration, r *r
 // proto files and builds an extern_path option string for each dependency
 // package. Self-extern overrides are NOT included — see
 // ResolveExternPathOptionsForReferences for the variant that adds them.
+//
+// Per-file routing is gated on the **upstream** package's mode (i.e. whether
+// it has PerFileTypeProvideKind entries registered). Consumer mode is
+// irrelevant: per-package consumers of per-file upstreams also need the
+// per-type extern_paths because the upstream's facade label no longer
+// exists.
 func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 	libraries := mergedLibraries(r)
 	if len(libraries) == 0 {
@@ -200,6 +207,19 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 			continue
 		}
 
+		// Suppress the per-package facade extern_path whenever the
+		// upstream package is in per-file mode (has any
+		// PerFileTypeProvideKind entries). With the facade gone, that
+		// label no longer exists; references route through per-type
+		// extern_paths emitted by perFileCrossPackageTypeExternPaths
+		// below instead. This applies whether the consumer itself is
+		// per-file or per-package — a per-package consumer of a per-
+		// file upstream still needs per-type routing because there's
+		// no facade to depend on.
+		if hasPerFileTypeEntries(resolver, protoPackage) {
+			continue
+		}
+
 		// extern_path=.{proto_package}=::{crate_name}
 		// The crate exposes all generated types at its root (see the
 		// proto_rust_library Starlark macro), so no nested module path is
@@ -212,19 +232,226 @@ func ResolveTransitiveExternPaths(r *rule.Rule, from label.Label) []string {
 		result = append(result, ep)
 	}
 
-	// In per-file mode, also emit per-type extern_path entries for sibling
-	// per-file crates in the same proto package — without these, prost
-	// emits a relative path for cross-file same-package references that
-	// won't resolve once each file lives in its own crate. The siblings'
-	// types were registered against PerFileTypeProvideKind keyed by proto
-	// package; we look them up by our own packages and skip entries
-	// whose crate is one of ours.
+	// Per-type extern_path entries for sibling per-file crates in the same
+	// proto package — without these, prost emits a relative path for
+	// cross-file same-package references that won't resolve once each
+	// file lives in its own crate. The siblings' types were registered
+	// against PerFileTypeProvideKind keyed by proto package; we look them
+	// up by our own packages and skip entries whose crate is one of ours.
 	result = append(result, perFileSiblingTypeExternPaths(resolver, ownPackages, ownCrates)...)
+
+	// Per-type entries for cross-package per-file upstreams. Emitted
+	// unconditionally — `perFileCrossPackageTypeExternPaths` walks the
+	// transitive `seen` set and filters per-upstream-mode internally.
+	result = append(result, perFileCrossPackageTypeExternPaths(resolver, ownPackages, seen)...)
 
 	sort.Strings(result)
 
 	cacheRule.SetPrivateAttr(TransitiveExternPathsKey, result)
 	return result
+}
+
+// hasPerFileTypeEntries reports whether the resolver has any
+// PerFileTypeProvideKind entry for the given proto package. Used as the
+// per-file-mode detector for upstream packages.
+func hasPerFileTypeEntries(resolver protoc.ImportResolver, protoPackage string) bool {
+	return len(resolver.Resolve("proto", PerFileTypeProvideKind, protoPackage)) > 0
+}
+
+// perFileCrossPackageTypeExternPaths emits per-type extern_path entries for
+// every cross-package per-file upstream that appears in the transitive
+// import graph walked above (the `seen` set). For each upstream proto file
+// we look up its package via prost_extern, then enumerate the package's
+// PerFileTypeProvideKind entries to emit one extern_path per declared type.
+//
+// Same-package types are not emitted here (they're handled by
+// perFileSiblingTypeExternPaths).
+func perFileCrossPackageTypeExternPaths(
+	resolver protoc.ImportResolver,
+	ownPackages map[string]bool,
+	seen map[string]bool,
+) []string {
+	out := make([]string, 0)
+	emitted := make(map[string]bool)
+	emittedPackages := make(map[string]bool)
+
+	for protofile := range seen {
+		externs := resolver.Resolve("proto", "prost_extern", protofile)
+		if len(externs) == 0 {
+			continue
+		}
+		protoPackage := externs[0].Label.Pkg
+		if protoPackage == "" || ownPackages[protoPackage] || emittedPackages[protoPackage] {
+			continue
+		}
+		entries := resolver.Resolve("proto", PerFileTypeProvideKind, protoPackage)
+		if len(entries) == 0 {
+			continue
+		}
+		emittedPackages[protoPackage] = true
+		for _, ent := range entries {
+			typeName := ent.Label.Pkg
+			crateName := ent.Label.Name
+			if typeName == "" || crateName == "" {
+				continue
+			}
+			entry := "extern_path=." + protoPackage + "." + typeName + "=::" + crateName + "::" + toUpperCamel(typeName)
+			if emitted[entry] {
+				continue
+			}
+			emitted[entry] = true
+			out = append(out, entry)
+		}
+	}
+	return out
+}
+
+// toUpperCamel converts a proto type name to the Rust UpperCamel form prost
+// emits. Matches prost-build's `to_upper_camel` (which delegates to heck's
+// `ToUpperCamelCase`): consecutive runs of uppercase letters are treated as
+// a single word, with a new word starting when an uppercase letter is
+// followed by a lowercase letter (e.g. `PIKInfo` → `PikInfo`, `URLLoader` →
+// `UrlLoader`).
+//
+// The transform also splits on `_` and `-` and capitalizes each resulting
+// word's first character.
+func toUpperCamel(name string) string {
+	runes := []rune(name)
+	if len(runes) == 0 {
+		return name
+	}
+	var words []string
+	start := 0
+	for i := 0; i < len(runes); i++ {
+		r := runes[i]
+		if r == '_' || r == '-' {
+			if start < i {
+				words = append(words, string(runes[start:i]))
+			}
+			start = i + 1
+			continue
+		}
+		if i == 0 {
+			continue
+		}
+		prev := runes[i-1]
+		// lower → upper boundary: e.g. `MyType` splits at `T`.
+		if !unicodeUpper(prev) && unicodeUpper(r) {
+			words = append(words, string(runes[start:i]))
+			start = i
+			continue
+		}
+		// Acronym tail: prev=upper, curr=upper, next=lower splits before curr.
+		// e.g. `PIKInfo` at i=3 ('I'): prev='K'(upper), curr='I'(upper),
+		// next='n'(lower) → boundary before 'I' so the word is `PIK`.
+		if unicodeUpper(prev) && unicodeUpper(r) && i+1 < len(runes) && unicodeLower(runes[i+1]) {
+			words = append(words, string(runes[start:i]))
+			start = i
+		}
+	}
+	if start < len(runes) {
+		words = append(words, string(runes[start:]))
+	}
+
+	var b strings.Builder
+	for _, w := range words {
+		if w == "" {
+			continue
+		}
+		wr := []rune(w)
+		b.WriteRune(unicodeToUpper(wr[0]))
+		for _, r := range wr[1:] {
+			b.WriteRune(unicodeToLower(r))
+		}
+	}
+	return b.String()
+}
+
+func unicodeUpper(r rune) bool   { return r >= 'A' && r <= 'Z' }
+func unicodeLower(r rune) bool   { return r >= 'a' && r <= 'z' }
+func unicodeToUpper(r rune) rune { return rune(strings.ToUpper(string(r))[0]) }
+func unicodeToLower(r rune) rune { return rune(strings.ToLower(string(r))[0]) }
+
+// protoTypePathToRustPath converts a dotted proto type path like
+// `Outer.Inner.Leaf` to the matching Rust path `outer::inner::Leaf` —
+// every segment except the last becomes a snake-cased module name
+// (matching prost-build's nested-message module layout), and the last
+// segment becomes the upper-camel-cased struct/enum name. A single-
+// segment input like `MyMessage` is returned as `MyMessage`.
+func protoTypePathToRustPath(typePath string) string {
+	parts := strings.Split(typePath, ".")
+	if len(parts) == 1 {
+		return toUpperCamel(parts[0])
+	}
+	var b strings.Builder
+	for i, p := range parts {
+		if i > 0 {
+			b.WriteString("::")
+		}
+		if i == len(parts)-1 {
+			b.WriteString(toUpperCamel(p))
+		} else {
+			// Module name: snake_case of the upper-camel form, matching
+			// prost-build's `push_mod(&to_snake(...))` convention for
+			// nested messages.
+			b.WriteString(toSnakeFromCamel(p))
+		}
+	}
+	return b.String()
+}
+
+// toSnakeFromCamel converts an UpperCamel/lowerCamel/UNDERSCORE_CASE/`PIKInfo`
+// identifier to snake_case. Mirrors heck's `ToSnakeCase` behavior used by
+// prost-build for nested-message module names.
+func toSnakeFromCamel(s string) string {
+	// Reuse our word-boundary detection (it's the same as toUpperCamel's),
+	// then lowercase each word and join with `_`.
+	runes := []rune(s)
+	if len(runes) == 0 {
+		return s
+	}
+	var words []string
+	start := 0
+	for i := 0; i < len(runes); i++ {
+		r := runes[i]
+		if r == '_' || r == '-' {
+			if start < i {
+				words = append(words, string(runes[start:i]))
+			}
+			start = i + 1
+			continue
+		}
+		if i == 0 {
+			continue
+		}
+		prev := runes[i-1]
+		if !unicodeUpper(prev) && unicodeUpper(r) {
+			words = append(words, string(runes[start:i]))
+			start = i
+			continue
+		}
+		if unicodeUpper(prev) && unicodeUpper(r) && i+1 < len(runes) && unicodeLower(runes[i+1]) {
+			words = append(words, string(runes[start:i]))
+			start = i
+		}
+	}
+	if start < len(runes) {
+		words = append(words, string(runes[start:]))
+	}
+
+	var b strings.Builder
+	for i, w := range words {
+		if w == "" {
+			continue
+		}
+		if i > 0 {
+			b.WriteRune('_')
+		}
+		for _, r := range w {
+			b.WriteRune(unicodeToLower(r))
+		}
+	}
+	return b.String()
 }
 
 // perFileSiblingTypeExternPaths emits extern_path entries that route same-
@@ -262,7 +489,13 @@ func perFileSiblingTypeExternPaths(
 			// generated code lands on `::<crate>::<TypeName>` rather than
 			// `::<crate>` (the latter would refer to the crate itself, not
 			// the type, and fails compilation as E0425/E0433).
-			entry := "extern_path=." + pkg + "." + typeName + "=::" + crateName + "::" + typeName
+			//
+			// Nested types arrive as dotted paths (e.g. `Outer.Inner`). Each
+			// non-final segment becomes a snake-cased Rust module
+			// (`outer::Inner`), matching prost-build's nested-message layout.
+			// The leaf segment is upper-camel-cased — proto names like
+			// `PIKInfo` become `PikInfo` in generated Rust.
+			entry := "extern_path=." + pkg + "." + typeName + "=::" + crateName + "::" + protoTypePathToRustPath(typeName)
 			if seen[entry] {
 				continue
 			}

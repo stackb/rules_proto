@@ -28,6 +28,7 @@ go_library(
 go_test(
     name = "protobuf_test",
     srcs = [
+        "config_filemode_test.go",
         "generate_test.go",
         "override_test.go",
     ],
@@ -37,6 +38,7 @@ go_test(
         "@bazel_gazelle//config",
         "@bazel_gazelle//label",
         "@bazel_gazelle//language",
+        "@bazel_gazelle//language/proto",
         "@bazel_gazelle//resolve",
         "@bazel_gazelle//rule",
         "@bazel_gazelle//testtools",

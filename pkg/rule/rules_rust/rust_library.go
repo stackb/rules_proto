@@ -1,7 +1,6 @@
 package rules_rust
 
 import (
-	"path"
 	"sort"
 	"strings"
 
@@ -15,11 +14,9 @@ import (
 
 var rustLibraryKindInfo = rule.KindInfo{
 	MergeableAttrs: map[string]bool{
-		"srcs":             true,
-		"deps":             true,
-		"reexports":        true,
-		"per_file":         true,
-		"per_file_imports": true,
+		"srcs":      true,
+		"deps":      true,
+		"reexports": true,
 	},
 	NonEmptyAttrs: map[string]bool{
 		"srcs": true,
@@ -30,18 +27,18 @@ var rustLibraryKindInfo = rule.KindInfo{
 }
 
 // RustLibrary implements RuleProvider for 'proto_rust_library'-derived rules.
+//
+// In `gazelle:proto file` packages each per-file proto_library produces its
+// own RustLibrary (see Name() — the rule name carries the file stem). The
+// `proto_rust_library` Starlark macro is a plain rust_library wrapper; no
+// per-file expansion happens at the macro layer.
 type RustLibrary struct {
-	KindName       string
-	RuleNameSuffix string
-	Outputs        []string
-	Config         *protoc.ProtocConfiguration
-	RuleConfig     *protoc.LanguageRuleConfig
-	Resolver       protoc.DepsResolver
-	// PerFile, when true, tells the proto_rust_library macro to expand
-	// `srcs` into one rust_library per .proto file plus a per-package
-	// façade. Set from the surrounding gazelle:proto file mode — see
-	// ProtocConfiguration.IsProtoFileMode.
-	PerFile              bool
+	KindName             string
+	RuleNameSuffix       string
+	Outputs              []string
+	Config               *protoc.ProtocConfiguration
+	RuleConfig           *protoc.LanguageRuleConfig
+	Resolver             protoc.DepsResolver
 	id                   label.Label
 	protoLibrariesByRule map[label.Label][]protoc.ProtoLibrary
 }
@@ -52,11 +49,36 @@ func (s *RustLibrary) Kind() string {
 }
 
 // Name implements part of the RuleProvider interface.
+//
+// In per-file mode the rule name carries the file stem suffix
+// (`<crate>__<stem>`) so each per-file proto_library in the same proto
+// package produces a uniquely-named rule. That makes the merge branch in
+// `Rule()` a no-op for per-file callers and lets gazelle emit one
+// rust_library per .proto file — the dep DAG then mirrors the
+// (acyclic) proto-file import graph, dissolving the cross-package
+// cycles that motivated the per-file scheme.
+//
+// In per-package mode the name is the proto package's sanitized crate
+// name and merge across proto_libraries with the same package keeps
+// working as before.
 func (s *RustLibrary) Name() string {
-	if pkg := s.Pkg(); pkg != "" {
-		return protoc.RustCrateName(pkg)
+	pkg := s.Pkg()
+	if pkg == "" {
+		return s.Config.Library.BaseName() + s.RuleNameSuffix
 	}
-	return s.Config.Library.BaseName() + s.RuleNameSuffix
+	base := protoc.RustCrateName(pkg)
+	if !s.Config.IsProtoFileMode() {
+		return base
+	}
+	// Per-file proto_libraries typically contain one content-bearing
+	// .proto plus a shared co-included `package.proto` (no codegen).
+	// Suffix the rule name with the first content-bearing file's stem.
+	for _, f := range s.Config.Library.Files() {
+		if f.HasMessages() || f.HasEnums() || f.HasServices() {
+			return base + "__" + strings.TrimSuffix(f.Basename, ".proto")
+		}
+	}
+	return base
 }
 
 // Pkg returns the proto package name of the first file in the library, or "".
@@ -173,12 +195,6 @@ func (s *RustLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	if len(visibility) > 0 {
 		newRule.SetAttr("visibility", visibility)
 	}
-	if s.PerFile {
-		// Tell the proto_rust_library macro to expand srcs into per-file
-		// crates + a per-package façade. See macro docstring in
-		// bazel_tools/rust/proto_rust_library.bzl.
-		newRule.SetAttr("per_file", true)
-	}
 
 	return newRule
 }
@@ -247,100 +263,4 @@ func (s *RustLibrary) Resolve(c *config.Config, ix *resolve.RuleIndex, r *rule.R
 	if reexports := s.Reexports(); len(reexports) > 0 {
 		r.SetAttr("reexports", reexports)
 	}
-	if s.PerFile {
-		if perFileImports := s.PerFileImports(); len(perFileImports) > 0 {
-			r.SetAttr("per_file_imports", protoc.MakeStringListDict(perFileImports))
-		}
-	}
-}
-
-// PerFileImports returns a stem→sibling-stems map describing which per-file
-// crates each per-file crate in this library must depend on at the bazel
-// dep-graph level.
-//
-// Per-file mode emits one rust_library per .proto file (`<facade>__<stem>`).
-// When a file's prost/serde/tonic codegen references a type defined in a
-// sibling file in the same proto package, the resulting Rust code uses an
-// absolute path through the sibling's per-file crate (e.g.
-// `::omnistac_uss_proto__uss_stream::UssStream`) because the extern_path
-// registry routes same-package cross-file references that way. Without an
-// explicit `deps =` edge for the sibling crate, the consuming per-file
-// crate fails to compile with `cannot find crate`.
-//
-// The mapping is computed once per rule (over all merged proto_libraries
-// tracked under `protoLibrariesByRule`) so it survives the rule-merge that
-// collapses N per-file proto_libraries into one proto_rust_library.
-//
-// Cross-package imports are NOT recorded here — they're already handled by
-// the cross-package façade entry the gazelle resolver adds to `deps`.
-func (s *RustLibrary) PerFileImports() map[string][]string {
-	if !s.PerFile {
-		return nil
-	}
-
-	libs, ok := s.protoLibrariesByRule[s.id]
-	if !ok || len(libs) == 0 {
-		libs = []protoc.ProtoLibrary{s.Config.Library}
-	}
-
-	// Build the set of stems that actually correspond to per-file crates in
-	// this package — i.e. files that emit codegen (have messages, enums, or
-	// services). Files like a shared `package.proto` are not crates and must
-	// not be listed as deps.
-	crateStems := make(map[string]bool)
-	for _, lib := range libs {
-		for _, f := range lib.Files() {
-			if !f.HasMessages() && !f.HasEnums() && !f.HasServices() {
-				continue
-			}
-			crateStems[strings.TrimSuffix(f.Basename, ".proto")] = true
-		}
-	}
-
-	result := make(map[string][]string)
-	seen := make(map[string]map[string]bool)
-
-	for _, lib := range libs {
-		for _, f := range lib.Files() {
-			if !f.HasMessages() && !f.HasEnums() && !f.HasServices() {
-				continue
-			}
-			ownStem := strings.TrimSuffix(f.Basename, ".proto")
-			if seen[ownStem] == nil {
-				seen[ownStem] = make(map[string]bool)
-			}
-			for _, imp := range f.Imports() {
-				impDir := path.Dir(imp.Filename)
-				if impDir == "." {
-					impDir = ""
-				}
-				if impDir != f.Dir {
-					// Cross-bazel-package import — handled by the façade
-					// dep, not by an inter-per-file edge.
-					continue
-				}
-				impStem := strings.TrimSuffix(path.Base(imp.Filename), ".proto")
-				if impStem == ownStem {
-					continue
-				}
-				if !crateStems[impStem] {
-					// Sibling has no codegen (e.g. shared `package.proto`)
-					// so there's no per-file crate to depend on.
-					continue
-				}
-				if seen[ownStem][impStem] {
-					continue
-				}
-				seen[ownStem][impStem] = true
-				result[ownStem] = append(result[ownStem], impStem)
-			}
-		}
-	}
-
-	for stem, sibs := range result {
-		sort.Strings(sibs)
-		result[stem] = sibs
-	}
-
-	return result
 }

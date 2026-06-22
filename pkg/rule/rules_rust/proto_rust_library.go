@@ -94,7 +94,6 @@ func (s *protoRustLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *proto
 		RuleConfig:           cfg,
 		Config:               pc,
 		Resolver:             protoc.ResolveDepsAttr("deps", false),
-		PerFile:              pc.IsProtoFileMode(),
 		protoLibrariesByRule: s.protoLibrariesByRule,
 	}
 	rl.id = label.New("", pc.Rel, rl.Name())
