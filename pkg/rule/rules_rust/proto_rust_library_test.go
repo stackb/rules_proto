@@ -223,3 +223,67 @@ func formatRules(rules ...*rule.Rule) string {
 	}
 	return string(file.Format())
 }
+
+// TestPerFileImports_SameBazelPackageOnly verifies that PerFileImports records
+// only same-bazel-package sibling stems (cross-package imports are handled by
+// the façade dep emitted by the resolver). Sibling stems without codegen
+// (e.g. a shared `package.proto`) must be excluded so they don't produce
+// invalid `:<facade>__package` deps.
+func TestPerFileImports_SameBazelPackageOnly(t *testing.T) {
+	// uss_service.proto imports uss_stream.proto (same dir) AND
+	// google/protobuf/empty.proto (cross-package). It also shares the dir
+	// with package.proto, which is NOT imported and has no codegen.
+	serviceFile := makeFile("omnistac/uss/proto", "uss_service.proto", `
+syntax = "proto3";
+package omnistac.uss.proto;
+import "omnistac/uss/proto/uss_stream.proto";
+import "google/protobuf/empty.proto";
+service Uss { rpc Stream (UssStream) returns (UssStream); }
+`)
+	streamFile := makeFile("omnistac/uss/proto", "uss_stream.proto", `
+syntax = "proto3";
+package omnistac.uss.proto;
+message UssStream {}
+`)
+	packageFile := makeFile("omnistac/uss/proto", "package.proto", `
+syntax = "proto3";
+package omnistac.uss.proto;
+`)
+
+	rl := &RustLibrary{
+		PerFile: true,
+		id:      label.New("", "omnistac/uss/proto", "omnistac_uss_proto"),
+		Config: &protoc.ProtocConfiguration{
+			Library: makeTestProtoLibrary(serviceFile, streamFile, packageFile),
+		},
+		protoLibrariesByRule: map[label.Label][]protoc.ProtoLibrary{},
+	}
+	rl.protoLibrariesByRule[rl.id] = []protoc.ProtoLibrary{rl.Config.Library}
+
+	got := rl.PerFileImports()
+	want := map[string][]string{
+		"uss_service": {"uss_stream"},
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("PerFileImports mismatch (-want +got):\n%s", diff)
+	}
+}
+
+// TestPerFileImports_DisabledOutsidePerFileMode verifies the method is a
+// no-op when PerFile=false, so per-package-mode rules don't accidentally
+// pick up a per_file_imports attribute.
+func TestPerFileImports_DisabledOutsidePerFileMode(t *testing.T) {
+	rl := &RustLibrary{
+		PerFile: false,
+		Config: &protoc.ProtocConfiguration{
+			Library: makeTestProtoLibrary(
+				makeFile("p/k", "a.proto", `syntax = "proto3"; package p.k; import "p/k/b.proto"; message A {}`),
+				makeFile("p/k", "b.proto", `syntax = "proto3"; package p.k; message B {}`),
+			),
+		},
+		protoLibrariesByRule: map[label.Label][]protoc.ProtoLibrary{},
+	}
+	if got := rl.PerFileImports(); got != nil {
+		t.Errorf("PerFileImports should be nil when PerFile=false, got %v", got)
+	}
+}
