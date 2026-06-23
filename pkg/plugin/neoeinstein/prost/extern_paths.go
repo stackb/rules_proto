@@ -295,7 +295,13 @@ func perFileCrossPackageTypeExternPaths(
 			if typeName == "" || crateName == "" {
 				continue
 			}
-			entry := "extern_path=." + protoPackage + "." + typeName + "=::" + crateName + "::" + toUpperCamel(typeName)
+			// `typeName` is a dotted proto type path (e.g. `Outer.Inner`)
+			// for nested types. Convert through protoTypePathToRustPath so
+			// the rust_path becomes `outer::Inner`, matching prost-build's
+			// nested-module emission. The previous direct toUpperCamel
+			// call left the dot literal in the rust_path, producing the
+			// syntactically invalid `::<crate>::Outer.Inner`.
+			entry := "extern_path=." + protoPackage + "." + typeName + "=::" + crateName + "::" + protoTypePathToRustPath(typeName)
 			if emitted[entry] {
 				continue
 			}

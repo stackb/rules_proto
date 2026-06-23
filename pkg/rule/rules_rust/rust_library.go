@@ -235,6 +235,16 @@ func (s *RustLibrary) Reexports() []string {
 				// via the regular extern_path mechanism.
 				continue
 			}
+			// Skip parents that are in per-file mode. Their facade crate
+			// (impCrate) no longer exists, and the per-type extern_paths
+			// emitted by perFileCrossPackageTypeExternPaths route the
+			// parent-package references at the specific per-file crates
+			// — so the lib.rs `pub use ::<facade>::*;` re-export shim is
+			// neither needed nor satisfiable. Kind constant inlined to
+			// avoid a dep cycle on the prost plugin package.
+			if len(resolver.Resolve("proto", "prost_extern_per_file_type", impPkg)) > 0 {
+				continue
+			}
 			entry := impCrate + "=" + impPkg
 			if seen[entry] {
 				continue
