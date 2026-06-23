@@ -318,6 +318,7 @@ def _proto_compile_impl(ctx):
 
     replaced_args = _ctx_replace_args(ctx, _uniq(args))
     final_args = ctx.actions.args()
+
     # protoc reads `@paramfile` with one arg per line and NO shell quoting.
     # Bazel's default "shell" format wraps each arg in single quotes, which
     # protoc treats as input filenames (the leading `'` defeats the `--flag`

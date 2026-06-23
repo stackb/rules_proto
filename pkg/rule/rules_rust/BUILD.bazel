@@ -25,6 +25,7 @@ go_test(
         "//pkg/protoc",
         "@bazel_gazelle//config",
         "@bazel_gazelle//label",
+        "@bazel_gazelle//language/proto",
         "@bazel_gazelle//rule",
         "@com_github_google_go_cmp//cmp",
     ],
