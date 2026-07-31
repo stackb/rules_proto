@@ -276,8 +276,8 @@ func (s *starlarkRuleProvider) Rule(othergen ...*rule.Rule) *rule.Rule {
 				}
 				if attrValue, ok, err := attrs.Get(attrName); ok && err == nil {
 					switch t := attrValue.(type) {
-					case *starlark.Bool:
-						r.SetAttr(attrName.GoString(), bool(*t))
+					case starlark.Bool:
+						r.SetAttr(attrName.GoString(), bool(t))
 					case *starlark.Int:
 						intValue, _ := t.Int64()
 						r.SetAttr(attrName.GoString(), intValue)
