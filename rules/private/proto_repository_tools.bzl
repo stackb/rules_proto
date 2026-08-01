@@ -24,6 +24,11 @@ filegroup(
     name = "gazelle",
     srcs = ["bin/gazelle{extension}"],
 )
+
+filegroup(
+    name = "preserve_packages",
+    srcs = ["bin/preserve_packages{extension}"],
+)
 """
 
 def _proto_repository_tools_impl(ctx):
@@ -90,6 +95,7 @@ def _proto_repository_tools_impl(ctx):
         "-asmflags",
         "all=-trimpath=" + env["GOPATH"],
         "github.com/stackb/rules_proto/v4/cmd/gazelle",
+        "github.com/stackb/rules_proto/v4/cmd/preserve_packages",
     ]
     result = env_execute(ctx, args, environment = env)
     if result.return_code:
