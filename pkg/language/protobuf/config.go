@@ -117,10 +117,18 @@ func (pl *protobufLang) Configure(c *config.Config, rel string, f *rule.File) {
 
 // getOrCreatePackageConfig either inserts a new config into the map under the
 // language name or replaces it with a clone.
+//
+// When cloning from the parent directory's config we must overwrite the
+// embedded *config.Config pointer to the current directory's config. Without
+// this, lookups that walk `cfg.Config.Exts[...]` (e.g.
+// `IsProtoFileMode` reading the standard proto language's per-directory mode)
+// resolve against the parent's `Exts` and miss directives like
+// `# gazelle:proto file` that were applied to the child only.
 func (pl *protobufLang) getOrCreatePackageConfig(config *config.Config) *protoc.PackageConfig {
 	var cfg *protoc.PackageConfig
 	if existingExt, ok := config.Exts[pl.name]; ok {
 		cfg = existingExt.(*protoc.PackageConfig).Clone()
+		cfg.Config = config
 	} else {
 		cfg = protoc.NewPackageConfig(config)
 	}

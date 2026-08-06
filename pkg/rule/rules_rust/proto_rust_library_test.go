@@ -6,6 +6,7 @@ import (
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
+	gproto "github.com/bazelbuild/bazel-gazelle/language/proto"
 	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stackb/rules_proto/v4/pkg/protoc"
@@ -51,9 +52,8 @@ func TestProtoRustLibraryRule(t *testing.T) {
 			},
 			want: `
 proto_rust_library(
-    name = "google_api_rs",
+    name = "google_api",
     srcs = ["google.api.rs"],
-    pkg = "google.api",
     deps = [
         "@crates//:pbjson",
         "@crates//:prost",
@@ -77,12 +77,11 @@ proto_rust_library(
 			},
 			want: `
 proto_rust_library(
-    name = "trumid_common_proto_rs",
+    name = "trumid_common_proto",
     srcs = [
         "trumid.common.proto.rs",
         "trumid.common.proto.serde.rs",
     ],
-    pkg = "trumid.common.proto",
     deps = [
         "@crates//:pbjson",
         "@crates//:prost",
@@ -107,9 +106,8 @@ proto_rust_library(
 			},
 			want: `
 proto_rust_library(
-    name = "example_wkt_rs",
+    name = "example_wkt",
     srcs = ["example.wkt.rs"],
-    pkg = "example.wkt",
     deps = [
         "@crates//:pbjson",
         "@crates//:prost",
@@ -134,12 +132,11 @@ proto_rust_library(
 			},
 			want: `
 proto_rust_library(
-    name = "example_grpc_rs",
+    name = "example_grpc",
     srcs = [
         "example.grpc.rs",
         "example.grpc.tonic.rs",
     ],
-    pkg = "example.grpc",
     deps = [
         "@crates//:pbjson",
         "@crates//:prost",
@@ -227,3 +224,96 @@ func formatRules(rules ...*rule.Rule) string {
 	}
 	return string(file.Format())
 }
+
+// TestProtoRustLibraryRule_PerFileMode_OneRulePerFile is the core regression
+// test for the per-file scheme: in `gazelle:proto file` mode each per-file
+// proto_library must produce a uniquely-named `proto_rust_library` rule, so
+// the merge branch in `Rule()` is a no-op and consumer dep resolution can
+// route every cross-file/cross-package reference to the specific per-file
+// label (rather than collapsing through a per-package facade and re-closing
+// the proto-package-level cycle).
+//
+// Name convention asserted: `<sanitized_pkg>__<stem>` where `<stem>` is the
+// basename (minus `.proto`) of the first content-bearing file in the
+// proto_library — `package.proto` co-includes are skipped so they don't
+// steal the suffix.
+func TestProtoRustLibraryRule_PerFileMode_OneRulePerFile(t *testing.T) {
+	c := &config.Config{Exts: map[string]interface{}{}}
+	c.Exts["proto"] = &gproto.ProtoConfig{Mode: gproto.FileMode}
+	pkgCfg := protoc.NewPackageConfig(c)
+	ruleCfg := protoc.NewLanguageRuleConfig(c, "rust")
+
+	libA := protoc.NewOtherProtoLibrary(nil, rule.NewRule("proto_library", "a_proto"),
+		makeFile("p/k", "a.proto", `syntax = "proto3"; package p.k; message A {}`))
+	libB := protoc.NewOtherProtoLibrary(nil, rule.NewRule("proto_library", "b_proto"),
+		makeFile("p/k", "b.proto", `syntax = "proto3"; package p.k; message B {}`))
+
+	pcA := &protoc.ProtocConfiguration{
+		PackageConfig: pkgCfg,
+		Rel:           "p/k",
+		Library:       libA,
+		Plugins: []*protoc.PluginConfiguration{
+			{Config: &protoc.LanguagePluginConfig{}, Outputs: []string{"a.p.k.rs"}},
+		},
+	}
+	pcB := &protoc.ProtocConfiguration{
+		PackageConfig: pkgCfg,
+		Rel:           "p/k",
+		Library:       libB,
+		Plugins: []*protoc.PluginConfiguration{
+			{Config: &protoc.LanguagePluginConfig{}, Outputs: []string{"b.p.k.rs"}},
+		},
+	}
+
+	impl := protoRustLibrary{
+		protoLibrariesByRule: make(map[label.Label][]protoc.ProtoLibrary),
+	}
+	rA := impl.ProvideRule(ruleCfg, pcA).Rule()
+	rB := impl.ProvideRule(ruleCfg, pcB).Rule(rA)
+
+	if rA.Name() != "p_k__a" {
+		t.Errorf("first rule name: got %q, want %q", rA.Name(), "p_k__a")
+	}
+	if rB.Name() != "p_k__b" {
+		t.Errorf("second rule name: got %q, want %q", rB.Name(), "p_k__b")
+	}
+	if rA == rB {
+		t.Errorf("per-file rules must NOT merge — got the same *Rule pointer back from Rule(rA)")
+	}
+}
+
+// TestProtoRustLibraryRule_PerFileMode_SkipsPackageProto verifies that when
+// a per-file proto_library carries a shared `package.proto` co-include, the
+// rule's `__<stem>` suffix is derived from the content-bearing file (not
+// `package`).
+func TestProtoRustLibraryRule_PerFileMode_SkipsPackageProto(t *testing.T) {
+	c := &config.Config{Exts: map[string]interface{}{}}
+	c.Exts["proto"] = &gproto.ProtoConfig{Mode: gproto.FileMode}
+	pkgCfg := protoc.NewPackageConfig(c)
+	ruleCfg := protoc.NewLanguageRuleConfig(c, "rust")
+
+	// Note `package.proto` comes FIRST in the file list — the suffix must
+	// still resolve to `order`, the content-bearing file.
+	lib := protoc.NewOtherProtoLibrary(nil, rule.NewRule("proto_library", "order_proto"),
+		makeFile("p/k", "package.proto", `syntax = "proto3"; package p.k;`),
+		makeFile("p/k", "order.proto", `syntax = "proto3"; package p.k; message Order {}`),
+	)
+
+	pc := &protoc.ProtocConfiguration{
+		PackageConfig: pkgCfg,
+		Rel:           "p/k",
+		Library:       lib,
+		Plugins: []*protoc.PluginConfiguration{
+			{Config: &protoc.LanguagePluginConfig{}, Outputs: []string{"order.p.k.rs"}},
+		},
+	}
+
+	impl := protoRustLibrary{
+		protoLibrariesByRule: make(map[label.Label][]protoc.ProtoLibrary),
+	}
+	r := impl.ProvideRule(ruleCfg, pc).Rule()
+	if r.Name() != "p_k__order" {
+		t.Errorf("rule name: got %q, want %q", r.Name(), "p_k__order")
+	}
+}
+

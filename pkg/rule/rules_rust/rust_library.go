@@ -27,6 +27,11 @@ var rustLibraryKindInfo = rule.KindInfo{
 }
 
 // RustLibrary implements RuleProvider for 'proto_rust_library'-derived rules.
+//
+// In `gazelle:proto file` packages each per-file proto_library produces its
+// own RustLibrary (see Name() — the rule name carries the file stem). The
+// `proto_rust_library` Starlark macro is a plain rust_library wrapper; no
+// per-file expansion happens at the macro layer.
 type RustLibrary struct {
 	KindName             string
 	RuleNameSuffix       string
@@ -44,14 +49,42 @@ func (s *RustLibrary) Kind() string {
 }
 
 // Name implements part of the RuleProvider interface.
+//
+// In per-file mode the rule name carries the file stem suffix
+// (`<crate>__<stem>`) so each per-file proto_library in the same proto
+// package produces a uniquely-named rule. That makes the merge branch in
+// `Rule()` a no-op for per-file callers and lets gazelle emit one
+// rust_library per .proto file — the dep DAG then mirrors the
+// (acyclic) proto-file import graph, dissolving the cross-package
+// cycles that motivated the per-file scheme.
+//
+// In per-package mode the name is the proto package's sanitized crate
+// name and merge across proto_libraries with the same package keeps
+// working as before.
 func (s *RustLibrary) Name() string {
-	if pkg := s.Pkg(); pkg != "" {
-		return protoc.RustCrateName(pkg)
+	pkg := s.Pkg()
+	if pkg == "" {
+		return s.Config.Library.BaseName() + s.RuleNameSuffix
 	}
-	return s.Config.Library.BaseName() + s.RuleNameSuffix
+	base := protoc.RustCrateName(pkg)
+	if !s.Config.IsProtoFileMode() {
+		return base
+	}
+	// Per-file proto_libraries typically contain one content-bearing
+	// .proto plus a shared co-included `package.proto` (no codegen).
+	// Suffix the rule name with the first content-bearing file's stem.
+	for _, f := range s.Config.Library.Files() {
+		if f.HasMessages() || f.HasEnums() || f.HasServices() {
+			return base + "__" + strings.TrimSuffix(f.Basename, ".proto")
+		}
+	}
+	return base
 }
 
-// Pkg returns the proto package name from the first file in the library.
+// Pkg returns the proto package name of the first file in the library, or "".
+// Internal helper: drives the rule's crate name (via RustCrateName) and the
+// reexport computation. Not propagated to the generated rule as an attribute —
+// the consuming Starlark rule no longer accepts a `pkg` attr.
 func (s *RustLibrary) Pkg() string {
 	files := s.Config.Library.Files()
 	if len(files) == 0 {
@@ -156,9 +189,6 @@ func (s *RustLibrary) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule.SetPrivateAttr(config.GazelleImportsKey, imports)
 	s.protoLibrariesByRule[s.id] = []protoc.ProtoLibrary{s.Config.Library}
 
-	if pkg := s.Pkg(); pkg != "" {
-		newRule.SetAttr("pkg", pkg)
-	}
 	if len(deps) > 0 {
 		newRule.SetAttr("deps", deps)
 	}
@@ -203,6 +233,16 @@ func (s *RustLibrary) Reexports() []string {
 			if !strings.HasPrefix(ownPkg, impPkg+".") {
 				// Not a strict prefix-parent of our own package — handled
 				// via the regular extern_path mechanism.
+				continue
+			}
+			// Skip parents that are in per-file mode. Their facade crate
+			// (impCrate) no longer exists, and the per-type extern_paths
+			// emitted by perFileCrossPackageTypeExternPaths route the
+			// parent-package references at the specific per-file crates
+			// — so the lib.rs `pub use ::<facade>::*;` re-export shim is
+			// neither needed nor satisfiable. Kind constant inlined to
+			// avoid a dep cycle on the prost plugin package.
+			if len(resolver.Resolve("proto", "prost_extern_per_file_type", impPkg)) > 0 {
 				continue
 			}
 			entry := impCrate + "=" + impPkg

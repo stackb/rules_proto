@@ -1,6 +1,7 @@
 package rules_rust
 
 import (
+	"path"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -57,16 +58,32 @@ func (s *protoRustLibrary) ProvideRule(cfg *protoc.LanguageRuleConfig, pc *proto
 		return nil
 	}
 
-	// Compute Rust keyword escape mappings for proto packages containing
-	// Rust reserved keywords (e.g., "google.type" → prost writes to
-	// "google/r#type/" instead of "google/type/").
+	// Compute output_mappings whenever the directory protoc-gen-prost writes
+	// to (derived from the proto package name, with Rust keyword segments
+	// r#-escaped) differs from the bazel package the rule lives in. Two
+	// distinct causes:
+	//
+	//   1. Rust keyword escapes — proto package "google.type" → prost writes
+	//      to "google/r#type/" while the bazel pkg is "google/type".
+	//
+	//   2. Proto package path simply differs from bazel package path —
+	//      e.g. proto package "trumid.common.auth" living at bazel pkg
+	//      "trumid/common/auth/proto", or "grpc.health.v1" living at
+	//      "thirdparty/protobuf/grpc/src/main/protobuf/grpc/health/v1".
+	//      Without a mapping, proto_compile.bzl's rename step looks for the
+	//      output at <bazel-bin>/<bazel_pkg>/<file>.rs and fails with
+	//      `mv: ... No such file or directory`.
 	if files := pc.Library.Files(); len(files) > 0 {
 		pkg := files[0].Package().Name
-		for output, escapedPath := range protoc.RustKeywordEscapeMappings(pkg, outputs) {
+		protocDir := protoc.RustProtocOutputDir(pkg)
+		if protocDir != "" && protocDir != pc.Rel {
 			if pc.Mappings == nil {
 				pc.Mappings = make(map[string]string)
 			}
-			pc.Mappings[output] = escapedPath
+			for _, output := range outputs {
+				base := path.Base(output)
+				pc.Mappings[base] = path.Join(protocDir, base)
+			}
 		}
 	}
 
