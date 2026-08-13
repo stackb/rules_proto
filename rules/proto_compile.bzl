@@ -4,6 +4,7 @@ This runs the protoc tool and generates output source files.
 """
 
 load("@rules_proto//proto:defs.bzl", "ProtoInfo")
+load("//toolchain:toolchain.bzl", "find_protoc", "use_protoc_toolchains")
 load(":providers.bzl", "ProtoCompileInfo", "ProtoPluginInfo")
 
 def _uniq(iterable):
@@ -57,11 +58,28 @@ def _plugin_label_key(label):
 
     return key
 
+def get_protoc(ctx):
+    """Returns the protoc tool for the rule.
+
+    Args:
+        ctx: the rule context (must have a 'protoc' attribute).
+
+    Returns:
+        struct: having an `executable` <File> and a `tool` field suitable for
+        the `tools` argument of a ctx.actions method.
+    """
+    return find_protoc(ctx, override = ctx.file.protoc)
+
 def get_protoc_executable(ctx):
-    if ctx.file.protoc:
-        return ctx.file.protoc
-    protoc_toolchain_info = ctx.toolchains[str(Label("//toolchain:protoc"))]
-    return protoc_toolchain_info.protoc_executable
+    """Deprecated: use `get_protoc(ctx).executable`.
+
+    Args:
+        ctx: the rule context (must have a 'protoc' attribute).
+
+    Returns:
+        File: the protoc executable.
+    """
+    return get_protoc(ctx).executable
 
 def _descriptor_proto_path(proto, proto_info):
     """Convert a proto File to the path within the descriptor file.
@@ -144,8 +162,8 @@ def _proto_compile_impl(ctx):
     # const <bool> verbosity flag
     verbose = ctx.attr.verbose
 
-    # const <File> the protoc file from the toolchain
-    protoc = get_protoc_executable(ctx)
+    # const <struct> the protoc tool from the toolchain
+    protoc = get_protoc(ctx)
 
     # const <list<ProtoInfo>> proto providers (from proto or protos attr)
     proto_infos = []
@@ -170,8 +188,8 @@ def _proto_compile_impl(ctx):
     for pi in proto_infos:
         descriptors += pi.transitive_descriptor_sets.to_list()
 
-    # mut <list<File>> tools for the compile action
-    tools = [protoc]
+    # mut <list<File|FilesToRunProvider>> tools for the compile action
+    tools = [protoc.tool]
 
     # mut <list<string>> argument list for protoc execution
     args = [] + ctx.attr.args
@@ -316,7 +334,7 @@ def _proto_compile_impl(ctx):
     commands = [
         "set -euo pipefail",
         "mkdir -p ./" + ctx.label.package,
-        protoc.path + " $@",  # $@ is replaced with args list
+        protoc.executable.path + " $@",  # $@ is replaced with args list
     ]
 
     # if the rule declares any mappings, setup copy file commands to move them
@@ -486,5 +504,5 @@ proto_compile = rule(
             doc = "If set, copy the output files to a new set having this suffix",
         ),
     },
-    toolchains = ["@build_stack_rules_proto//toolchain:protoc"],
+    toolchains = use_protoc_toolchains(),
 )
