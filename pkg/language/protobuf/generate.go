@@ -105,10 +105,9 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		protoc.GlobalRuleIndex().Put(internalLabel, r)
 		switch r.Kind() {
 		case "proto_rust_library":
-			pl.protoRustLibraryPackages = append(
-				pl.protoRustLibraryPackages,
-				protoRustLibraryManifestPath(args.Rel, r.Name()),
-			)
+			if protoRustLibraryIsExplicitWorkspaceMember(r.Name()) {
+				pl.protoRustLibraryPackages = append(pl.protoRustLibraryPackages, args.Rel)
+			}
 			// The proto_rust_library macro's underlying _proto_rust_lib rule
 			// (named "<name>_lib") is what provides ProtoCompileInfo for the
 			// wrapper lib.rs + Cargo.toml; that's the label that belongs in
@@ -140,15 +139,12 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 	}
 }
 
-// protoRustLibraryManifestPath returns the workspace-relative directory that
-// contains a proto_rust_library's generated Cargo.toml. Package-level crates
-// use the Bazel package directory. Per-file crates use a unique subdirectory
-// so their manifests and crate roots cannot collide with their siblings.
-func protoRustLibraryManifestPath(rel, name string) string {
-	if strings.Contains(name, "__") {
-		return path.Join(rel, "_rust", name)
-	}
-	return rel
+// protoRustLibraryIsExplicitWorkspaceMember reports whether the generated
+// crate belongs in the root Cargo.toml marker section. Per-file crates are
+// path dependencies of these package-level roots, so Cargo enrolls them in
+// the workspace transitively after their manifests are vendored.
+func protoRustLibraryIsExplicitWorkspaceMember(name string) bool {
+	return !strings.Contains(name, "__")
 }
 
 func matchingFiles(files map[string]*protoc.File, srcs []label.Label) []*protoc.File {

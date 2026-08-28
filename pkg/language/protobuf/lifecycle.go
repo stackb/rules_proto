@@ -21,7 +21,8 @@ func (pl *protobufLang) Before(context.Context) {
 //
 //  1. Root Cargo.toml [workspace] members list — the lines between the
 //     `# gazelle:proto_rust_members start/end` markers are replaced with
-//     one entry per proto_rust_library Cargo manifest directory.
+//     one entry per package-level proto_rust_library. Per-file crates are
+//     enrolled transitively through generated Cargo path dependencies.
 //
 //  2. Root BUILD.bazel proto_compile_assets aggregator deps — the lines
 //     between the `# gazelle:vendor_proto_sources_deps start/end` markers
