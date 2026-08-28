@@ -10,7 +10,7 @@ import (
 func TestUpdateRootCargoDependencies(t *testing.T) {
 	repoRoot := t.TempDir()
 	cargoToml := filepath.Join(repoRoot, "Cargo.toml")
-	const initial = `[patch.crates-io]
+	const initial = `[workspace.dependencies]
 # gazelle:proto_rust_dependencies start
 stale = { path = "stale" }
 # gazelle:proto_rust_dependencies end
