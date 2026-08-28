@@ -25,6 +25,16 @@ func makeFile(dir, basename, protoContent string) *protoc.File {
 	return f
 }
 
+func languageRuleConfigWithResolve(spec string) protoc.LanguageRuleConfig {
+	cfg := protoc.NewLanguageRuleConfig(config.New(), "rust")
+	rewrite, err := protoc.ParseRewrite(spec)
+	if err != nil {
+		panic("bad resolve: " + err.Error())
+	}
+	cfg.Resolves = append(cfg.Resolves, *rewrite)
+	return *cfg
+}
+
 func TestProtoRustLibraryRule(t *testing.T) {
 	for name, tc := range map[string]struct {
 		cfg  protoc.LanguageRuleConfig
@@ -142,6 +152,35 @@ proto_rust_library(
         "@crates//:prost",
         "@crates//:serde",
         "@crates//:tonic",
+    ],
+)
+`,
+		},
+		"with rewritten dependency": {
+			cfg: languageRuleConfigWithResolve(
+				`^trumid/common/proto/guid[.]proto$ //trumid/common/proto/rust-types:trumid_common_proto_rs`,
+			),
+			pc: protoc.ProtocConfiguration{
+				Library: makeTestProtoLibrary(
+					makeFile("example/api", "thing.proto",
+						`syntax = "proto3"; package example.api; import "trumid/common/proto/guid.proto"; message Thing {}`),
+				),
+				Plugins: []*protoc.PluginConfiguration{
+					{
+						Config:  &protoc.LanguagePluginConfig{},
+						Outputs: []string{"example.api.rs"},
+					},
+				},
+			},
+			want: `
+proto_rust_library(
+    name = "example_api",
+    srcs = ["example.api.rs"],
+    deps = [
+        "//trumid/common/proto/rust-types:trumid_common_proto_rs",
+        "@crates//:pbjson",
+        "@crates//:prost",
+        "@crates//:serde",
     ],
 )
 `,
@@ -316,4 +355,3 @@ func TestProtoRustLibraryRule_PerFileMode_SkipsPackageProto(t *testing.T) {
 		t.Errorf("rule name: got %q, want %q", r.Name(), "p_k__order")
 	}
 }
-

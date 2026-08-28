@@ -108,6 +108,7 @@ func (s *RustLibrary) Srcs() []string {
 // Deps computes the deps list for the rule.
 func (s *RustLibrary) Deps() []string {
 	deps := s.RuleConfig.GetDeps()
+	deps = append(deps, protoc.ResolveLibraryRewrites(s.RuleConfig.GetRewrites(), s.Config.Library)...)
 	deps = append(deps, s.fixedDeps()...)
 	return protoc.DeduplicateAndSort(deps)
 }

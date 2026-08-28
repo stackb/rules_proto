@@ -214,6 +214,39 @@ func TestResolveExternPathOptions_FiltersExisting(t *testing.T) {
 	}
 }
 
+func TestResolveExternPathOptions_DeduplicatesProtoPaths(t *testing.T) {
+	resolver := protoc.GlobalResolver()
+	resolver.Provide("proto", "prost_extern",
+		"deduptest/consumer/consumer.proto",
+		label.New("", "deduptest.consumer", "consumer_rs"))
+	resolver.Provide("proto", "prost_extern",
+		"deduptest/api/label.proto",
+		label.New("", "deduptest.api", "label_rs"))
+	resolver.Provide("proto", "prost_extern",
+		"deduptest/api/metric.proto",
+		label.New("", "deduptest.api", "metric_rs"))
+	resolver.Provide("proto", "depends",
+		"deduptest/consumer/consumer.proto",
+		label.New("", "deduptest/api", "label.proto"))
+	resolver.Provide("proto", "depends",
+		"deduptest/consumer/consumer.proto",
+		label.New("", "deduptest/api", "metric.proto"))
+	resolver.Provide("proto", prost.PerFileTypeProvideKind,
+		"deduptest.api",
+		label.New("", "ValueType", "label_rs"))
+	resolver.Provide("proto", prost.PerFileTypeProvideKind,
+		"deduptest.api",
+		label.New("", "ValueType", "metric_rs"))
+
+	r := makeLibraryRule("consumer_proto", "deduptest/consumer", []string{"consumer.proto"})
+	from := label.New("", "deduptest/consumer", "consumer_proto")
+	got := prost.ResolveExternPathOptions(&protoc.PluginConfiguration{}, r, from)
+	want := []string{"extern_path=.deduptest.api.ValueType=::label_rs::ValueType"}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("ResolveExternPathOptions:\n got: %v\nwant: %v", got, want)
+	}
+}
+
 // TestResolveTransitiveExternPaths_GoogleProtobufNotSkipped guards against the
 // historical hard-coded skip of google/protobuf/* in the dep walk. When a
 // downstream repo registers a rust target for google.protobuf (via

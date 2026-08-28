@@ -514,15 +514,30 @@ func perFileSiblingTypeExternPaths(
 
 // mergeExternPathOptions strips any pre-existing extern_path= entries from
 // cfg.Options and returns the remainder concatenated with the supplied
-// extern_path strings.
+// extern_path strings, keeping only the first mapping for each protobuf path.
+// Callers sort the paths first, making collisions deterministic.
 func mergeExternPathOptions(cfg *protoc.PluginConfiguration, externPaths []string) []string {
 	options := make([]string, 0, len(cfg.Options)+len(externPaths))
+	seen := make(map[string]bool, len(externPaths))
 	for _, opt := range cfg.Options {
 		if !strings.HasPrefix(opt, "extern_path=") {
 			options = append(options, opt)
 		}
 	}
-	options = append(options, externPaths...)
+	for _, opt := range externPaths {
+		key := opt
+		const prefix = "extern_path="
+		if strings.HasPrefix(opt, prefix) {
+			if eq := strings.IndexByte(opt[len(prefix):], '='); eq >= 0 {
+				key = opt[:len(prefix)+eq]
+			}
+		}
+		if seen[key] {
+			continue
+		}
+		seen[key] = true
+		options = append(options, opt)
+	}
 	return options
 }
 
