@@ -16,7 +16,7 @@ func (pl *protobufLang) Before(context.Context) {
 
 // DoneGeneratingRules implements part of the language.LifecycleManager interface.
 //
-// Performs three cross-package syncs that need every GenerateRules call to
+// Performs four cross-package syncs that need every GenerateRules call to
 // have completed first:
 //
 //  1. Root Cargo.toml [workspace] members list — the lines between the
@@ -32,6 +32,10 @@ func (pl *protobufLang) Before(context.Context) {
 //     `# gazelle:proto_rust_excludes start/end` markers are replaced with
 //     one entry per Bazel package containing standalone per-file crates.
 //
+//  4. Root Cargo.toml [workspace.dependencies] table — the lines between the
+//     `# gazelle:proto_rust_dependencies start/end` markers are replaced with
+//     one path dependency per standalone per-file crate.
+//
 // All syncs are no-ops when the corresponding markers are absent (or the
 // target file does not exist).
 func (pl *protobufLang) DoneGeneratingRules() {
@@ -44,6 +48,9 @@ func (pl *protobufLang) DoneGeneratingRules() {
 	if err := updateRootCargoExcludes(pl.repoRoot, pl.protoRustPerFilePackageDirs); err != nil {
 		log.Printf("warning: could not update root Cargo.toml proto_rust_excludes: %v", err)
 	}
+	if err := updateRootCargoDependencies(pl.repoRoot, pl.protoRustPerFilePackages); err != nil {
+		log.Printf("warning: could not update root Cargo.toml proto_rust_dependencies: %v", err)
+	}
 	if err := updateRootVendorAssetsDeps(pl.repoRoot, pl.vendorAssetLabels); err != nil {
 		log.Printf("warning: could not update root BUILD.bazel vendor_proto_sources_deps: %v", err)
 	}
@@ -54,13 +61,40 @@ func (pl *protobufLang) AfterResolvingDeps(context.Context) {
 }
 
 const (
-	cargoMembersStartMarker     = "# gazelle:proto_rust_members start"
-	cargoMembersEndMarker       = "# gazelle:proto_rust_members end"
-	cargoExcludesStartMarker    = "# gazelle:proto_rust_excludes start"
-	cargoExcludesEndMarker      = "# gazelle:proto_rust_excludes end"
-	vendorAssetsDepsStartMarker = "# gazelle:vendor_proto_sources_deps start"
-	vendorAssetsDepsEndMarker   = "# gazelle:vendor_proto_sources_deps end"
+	cargoMembersStartMarker      = "# gazelle:proto_rust_members start"
+	cargoMembersEndMarker        = "# gazelle:proto_rust_members end"
+	cargoExcludesStartMarker     = "# gazelle:proto_rust_excludes start"
+	cargoExcludesEndMarker       = "# gazelle:proto_rust_excludes end"
+	cargoDependenciesStartMarker = "# gazelle:proto_rust_dependencies start"
+	cargoDependenciesEndMarker   = "# gazelle:proto_rust_dependencies end"
+	vendorAssetsDepsStartMarker  = "# gazelle:vendor_proto_sources_deps start"
+	vendorAssetsDepsEndMarker    = "# gazelle:vendor_proto_sources_deps end"
 )
+
+type cargoPathDependency struct {
+	Name string
+	Path string
+}
+
+// updateRootCargoDependencies rewrites the
+// gazelle:proto_rust_dependencies marker section in the root Cargo.toml with
+// standalone per-file crates as workspace path dependencies. This lets tools
+// that parse Cargo.lock discover transitive path packages while the containing
+// _rust directories remain excluded from workspace membership.
+func updateRootCargoDependencies(repoRoot string, dependencies []cargoPathDependency) error {
+	entries := make([]string, 0, len(dependencies))
+	for _, dependency := range dependencies {
+		entries = append(entries, fmt.Sprintf("%s = { path = %q }", dependency.Name, dependency.Path))
+	}
+	return rewriteMarkerSectionLines(
+		filepath.Join(repoRoot, "Cargo.toml"),
+		cargoDependenciesStartMarker,
+		cargoDependenciesEndMarker,
+		entries,
+		"[workspace.dependencies] path dependency list",
+		func(indent, entry string) string { return indent + entry },
+	)
+}
 
 // updateRootCargoMembers rewrites the gazelle:proto_rust_members marker
 // section in the root Cargo.toml with a sorted, deduplicated list of
@@ -111,6 +145,22 @@ func updateRootVendorAssetsDeps(repoRoot string, labels []string) error {
 // but markers are absent, a warning is logged once with the supplied
 // description so the maintainer knows where to add them.
 func rewriteMarkerSection(path, startMarker, endMarker string, entries []string, description string) error {
+	return rewriteMarkerSectionLines(
+		path,
+		startMarker,
+		endMarker,
+		entries,
+		description,
+		func(indent, entry string) string { return fmt.Sprintf("%s%q,", indent, entry) },
+	)
+}
+
+func rewriteMarkerSectionLines(
+	path, startMarker, endMarker string,
+	entries []string,
+	description string,
+	formatEntry func(indent, entry string) string,
+) error {
 	src, err := os.ReadFile(path)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -155,7 +205,7 @@ func rewriteMarkerSection(path, startMarker, endMarker string, entries []string,
 	newSection := make([]string, 0, len(uniq)+2)
 	newSection = append(newSection, lines[startIdx])
 	for _, e := range uniq {
-		newSection = append(newSection, fmt.Sprintf("%s\"%s\",", indent, e))
+		newSection = append(newSection, formatEntry(indent, e))
 	}
 	newSection = append(newSection, lines[endIdx])
 

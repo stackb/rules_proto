@@ -108,9 +108,14 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 			if protoRustLibraryIsExplicitWorkspaceMember(r.Name()) {
 				pl.protoRustLibraryPackages = append(pl.protoRustLibraryPackages, args.Rel)
 			} else {
+				cratePath := path.Join(args.Rel, "_rust", r.Name())
 				pl.protoRustPerFilePackageDirs = append(
 					pl.protoRustPerFilePackageDirs,
 					path.Join(args.Rel, "_rust"),
+				)
+				pl.protoRustPerFilePackages = append(
+					pl.protoRustPerFilePackages,
+					cargoPathDependency{Name: r.Name(), Path: cratePath},
 				)
 			}
 			// The proto_rust_library macro's underlying _proto_rust_lib rule
