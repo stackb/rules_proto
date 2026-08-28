@@ -40,8 +40,8 @@ type protobufLang struct {
 	starlarkRules arrayFlags
 	// starlarkPlugins stores custom starlark proto plugin names in the form filename%pluginname
 	starlarkPlugins arrayFlags
-	// protoRustLibraryPackages collects the workspace-relative path of every
-	// package that emits a proto_rust_library rule. Populated in
+	// protoRustLibraryPackages collects the workspace-relative path of each
+	// package-level proto_rust_library that vendors a Cargo.toml. Populated in
 	// GenerateRules and consumed in DoneGeneratingRules to update the root
 	// Cargo.toml [workspace] members list.
 	protoRustLibraryPackages []string

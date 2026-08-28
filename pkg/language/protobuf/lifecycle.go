@@ -21,12 +21,14 @@ func (pl *protobufLang) Before(context.Context) {
 //
 //  1. Root Cargo.toml [workspace] members list — the lines between the
 //     `# gazelle:proto_rust_members start/end` markers are replaced with
-//     one entry per package that emitted a proto_rust_library.
+//     one entry per package-level proto_rust_library that vendors a
+//     Cargo.toml.
 //
 //  2. Root BUILD.bazel proto_compile_assets aggregator deps — the lines
 //     between the `# gazelle:vendor_proto_sources_deps start/end` markers
 //     are replaced with one entry per generated proto_compiled_sources rule
-//     and one entry per proto_rust_library's underlying _lib target.
+//     and one entry per package-level proto_rust_library's underlying _lib
+//     target.
 //
 // Both syncs are no-ops when the corresponding markers are absent (or the
 // target file does not exist).
@@ -47,10 +49,10 @@ func (pl *protobufLang) AfterResolvingDeps(context.Context) {
 }
 
 const (
-	cargoMembersStartMarker      = "# gazelle:proto_rust_members start"
-	cargoMembersEndMarker        = "# gazelle:proto_rust_members end"
-	vendorAssetsDepsStartMarker  = "# gazelle:vendor_proto_sources_deps start"
-	vendorAssetsDepsEndMarker    = "# gazelle:vendor_proto_sources_deps end"
+	cargoMembersStartMarker     = "# gazelle:proto_rust_members start"
+	cargoMembersEndMarker       = "# gazelle:proto_rust_members end"
+	vendorAssetsDepsStartMarker = "# gazelle:vendor_proto_sources_deps start"
+	vendorAssetsDepsEndMarker   = "# gazelle:vendor_proto_sources_deps end"
 )
 
 // updateRootCargoMembers rewrites the gazelle:proto_rust_members marker

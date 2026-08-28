@@ -3,6 +3,7 @@ package protobuf
 import (
 	"log"
 	"path"
+	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -104,6 +105,9 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		protoc.GlobalRuleIndex().Put(internalLabel, r)
 		switch r.Kind() {
 		case "proto_rust_library":
+			if !protoRustLibraryVendorsManifest(r.Name()) {
+				break
+			}
 			pl.protoRustLibraryPackages = append(pl.protoRustLibraryPackages, args.Rel)
 			// The proto_rust_library macro's underlying _proto_rust_lib rule
 			// (named "<name>_lib") is what provides ProtoCompileInfo for the
@@ -134,6 +138,13 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		Imports: imports,
 		Empty:   pkg.Empty(),
 	}
+}
+
+// protoRustLibraryVendorsManifest reports whether a proto_rust_library is a
+// package-level crate. Per-file rules have "__" in their names and share the
+// package-level crate's generated lib.rs and Cargo.toml.
+func protoRustLibraryVendorsManifest(name string) bool {
+	return !strings.Contains(name, "__")
 }
 
 func matchingFiles(files map[string]*protoc.File, srcs []label.Label) []*protoc.File {
