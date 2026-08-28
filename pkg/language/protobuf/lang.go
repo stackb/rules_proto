@@ -53,7 +53,7 @@ type protobufLang struct {
 	protoRustPerFilePackageDirs []string
 	// protoRustPerFilePackages collects the package names and workspace-relative
 	// paths of standalone per-file crates. They are listed under the root
-	// [workspace.dependencies] table so Bazel's Cargo lockfile parser can resolve
+	// [patch.crates-io] table so Bazel's Cargo lockfile parser can resolve
 	// every transitive path package without making these crates workspace members.
 	protoRustPerFilePackages []cargoPathDependency
 	// vendorAssetLabels collects bazel labels of every generated rule that

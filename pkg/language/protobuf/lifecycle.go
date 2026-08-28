@@ -32,7 +32,7 @@ func (pl *protobufLang) Before(context.Context) {
 //     `# gazelle:proto_rust_excludes start/end` markers are replaced with
 //     one entry per Bazel package containing standalone per-file crates.
 //
-//  4. Root Cargo.toml [workspace.dependencies] table — the lines between the
+//  4. Root Cargo.toml [patch.crates-io] table — the lines between the
 //     `# gazelle:proto_rust_dependencies start/end` markers are replaced with
 //     one path dependency per standalone per-file crate.
 //
@@ -91,7 +91,7 @@ func updateRootCargoDependencies(repoRoot string, dependencies []cargoPathDepend
 		cargoDependenciesStartMarker,
 		cargoDependenciesEndMarker,
 		entries,
-		"[workspace.dependencies] path dependency list",
+		"[patch.crates-io] path dependency list",
 		func(indent, entry string) string { return indent + entry },
 	)
 }
