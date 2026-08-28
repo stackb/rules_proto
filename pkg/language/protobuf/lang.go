@@ -51,11 +51,6 @@ type protobufLang struct {
 	// are excluded from the root Cargo workspace so each generated manifest can
 	// be used directly or as a path dependency.
 	protoRustPerFilePackageDirs []string
-	// protoRustPerFilePackages collects the package names and workspace-relative
-	// paths of standalone per-file crates. They are listed under the root
-	// [workspace.dependencies] table so Bazel's Cargo lockfile parser can resolve
-	// every transitive path package without making these crates workspace members.
-	protoRustPerFilePackages []cargoPathDependency
 	// vendorAssetLabels collects bazel labels of every generated rule that
 	// provides ProtoCompileInfo and should appear in the root
 	// `proto_compile_assets` aggregator. Populated in GenerateRules and
