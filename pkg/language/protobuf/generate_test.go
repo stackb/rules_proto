@@ -151,23 +151,26 @@ import "google/protobuf/any.proto";
 	}
 }
 
-func TestProtoRustLibraryVendorsManifest(t *testing.T) {
+func TestProtoRustLibraryManifestPath(t *testing.T) {
 	for name, tc := range map[string]struct {
+		rel      string
 		ruleName string
-		want     bool
+		want     string
 	}{
 		"package-level crate": {
+			rel:      "example/proto",
 			ruleName: "example_proto_rs",
-			want:     true,
+			want:     "example/proto",
 		},
 		"per-file crate": {
+			rel:      "example/proto",
 			ruleName: "example_proto__message_proto_rs",
-			want:     false,
+			want:     "example/proto/_rust/example_proto__message_proto_rs",
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
-			if got := protoRustLibraryVendorsManifest(tc.ruleName); got != tc.want {
-				t.Errorf("protoRustLibraryVendorsManifest(%q) = %t, want %t", tc.ruleName, got, tc.want)
+			if got := protoRustLibraryManifestPath(tc.rel, tc.ruleName); got != tc.want {
+				t.Errorf("protoRustLibraryManifestPath(%q, %q) = %q, want %q", tc.rel, tc.ruleName, got, tc.want)
 			}
 		})
 	}

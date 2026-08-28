@@ -105,10 +105,10 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		protoc.GlobalRuleIndex().Put(internalLabel, r)
 		switch r.Kind() {
 		case "proto_rust_library":
-			if !protoRustLibraryVendorsManifest(r.Name()) {
-				break
-			}
-			pl.protoRustLibraryPackages = append(pl.protoRustLibraryPackages, args.Rel)
+			pl.protoRustLibraryPackages = append(
+				pl.protoRustLibraryPackages,
+				protoRustLibraryManifestPath(args.Rel, r.Name()),
+			)
 			// The proto_rust_library macro's underlying _proto_rust_lib rule
 			// (named "<name>_lib") is what provides ProtoCompileInfo for the
 			// wrapper lib.rs + Cargo.toml; that's the label that belongs in
@@ -140,11 +140,15 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 	}
 }
 
-// protoRustLibraryVendorsManifest reports whether a proto_rust_library is a
-// package-level crate. Per-file rules have "__" in their names and share the
-// package-level crate's generated lib.rs and Cargo.toml.
-func protoRustLibraryVendorsManifest(name string) bool {
-	return !strings.Contains(name, "__")
+// protoRustLibraryManifestPath returns the workspace-relative directory that
+// contains a proto_rust_library's generated Cargo.toml. Package-level crates
+// use the Bazel package directory. Per-file crates use a unique subdirectory
+// so their manifests and crate roots cannot collide with their siblings.
+func protoRustLibraryManifestPath(rel, name string) string {
+	if strings.Contains(name, "__") {
+		return path.Join(rel, "_rust", name)
+	}
+	return rel
 }
 
 func matchingFiles(files map[string]*protoc.File, srcs []label.Label) []*protoc.File {
