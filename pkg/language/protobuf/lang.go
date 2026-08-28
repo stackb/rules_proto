@@ -41,11 +41,16 @@ type protobufLang struct {
 	// starlarkPlugins stores custom starlark proto plugin names in the form filename%pluginname
 	starlarkPlugins arrayFlags
 	// protoRustLibraryPackages collects the workspace-relative path of each
-	// package-level proto_rust_library. Per-file crates join the Cargo workspace
-	// transitively as path dependencies. Populated in
+	// package-level proto_rust_library. Per-file crates remain standalone path
+	// dependencies under excluded _rust directories. Populated in
 	// GenerateRules and consumed in DoneGeneratingRules to update the root
 	// Cargo.toml [workspace] members list.
 	protoRustLibraryPackages []string
+	// protoRustPerFilePackageDirs collects the workspace-relative _rust
+	// directories that contain standalone per-file crates. These directories
+	// are excluded from the root Cargo workspace so each generated manifest can
+	// be used directly or as a path dependency.
+	protoRustPerFilePackageDirs []string
 	// vendorAssetLabels collects bazel labels of every generated rule that
 	// provides ProtoCompileInfo and should appear in the root
 	// `proto_compile_assets` aggregator. Populated in GenerateRules and

@@ -107,6 +107,11 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		case "proto_rust_library":
 			if protoRustLibraryIsExplicitWorkspaceMember(r.Name()) {
 				pl.protoRustLibraryPackages = append(pl.protoRustLibraryPackages, args.Rel)
+			} else {
+				pl.protoRustPerFilePackageDirs = append(
+					pl.protoRustPerFilePackageDirs,
+					path.Join(args.Rel, "_rust"),
+				)
 			}
 			// The proto_rust_library macro's underlying _proto_rust_lib rule
 			// (named "<name>_lib") is what provides ProtoCompileInfo for the
