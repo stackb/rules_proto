@@ -3,6 +3,7 @@ package tonic
 import (
 	"path"
 	"sort"
+	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
@@ -31,15 +32,25 @@ func (p *ProtocGenTonicPlugin) Configure(ctx *protoc.PluginContext) *protoc.Plug
 		return nil
 	}
 
-	outputs := p.outputs(ctx.ProtoLibrary)
+	perFile := ctx.IsProtoFileMode()
+	outputs := p.outputs(ctx.ProtoLibrary, perFile)
 	if len(outputs) == 0 {
 		return nil
+	}
+
+	options := ctx.PluginConfig.GetOptions()
+	if perFile {
+		// Must match the prost plugin's per_file=true so tonic emits one
+		// `<stem>.<pkg>.tonic.rs` per file AND inserts its module entry
+		// into the matching `<stem>.<pkg>.rs` rather than the per-package
+		// `<pkg>.rs` (which doesn't exist in per-file mode).
+		options = append(options, "per_file=true")
 	}
 
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/neoeinstein/tonic", "protoc-gen-tonic"),
 		Outputs: outputs,
-		Options: ctx.PluginConfig.GetOptions(),
+		Options: options,
 	}
 }
 
@@ -63,13 +74,39 @@ func (p *ProtocGenTonicPlugin) shouldApply(lib protoc.ProtoLibrary) bool {
 	return false
 }
 
-// outputs computes the output files for the plugin. Tonic generates one
-// .tonic.rs file per proto package that has services. The path includes the
-// file's directory so that mergeSources can handle the rel stripping.
-func (p *ProtocGenTonicPlugin) outputs(lib protoc.ProtoLibrary) []string {
-	seen := make(map[string]bool)
+// outputs computes the output files for the plugin.
+//
+// Per-package mode (default): one `<pkg>.tonic.rs` per proto package that
+// declares services.
+//
+// Per-file mode (the surrounding bazel package opts into `gazelle:proto file`):
+// one `<file_stem>.<pkg>.tonic.rs` per .proto file that declares services.
+// The vendored protoc-gen-tonic honours this naming convention when
+// `per_file=true` is in the options block.
+func (p *ProtocGenTonicPlugin) outputs(lib protoc.ProtoLibrary, perFile bool) []string {
 	outputs := make([]string, 0)
 
+	if perFile {
+		for _, f := range lib.Files() {
+			if !f.HasServices() {
+				continue
+			}
+			pkg := f.Package()
+			if pkg.Name == "" {
+				continue
+			}
+			stem := strings.TrimSuffix(f.Basename, ".proto")
+			filename := stem + "." + pkg.Name + ".tonic.rs"
+			if f.Dir != "" {
+				filename = path.Join(f.Dir, filename)
+			}
+			outputs = append(outputs, filename)
+		}
+		sort.Strings(outputs)
+		return outputs
+	}
+
+	seen := make(map[string]bool)
 	for _, f := range lib.Files() {
 		if !f.HasServices() {
 			continue

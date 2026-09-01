@@ -16,19 +16,23 @@ func (pl *protobufLang) Before(context.Context) {
 
 // DoneGeneratingRules implements part of the language.LifecycleManager interface.
 //
-// Performs two cross-package syncs that need every GenerateRules call to
+// Performs three cross-package syncs that need every GenerateRules call to
 // have completed first:
 //
 //  1. Root Cargo.toml [workspace] members list — the lines between the
 //     `# gazelle:proto_rust_members start/end` markers are replaced with
-//     one entry per package that emitted a proto_rust_library.
+//     one entry per package-level proto_rust_library.
 //
 //  2. Root BUILD.bazel proto_compile_assets aggregator deps — the lines
 //     between the `# gazelle:vendor_proto_sources_deps start/end` markers
 //     are replaced with one entry per generated proto_compiled_sources rule
 //     and one entry per proto_rust_library's underlying _lib target.
 //
-// Both syncs are no-ops when the corresponding markers are absent (or the
+//  3. Root Cargo.toml [workspace] exclude list — the lines between the
+//     `# gazelle:proto_rust_excludes start/end` markers are replaced with
+//     one entry per Bazel package containing standalone per-file crates.
+//
+// All syncs are no-ops when the corresponding markers are absent (or the
 // target file does not exist).
 func (pl *protobufLang) DoneGeneratingRules() {
 	if pl.repoRoot == "" {
@@ -36,6 +40,9 @@ func (pl *protobufLang) DoneGeneratingRules() {
 	}
 	if err := updateRootCargoMembers(pl.repoRoot, pl.protoRustLibraryPackages); err != nil {
 		log.Printf("warning: could not update root Cargo.toml proto_rust_members: %v", err)
+	}
+	if err := updateRootCargoExcludes(pl.repoRoot, pl.protoRustPerFilePackageDirs); err != nil {
+		log.Printf("warning: could not update root Cargo.toml proto_rust_excludes: %v", err)
 	}
 	if err := updateRootVendorAssetsDeps(pl.repoRoot, pl.vendorAssetLabels); err != nil {
 		log.Printf("warning: could not update root BUILD.bazel vendor_proto_sources_deps: %v", err)
@@ -47,10 +54,12 @@ func (pl *protobufLang) AfterResolvingDeps(context.Context) {
 }
 
 const (
-	cargoMembersStartMarker      = "# gazelle:proto_rust_members start"
-	cargoMembersEndMarker        = "# gazelle:proto_rust_members end"
-	vendorAssetsDepsStartMarker  = "# gazelle:vendor_proto_sources_deps start"
-	vendorAssetsDepsEndMarker    = "# gazelle:vendor_proto_sources_deps end"
+	cargoMembersStartMarker     = "# gazelle:proto_rust_members start"
+	cargoMembersEndMarker       = "# gazelle:proto_rust_members end"
+	cargoExcludesStartMarker    = "# gazelle:proto_rust_excludes start"
+	cargoExcludesEndMarker      = "# gazelle:proto_rust_excludes end"
+	vendorAssetsDepsStartMarker = "# gazelle:vendor_proto_sources_deps start"
+	vendorAssetsDepsEndMarker   = "# gazelle:vendor_proto_sources_deps end"
 )
 
 // updateRootCargoMembers rewrites the gazelle:proto_rust_members marker
@@ -64,6 +73,19 @@ func updateRootCargoMembers(repoRoot string, packages []string) error {
 		cargoMembersEndMarker,
 		packages,
 		"[workspace] members list",
+	)
+}
+
+// updateRootCargoExcludes rewrites the gazelle:proto_rust_excludes marker
+// section in the root Cargo.toml with directories containing standalone
+// per-file crates.
+func updateRootCargoExcludes(repoRoot string, packages []string) error {
+	return rewriteMarkerSection(
+		filepath.Join(repoRoot, "Cargo.toml"),
+		cargoExcludesStartMarker,
+		cargoExcludesEndMarker,
+		packages,
+		"[workspace] exclude list",
 	)
 }
 

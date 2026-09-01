@@ -14,8 +14,19 @@ import (
 )
 
 const (
-	// ProtoLibraryKey stores the ProtoLibrary implementation for a rule.
+	// ProtoLibraryKey stores the ProtoLibrary implementation for a rule. When a
+	// proto_compile / proto_compiled_sources rule merges multiple proto_libraries
+	// into its `protos` attribute, this key still references only the first
+	// library — preserved for compatibility with callers that index a single
+	// ProtoLibrary. See MergedProtoLibrariesKey for the full set.
 	ProtoLibraryKey = "_proto_library"
+	// MergedProtoLibrariesKey stores the full []ProtoLibrary backing a merged
+	// proto_compile / proto_compiled_sources rule. Always contains at least one
+	// library; equal to []{ProtoLibraryKey} when no merge occurred. Plugin option
+	// resolvers must consult this — relying on ProtoLibraryKey alone misses the
+	// post-merge libraries and lets their .proto files leak into the dep-walk's
+	// "external" classification.
+	MergedProtoLibrariesKey = "_merged_proto_libraries"
 )
 
 func init() {
@@ -132,6 +143,11 @@ func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 		existingProtos = append(existingProtos, s.config.Library.Name())
 		other.SetAttr("protos", DeduplicateAndSort(existingProtos))
 
+		// Track the full backing-library set for downstream plugin option
+		// resolution. See MergedProtoLibrariesKey docs.
+		existingMerged, _ := other.PrivateAttr(MergedProtoLibrariesKey).([]ProtoLibrary)
+		other.SetPrivateAttr(MergedProtoLibrariesKey, append(existingMerged, s.config.Library))
+
 		// Merge plugins
 		otherPlugins := other.AttrStrings("plugins")
 		otherPlugins = append(otherPlugins, GetPluginLabels(s.config.Plugins)...)
@@ -162,6 +178,7 @@ func (s *protoCompileRule) Rule(otherGen ...*rule.Rule) *rule.Rule {
 	newRule.SetAttr(s.outputsAttrName, outputs)
 	newRule.SetAttr("plugins", GetPluginLabels(s.config.Plugins))
 	newRule.SetAttr("proto", s.config.Library.Name())
+	newRule.SetPrivateAttr(MergedProtoLibrariesKey, []ProtoLibrary{s.config.Library})
 
 	if s.config.LanguageConfig.Protoc != "" {
 		newRule.SetAttr("protoc", s.config.LanguageConfig.Protoc)

@@ -151,6 +151,28 @@ import "google/protobuf/any.proto";
 	}
 }
 
+func TestProtoRustLibraryIsExplicitWorkspaceMember(t *testing.T) {
+	for name, tc := range map[string]struct {
+		ruleName string
+		want     bool
+	}{
+		"package-level crate": {
+			ruleName: "example_proto_rs",
+			want:     true,
+		},
+		"per-file crate": {
+			ruleName: "example_proto__message_proto_rs",
+			want:     false,
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			if got := protoRustLibraryIsExplicitWorkspaceMember(tc.ruleName); got != tc.want {
+				t.Errorf("protoRustLibraryIsExplicitWorkspaceMember(%q) = %t, want %t", tc.ruleName, got, tc.want)
+			}
+		})
+	}
+}
+
 type testGenerateRulesState struct {
 	t        *testing.T
 	tmpdir   string

@@ -159,8 +159,21 @@ def _proto_compile_impl(ctx):
     # const <ProtoInfo> primary proto provider (for descriptor path resolution)
     primary_proto_info = proto_infos[0]
 
-    # const <list<ProtoPluginInfo>> plugins to be applied
-    plugins = [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins]
+    # const <list<ProtoPluginInfo>> plugins to be applied. Sort by plugin name
+    # so protoc invocation order is deterministic and independent of attr
+    # ordering. This matters when plugins use protoc's @@protoc_insertion_point
+    # mechanism — e.g. protoc-gen-tonic inserts client/server code at the
+    # `module` insertion point of protoc-gen-prost's {package}.rs output. If
+    # tonic runs before prost, the insertion target doesn't exist yet and
+    # protoc fails with "Tried to insert into file that doesn't exist" (and
+    # then "Tried to write the same file twice" when prost's subsequent
+    # create collides with the failed-insertion entry). Alphabetical sort
+    # puts protoc-gen-prost before protoc-gen-tonic, satisfying the
+    # producer-before-consumer ordering this protocol requires.
+    plugins = sorted(
+        [plugin[ProtoPluginInfo] for plugin in ctx.attr.plugins],
+        key = lambda p: p.name,
+    )
 
     # const <dict<string,string>>
     outs = {_plugin_label_key(Label(k)): v for k, v in ctx.attr.outs.items()}
@@ -195,17 +208,15 @@ def _proto_compile_impl(ctx):
     for plugin in plugins:
         ### Part 2.1: build protos list
 
-        # When using protos (plural), all ProtoInfo providers share the
-        # same package (that's why their outputs overlap). Only pass files
-        # from the first provider to protoc as file_to_generate — the
-        # descriptor sets from ALL providers are already included, giving
-        # the plugin full type information to generate the complete
-        # package output. This avoids duplicate CodeGeneratorResponse.File
-        # entries from package-level plugins like protoc-gen-prost.
-        gen_infos = [proto_infos[0]] if len(proto_infos) > 1 else proto_infos
-
-        # add all protos unless excluded
-        for pi in gen_infos:
+        # All ProtoInfo providers (either the single `proto` attr or every
+        # entry in `protos`) contribute their direct_sources to protoc's
+        # file_to_generate list. protoc plugins emit code only for files
+        # explicitly listed there, so dropping providers here would silently
+        # truncate the generated output for package-level plugins like
+        # protoc-gen-prost (which generates per-file, not per-package).
+        # The inner `proto in protos` check deduplicates if a .proto somehow
+        # appears in multiple providers' direct_sources.
+        for pi in proto_infos:
             for proto in pi.direct_sources:
                 if any([
                     proto.dirname.endswith(exclusion) or proto.path.endswith(exclusion)
@@ -307,6 +318,15 @@ def _proto_compile_impl(ctx):
 
     replaced_args = _ctx_replace_args(ctx, _uniq(args))
     final_args = ctx.actions.args()
+
+    # protoc reads `@paramfile` with one arg per line and NO shell quoting.
+    # Bazel's default "shell" format wraps each arg in single quotes, which
+    # protoc treats as input filenames (the leading `'` defeats the `--flag`
+    # prefix match) and the action fails with "Missing output directives".
+    # The bug stays latent until the args list overflows the command line and
+    # bazel actually materializes the param file — typically only triggered
+    # once a rule accumulates many --xxx_opt= entries.
+    final_args.set_param_file_format("multiline")
     final_args.use_param_file("@%s", use_always = False)
     final_args.add_all(replaced_args)
 
