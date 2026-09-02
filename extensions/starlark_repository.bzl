@@ -1,0 +1,149 @@
+"""proto_repostitory.bzl provides the starlark_repository rule."""
+
+# Copyright 2014 The Bazel Authors. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@bazel_features//:features.bzl", "bazel_features")
+load("@build_stack_rules_proto//rules/proto:starlark_repository.bzl", "starlark_repository_attrs", starlark_repository_repo_rule = "starlark_repository")
+
+def _extension_metadata(
+        module_ctx,
+        *,
+        root_module_direct_deps = None,
+        root_module_direct_dev_deps = None,
+        reproducible = False):
+    """returns the module_ctx.extension_metadata in a bazel-version-aware way
+
+    This function was copied from the bazel-gazelle repository.
+    """
+
+    if not hasattr(module_ctx, "extension_metadata"):
+        return None
+    metadata_kwargs = {}
+    if bazel_features.external_deps.extension_metadata_has_reproducible:
+        metadata_kwargs["reproducible"] = reproducible
+    return module_ctx.extension_metadata(
+        root_module_direct_deps = root_module_direct_deps,
+        root_module_direct_dev_deps = root_module_direct_dev_deps,
+        **metadata_kwargs
+    )
+
+def _default_preserve(kwargs):
+    """Sets build_file_generation = "preserve" by default.
+
+    starlark_repository exists specifically to capture upstream module
+    contents for introspection. The "preserve" mode is the only mode that
+    produces the starlark_package_library aggregator, so it's the desired
+    default. Users can still override (e.g. to "on" or "clean") by passing
+    build_file_generation explicitly on the tag.
+    """
+    if not kwargs.get("build_file_generation"):
+        kwargs["build_file_generation"] = "preserve"
+
+def _starlark_repository_impl(module_ctx):
+    # named_archives / named_locals are dicts<K,V> where V is the kwargs for
+    # the underlying "starlark_repository" repo rule and K is the tag.name
+    # (the name given by the MODULE.bazel author).
+    named_archives = {}
+    named_locals = {}
+
+    # iterate all the module tags and gather a list of named repos.
+    #
+    # TODO(pcj): what is the best practice for version selection here? Do I need
+    # to check if module.is_root and handle that differently?
+    #
+    for module in module_ctx.modules:
+        for tag in module.tags.archive:
+            kwargs = {
+                attr: getattr(tag, attr)
+                for attr in _starlark_repository_archive_attrs.keys()
+                if hasattr(tag, attr)
+            }
+            _default_preserve(kwargs)
+            named_archives[tag.name] = kwargs
+        for tag in module.tags.local:
+            kwargs = {
+                attr: getattr(tag, attr)
+                for attr in _starlark_repository_local_attrs.keys()
+                if hasattr(tag, attr)
+            }
+
+            # The user-facing attr is "path"; the underlying repo rule expects
+            # "local_path" (a sibling of "urls" / "commit" / "version").
+            kwargs["local_path"] = kwargs.pop("path")
+            _default_preserve(kwargs)
+            named_locals[tag.name] = kwargs
+
+    # declare a repository rule foreach one
+    for apparent_name, kwargs in named_archives.items():
+        starlark_repository_repo_rule(
+            apparent_name = apparent_name,
+            **kwargs
+        )
+    for apparent_name, kwargs in named_locals.items():
+        starlark_repository_repo_rule(
+            apparent_name = apparent_name,
+            **kwargs
+        )
+
+    return _extension_metadata(
+        module_ctx,
+        reproducible = True,
+    )
+
+_starlark_repository_archive_attrs = starlark_repository_attrs | {
+    "name": attr.string(
+        doc = "The repo name.",
+        mandatory = True,
+    ),
+}
+_starlark_repository_archive_attrs.pop("apparent_name")
+
+# Attrs for the .local() tag class. Excludes archive-only attrs (urls, sha256,
+# strip_prefix, type, integrity, canonical_id, auth_patterns, commit, tag,
+# vcs, remote, version, sum, replace) and instead takes a single `path`
+# (mapped to the underlying rule's `local_path`).
+_starlark_repository_local_attrs = {
+    "name": attr.string(
+        doc = "The repo name.",
+        mandatory = True,
+    ),
+    "path": attr.string(
+        doc = "Filesystem path (workspace-relative or absolute) to the repository contents.",
+        mandatory = True,
+    ),
+    "build_directives": attr.string_list(),
+    "build_file_generation": attr.string(),
+    "languages": attr.string_list(),
+    "cfgs": attr.label_list(allow_files = True),
+    "imports": attr.label_list(allow_files = True),
+    "imports_out": attr.string(default = "imports.csv"),
+    "deleted_files": attr.string_list(),
+    "reresolve_known_proto_imports": attr.bool(),
+    "importpath": attr.string(),
+}
+
+starlark_repository = module_extension(
+    implementation = _starlark_repository_impl,
+    tag_classes = dict(
+        archive = tag_class(
+            doc = "declare an http_archive repository that is post-processed by a custom version of gazelle that includes the 'protobuf' language",
+            attrs = _starlark_repository_archive_attrs,
+        ),
+        local = tag_class(
+            doc = "declare a local-path repository that is post-processed by gazelle's starlarkrepository language. Useful when the source already lives on disk (e.g. a git submodule) and we want to avoid network fetches.",
+            attrs = _starlark_repository_local_attrs,
+        ),
+    ),
+)
