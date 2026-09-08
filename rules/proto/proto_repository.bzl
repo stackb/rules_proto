@@ -74,7 +74,7 @@ def _proto_repository_impl(ctx):
     watch(ctx, go_env_cache)
     fetch_repo = str(ctx.path(Label("@bazel_gazelle_go_repository_tools//:bin/fetch_repo{}".format(executable_extension(ctx)))))
     watch(ctx, fetch_repo)
-    generate = ctx.attr.build_file_generation in ["on", "clean"]
+    generate = ctx.attr.build_file_generation in ["on", "clean", "preserve"]
 
     _gazelle = "@proto_repository_tools//:bin/gazelle{}".format(executable_extension(ctx))
 
@@ -84,16 +84,25 @@ def _proto_repository_impl(ctx):
 
     reproducible = False
     if ctx.attr.local_path:
+        # Resolve relative paths against the main workspace root. Bare strings
+        # passed to watch_tree() and the --path arg of fetch_repo are otherwise
+        # interpreted relative to the external repo's own directory, which is
+        # never what the caller wants.
+        local_path = ctx.attr.local_path
+        if not local_path.startswith("/"):
+            workspace_root = str(ctx.path(Label("@@//:MODULE.bazel")).dirname)
+            local_path = workspace_root + "/" + local_path
+
         if hasattr(ctx, "watch_tree"):
             # https://github.com/bazelbuild/bazel/commit/fffa0affebbacf1961a97ef7cd248be64487d480
-            ctx.watch_tree(ctx.attr.local_path)
+            ctx.watch_tree(local_path)
         else:
             # buildifier: disable=print
             print("""
   WARNING: go.mod replace directives to module paths is only supported in bazel 7.1.0-rc1 or later,
-          Because of this changes to %s will not be detected by your version of Bazel.""" % ctx.attr.local_path)
+          Because of this changes to %s will not be detected by your version of Bazel.""" % local_path)
 
-        fetch_repo_args = ["--path", ctx.attr.local_path, "--dest", ctx.path("")]
+        fetch_repo_args = ["--path", local_path, "--dest", ctx.path("")]
     elif ctx.attr.urls:
         # HTTP mode
         for key in ("commit", "tag", "vcs", "remote", "version", "sum", "replace"):
@@ -245,6 +254,7 @@ def _proto_repository_impl(ctx):
         fail("%s: %s" % (ctx.name, result.stderr))
 
     _delete_files(ctx, ctx.attr.deleted_files)
+    _preserve_packages(ctx)
     if DEBUG:
         _find(ctx)
 
@@ -321,6 +331,11 @@ def _proto_repository_impl(ctx):
         # BEGIN protobuf extension flags
         if ctx.attr.languages:
             cmd.extend(["-lang", ",".join(ctx.attr.languages)])
+
+        # Gazelle may not discover a repository name in an extracted archive.
+        # Use the canonical name to qualify real conditions/visibility packages.
+        if "starlarkrepository" in ctx.attr.languages:
+            cmd.extend(["-starlarkrepository_canonical_repo_name", ctx.name])
         if ctx.attr.cfgs:
             cfgs = ",".join([str(ctx.path(f).realpath) for f in ctx.attr.cfgs])
             cmd.extend(["-proto_configs", cfgs])
@@ -413,6 +428,25 @@ def _delete_files(ctx, files_to_delete):
 
     # print("delete files result:", result.stdout)
 
+def _preserve_packages(ctx):
+    """Renames BUILD files to .package suffix for build_file_generation = "preserve".
+
+    Mirrors fetch_repo -clean semantics (deletes MODULE.bazel / WORKSPACE /
+    etc.) but renames BUILD / BUILD.bazel to BUILD.package / BUILD.bazel.package
+    so the starlarkrepository gazelle extension can capture them as
+    starlark_package rules.
+    """
+    if ctx.attr.build_file_generation != "preserve":
+        return
+
+    preserve_packages = str(ctx.path(Label("@proto_repository_tools//:bin/preserve_packages{}".format(executable_extension(ctx)))))
+    result = env_execute(
+        ctx,
+        [preserve_packages, "-root", ctx.path("")],
+    )
+    if result.return_code:
+        fail("preserve_packages failed for %s: %s" % (ctx.name, result.stderr))
+
 def _generate_package_info(*, importpath, version):
     package_name = importpath
 
@@ -461,6 +495,8 @@ package_info(
     )
 
 def _generate_proto_repository_info(ctx):
+    if not ctx.attr.imports_out:
+        return ""
     return """
 exports_files(["{imports_out}"])
 """.format(
@@ -609,17 +645,22 @@ _go_repository_attrs = {
     ),
     "build_file_generation": attr.string(
         default = "auto",
-        doc = """One of `"auto"`, `"on"`, `"off"`, `"clean"`.
+        doc = """One of `"auto"`, `"on"`, `"off"`, `"clean"`, `"preserve"`.
 
             Whether Gazelle should generate build files in the repository. In `"auto"`
             mode, Gazelle will run if there is no build file in the repository root
             directory. In `"clean"` mode, Gazelle will first remove any existing build
-            files.""",
+            files. In `"preserve"` mode (used by `starlark_repository`), the upstream
+            `BUILD` / `BUILD.bazel` files are renamed to `BUILD.package` /
+            `BUILD.bazel.package` (and `MODULE.bazel` / `WORKSPACE*` files are deleted)
+            so the starlarkrepository gazelle extension can emit `starlark_package`
+            rules referencing the preserved files.""",
         values = [
             "on",
             "auto",
             "off",
             "clean",
+            "preserve",
         ],
     ),
     "build_naming_convention": attr.string(
