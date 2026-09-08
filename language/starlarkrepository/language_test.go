@@ -1,10 +1,17 @@
 package starlarkrepository
 
 import (
+	"flag"
 	"os"
 	"path/filepath"
+	"reflect"
+	"sort"
 	"testing"
 
+	"github.com/bazelbuild/bazel-gazelle/config"
+	"github.com/bazelbuild/bazel-gazelle/label"
+	"github.com/bazelbuild/bazel-gazelle/resolve"
+	"github.com/bazelbuild/bazel-gazelle/rule"
 	"github.com/bazelbuild/buildtools/build"
 )
 
@@ -231,6 +238,71 @@ func TestStringListDict(t *testing.T) {
 				if len(listExpr.List) != len(expectedValues) {
 					t.Errorf("key %q: expected %d values, got %d", keyExpr.Value, len(expectedValues), len(listExpr.List))
 				}
+			}
+		})
+	}
+}
+
+// Exercise both library resolvers with the empty RepoName used when Gazelle
+// runs over an extracted archive, as well as named standalone repositories.
+func TestLibrarySpecialPackages(t *testing.T) {
+	for _, repository := range []struct{ name, indexed, canonical, prefix string }{
+		{"archive", "", "extension+fixture", "@@extension+fixture"},
+		{"named", "fixture", "", "@fixture"},
+		{"main", "", "", ""},
+	} {
+		for _, library := range []struct{ kind, member, attr string }{
+			{starlarkPackageLibraryKind, starlarkPackageKind, "packages"},
+			{starlarkModuleLibraryKind, starlarkModuleKind, "modules"},
+		} {
+			t.Run(repository.name+"/"+library.kind, func(t *testing.T) {
+				c := config.New()
+				c.RepoName = repository.indexed
+				ext := &starlarkRepositoryLang{roots: []string{""}}
+				fs := flag.NewFlagSet("test", flag.ContinueOnError)
+				ext.RegisterFlags(fs, "fix", c)
+				if err := fs.Parse([]string{"-starlarkrepository_canonical_repo_name", repository.canonical}); err != nil {
+					t.Fatal(err)
+				}
+				ix := resolve.NewRuleIndex(func(*rule.Rule, string) resolve.Resolver { return ext })
+				for _, pkg := range []string{"", "conditions", "visibility", "ordinary", "conditions/subdir"} {
+					member := rule.NewRule(library.member, "member")
+					member.SetAttr("src", "defs.bzl")
+					ix.AddRule(c, member, &rule.File{Pkg: pkg})
+				}
+				ix.Finish()
+				r := rule.NewRule(library.kind, "library")
+				ext.Resolve(c, ix, nil, r, nil, label.New(c.RepoName, "", r.Name()))
+				want := []string{":member", "//conditions/subdir:member", "//ordinary:member", repository.prefix + "//conditions:member", repository.prefix + "//visibility:member"}
+				sort.Strings(want)
+				if got := r.AttrStrings(library.attr); !reflect.DeepEqual(got, want) {
+					t.Fatalf("%s = %v, want %v", library.attr, got, want)
+				}
+			})
+		}
+	}
+}
+
+func TestLibraryDependencyLabel(t *testing.T) {
+	ext := &starlarkRepositoryLang{canonicalRepoName: "extension+fixture"}
+	for _, tc := range []struct{ dep, from, want string }{
+		{"@fixture//conditions:member", "@fixture//conditions:library", ":member"},
+		{"@fixture//visibility:member", "@fixture//visibility:library", ":member"},
+		{"@other//conditions:member", "@fixture//:library", "@other//conditions:member"},
+		{"@@other+repo//visibility:member", "@fixture//:library", "@@other+repo//visibility:member"},
+		{"@fixture//ordinary:member", "@fixture//:library", "//ordinary:member"},
+	} {
+		t.Run(tc.dep+" from "+tc.from, func(t *testing.T) {
+			dep, err := label.Parse(tc.dep)
+			if err != nil {
+				t.Fatal(err)
+			}
+			from, err := label.Parse(tc.from)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if got := ext.libraryDependencyLabel(dep, from); got != tc.want {
+				t.Errorf("got %q, want %q", got, tc.want)
 			}
 		})
 	}

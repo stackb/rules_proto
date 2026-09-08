@@ -20,5 +20,11 @@ go_test(
     name = "starlarkrepository_test",
     srcs = ["language_test.go"],
     embed = [":starlarkrepository"],
-    deps = ["@com_github_bazelbuild_buildtools//build"],
+    deps = [
+        "@bazel_gazelle//config",
+        "@bazel_gazelle//label",
+        "@bazel_gazelle//resolve",
+        "@bazel_gazelle//rule",
+        "@com_github_bazelbuild_buildtools//build",
+    ],
 )

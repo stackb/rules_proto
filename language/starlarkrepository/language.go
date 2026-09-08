@@ -107,14 +107,15 @@ var (
 )
 
 type starlarkRepositoryLang struct {
-	roots        []string
-	repoName     string
-	excludeDirs  []string
-	bazelVersion string
-	bazelIgnore  []string
-	logFile      string
-	logWriter    *os.File
-	logger       *log.Logger
+	roots             []string
+	repoName          string
+	canonicalRepoName string
+	excludeDirs       []string
+	bazelVersion      string
+	bazelIgnore       []string
+	logFile           string
+	logWriter         *os.File
+	logger            *log.Logger
 }
 
 // NewLanguage is called by Gazelle to install this language extension in a
@@ -141,6 +142,7 @@ func (*starlarkRepositoryLang) Name() string {
 // https://pkg.go.dev/github.com/bazelbuild/bazel-gazelle/resolve?tab=doc#Resolver
 // interface, but are otherwise unused.
 func (ext *starlarkRepositoryLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
+	fs.StringVar(&ext.canonicalRepoName, "starlarkrepository_canonical_repo_name", "", "canonical name of the repository being generated")
 	fs.StringVar(&ext.logFile, logFileDirectiveName, "", "path to log file for this extension")
 }
 
@@ -471,7 +473,7 @@ func (ext *starlarkRepositoryLang) starlarkPackageLibraryResolve(c *config.Confi
 	for _, m := range matches {
 		depLabel := m.Label.Rel(from.Repo, from.Pkg)
 		if strings.HasPrefix(depLabel.Pkg, root) {
-			packages = append(packages, depLabel.String())
+			packages = append(packages, ext.libraryDependencyLabel(m.Label, from))
 		}
 	}
 
@@ -499,7 +501,7 @@ func (ext *starlarkRepositoryLang) starlarkModuleLibraryResolve(c *config.Config
 	for _, m := range matches {
 		depLabel := m.Label.Rel(from.Repo, from.Pkg)
 		if strings.HasPrefix(depLabel.Pkg, root) {
-			modules = append(modules, depLabel.String())
+			modules = append(modules, ext.libraryDependencyLabel(m.Label, from))
 		}
 	}
 
@@ -507,6 +509,21 @@ func (ext *starlarkRepositoryLang) starlarkModuleLibraryResolve(c *config.Config
 		sort.Strings(modules)
 		r.SetAttr("modules", modules)
 	}
+}
+
+// libraryDependencyLabel keeps real targets in Bazel's special packages in
+// their owning repository. Unqualified //conditions and //visibility labels
+// otherwise resolve in the main repository, even from an external repository.
+func (ext *starlarkRepositoryLang) libraryDependencyLabel(dep, from label.Label) string {
+	rel := dep.Rel(from.Repo, from.Pkg)
+	if !rel.Relative && (dep.Pkg == "conditions" || dep.Pkg == "visibility") {
+		if dep.Repo == from.Repo && ext.canonicalRepoName != "" {
+			dep.Repo = ext.canonicalRepoName
+			dep.Canonical = true
+		}
+		return dep.String()
+	}
+	return rel.String()
 }
 
 // Before implements part of the language.LifecycleManager interface.

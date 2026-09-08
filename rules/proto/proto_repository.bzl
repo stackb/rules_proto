@@ -331,6 +331,10 @@ def _proto_repository_impl(ctx):
         # BEGIN protobuf extension flags
         if ctx.attr.languages:
             cmd.extend(["-lang", ",".join(ctx.attr.languages)])
+        # Gazelle may not discover a repository name in an extracted archive.
+        # Use the canonical name to qualify real conditions/visibility packages.
+        if "starlarkrepository" in ctx.attr.languages:
+            cmd.extend(["-starlarkrepository_canonical_repo_name", ctx.name])
         if ctx.attr.cfgs:
             cfgs = ",".join([str(ctx.path(f).realpath) for f in ctx.attr.cfgs])
             cmd.extend(["-proto_configs", cfgs])
