@@ -3,6 +3,7 @@ package protobuf
 import (
 	"log"
 	"path"
+	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -104,7 +105,14 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		protoc.GlobalRuleIndex().Put(internalLabel, r)
 		switch r.Kind() {
 		case "proto_rust_library":
-			pl.protoRustLibraryPackages = append(pl.protoRustLibraryPackages, args.Rel)
+			if protoRustLibraryIsExplicitWorkspaceMember(r.Name()) {
+				pl.protoRustLibraryPackages = append(pl.protoRustLibraryPackages, args.Rel)
+			} else {
+				pl.protoRustPerFilePackageDirs = append(
+					pl.protoRustPerFilePackageDirs,
+					path.Join(args.Rel, "_rust"),
+				)
+			}
 			// The proto_rust_library macro's underlying _proto_rust_lib rule
 			// (named "<name>_lib") is what provides ProtoCompileInfo for the
 			// wrapper lib.rs + Cargo.toml; that's the label that belongs in
@@ -134,6 +142,14 @@ func (pl *protobufLang) GenerateRules(args language.GenerateArgs) language.Gener
 		Imports: imports,
 		Empty:   pkg.Empty(),
 	}
+}
+
+// protoRustLibraryIsExplicitWorkspaceMember reports whether the generated
+// crate belongs in the root Cargo.toml marker section. Per-file crates are
+// path dependencies of these package-level roots, so Cargo enrolls them in
+// the workspace transitively after their manifests are vendored.
+func protoRustLibraryIsExplicitWorkspaceMember(name string) bool {
+	return !strings.Contains(name, "__")
 }
 
 func matchingFiles(files map[string]*protoc.File, srcs []label.Label) []*protoc.File {

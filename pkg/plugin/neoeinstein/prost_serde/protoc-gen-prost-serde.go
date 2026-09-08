@@ -3,6 +3,7 @@ package prost_serde
 import (
 	"path"
 	"sort"
+	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/label"
 	"github.com/bazelbuild/bazel-gazelle/rule"
@@ -31,15 +32,26 @@ func (p *ProtocGenProstSerdePlugin) Configure(ctx *protoc.PluginContext) *protoc
 		return nil
 	}
 
-	outputs := p.outputs(ctx.ProtoLibrary)
+	perFile := ctx.IsProtoFileMode()
+	outputs := p.outputs(ctx.ProtoLibrary, perFile)
 	if len(outputs) == 0 {
 		return nil
+	}
+
+	options := ctx.PluginConfig.GetOptions()
+	if perFile {
+		// Must match the prost plugin's per_file=true so pbjson emits one
+		// `<stem>.<pkg>.serde.rs` per file AND points its `insert_include`
+		// pragma at the matching `<stem>.<pkg>.rs` (which prost wrote);
+		// the unpatched form inserts into `<pkg>.rs`, a filename that no
+		// longer exists in per-file mode.
+		options = append(options, "per_file=true")
 	}
 
 	return &protoc.PluginConfiguration{
 		Label:   label.New("build_stack_rules_proto", "plugin/neoeinstein/prost-serde", "protoc-gen-prost-serde"),
 		Outputs: outputs,
-		Options: ctx.PluginConfig.GetOptions(),
+		Options: options,
 	}
 }
 
@@ -63,15 +75,46 @@ func (p *ProtocGenProstSerdePlugin) shouldApply(lib protoc.ProtoLibrary) bool {
 	return false
 }
 
-// outputs computes the output files for the plugin. Prost-serde generates one
-// .serde.rs file per proto package. The path includes the file's directory so
-// that mergeSources can handle the rel stripping.
-func (p *ProtocGenProstSerdePlugin) outputs(lib protoc.ProtoLibrary) []string {
-	seen := make(map[string]bool)
+// outputs computes the output files for the plugin.
+//
+// Per-package mode (default): one `<pkg>.serde.rs` per proto package.
+//
+// Per-file mode (the surrounding bazel package opts into `gazelle:proto file`):
+// one `<file_stem>.<pkg>.serde.rs` per .proto file that defines messages or
+// enums. The vendored protoc-gen-prost-serde honours this naming convention
+// when `per_file=true` is in the options block.
+func (p *ProtocGenProstSerdePlugin) outputs(lib protoc.ProtoLibrary, perFile bool) []string {
 	outputs := make([]string, 0)
 
+	if perFile {
+		for _, f := range lib.Files() {
+			if !prost.HasGeneratableContent(f) {
+				// Same rationale as the per-package branch below: pbjson
+				// emits no file for extend-only protos, and a declared
+				// output would trip proto_compile.bzl's `mv` rename.
+				continue
+			}
+			pkg := f.Package()
+			if pkg.Name == "" {
+				continue
+			}
+			stem := strings.TrimSuffix(f.Basename, ".proto")
+			filename := stem + "." + pkg.Name + ".serde.rs"
+			if f.Dir != "" {
+				filename = path.Join(f.Dir, filename)
+			}
+			outputs = append(outputs, filename)
+		}
+		sort.Strings(outputs)
+		return outputs
+	}
+
+	seen := make(map[string]bool)
 	for _, f := range lib.Files() {
-		if !(f.HasMessages() || f.HasEnums()) {
+		if !prost.HasGeneratableContent(f) {
+			// Skip files with no serializable types. pbjson-build emits
+			// nothing for extend-only files, and the declared output would
+			// later fail proto_compile.bzl's `mv` rename.
 			continue
 		}
 		pkg := f.Package()

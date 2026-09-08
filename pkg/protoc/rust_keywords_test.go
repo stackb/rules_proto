@@ -85,11 +85,11 @@ func TestRustCrateName(t *testing.T) {
 		want string
 	}{
 		"empty":             {pkg: "", want: ""},
-		"single segment":    {pkg: "foo", want: "foo_rs"},
-		"trailing proto":    {pkg: "trumid.common.utils.state.snapshot.proto", want: "trumid_common_utils_state_snapshot_proto_rs"},
+		"single segment":    {pkg: "foo", want: "foo"},
+		"trailing proto":    {pkg: "trumid.common.utils.state.snapshot.proto", want: "trumid_common_utils_state_snapshot_proto"},
 		"sub-package": {pkg: "trumid.common.utils.state.snapshot.proto.example",
-			want: "trumid_common_utils_state_snapshot_proto_example_rs"},
-		"keywords are not escaped here": {pkg: "google.type", want: "google_type_rs"},
+			want: "trumid_common_utils_state_snapshot_proto_example"},
+		"keywords are not escaped here": {pkg: "google.type", want: "google_type"},
 	} {
 		t.Run(name, func(t *testing.T) {
 			if got := RustCrateName(tc.pkg); got != tc.want {

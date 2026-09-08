@@ -11,7 +11,7 @@ proto_library(
     name = "thing_proto",
     srcs = ["thing.proto"],
     visibility = ["//visibility:public"],
-    deps = ["@protobufapis//google/protobuf:timestamp_proto"],
+    deps = ["@com_google_protobuf//:timestamp_proto"],
 )
 
 proto_cc_library(

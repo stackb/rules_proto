@@ -144,6 +144,42 @@ func TestRunPkg(t *testing.T) {
 	}
 }
 
+func TestRegenerateProTip(t *testing.T) {
+	for name, tc := range map[string]struct {
+		targetLabel string
+		updateName  string
+		want        string
+	}{
+		"empty update name": {
+			targetLabel: "//proto:foo_proto_compile",
+			updateName:  "",
+			want:        "",
+		},
+		"local target": {
+			targetLabel: "//proto:foo_proto_compile",
+			updateName:  "foo_proto_compile.update",
+			want:        "\nProTip: to regenerate, run:\n    bazel run //proto:foo_proto_compile.update\n",
+		},
+		"external repo target": {
+			targetLabel: "@@some_repo//pkg:foo_proto_compile",
+			updateName:  "foo_proto_compile.update",
+			want:        "\nProTip: to regenerate, run:\n    bazel run @@some_repo//pkg:foo_proto_compile.update\n",
+		},
+		"target with no colon": {
+			targetLabel: "raw_label_no_colon",
+			updateName:  "foo_proto_compile.update",
+			want:        "\nProTip: to regenerate, run:\n    bazel run foo_proto_compile.update\n",
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			got := regenerateProTip(tc.targetLabel, tc.updateName)
+			if got != tc.want {
+				t.Errorf("regenerateProTip: got %q, want %q", got, tc.want)
+			}
+		})
+	}
+}
+
 // listFiles - convenience debugging function to log the files under a given dir
 func listFiles(t *testing.T, dir string) error {
 	return filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {

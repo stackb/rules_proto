@@ -12,6 +12,7 @@ go_library(
         "//pkg/protoc",
         "@bazel_gazelle//label",
         "@bazel_gazelle//rule",
+        "@com_github_emicklei_proto//:proto",
     ],
 )
 
@@ -19,10 +20,13 @@ go_test(
     name = "prost_test",
     srcs = [
         "extern_paths_test.go",
+        "needs_cwkt_test.go",
+        "nested_type_path_test.go",
         "protoc-gen-prost_test.go",
+        "register_nested_test.go",
     ],
+    embed = [":prost"],
     deps = [
-        ":prost",
         "//pkg/plugintest",
         "//pkg/protoc",
         "@bazel_gazelle//label",

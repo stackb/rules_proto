@@ -40,6 +40,7 @@ go_library(
     deps = [
         "@bazel_gazelle//config",
         "@bazel_gazelle//label",
+        "@bazel_gazelle//language/proto",
         "@bazel_gazelle//resolve",
         "@bazel_gazelle//rule",
         "@com_github_bazelbuild_buildtools//build",
