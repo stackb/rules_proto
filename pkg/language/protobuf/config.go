@@ -1,9 +1,11 @@
 package protobuf
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
+	"os"
 	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
@@ -20,6 +22,9 @@ func (pl *protobufLang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Co
 	fs.StringVar(&pl.configFiles,
 		"proto_configs", "",
 		"optional config.yaml file(s) that provide preconfiguration")
+	fs.StringVar(&pl.configInputsOutFile,
+		"proto_config_inputs_out", "",
+		"write loaded Starlark source paths as JSON for repository input tracking")
 	fs.StringVar(&pl.importsInFiles,
 		"proto_imports_in", "",
 		"index files to parse and load symbols from")
@@ -71,6 +76,16 @@ func (pl *protobufLang) CheckFlags(fs *flag.FlagSet, c *config.Config) error {
 			if err := protoc.GlobalResolver().LoadFile(filename); err != nil {
 				return fmt.Errorf("loading %s: %w", filename, err)
 			}
+		}
+	}
+
+	if pl.configInputsOutFile != "" {
+		data, err := json.Marshal(protoc.StarlarkFiles(c))
+		if err != nil {
+			return err
+		}
+		if err := os.WriteFile(pl.configInputsOutFile, data, 0o644); err != nil {
+			return fmt.Errorf("writing -proto_config_inputs_out: %w", err)
 		}
 	}
 

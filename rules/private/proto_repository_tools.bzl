@@ -13,7 +13,7 @@
 # limitations under the License.
 """"""
 
-load("@bazel_gazelle//internal:common.bzl", "env_execute", "executable_extension")
+load("@bazel_gazelle//internal:common.bzl", "env_execute", "executable_extension", "watch")
 load("@bazel_gazelle//internal:go_repository_cache.bzl", "read_cache_env")
 load("@build_stack_rules_proto//rules/private:proto_repository_tools_srcs.bzl", "PROTO_REPOSITORY_TOOLS_SRCS")
 
@@ -33,6 +33,13 @@ def _proto_repository_tools_impl(ctx):
     go_tool = env["GOROOT"] + "/bin/go" + extension
 
     rules_proto_path = ctx.path(Label("@build_stack_rules_proto//:MODULE.bazel"))
+
+    # The compiler reads sources through the symlink below. Resolve paths from
+    # the source root: the generated list can still name deleted packages.
+    for src in ctx.attr._proto_repository_tools_srcs + [ctx.attr._list_repository_tools_srcs]:
+        relative_path = src.package + "/" + src.name if src.package else src.name
+        watch(ctx, rules_proto_path.dirname.get_child(relative_path))
+
     ctx.symlink(
         rules_proto_path.dirname,
         "src/github.com/stackb/rules_proto/v4",

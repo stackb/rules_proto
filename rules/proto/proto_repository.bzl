@@ -318,6 +318,13 @@ def _proto_repository_impl(ctx):
         if is_module_extension_repo:
             cmd.append("-bzlmod")
 
+        # These files are read by Gazelle, not by repository_ctx.
+        for input in ctx.attr.cfgs + ctx.attr.imports:
+            watch(ctx, ctx.path(input))
+
+        config_inputs = ctx.path(".gazelle_config_inputs.json")
+        cmd.extend(["-proto_config_inputs_out", config_inputs])
+
         # BEGIN protobuf extension flags
         if ctx.attr.languages:
             cmd.extend(["-lang", ",".join(ctx.attr.languages)])
@@ -344,6 +351,19 @@ def _proto_repository_impl(ctx):
                 ctx.attr.importpath,
                 result.stderr,
             ))
+
+        # YAML and command-line configuration can load Starlark files outside
+        # this repository. Gazelle reports the actual paths it resolved.
+        repo_root = str(ctx.path("")) + "/"
+        real_repo_root = str(ctx.path("").realpath) + "/"
+        for filename in json.decode(ctx.read(config_inputs, watch = "no")):
+            input_path = ctx.path(filename)
+            if str(input_path).startswith(repo_root):
+                input_path = input_path.realpath
+            if not str(input_path.realpath).startswith(real_repo_root):
+                watch(ctx, input_path)
+        ctx.delete(config_inputs)
+
         if ctx.attr.debug_mode and result.stderr:
             # buildifier: disable=print
             print("%s gazelle.stdout: %s" % (ctx.name, result.stdout))
