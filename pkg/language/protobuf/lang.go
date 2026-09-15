@@ -24,6 +24,8 @@ type protobufLang struct {
 	packages map[string]*protoc.Package
 	// configFiles contains yconfig yaml files to parse.  May be comma-separated.
 	configFiles string
+	// configInputsOutFile is a JSON manifest of loaded Starlark source paths.
+	configInputsOutFile string
 	// repoName is the name (if this an external repository)
 	repoName string
 	// importsOutFile is the name of the file to create.  If "", skip writing

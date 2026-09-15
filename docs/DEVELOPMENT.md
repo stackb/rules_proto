@@ -79,3 +79,30 @@ For example `(cd
 /private/var/tmp/_bazel_i868039/7b08591af2b3d71f45f2e4029050db37/bazel_testing/bazel_go_test/main
 && code .)`.  You can then use `bazel build` directly in this space to explore
 what's going on.
+
+## Repository input tracking
+
+`proto_repository` watches its `cfgs` YAML files and `imports` CSV files.
+Gazelle also writes a temporary JSON manifest through
+`-proto_config_inputs_out` listing the Starlark plugin and rule files loaded
+from YAML or `-proto_plugin` / `-proto_rule`. The repository rule watches those
+files and removes the manifest. Sources inside the fetched repository are
+already covered by the repository definition and are not watched separately.
+The repository Gazelle tool also watches its Go sources so source changes
+rebuild the executable.
+
+The following regression test uses real Bazel and Gazelle in a temporary
+workspace. It checks configuration, CSV, and Starlark edits, propagation to a
+consumer repository, and reuse when no inputs change. Archives and dependencies
+are supplied locally; the test does not require network access.
+
+```sh
+go build -mod=vendor -o /tmp/rules-proto-gazelle ./cmd/gazelle
+python3 tools/test_proto_repository_inputs.py \
+  --bazel "$(command -v bazel)" \
+  --gazelle /tmp/rules-proto-gazelle \
+  --gazelle-repo "$(bazel info output_base)/external/gazelle+"
+```
+
+`--gazelle-repo` must point to the fetched bazel-gazelle sources; adjust the
+canonical repository name if your Bazel version uses a different spelling.

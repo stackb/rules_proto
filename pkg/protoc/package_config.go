@@ -3,6 +3,7 @@ package protoc
 import (
 	"fmt"
 	"log"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -265,9 +266,16 @@ func RegisterStarlarkPlugin(c *config.Config, starlarkPlugin string) error {
 	if len(parts) != 2 {
 		return fmt.Errorf("invalid starlark plugin name %q", starlarkPlugin)
 	}
-	fileName := parts[0]
+	fileName, err := resolveStarlarkFilename(c.WorkDir, parts[0])
+	if err != nil {
+		return err
+	}
+	fileName, err = filepath.Abs(fileName)
+	if err != nil {
+		return err
+	}
 	ruleName := parts[1]
-	impl, err := LoadStarlarkPluginFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
+	impl, err := LoadStarlarkPluginFromFile("", fileName, ruleName, func(msg string) {
 		log.Printf("%s: %v", starlarkPlugin, msg)
 	}, func(err error) {
 		log.Fatalf("starlark plugin configuration error (plugin %q will not be registered): %v", starlarkPlugin, err)
@@ -275,6 +283,7 @@ func RegisterStarlarkPlugin(c *config.Config, starlarkPlugin string) error {
 	if err != nil {
 		return err
 	}
+	recordStarlarkFile(c, fileName)
 	Plugins().RegisterPlugin(starlarkPlugin, impl)
 	return nil
 }
@@ -284,16 +293,48 @@ func RegisterStarlarkRule(c *config.Config, starlarkRule string) error {
 	if len(parts) != 2 {
 		return fmt.Errorf("invalid starlark rule name %q", starlarkRule)
 	}
-	fileName := parts[0]
+	fileName, err := resolveStarlarkFilename(c.WorkDir, parts[0])
+	if err != nil {
+		return err
+	}
+	fileName, err = filepath.Abs(fileName)
+	if err != nil {
+		return err
+	}
 	ruleName := parts[1]
 
-	impl, err := LoadStarlarkLanguageRuleFromFile(c.WorkDir, fileName, ruleName, func(msg string) {
+	impl, err := LoadStarlarkLanguageRuleFromFile("", fileName, ruleName, func(msg string) {
 	}, func(err error) {
 		log.Panicf("starlark rule configuration error (rule %q will not be registered): %v", starlarkRule, err)
 	})
 	if err != nil {
 		return err
 	}
+	recordStarlarkFile(c, fileName)
 	Rules().MustRegisterRule(starlarkRule, impl)
 	return nil
+}
+
+const starlarkFilesKey = "rules_proto_starlark_files"
+
+func recordStarlarkFile(c *config.Config, filename string) {
+	files, ok := c.Exts[starlarkFilesKey].(map[string]bool)
+	if !ok {
+		files = make(map[string]bool)
+		c.Exts[starlarkFilesKey] = files
+	}
+	files[filename] = true
+}
+
+// StarlarkFiles returns the sorted, absolute paths of plugin and rule sources
+// loaded by this configuration. Repository rules use them to track inputs read
+// by the Gazelle subprocess.
+func StarlarkFiles(c *config.Config) []string {
+	files, _ := c.Exts[starlarkFilesKey].(map[string]bool)
+	out := make([]string, 0, len(files))
+	for filename := range files {
+		out = append(out, filename)
+	}
+	sort.Strings(out)
+	return out
 }
