@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@grpc/grpc-js": "1.13.4",
+    "@grpc/grpc-js": "1.13.5",
     "@nestjs/common": "11.1.6",
     "@nestjs/core": "11.1.6",
     "@nestjs/microservices": "11.1.6",
